@@ -114,14 +114,16 @@ This macro is similar to NSLocalizedString, but it does not require the optional
 
 
 ```objc
-	TmlLocalizedStringWithDescription(label, description)
+TmlLocalizedStringWithDescription(label, description)
 ```
 
 Example:
 
 ```objc
 TmlLocalizedStringWithDescription(@"Invite", @"Invite someone to join the group")
+```
 
+```objc
 TmlLocalizedStringWithDescription(@"Invite", @"An invite received from a friend")
 ```
 
@@ -135,33 +137,29 @@ TmlLocalizedStringWithTokens(label, tokens)
 Example: 
 
 ```objc
-
 TmlLocalizedStringWithTokens(@"You have {count || message}.", @{@"count": @4})
-
 TmlLocalizedStringWithTokens(@"Hello {user}.", @{@"user": @"Michael"})
+```
 
+```objc
 User *user  = [[User alloc] initWithName: @"Michael" gender: @"male"];
-
 // will use [user description] for substitution value
 TmlLocalizedStringWithTokens(@"Hello {user}.", @{@"user": user})
-
 // second parameter is used for substitution value
 TmlLocalizedStringWithTokens(@"Hello {user}.", @{@"user": @[user, user.name]})
 TmlLocalizedStringWithTokens(@"Hello {user}.", @{@"user": @[user, @"Mike"]})
+```
 
+```objc
 NSDictionary *user = @{@"name": @"Michael", @"gender": @"male"};
-
 // can be used for context rules, but not substitution value
 TmlLocalizedStringWithTokens(@"{user | Born On}.", @{@"user": user})
-
 TmlLocalizedStringWithTokens(@"Hello {user}.", @{
           @"user": @{@"object": user, @"property": @"name"}
 })
-
 TmlLocalizedStringWithTokens(@"Hello {user}.", @{
           @"user": @{@"object": user, @"value": @"Michael"}
 })
-
 ```
 
 Tokens can be passed in many different ways. If the token is passed as a primitive type, it would be used for both context rules and displayed value. If it is passed a class or a structure, you can separate the object being used for context rules and the value that would be substituted for the token.
@@ -174,9 +172,9 @@ Example:
 
 ```objc
 TmlLocalizedStringWithDescriptionAndTokens(
-            @"Hello {user}",
-            @"A greeting message",
-            @{@"user": @"Michael"}
+    @"Hello {user}",
+    @"A greeting message",
+    @{@"user": @"Michael"}
 )
 ```
 
@@ -191,10 +189,10 @@ Example:
 
 ```objc
 TmlLocalizedStringWithDescriptionAndTokensAndOptions(
-            @"Hello {user}",
-            @"A greeting message",
-            @{@"user": @"Michael"},
-            @{@"level": @5, @"max-length": @20}
+    @"Hello {user}",
+    @"A greeting message",
+    @{@"user": @"Michael"},
+    @{@"level": @5, @"max-length": @20}
 )
 ```
 
@@ -209,9 +207,9 @@ Example:
 
 ```objc
 TmlLocalizedStringWithTokensAndOptions(
-      @"You have {count || message}.",
-      @{@"count": @4},
-      @{@"max-length": @20}
+    @"You have {count || message}.",
+    @{@"count": @4},
+    @{@"max-length": @20}
 )
 ```
 
@@ -259,42 +257,42 @@ For tokens that you want to define in once and reuse throughout your application
 ```objc
 [Tml configure:^(TmlConfiguration *config) {
   [config setDefaultTokenValue: @"<strong>{$0}</strong>"
-                         forName: @"bold"
-                            type: @"decoration"
-                          format: @"html"];
+                       forName: @"bold"
+                          type: @"decoration"
+                        format: @"html"];
 
   [config setDefaultTokenValue: @"<span style='color:green'>{$0}</span>"
-                         forName: @"green"
-                            type: @"decoration"
-                          format: @"html"];
+                       forName: @"green"
+                          type: @"decoration"
+                        format: @"html"];
 
   [config setDefaultTokenValue: @{
-                                     @"font": @{
-                                        @"name": @"system",
-                                        @"size": @12,
-                                        @"type": @"italic"
-                                     },
-                                     @"color": @"blue"
-                                   }
-                         forName: @"bold"
-                            type: @"decoration"
-                          format: @"attributed"];
+                     @"font": @{
+                        @"name": @"system",
+                        @"size": @12,
+                        @"type": @"italic"
+                     },
+                     @"color": @"blue"
+                   }
+                       forName: @"bold"
+                          type: @"decoration"
+                        format: @"attributed"];
 
   [config setDefaultTokenValue: @{
-                                     @"shadow": @{
-                                        @"offset": @1,1,
-                                        @"radius": @0.5,
-                                        @"color": @"grey"
-                                     },
-                                     @"color": @"black"
+                     @"shadow": @{
+                        @"offset": @1,1,
+                        @"radius": @0.5,
+                        @"color": @"grey"
+                     },
+                     @"color": @"black"
                                    }
-                         forName: @"shadow"
-                            type: @"decoration"
-                          format: @"attributed"];
+                       forName: @"shadow"
+                          type: @"decoration"
+                        format: @"attributed"];
 
   [config setDefaultTokenValue: @"My App Name"
-                         forName: @"app_name"
-                            type: @"data"];
+                       forName: @"app_name"
+                          type: @"data"];
 }];
 ```
 
@@ -327,15 +325,10 @@ The other Attributed String macros are as follow:
 
 ```objc
 TmlLocalizedAttributedStringWithDescription(label, description)
-
 TmlLocalizedAttributedStringWithDescriptionAndTokens(label, description, tokens)
-
 TmlLocalizedAttributedStringWithDescriptionAndTokensAndOptions(label, description, tokens, options)
-
 TmlLocalizedAttributedStringWithTokens(label, tokens)
-
 TmlLocalizedAttributedStringWithTokensAndOptions(label, tokens, options)
-
 TmlLocalizedAttributedStringWithOptions(label, options)
 ```
 
