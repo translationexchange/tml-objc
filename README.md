@@ -446,10 +446,11 @@ Tml can automatically translate views for you with one line of code. Consider th
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [[NSNotificationCenter defaultCenter] addObserver: self
-                                             selector: @selector(localize)
-                                                 name: TmlTranslationsLoadedNotification
-                                               object: self.view.window];
+    [[NSNotificationCenter defaultCenter]
+        addObserver: self
+           selector: @selector(localize)
+               name: TmlLanguageChangedNotification
+             object: self.view.window];
 
     [self localize];
 }
