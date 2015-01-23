@@ -1,0 +1,384 @@
+{
+    "keyword":"plural",
+    "latin_name":"Plural",
+    "description":"Converts singular form to plural",
+    "application":"phrase",
+    "rules":[
+             {
+             "id":739,
+             "description":"Uncountable word",
+             "conditions":"(in 'sheep,fish,series,species,money,rice,information,equipment' @value)",
+             "conditions_expression":[
+                                      "in",
+                                      "sheep,fish,series,species,money,rice,information,equipment",
+                                      "@value"
+                                      ],
+             "operations":"@value",
+             "operations_expression":"@value"
+             },
+             {
+             "id":740,
+             "description":"Irregular word",
+             "conditions":"(= 'move' @value)",
+             "conditions_expression":[
+                                      "=",
+                                      "move",
+                                      "@value"
+                                      ],
+             "operations":"(quote 'moves')",
+             "operations_expression":[
+                                      "quote",
+                                      "moves"
+                                      ]
+             },
+             {
+             "id":741,
+             "description":"Irregular word",
+             "conditions":"(= 'sex' @value)",
+             "conditions_expression":[
+                                      "=",
+                                      "sex",
+                                      "@value"
+                                      ],
+             "operations":"(quote 'sexes')",
+             "operations_expression":[
+                                      "quote",
+                                      "sexes"
+                                      ]
+             },
+             {
+             "id":742,
+             "description":"Irregular word",
+             "conditions":"(= 'child' @value)",
+             "conditions_expression":[
+                                      "=",
+                                      "child",
+                                      "@value"
+                                      ],
+             "operations":"(quote 'children')",
+             "operations_expression":[
+                                      "quote",
+                                      "children"
+                                      ]
+             },
+             {
+             "id":743,
+             "description":"Irregular word",
+             "conditions":"(= 'person' @value)",
+             "conditions_expression":[
+                                      "=",
+                                      "person",
+                                      "@value"
+                                      ],
+             "operations":"(quote 'people')",
+             "operations_expression":[
+                                      "quote",
+                                      "people"
+                                      ]
+             },
+             {
+             "id":744,
+             "conditions":"(match '/(quiz)$/i' @value)",
+             "conditions_expression":[
+                                      "match",
+                                      "/(quiz)$/i",
+                                      "@value"
+                                      ],
+             "operations":"(replace '/(quiz)$/i' '$1zes' @value)",
+             "operations_expression":[
+                                      "replace",
+                                      "/(quiz)$/i",
+                                      "$1zes",
+                                      "@value"
+                                      ]
+             },
+             {
+             "id":745,
+             "conditions":"(match '/^(ox)$/i' @value)",
+             "conditions_expression":[
+                                      "match",
+                                      "/^(ox)$/i",
+                                      "@value"
+                                      ],
+             "operations":"(replace '/^(ox)$/i' '$1en' @value)",
+             "operations_expression":[
+                                      "replace",
+                                      "/^(ox)$/i",
+                                      "$1en",
+                                      "@value"
+                                      ]
+             },
+             {
+             "id":746,
+             "conditions":"(match '/([m|l])ouse$/i' @value)",
+             "conditions_expression":[
+                                      "match",
+                                      "/([m|l])ouse$/i",
+                                      "@value"
+                                      ],
+             "operations":"(replace '/([m|l])ouse$/i' '$1ice' @value)",
+             "operations_expression":[
+                                      "replace",
+                                      "/([m|l])ouse$/i",
+                                      "$1ice",
+                                      "@value"
+                                      ]
+             },
+             {
+             "id":747,
+             "conditions":"(match '/(matr|vert|ind)ix|ex$/i' @value)",
+             "conditions_expression":[
+                                      "match",
+                                      "/(matr|vert|ind)ix|ex$/i",
+                                      "@value"
+                                      ],
+             "operations":"(replace '/(matr|vert|ind)ix|ex$/i' '$1ices' @value)",
+             "operations_expression":[
+                                      "replace",
+                                      "/(matr|vert|ind)ix|ex$/i",
+                                      "$1ices",
+                                      "@value"
+                                      ]
+             },
+             {
+             "id":748,
+             "conditions":"(match '/(x|ch|ss|sh)$/i' @value)",
+             "conditions_expression":[
+                                      "match",
+                                      "/(x|ch|ss|sh)$/i",
+                                      "@value"
+                                      ],
+             "operations":"(replace '/(x|ch|ss|sh)$/i' '$1es' @value)",
+             "operations_expression":[
+                                      "replace",
+                                      "/(x|ch|ss|sh)$/i",
+                                      "$1es",
+                                      "@value"
+                                      ]
+             },
+             {
+             "id":749,
+             "conditions":"(match '/([^aeiouy]|qu)y$/i' @value)",
+             "conditions_expression":[
+                                      "match",
+                                      "/([^aeiouy]|qu)y$/i",
+                                      "@value"
+                                      ],
+             "operations":"(replace '/([^aeiouy]|qu)y$/i' '$1ies' @value)",
+             "operations_expression":[
+                                      "replace",
+                                      "/([^aeiouy]|qu)y$/i",
+                                      "$1ies",
+                                      "@value"
+                                      ]
+             },
+             {
+             "id":750,
+             "conditions":"(match '/([^aeiouy]|qu)ies$/i' @value)",
+             "conditions_expression":[
+                                      "match",
+                                      "/([^aeiouy]|qu)ies$/i",
+                                      "@value"
+                                      ],
+             "operations":"(replace '/([^aeiouy]|qu)ies$/i' '$1y' @value)",
+             "operations_expression":[
+                                      "replace",
+                                      "/([^aeiouy]|qu)ies$/i",
+                                      "$1y",
+                                      "@value"
+                                      ]
+             },
+             {
+             "id":751,
+             "conditions":"(match '/(hive)$/i' @value)",
+             "conditions_expression":[
+                                      "match",
+                                      "/(hive)$/i",
+                                      "@value"
+                                      ],
+             "operations":"(replace '/(hive)$/i' '$1s' @value)",
+             "operations_expression":[
+                                      "replace",
+                                      "/(hive)$/i",
+                                      "$1s",
+                                      "@value"
+                                      ]
+             },
+             {
+             "id":752,
+             "conditions":"(match '/(?:([^f])fe|([lr])f)$/i' @value)",
+             "conditions_expression":[
+                                      "match",
+                                      "/(?:([^f])fe|([lr])f)$/i",
+                                      "@value"
+                                      ],
+             "operations":"(replace '/(?:([^f])fe|([lr])f)$/i' '$1$2ves' @value)",
+             "operations_expression":[
+                                      "replace",
+                                      "/(?:([^f])fe|([lr])f)$/i",
+                                      "$1$2ves",
+                                      "@value"
+                                      ]
+             },
+             {
+             "id":753,
+             "conditions":"(match '/sis$/i' @value)",
+             "conditions_expression":[
+                                      "match",
+                                      "/sis$/i",
+                                      "@value"
+                                      ],
+             "operations":"(replace '/sis$/i' 'ses' @value)",
+             "operations_expression":[
+                                      "replace",
+                                      "/sis$/i",
+                                      "ses",
+                                      "@value"
+                                      ]
+             },
+             {
+             "id":754,
+             "conditions":"(match '/([ti])um$/i' @value)",
+             "conditions_expression":[
+                                      "match",
+                                      "/([ti])um$/i",
+                                      "@value"
+                                      ],
+             "operations":"(replace '/([ti])um$/i' '$1a' @value)",
+             "operations_expression":[
+                                      "replace",
+                                      "/([ti])um$/i",
+                                      "$1a",
+                                      "@value"
+                                      ]
+             },
+             {
+             "id":755,
+             "conditions":"(match '/(buffal|tomat|potat)o$/i' @value)",
+             "conditions_expression":[
+                                      "match",
+                                      "/(buffal|tomat|potat)o$/i",
+                                      "@value"
+                                      ],
+             "operations":"(replace '/(buffal|tomat|potat)o$/i' '$1oes' @value)",
+             "operations_expression":[
+                                      "replace",
+                                      "/(buffal|tomat|potat)o$/i",
+                                      "$1oes",
+                                      "@value"
+                                      ]
+             },
+             {
+             "id":756,
+             "conditions":"(match '/(bu)s$/i' @value)",
+             "conditions_expression":[
+                                      "match",
+                                      "/(bu)s$/i",
+                                      "@value"
+                                      ],
+             "operations":"(replace '/(bu)s$/i' '$1ses' @value)",
+             "operations_expression":[
+                                      "replace",
+                                      "/(bu)s$/i",
+                                      "$1ses",
+                                      "@value"
+                                      ]
+             },
+             {
+             "id":757,
+             "conditions":"(match '/(alias|status)$/i' @value)",
+             "conditions_expression":[
+                                      "match",
+                                      "/(alias|status)$/i",
+                                      "@value"
+                                      ],
+             "operations":"(replace '/(alias|status)$/i' '$1es' @value)",
+             "operations_expression":[
+                                      "replace",
+                                      "/(alias|status)$/i",
+                                      "$1es",
+                                      "@value"
+                                      ]
+             },
+             {
+             "id":758,
+             "conditions":"(match '/(octop)us$/i' @value)",
+             "conditions_expression":[
+                                      "match",
+                                      "/(octop)us$/i",
+                                      "@value"
+                                      ],
+             "operations":"(replace '/(octop)us$/i' '$1i' @value)",
+             "operations_expression":[
+                                      "replace",
+                                      "/(octop)us$/i",
+                                      "$1i",
+                                      "@value"
+                                      ]
+             },
+             {
+             "id":759,
+             "conditions":"(match '/(ax|test)is$/i' @value)",
+             "conditions_expression":[
+                                      "match",
+                                      "/(ax|test)is$/i",
+                                      "@value"
+                                      ],
+             "operations":"(replace '/(ax|test)is$/i' '$1es' @value)",
+             "operations_expression":[
+                                      "replace",
+                                      "/(ax|test)is$/i",
+                                      "$1es",
+                                      "@value"
+                                      ]
+             },
+             {
+             "id":760,
+             "conditions":"(match '/us$/i' @value)",
+             "conditions_expression":[
+                                      "match",
+                                      "/us$/i",
+                                      "@value"
+                                      ],
+             "operations":"(replace '/us$/i' '$1es' @value)",
+             "operations_expression":[
+                                      "replace",
+                                      "/us$/i",
+                                      "$1es",
+                                      "@value"
+                                      ]
+             },
+             {
+             "id":761,
+             "conditions":"(match '/s$/i' @value)",
+             "conditions_expression":[
+                                      "match",
+                                      "/s$/i",
+                                      "@value"
+                                      ],
+             "operations":"(replace '/s$/i' 's' @value)",
+             "operations_expression":[
+                                      "replace",
+                                      "/s$/i",
+                                      "s",
+                                      "@value"
+                                      ]
+             },
+             {
+             "id":762,
+             "conditions":"(match '/$/' @value)",
+             "conditions_expression":[
+                                      "match",
+                                      "/$/",
+                                      "@value"
+                                      ],
+             "operations":"(replace '/$/' 's' @value)",
+             "operations_expression":[
+                                      "replace",
+                                      "/$/",
+                                      "s",
+                                      "@value"
+                                      ]
+             }
+             ]
+}

@@ -1,0 +1,16 @@
+PODS:
+  - MBProgressHUD (0.9)
+  - MPColorTools (1.6.1)
+  - ViewDeck (2.2.11)
+
+DEPENDENCIES:
+  - MBProgressHUD (~> 0.9)
+  - MPColorTools (~> 1.6)
+  - ViewDeck (~> 2.2.11)
+
+SPEC CHECKSUMS:
+  MBProgressHUD: 2038dbcf3dce73215abed6001657043d53aa79a8
+  MPColorTools: d59184c7ce8c28926f93d15565b1dce586376191
+  ViewDeck: 2f38c054dfe8e69af4877c006785996faa277902
+
+COCOAPODS: 0.35.0

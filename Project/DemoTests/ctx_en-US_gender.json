@@ -1,0 +1,54 @@
+{
+    "keyword":"gender",
+    "keys":[
+            "male",
+            "female",
+            "other"
+            ],
+    "default_key":"other",
+    "token_expression":"/.*(user|translator|profile|actor|target)(\\d)*$/",
+    "variables":[
+                 "@gender"
+                 ],
+    "token_mapping":[
+                     {
+                     "other":"{$0}"
+                     },
+                     {
+                     "male":"{$0}",
+                     "female":"{$1}",
+                     "other":"{$0}/{$1}"
+                     },
+                     {
+                     "male":"{$0}",
+                     "female":"{$1}",
+                     "other":"{$2}"
+                     }
+                     ],
+    "rules":{
+        "female":{
+            "keyword":"female",
+            "description":"{token} is a female",
+            "conditions":"(= 'female' @gender)",
+            "conditions_expression":[
+                                     "=",
+                                     "female",
+                                     "@gender"
+                                     ]
+        },
+        "male":{
+            "keyword":"male",
+            "description":"{token} is a male",
+            "conditions":"(= 'male' @gender)",
+            "conditions_expression":[
+                                     "=",
+                                     "male",
+                                     "@gender"
+                                     ]
+        },
+        "other":{
+            "keyword":"other",
+            "description":"{token}'s gender is unknown"
+        }
+    }
+}

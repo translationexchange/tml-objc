@@ -1,0 +1,129 @@
+{
+    "keyword":"number",
+    "keys":[
+            "one",
+            "few",
+            "many",
+            "other"
+            ],
+    "default_key":"many",
+    "token_expression":"/.*(count|num|minutes|seconds|hours|sum|total)(\\d)*$/",
+    "variables":[
+                 "@n"
+                 ],
+    "token_mapping":[
+                     "unsupported",
+                     "unsupported",
+                     {
+                     "one":"{$0}",
+                     "few":"{$1}",
+                     "many":"{$2}",
+                     "other":"{$2}"
+                     },
+                     {
+                     "one":"{$0}",
+                     "few":"{$1}",
+                     "many":"{$2}",
+                     "other":"{$3}"
+                     }
+                     ],
+    "rules":{
+        "few":{
+            "keyword":"few",
+            "description":"{token} ends in 2, 3, 4, but not in 12, 13, 14",
+            "examples":"2-4, 22-24, 32-34...",
+            "conditions":"(&& (in '2..4' (mod @n 10)) (not (in '12..14' (mod @n 100))))",
+            "conditions_expression":[
+                                     "&&",
+                                     [
+                                      "in",
+                                      "2..4",
+                                      [
+                                       "mod",
+                                       "@n",
+                                       10
+                                       ]
+                                      ],
+                                     [
+                                      "not",
+                                      [
+                                       "in",
+                                       "12..14",
+                                       [
+                                        "mod",
+                                        "@n",
+                                        100
+                                        ]
+                                       ]
+                                      ]
+                                     ]
+        },
+        "many":{
+            "keyword":"many",
+            "description":"{token} mod 10 is 0 or {token} mod 10 in 5..9 or {token} mod 100 in 11..14",
+            "examples":"0, 5-20, 25-30, 35-40...",
+            "conditions":"(|| (= 0 (mod @n 10)) (in '5..9' (mod @n 10)) (in '11..14' (mod @n 100)))",
+            "conditions_expression":[
+                                     "||",
+                                     [
+                                      "=",
+                                      0,
+                                      [
+                                       "mod",
+                                       "@n",
+                                       10
+                                       ]
+                                      ],
+                                     [
+                                      "in",
+                                      "5..9",
+                                      [
+                                       "mod",
+                                       "@n",
+                                       10
+                                       ]
+                                      ],
+                                     [
+                                      "in",
+                                      "11..14",
+                                      [
+                                       "mod",
+                                       "@n",
+                                       100
+                                       ]
+                                      ]
+                                     ]
+        },
+        "one":{
+            "keyword":"one",
+            "description":"{token} mod 10 is 1 and {token} mod 100 is not 11",
+            "examples":"1, 21, 31, 41, 51, 61...",
+            "conditions":"(&& (= 1 (mod @n 10)) (!= 11 (mod @n 100)))",
+            "conditions_expression":[
+                                     "&&",
+                                     [
+                                      "=",
+                                      1,
+                                      [
+                                       "mod",
+                                       "@n",
+                                       10
+                                       ]
+                                      ],
+                                     [
+                                      "!=",
+                                      11,
+                                      [
+                                       "mod",
+                                       "@n",
+                                       100
+                                       ]
+                                      ]
+                                     ]
+        },
+        "other":{
+            "keyword":"other",
+            "examples":"1.2, 2.07, 5.94..."
+        }
+    }
+}

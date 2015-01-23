@@ -1,0 +1,42 @@
+{
+    "key":"6aee6161b45c7613a",
+    "name":"iOS SDK Example",
+    "description":"",
+    "default_locale":"en-US",
+    "languages":[
+                 {
+                     "locale":"en-US",
+                     "name":"English (US)",
+                     "english_name":"English (US)",
+                     "native_name":"English (US)",
+                     "flag_url":"http://localhost:3000/media/57/23/20/19/cf185dab9566b718e.png"
+                 },
+                 {
+                     "locale":"ru",
+                     "name":"Русский",
+                     "english_name":"Russian",
+                     "native_name":"Русский",
+                     "flag_url":"http://localhost:3000/media/54/39/11/49/cb768f030bde97f97.png"
+                 }
+                 ],
+    "threshold":1,
+    "translator_level":1,
+    "features":{
+        "inline_translations":true,
+        "google_suggestions":true,
+        "decorations":true,
+        "shortcuts":true,
+        "context_rules":true,
+        "language_cases":true,
+        "javascript_sdk":false,
+        "glossary":true,
+        "forum":true,
+        "awards":true,
+        "admin_translations":true,
+        "open_registration":true,
+        "language_flags":true
+    },
+    "tokens":{
+        
+    }
+}

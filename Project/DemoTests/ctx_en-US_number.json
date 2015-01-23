@@ -1,0 +1,40 @@
+{
+    "keyword":"number",
+    "keys":[
+            "one",
+            "other"
+            ],
+    "default_key":"other",
+    "token_expression":"/.*(count|num|minutes|seconds|hours|sum|total)(\\d)*$/",
+    "variables":[
+                 "@n"
+                 ],
+    "token_mapping":[
+                     {
+                     "one":"{$0}",
+                     "other":"{$0::plural}"
+                     },
+                     {
+                     "one":"{$0}",
+                     "other":"{$1}"
+                     }
+                     ],
+    "rules":{
+        "one":{
+            "keyword":"one",
+            "description":"{token} is 1",
+            "examples":"1",
+            "conditions":"(= @n 1)",
+            "conditions_expression":[
+                                     "=",
+                                     "@n",
+                                     1
+                                     ]
+        },
+        "other":{
+            "keyword":"other",
+            "description":"{token} is not 1",
+            "examples":"0, 2-999; 1.2, 2.07..."
+        }
+    }
+}
