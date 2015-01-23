@@ -34,7 +34,7 @@ Run the application. Open the language selector and change language.
 
 Another sample application is located here:
 
-    [tml-objc-samples-wammer](https://github.com/translationexchange/tml-objc-samples-wammer)
+https://github.com/translationexchange/tml-objc-samples-wammer
 
 
 Requirements
