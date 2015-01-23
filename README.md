@@ -25,10 +25,12 @@ Demo Applications
 
 To run the sample project, follow these steps:
 
-	$ git clone https://github.com/translationexchange/tml-objc.git
-	$ cd tml-objc/Project
-	$ pod install
-	$ open Demo.xcworkspace
+```sh
+$ git clone https://github.com/translationexchange/tml-objc.git
+$ cd tml-objc/Project
+$ pod install
+$ open Demo.xcworkspace
+```
 
 Run the application. Open the language selector and change language.
 
@@ -51,8 +53,9 @@ Installation
 
 Tml SDK is available through [CocoaPods](http://cocoapods.org). To install the SDK, simply add the following line to your Podfile:
 
-    pod "Tml"
-
+```ruby
+pod "Tml"
+```
 
 Integration
 ==================
@@ -67,22 +70,16 @@ Tml SDK comes with the English language configuration by default. So if your app
 On the other hand, you should initialize the Tml SDK if you plan on taking advantage of the continues integration with TranslationExchange platform, translation memory and analytics.
 
 
-	#import "Tml.h"
+```objc
+#import "Tml.h"
 
-	....
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
+  [Tml sharedInstanceWithToken: YOUR_TOKEN];
 
-	- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-		
-		... 
-
-    [Tml sharedInstanceWithToken: YOUR_TOKEN];
-
-    ....
-
-    return YES;
-	}
-
+  return YES;
+}
+```
 
 How does it work?
 ==================
