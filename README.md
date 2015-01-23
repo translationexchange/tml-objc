@@ -76,18 +76,12 @@ On the other hand, you should initialize the Tml SDK if you plan on taking advan
 	- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 		
 		... 
-	    
-        // for testing and development
-        [Tml initWitKey:@"APP_KEY" secret:@"APP_SECRET"];
 
+    [Tml sharedInstanceWithToken: YOUR_TOKEN];
 
-        // for release and production
+    ....
 
-		[Tml initWitKey:@"APP_KEY"];
-        
-        ....
-
-        return YES;
+    return YES;
 	}
 
 
