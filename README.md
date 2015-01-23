@@ -7,7 +7,7 @@ Tml for Objective C
 
 [![Version](http://cocoapod-badges.herokuapp.com/v/Tml/badge.png)](http://cocoadocs.org/docsets/Tml)
 [![Platform](http://cocoapod-badges.herokuapp.com/p/Tml/badge.png)](http://cocoadocs.org/docsets/Tml)
-[![Build Status](https://travis-ci.org/translationexchange/tml-objc.png)](https://travis-ci.org/translationexchange/tml-objc)
+[![Build Status](https://travis-ci.org/translationexchange/tml-objc.svg?branch=master)](https://travis-ci.org/translationexchange/tml-objc)
 
 Tml SDK for Objective C is an integrated cloud-based translation solution for iOS applications.
 
