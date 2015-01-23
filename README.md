@@ -94,119 +94,139 @@ Internationalization & TML
 
 If your application is already internationalized using the standard NSLocalizedString methods, you can simply import the Tml.h header in your .m file and Tml will take over the internationalization macros.
 
-	#import "Tml.h"
-
+```objc
+#import "Tml.h"
+```
 
 Tml also provides its own macros for internationalization that enhance the standard iOS macros.
 
-	TmlLocalizedString(label)
-	
+```objc
+TmlLocalizedString(label)
+```
+
 Example:
 
-    TmlLocalizedString(@"Hello World")
+```objc
+TmlLocalizedString(@"Hello World")
+```
 
 This macro is similar to NSLocalizedString, but it does not require the optional comment to be passed as nil.
 
 
-
+```objc
 	TmlLocalizedStringWithDescription(label, description)
-	
+```
+
 Example:
 
-    TmlLocalizedStringWithDescription(@"Invite", @"Invite someone to join the group")
+```objc
+TmlLocalizedStringWithDescription(@"Invite", @"Invite someone to join the group")
 
-    TmlLocalizedStringWithDescription(@"Invite", @"An invite received from a friend")
-
+TmlLocalizedStringWithDescription(@"Invite", @"An invite received from a friend")
+```
 
 Unlike NSLocalizedString, where the second parameter is a comment for a translator, Tml uses the description to contextualize the key. So the above example would actually register two distinct keys, where each would have its own translations.
 
 
+```objc
+TmlLocalizedStringWithTokens(label, tokens)
+```
 
-	TmlLocalizedStringWithTokens(label, tokens)
-	
 Example: 
 
-    TmlLocalizedStringWithTokens(@"You have {count || message}.", @{@"count": @4})
+```objc
 
-    TmlLocalizedStringWithTokens(@"Hello {user}.", @{@"user": @"Michael"})
+TmlLocalizedStringWithTokens(@"You have {count || message}.", @{@"count": @4})
 
-    User *user  = [[User alloc] initWithName: @"Michael" gender: @"male"];
-    
-    // will use [user description] for substitution value
-    TmlLocalizedStringWithTokens(@"Hello {user}.", @{@"user": user})
+TmlLocalizedStringWithTokens(@"Hello {user}.", @{@"user": @"Michael"})
 
-    // second parameter is used for substitution value
-    TmlLocalizedStringWithTokens(@"Hello {user}.", @{@"user": @[user, user.name]})
-    TmlLocalizedStringWithTokens(@"Hello {user}.", @{@"user": @[user, @"Mike"]})
+User *user  = [[User alloc] initWithName: @"Michael" gender: @"male"];
 
-    NSDictionary *user = @{@"name": @"Michael", @"gender": @"male"};
+// will use [user description] for substitution value
+TmlLocalizedStringWithTokens(@"Hello {user}.", @{@"user": user})
 
-    // can be used for context rules, but not substitution value
-    TmlLocalizedStringWithTokens(@"{user | Born On}.", @{@"user": user})
+// second parameter is used for substitution value
+TmlLocalizedStringWithTokens(@"Hello {user}.", @{@"user": @[user, user.name]})
+TmlLocalizedStringWithTokens(@"Hello {user}.", @{@"user": @[user, @"Mike"]})
 
-    TmlLocalizedStringWithTokens(@"Hello {user}.", @{
-                @"user": @{@"object": user, @"property": @"name"}
-    })
-    
-    TmlLocalizedStringWithTokens(@"Hello {user}.", @{
-                @"user": @{@"object": user, @"value": @"Michael"}
-    })
+NSDictionary *user = @{@"name": @"Michael", @"gender": @"male"};
 
+// can be used for context rules, but not substitution value
+TmlLocalizedStringWithTokens(@"{user | Born On}.", @{@"user": user})
+
+TmlLocalizedStringWithTokens(@"Hello {user}.", @{
+          @"user": @{@"object": user, @"property": @"name"}
+})
+
+TmlLocalizedStringWithTokens(@"Hello {user}.", @{
+          @"user": @{@"object": user, @"value": @"Michael"}
+})
+
+```
 
 Tokens can be passed in many different ways. If the token is passed as a primitive type, it would be used for both context rules and displayed value. If it is passed a class or a structure, you can separate the object being used for context rules and the value that would be substituted for the token.
 
-
-
-	TmlLocalizedStringWithDescriptionAndTokens(label, description, tokens)
+```objc
+TmlLocalizedStringWithDescriptionAndTokens(label, description, tokens)
+```
 
 Example: 
 
-    TmlLocalizedStringWithDescriptionAndTokens(
-                @"Hello {user}",
-                @"A greeting message", 
-                @{@"user": @"Michael"}
-    )
+```objc
+TmlLocalizedStringWithDescriptionAndTokens(
+            @"Hello {user}",
+            @"A greeting message",
+            @{@"user": @"Michael"}
+)
+```
 
 Same as the two examples above - allows you to provide both description and tokens.
 
 
-
-	TmlLocalizedStringWithDescriptionAndTokensAndOptions(label, description, tokens, options)
+```objc
+TmlLocalizedStringWithDescriptionAndTokensAndOptions(label, description, tokens, options)
+```
 
 Example: 
 
-    TmlLocalizedStringWithDescriptionAndTokensAndOptions(
-                @"Hello {user}", 
-                @"A greeting message", 
-                @{@"user": @"Michael"},
-                @{@"level": @5, @"max-length": @20}
-    )
-
+```objc
+TmlLocalizedStringWithDescriptionAndTokensAndOptions(
+            @"Hello {user}",
+            @"A greeting message",
+            @{@"user": @"Michael"},
+            @{@"level": @5, @"max-length": @20}
+)
+```
 
 Only translators of a specific rank are allowed to translate keys of a specific level. The constraint indicate that the translations of this key may not be longer than 20 chars. See wiki.translationexchage.com for more details.
 
 
+```objc
+TmlLocalizedStringWithTokensAndOptions(label, tokens, options)
+```
 
-	TmlLocalizedStringWithTokensAndOptions(label, tokens, options)
-	
 Example: 
 
-    TmlLocalizedStringWithTokensAndOptions(
-                @"You have {count || message}.", 
-                @{@"count": @4}, 
-                @{@"max-length": @20}
-    )
-
+```objc
+TmlLocalizedStringWithTokensAndOptions(
+      @"You have {count || message}.",
+      @{@"count": @4},
+      @{@"max-length": @20}
+)
+```
 
 Allows you to skip the description.
 
 
-
-	TmlLocalizedStringWithOptions(label, options)
+```objc
+TmlLocalizedStringWithOptions(label, options)
+```
 
 Example: 
 
-    TmlLocalizedStringWithOptions(@"Hello World", @{@"max-length": @20})
+```objc
+TmlLocalizedStringWithOptions(@"Hello World", @{@"max-length": @20})
+```
 
 Allows you to skip description and tokens.
 
@@ -214,14 +234,18 @@ Allows you to skip description and tokens.
 
 All of the above macros assume that you are working with HTML and will return HTML markup for decorated tokens. For example:
 
-	TmlLocalizedStringWithTokens(
-        @"You have completed [bold: {count || mile}] on your last run.", 
-        @{@"count": @4.2}
-    )
+```objc
+TmlLocalizedStringWithTokens(
+    @"You have completed [bold: {count || mile}] on your last run.",
+    @{@"count": @4.2}
+)
+```
 
 Will result in: 
 
+```html
 	"You have completed <strong>4.2 miles</strong> on your last run."
+```
 
 Unless you render it in a browser, you should not use decoration tokens with the above methods. Instead, you should use the Attributed String macros.
 
@@ -232,45 +256,47 @@ Default Tokens
 
 For tokens that you want to define in once and reuse throughout your application, you can pre-define them in Tml configuration, using the following approach:
 
-	[Tml configure:^(TmlConfiguration *config) {
-	    [config setDefaultTokenValue: @"<strong>{$0}</strong>"
-                             forName: @"bold"
-                                type: @"decoration"
-                              format: @"html"];
+```objc
+[Tml configure:^(TmlConfiguration *config) {
+  [config setDefaultTokenValue: @"<strong>{$0}</strong>"
+                         forName: @"bold"
+                            type: @"decoration"
+                          format: @"html"];
 
-	    [config setDefaultTokenValue: @"<span style='color:green'>{$0}</span>"
-                             forName: @"green"
-                                type: @"decoration"
-                              format: @"html"];
+  [config setDefaultTokenValue: @"<span style='color:green'>{$0}</span>"
+                         forName: @"green"
+                            type: @"decoration"
+                          format: @"html"];
 
-	    [config setDefaultTokenValue: @{
-                                         @"font": @{
-                                            @"name": @"system",
-                                            @"size": @12, 
-                                            @"type": @"italic"
-                                         }, 
-                                         @"color": @"blue"
-                                       }
-                             forName: @"bold"
-                                type: @"decoration"
-                              format: @"attributed"];
+  [config setDefaultTokenValue: @{
+                                     @"font": @{
+                                        @"name": @"system",
+                                        @"size": @12,
+                                        @"type": @"italic"
+                                     },
+                                     @"color": @"blue"
+                                   }
+                         forName: @"bold"
+                            type: @"decoration"
+                          format: @"attributed"];
 
-	    [config setDefaultTokenValue: @{
-                                         @"shadow": @{
-                                            @"offset": @1,1,
-                                            @"radius": @0.5,
-                                            @"color": @"grey"
-                                         },
-                                         @"color": @"black"
-                                       }
-                             forName: @"shadow"
-                                type: @"decoration"
-                              format: @"attributed"];
+  [config setDefaultTokenValue: @{
+                                     @"shadow": @{
+                                        @"offset": @1,1,
+                                        @"radius": @0.5,
+                                        @"color": @"grey"
+                                     },
+                                     @"color": @"black"
+                                   }
+                         forName: @"shadow"
+                            type: @"decoration"
+                          format: @"attributed"];
 
-	    [config setDefaultTokenValue: @"My App Name" 
-                             forName: @"app_name" 
-                                type: @"data"];
-	}];
+  [config setDefaultTokenValue: @"My App Name"
+                         forName: @"app_name"
+                            type: @"data"];
+}];
+```
 
 Alternatively, you can provide token values inline, which would overwrite the default token definitions.
 
@@ -282,45 +308,50 @@ AttributedString Macros
 
 Attributed String macros are very similar to the above macros, but will always return an NSAttributedString instead of plain NSString.
 
-	
-	TmlLocalizedAttributedString(label)
+```objc
+TmlLocalizedAttributedString(label)
+```
 
 Examples:
 
-    TmlLocalizedAttributedString(@"Hello World")
-	TmlLocalizedAttributedString(@"Hello [bold: World]")
-	TmlLocalizedAttributedString(@"This [bold: technology is [shadow: very cool]].")
+```objc
+TmlLocalizedAttributedString(@"Hello World")
+TmlLocalizedAttributedString(@"Hello [bold: World]")
+TmlLocalizedAttributedString(@"This [bold: technology is [shadow: very cool]].")
+```
 
 Notice that "very cool" will be bold and have a shadow. Nesting tokens inherits the parent token traits.
 
 
 The other Attributed String macros are as follow:
 
-	TmlLocalizedAttributedStringWithDescription(label, description)
+```objc
+TmlLocalizedAttributedStringWithDescription(label, description)
 
-	TmlLocalizedAttributedStringWithDescriptionAndTokens(label, description, tokens)
+TmlLocalizedAttributedStringWithDescriptionAndTokens(label, description, tokens)
 
-	TmlLocalizedAttributedStringWithDescriptionAndTokensAndOptions(label, description, tokens, options)
+TmlLocalizedAttributedStringWithDescriptionAndTokensAndOptions(label, description, tokens, options)
 
-	TmlLocalizedAttributedStringWithTokens(label, tokens)
-	
-	TmlLocalizedAttributedStringWithTokensAndOptions(label, tokens, options)
+TmlLocalizedAttributedStringWithTokens(label, tokens)
 
-	TmlLocalizedAttributedStringWithOptions(label, options)
+TmlLocalizedAttributedStringWithTokensAndOptions(label, tokens, options)
 
+TmlLocalizedAttributedStringWithOptions(label, options)
+```
 
 The previous example that used HTML as decoration can now be rewritten using the following method:
 
-	TmlLocalizedAttributedStringWithTokens(
-        @"You have completed [bold: {count || mile}] on your last run.", 
-        @{@"count": @4.2}
-    )
-
+```objc
+TmlLocalizedAttributedStringWithTokens(
+    @"You have completed [bold: {count || mile}] on your last run.",
+    @{@"count": @4.2}
+)
+```
 
 This would result in and NSAttributedString with the following value:
 
-	"You have completed **4.2 miles** on the last run."
 
+  "You have completed **4.2 miles** on the last run."
 
 
 NSAttributedString vs TmlLocalizedAttributedString
@@ -329,23 +360,24 @@ NSAttributedString vs TmlLocalizedAttributedString
 The benefits of using TML with NSAttributedString is that labels get translated in context. If you tried the above example without using TML, you would end up with code similar to the following:
 
 
-    NSDictionary *bold = @{[UIFont boldSystemFontOfSize:@12], NSFontAttributeName};
+```objc
+NSDictionary *bold = @{[UIFont boldSystemFontOfSize:@12], NSFontAttributeName};
 
-	NSMutableAttributedString *str = [[NSMutableAttributedString alloc] init];
-	[str appendString : NSLocalizedString(@"You have completed ")];
+NSMutableAttributedString *str = [[NSMutableAttributedString alloc] init];
+[str appendString : NSLocalizedString(@"You have completed ")];
 
-	if (distance_in_miles == 1)
-	   [str appendAttributedString:
-            [[NSAttributedString alloc] initWithString: NSLocalizedString(@"1 mile")]
-                        attributes: bold];
-	else
-	   [str appendAttributedString: 
-            [[NSAttributedString alloc] initWithString:
-                [NSString stringWithFormat: NSLocalizedString(@"%d miles"), distance_in_miles]]
-                        attributes: bold];
+if (distance_in_miles == 1)
+   [str appendAttributedString:
+          [[NSAttributedString alloc] initWithString: NSLocalizedString(@"1 mile")]
+                      attributes: bold];
+else
+   [str appendAttributedString:
+          [[NSAttributedString alloc] initWithString:
+              [NSString stringWithFormat: NSLocalizedString(@"%d miles"), distance_in_miles]]
+                      attributes: bold];
 
-	[str appendString: NSLocalizedString(@" on your last run.")];
-
+[str appendString: NSLocalizedString(@" on your last run.")];
+```
 
 The above code has the following issues:
 
@@ -356,11 +388,12 @@ The above code has the following issues:
 
 All of the above code can be replaced with a single line using TML:
 
-	TmlLocalizedAttributedStringWithTokens(
-        @"You have completed [bold: {count || mile}] on your last run.", 
-        @{@"count": @4.2}
-    )
-
+```objc
+TmlLocalizedAttributedStringWithTokens(
+    @"You have completed [bold: {count || mile}] on your last run.",
+    @{@"count": @4.2}
+)
+```
 
 Which is easily translated to Russian:
 
@@ -369,27 +402,32 @@ Which is easily translated to Russian:
 
 Since there are languages, like Hebrew, which depend on the gender of the viewing user, any time you refer to "You", you should always pass the viewing_user as a token.
 
-	TmlLocalizedAttributedStringWithTokens(@"You have completed [bold: {count || mile}] on your last run.", @{@"count": @4.2, @"viewing_user": currentUser})
-    
+```objc
+TmlLocalizedAttributedStringWithTokens(@"You have completed [bold: {count || mile}] on your last run.", @{@"count": @4.2, @"viewing_user": currentUser})
+```
+
 Or better yet, set it in the configuration, and then you never have to pass it as a token:
 
-	[Tml configure:^(TmlConfiguration *config) {
-        config.viewingUser = currentUser;
-    }];
-
+```objc
+[Tml configure:^(TmlConfiguration *config) {
+    config.viewingUser = currentUser;
+}];
+```
 
 
 Here is a more complicated example:
 
-	TmlLocalizedAttributedStringWithTokens(
-            @"[bold: {user}] has completed [bold: {count || mile}] on {user| his, her} last run.",
-            @{ 
-                @"user": friend,
-                @"count": @4.2,
-                @"link": @{@"color": @"blue"}
-                @"bold": @{@"font":@{@"name": @"system", @"size": @12, @"type": @"bold"}}
-            }
-    )
+```objc
+TmlLocalizedAttributedStringWithTokens(
+    @"[bold: {user}] has completed [bold: {count || mile}] on {user| his, her} last run.",
+    @{
+        @"user": friend,
+        @"count": @4.2,
+        @"link": @{@"color": @"blue"}
+        @"bold": @{@"font":@{@"name": @"system", @"size": @12, @"type": @"bold"}}
+    }
+)
+```
 
 In English, this will render as:
 
@@ -409,29 +447,25 @@ Translating UIViews
 
 Tml can automatically translate views for you with one line of code. Consider the following example:
 
+```objc
+#import "UIViewController+Tml.h"
 
-    #import "UIViewController+Tml.h"
-    
-    ...
+- (void)viewDidLoad {
+    [super viewDidLoad];
 
-    - (void)viewDidLoad {
-        [super viewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver: self
+                                             selector: @selector(localize)
+                                                 name: TmlTranslationsLoadedNotification
+                                               object: self.view.window];
 
-        [[NSNotificationCenter defaultCenter] addObserver: self
-                                                 selector: @selector(localize)
-                                                     name: TmlTranslationsLoadedNotification
-                                                   object: self.view.window];
-
-        [self localize];
-    }
+    [self localize];
+}
 
 
-    - (void) localize {
-        TmlLocalizeView(self.view);
-    }
-
-    ...
-
+- (void) localize {
+    TmlLocalizeView(self.view);
+}
+```
 
 The above code will translate your entire user interface every time a new language is selected.
 
@@ -442,11 +476,11 @@ Language Selector
 
 Tml SDK comes with a language selector that you can use in your application. To open the langugae selector from a view controller, use the following code:
 
-    #import "TmlLanguageSelectorViewController.h"
-	
-	[TmlLanguageSelectorViewController changeLanguageFromController:self];
+```objc
+#import "TmlLanguageSelectorViewController.h"
 
-
+[TmlLanguageSelectorViewController changeLanguageFromController:self];
+```
 
 In-App Translator
 ==================
@@ -454,10 +488,11 @@ In-App Translator
 
 Tml comes with an In-App translator, so users of your app can sign up and translate your app from within your app. To open the in-app translator, use the following code:
 
-    #import "TmlTranslatorViewController.h"
+```objc
+#import "TmlTranslatorViewController.h"
 
-	[TmlTranslatorViewController translateFromController:self];
-
+[TmlTranslatorViewController translateFromController:self];
+```
 
 
 Links
