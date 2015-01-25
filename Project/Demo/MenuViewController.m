@@ -30,8 +30,6 @@
 
 #import "MenuViewController.h"
 #import "Tml.h"
-#import "TmlTranslatorViewController.h"
-#import "TmlLanguageSelectorViewController.h"
 #import "UIViewController+Tml.h"
 
 @interface MenuViewController ()
@@ -135,11 +133,11 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 2) {
         if (indexPath.row == 0) {
-            [TmlLanguageSelectorViewController changeLanguageFromController:self];
+            TmlChangeLanguage(self);
         } else if (indexPath.row == 1) {
-            [TmlTranslatorViewController toggleInAppTranslationsFromController:self];
+            TmlToggleInAppTranslations(self);
         } else if (indexPath.row == 2) {
-            [TmlTranslatorViewController translateFromController:self];
+            TmlOpenTranslatorTools(self);
         }
         return;
     }

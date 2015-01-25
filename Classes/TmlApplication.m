@@ -265,6 +265,10 @@
 }
 
 - (void) registerMissingTranslationKey: (NSObject *) translationKey forSource: (TmlSource *) source {
+    TmlTranslationKey *tkey = (TmlTranslationKey *) translationKey;
+    if ([tkey.label isEqualToString:@""])
+        return;
+    
     if (self.missingTranslationKeysBySources == nil) {
         self.missingTranslationKeysBySources = [NSMutableDictionary dictionary];
     }
@@ -278,7 +282,6 @@
         [self.missingTranslationKeysBySources setObject:sourceKeys forKey:sourceKey];
     }
     
-    TmlTranslationKey *tkey = (TmlTranslationKey *) translationKey;
     if ([sourceKeys objectForKey:tkey.key] == nil) {
         [sourceKeys setObject:tkey forKey:tkey.key];
     }
@@ -296,6 +299,7 @@
     }
 
     TmlDebug(@"Submitting missing translations...");
+    
 
     NSMutableArray *params = [NSMutableArray array];
 
@@ -314,6 +318,8 @@
     
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:params options:(NSJSONWritingPrettyPrinted) error:&error];
+    
+    TmlDebug(@"%@", params);
     
     [self.apiClient post: @"sources/register_keys"
         params: @{@"source_keys": [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]}

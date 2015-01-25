@@ -40,7 +40,7 @@
 @implementation TmlViewController
 
 - (void) translate {
-    TmlBeginBlockWithOptions(@{@"source": [self tr8nSourceKey]})
+    TmlBeginBlockWithOptions(@{@"source": [self tmlSourceKey]})
     [self translateView:self.view];
     TmlEndBlockWithOptions
 }

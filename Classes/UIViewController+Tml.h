@@ -33,42 +33,62 @@
 #import <UIKit/UIView.h>
 #import "TmlLanguage.h"
 #import "TmlApplication.h"
+#import "TmlTranslatorViewController.h"
+#import "TmlLanguageSelectorViewController.h"
 
 @interface UIViewController (Tml)
 
-- (NSString *) tr8nSourceKey;
+- (NSString *) tmlSourceKey;
 
-- (TmlLanguage *) tr8nDefaultLanguage;
+- (TmlLanguage *) tmlDefaultLanguage;
 
-- (TmlLanguage *) tr8nCurrentLanguage;
+- (TmlLanguage *) tmlCurrentLanguage;
 
-- (TmlApplication *) tr8nCurrentApplication;
+- (TmlApplication *) tmlCurrentApplication;
 
-- (NSObject *) tr8nCurrentUser;
+- (NSObject *) tmlCurrentUser;
 
 - (void) setTextValue: (NSObject *) value toField: (id) field;
 
 - (void) translateView: (UIView *) view;
+
+- (void) translateView: (UIView *) view withTokens: (NSDictionary *) tokens;
 
 - (void) translateView: (UIView *) view withLabel: (NSString *) label description: (NSString *) description tokens: (NSDictionary *) tokens options: (NSDictionary *) options;
 
 @end
 
 #define TmlLocalizeView(view) \
-[self translateView: view]
+    [self translateView: view]
+
+#define TmlLocalizeViewWithTokens(view, tokens) \
+    [self translateView: view withTokens: tokens]
 
 #define TmlLocalizeViewWithLabel(view, label) \
-[self translateView: view withLabel: label description: nil tokens: @{} options: @{}]
+    [self translateView: view withLabel: label description: nil tokens: @{} options: @{}]
 
 #define TmlLocalizeViewWithLabelAndTokens(view, label, the_tokens) \
-[self translateView: view withLabel: label description: nil tokens: the_tokens options: @{}]
+    [self translateView: view withLabel: label description: nil tokens: the_tokens options: @{}]
 
 #define TmlLocalizeViewWithLabelAndDescription(view, label, desc) \
-[self translateView: view withLabel: label description: desc tokens: @{} options: @{}]
+    [self translateView: view withLabel: label description: desc tokens: @{} options: @{}]
 
 #define TmlLocalizeViewWithLabelAndDescriptionAndTokens(view, label, description, tokens) \
-[self translateView: view withLabel: label description: description tokens: tokens options: @{}]
+    [self translateView: view withLabel: label description: description tokens: tokens options: @{}]
 
 #define TmlLocalizeViewWithLabelAndDescriptionAndTokensAndOptions(view, label, description, tokens, options) \
-[self translateView: view withLabel: label description: description tokens: tokens options: options]
+    [self translateView: view withLabel: label description: description tokens: tokens options: options]
+
+/************************************************************************************
+ UX macros
+ ************************************************************************************/
+
+#define TmlChangeLanguage(controller) \
+    [TmlLanguageSelectorViewController changeLanguageFromController:controller]
+
+#define TmlToggleInAppTranslations(controller) \
+    [TmlTranslatorViewController toggleInAppTranslationsFromController:self];
+
+#define TmlOpenTranslatorTools(controller) \
+    [TmlTranslatorViewController translateFromController:controller];
 

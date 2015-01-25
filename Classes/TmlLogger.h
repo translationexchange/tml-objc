@@ -45,11 +45,11 @@ static inline void TmlLog(NSString *format, ...) {
 #define TmlError(...)
 #endif
 
-#ifdef TML_DEBUG
+//#ifdef TML_DEBUG
 #define TmlDebug(...) TmlLog(__VA_ARGS__)
-#else
-#define TmlDebug(...)
-#endif
+//#else
+//#define TmlDebug(...)
+//#endif
 
 #ifdef TML_MESSAGING_DEBUG
 #define MessagingDebug(...) TmlLog(__VA_ARGS__)

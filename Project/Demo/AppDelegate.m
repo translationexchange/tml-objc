@@ -16,10 +16,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-//    [Tml sharedInstanceWithToken:@"4b4f43e78bb4fc45813b94d62ebc97ca0cd5e5b4493edbe3b4b5779968e80b3b"];
+    [Tml sharedInstanceWithToken:@"c1b24de175b50f9d37d1259024689e9fea2c51ea28679517109925539afbed58"];
 
-    [Tml sharedInstanceWithToken:@"ca989a39e14a7d8ce17ddce533c14e1b1bb31623b7670dd14ea1a59313e59fa9"
-                   launchOptions:@{@"host": @"http://localhost:3000"}];
+//    [Tml sharedInstanceWithToken:@"ca989a39e14a7d8ce17ddce533c14e1b1bb31623b7670dd14ea1a59313e59fa9"
+//                   launchOptions:@{@"host": @"http://localhost:3000"}];
  
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
     self.window.rootViewController = [[IIViewDeckController alloc] initWithCenterViewController:[mainStoryboard instantiateViewControllerWithIdentifier: @"WelcomeViewController"]

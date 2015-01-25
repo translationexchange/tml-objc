@@ -37,7 +37,7 @@
 - (void) testLocalization {
     
     NSString *result = TmlLocalizedDateWithFormat([NSDate date], @"MM/dd/yyyy at h:m");
-    TmlDebug(@"Translated string: %@", result);
+    NSLog(@"Translated string: %@", result);
     
 }
 

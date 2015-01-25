@@ -41,49 +41,49 @@
 
 @implementation WelcomeViewController
 
-- (void) localize {
-//   self.welcomeLabel.text = NSLocalizedString(@"Welcome To Tml Demo", @"Welcome message");
-    
-//    TmlLocalizeViewWithLabelAndDescription(self.welcomeLabel, @"Welcome To Tml Demo", @"Welcome message");
-  
-    TmlLocalizeView(self.view);
-    
-//    self.welcomeLabel.text = TmlLocalizedString(@"Welcome");
-    
-
-    //    TmlBeginSource(@"Welcome Screen");
-//
-////    NSDictionary *user = @{@"name": @"Michael", @"gender": @"male"};
-////    {user:gender::possesive || male: himself, female: herself}
-////    {birthday:date || past: liked, present: likes, future: will like}
-////    self.welcomeLabel.attributedText = TmlLocalizedAttributedStringWithTokens(@"{user} uploaded {count || photo} of {user | himself, herself} to {user | his, her} photo album", (@{@"count": @5, @"user": @{@"object": user, @"attribute": @"name"}, @"bold": @{@"font": @{@"family": @"Arial", @"size": @20}, @"color": @"green"}})); //, (@{@"user": @"Michael", @"another": @"test"}));
+//- (void) localize {
+////   self.welcomeLabel.text = NSLocalizedString(@"Welcome To Tml Demo", @"Welcome message");
 //    
-////    [self setTextValue: TmlLocalizedStringWithDescription(@"Welcome", @"Welcome title") toField:self.titleLabel];
-////    [self setTextValue: TmlLocalizedAttributedStringWithTokens(@"You have [bold: {count || message}]", (@{@"count": @1, @"bold": @{
-////                                                                     @"color": @"green",
-////                                                                     @"font": @{@"name": @"ChalkboardSE", @"size": @18}
-////                                                                 }}))
-////               toField:self.welcomeLabel];
-//    
-////    TmlLocalizeViewWithLabel(self.titleLabel, @"Welcome");
-////    TmlLocalizeViewWithLabelAndTokens(self.welcomeLabel, @"Welcome to [bold: Tml Demo]",
-////                                        (@{@"bold": @{
-////                                                   @"underline": @"double",
-////                                                   @"font": @{@"name": @"ChalkboardSE", @"size": @42}
-////                                            }
-////                                        }));
-////    TmlLocalizeView(self.welcomeText);
-//    
-////    
-////    [self setTextValue: TmlLocalizedString(@"Welcome") toField:self.titleLabel];
-////    [self setTextValue: TmlLocalizedString(@"Welcome to Tml Demo") toField:self.self.welcomeLabel];
-////    [self setTextValue: TmlLocalizedString(@"This application demonstrates Tml's capabilities. Use the menu on the left to choose a sample.")
-////               toField:self.welcomeText];
-//    
+////    TmlLocalizeViewWithLabelAndDescription(self.welcomeLabel, @"Welcome To Tml Demo", @"Welcome message");
+//  
 //    TmlLocalizeView(self.view);
 //    
-//    TmlEndSource
-}
+////    self.welcomeLabel.text = TmlLocalizedString(@"Welcome");
+//    
+//
+//    //    TmlBeginSource(@"Welcome Screen");
+////
+//////    NSDictionary *user = @{@"name": @"Michael", @"gender": @"male"};
+//////    {user:gender::possesive || male: himself, female: herself}
+//////    {birthday:date || past: liked, present: likes, future: will like}
+//////    self.welcomeLabel.attributedText = TmlLocalizedAttributedStringWithTokens(@"{user} uploaded {count || photo} of {user | himself, herself} to {user | his, her} photo album", (@{@"count": @5, @"user": @{@"object": user, @"attribute": @"name"}, @"bold": @{@"font": @{@"family": @"Arial", @"size": @20}, @"color": @"green"}})); //, (@{@"user": @"Michael", @"another": @"test"}));
+////    
+//////    [self setTextValue: TmlLocalizedStringWithDescription(@"Welcome", @"Welcome title") toField:self.titleLabel];
+//////    [self setTextValue: TmlLocalizedAttributedStringWithTokens(@"You have [bold: {count || message}]", (@{@"count": @1, @"bold": @{
+//////                                                                     @"color": @"green",
+//////                                                                     @"font": @{@"name": @"ChalkboardSE", @"size": @18}
+//////                                                                 }}))
+//////               toField:self.welcomeLabel];
+////    
+//////    TmlLocalizeViewWithLabel(self.titleLabel, @"Welcome");
+//////    TmlLocalizeViewWithLabelAndTokens(self.welcomeLabel, @"Welcome to [bold: Tml Demo]",
+//////                                        (@{@"bold": @{
+//////                                                   @"underline": @"double",
+//////                                                   @"font": @{@"name": @"ChalkboardSE", @"size": @42}
+//////                                            }
+//////                                        }));
+//////    TmlLocalizeView(self.welcomeText);
+////    
+//////    
+//////    [self setTextValue: TmlLocalizedString(@"Welcome") toField:self.titleLabel];
+//////    [self setTextValue: TmlLocalizedString(@"Welcome to Tml Demo") toField:self.self.welcomeLabel];
+//////    [self setTextValue: TmlLocalizedString(@"This application demonstrates Tml's capabilities. Use the menu on the left to choose a sample.")
+//////               toField:self.welcomeText];
+////    
+////    TmlLocalizeView(self.view);
+////    
+////    TmlEndSource
+//}
 
 
 @end
