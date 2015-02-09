@@ -16,11 +16,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    [Tml sharedInstanceWithToken:@"c1b24de175b50f9d37d1259024689e9fea2c51ea28679517109925539afbed58"];
+    [Tml sharedInstanceWithToken:@"8641229aae46c7d39e78657e9da0c86c80f432c21e4e4fb5bf0934673499be7a"];
 
-//    [Tml sharedInstanceWithToken:@"ca989a39e14a7d8ce17ddce533c14e1b1bb31623b7670dd14ea1a59313e59fa9"
-//                   launchOptions:@{@"host": @"http://localhost:3000"}];
- 
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
     self.window.rootViewController = [[IIViewDeckController alloc] initWithCenterViewController:[mainStoryboard instantiateViewControllerWithIdentifier: @"WelcomeViewController"]
                                                                              leftViewController:[mainStoryboard instantiateViewControllerWithIdentifier: @"MenuViewController"]];

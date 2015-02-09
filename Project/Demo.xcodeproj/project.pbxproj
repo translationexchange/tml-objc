@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		23EBD41BB7AB4911A4BF6EA2 /* libPods-DemoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 568004C1C8454EA8AD9E4612 /* libPods-DemoTests.a */; };
 		4C183DDC1A0C71CC005B942B /* TmlPostOffice.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C183DDB1A0C71CC005B942B /* TmlPostOffice.m */; };
+		4C26E3F61A7B41B500D72574 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C26E3F51A7B41B500D72574 /* logo.png */; };
 		4C36258419EF4E5700356B51 /* StaticTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C36258319EF4E5700356B51 /* StaticTableViewController.m */; };
 		4C36258719EF590400356B51 /* StaticViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C36258619EF590400356B51 /* StaticViewController.m */; };
 		4C36258B19F0509D00356B51 /* CHANGELOG.md in Sources */ = {isa = PBXBuildFile; fileRef = 4C36258A19F0509D00356B51 /* CHANGELOG.md */; };
@@ -124,7 +125,6 @@
 		4CCBA13118B9B69A00CFCB3A /* TMLConsoleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA12A18B9B69A00CFCB3A /* TMLConsoleViewController.m */; };
 		4CCBA13218B9B69A00CFCB3A /* TMLTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA12C18B9B69A00CFCB3A /* TMLTableViewCell.m */; };
 		4CCBA13318B9B69A00CFCB3A /* TranslationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA12E18B9B69A00CFCB3A /* TranslationViewController.m */; };
-		4CE06A0218BD36AE0088AB3E /* tr8n_logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CE06A0118BD36AE0088AB3E /* tr8n_logo.png */; };
 		4CE06A0518BD37A40088AB3E /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE06A0418BD37A40088AB3E /* WelcomeViewController.m */; };
 		4CE06A0818BD3D2E0088AB3E /* DecorationTokensDemoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE06A0718BD3D2E0088AB3E /* DecorationTokensDemoViewController.m */; };
 		4CE06A1318BD42D30088AB3E /* TMLSampleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CE06A1218BD42D30088AB3E /* TMLSampleTableViewCell.m */; };
@@ -155,6 +155,7 @@
 		3EC5E4639492FBCE50FA374A /* Pods-DemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DemoTests/Pods-DemoTests.release.xcconfig"; sourceTree = "<group>"; };
 		4C183DDA1A0C71CC005B942B /* TmlPostOffice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlPostOffice.h; sourceTree = "<group>"; };
 		4C183DDB1A0C71CC005B942B /* TmlPostOffice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlPostOffice.m; sourceTree = "<group>"; };
+		4C26E3F51A7B41B500D72574 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		4C36258219EF4E5700356B51 /* StaticTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticTableViewController.h; sourceTree = "<group>"; };
 		4C36258319EF4E5700356B51 /* StaticTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaticTableViewController.m; sourceTree = "<group>"; };
 		4C36258519EF590400356B51 /* StaticViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticViewController.h; sourceTree = "<group>"; };
@@ -285,7 +286,6 @@
 		4CCBA12D18B9B69A00CFCB3A /* TranslationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranslationViewController.h; sourceTree = "<group>"; };
 		4CCBA12E18B9B69A00CFCB3A /* TranslationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranslationViewController.m; sourceTree = "<group>"; };
 		4CDE2B971A675B9600A3B959 /* TmlLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TmlLogger.h; sourceTree = "<group>"; };
-		4CE06A0118BD36AE0088AB3E /* tr8n_logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tr8n_logo.png; sourceTree = "<group>"; };
 		4CE06A0318BD37A40088AB3E /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
 		4CE06A0418BD37A40088AB3E /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
 		4CE06A0618BD3D2E0088AB3E /* DecorationTokensDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DecorationTokensDemoViewController.h; sourceTree = "<group>"; };
@@ -464,8 +464,8 @@
 		4C7A871218BD354100C2375D /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				4C26E3F51A7B41B500D72574 /* logo.png */,
 				4CCA001D1922D12E00CE4D95 /* arrow_down.png */,
-				4CE06A0118BD36AE0088AB3E /* tr8n_logo.png */,
 				4C4233FA18B9B38700B76555 /* Main.storyboard */,
 				4C42340018B9B38700B76555 /* Images.xcassets */,
 				4C7A871018BD353C00C2375D /* more.png */,
@@ -871,9 +871,9 @@
 				4CCA001E1922D12E00CE4D95 /* arrow_down.png in Resources */,
 				4CC2EAE618BA7B0800F359F8 /* Icon-Small@2x.png in Resources */,
 				4C4233F318B9B38700B76555 /* InfoPlist.strings in Resources */,
-				4CE06A0218BD36AE0088AB3E /* tr8n_logo.png in Resources */,
 				4C7A863418BD1C0800C2375D /* Podfile in Resources */,
 				4C7A871118BD353C00C2375D /* more.png in Resources */,
+				4C26E3F61A7B41B500D72574 /* logo.png in Resources */,
 				4CFA531519284666006E1B43 /* README.md in Resources */,
 				4C4233FC18B9B38700B76555 /* Main.storyboard in Resources */,
 				4CFA531419284666006E1B43 /* Rakefile in Resources */,

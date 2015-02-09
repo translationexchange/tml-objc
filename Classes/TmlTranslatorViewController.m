@@ -58,9 +58,9 @@
     [Tml configuration].inContextTranslatorEnabled = ![Tml configuration].inContextTranslatorEnabled;
     
     if ([Tml configuration].inContextTranslatorEnabled)
-        hud.labelText = TmlLocalizedString(@"In-app translator enabled");
+        hud.labelText = @"In-app translator enabled";
     else
-        hud.labelText = TmlLocalizedString(@"In-app translator disabled");
+        hud.labelText = @"In-app translator disabled";
     
     [[NSNotificationCenter defaultCenter] postNotificationName: TmlLanguageChangedNotification object: [Tml configuration].currentLocale];
     
@@ -68,8 +68,8 @@
         [hud hide:YES];
         if ([Tml configuration].inContextTranslatorEnabled) {
             [[[UIAlertView alloc] initWithTitle: nil
-                                        message: TmlLocalizedString(@"Tap and hold on any label in the UI to bring up the translation tools.") delegate:nil
-                              cancelButtonTitle: TmlLocalizedString(@"Ok") otherButtonTitles:nil] show];
+                                        message: @"Tap and hold on any label in the UI to bring up the translation tools." delegate:nil
+                              cancelButtonTitle: @"Ok" otherButtonTitles:nil] show];
         }
     });
 }
