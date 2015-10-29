@@ -40,7 +40,7 @@
 
 @implementation TmlApplication
 
-@synthesize host, key, accessToken, secret, name, description, defaultLocale, threshold, features, tools;
+@synthesize host, key, accessToken, secret, name, defaultLocale, threshold, features, tools;
 @synthesize translationKeys, translations, languagesByLocales, sourcesByKeys, missingTranslationKeysBySources, scheduler;
 @synthesize apiClient, postOffice;
 
@@ -67,7 +67,6 @@
 - (void) updateAttributes: (NSDictionary *) attributes {
     self.key = [attributes objectForKey:@"key"];
     self.name = [attributes objectForKey:@"name"];
-    self.description = [attributes objectForKey:@"description"];
     self.defaultLocale = [attributes objectForKey:@"default_locale"];
     self.threshold = [attributes objectForKey:@"threshold"];
     self.features = [attributes objectForKey:@"features"];

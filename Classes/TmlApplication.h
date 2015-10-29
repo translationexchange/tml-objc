@@ -62,9 +62,6 @@
 // Application name
 @property(nonatomic, strong) NSString *name;
 
-// Application description
-@property(nonatomic, strong) NSString *description;
-
 // Application default locale
 @property(nonatomic, strong) NSString *defaultLocale;
 
