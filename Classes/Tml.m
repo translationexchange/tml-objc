@@ -29,14 +29,15 @@
  */
 
 
+#import "NSString+TmlAdditions.h"
 #import "Tml.h"
-#import <CommonCrypto/CommonDigest.h>
-#import "TmlTranslationKey.h"
-#import "TmlTranslation.h"
 #import "TmlCache.h"
-#import "TmlLanguageCase.h"
 #import "TmlDataToken.h"
+#import "TmlLanguageCase.h"
 #import "TmlReachability.h"
+#import "TmlTranslation.h"
+#import "TmlTranslationKey.h"
+#import <CommonCrypto/CommonDigest.h>
 
 #define kTmlServiceHost @"https://api.translationexchange.com"
 
@@ -74,7 +75,7 @@ static Tml *sharedInstance = nil;
 /************************************************************************************
  ** Initialization
  ************************************************************************************/
-
+#pragma mark - Initialization
 - (void) updateWithToken: (NSString *) token launchOptions: (NSDictionary *) launchOptions {
     self.cache = [[TmlCache alloc] initWithKey: token];
     
@@ -89,6 +90,8 @@ static Tml *sharedInstance = nil;
     TmlConfiguration *config = self.configuration;
     self.defaultLanguage = [app languageForLocale: config.defaultLocale];
     self.currentLanguage = [app languageForLocale: config.currentLocale];
+    
+    [self loadLocalLocalizationBundle];
     
     [app loadTranslationsForLocale:self.currentLanguage.locale withOptions:@{} success:^{
         TmlDebug(@"Loaded translations for current locale!");
@@ -117,6 +120,55 @@ static Tml *sharedInstance = nil;
     };
     self.reachability = reachability;
     [reachability startNotifier];
+}
+
+- (NSArray *) findLocalTranslationBundles {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error = nil;
+    NSArray *contents = [fileManager contentsOfDirectoryAtPath:[[NSBundle mainBundle] bundlePath] error:&error];
+    if (error != nil) {
+        TmlError(@"Error listing main bundle files: %@", error);
+        return nil;
+    }
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self matches '^tml_[0-9]+\\.zip'"];
+    NSArray *bundles = [contents filteredArrayUsingPredicate:predicate];
+    return bundles;
+}
+
+- (NSString *) latestLocalTranslationBundlePath {
+    NSArray *localBundleZipFiles = [self findLocalTranslationBundles];
+    if (localBundleZipFiles.count == 0) {
+        TmlDebug(@"No local localization bundles found");
+        return nil;
+    }
+    
+    localBundleZipFiles = [localBundleZipFiles sortedArrayUsingComparator:^NSComparisonResult(NSString *a, NSString *b) {
+        NSString *aVersion = [a tmlTranslationBundleVersionFromPath];
+        NSString *bVersion = [b tmlTranslationBundleVersionFromPath];
+        NSInteger aInt = [aVersion integerValue];
+        NSInteger bInt = [bVersion integerValue];
+        if (aInt > bInt) {
+            return NSOrderedAscending;
+        }
+        else if (aInt < bInt) {
+            return NSOrderedDescending;
+        }
+        return NSOrderedSame;
+    }];
+    NSString *latest = [localBundleZipFiles lastObject];
+    latest = [[NSBundle mainBundle] pathForResource:[latest stringByDeletingPathExtension] ofType:[latest pathExtension]];
+    return latest;
+}
+
+- (void) loadLocalLocalizationBundle {
+    NSString *latestLocalBundlePath = [self latestLocalTranslationBundlePath];
+    NSString *latestLocalBundleVersion = [latestLocalBundlePath tmlTranslationBundleVersionFromPath];
+    NSString *currentBundleVersion = [self.cache currentTranslationBundleVersion];
+    if (latestLocalBundlePath != nil
+        && [latestLocalBundleVersion isEqualToString:currentBundleVersion] == NO) {
+        [self.cache loadContentsOfTranslationBundleAtPath:latestLocalBundlePath];
+    }
 }
 
 + (NSString *) translate:(NSString *) label withDescription:(NSString *) description andTokens: (NSDictionary *) tokens andOptions: (NSDictionary *) options {

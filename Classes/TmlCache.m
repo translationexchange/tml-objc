@@ -28,8 +28,10 @@
  *  THE SOFTWARE.
  */
 
+#import "NSString+TmlAdditions.h"
 #import "TmlCache.h"
 #import "TmlLogger.h"
+#import <SSZipArchive/SSZipArchive.h>
 
 @interface TmlCache()
 @property(strong, nonatomic) NSString *appKey;
@@ -195,5 +197,64 @@
     return languages;
 }
 
+#pragma mark - Translation Bundles
+- (NSArray *)cachedTranslationBundlePaths {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error = nil;
+    NSArray *contents = [fileManager contentsOfDirectoryAtPath:self.path error:&error];
+    if (error != nil) {
+        TmlError(@"Error getting contents of cache directory: %@", error);
+        return nil;
+    }
+    NSArray *filteredPaths = [contents filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"^[0-9]+$"]];
+    NSMutableArray *bundlePaths = [NSMutableArray array];
+    BOOL isDir = NO;
+    for (NSString *candidatePath in filteredPaths) {
+        if ([fileManager fileExistsAtPath:candidatePath isDirectory:&isDir] && isDir == YES) {
+            [bundlePaths addObject:candidatePath];
+        }
+    }
+    return [NSArray arrayWithArray:bundlePaths];
+}
+
+- (NSString *)currentTranslationBundleVersion {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *currentBundleLinkPath = [NSString stringWithFormat:@"%@/current", self.path];
+    if ([fileManager fileExistsAtPath:currentBundleLinkPath isDirectory:nil] == NO) {
+        return nil;
+    }
+    NSString *bundlePath = [currentBundleLinkPath stringByResolvingSymlinksInPath];
+    NSString *version = [bundlePath tmlTranslationBundleVersionFromPath];
+    return version;
+}
+
+- (NSString *)cachePathForTranslationBundleVersion:(NSString *)bundleVersion {
+    return [NSString stringWithFormat:@"%@/%@", self.path, bundleVersion];
+}
+
+- (void)loadContentsOfTranslationBundleAtPath:(NSString *)aPath {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:aPath isDirectory:nil] == NO) {
+        TmlError(@"Tried to load contents of localization bundle but none could be found at path: %@", path);
+        return;
+    }
+    NSString *bundleVersion = [[aPath lastPathComponent] tmlTranslationBundleVersionFromPath];
+    NSString *tempPath = [NSString stringWithFormat:@"%@/%@", NSTemporaryDirectory(), bundleVersion];
+    [self validatePath:tempPath];
+    [SSZipArchive unzipFileAtPath:aPath toDestination:tempPath overwrite:YES password:nil progressHandler:nil completionHandler:^(NSString *zipPath, BOOL succeeded, NSError *error) {
+        if (error != nil) {
+            TmlError(@"Error uncompressing local translation bundle: %@", error);
+        }
+        else {
+            NSError *moveError = nil;
+            [fileManager moveItemAtPath:tempPath
+                                 toPath:[self cachePathForTranslationBundleVersion:bundleVersion]
+                                  error:&moveError];
+            if (moveError != nil) {
+                TmlError(@"Error installing uncompressed translation bundle: %@", moveError);
+            }
+        }
+    }];
+}
 
 @end

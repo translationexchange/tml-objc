@@ -53,4 +53,11 @@
 
 - (NSArray *) cachedLocales;
 
+#pragma mark - Translation Bundles
+- (NSArray *) cachedTranslationBundlePaths;
+
+- (NSString *) currentTranslationBundleVersion;
+
+- (void) loadContentsOfTranslationBundleAtPath:(NSString *)path;
+
 @end

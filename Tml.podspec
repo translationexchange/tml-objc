@@ -52,4 +52,5 @@ DESC
 
   s.dependency 'MPColorTools', '~> 1.6'
   s.dependency 'MBProgressHUD', '~> 0.9'
+  s.dependency 'SSZipArchive'
 end

@@ -138,6 +138,7 @@
 		4CFA531619284666006E1B43 /* Tml.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 4CFA531219284666006E1B43 /* Tml.podspec */; };
 		4CFA53191928483D006E1B43 /* TmlApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCA002C1925292300CE4D95 /* TmlApiClient.m */; };
 		7763CE239D6940AF971EA5E9 /* libPods-Demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2305CA3DC53F409AB1C35AE2 /* libPods-Demo.a */; };
+		C42BDBAE1BE2C984005D5F10 /* NSString+TmlAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C42BDBAD1BE2C984005D5F10 /* NSString+TmlAdditions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -308,6 +309,8 @@
 		84922E9709A1E82DE15D4D88 /* Pods-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		A6A3AC3DD938835FB92F9194 /* Pods-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		BD38CEACE6D239B51CE90063 /* Pods-DemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DemoTests/Pods-DemoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C42BDBAC1BE2C984005D5F10 /* NSString+TmlAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+TmlAdditions.h"; sourceTree = "<group>"; };
+		C42BDBAD1BE2C984005D5F10 /* NSString+TmlAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+TmlAdditions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -456,6 +459,8 @@
 				4CE06A0D18BD3F040088AB3E /* Tokenizers */,
 				4CE06A0B18BD3EDC0088AB3E /* Rules Engine */,
 				4CE06A0918BD3EC00088AB3E /* UI */,
+				C42BDBAC1BE2C984005D5F10 /* NSString+TmlAdditions.h */,
+				C42BDBAD1BE2C984005D5F10 /* NSString+TmlAdditions.m */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -1013,6 +1018,7 @@
 				4CE06A2018BD882F0088AB3E /* User.m in Sources */,
 				4CCBA12F18B9B69A00CFCB3A /* MenuViewController.m in Sources */,
 				4CE06A1618BD823B0088AB3E /* DataTokensDemoViewController.m in Sources */,
+				C42BDBAE1BE2C984005D5F10 /* NSString+TmlAdditions.m in Sources */,
 				4C36258419EF4E5700356B51 /* StaticTableViewController.m in Sources */,
 				4C7A86E518BD1F9500C2375D /* TmlTranslation.m in Sources */,
 				4CCA002D1925292300CE4D95 /* TmlApiClient.m in Sources */,

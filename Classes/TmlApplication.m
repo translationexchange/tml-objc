@@ -28,15 +28,15 @@
  *  THE SOFTWARE.
  */
 
-#import "TmlApplication.h"
-#import "TmlCache.h"
-#import "TmlLanguage.h"
-#import "TmlSource.h"
-#import "TmlTranslation.h"
 #import "Tml.h"
 #import "TmlApiClient.h"
-#import "TmlPostOffice.h"
+#import "TmlApplication.h"
+#import "TmlCache.h"
 #import "TmlConfiguration.h"
+#import "TmlLanguage.h"
+#import "TmlPostOffice.h"
+#import "TmlSource.h"
+#import "TmlTranslation.h"
 
 @implementation TmlApplication
 
@@ -231,8 +231,9 @@
 }
 
 - (TmlLanguage *) languageForLocale: (NSString *) locale {
-    if ([self.languagesByLocales objectForKey:locale]) {
-        return [self.languagesByLocales objectForKey:locale];
+    TmlLanguage *lang = (self.languagesByLocales == nil) ? nil : self.languagesByLocales[locale];
+    if (lang != nil) {
+        return lang;
     }
     
     TmlLanguage *language = [[TmlLanguage alloc] initWithAttributes:@{@"locale": locale, @"application": self}];
