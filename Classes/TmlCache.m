@@ -135,7 +135,7 @@
     
     [fileManager moveItemAtPath:source toPath:target error:&error];
     if (error) {
-        TmlError(@"Failed to move file to path %@", target);
+        TmlError(@"Failed to move file to path %@. Error: %@", target, error);
         return false;
     }
     
