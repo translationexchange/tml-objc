@@ -31,6 +31,11 @@
 #import "TmlCache.h"
 #import "TmlLogger.h"
 
+@interface TmlCache()
+@property(strong, nonatomic) NSString *appKey;
+@property(strong, nonatomic) NSString *path;
+@end
+
 @implementation TmlCache
 
 @synthesize appKey, path;

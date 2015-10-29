@@ -32,9 +32,9 @@
 
 @interface TmlCache : NSObject
 
-@property(nonatomic, strong) NSString *appKey;
+@property(readonly, nonatomic) NSString *appKey;
 
-@property(nonatomic, strong) NSString *path;
+@property(readonly, nonatomic) NSString *path;
 
 // Initializes Cache with api key
 - (id) initWithKey: (NSString *) key;
