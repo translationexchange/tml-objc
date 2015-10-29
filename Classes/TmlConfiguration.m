@@ -118,6 +118,10 @@
     return self;
 }
 
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@ (currentLocale: %@; defaultLocalte: %@)", [super description], self.currentLocale, self.defaultLocale];
+}
+
 - (NSString *) deviceLocale {
     NSLocale *locale = [NSLocale currentLocale];
     NSString *deviceLocale = [locale localeIdentifier];

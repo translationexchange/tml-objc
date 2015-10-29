@@ -232,7 +232,7 @@
 }
 
 - (NSString *) description {
-    return [NSString stringWithFormat:@"%@ (%@)", self.englishName, self.locale];
+    return [NSString stringWithFormat:@"%@ name: %@ [%@]", [super description], self.englishName, self.locale];
 }
 
 @end
