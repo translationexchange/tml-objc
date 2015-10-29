@@ -29,9 +29,7 @@
  */
 
 #import "TmlBase.h"
-#import <objc/runtime.h>
 #import "Tml.h"
-#import "TmlTranslation.h"
 
 @implementation TmlBase
 
