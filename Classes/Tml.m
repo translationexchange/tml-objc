@@ -83,31 +83,40 @@ static Tml *sharedInstance = nil;
     
     [self initReachabilityForHost: host];
     
-    self.currentApplication = [[TmlApplication alloc] initWithToken: token host:host];
-    self.defaultLanguage = [self.currentApplication languageForLocale: self.configuration.defaultLocale];
-    self.currentLanguage = [self.currentApplication languageForLocale: self.configuration.currentLocale];
+    TmlApplication *app = [[TmlApplication alloc] initWithToken: token host:host];
+    self.currentApplication = app;
     
-    [self.currentApplication loadTranslationsForLocale:self.currentLanguage.locale withOptions:@{} success:^{
+    TmlConfiguration *config = self.configuration;
+    self.defaultLanguage = [app languageForLocale: config.defaultLocale];
+    self.currentLanguage = [app languageForLocale: config.currentLocale];
+    
+    [app loadTranslationsForLocale:self.currentLanguage.locale withOptions:@{} success:^{
         TmlDebug(@"Loaded translations for current locale!");
     } failure:^(NSError *error) {
         TmlDebug(@"Failed to load translations!");
     }];
     
-    [self.currentApplication log];
+    [app log];
 }
 
 - (void) initReachabilityForHost: (NSString *) host {
     TmlDebug(@"Initializing reachability for %@", host);
-    self.reachability = [TmlReachability reachabilityForInternetConnection];
-    self.reachability.reachableBlock = ^(TmlReachability*reach) {
+    TmlReachability *reachability = self.reachability;
+    if (reachability != nil) {
+        [reachability stopNotifier];
+    }
+    
+    reachability = [TmlReachability reachabilityForInternetConnection];
+    reachability.reachableBlock = ^(TmlReachability*reach) {
         TmlDebug(@"Tml connection is available");
         [[NSNotificationCenter defaultCenter] postNotificationName: TmlIsReachableNotification object: nil];
     };
-    self.reachability.unreachableBlock = ^(TmlReachability*reach) {
+    reachability.unreachableBlock = ^(TmlReachability*reach) {
         TmlDebug(@"Tml connection is not available");
         [[NSNotificationCenter defaultCenter] postNotificationName: TmlIsUnreachableNotification object: nil];
     };
-    [self.reachability startNotifier];
+    self.reachability = reachability;
+    [reachability startNotifier];
 }
 
 + (NSString *) translate:(NSString *) label withDescription:(NSString *) description andTokens: (NSDictionary *) tokens andOptions: (NSDictionary *) options {
