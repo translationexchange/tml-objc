@@ -21,9 +21,10 @@
         return nil;
     }
     
-    NSString *version = [regex stringByReplacingMatchesInString:self
+    NSString *lastComponent = [self lastPathComponent];
+    NSString *version = [regex stringByReplacingMatchesInString:lastComponent
                                                         options:NSMatchingReportCompletion
-                                                          range:NSMakeRange(0, self.length)
+                                                          range:NSMakeRange(0, lastComponent.length)
                                                    withTemplate:@"$1"];
     return version;
 }
