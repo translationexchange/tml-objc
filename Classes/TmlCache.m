@@ -198,6 +198,10 @@
 }
 
 #pragma mark - Translation Bundles
+- (NSString *)cachedBundleVersionInfoPath {
+    return [NSString stringWithFormat:@"%@/version.json", self.path];
+}
+
 - (NSArray *)cachedTranslationBundlePaths {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error = nil;
@@ -313,6 +317,7 @@
         return;
     }
     
+    // create symlink to versioned path
     NSError *error = nil;
     NSString *currentBundlePath = [self cachePathForCurrentTranslationBundle];
     [fileManager removeItemAtPath:currentBundlePath error:nil];
@@ -320,6 +325,19 @@
                           withDestinationPath:[versionedPath lastPathComponent]
                                         error:&error] == NO) {
         TmlError(@"Error linking cached translation bundle as current: %@", error);
+        return;
+    }
+    
+    // Create/update version.json
+    NSDictionary *info = @{@"version": version};
+    NSData *data = [NSJSONSerialization dataWithJSONObject:info options:0 error:&error];
+    if (data == nil) {
+        TmlError(@"Error writing version info: %@", error);
+        return;
+    }
+    NSString *versionInfoPath = [self cachedBundleVersionInfoPath];
+    if ([data writeToFile:versionInfoPath options:NSDataWritingAtomic error:&error] == NO) {
+        TmlError(@"Error saving version info: %@", error);
     }
 }
 
