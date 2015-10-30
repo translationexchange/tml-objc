@@ -58,6 +58,10 @@
 
 - (NSString *) currentTranslationBundleVersion;
 
+- (NSString *)cachePathForTranslationBundleVersion:(NSString *)bundleVersion;
+
+- (NSString *)cachePathForCurrentTranslationBundle;
+
 - (void) loadContentsOfTranslationBundleAtPath:(NSString *)path;
 
 @end
