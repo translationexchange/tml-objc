@@ -201,17 +201,19 @@
 - (NSArray *)cachedTranslationBundlePaths {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error = nil;
-    NSArray *contents = [fileManager contentsOfDirectoryAtPath:self.path error:&error];
+    NSString *rootPath = self.path;
+    NSArray *contents = [fileManager contentsOfDirectoryAtPath:rootPath error:&error];
     if (error != nil) {
         TmlError(@"Error getting contents of cache directory: %@", error);
         return nil;
     }
-    NSArray *filteredPaths = [contents filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"^[0-9]+$"]];
+    NSArray *filteredPaths = [contents filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self matches '^[0-9]+$'"]];
     NSMutableArray *bundlePaths = [NSMutableArray array];
     BOOL isDir = NO;
     for (NSString *candidatePath in filteredPaths) {
-        if ([fileManager fileExistsAtPath:candidatePath isDirectory:&isDir] && isDir == YES) {
-            [bundlePaths addObject:candidatePath];
+        NSString *absolutePath = [NSString stringWithFormat:@"%@/%@", rootPath, candidatePath];
+        if ([fileManager fileExistsAtPath:absolutePath isDirectory:&isDir] && isDir == YES) {
+            [bundlePaths addObject:absolutePath];
         }
     }
     return [NSArray arrayWithArray:bundlePaths];
@@ -219,7 +221,7 @@
 
 - (NSString *)currentTranslationBundleVersion {
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *currentBundleLinkPath = [NSString stringWithFormat:@"%@/current", self.path];
+    NSString *currentBundleLinkPath = [self cachePathForCurrentTranslationBundle];
     if ([fileManager fileExistsAtPath:currentBundleLinkPath isDirectory:nil] == NO) {
         return nil;
     }
@@ -230,6 +232,10 @@
 
 - (NSString *)cachePathForTranslationBundleVersion:(NSString *)bundleVersion {
     return [NSString stringWithFormat:@"%@/%@", self.path, bundleVersion];
+}
+
+- (NSString *)cachePathForCurrentTranslationBundle {
+    return [NSString stringWithFormat:@"%@/current", self.path];
 }
 
 - (void)loadContentsOfTranslationBundleAtPath:(NSString *)aPath {
@@ -247,14 +253,39 @@
         }
         else {
             NSError *moveError = nil;
-            [fileManager moveItemAtPath:tempPath
-                                 toPath:[self cachePathForTranslationBundleVersion:bundleVersion]
-                                  error:&moveError];
-            if (moveError != nil) {
-                TmlError(@"Error installing uncompressed translation bundle: %@", moveError);
+            NSString *destinationPath = [self cachePathForTranslationBundleVersion:bundleVersion];
+            if ([fileManager fileExistsAtPath:destinationPath] == YES) {
+                if ([fileManager removeItemAtPath:destinationPath error:&moveError] == NO) {
+                    TmlError(@"Error removing old cached translation bundle: %@", moveError);
+                    return;
+                }
             }
+            if ([fileManager moveItemAtPath:tempPath toPath:destinationPath error:&moveError] == NO) {
+                TmlError(@"Error installing uncompressed translation bundle: %@", moveError);
+                return;
+            }
+            [self selectCachedTranslationBundleWithVersion:bundleVersion];
         }
     }];
+}
+
+- (void)selectCachedTranslationBundleWithVersion:(NSString *)version {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *versionedPath = [self cachePathForTranslationBundleVersion:version];
+    BOOL isDir = NO;
+    if ([fileManager fileExistsAtPath:versionedPath isDirectory:&isDir] == NO || isDir == NO) {
+        TmlError(@"Cannot selecting cached bundle with version \"%@\"", version);
+        return;
+    }
+    
+    NSError *error = nil;
+    NSString *currentBundlePath = [self cachePathForCurrentTranslationBundle];
+    [fileManager removeItemAtPath:currentBundlePath error:nil];
+    if ([fileManager createSymbolicLinkAtPath:currentBundlePath
+                          withDestinationPath:[versionedPath lastPathComponent]
+                                        error:&error] == NO) {
+        TmlError(@"Error linking cached translation bundle as current: %@", error);
+    }
 }
 
 @end
