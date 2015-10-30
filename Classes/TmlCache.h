@@ -56,12 +56,19 @@
 #pragma mark - Translation Bundles
 - (NSArray *) cachedTranslationBundlePaths;
 
+- (NSString *) latestTranslationBundleVersion;
+
 - (NSString *) currentTranslationBundleVersion;
 
 - (NSString *)cachePathForTranslationBundleVersion:(NSString *)bundleVersion;
 
 - (NSString *)cachePathForCurrentTranslationBundle;
 
+- (void)installContentsOfTranslationBundleAtPath:(NSString *)aPath
+                                      completion:(void(^)(NSString *destinationPath, BOOL success, NSError *error))completion;
+
 - (void) loadContentsOfTranslationBundleAtPath:(NSString *)path;
+
+- (void)selectCachedTranslationBundleWithVersion:(NSString *)version;
 
 @end

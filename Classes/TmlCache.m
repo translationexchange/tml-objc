@@ -230,6 +230,19 @@
     return version;
 }
 
+- (NSString *)latestTranslationBundleVersion {
+    NSArray *allBundlePaths = [self cachedTranslationBundlePaths];
+    NSString *latestVersion = nil;
+    for (NSString *bundlePath in allBundlePaths) {
+        NSString *bundleVersion = [bundlePath tmlTranslationBundleVersionFromPath];
+        if (latestVersion == nil
+            || [latestVersion compareToTmlTranslationBundleVersion:bundleVersion] == NSOrderedAscending) {
+            latestVersion = bundleVersion;
+        }
+    }
+    return latestVersion;
+}
+
 - (NSString *)cachePathForTranslationBundleVersion:(NSString *)bundleVersion {
     return [NSString stringWithFormat:@"%@/%@", self.path, bundleVersion];
 }
@@ -238,7 +251,9 @@
     return [NSString stringWithFormat:@"%@/current", self.path];
 }
 
-- (void)loadContentsOfTranslationBundleAtPath:(NSString *)aPath {
+- (void)installContentsOfTranslationBundleAtPath:(NSString *)aPath
+                                      completion:(void(^)(NSString *destinationPath, BOOL success, NSError *error))completion
+{
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if ([fileManager fileExistsAtPath:aPath isDirectory:nil] == NO) {
         TmlError(@"Tried to load contents of localization bundle but none could be found at path: %@", path);
@@ -247,25 +262,45 @@
     NSString *bundleVersion = [[aPath lastPathComponent] tmlTranslationBundleVersionFromPath];
     NSString *tempPath = [NSString stringWithFormat:@"%@/%@", NSTemporaryDirectory(), bundleVersion];
     [self validatePath:tempPath];
-    [SSZipArchive unzipFileAtPath:aPath toDestination:tempPath overwrite:YES password:nil progressHandler:nil completionHandler:^(NSString *zipPath, BOOL succeeded, NSError *error) {
-        if (error != nil) {
-            TmlError(@"Error uncompressing local translation bundle: %@", error);
+    [SSZipArchive unzipFileAtPath:aPath
+                    toDestination:tempPath
+                        overwrite:YES
+                         password:nil
+                  progressHandler:nil
+                completionHandler:^(NSString *zipPath, BOOL succeeded, NSError *error) {
+                    if (error != nil) {
+                        TmlError(@"Error uncompressing local translation bundle: %@", error);
+                    }
+                    BOOL success = succeeded;
+                    NSError *installError = error;
+                    NSString *destinationPath = [self cachePathForTranslationBundleVersion:bundleVersion];
+                    if (success == YES) {
+                        if ([fileManager fileExistsAtPath:destinationPath] == YES) {
+                            if ([fileManager removeItemAtPath:destinationPath error:&installError] == NO) {
+                                TmlError(@"Error removing old cached translation bundle: %@", installError);
+                                success = NO;
+                            }
+                        }
+                    }
+                    if (success == YES
+                        && [fileManager moveItemAtPath:tempPath toPath:destinationPath error:&installError] == NO) {
+                        TmlError(@"Error installing uncompressed translation bundle: %@", installError);
+                        success = NO;
+                    }
+                    if (completion != nil) {
+                        completion(destinationPath, success, error);
+                    }
+                }];
+}
+
+- (void)loadContentsOfTranslationBundleAtPath:(NSString *)aPath {
+    [self installContentsOfTranslationBundleAtPath:aPath completion:^(NSString *destinationPath, BOOL success, NSError *error) {
+        NSString *bundleVersion = nil;
+        if (success == YES && destinationPath != nil) {
+            bundleVersion = [destinationPath tmlTranslationBundleVersionFromPath];
         }
-        else {
-            NSError *moveError = nil;
-            NSString *destinationPath = [self cachePathForTranslationBundleVersion:bundleVersion];
-            if ([fileManager fileExistsAtPath:destinationPath] == YES) {
-                if ([fileManager removeItemAtPath:destinationPath error:&moveError] == NO) {
-                    TmlError(@"Error removing old cached translation bundle: %@", moveError);
-                    return;
-                }
-            }
-            if ([fileManager moveItemAtPath:tempPath toPath:destinationPath error:&moveError] == NO) {
-                TmlError(@"Error installing uncompressed translation bundle: %@", moveError);
-                return;
-            }
-            [self selectCachedTranslationBundleWithVersion:bundleVersion];
-        }
+        if (bundleVersion != nil)
+        [self selectCachedTranslationBundleWithVersion:bundleVersion];
     }];
 }
 

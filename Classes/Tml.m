@@ -159,7 +159,14 @@ static Tml *sharedInstance = nil;
     TmlCache *ourCache = self.cache;
     if (latestLocalBundlePath != nil
         && [[NSFileManager defaultManager] fileExistsAtPath:[ourCache cachePathForTranslationBundleVersion:latestLocalBundleVersion]] == NO) {
-        [ourCache loadContentsOfTranslationBundleAtPath:latestLocalBundlePath];
+        [ourCache installContentsOfTranslationBundleAtPath:latestLocalBundlePath completion:^(NSString *destinationPath, BOOL success, NSError *error) {
+            if (success == YES && destinationPath != nil) {
+                NSString *latestCachedVersion = [ourCache latestTranslationBundleVersion];
+                if ([latestLocalBundleVersion compareToTmlTranslationBundleVersion:latestCachedVersion] != NSOrderedDescending) {
+                    [ourCache selectCachedTranslationBundleWithVersion:latestLocalBundleVersion];
+                }
+            }
+        }];
     }
 }
 
