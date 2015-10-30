@@ -11,5 +11,6 @@
 @interface NSString (TmlAdditions)
 
 - (NSString *)tmlTranslationBundleVersionFromPath;
+- (NSComparisonResult)compareToTmlTranslationBundleVersion:(NSString *)version;
 
 @end

@@ -146,15 +146,7 @@ static Tml *sharedInstance = nil;
     localBundleZipFiles = [localBundleZipFiles sortedArrayUsingComparator:^NSComparisonResult(NSString *a, NSString *b) {
         NSString *aVersion = [a tmlTranslationBundleVersionFromPath];
         NSString *bVersion = [b tmlTranslationBundleVersionFromPath];
-        NSInteger aInt = [aVersion integerValue];
-        NSInteger bInt = [bVersion integerValue];
-        if (aInt > bInt) {
-            return NSOrderedAscending;
-        }
-        else if (aInt < bInt) {
-            return NSOrderedDescending;
-        }
-        return NSOrderedSame;
+        return [aVersion compareToTmlTranslationBundleVersion:bVersion];
     }];
     NSString *latest = [localBundleZipFiles lastObject];
     latest = [[NSBundle mainBundle] pathForResource:[latest stringByDeletingPathExtension] ofType:[latest pathExtension]];
