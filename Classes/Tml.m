@@ -164,10 +164,10 @@ static Tml *sharedInstance = nil;
 - (void) loadLocalLocalizationBundle {
     NSString *latestLocalBundlePath = [self latestLocalTranslationBundlePath];
     NSString *latestLocalBundleVersion = [latestLocalBundlePath tmlTranslationBundleVersionFromPath];
-    NSString *currentBundleVersion = [self.cache currentTranslationBundleVersion];
+    TmlCache *ourCache = self.cache;
     if (latestLocalBundlePath != nil
-        && [latestLocalBundleVersion isEqualToString:currentBundleVersion] == NO) {
-        [self.cache loadContentsOfTranslationBundleAtPath:latestLocalBundlePath];
+        && [[NSFileManager defaultManager] fileExistsAtPath:[ourCache cachePathForTranslationBundleVersion:latestLocalBundleVersion]] == NO) {
+        [ourCache loadContentsOfTranslationBundleAtPath:latestLocalBundlePath];
     }
 }
 
