@@ -28,9 +28,12 @@
  *  THE SOFTWARE.
  */
 
-#import <UIKit/UIKit.h>
-#import "NSObject+TML.h"
+#import "UITextField+TML.h"
 
-@interface UIButton (TML)
+@implementation UITextField (TML)
+
+- (void)localizeWithTML {
+    // Check if TML automatic localization mode is enabled, then localize the view
+}
 
 @end

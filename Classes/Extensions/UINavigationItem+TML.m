@@ -28,9 +28,12 @@
  *  THE SOFTWARE.
  */
 
-#import <UIKit/UIKit.h>
-#import "NSObject+TML.h"
+#import "UINavigationItem+TML.h"
 
-@interface UIButton (TML)
+@implementation UINavigationItem (TML)
+
+- (void)localizeWithTML {
+    // Check if TML automatic localization mode is enabled, then localize the view
+}
 
 @end

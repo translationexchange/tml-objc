@@ -31,6 +31,6 @@
 #import <UIKit/UIKit.h>
 #import "NSObject+TML.h"
 
-@interface UIButton (TML)
+@interface UITextView (TML)
 
 @end

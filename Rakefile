@@ -1,7 +1,7 @@
 namespace :test do
   desc "Run the Tml Tests for iOS"
   task :ios do
-    $ios_success = system("xctool -workspace Project/Demo.xcworkspace -scheme 'Demo' -sdk iphonesimulator -configuration Release test -test-sdk iphonesimulator ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES")
+    $ios_success = system("xctool -workspace Demo/Demo.xcworkspace -scheme 'Demo' -sdk iphonesimulator -configuration Release test -test-sdk iphonesimulator ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES")
   end
 end
 

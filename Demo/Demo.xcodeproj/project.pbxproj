@@ -141,6 +141,20 @@
 		C0F80D091BEA83DE0048DF2D /* TMLTranslation.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CC71BEA83DE0048DF2D /* TMLTranslation.m */; };
 		C0F80D0A1BEA83DE0048DF2D /* TMLTranslationKey.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CC91BEA83DE0048DF2D /* TMLTranslationKey.m */; };
 		C0F80D0B1BEA83DE0048DF2D /* TMLTranslationKey.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CC91BEA83DE0048DF2D /* TMLTranslationKey.m */; };
+		C0F80D0E1BEA860F0048DF2D /* UIBarButtonItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D0D1BEA860F0048DF2D /* UIBarButtonItem+TML.m */; };
+		C0F80D0F1BEA860F0048DF2D /* UIBarButtonItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D0D1BEA860F0048DF2D /* UIBarButtonItem+TML.m */; };
+		C0F80D121BEA86260048DF2D /* UINavigationItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D111BEA86260048DF2D /* UINavigationItem+TML.m */; };
+		C0F80D131BEA86260048DF2D /* UINavigationItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D111BEA86260048DF2D /* UINavigationItem+TML.m */; };
+		C0F80D161BEA86370048DF2D /* UISearchBar+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D151BEA86370048DF2D /* UISearchBar+TML.m */; };
+		C0F80D171BEA86370048DF2D /* UISearchBar+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D151BEA86370048DF2D /* UISearchBar+TML.m */; };
+		C0F80D1A1BEA86480048DF2D /* UISegmentedControl+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D191BEA86480048DF2D /* UISegmentedControl+TML.m */; };
+		C0F80D1B1BEA86480048DF2D /* UISegmentedControl+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D191BEA86480048DF2D /* UISegmentedControl+TML.m */; };
+		C0F80D1E1BEA865F0048DF2D /* UITabBarItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D1D1BEA865F0048DF2D /* UITabBarItem+TML.m */; };
+		C0F80D1F1BEA865F0048DF2D /* UITabBarItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D1D1BEA865F0048DF2D /* UITabBarItem+TML.m */; };
+		C0F80D221BEA866D0048DF2D /* UITextField+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D211BEA866D0048DF2D /* UITextField+TML.m */; };
+		C0F80D231BEA866D0048DF2D /* UITextField+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D211BEA866D0048DF2D /* UITextField+TML.m */; };
+		C0F80D261BEA86800048DF2D /* UITextView+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D251BEA86800048DF2D /* UITextView+TML.m */; };
+		C0F80D271BEA86800048DF2D /* UITextView+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D251BEA86800048DF2D /* UITextView+TML.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -314,6 +328,20 @@
 		C0F80CC71BEA83DE0048DF2D /* TMLTranslation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTranslation.m; sourceTree = "<group>"; };
 		C0F80CC81BEA83DE0048DF2D /* TMLTranslationKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLTranslationKey.h; sourceTree = "<group>"; };
 		C0F80CC91BEA83DE0048DF2D /* TMLTranslationKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTranslationKey.m; sourceTree = "<group>"; };
+		C0F80D0C1BEA860F0048DF2D /* UIBarButtonItem+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+TML.h"; sourceTree = "<group>"; };
+		C0F80D0D1BEA860F0048DF2D /* UIBarButtonItem+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+TML.m"; sourceTree = "<group>"; };
+		C0F80D101BEA86260048DF2D /* UINavigationItem+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationItem+TML.h"; sourceTree = "<group>"; };
+		C0F80D111BEA86260048DF2D /* UINavigationItem+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationItem+TML.m"; sourceTree = "<group>"; };
+		C0F80D141BEA86370048DF2D /* UISearchBar+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UISearchBar+TML.h"; sourceTree = "<group>"; };
+		C0F80D151BEA86370048DF2D /* UISearchBar+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UISearchBar+TML.m"; sourceTree = "<group>"; };
+		C0F80D181BEA86480048DF2D /* UISegmentedControl+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UISegmentedControl+TML.h"; sourceTree = "<group>"; };
+		C0F80D191BEA86480048DF2D /* UISegmentedControl+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UISegmentedControl+TML.m"; sourceTree = "<group>"; };
+		C0F80D1C1BEA865F0048DF2D /* UITabBarItem+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarItem+TML.h"; sourceTree = "<group>"; };
+		C0F80D1D1BEA865F0048DF2D /* UITabBarItem+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarItem+TML.m"; sourceTree = "<group>"; };
+		C0F80D201BEA866D0048DF2D /* UITextField+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+TML.h"; sourceTree = "<group>"; };
+		C0F80D211BEA866D0048DF2D /* UITextField+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+TML.m"; sourceTree = "<group>"; };
+		C0F80D241BEA86800048DF2D /* UITextView+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+TML.h"; sourceTree = "<group>"; };
+		C0F80D251BEA86800048DF2D /* UITextView+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+TML.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -718,16 +746,30 @@
 		C0F80C931BEA83DE0048DF2D /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				C0F80C941BEA83DE0048DF2D /* NSObject+TML.h */,
-				C0F80C951BEA83DE0048DF2D /* NSObject+TML.m */,
 				C0F80C961BEA83DE0048DF2D /* NSString+TmlAdditions.h */,
 				C0F80C971BEA83DE0048DF2D /* NSString+TmlAdditions.m */,
+				C0F80C9C1BEA83DE0048DF2D /* UIViewController+TML.h */,
+				C0F80C9D1BEA83DE0048DF2D /* UIViewController+TML.m */,
+				C0F80C941BEA83DE0048DF2D /* NSObject+TML.h */,
+				C0F80C951BEA83DE0048DF2D /* NSObject+TML.m */,
 				C0F80C981BEA83DE0048DF2D /* UIButton+TML.h */,
 				C0F80C991BEA83DE0048DF2D /* UIButton+TML.m */,
 				C0F80C9A1BEA83DE0048DF2D /* UILabel+TML.h */,
 				C0F80C9B1BEA83DE0048DF2D /* UILabel+TML.m */,
-				C0F80C9C1BEA83DE0048DF2D /* UIViewController+TML.h */,
-				C0F80C9D1BEA83DE0048DF2D /* UIViewController+TML.m */,
+				C0F80D0C1BEA860F0048DF2D /* UIBarButtonItem+TML.h */,
+				C0F80D0D1BEA860F0048DF2D /* UIBarButtonItem+TML.m */,
+				C0F80D101BEA86260048DF2D /* UINavigationItem+TML.h */,
+				C0F80D111BEA86260048DF2D /* UINavigationItem+TML.m */,
+				C0F80D141BEA86370048DF2D /* UISearchBar+TML.h */,
+				C0F80D151BEA86370048DF2D /* UISearchBar+TML.m */,
+				C0F80D181BEA86480048DF2D /* UISegmentedControl+TML.h */,
+				C0F80D191BEA86480048DF2D /* UISegmentedControl+TML.m */,
+				C0F80D1C1BEA865F0048DF2D /* UITabBarItem+TML.h */,
+				C0F80D1D1BEA865F0048DF2D /* UITabBarItem+TML.m */,
+				C0F80D201BEA866D0048DF2D /* UITextField+TML.h */,
+				C0F80D211BEA866D0048DF2D /* UITextField+TML.m */,
+				C0F80D241BEA86800048DF2D /* UITextView+TML.h */,
+				C0F80D251BEA86800048DF2D /* UITextView+TML.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1021,6 +1063,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0F80D221BEA866D0048DF2D /* UITextField+TML.m in Sources */,
 				C0F80CDA1BEA83DE0048DF2D /* TMLViewController.m in Sources */,
 				4C4233F918B9B38700B76555 /* AppDelegate.m in Sources */,
 				C0F80CD41BEA83DE0048DF2D /* TMLSource.m in Sources */,
@@ -1030,6 +1073,7 @@
 				C0F80CE21BEA83DE0048DF2D /* UILabel+TML.m in Sources */,
 				C0F80CCE1BEA83DE0048DF2D /* TMLCache.m in Sources */,
 				C0F80CDE1BEA83DE0048DF2D /* NSString+TmlAdditions.m in Sources */,
+				C0F80D121BEA86260048DF2D /* UINavigationItem+TML.m in Sources */,
 				C0F80CD21BEA83DE0048DF2D /* TMLPostOffice.m in Sources */,
 				C0F80CFE1BEA83DE0048DF2D /* TMLDecorationTokenizer.m in Sources */,
 				4CE06A2018BD882F0088AB3E /* User.m in Sources */,
@@ -1052,15 +1096,20 @@
 				C0F80CD61BEA83DE0048DF2D /* TMLLanguageSelectorViewController.m in Sources */,
 				4CE06A0518BD37A40088AB3E /* WelcomeViewController.m in Sources */,
 				C0F80CEE1BEA83DE0048DF2D /* TMLLanguageContext.m in Sources */,
+				C0F80D261BEA86800048DF2D /* UITextView+TML.m in Sources */,
 				C0F80D001BEA83DE0048DF2D /* TMLHtmlDecorationTokenizer.m in Sources */,
 				C0F80D061BEA83DE0048DF2D /* TMLPipedToken.m in Sources */,
+				C0F80D1A1BEA86480048DF2D /* UISegmentedControl+TML.m in Sources */,
 				4CCBA13118B9B69A00CFCB3A /* TMLConsoleViewController.m in Sources */,
 				C0F80CF81BEA83DE0048DF2D /* TMLBase.m in Sources */,
 				C0F80CDC1BEA83DE0048DF2D /* NSObject+TML.m in Sources */,
+				C0F80D161BEA86370048DF2D /* UISearchBar+TML.m in Sources */,
 				C0F80CE81BEA83DE0048DF2D /* TMLLanguage.m in Sources */,
 				C0F80CFA1BEA83DE0048DF2D /* TMLAttributedDecorationTokenizer.m in Sources */,
 				C0F80CEC1BEA83DE0048DF2D /* TMLLanguageCaseRule.m in Sources */,
 				4C7A870F18BD330000C2375D /* ApplicationTableViewController.m in Sources */,
+				C0F80D0E1BEA860F0048DF2D /* UIBarButtonItem+TML.m in Sources */,
+				C0F80D1E1BEA865F0048DF2D /* UITabBarItem+TML.m in Sources */,
 				4C4233F518B9B38700B76555 /* main.m in Sources */,
 				C0F80CF21BEA83DE0048DF2D /* TMLRulesEvaluator.m in Sources */,
 				C0F80CCA1BEA83DE0048DF2D /* TMLApiClient.m in Sources */,
@@ -1077,6 +1126,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0F80D231BEA866D0048DF2D /* UITextField+TML.m in Sources */,
 				C0F80CDB1BEA83DE0048DF2D /* TMLViewController.m in Sources */,
 				C0F80C771BEA7E310048DF2D /* TMLTest.m in Sources */,
 				C0F80CD51BEA83DE0048DF2D /* TMLSource.m in Sources */,
@@ -1086,6 +1136,7 @@
 				C0F80CE31BEA83DE0048DF2D /* UILabel+TML.m in Sources */,
 				C0F80CCF1BEA83DE0048DF2D /* TMLCache.m in Sources */,
 				C0F80CDF1BEA83DE0048DF2D /* NSString+TmlAdditions.m in Sources */,
+				C0F80D131BEA86260048DF2D /* UINavigationItem+TML.m in Sources */,
 				C0F80CD31BEA83DE0048DF2D /* TMLPostOffice.m in Sources */,
 				C0F80CFF1BEA83DE0048DF2D /* TMLDecorationTokenizer.m in Sources */,
 				C0F80C701BEA7E310048DF2D /* TMLLanguageCaseRuleTest.m in Sources */,
@@ -1108,15 +1159,20 @@
 				C0F80CD71BEA83DE0048DF2D /* TMLLanguageSelectorViewController.m in Sources */,
 				C0F80C741BEA7E310048DF2D /* TMLTestUser.m in Sources */,
 				C0F80CEF1BEA83DE0048DF2D /* TMLLanguageContext.m in Sources */,
+				C0F80D271BEA86800048DF2D /* UITextView+TML.m in Sources */,
 				C0F80D011BEA83DE0048DF2D /* TMLHtmlDecorationTokenizer.m in Sources */,
 				C0F80D071BEA83DE0048DF2D /* TMLPipedToken.m in Sources */,
+				C0F80D1B1BEA86480048DF2D /* UISegmentedControl+TML.m in Sources */,
 				C0F80C651BEA7E310048DF2D /* TMLConfigurationTest.m in Sources */,
 				C0F80CF91BEA83DE0048DF2D /* TMLBase.m in Sources */,
 				C0F80CDD1BEA83DE0048DF2D /* NSObject+TML.m in Sources */,
+				C0F80D171BEA86370048DF2D /* UISearchBar+TML.m in Sources */,
 				C0F80CE91BEA83DE0048DF2D /* TMLLanguage.m in Sources */,
 				C0F80CFB1BEA83DE0048DF2D /* TMLAttributedDecorationTokenizer.m in Sources */,
 				C0F80CED1BEA83DE0048DF2D /* TMLLanguageCaseRule.m in Sources */,
 				C0F80C7E1BEA7E310048DF2D /* TMLTranslationKeyTest.m in Sources */,
+				C0F80D0F1BEA860F0048DF2D /* UIBarButtonItem+TML.m in Sources */,
+				C0F80D1F1BEA865F0048DF2D /* UITabBarItem+TML.m in Sources */,
 				C0F80C761BEA7E310048DF2D /* TMLRulesParserTest.m in Sources */,
 				C0F80CF31BEA83DE0048DF2D /* TMLRulesEvaluator.m in Sources */,
 				C0F80CCB1BEA83DE0048DF2D /* TMLApiClient.m in Sources */,
