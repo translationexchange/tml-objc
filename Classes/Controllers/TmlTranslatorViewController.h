@@ -32,7 +32,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface TmlTranslatorViewController : UIViewController <UIWebViewDelegate>
+@interface TMLTranslatorViewController : UIViewController <UIWebViewDelegate>
 
 + (void) toggleInAppTranslationsFromController:(UIViewController *) controller;
 

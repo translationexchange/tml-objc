@@ -29,15 +29,15 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TmlBase.h"
-#import "TmlApplication.h"
-#import "TmlLanguage.h"
+#import "TMLBase.h"
+#import "TMLApplication.h"
+#import "TMLLanguage.h"
 
 
-@interface TmlTranslationKey : TmlBase
+@interface TMLTranslationKey : TMLBase
 
 // Reference to the application where the key came from
-@property(nonatomic, weak) TmlApplication *application;
+@property(nonatomic, weak) TMLApplication *application;
 
 // Unique key (md5 hash) identifying this translation key
 @property(nonatomic, strong) NSString *key;
@@ -75,8 +75,8 @@
 - (NSDictionary *) toDictionary;
 
 // Translation methods
-- (NSObject *) translateToLanguage: (TmlLanguage *) language;
-- (NSObject *) translateToLanguage: (TmlLanguage *) language withTokens: (NSDictionary *) tokens;
-- (NSObject *) translateToLanguage: (TmlLanguage *) language withTokens: (NSDictionary *) tokens andOptions: (NSDictionary *) options;
+- (NSObject *) translateToLanguage: (TMLLanguage *) language;
+- (NSObject *) translateToLanguage: (TMLLanguage *) language withTokens: (NSDictionary *) tokens;
+- (NSObject *) translateToLanguage: (TMLLanguage *) language withTokens: (NSDictionary *) tokens andOptions: (NSDictionary *) options;
 
 @end

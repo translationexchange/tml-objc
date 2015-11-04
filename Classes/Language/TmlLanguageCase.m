@@ -28,10 +28,10 @@
  *  THE SOFTWARE.
  */
 
-#import "TmlLanguageCase.h"
-#import "TmlLanguageCaseRule.h"
+#import "TMLLanguageCase.h"
+#import "TMLLanguageCaseRule.h"
 
-@implementation TmlLanguageCase
+@implementation TMLLanguageCase
 
 @synthesize language, application, keyword, latinName, nativeName, description, rules;
 
@@ -48,7 +48,7 @@
     NSMutableArray *caseRules = [NSMutableArray array];
     if ([attributes objectForKey:@"rules"]) {
         for (NSDictionary *ruleData in [attributes objectForKey:@"rules"]) {
-            TmlLanguageCaseRule *rule = [[TmlLanguageCaseRule alloc] initWithAttributes:ruleData];
+            TMLLanguageCaseRule *rule = [[TMLLanguageCaseRule alloc] initWithAttributes:ruleData];
             rule.languageCase = self;
             [caseRules addObject:rule];
         }
@@ -61,7 +61,7 @@
 }
 
 - (NSObject *) findMatchingRule: (NSString *) value forObject: (NSObject *) object {
-    for (TmlLanguageCaseRule *rule in self.rules) {
+    for (TMLLanguageCaseRule *rule in self.rules) {
         NSNumber *result = [rule evaluate:value forObject:object];
         if ([result isEqual: @YES])
             return rule;
@@ -94,7 +94,7 @@
 
     NSString *transformedValue = [NSString stringWithString:value];
     for (NSString *element in elements) {
-        TmlLanguageCaseRule *rule = (TmlLanguageCaseRule *) [self findMatchingRule:element forObject:object];
+        TMLLanguageCaseRule *rule = (TMLLanguageCaseRule *) [self findMatchingRule:element forObject:object];
         if (rule == nil)
             continue;
         

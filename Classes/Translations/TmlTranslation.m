@@ -28,12 +28,12 @@
  *  THE SOFTWARE.
  */
 
-#import "TmlTranslation.h"
-#import "TmlLanguageContext.h"
-#import "TmlLanguageContextRule.h"
-#import "TmlDataToken.h"
+#import "TMLTranslation.h"
+#import "TMLLanguageContext.h"
+#import "TMLLanguageContextRule.h"
+#import "TMLDataToken.h"
 
-@implementation TmlTranslation
+@implementation TMLTranslation
 
 @synthesize translationKey, language, locale, label, context;
 
@@ -61,7 +61,7 @@
     for (NSString *tokenName in [self.context allKeys]) {
         NSDictionary *rules = [self.context objectForKey:tokenName];
         
-        NSObject *tokenObject = [TmlDataToken tokenObjectForName: tokenName fromTokens: tokens];
+        NSObject *tokenObject = [TMLDataToken tokenObjectForName: tokenName fromTokens: tokens];
         
         if (tokenObject == nil)
             return NO;
@@ -69,14 +69,14 @@
         for (NSString *contextKey in [rules allKeys]) {
             NSString *ruleKey = [rules objectForKey:contextKey];
             
-            if ([TmlLanguageContextRule isFallback: ruleKey])
+            if ([TMLLanguageContextRule isFallback: ruleKey])
                 continue;
             
-            TmlLanguageContext *languageContext = (TmlLanguageContext *) [self.language contextByKeyword:contextKey];
+            TMLLanguageContext *languageContext = (TMLLanguageContext *) [self.language contextByKeyword:contextKey];
             if (languageContext == nil)
                 return NO;
                 
-            TmlLanguageContextRule *rule = (TmlLanguageContextRule *) [languageContext findMatchingRule:tokenObject];
+            TMLLanguageContextRule *rule = (TMLLanguageContextRule *) [languageContext findMatchingRule:tokenObject];
             if (rule == nil || ![rule.keyword isEqualToString:ruleKey])
                 return NO;
         }

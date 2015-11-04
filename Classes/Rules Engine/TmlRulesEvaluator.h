@@ -31,7 +31,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TmlRulesEvaluator : NSObject
+@interface TMLRulesEvaluator : NSObject
 
 @property(nonatomic) NSMutableDictionary *context;
 @property(nonatomic) NSMutableDictionary *variables;

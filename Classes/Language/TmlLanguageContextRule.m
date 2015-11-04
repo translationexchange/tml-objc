@@ -28,11 +28,11 @@
  *  THE SOFTWARE.
  */
 
-#import "TmlLanguageContextRule.h"
-#import "TmlRulesParser.h"
-#import "TmlRulesEvaluator.h"
+#import "TMLLanguageContextRule.h"
+#import "TMLRulesParser.h"
+#import "TMLRulesEvaluator.h"
 
-@implementation TmlLanguageContextRule
+@implementation TMLLanguageContextRule
 
 @synthesize languageContext, keyword, description, examples, conditions, compiledConditions;
 
@@ -57,7 +57,7 @@
 
 - (NSArray *) conditionsExpression {
     if (self.compiledConditions == nil) {
-        TmlRulesParser *p = [TmlRulesParser parserWithExpression: self.conditions];
+        TMLRulesParser *p = [TMLRulesParser parserWithExpression: self.conditions];
         self.compiledConditions = (NSArray *) [p parse];
     }
     return self.compiledConditions;
@@ -67,7 +67,7 @@
     if ([self isFallback])
         return @YES;
     
-    TmlRulesEvaluator *e = [[TmlRulesEvaluator alloc] init];
+    TMLRulesEvaluator *e = [[TMLRulesEvaluator alloc] init];
     
     for (NSString *key in [vars allKeys]) {
         NSObject *value = [vars objectForKey:key];

@@ -28,10 +28,10 @@
  *  THE SOFTWARE.
  */
 
-#import "TmlBase.h"
-#import "Tml.h"
+#import "TMLBase.h"
+#import "TML.h"
 
-@implementation TmlBase
+@implementation TMLBase
 
 - (id) initWithAttributes:(NSDictionary *)attributes {
     if (self = [super init]) {
@@ -42,11 +42,11 @@
 
 // Should be overloaded by all extending models
 - (void) updateAttributes:(NSDictionary *)newAttributes {
-    TmlDebug(@"Update attributes method is not implemented...");
+    TMLDebug(@"Update attributes method is not implemented...");
 }
 
 - (void) load {
-    TmlDebug(@"Reload method is not implemented...");
+    TMLDebug(@"Reload method is not implemented...");
 }
 
 @end

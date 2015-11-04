@@ -29,13 +29,13 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TmlLanguage.h"
-#import "TmlBase.h"
+#import "TMLLanguage.h"
+#import "TMLBase.h"
 
-@interface TmlLanguageCase : TmlBase
+@interface TMLLanguageCase : TMLBase
 
 // Holds reference back to the language it belongs to
-@property(nonatomic, weak) TmlLanguage *language;
+@property(nonatomic, weak) TMLLanguage *language;
 
 // How to apply the case: "phrase" or "words"
 @property(nonatomic, strong) NSString *application;

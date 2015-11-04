@@ -30,13 +30,13 @@
 
 #import <Foundation/Foundation.h>
 
-@class TmlApplication;
+@class TMLApplication;
 
-@interface TmlApiClient : NSObject
+@interface TMLApiClient : NSObject
 
-@property(nonatomic, strong) TmlApplication *application;
+@property(nonatomic, strong) TMLApplication *application;
 
-- (id) initWithApplication: (TmlApplication *) owner;
+- (id) initWithApplication: (TMLApplication *) owner;
 
 - (void) get: (NSString *) path
       params: (NSDictionary *) params

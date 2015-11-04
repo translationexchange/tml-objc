@@ -29,43 +29,43 @@
  */
 
 
-#import "NSString+TmlAdditions.h"
-#import "Tml.h"
-#import "TmlCache.h"
-#import "TmlDataToken.h"
-#import "TmlLanguageCase.h"
-#import "TmlTranslation.h"
-#import "TmlTranslationKey.h"
+#import "NSString+TMLAdditions.h"
+#import "TML.h"
+#import "TMLCache.h"
+#import "TMLDataToken.h"
+#import "TMLLanguageCase.h"
+#import "TMLTranslation.h"
+#import "TMLTranslationKey.h"
 #import <CommonCrypto/CommonDigest.h>
 
-#define kTmlServiceHost @"https://api.translationexchange.com"
+#define kTMLServiceHost @"https://api.translationexchange.com"
 
 /************************************************************************************
  ** Implementation
  ************************************************************************************/
 
-@implementation Tml
+@implementation TML
 
 @synthesize configuration, cache;
 @synthesize currentApplication, defaultLanguage, currentLanguage, currentSource, currentUser, delegate;
 @synthesize blockOptions;
 
 
-// Shared instance of Tml
-+ (Tml *)sharedInstance {
-    static Tml *sharedInstance = nil;
+// Shared instance of TML
++ (TML *)sharedInstance {
+    static TML *sharedInstance = nil;
     static dispatch_once_t onceToken = 0;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[Tml alloc] init];
+        sharedInstance = [[TML alloc] init];
     });
     return sharedInstance;
 }
 
-+ (Tml *) sharedInstanceWithToken: (NSString *) token {
++ (TML *) sharedInstanceWithToken: (NSString *) token {
     return [self sharedInstanceWithToken:token launchOptions:nil];
 }
 
-+ (Tml *) sharedInstanceWithToken: (NSString *) token launchOptions: (NSDictionary *) launchOptions {
++ (TML *) sharedInstanceWithToken: (NSString *) token launchOptions: (NSDictionary *) launchOptions {
     [[self sharedInstance] updateWithToken:token launchOptions:launchOptions];
     return [self sharedInstance];
 }
@@ -76,31 +76,31 @@
 
 - (id) init {
     if (self == [super init]) {
-        self.configuration = [[TmlConfiguration alloc] init];
+        self.configuration = [[TMLConfiguration alloc] init];
     }
     return self;
 }
 
 #pragma mark - Initialization
 - (void) updateWithToken: (NSString *) token launchOptions: (NSDictionary *) launchOptions {
-    self.cache = [[TmlCache alloc] initWithKey: token];
+    self.cache = [[TMLCache alloc] initWithKey: token];
     
     NSString *host = [launchOptions objectForKey:@"host"];
-    if (!host) host = kTmlServiceHost;
+    if (!host) host = kTMLServiceHost;
     
-    TmlApplication *app = [[TmlApplication alloc] initWithToken: token host:host];
+    TMLApplication *app = [[TMLApplication alloc] initWithToken: token host:host];
     self.currentApplication = app;
     
-    TmlConfiguration *config = self.configuration;
+    TMLConfiguration *config = self.configuration;
     self.defaultLanguage = [app languageForLocale: config.defaultLocale];
     self.currentLanguage = [app languageForLocale: config.currentLocale];
     
     [self loadLocalLocalizationBundle];
     
     [app loadTranslationsForLocale:self.currentLanguage.locale withOptions:@{} success:^{
-        TmlDebug(@"Loaded translations for current locale!");
+        TMLDebug(@"Loaded translations for current locale!");
     } failure:^(NSError *error) {
-        TmlDebug(@"Failed to load translations!");
+        TMLDebug(@"Failed to load translations!");
     }];
     
     [app log];
@@ -111,7 +111,7 @@
     NSError *error = nil;
     NSArray *contents = [fileManager contentsOfDirectoryAtPath:[[NSBundle mainBundle] bundlePath] error:&error];
     if (error != nil) {
-        TmlError(@"Error listing main bundle files: %@", error);
+        TMLError(@"Error listing main bundle files: %@", error);
         return nil;
     }
     
@@ -123,14 +123,14 @@
 - (NSString *) latestLocalTranslationBundlePath {
     NSArray *localBundleZipFiles = [self findLocalTranslationBundles];
     if (localBundleZipFiles.count == 0) {
-        TmlDebug(@"No local localization bundles found");
+        TMLDebug(@"No local localization bundles found");
         return nil;
     }
     
     localBundleZipFiles = [localBundleZipFiles sortedArrayUsingComparator:^NSComparisonResult(NSString *a, NSString *b) {
         NSString *aVersion = [a tmlTranslationBundleVersionFromPath];
         NSString *bVersion = [b tmlTranslationBundleVersionFromPath];
-        return [aVersion compareToTmlTranslationBundleVersion:bVersion];
+        return [aVersion compareToTMLTranslationBundleVersion:bVersion];
     }];
     NSString *latest = [localBundleZipFiles lastObject];
     latest = [[NSBundle mainBundle] pathForResource:[latest stringByDeletingPathExtension] ofType:[latest pathExtension]];
@@ -140,13 +140,13 @@
 - (void) loadLocalLocalizationBundle {
     NSString *latestLocalBundlePath = [self latestLocalTranslationBundlePath];
     NSString *latestLocalBundleVersion = [latestLocalBundlePath tmlTranslationBundleVersionFromPath];
-    TmlCache *ourCache = self.cache;
+    TMLCache *ourCache = self.cache;
     if (latestLocalBundlePath != nil
         && [[NSFileManager defaultManager] fileExistsAtPath:[ourCache cachePathForTranslationBundleVersion:latestLocalBundleVersion]] == NO) {
         [ourCache installContentsOfTranslationBundleAtPath:latestLocalBundlePath completion:^(NSString *destinationPath, BOOL success, NSError *error) {
             if (success == YES && destinationPath != nil) {
                 NSString *latestCachedVersion = [ourCache latestTranslationBundleVersion];
-                if ([latestLocalBundleVersion compareToTmlTranslationBundleVersion:latestCachedVersion] != NSOrderedDescending) {
+                if ([latestLocalBundleVersion compareToTMLTranslationBundleVersion:latestCachedVersion] != NSOrderedDescending) {
                     [ourCache selectCachedTranslationBundleWithVersion:latestLocalBundleVersion];
                 }
             }
@@ -187,16 +187,16 @@
  ** Configuration
  ************************************************************************************/
 
-+ (void) configure:(void (^)(TmlConfiguration *config)) changes {
-    changes([Tml configuration]);
++ (void) configure:(void (^)(TMLConfiguration *config)) changes {
+    changes([TML configuration]);
 }
 
-+ (TmlConfiguration *) configuration {
-    return [[Tml sharedInstance] configuration];
++ (TMLConfiguration *) configuration {
+    return [[TML sharedInstance] configuration];
 }
 
-+ (TmlCache *) cache {
-    return [[Tml sharedInstance] cache];
++ (TMLCache *) cache {
+    return [[TML sharedInstance] cache];
 }
 
 /************************************************************************************
@@ -204,15 +204,15 @@
  ************************************************************************************/
 
 + (void) beginBlockWithOptions:(NSDictionary *) options {
-    [[Tml sharedInstance] beginBlockWithOptions:options];
+    [[TML sharedInstance] beginBlockWithOptions:options];
 }
 
 + (NSObject *) blockOptionForKey: (NSString *) key {
-    return [[Tml sharedInstance] blockOptionForKey: key];
+    return [[TML sharedInstance] blockOptionForKey: key];
 }
 
 + (void) endBlockWithOptions {
-    [[Tml sharedInstance] endBlockWithOptions];
+    [[TML sharedInstance] endBlockWithOptions];
 }
 
 - (void) beginBlockWithOptions:(NSDictionary *) options {
@@ -250,20 +250,20 @@
  ** Class Methods
  ************************************************************************************/
 
-+ (TmlApplication *) currentApplication {
-    return [[Tml sharedInstance] currentApplication];
++ (TMLApplication *) currentApplication {
+    return [[TML sharedInstance] currentApplication];
 }
 
-+ (TmlLanguage *) defaultLanguage {
-    return [[Tml sharedInstance] defaultLanguage];
++ (TMLLanguage *) defaultLanguage {
+    return [[TML sharedInstance] defaultLanguage];
 }
 
-+ (TmlLanguage *) currentLanguage {
-    return [[Tml sharedInstance] currentLanguage];
++ (TMLLanguage *) currentLanguage {
+    return [[TML sharedInstance] currentLanguage];
 }
 
 + (void) changeLocale: (NSString *) locale success: (void (^)()) success failure: (void (^)(NSError *error)) failure {
-    [[Tml sharedInstance] changeLocale:locale success:success failure:failure];
+    [[TML sharedInstance] changeLocale:locale success:success failure:failure];
 }
 
 - (void) changeLocale: (NSString *) locale success: (void (^)()) success failure: (void (^)(NSError *error)) failure {
@@ -271,8 +271,8 @@
     self.configuration.currentLocale = locale;
     BOOL hasBackup = [cache backupCacheForLocale: locale];
     
-    TmlLanguage *previousLanguage = self.currentLanguage;
-    self.currentLanguage = (TmlLanguage *) [self.currentApplication languageForLocale: locale];
+    TMLLanguage *previousLanguage = self.currentLanguage;
+    self.currentLanguage = (TMLLanguage *) [self.currentApplication languageForLocale: locale];
     
     [self.currentApplication resetTranslations];
     [self.currentApplication loadTranslationsForLocale:self.currentLanguage.locale withOptions:@{@"offline": @YES} success:^{
@@ -307,7 +307,7 @@
 }
 
 + (void) reloadTranslations {
-    [[Tml sharedInstance] reloadTranslations];
+    [[TML sharedInstance] reloadTranslations];
 }
 
 - (void) reloadTranslations {
@@ -331,14 +331,14 @@
     NSArray *stack = [NSThread callStackSymbols];
     NSString *caller = [[[stack objectAtIndex:2] componentsSeparatedByString:@"["] objectAtIndex:1];
     caller = [[caller componentsSeparatedByString:@" "] objectAtIndex:0];
-    TmlDebug(@"caller: %@", stack);
+    TMLDebug(@"caller: %@", stack);
     return caller;
 }
 
 - (NSObject *) translate:(NSString *) label withDescription:(NSString *) description andTokens: (NSDictionary *) tokens andOptions: (NSDictionary *) options {
-    // if Tml is used in a disconnected mode or has not been initialized, fallback onto English US
+    // if TML is used in a disconnected mode or has not been initialized, fallback onto English US
     if (self.currentLanguage == nil) {
-        self.defaultLanguage = [TmlLanguage defaultLanguage];
+        self.defaultLanguage = [TMLLanguage defaultLanguage];
         self.currentLanguage = self.defaultLanguage;
     }
     return [self.currentLanguage translate:label withDescription:description andTokens:tokens andOptions:options];
@@ -352,7 +352,7 @@
 - (NSDictionary *) tokenValuesForDate: (NSDate *) date fromTokenizedFormat:(NSString *) tokenizedFormat {
     NSMutableDictionary *tokens = [NSMutableDictionary dictionary];
     
-    NSArray *matches = [[TmlDataToken expression] matchesInString: tokenizedFormat options: 0 range: NSMakeRange(0, [tokenizedFormat length])];
+    NSArray *matches = [[TMLDataToken expression] matchesInString: tokenizedFormat options: 0 range: NSMakeRange(0, [tokenizedFormat length])];
     for (NSTextCheckingResult *match in matches) {
         NSString *tokenName = [tokenizedFormat substringWithRange:[match range]];
         
@@ -368,20 +368,20 @@
 - (NSString *) localizeDate:(NSDate *) date withTokenizedFormat:(NSString *) tokenizedFormat andDescription: (NSString *) description {
     NSDictionary *tokens = [self tokenValuesForDate:date fromTokenizedFormat:tokenizedFormat];
     
-//    TmlDebug(@"Tokenized date string: %@", tokenizedFormat);
-//    TmlDebug(@"Tokenized date string: %@", [tokens description]);
+//    TMLDebug(@"Tokenized date string: %@", tokenizedFormat);
+//    TMLDebug(@"Tokenized date string: %@", [tokens description]);
     
-    return TmlLocalizedStringWithDescriptionAndTokens(tokenizedFormat, description, tokens);
+    return TMLLocalizedStringWithDescriptionAndTokens(tokenizedFormat, description, tokens);
 }
 
 // {days} {month_name::gen} at [bold: {hours}:{minutes}] {am_pm}
 - (NSAttributedString *) localizeAttributedDate:(NSDate *) date withTokenizedFormat:(NSString *) tokenizedFormat andDescription: (NSString *) description {
     NSDictionary *tokens = [self tokenValuesForDate:date fromTokenizedFormat:tokenizedFormat];
     
-//    TmlDebug(@"Tokenized date string: %@", tokenizedFormat);
-//    TmlDebug(@"Tokenized date string: %@", [tokens description]);
+//    TMLDebug(@"Tokenized date string: %@", tokenizedFormat);
+//    TMLDebug(@"Tokenized date string: %@", [tokens description]);
     
-    return TmlLocalizedAttributedStringWithDescriptionAndTokens(tokenizedFormat, description, tokens);
+    return TMLLocalizedAttributedStringWithDescriptionAndTokens(tokenizedFormat, description, tokens);
 }
 
 // default_format
@@ -399,7 +399,7 @@
                                   options: NSRegularExpressionCaseInsensitive
                                   error: &error];
 
-//    TmlDebug(@"Parsing date format: %@", format);
+//    TMLDebug(@"Parsing date format: %@", format);
     NSString *tokenizedFormat = format;
     
     NSArray *matches = [expression matchesInString: format options: 0 range: NSMakeRange(0, [format length])];
@@ -413,7 +413,7 @@
         tokenizedFormat = [tokenizedFormat stringByReplacingOccurrencesOfString:element withString: placeholder];
     }
 
-//    TmlDebug(@"Tokenized date string: %@", tokenizedFormat);
+//    TMLDebug(@"Tokenized date string: %@", tokenizedFormat);
 
     NSMutableDictionary *tokens = [NSMutableDictionary dictionary];
     
@@ -429,10 +429,10 @@
             tokenizedFormat = [tokenizedFormat stringByReplacingOccurrencesOfString:placeholder withString:element];
     }
     
-//    TmlDebug(@"Tokenized date string: %@", tokenizedFormat);
-//    TmlDebug(@"Tokenized date string: %@", [tokens description]);
+//    TMLDebug(@"Tokenized date string: %@", tokenizedFormat);
+//    TMLDebug(@"Tokenized date string: %@", [tokens description]);
 
-    return TmlLocalizedStringWithDescriptionAndTokens(tokenizedFormat, description, tokens);
+    return TMLLocalizedStringWithDescriptionAndTokens(tokenizedFormat, description, tokens);
 }
 
 

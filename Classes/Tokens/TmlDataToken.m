@@ -48,15 +48,15 @@
  #
  ***********************************************************************/
 
-#import "TmlDataToken.h"
-#import "Tml.h"
-#import "TmlLanguageCase.h"
+#import "TMLDataToken.h"
+#import "TML.h"
+#import "TMLLanguageCase.h"
 
-@interface TmlDataToken ()
+@interface TMLDataToken ()
 
 @end
 
-@implementation TmlDataToken
+@implementation TMLDataToken
 
 @synthesize label, fullName, shortName, caseKeys, contextKeys;
 
@@ -170,7 +170,7 @@
  * {user:gender:value}   - just not with transform tokens
  */
 
-- (TmlLanguageContext *) contextForLanguage: (TmlLanguage *) language {
+- (TMLLanguageContext *) contextForLanguage: (TMLLanguage *) language {
     if ([self.contextKeys count] > 0) {
         return [language contextByKeyword:[self.contextKeys objectAtIndex:0]];
     }
@@ -185,18 +185,18 @@
  *
  * - if an object is passed without a substitution value, it will use toString() to get the value
  *
- *     [Tml translate: @"Hello {user}" withTokens: @{@"user": current_user}]
- *     [Tml translate: @"{count||message}" withTokens: @{@"count": @1}]
+ *     [TML translate: @"Hello {user}" withTokens: @{@"user": current_user}]
+ *     [TML translate: @"{count||message}" withTokens: @{@"count": @1}]
  *
  * - if object is an array, the second value is the substitution value:
  *
- *     [Tml translate: @"Hello {user}" withTokens: @{@"user": @[user, @"Michael"]}]
- *     [Tml translate: @"Hello {user}" withTokens: @{@"user": @[user, user.name]}]
+ *     [TML translate: @"Hello {user}" withTokens: @{@"user": @[user, @"Michael"]}]
+ *     [TML translate: @"Hello {user}" withTokens: @{@"user": @[user, user.name]}]
  *
  * - The parameter can be a dictionary that may contain an "object" and value/attribute/property element (mostly for JSON support):
  *
- *     [Tml translate: @"Hello {user}" withTokens: @{@"user": @{@"object": @{@"gender": @"male"}, @"value": @"Michael"}}]
- *     [Tml translate: @"Hello {user}" withTokens: @{@"user": @{@"object": @{@"gender": @"male", @"name": @"Michael"}, @"property": @"name"}}]
+ *     [TML translate: @"Hello {user}" withTokens: @{@"user": @{@"object": @{@"gender": @"male"}, @"value": @"Michael"}}]
+ *     [TML translate: @"Hello {user}" withTokens: @{@"user": @{@"object": @{@"gender": @"male", @"name": @"Michael"}, @"property": @"name"}}]
  *
  */
 
@@ -208,7 +208,7 @@
 
     // token not provided, fallback onto default, if available
     if ([tokens objectForKey:self.shortName] == nil) {
-        NSString *tokenObject = (NSString *) [[Tml configuration] defaultTokenValueForName: self.shortName type:@"data" format: ([[options objectForKey:@"tokenizer"] isEqual: @"attributed"] ? @"attributed" : @"html")];
+        NSString *tokenObject = (NSString *) [[TML configuration] defaultTokenValueForName: self.shortName type:@"data" format: ([[options objectForKey:@"tokenizer"] isEqual: @"attributed"] ? @"attributed" : @"html")];
         if (tokenObject != nil) return tokenObject;
         return [self description];
     }
@@ -221,7 +221,7 @@
         
         // array must have 2 elements, object and value
         if ([tokenArrayObject count] != 2) {
-            TmlDebug(@"{%@ in %@: array substitution value is not provided}", self.shortName, self.label);
+            TMLDebug(@"{%@ in %@: array substitution value is not provided}", self.shortName, self.label);
             return [self description];
         }
         
@@ -230,7 +230,7 @@
             return [tokenArrayObject objectAtIndex:1];
         }
         
-        TmlDebug(@"{%@ in %@: unsupported array method}", self.shortName, self.label);
+        TMLDebug(@"{%@ in %@: unsupported array method}", self.shortName, self.label);
         return [self description];
     }
     
@@ -243,7 +243,7 @@
         }
         
         if (![[tokenDictionaryObject objectForKey:@"object"] isKindOfClass: NSDictionary.class]) {
-            TmlDebug(@"{%@ in %@: object attribute is missing or invalid}", self.shortName, self.label);
+            TMLDebug(@"{%@ in %@: object attribute is missing or invalid}", self.shortName, self.label);
             return [self description];
         }
         
@@ -259,7 +259,7 @@
             return [object objectForKey:[tokenDictionaryObject objectForKey:@"property"]];
         }
 
-        TmlDebug(@"{%@ in %@: substitution property/value is not provided", self.shortName, self.label);
+        TMLDebug(@"{%@ in %@: substitution property/value is not provided", self.shortName, self.label);
         return [self description];
     }
     
@@ -270,14 +270,14 @@
     return [self.class tokenObjectForName:self.shortName fromTokens:tokens];
 }
 
-- (NSString *) applyLanguageCaseWithKey: (NSString *) caseKey value: (NSString *) value object: (NSObject *) object language: (TmlLanguage *) language options: (NSDictionary *) options {
-    TmlLanguageCase *lcase = [language languageCaseByKeyword:caseKey];
+- (NSString *) applyLanguageCaseWithKey: (NSString *) caseKey value: (NSString *) value object: (NSObject *) object language: (TMLLanguage *) language options: (NSDictionary *) options {
+    TMLLanguageCase *lcase = [language languageCaseByKeyword:caseKey];
     if (lcase == nil)
         return value;
     return [lcase apply:value forObject:object];;
 }
 
-- (NSString *) applyLanguageCasesToValue: (NSString *) tokenValue fromObject: (NSObject *) tokenObject forLanguage: (TmlLanguage *) language andOptions: (NSDictionary *) options {
+- (NSString *) applyLanguageCasesToValue: (NSString *) tokenValue fromObject: (NSObject *) tokenObject forLanguage: (TMLLanguage *) language andOptions: (NSDictionary *) options {
     if ([self.caseKeys count] > 0) {
         for (NSString *caseKey in self.caseKeys) {
             tokenValue = [self applyLanguageCaseWithKey:caseKey value:tokenValue object:tokenObject language:language options:options];
@@ -287,7 +287,7 @@
     return tokenValue;
 }
 
-- (NSString *) substituteInLabel: (NSString *) translatedLabel usingTokens: (NSDictionary *) tokens forLanguage: (TmlLanguage *) language withOptions: (NSDictionary *) options {
+- (NSString *) substituteInLabel: (NSString *) translatedLabel usingTokens: (NSDictionary *) tokens forLanguage: (TMLLanguage *) language withOptions: (NSDictionary *) options {
     NSString *tokenValue = [self tokenValue:tokens withOptions:options];
     
     if ([tokenValue isEqualToString: self.fullName])

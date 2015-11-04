@@ -30,35 +30,35 @@
 
 
 #import <Foundation/Foundation.h>
-#import "TmlApplication.h"
-#import "TmlLanguage.h"
-#import "TmlSource.h"
-#import "TmlConfiguration.h"
-#import "TmlCache.h"
-#import "TmlLogger.h"
+#import "TMLApplication.h"
+#import "TMLLanguage.h"
+#import "TMLSource.h"
+#import "TMLConfiguration.h"
+#import "TMLCache.h"
+#import "TMLLogger.h"
 
-#define TmlLanguageChangedNotification @"TmlLanguageChangedNotification"
-#define TmlIsReachableNotification @"TmlIsReachableNotification"
-#define TmlIsUnreachableNotification @"TmlIsUnreachableNotification"
+#define TMLLanguageChangedNotification @"TMLLanguageChangedNotification"
+#define TMLIsReachableNotification @"TMLIsReachableNotification"
+#define TMLIsUnreachableNotification @"TMLIsUnreachableNotification"
 
-@protocol TmlDelegate;
+@protocol TMLDelegate;
 
-@interface Tml : NSObject
+@interface TML : NSObject
 
-// Holds Tml configuration settings
-@property(nonatomic, strong) TmlConfiguration *configuration;
+// Holds TML configuration settings
+@property(nonatomic, strong) TMLConfiguration *configuration;
 
 // Holds reference to the cache object
-@property(nonatomic, strong) TmlCache *cache;
+@property(nonatomic, strong) TMLCache *cache;
 
 // Holds the application information
-@property(nonatomic, strong) TmlApplication *currentApplication;
+@property(nonatomic, strong) TMLApplication *currentApplication;
 
 // Holds default language of the application
-@property(nonatomic, strong) TmlLanguage *defaultLanguage;
+@property(nonatomic, strong) TMLLanguage *defaultLanguage;
 
 // Holds current language, per user selection
-@property(nonatomic, strong) TmlLanguage *currentLanguage;
+@property(nonatomic, strong) TMLLanguage *currentLanguage;
 
 // Holds the current source key
 @property(nonatomic, strong) NSString *currentSource;
@@ -69,23 +69,23 @@
 // Holds block options
 @property(nonatomic, strong) NSMutableArray *blockOptions;
 
-// Tml delegate
-@property(nonatomic, assign) id <TmlDelegate> delegate;
+// TML delegate
+@property(nonatomic, assign) id <TMLDelegate> delegate;
 
-+ (Tml *) sharedInstance;
++ (TML *) sharedInstance;
 
-+ (Tml *) sharedInstanceWithToken: (NSString *) token;
++ (TML *) sharedInstanceWithToken: (NSString *) token;
 
-+ (Tml *) sharedInstanceWithToken: (NSString *) token launchOptions: (NSDictionary *) launchOptions;
++ (TML *) sharedInstanceWithToken: (NSString *) token launchOptions: (NSDictionary *) launchOptions;
 
 // Configuration methods
-+ (void) configure:(void (^)(TmlConfiguration *config)) changes;
++ (void) configure:(void (^)(TMLConfiguration *config)) changes;
 
 // Returns configuration
-+ (TmlConfiguration *) configuration;
++ (TMLConfiguration *) configuration;
 
 // Returns cache
-+ (TmlCache *) cache;
++ (TMLCache *) cache;
 
 // HTML Translation Methods
 + (NSString *) translate:(NSString *) label withDescription:(NSString *) description andTokens: (NSDictionary *) tokens andOptions: (NSDictionary *) options;
@@ -110,11 +110,11 @@
  Class Methods
  ************************************************************************************/
 
-+ (TmlApplication *) currentApplication;
++ (TMLApplication *) currentApplication;
 
-+ (TmlLanguage *) defaultLanguage;
++ (TMLLanguage *) defaultLanguage;
 
-+ (TmlLanguage *) currentLanguage;
++ (TMLLanguage *) currentLanguage;
 
 + (void) changeLocale: (NSString *) locale success: (void (^)()) success failure: (void (^)(NSError *error)) failure;
 
@@ -123,90 +123,90 @@
 @end
 
 /************************************************************************************
- Tml Delegate
+ TML Delegate
  ************************************************************************************/
 
-@protocol TmlDelegate <NSObject>
+@protocol TMLDelegate <NSObject>
 
 - (void) tr8nDidLoadTranslations;
 
 @end
 
 /************************************************************************************
- Default Tml Macros
+ Default TML Macros
  ************************************************************************************/
 
-#define TmlTranslationKey(label, description) \
-    [TmlTranslationKey generateKeyForLabel: label andDescription: description]
+#define TMLTranslationKey(label, description) \
+    [TMLTranslationKey generateKeyForLabel: label andDescription: description]
 
-#define TmlLocalizedString(label) \
-    [Tml translate: label withDescription: nil andTokens: @{} andOptions: @{}]
+#define TMLLocalizedString(label) \
+    [TML translate: label withDescription: nil andTokens: @{} andOptions: @{}]
 
-#define TmlLocalizedStringWithDescription(label, description) \
-    [Tml translate: label withDescription: description andTokens: @{} andOptions: @{}]
+#define TMLLocalizedStringWithDescription(label, description) \
+    [TML translate: label withDescription: description andTokens: @{} andOptions: @{}]
 
-#define TmlLocalizedStringWithDescriptionAndTokens(label, description, tokens) \
-    [Tml translate: label withDescription: description andTokens: tokens andOptions: @{}]
+#define TMLLocalizedStringWithDescriptionAndTokens(label, description, tokens) \
+    [TML translate: label withDescription: description andTokens: tokens andOptions: @{}]
 
-#define TmlLocalizedStringWithDescriptionAndTokensAndOptions(label, description, tokens, options) \
-    [Tml translate: label withDescription: description andTokens: tokens andOptions: options]
+#define TMLLocalizedStringWithDescriptionAndTokensAndOptions(label, description, tokens, options) \
+    [TML translate: label withDescription: description andTokens: tokens andOptions: options]
 
-#define TmlLocalizedStringWithTokens(label, tokens) \
-    [Tml translate: label withDescription: nil andTokens: tokens andOptions: nil]
+#define TMLLocalizedStringWithTokens(label, tokens) \
+    [TML translate: label withDescription: nil andTokens: tokens andOptions: nil]
 
-#define TmlLocalizedStringWithTokensAndOptions(label, tokens, options) \
-    [Tml translate: label withDescription: nil andTokens: tokens andOptions: options]
+#define TMLLocalizedStringWithTokensAndOptions(label, tokens, options) \
+    [TML translate: label withDescription: nil andTokens: tokens andOptions: options]
 
-#define TmlLocalizedStringWithOptions(label, options) \
-    [Tml translate: label withDescription: nil andTokens: @{} andOptions: options]
+#define TMLLocalizedStringWithOptions(label, options) \
+    [TML translate: label withDescription: nil andTokens: @{} andOptions: options]
 
-#define TmlLocalizedStringWithDescriptionAndOptions(label, description, options) \
-    [Tml translate: label withDescription: description andTokens: @{} andOptions: options]
+#define TMLLocalizedStringWithDescriptionAndOptions(label, description, options) \
+    [TML translate: label withDescription: description andTokens: @{} andOptions: options]
 
-#define TmlLocalizedAttributedString(label) \
-    [Tml translateAttributedString: label withDescription: nil andTokens: @{} andOptions: @{}]
+#define TMLLocalizedAttributedString(label) \
+    [TML translateAttributedString: label withDescription: nil andTokens: @{} andOptions: @{}]
 
-#define TmlLocalizedAttributedStringWithDescription(label, description) \
-    [Tml translateAttributedString: label withDescription: description andTokens: @{} andOptions: @{}]
+#define TMLLocalizedAttributedStringWithDescription(label, description) \
+    [TML translateAttributedString: label withDescription: description andTokens: @{} andOptions: @{}]
 
-#define TmlLocalizedAttributedStringWithDescriptionAndTokens(label, description, tokens) \
-    [Tml translateAttributedString: label withDescription: description andTokens: tokens andOptions: @{}]
+#define TMLLocalizedAttributedStringWithDescriptionAndTokens(label, description, tokens) \
+    [TML translateAttributedString: label withDescription: description andTokens: tokens andOptions: @{}]
 
-#define TmlLocalizedAttributedStringWithDescriptionAndTokensAndOptions(label, description, tokens, options) \
-    [Tml translateAttributedString: label withDescription: description andTokens: tokens andOptions: options]
+#define TMLLocalizedAttributedStringWithDescriptionAndTokensAndOptions(label, description, tokens, options) \
+    [TML translateAttributedString: label withDescription: description andTokens: tokens andOptions: options]
 
-#define TmlLocalizedAttributedStringWithTokens(label, tokens) \
-    [Tml translateAttributedString: label withDescription: nil andTokens: tokens andOptions: nil]
+#define TMLLocalizedAttributedStringWithTokens(label, tokens) \
+    [TML translateAttributedString: label withDescription: nil andTokens: tokens andOptions: nil]
 
-#define TmlLocalizedAttributedStringWithTokensAndOptions(label, tokens, options) \
-    [Tml translateAttributedString: label withDescription: nil andTokens: tokens andOptions: options]
+#define TMLLocalizedAttributedStringWithTokensAndOptions(label, tokens, options) \
+    [TML translateAttributedString: label withDescription: nil andTokens: tokens andOptions: options]
 
-#define TmlLocalizedAttributedStringWithOptions(label, options) \
-    [Tml translateAttributedString: label withDescription: nil andTokens: @{} andOptions: options]
+#define TMLLocalizedAttributedStringWithOptions(label, options) \
+    [TML translateAttributedString: label withDescription: nil andTokens: @{} andOptions: options]
 
-#define TmlBeginSource(name) \
-    [Tml beginBlockWithOptions: @{@"source": name}];
+#define TMLBeginSource(name) \
+    [TML beginBlockWithOptions: @{@"source": name}];
 
-#define TmlEndSource \
-    [Tml endBlockWithOptions];
+#define TMLEndSource \
+    [TML endBlockWithOptions];
 
-#define TmlBeginBlockWithOptions(options) \
-    [Tml beginBlockWithOptions:options];
+#define TMLBeginBlockWithOptions(options) \
+    [TML beginBlockWithOptions:options];
 
-#define TmlEndBlockWithOptions \
-    [Tml endBlockWithOptions];
+#define TMLEndBlockWithOptions \
+    [TML endBlockWithOptions];
 
-#define TmlLocalizedDateWithFormat(date, format) \
-    [Tml localizeDate: date withFormat: format andDescription: nil];
+#define TMLLocalizedDateWithFormat(date, format) \
+    [TML localizeDate: date withFormat: format andDescription: nil];
 
-#define TmlLocalizedDateWithFormatAndDescription(date, format, description) \
-[Tml localizeDate: date withFormat: format andDescription: description];
+#define TMLLocalizedDateWithFormatAndDescription(date, format, description) \
+[TML localizeDate: date withFormat: format andDescription: description];
 
-#define TmlLocalizedDateWithFormatKey(date, formatKey) \
-    [Tml localizeDate: date withFormatKey: formatKey andDescription: nil];
+#define TMLLocalizedDateWithFormatKey(date, formatKey) \
+    [TML localizeDate: date withFormatKey: formatKey andDescription: nil];
 
-#define TmlLocalizedDateWithFormatKeyAndDescription(date, formatKey, description) \
-    [Tml localizeDate: date withFormatKey: formatKey andDescription: description];
+#define TMLLocalizedDateWithFormatKeyAndDescription(date, formatKey, description) \
+    [TML localizeDate: date withFormatKey: formatKey andDescription: description];
 
 /************************************************************************************
  Overload the defeault localization macros
@@ -214,17 +214,17 @@
 
 #undef NSLocalizedString
 #define NSLocalizedString(key, comment) \
-    [Tml translate: key withDescription: comment]
+    [TML translate: key withDescription: comment]
 
 #undef NSLocalizedStringFromTable
 #define NSLocalizedStringFromTable(key, tbl, comment) \
-    [Tml translate: key withDescription: comment]
+    [TML translate: key withDescription: comment]
 
 #undef NSLocalizedStringFromTableInBundle
 #define NSLocalizedStringFromTableInBundle(key, tbl, bundle, comment) \
-    [Tml translate: key withDescription: comment]
+    [TML translate: key withDescription: comment]
 
 #undef NSLocalizedStringWithDefaultValue
 #define NSLocalizedStringWithDefaultValue(key, tbl, bundle, val, comment) \
-    [Tml translate: key withDescription: comment]
+    [TML translate: key withDescription: comment]
 

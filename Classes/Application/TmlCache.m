@@ -28,17 +28,17 @@
  *  THE SOFTWARE.
  */
 
-#import "NSString+TmlAdditions.h"
-#import "TmlCache.h"
-#import "TmlLogger.h"
+#import "NSString+TMLAdditions.h"
+#import "TMLCache.h"
+#import "TMLLogger.h"
 #import <SSZipArchive/SSZipArchive.h>
 
-@interface TmlCache()
+@interface TMLCache()
 @property(strong, nonatomic) NSString *appKey;
 @property(strong, nonatomic) NSString *path;
 @end
 
-@implementation TmlCache
+@implementation TMLCache
 
 @synthesize appKey, path;
 
@@ -52,9 +52,9 @@
 
 - (void) initCachePath {
     NSString *cachePath = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    cachePath = [cachePath stringByAppendingPathComponent: @"Tml"];
+    cachePath = [cachePath stringByAppendingPathComponent: @"TML"];
     cachePath = [cachePath stringByAppendingPathComponent: self.appKey];
-    TmlDebug(@"Cache path: %@", cachePath);
+    TMLDebug(@"Cache path: %@", cachePath);
     [self validatePath: cachePath];
     self.path = cachePath;
 }
@@ -66,7 +66,7 @@
     NSError *error = nil;
     [[NSFileManager defaultManager] createDirectoryAtPath:cachePath withIntermediateDirectories:YES attributes:nil error:&error];
     if (error) {
-        TmlDebug(@"Failed to create cache folder at %@", cachePath);
+        TMLDebug(@"Failed to create cache folder at %@", cachePath);
     }
 }
 
@@ -86,26 +86,26 @@
 - (NSObject *) fetchObjectForKey: (NSString *) key {
     NSString *objectPath = [self cachePathForKey: key];
     
-//    TmlDebug(@"Loading %@ at path %@", key, objectPath);
+//    TMLDebug(@"Loading %@ at path %@", key, objectPath);
     
     if (![[NSFileManager defaultManager] fileExistsAtPath:objectPath]) {
-        TmlDebug(@"Cache miss: %@", key);
+        TMLDebug(@"Cache miss: %@", key);
         return nil;
     }
     
     NSData *jsonData = [NSData dataWithContentsOfFile:objectPath];
 //    NSString* jsonString = [NSString stringWithUTF8String:[jsonData bytes]];
-//    TmlDebug(@"%@", jsonString);
+//    TMLDebug(@"%@", jsonString);
     
     NSError *error = nil;
     NSObject *result = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
     
     if (error) {
-        TmlDebug(@"Error trace: %@", error);
+        TMLDebug(@"Error trace: %@", error);
         return nil;
     }
     
-    TmlDebug(@"Cache hit: %@", key);
+    TMLDebug(@"Cache hit: %@", key);
     return result;
 }
 
@@ -119,7 +119,7 @@
     [fileManager removeItemAtPath:objectPath error:&error];
     
     if (error) {
-        TmlDebug(@"Failed to reset cache for key: %@", self.path);
+        TMLDebug(@"Failed to reset cache for key: %@", self.path);
     }
 }
 
@@ -137,7 +137,7 @@
     
     [fileManager moveItemAtPath:source toPath:target error:&error];
     if (error) {
-        TmlError(@"Failed to move file to path %@. Error: %@", target, error);
+        TMLError(@"Failed to move file to path %@. Error: %@", target, error);
         return false;
     }
     
@@ -160,7 +160,7 @@
 
 - (void) storeData: (NSData *) data forKey: (NSString *) key withOptions: (NSDictionary *) options {
     NSString *objectPath = [self cachePathForKey: key];
-//    TmlDebug(@"Saving %@ to cache %@", key, objectPath);
+//    TMLDebug(@"Saving %@ to cache %@", key, objectPath);
     NSData *copy = [NSData dataWithData:data];
     [copy writeToFile:objectPath atomically:NO];
 }
@@ -208,7 +208,7 @@
     NSString *rootPath = self.path;
     NSArray *contents = [fileManager contentsOfDirectoryAtPath:rootPath error:&error];
     if (error != nil) {
-        TmlError(@"Error getting contents of cache directory: %@", error);
+        TMLError(@"Error getting contents of cache directory: %@", error);
         return nil;
     }
     NSArray *filteredPaths = [contents filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"self matches '^[0-9]+$'"]];
@@ -240,7 +240,7 @@
     for (NSString *bundlePath in allBundlePaths) {
         NSString *bundleVersion = [bundlePath tmlTranslationBundleVersionFromPath];
         if (latestVersion == nil
-            || [latestVersion compareToTmlTranslationBundleVersion:bundleVersion] == NSOrderedAscending) {
+            || [latestVersion compareToTMLTranslationBundleVersion:bundleVersion] == NSOrderedAscending) {
             latestVersion = bundleVersion;
         }
     }
@@ -260,7 +260,7 @@
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if ([fileManager fileExistsAtPath:aPath isDirectory:nil] == NO) {
-        TmlError(@"Tried to load contents of localization bundle but none could be found at path: %@", path);
+        TMLError(@"Tried to load contents of localization bundle but none could be found at path: %@", path);
         return;
     }
     NSString *bundleVersion = [[aPath lastPathComponent] tmlTranslationBundleVersionFromPath];
@@ -273,7 +273,7 @@
                   progressHandler:nil
                 completionHandler:^(NSString *zipPath, BOOL succeeded, NSError *error) {
                     if (error != nil) {
-                        TmlError(@"Error uncompressing local translation bundle: %@", error);
+                        TMLError(@"Error uncompressing local translation bundle: %@", error);
                     }
                     BOOL success = succeeded;
                     NSError *installError = error;
@@ -281,14 +281,14 @@
                     if (success == YES) {
                         if ([fileManager fileExistsAtPath:destinationPath] == YES) {
                             if ([fileManager removeItemAtPath:destinationPath error:&installError] == NO) {
-                                TmlError(@"Error removing old cached translation bundle: %@", installError);
+                                TMLError(@"Error removing old cached translation bundle: %@", installError);
                                 success = NO;
                             }
                         }
                     }
                     if (success == YES
                         && [fileManager moveItemAtPath:tempPath toPath:destinationPath error:&installError] == NO) {
-                        TmlError(@"Error installing uncompressed translation bundle: %@", installError);
+                        TMLError(@"Error installing uncompressed translation bundle: %@", installError);
                         success = NO;
                     }
                     if (completion != nil) {
@@ -313,7 +313,7 @@
     NSString *versionedPath = [self cachePathForTranslationBundleVersion:version];
     BOOL isDir = NO;
     if ([fileManager fileExistsAtPath:versionedPath isDirectory:&isDir] == NO || isDir == NO) {
-        TmlError(@"Cannot selecting cached bundle with version \"%@\"", version);
+        TMLError(@"Cannot selecting cached bundle with version \"%@\"", version);
         return;
     }
     
@@ -324,7 +324,7 @@
     if ([fileManager createSymbolicLinkAtPath:currentBundlePath
                           withDestinationPath:[versionedPath lastPathComponent]
                                         error:&error] == NO) {
-        TmlError(@"Error linking cached translation bundle as current: %@", error);
+        TMLError(@"Error linking cached translation bundle as current: %@", error);
         return;
     }
     
@@ -332,12 +332,12 @@
     NSDictionary *info = @{@"version": version};
     NSData *data = [NSJSONSerialization dataWithJSONObject:info options:0 error:&error];
     if (data == nil) {
-        TmlError(@"Error writing version info: %@", error);
+        TMLError(@"Error writing version info: %@", error);
         return;
     }
     NSString *versionInfoPath = [self cachedBundleVersionInfoPath];
     if ([data writeToFile:versionInfoPath options:NSDataWritingAtomic error:&error] == NO) {
-        TmlError(@"Error saving version info: %@", error);
+        TMLError(@"Error saving version info: %@", error);
     }
 }
 

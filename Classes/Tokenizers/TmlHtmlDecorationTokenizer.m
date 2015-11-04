@@ -28,10 +28,10 @@
  *  THE SOFTWARE.
  */
 
-#import "TmlHtmlDecorationTokenizer.h"
-#import "Tml.h"
+#import "TMLHtmlDecorationTokenizer.h"
+#import "TML.h"
 
-@implementation TmlHtmlDecorationTokenizer
+@implementation TMLHtmlDecorationTokenizer
 
 
 - (NSString *) applyToken: (NSString *) token toValue: (NSString *) value {
@@ -41,7 +41,7 @@
     id decoration = [self.tokensData objectForKey:token];
     
     if (decoration == nil || [decoration isKindOfClass:NSDictionary.class]) {
-        decoration = [[Tml configuration] defaultTokenValueForName:token type:@"decoration" format: @"html"];
+        decoration = [[TML configuration] defaultTokenValueForName:token type:@"decoration" format: @"html"];
         if (decoration == nil) return value;
         
         NSString *defaultValue = [((NSString *) decoration) stringByReplacingOccurrencesOfString:TR8N_PLACEHOLDER withString:value];

@@ -30,13 +30,13 @@
 
 #import <Foundation/Foundation.h>
 
-@class TmlApplication;
+@class TMLApplication;
 
-@interface TmlPostOffice : NSObject
+@interface TMLPostOffice : NSObject
 
-@property(nonatomic, strong) TmlApplication *application;
+@property(nonatomic, strong) TMLApplication *application;
 
-- (id) initWithApplication: (TmlApplication *) owner;
+- (id) initWithApplication: (TMLApplication *) owner;
 
 - (void) deliver: (NSString *) template_keyword
               to: (NSString *) to

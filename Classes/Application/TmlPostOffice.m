@@ -28,16 +28,16 @@
  *  THE SOFTWARE.
  */
 
-#import "TmlPostOffice.h"
-#import "TmlApplication.h"
-#import "TmlApiClient.h"
-#import "Tml.h"
+#import "TMLPostOffice.h"
+#import "TMLApplication.h"
+#import "TMLApiClient.h"
+#import "TML.h"
 
-@implementation TmlPostOffice
+@implementation TMLPostOffice
 
 @synthesize application;
 
-- (id) initWithApplication: (TmlApplication *) owner {
+- (id) initWithApplication: (TMLApplication *) owner {
     if (self == [super init]) {
         self.application = owner;
     }
@@ -102,7 +102,7 @@
 //    NSMutableDictionary *params = [NSMutableDictionary dictionary];
 //    [params setObject:application.key forKey:@"client_id"];
 //    [params setObject:token forKey:@"device_token"];
-//    [params setObject:[[Tml currentLanguage] locale] forKey:@"locale"];
+//    [params setObject:[[TML currentLanguage] locale] forKey:@"locale"];
 //
 //    NSArray *keys = @[@"name", @"first_name", @"last_name", @"gender", @"tokens", @"external_id", @"email", @"phone_number", @"country_code", @"list", @"lists"];
 //    for (NSString *key in keys) {

@@ -28,12 +28,12 @@
  *  THE SOFTWARE.
  */
 
-#import "TmlLanguageCaseRule.h"
-#import "TmlRulesParser.h"
-#import "TmlRulesEvaluator.h"
-#import "TmlLanguageContext.h"
+#import "TMLLanguageCaseRule.h"
+#import "TMLRulesParser.h"
+#import "TMLRulesEvaluator.h"
+#import "TMLLanguageContext.h"
 
-@implementation TmlLanguageCaseRule
+@implementation TMLLanguageCaseRule
 
 @synthesize languageCase, description, examples, conditions, compiledConditions, operations, compiledOperations;
 
@@ -51,7 +51,7 @@
 
 - (NSArray *) conditionsExpression {
     if (self.compiledConditions == nil) {
-        TmlRulesParser *p = [TmlRulesParser parserWithExpression: self.conditions];
+        TMLRulesParser *p = [TMLRulesParser parserWithExpression: self.conditions];
         self.compiledConditions = (NSArray *) [p parse];
     }
     return self.compiledConditions;
@@ -60,7 +60,7 @@
 
 - (NSArray *) operationsExpression {
     if (self.compiledOperations == nil) {
-        TmlRulesParser *p = [TmlRulesParser parserWithExpression: self.operations];
+        TMLRulesParser *p = [TMLRulesParser parserWithExpression: self.operations];
         self.compiledOperations = (NSArray *) [p parse];
     }
     return self.compiledOperations;
@@ -77,7 +77,7 @@
         return @{@"@gender": @"unknown"};
     }
     
-    TmlLanguageContext *context = (TmlLanguageContext *) [self.languageCase.language contextByKeyword: @"gender"];
+    TMLLanguageContext *context = (TMLLanguageContext *) [self.languageCase.language contextByKeyword: @"gender"];
     
     if (context == nil)
         return @{@"@gender": @"unknown"};
@@ -93,7 +93,7 @@
     if (self.conditions == nil)
         return @NO;
     
-    TmlRulesEvaluator *p = [[TmlRulesEvaluator alloc] init];
+    TMLRulesEvaluator *p = [[TMLRulesEvaluator alloc] init];
     [p evaluateExpression:@[@"let", @"@value", value]];
     
     if (object) {
@@ -111,7 +111,7 @@
     if (self.operations == nil)
         return value;
     
-    TmlRulesEvaluator *p = [[TmlRulesEvaluator alloc] init];
+    TMLRulesEvaluator *p = [[TMLRulesEvaluator alloc] init];
     [p evaluateExpression:@[@"let", @"@value", value]];
     
     return (NSString *) [p evaluateExpression:[self operationsExpression]];

@@ -28,31 +28,31 @@
  *  THE SOFTWARE.
  */
 
-#ifndef TmlLogger_h
-#define TmlLogger_h
+#ifndef TMLLogger_h
+#define TMLLogger_h
 
-static inline void TmlLog(NSString *format, ...) {
+static inline void TMLLog(NSString *format, ...) {
     __block va_list arg_list;
     va_start (arg_list, format);
     NSString *formattedString = [[NSString alloc] initWithFormat:format arguments:arg_list];
     va_end(arg_list);
-    NSLog(@"[Tml] %@", formattedString);
+    NSLog(@"[TML] %@", formattedString);
 }
 
 #ifdef TML_ERROR
-#define TmlError(...) TmlLog(__VA_ARGS__)
+#define TMLError(...) TMLLog(__VA_ARGS__)
 #else
-#define TmlError(...)
+#define TMLError(...)
 #endif
 
 //#ifdef TML_DEBUG
-#define TmlDebug(...) TmlLog(__VA_ARGS__)
+#define TMLDebug(...) TMLLog(__VA_ARGS__)
 //#else
-//#define TmlDebug(...)
+//#define TMLDebug(...)
 //#endif
 
 #ifdef TML_MESSAGING_DEBUG
-#define MessagingDebug(...) TmlLog(__VA_ARGS__)
+#define MessagingDebug(...) TMLLog(__VA_ARGS__)
 #else
 #define MessagingDebug(...)
 #endif

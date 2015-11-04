@@ -1,15 +1,15 @@
 //
-//  NSString+TmlAdditions.m
+//  NSString+TMLAdditions.m
 //  Demo
 //
 //  Created by Pasha on 10/29/15.
-//  Copyright © 2015 TmlHub Inc. All rights reserved.
+//  Copyright © 2015 TMLHub Inc. All rights reserved.
 //
 
-#import "NSString+TmlAdditions.h"
-#import "Tml.h"
+#import "NSString+TMLAdditions.h"
+#import "TML.h"
 
-@implementation NSString (TmlAdditions)
+@implementation NSString (TMLAdditions)
 
 - (NSString *)tmlTranslationBundleVersionFromPath {
     NSError *error = nil;
@@ -17,7 +17,7 @@
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:&error];
     if (error != nil) {
-        TmlError(@"Error constructing regexp for determinging version of local localization bundles: %@", error);
+        TMLError(@"Error constructing regexp for determinging version of local localization bundles: %@", error);
         return nil;
     }
     
@@ -29,7 +29,7 @@
     return version;
 }
 
-- (NSComparisonResult)compareToTmlTranslationBundleVersion:(NSString *)version {
+- (NSComparisonResult)compareToTMLTranslationBundleVersion:(NSString *)version {
     NSInteger ours = [self integerValue];
     NSInteger their = (version == nil) ? 0 : [version integerValue];
     if (ours < their) {

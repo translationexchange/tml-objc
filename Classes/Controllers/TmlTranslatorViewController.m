@@ -29,12 +29,12 @@
  */
 
 
-#import "TmlTranslatorViewController.h"
-#import "Tml.h"
+#import "TMLTranslatorViewController.h"
+#import "TML.h"
 #import "MBProgressHUD.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface TmlTranslatorViewController ()
+@interface TMLTranslatorViewController ()
 
 @property(nonatomic, strong) UIWebView *webView;
 
@@ -48,25 +48,25 @@
 
 @end
 
-@implementation TmlTranslatorViewController
+@implementation TMLTranslatorViewController
 
 @synthesize webView, translationKey;
 
 + (void) toggleInAppTranslationsFromController:(UIViewController *) controller {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:controller.view animated:YES];
 
-    [Tml configuration].inContextTranslatorEnabled = ![Tml configuration].inContextTranslatorEnabled;
+    [TML configuration].inContextTranslatorEnabled = ![TML configuration].inContextTranslatorEnabled;
     
-    if ([Tml configuration].inContextTranslatorEnabled)
+    if ([TML configuration].inContextTranslatorEnabled)
         hud.labelText = @"In-app translator enabled";
     else
         hud.labelText = @"In-app translator disabled";
     
-    [[NSNotificationCenter defaultCenter] postNotificationName: TmlLanguageChangedNotification object: [Tml configuration].currentLocale];
+    [[NSNotificationCenter defaultCenter] postNotificationName: TMLLanguageChangedNotification object: [TML configuration].currentLocale];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         [hud hide:YES];
-        if ([Tml configuration].inContextTranslatorEnabled) {
+        if ([TML configuration].inContextTranslatorEnabled) {
             [[[UIAlertView alloc] initWithTitle: nil
                                         message: @"Tap and hold on any label in the UI to bring up the translation tools." delegate:nil
                               cancelButtonTitle: @"Ok" otherButtonTitles:nil] show];
@@ -75,9 +75,9 @@
 }
 
 + (void) translateFromController:(UIViewController *) controller withOptions: (NSDictionary *) options {
-    TmlApplication *app = [Tml sharedInstance].currentApplication;
+    TMLApplication *app = [TML sharedInstance].currentApplication;
 
-    if (![TmlConfiguration isHostAvailable:[app.tools valueForKey:@"host"]]) {
+    if (![TMLConfiguration isHostAvailable:[app.tools valueForKey:@"host"]]) {
         [[[UIAlertView alloc] initWithTitle: @"Translation Center"
                                     message: @"You are not currently conntected to the internet. Please enable connection and try again."
                                    delegate: self
@@ -85,13 +85,13 @@
                           otherButtonTitles: nil] show];
     }
         
-    TmlTranslatorViewController *translator = [[TmlTranslatorViewController alloc] init];
+    TMLTranslatorViewController *translator = [[TMLTranslatorViewController alloc] init];
     translator.translationKey = [options objectForKey:@"translation_key"];
     [controller presentViewController:translator animated: YES completion: nil];
 }
 
 + (void) translateFromController:(UIViewController *) controller {
-    TmlTranslatorViewController *translator = [[TmlTranslatorViewController alloc] init];
+    TMLTranslatorViewController *translator = [[TMLTranslatorViewController alloc] init];
     [controller presentViewController:translator animated: YES completion: nil];
 }
 
@@ -101,9 +101,9 @@
     self.view.backgroundColor = [UIColor colorWithWhite:0.97f alpha:1.0f];
     
     UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 25, self.view.frame.size.width, 44.0)];
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:TmlLocalizedString(@"Cancel") style:UIBarButtonItemStyleDone target:self action:@selector(dismiss:)];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:TMLLocalizedString(@"Cancel") style:UIBarButtonItemStyleDone target:self action:@selector(dismiss:)];
     
-    UINavigationItem *titleItem = [[UINavigationItem alloc] initWithTitle:TmlLocalizedString(@"Translate")];
+    UINavigationItem *titleItem = [[UINavigationItem alloc] initWithTitle:TMLLocalizedString(@"Translate")];
     titleItem.leftBarButtonItem=doneButton;
     navBar.items = @[titleItem];
     [self.view addSubview:navBar];
@@ -115,7 +115,7 @@
 }
 
 - (NSString *) host {
-    TmlApplication *app = [Tml sharedInstance].currentApplication;
+    TMLApplication *app = [TML sharedInstance].currentApplication;
     NSString *host = [app.tools objectForKey: @"host"];
     if(!host) host = @"https://translation-center.translationexchange.com";
     return host;
@@ -124,8 +124,8 @@
 - (void) viewDidLoad {
     [super viewDidLoad];
     
-    TmlApplication *app = [Tml sharedInstance].currentApplication;
-    TmlLanguage *lang = [Tml sharedInstance].currentLanguage;
+    TMLApplication *app = [TML sharedInstance].currentApplication;
+    TMLLanguage *lang = [TML sharedInstance].currentLanguage;
     
     NSString *url = nil;
 
@@ -135,7 +135,7 @@
         url = [NSString stringWithFormat:@"%@/mobile?locale=%@&key=%@", [self host], lang.locale, app.key];
     }
     
-    TmlDebug(@"url %@", url);
+    TMLDebug(@"url %@", url);
     
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
     
@@ -185,7 +185,7 @@
 }
 
 -(IBAction)dismiss:(id)sender {
-    [Tml reloadTranslations];
+    [TML reloadTranslations];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

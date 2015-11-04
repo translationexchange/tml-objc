@@ -29,9 +29,9 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TmlLanguage.h"
+#import "TMLLanguage.h"
 
-@interface TmlConfiguration : NSObject
+@interface TMLConfiguration : NSObject
 
 @property(nonatomic, strong) NSMutableDictionary *settings;
 

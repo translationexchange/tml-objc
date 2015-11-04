@@ -29,16 +29,16 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TmlBase.h"
+#import "TMLBase.h"
 
-@class TmlApiClient;
-@class TmlPostOffice;
-@class TmlLanguage;
-@class TmlSource;
+@class TMLApiClient;
+@class TMLPostOffice;
+@class TMLLanguage;
+@class TMLSource;
 
-@interface TmlApplication : TmlBase
+@interface TMLApplication : TMLBase
 
-// Application host - points to the TmlHub server
+// Application host - points to the TMLHub server
 @property(nonatomic, strong) NSString *host;
 
 // Application key - must always be specified
@@ -51,10 +51,10 @@
 @property(nonatomic, strong) NSString *accessToken;
 
 // API Client
-@property(nonatomic, strong) TmlApiClient *apiClient;
+@property(nonatomic, strong) TMLApiClient *apiClient;
 
 // PostOffice Client
-@property(nonatomic, strong) TmlPostOffice *postOffice;
+@property(nonatomic, strong) TMLPostOffice *postOffice;
 
 // Holds scheduler for background tasks
 @property(nonatomic, strong) NSTimer *scheduler;
@@ -100,9 +100,9 @@
 
 - (void) resetTranslations;
 
-- (TmlLanguage *) languageForLocale: (NSString *) locale;
+- (TMLLanguage *) languageForLocale: (NSString *) locale;
 
-- (TmlSource *) sourceForKey: (NSString *) sourceKey andLocale: (NSString *) locale;
+- (TMLSource *) sourceForKey: (NSString *) sourceKey andLocale: (NSString *) locale;
 
 - (BOOL) isTranslationCacheEmpty;
 

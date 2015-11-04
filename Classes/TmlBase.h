@@ -30,7 +30,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TmlBase : NSObject
+@interface TMLBase : NSObject
 
 - (id) initWithAttributes:(NSDictionary *)newAttributes;
 

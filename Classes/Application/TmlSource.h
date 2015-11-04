@@ -29,15 +29,15 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TmlBase.h"
-#import "TmlApplication.h"
-#import "TmlLanguage.h"
-#import "TmlTranslationKey.h"
+#import "TMLBase.h"
+#import "TMLApplication.h"
+#import "TMLLanguage.h"
+#import "TMLTranslationKey.h"
 
-@interface TmlSource : TmlBase
+@interface TMLSource : TMLBase
 
 // Reference back to the application it belongs to
-@property(nonatomic, weak) TmlApplication *application;
+@property(nonatomic, weak) TMLApplication *application;
 
 // Source key
 @property(nonatomic, strong) NSString *key;

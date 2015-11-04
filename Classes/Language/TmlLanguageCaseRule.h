@@ -29,13 +29,13 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TmlLanguageCase.h"
-#import "TmlBase.h"
+#import "TMLLanguageCase.h"
+#import "TMLBase.h"
 
-@interface TmlLanguageCaseRule : TmlBase
+@interface TMLLanguageCaseRule : TMLBase
 
 // Reference back to the language case the rule belongs to
-@property(nonatomic, weak) TmlLanguageCase *languageCase;
+@property(nonatomic, weak) TMLLanguageCase *languageCase;
 
 // Rule description
 @property(nonatomic, strong) NSString *description;

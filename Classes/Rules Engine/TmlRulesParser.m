@@ -28,9 +28,9 @@
  *  THE SOFTWARE.
  */
 
-#import "TmlRulesParser.h"
+#import "TMLRulesParser.h"
 
-@interface TmlRulesParser (Private)
+@interface TMLRulesParser (Private)
 
 + (NSRegularExpression *) tokensRegularExpression;
 
@@ -42,7 +42,7 @@
 
 @end
 
-@implementation TmlRulesParser
+@implementation TMLRulesParser
 @synthesize tokens;
 
 + (NSRegularExpression *) tokensRegularExpression {
@@ -56,8 +56,8 @@
     return regex;
 }
 
-+ (TmlRulesParser *) parserWithExpression: (NSString *)expression {
-    return [[TmlRulesParser alloc] initWithExpression:expression];
++ (TMLRulesParser *) parserWithExpression: (NSString *)expression {
+    return [[TMLRulesParser alloc] initWithExpression:expression];
 }
 
 - (id) initWithExpression: (NSString *)expression {

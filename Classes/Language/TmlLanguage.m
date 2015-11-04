@@ -28,24 +28,24 @@
  *  THE SOFTWARE.
  */
 
-#import "TmlLanguage.h"
-#import "TmlApplication.h"
-#import "TmlLanguageCase.h"
-#import "TmlLanguageContext.h"
-#import "TmlBase.h"
-#import "Tml.h"
-#import "TmlApiClient.h"
+#import "TMLLanguage.h"
+#import "TMLApplication.h"
+#import "TMLLanguageCase.h"
+#import "TMLLanguageContext.h"
+#import "TMLBase.h"
+#import "TML.h"
+#import "TMLApiClient.h"
 
-@implementation TmlLanguage
+@implementation TMLLanguage
 
 @synthesize application, locale, englishName, nativeName, rightToLeft, contexts, cases, flagUrl;
 
-+ (TmlLanguage *) defaultLanguage {
++ (TMLLanguage *) defaultLanguage {
     NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"en-US" ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:jsonPath];
     NSError *error = nil;
     NSDictionary *attributes = (NSDictionary *) [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
-    return [[TmlLanguage alloc] initWithAttributes:attributes];
+    return [[TMLLanguage alloc] initWithAttributes:attributes];
 }
 
 - (NSString *) cacheKey {
@@ -67,7 +67,7 @@
         NSDictionary *casesHash = (NSDictionary *) [attributes objectForKey:@"cases"];
         for (NSString *key in [casesHash allKeys]) {
             NSDictionary *caseData = [casesHash objectForKey:key];
-            TmlLanguageCase *lcase = [[TmlLanguageCase alloc] initWithAttributes:caseData];
+            TMLLanguageCase *lcase = [[TMLLanguageCase alloc] initWithAttributes:caseData];
             lcase.keyword = key;
             lcase.language = self;
             [languageCases setObject:lcase forKey:key];
@@ -80,7 +80,7 @@
         NSDictionary *contextsHash = (NSDictionary *) [attributes objectForKey:@"contexts"];
         for (NSString *key in [contextsHash allKeys]) {
             NSDictionary *contextData = [contextsHash objectForKey:key];
-            TmlLanguageContext *lcontext = [[TmlLanguageContext alloc] initWithAttributes:contextData];
+            TMLLanguageContext *lcontext = [[TMLLanguageContext alloc] initWithAttributes:contextData];
             lcontext.keyword = key;
             lcontext.language = self;
             [languageContexts setObject:lcontext forKey:key];
@@ -101,12 +101,12 @@
      ];
 }
 
-- (TmlLanguageContext *) contextByKeyword: (NSString *) keyword {
+- (TMLLanguageContext *) contextByKeyword: (NSString *) keyword {
     return [self.contexts objectForKey:keyword];
 }
 
-- (TmlLanguageContext *) contextByTokenName: (NSString *) tokenName {
-    for (TmlLanguageContext *context in [self.contexts allValues]) {
+- (TMLLanguageContext *) contextByTokenName: (NSString *) tokenName {
+    for (TMLLanguageContext *context in [self.contexts allValues]) {
         if ([context isApplicableToTokenName:tokenName]) {
             return context;
         }
@@ -114,7 +114,7 @@
     return nil;
 }
 
-- (TmlLanguageCase *) languageCaseByKeyword: (NSString *) keyword {
+- (TMLLanguageCase *) languageCaseByKeyword: (NSString *) keyword {
     return [self.cases objectForKey:keyword];
 }
 
@@ -162,14 +162,14 @@
     NSObject *value = [options objectForKey:key];
     if (value) return value;
     
-    value = [Tml blockOptionForKey:key];
+    value = [TML blockOptionForKey:key];
     if (value) return value;
     
     return defaultValue;
 }
 
 - (NSObject *) translationKeyWithKey: (NSString *) key label: (NSString *) label description:(NSString *) description options: (NSDictionary *) options {
-    NSString *keyLocale = (NSString *) [self valueFromOptions:options forKey:@"locale" withDefault:[[Tml sharedInstance] defaultLanguage].locale];
+    NSString *keyLocale = (NSString *) [self valueFromOptions:options forKey:@"locale" withDefault:[[TML sharedInstance] defaultLanguage].locale];
     NSNumber *keyLevel = (NSNumber *) [self valueFromOptions:options forKey:@"level" withDefault:[NSNumber numberWithInt:0]];
     
     NSMutableDictionary *keyAttributes = [NSMutableDictionary dictionaryWithDictionary:@{
@@ -185,28 +185,28 @@
     if (self.application)
         [keyAttributes setObject:self.application forKey:@"application"];
 
-    return [[TmlTranslationKey alloc] initWithAttributes:keyAttributes];
+    return [[TMLTranslationKey alloc] initWithAttributes:keyAttributes];
 }
 
 - (NSObject *) translate:(NSString *) label withDescription:(NSString *) description andTokens: (NSDictionary *) tokens andOptions: (NSDictionary *) options {
-    NSString *keyHash = [TmlTranslationKey generateKeyForLabel:label andDescription:description];
-    TmlTranslationKey *translationKey = (TmlTranslationKey *) [self translationKeyWithKey:keyHash label:label description:description options:options];
+    NSString *keyHash = [TMLTranslationKey generateKeyForLabel:label andDescription:description];
+    TMLTranslationKey *translationKey = (TMLTranslationKey *) [self translationKeyWithKey:keyHash label:label description:description options:options];
     
-//    TmlDebug(@"Translating %@", label);
+//    TMLDebug(@"Translating %@", label);
     
     if ([self.application isTranslationCacheEmpty]) {
         return [translationKey translateToLanguage: self withTokens: tokens andOptions: options];
     }
     
-    if ([tokens objectForKey:@"viewing_user"] == nil && [Tml configuration].viewingUser != nil) {
+    if ([tokens objectForKey:@"viewing_user"] == nil && [TML configuration].viewingUser != nil) {
         NSMutableDictionary *tokensWithViewingUser = [NSMutableDictionary dictionaryWithDictionary:tokens];
-        [tokensWithViewingUser setObject:[Tml configuration].viewingUser forKey:@"viewing_user"];
+        [tokensWithViewingUser setObject:[TML configuration].viewingUser forKey:@"viewing_user"];
         tokens = tokensWithViewingUser;
     }
 
-    NSString *sourceKey = (NSString *) [self valueFromOptions:options forKey:@"source" withDefault:[[Tml sharedInstance] currentSource]];
+    NSString *sourceKey = (NSString *) [self valueFromOptions:options forKey:@"source" withDefault:[[TML sharedInstance] currentSource]];
     if (sourceKey) {
-        TmlSource *source = (TmlSource *) [self.application sourceForKey:sourceKey andLocale: self.locale];
+        TMLSource *source = (TMLSource *) [self.application sourceForKey:sourceKey andLocale: self.locale];
         if (source) {
             NSArray *translations = [source translationsForKey:keyHash inLanguage:self.locale];
             if (translations != nil) {

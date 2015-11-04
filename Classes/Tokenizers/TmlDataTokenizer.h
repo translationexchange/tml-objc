@@ -29,9 +29,9 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TmlLanguage.h"
+#import "TMLLanguage.h"
 
-@interface TmlDataTokenizer : NSObject
+@interface TMLDataTokenizer : NSObject
 
 // Label from which the tokens were extracted (original or translated)
 @property(nonatomic, strong) NSString *label;
@@ -49,8 +49,8 @@
 
 - (NSArray *) tokenNames;
 
-- (NSString *) substituteTokensInLabelUsingData: (NSDictionary *) tokensData forLanguage:(TmlLanguage *) language;
+- (NSString *) substituteTokensInLabelUsingData: (NSDictionary *) tokensData forLanguage:(TMLLanguage *) language;
 
-- (NSString *) substituteTokensInLabelUsingData: (NSDictionary *) tokensData forLanguage:(TmlLanguage *) language withOptions: (NSDictionary *) options;
+- (NSString *) substituteTokensInLabelUsingData: (NSDictionary *) tokensData forLanguage:(TMLLanguage *) language withOptions: (NSDictionary *) options;
 
 @end

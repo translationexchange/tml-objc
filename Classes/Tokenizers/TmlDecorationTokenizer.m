@@ -28,14 +28,14 @@
  *  THE SOFTWARE.
  */
 
-#import "TmlDecorationTokenizer.h"
+#import "TMLDecorationTokenizer.h"
 
-@interface TmlDecorationTokenizer ()
+@interface TMLDecorationTokenizer ()
 
 
 @end
 
-@implementation TmlDecorationTokenizer
+@implementation TMLDecorationTokenizer
 
 @synthesize tokenNames, fragments, tokensData, label, expression, allowedTokenNames, options;
 

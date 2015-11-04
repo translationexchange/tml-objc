@@ -30,7 +30,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TmlCache : NSObject
+@interface TMLCache : NSObject
 
 @property(readonly, nonatomic) NSString *appKey;
 

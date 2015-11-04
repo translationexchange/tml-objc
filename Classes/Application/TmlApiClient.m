@@ -28,15 +28,15 @@
  *  THE SOFTWARE.
  */
 
-#import "TmlApiClient.h"
-#import "Tml.h"
-#import "TmlApplication.h"
+#import "TMLApiClient.h"
+#import "TML.h"
+#import "TMLApplication.h"
 
-@implementation TmlApiClient
+@implementation TMLApiClient
 
 @synthesize application;
 
-- (id) initWithApplication: (TmlApplication *) owner {
+- (id) initWithApplication: (TMLApplication *) owner {
     if (self == [super init]) {
         self.application = owner;
     }
@@ -72,20 +72,20 @@
 
 - (NSObject *) parseData: (NSData *) data {
 //    NSString *json = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//    TmlDebug(@"Response: %@", json);
+//    TMLDebug(@"Response: %@", json);
     
     NSError *error = nil;
     NSObject *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     
     if (error) {
-        TmlDebug(@"Error trace: %@", error);
+        TMLDebug(@"Error trace: %@", error);
         return nil;
     }
     
     if ([responseObject isKindOfClass:NSDictionary.class]) {
         NSDictionary *responseData = (NSDictionary *) responseObject;
         if ([responseData valueForKey:@"error"] != nil) {
-            TmlDebug(@"Error trace: %@", [responseData valueForKey:@"error"]);
+            TMLDebug(@"Error trace: %@", [responseData valueForKey:@"error"]);
             return nil;
         }
     }
@@ -99,7 +99,7 @@
                          success: (void (^)(id responseObject)) success
                          failure: (void (^)(NSError *error)) failure {
     if (error) {
-        TmlDebug(@"Error: %@", error);
+        TMLDebug(@"Error: %@", error);
         failure(error);
         return;
     }
@@ -117,7 +117,7 @@
 //    }
     
     if ([options objectForKey:@"cache_key"]) {
-        [Tml.cache storeData: data forKey: [options objectForKey:@"cache_key"] withOptions: options];
+        [TML.cache storeData: data forKey: [options objectForKey:@"cache_key"] withOptions: options];
     }
     
     success(responseObject);
@@ -155,7 +155,7 @@
 {
     
     if ([options objectForKey:@"cache_key"]) {
-        NSObject *data = [Tml.cache fetchObjectForKey:[options objectForKey:@"cache_key"]];
+        NSObject *data = [TML.cache fetchObjectForKey:[options objectForKey:@"cache_key"]];
         if (data) {
             success(data);
             return;
@@ -163,7 +163,7 @@
     }
     
     NSString *fullPathWithQuery = [NSString stringWithFormat:@"%@?%@", [self apiFullPath: path], [self urlEncodedStringFromParams: [self apiParameters: params]]];
-    TmlDebug(@"GET %@", fullPathWithQuery);
+    TMLDebug(@"GET %@", fullPathWithQuery);
 
     NSURL *url = [NSURL URLWithString:fullPathWithQuery];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -185,7 +185,7 @@
       success: (void (^)(id responseObject)) success
       failure: (void (^)(NSError *error)) failure
 {
-//    TmlDebug(@"POST %@", [self apiFullPath: path]);
+//    TMLDebug(@"POST %@", [self apiFullPath: path]);
 
     NSURL *url = [NSURL URLWithString:[self apiFullPath: path]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];

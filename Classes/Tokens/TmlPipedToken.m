@@ -42,12 +42,12 @@
  # {count || message, messages}  - will include count:  "5 messages"
  #
  ***********************************************************************/
-#import "Tml.h"
-#import "TmlPipedToken.h"
-#import "TmlLanguageCase.h"
-#import "TmlLanguageContextRule.h"
+#import "TML.h"
+#import "TMLPipedToken.h"
+#import "TMLLanguageCase.h"
+#import "TMLLanguageContextRule.h"
 
-@implementation TmlPipedToken
+@implementation TMLPipedToken
 
 @synthesize separator, parameters;
 
@@ -110,7 +110,7 @@
  * results in: {"one": "likes", "other": "like"}
  *
  */
-- (NSDictionary *) generateValueMapForContext: (TmlLanguageContext *) context {
+- (NSDictionary *) generateValueMapForContext: (TMLLanguageContext *) context {
     NSMutableDictionary *values = [NSMutableDictionary dictionary];
     
     NSString *firstParam = [self.parameters objectAtIndex:0];
@@ -171,7 +171,7 @@
                 [parts removeObjectAtIndex:0];
                 
                 for (NSString *caseKey in parts) {
-                    TmlLanguageCase *lcase = [context.language languageCaseByKeyword:caseKey];
+                    TMLLanguageCase *lcase = [context.language languageCaseByKeyword:caseKey];
                     if (lcase == nil)
                         return nil;
                     
@@ -190,49 +190,49 @@
     return [NSString stringWithFormat:@"#%@#", self.shortName];
 }
 
-- (NSString *) substituteInLabel: (NSString *) translatedLabel usingTokens: (NSDictionary *) tokens forLanguage: (TmlLanguage *) language withOptions: (NSDictionary *) options {
+- (NSString *) substituteInLabel: (NSString *) translatedLabel usingTokens: (NSDictionary *) tokens forLanguage: (TMLLanguage *) language withOptions: (NSDictionary *) options {
     NSObject *object = [tokens objectForKey:self.shortName];
     
     if (object == nil) {
-        TmlDebug(@"{%@: missing value for %@}", translatedLabel, self.shortName);
+        TMLDebug(@"{%@: missing value for %@}", translatedLabel, self.shortName);
         return translatedLabel;
     }
     
     if ([self.parameters count] == 0) {
-        TmlDebug(@"{%@: missing piped params for %@}", translatedLabel, self.shortName);
+        TMLDebug(@"{%@: missing piped params for %@}", translatedLabel, self.shortName);
         return translatedLabel;
     }
     
-    TmlLanguageContext *context = [self contextForLanguage:language];
+    TMLLanguageContext *context = [self contextForLanguage:language];
     if (context == nil) {
-        TmlDebug(@"{%@: context not available for %@}", translatedLabel, self.shortName);
+        TMLDebug(@"{%@: context not available for %@}", translatedLabel, self.shortName);
         return translatedLabel;
     }
     
     NSDictionary *valueMap = [self generateValueMapForContext:context];
     
     if (valueMap == nil) {
-        TmlDebug(@"{%@: invalid context or piped params for %@}", translatedLabel, self.shortName);
+        TMLDebug(@"{%@: invalid context or piped params for %@}", translatedLabel, self.shortName);
         return translatedLabel;
     }
     
-    TmlLanguageContextRule *rule = (TmlLanguageContextRule *) [context findMatchingRule:object];
+    TMLLanguageContextRule *rule = (TMLLanguageContextRule *) [context findMatchingRule:object];
 
     if (rule == nil) {
-        TmlDebug(@"{%@: no context rule matched for %@}", translatedLabel, self.shortName);
+        TMLDebug(@"{%@: no context rule matched for %@}", translatedLabel, self.shortName);
         return translatedLabel;
     }
     
     NSString *value = [valueMap objectForKey:rule.keyword];
     if (value == nil) {
-        TmlLanguageContextRule *fallbackRule = (TmlLanguageContextRule *) context.fallbackRule;
+        TMLLanguageContextRule *fallbackRule = (TMLLanguageContextRule *) context.fallbackRule;
         if (fallbackRule && [valueMap objectForKey:fallbackRule.keyword]) {
             value = [valueMap objectForKey:fallbackRule.keyword];
         }
     }
     
     if (value == nil) {
-        TmlDebug(@"{%@: no value selected for %@}", translatedLabel, self.shortName);
+        TMLDebug(@"{%@: no value selected for %@}", translatedLabel, self.shortName);
         return translatedLabel;
     }
 

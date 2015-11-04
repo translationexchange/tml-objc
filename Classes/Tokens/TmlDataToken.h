@@ -29,11 +29,11 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TmlBase.h"
-#import "TmlLanguage.h"
-#import "TmlLanguageContext.h"
+#import "TMLBase.h"
+#import "TMLLanguage.h"
+#import "TMLLanguageContext.h"
 
-@interface TmlDataToken : TmlBase
+@interface TMLDataToken : TMLBase
 
 // Original label from where the token was extracted
 @property (nonatomic, strong) NSString *label;
@@ -75,14 +75,14 @@
 // Returns name based on various options
 - (NSString *) nameWithOptions: (NSDictionary *) options;
 
-- (TmlLanguageContext *) contextForLanguage: (TmlLanguage *) language;
+- (TMLLanguageContext *) contextForLanguage: (TMLLanguage *) language;
 
 - (NSString *) tokenValue: (NSDictionary *) tokens;
 
 - (NSString *) tokenValue: (NSDictionary *) tokens withOptions: (NSDictionary *) options;
 
-- (NSString *) applyLanguageCasesToValue: (NSString *) tokenValue fromObject: (NSObject *) tokenObject forLanguage: (TmlLanguage *) language andOptions: (NSDictionary *) options;
+- (NSString *) applyLanguageCasesToValue: (NSString *) tokenValue fromObject: (NSObject *) tokenObject forLanguage: (TMLLanguage *) language andOptions: (NSDictionary *) options;
 
-- (NSString *) substituteInLabel: (NSString *) translatedLabel usingTokens: (NSDictionary *) tokens forLanguage: (TmlLanguage *) language withOptions: (NSDictionary *) options;
+- (NSString *) substituteInLabel: (NSString *) translatedLabel usingTokens: (NSDictionary *) tokens forLanguage: (TMLLanguage *) language withOptions: (NSDictionary *) options;
 
 @end

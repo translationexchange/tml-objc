@@ -29,9 +29,9 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TmlDataToken.h"
+#import "TMLDataToken.h"
 
-@interface TmlMethodToken : TmlDataToken
+@interface TMLMethodToken : TMLDataToken
 
 @property(nonatomic, strong) NSString *objectName;
 

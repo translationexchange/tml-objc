@@ -57,7 +57,7 @@
     #define TR8N_PLACEHOLDER                @"{$0}"
 #endif
 
-@interface TmlDecorationTokenizer : NSObject
+@interface TMLDecorationTokenizer : NSObject
 
 @property(nonatomic, strong) NSMutableArray *tokenNames;
 

@@ -29,9 +29,9 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "TmlDataToken.h"
+#import "TMLDataToken.h"
 
-@interface TmlPipedToken : TmlDataToken
+@interface TMLPipedToken : TMLDataToken
 
 @property (nonatomic, strong) NSString *separator;
 
@@ -39,6 +39,6 @@
 
 - (BOOL) isValueDisplayedInTranslation;
 
-- (NSDictionary *) generateValueMapForContext: (TmlLanguageContext *) context;
+- (NSDictionary *) generateValueMapForContext: (TMLLanguageContext *) context;
 
 @end

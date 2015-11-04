@@ -28,12 +28,12 @@
  *  THE SOFTWARE.
  */
 
-#import "TmlSource.h"
-#import "TmlApiClient.h"
-#import "TmlConfiguration.h"
-#import "TmlTranslation.h"
+#import "TMLSource.h"
+#import "TMLApiClient.h"
+#import "TMLConfiguration.h"
+#import "TMLTranslation.h"
 
-@implementation TmlSource
+@implementation TMLSource
 
 @synthesize application, key, translations;
 
@@ -68,7 +68,7 @@
         
         newTranslations = [NSMutableArray array];
         for (NSDictionary* translation in translationsData) {
-            [newTranslations addObject:[[TmlTranslation alloc] initWithAttributes:@{
+            [newTranslations addObject:[[TMLTranslation alloc] initWithAttributes:@{
                  @"label": [translation valueForKey:@"label"],
                  @"locale": ([translation valueForKey:@"locale"] == nil ? locale : [translation valueForKey:@"locale"]),
                  @"context": ([translation valueForKey:@"context"] == nil ? @{} : [translation valueForKey:@"context"]),
@@ -84,9 +84,9 @@
 }
 
 - (void) loadTranslationsForLocale: (NSString *) locale {
-    [self.application.apiClient get: [NSString stringWithFormat: @"sources/%@/translations", [TmlConfiguration md5: self.key]]
+    [self.application.apiClient get: [NSString stringWithFormat: @"sources/%@/translations", [TMLConfiguration md5: self.key]]
                              params: @{@"locale": locale, @"all": @"true"}
-                            options: @{@"realtime": @true, @"cache_key": [TmlSource cacheKeyForLocale:locale andKey: self.key]}
+                            options: @{@"realtime": @true, @"cache_key": [TMLSource cacheKeyForLocale:locale andKey: self.key]}
                             success:^(id data) {
                                 [self updateTranslations:data forLocale:locale];
                             }

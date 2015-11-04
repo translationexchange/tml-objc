@@ -29,13 +29,13 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TmlBase.h"
-#import "TmlLanguage.h"
+#import "TMLBase.h"
+#import "TMLLanguage.h"
 
-@interface TmlLanguageContext : TmlBase
+@interface TMLLanguageContext : TMLBase
 
 // Reference back to the language it belongs to
-@property(nonatomic, weak) TmlLanguage *language;
+@property(nonatomic, weak) TMLLanguage *language;
 
 // Unique key identifying the context => num, gender, list, etc..
 @property(nonatomic, strong) NSString *keyword;

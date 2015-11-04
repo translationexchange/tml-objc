@@ -28,13 +28,13 @@
  *  THE SOFTWARE.
  */
 
-#import "TmlDataTokenizer.h"
-#import "TmlDataToken.h"
-#import "TmlPipedToken.h"
-#import "TmlMethodToken.h"
-#import "TmlLanguage.h"
+#import "TMLDataTokenizer.h"
+#import "TMLDataToken.h"
+#import "TMLPipedToken.h"
+#import "TMLMethodToken.h"
+#import "TMLLanguage.h"
 
-@implementation TmlDataTokenizer
+@implementation TMLDataTokenizer
 @synthesize label, tokens, allowedTokenNames;
 
 - (id) initWithLabel: (NSString *) newLabel {
@@ -53,21 +53,21 @@
 - (void) tokenize {
     self.tokens = [NSMutableArray array];
     // TODO: optimize this code to do it in one pass
-    NSArray *matches = [[TmlDataToken expression] matchesInString: self.label options: 0 range: NSMakeRange(0, [self.label length])];
+    NSArray *matches = [[TMLDataToken expression] matchesInString: self.label options: 0 range: NSMakeRange(0, [self.label length])];
     for (NSTextCheckingResult *match in matches) {
-        TmlDataToken *token = [[TmlDataToken alloc] initWithName:[self.label substringWithRange:[match range]]];
+        TMLDataToken *token = [[TMLDataToken alloc] initWithName:[self.label substringWithRange:[match range]]];
         if ([self isTokenAllowed:token])
             [self.tokens addObject:token];
     }
-    matches = [[TmlPipedToken expression] matchesInString: self.label options: 0 range: NSMakeRange(0, [self.label length])];
+    matches = [[TMLPipedToken expression] matchesInString: self.label options: 0 range: NSMakeRange(0, [self.label length])];
     for (NSTextCheckingResult *match in matches) {
-        TmlPipedToken *token = [[TmlPipedToken alloc] initWithName:[self.label substringWithRange:[match range]]];
+        TMLPipedToken *token = [[TMLPipedToken alloc] initWithName:[self.label substringWithRange:[match range]]];
         if ([self isTokenAllowed:token])
             [self.tokens addObject:token];
     }
-    matches = [[TmlMethodToken expression] matchesInString: self.label options: 0 range: NSMakeRange(0, [self.label length])];
+    matches = [[TMLMethodToken expression] matchesInString: self.label options: 0 range: NSMakeRange(0, [self.label length])];
     for (NSTextCheckingResult *match in matches) {
-        TmlMethodToken *token =[[TmlMethodToken alloc] initWithName:[self.label substringWithRange:[match range]]];
+        TMLMethodToken *token =[[TMLMethodToken alloc] initWithName:[self.label substringWithRange:[match range]]];
         if ([self isTokenAllowed:token])
             [self.tokens addObject:token];
     }
@@ -75,27 +75,27 @@
 
 - (NSArray *) tokenNames {
     NSMutableArray *tokenNames = [NSMutableArray array];
-    for (TmlDataToken *token in self.tokens) {
+    for (TMLDataToken *token in self.tokens) {
         [tokenNames addObject:token.shortName];
     }
     return tokenNames;
 }
 
-- (BOOL) isTokenAllowed: (TmlDataToken *) token {
+- (BOOL) isTokenAllowed: (TMLDataToken *) token {
     if (self.allowedTokenNames == nil)
         return YES;
     
     return [self.allowedTokenNames containsObject:token.shortName];
 }
 
-- (NSString *) substituteTokensInLabelUsingData: (NSDictionary *) tokensData forLanguage:(TmlLanguage *) language {
+- (NSString *) substituteTokensInLabelUsingData: (NSDictionary *) tokensData forLanguage:(TMLLanguage *) language {
     return [self substituteTokensInLabelUsingData:tokensData forLanguage:language];
 }
 
-- (NSString *) substituteTokensInLabelUsingData: (NSDictionary *) tokensData forLanguage:(TmlLanguage *) language withOptions: (NSDictionary *) options {
+- (NSString *) substituteTokensInLabelUsingData: (NSDictionary *) tokensData forLanguage:(TMLLanguage *) language withOptions: (NSDictionary *) options {
 
     NSString *translatedLabel = [NSString stringWithString:self.label];
-    for (TmlDataToken *token in self.tokens) {
+    for (TMLDataToken *token in self.tokens) {
         translatedLabel = [token substituteInLabel:translatedLabel usingTokens:tokensData forLanguage:language withOptions:options];
     }
     return translatedLabel;

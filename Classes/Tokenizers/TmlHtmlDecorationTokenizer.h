@@ -29,8 +29,8 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TmlDecorationTokenizer.h"
+#import "TMLDecorationTokenizer.h"
 
-@interface TmlHtmlDecorationTokenizer : TmlDecorationTokenizer
+@interface TMLHtmlDecorationTokenizer : TMLDecorationTokenizer
 
 @end

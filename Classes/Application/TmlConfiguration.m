@@ -28,17 +28,17 @@
  *  THE SOFTWARE.
  */
 
-#import "TmlConfiguration.h"
+#import "TMLConfiguration.h"
 #import <CommonCrypto/CommonDigest.h>
-#import "Tml.h"
+#import "TML.h"
 
-@interface TmlConfiguration () {
+@interface TMLConfiguration () {
     NSCalendar *calendar;
     NSDateFormatter *dateFormatter;
 }
 @end
 
-@implementation TmlConfiguration
+@implementation TMLConfiguration
 @synthesize currentLocale, defaultLocale, contextRules, defaultTokens, viewingUser;
 @synthesize inContextTranslatorEnabled, defaultLocalization;
 
@@ -86,12 +86,12 @@
 //    
 //    if ( status == kCFNetDiagnosticConnectionUp )
 //    {
-//        TmlDebug (@"Connection is Available");
+//        TMLDebug (@"Connection is Available");
 //        return YES;
 //    }
 //    else
 //    {
-//        TmlDebug (@"Connection is down");
+//        TMLDebug (@"Connection is down");
 //        return NO;
 //    }
 }
@@ -106,7 +106,7 @@
 
         if ([self.class persistentValueForKey:@"current_locale"] == nil) {
             self.currentLocale = [self deviceLocale]; // @"en-US";
-            TmlDebug(@"Current locale: %@", self.currentLocale);
+            TMLDebug(@"Current locale: %@", self.currentLocale);
         } else {
             self.currentLocale = [self.class persistentValueForKey:@"current_locale"];
         }
@@ -132,12 +132,12 @@
 
 - (void) setCurrentLocale:(NSString *)newLocale {
     currentLocale = newLocale;
-    [TmlConfiguration setPersistentValue:newLocale forKey:@"current_locale"];
+    [TMLConfiguration setPersistentValue:newLocale forKey:@"current_locale"];
 }
 
 - (void) setDefaultLocale:(NSString *)newLocale {
     defaultLocale = newLocale;
-    [TmlConfiguration setPersistentValue:newLocale forKey:@"default_locale"];
+    [TMLConfiguration setPersistentValue:newLocale forKey:@"default_locale"];
 }
 
 - (void) setupDefaultContextRules {
@@ -349,25 +349,25 @@
     if ([token isEqualToString:@"{month_name}"]) {
         NSDateComponents *comps = [calendar components:NSCalendarUnitMonth fromDate:date];
         NSString *monthName = [[self.defaultLocalization objectForKey:@"default_month_names"] objectAtIndex:comps.month-1];
-        return TmlLocalizedStringWithDescriptionAndOptions(monthName, @"Month name", (@{@"locale": @"en"}));
+        return TMLLocalizedStringWithDescriptionAndOptions(monthName, @"Month name", (@{@"locale": @"en"}));
     }
 
     if ([token isEqualToString:@"{short_month_name}"]) {
         NSDateComponents *comps = [calendar components:NSCalendarUnitMonth fromDate:date];
         NSString *monthName = [[self.defaultLocalization objectForKey:@"default_abbr_month_names"] objectAtIndex:comps.month-1];
-        return TmlLocalizedStringWithDescriptionAndOptions(monthName, @"Abbreviated month name", (@{@"locale": @"en"}));
+        return TMLLocalizedStringWithDescriptionAndOptions(monthName, @"Abbreviated month name", (@{@"locale": @"en"}));
     }
 
     if ([token isEqualToString:@"{weekday_name}"]) {
         NSDateComponents *comps = [calendar components:NSCalendarUnitWeekday fromDate:date];
         NSString *weekdayName = [[self.defaultLocalization objectForKey:@"default_day_names"] objectAtIndex:comps.weekday];
-        return TmlLocalizedStringWithDescriptionAndOptions(weekdayName, @"Weekday name", (@{@"locale": @"en"}));
+        return TMLLocalizedStringWithDescriptionAndOptions(weekdayName, @"Weekday name", (@{@"locale": @"en"}));
     }
 
     if ([token isEqualToString:@"{short_weekday_name}"]) {
         NSDateComponents *comps = [calendar components:NSCalendarUnitWeekday fromDate:date];
         NSString *weekdayName = [[self.defaultLocalization objectForKey:@"default_abbr_day_names"] objectAtIndex:comps.weekday];
-        return TmlLocalizedStringWithDescriptionAndOptions(weekdayName, @"Abbreviated weekday name", (@{@"locale": @"en"}));
+        return TMLLocalizedStringWithDescriptionAndOptions(weekdayName, @"Abbreviated weekday name", (@{@"locale": @"en"}));
     }
     
     if (dateFormatter == nil)

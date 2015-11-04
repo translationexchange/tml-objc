@@ -29,18 +29,18 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TmlBase.h"
-#import "TmlApplication.h"
+#import "TMLBase.h"
+#import "TMLApplication.h"
 
-@class TmlLanguageContext;
-@class TmlLanguageCase;
+@class TMLLanguageContext;
+@class TMLLanguageCase;
 
-@interface TmlLanguage : TmlBase
+@interface TMLLanguage : TMLBase
 
 // Holds reference to the application it belongs to
-@property(nonatomic, weak) TmlApplication *application;
+@property(nonatomic, weak) TMLApplication *application;
 
-// Language locale based on Tml notation
+// Language locale based on TML notation
 @property(nonatomic, strong) NSString *locale;
 
 // Language name in English
@@ -61,20 +61,20 @@
 // Hash of all language cases
 @property(nonatomic, strong) NSDictionary *cases;
 
-+ (TmlLanguage *) defaultLanguage;
++ (TMLLanguage *) defaultLanguage;
 
 - (NSString *) name;
 
 - (NSString *) fullName;
 
 // Returns language context based on the keyword
-- (TmlLanguageContext *) contextByKeyword: (NSString *) keyword;
+- (TMLLanguageContext *) contextByKeyword: (NSString *) keyword;
 
 // Returns language context based on the token name
-- (TmlLanguageContext *) contextByTokenName: (NSString *) tokenName;
+- (TMLLanguageContext *) contextByTokenName: (NSString *) tokenName;
 
 // Returns language case based on the keyword
-- (TmlLanguageCase *) languageCaseByKeyword: (NSString *) keyword;
+- (TMLLanguageCase *) languageCaseByKeyword: (NSString *) keyword;
 
 // Languages are loaded without definition by default, this will tell if the language has definition or it needs to be loaded
 - (BOOL) hasDefinitionData;

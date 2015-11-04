@@ -28,16 +28,16 @@
  *  THE SOFTWARE.
  */
 
-#import "TmlAttributedDecorationTokenizer.h"
+#import "TMLAttributedDecorationTokenizer.h"
 #import <UIKit/UIKit.h>
 #include "MPColorTools.h"
-#import "Tml.h"
+#import "TML.h"
 
-@interface TmlAttributedDecorationTokenizer ()
+@interface TMLAttributedDecorationTokenizer ()
 
 @end
 
-@implementation TmlAttributedDecorationTokenizer
+@implementation TMLAttributedDecorationTokenizer
 
 @synthesize attributes;
 
@@ -431,7 +431,7 @@
         
         NSDictionary *styles = [self.tokensData objectForKey:tokenName];
         if (styles == nil) {
-            styles = [[Tml configuration] defaultTokenValueForName:tokenName type:@"decoration" format: @"attributed"];
+            styles = [[TML configuration] defaultTokenValueForName:tokenName type:@"decoration" format: @"attributed"];
             if (styles == nil) continue;
         }
         

@@ -30,14 +30,14 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TmlRulesParser : NSObject {
+@interface TMLRulesParser : NSObject {
 
 }
 
 @property(nonatomic, retain) NSMutableArray *expression;
 @property(nonatomic, retain) NSMutableArray *tokens;
 
-+ (TmlRulesParser *) parserWithExpression: (NSString *)expression;
++ (TMLRulesParser *) parserWithExpression: (NSString *)expression;
 
 - (id) initWithExpression: (NSString *)expression;
 

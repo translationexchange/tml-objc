@@ -28,11 +28,11 @@
  *  THE SOFTWARE.
  */
 
-#import "TmlLanguageContext.h"
-#import "TmlLanguageContextRule.h"
-#import "Tml.h"
+#import "TMLLanguageContext.h"
+#import "TMLLanguageContextRule.h"
+#import "TML.h"
 
-@implementation TmlLanguageContext
+@implementation TMLLanguageContext
 
 @synthesize language, keyword, description, keys, tokenExpression, variableNames, tokenMapping, rules, fallbackRule;
 @synthesize tokenRegularExpression;
@@ -53,7 +53,7 @@
         NSDictionary *rulesHash = (NSDictionary *) [attributes objectForKey:@"rules"];
         for (NSString *key in [rulesHash allKeys]) {
             NSDictionary *ruleData = [rulesHash objectForKey:key];
-            TmlLanguageContextRule *rule = [[TmlLanguageContextRule alloc] initWithAttributes:ruleData];
+            TMLLanguageContextRule *rule = [[TMLLanguageContextRule alloc] initWithAttributes:ruleData];
             rule.keyword = key;
             rule.languageContext = self;
             [contextRules setObject:rule forKey:key];
@@ -84,7 +84,7 @@
     NSMutableDictionary *vars = [NSMutableDictionary dictionary];
     
     for (NSString *varName in self.variableNames) {
-        id method = [[Tml sharedInstance].configuration variableMethodForContext:self.keyword andVariableName:varName];
+        id method = [[TML sharedInstance].configuration variableMethodForContext:self.keyword andVariableName:varName];
 
         if (method==nil) {
             [vars setObject:object forKey:varName];
@@ -155,7 +155,7 @@
 - (NSObject *) findMatchingRule: (NSObject *) object {
     NSDictionary *tokenVars = [self vars:object];
     
-    for (TmlLanguageContextRule *rule in [self.rules allValues]) {
+    for (TMLLanguageContextRule *rule in [self.rules allValues]) {
         if ([rule isFallback])
             continue;
         

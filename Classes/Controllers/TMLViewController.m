@@ -31,14 +31,14 @@
 
 #import "TMLViewController.h"
 #import "UIViewController+TML.h"
-#import "Tml.h"
+#import "TML.h"
 
 @implementation TMLViewController
 
 - (void) localize {
-    TmlBeginBlockWithOptions(@{@"source": [self tmlSourceKey]})
+    TMLBeginBlockWithOptions(@{@"source": [self tmlSourceKey]})
     [self localizeView:self.view];
-    TmlEndBlockWithOptions
+    TMLEndBlockWithOptions
 }
 
 - (void)viewDidLoad {

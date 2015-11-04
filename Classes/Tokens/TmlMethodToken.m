@@ -28,9 +28,9 @@
  *  THE SOFTWARE.
  */
 
-#import "TmlMethodToken.h"
+#import "TMLMethodToken.h"
 
-@implementation TmlMethodToken
+@implementation TMLMethodToken
 
 @synthesize objectMethod, objectName;
 
@@ -48,14 +48,14 @@
 
 - (NSString *) valueForObject: (NSObject *) object andMethod: (NSString *) method {
     if (object == nil) {
-//        Tml::ins
+//        TML::ins
         return self.fullName;
     }
   
     return @"";
 }
 
-- (NSString *) substituteInLabel: (NSString *) translatedLabel usingTokens: (NSDictionary *) tokens forLanguage: (TmlLanguage *) language withOptions: (NSDictionary *) options {
+- (NSString *) substituteInLabel: (NSString *) translatedLabel usingTokens: (NSDictionary *) tokens forLanguage: (TMLLanguage *) language withOptions: (NSDictionary *) options {
     
     NSObject *object = [self.class tokenObjectForName:self.objectName fromTokens:tokens];
     

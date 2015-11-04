@@ -30,17 +30,17 @@
 
 
 #import <Foundation/Foundation.h>
-#import "TmlBase.h"
-#import "TmlTranslationKey.h"
-#import "TmlLanguage.h"
+#import "TMLBase.h"
+#import "TMLTranslationKey.h"
+#import "TMLLanguage.h"
 
-@interface TmlTranslation : TmlBase
+@interface TMLTranslation : TMLBase
 
 // Reference to the translation key it belongs to
-@property(nonatomic, weak) TmlTranslationKey *translationKey;
+@property(nonatomic, weak) TMLTranslationKey *translationKey;
 
 // Reference to the language it belongs to
-@property(nonatomic, weak) TmlLanguage *language;
+@property(nonatomic, weak) TMLLanguage *language;
 
 // Locale of the language it belongs to
 @property(nonatomic, strong) NSString *locale;

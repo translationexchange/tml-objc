@@ -28,9 +28,9 @@
  *  THE SOFTWARE.
  */
 
-#import "TmlRulesEvaluator.h"
+#import "TMLRulesEvaluator.h"
 
-@interface TmlRulesEvaluator (Private)
+@interface TMLRulesEvaluator (Private)
 
 - (NSObject *) applyFunction:(NSString *) name withArguments: (NSArray *) args;
 
@@ -40,7 +40,7 @@
 
 @end
 
-@implementation TmlRulesEvaluator
+@implementation TMLRulesEvaluator
 
 @synthesize context, variables;
 
@@ -48,42 +48,42 @@
     NSDictionary *defaultCtx =
     @{
       // McCarthy's Elementary S-functions and Predicates
-      @"label": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"label": ^(TMLRulesEvaluator *e, NSArray *args) {
           [e setVariable:[args objectAtIndex:1] forKey:[args objectAtIndex:0]];
           return [args objectAtIndex:1];
       },
     
-      @"quote": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"quote": ^(TMLRulesEvaluator *e, NSArray *args) {
           return [args objectAtIndex:0];
       },
 
-      @"car": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"car": ^(TMLRulesEvaluator *e, NSArray *args) {
           return [[args objectAtIndex:0] objectAtIndex:1];
       },
 
-      @"cdr": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"cdr": ^(TMLRulesEvaluator *e, NSArray *args) {
           NSMutableArray *elements = [NSMutableArray arrayWithArray: [args objectAtIndex:0]];
           [elements removeObjectAtIndex:0];
           return elements;
       },
 
-      @"cons": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"cons": ^(TMLRulesEvaluator *e, NSArray *args) {
           NSMutableArray *elements = [NSMutableArray arrayWithObject:[args objectAtIndex:0]];
           [elements addObjectsFromArray:[args objectAtIndex:1]];
           return elements;
       },
       
-      @"eq": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"eq": ^(TMLRulesEvaluator *e, NSArray *args) {
           NSString *v1 = [NSString stringWithFormat:@"%@", [args objectAtIndex:0]];
           NSString *v2 = [NSString stringWithFormat:@"%@", [args objectAtIndex:1]];
           return [NSNumber numberWithBool: [v1 isEqual:v2]];
       },
       
-      @"atom": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"atom": ^(TMLRulesEvaluator *e, NSArray *args) {
           return ([[args objectAtIndex:0] isKindOfClass: NSArray.class] ? @NO : @YES);
       },
 
-      @"cond": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"cond": ^(TMLRulesEvaluator *e, NSArray *args) {
           if ([[e evaluateExpression: [args objectAtIndex:0]] isEqual: @YES]) {
               return [args objectAtIndex:1];
           } else {
@@ -91,82 +91,82 @@
           }
       },
       
-      // Tml Extensions
-      @"=": ^(TmlRulesEvaluator *e, NSArray *args) {
-          NSObject *(^fn)(TmlRulesEvaluator *, NSArray *) = [e.context objectForKey:@"eq"];
+      // TML Extensions
+      @"=": ^(TMLRulesEvaluator *e, NSArray *args) {
+          NSObject *(^fn)(TMLRulesEvaluator *, NSArray *) = [e.context objectForKey:@"eq"];
           return fn(e, args);
       },
       
-      @"!=": ^(TmlRulesEvaluator *e, NSArray *args) {
-          NSObject *(^fn)(TmlRulesEvaluator *, NSArray *) = [e.context objectForKey:@"eq"];
+      @"!=": ^(TMLRulesEvaluator *e, NSArray *args) {
+          NSObject *(^fn)(TMLRulesEvaluator *, NSArray *) = [e.context objectForKey:@"eq"];
           return ([fn(e, args) isEqual:@YES] ? @NO : @YES);
       },
       
-      @"<": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"<": ^(TMLRulesEvaluator *e, NSArray *args) {
           NSString *v1 = [NSString stringWithFormat:@"%@", [args objectAtIndex:0]];
           NSString *v2 = [NSString stringWithFormat:@"%@", [args objectAtIndex:1]];
           return ([v1 doubleValue] < [v2 doubleValue] ? @YES : @NO);
       },
       
-      @">": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @">": ^(TMLRulesEvaluator *e, NSArray *args) {
           NSString *v1 = [NSString stringWithFormat:@"%@", [args objectAtIndex:0]];
           NSString *v2 = [NSString stringWithFormat:@"%@", [args objectAtIndex:1]];
           return ([v1 doubleValue] > [v2 doubleValue] ? @YES : @NO);
       },
 
-      @"+": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"+": ^(TMLRulesEvaluator *e, NSArray *args) {
           NSString *v1 = [NSString stringWithFormat:@"%@", [args objectAtIndex:0]];
           NSString *v2 = [NSString stringWithFormat:@"%@", [args objectAtIndex:1]];
           return [NSNumber numberWithDouble: ([v1 doubleValue] + [v2 doubleValue])];
       },
       
-      @"-": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"-": ^(TMLRulesEvaluator *e, NSArray *args) {
           NSString *v1 = [NSString stringWithFormat:@"%@", [args objectAtIndex:0]];
           NSString *v2 = [NSString stringWithFormat:@"%@", [args objectAtIndex:1]];
           return [NSNumber numberWithDouble: ([v1 doubleValue] - [v2 doubleValue])];
       },
       
-      @"*": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"*": ^(TMLRulesEvaluator *e, NSArray *args) {
           NSString *v1 = [NSString stringWithFormat:@"%@", [args objectAtIndex:0]];
           NSString *v2 = [NSString stringWithFormat:@"%@", [args objectAtIndex:1]];
           return [NSNumber numberWithDouble: ([v1 doubleValue] * [v2 doubleValue])];
       },
 
-      @"/": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"/": ^(TMLRulesEvaluator *e, NSArray *args) {
           NSString *v1 = [NSString stringWithFormat:@"%@", [args objectAtIndex:0]];
           NSString *v2 = [NSString stringWithFormat:@"%@", [args objectAtIndex:1]];
           return [NSNumber numberWithDouble: ([v1 doubleValue] / [v2 doubleValue])];
       },
 
-      @"%": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"%": ^(TMLRulesEvaluator *e, NSArray *args) {
           NSString *v1 = [NSString stringWithFormat:@"%@", [args objectAtIndex:0]];
           NSString *v2 = [NSString stringWithFormat:@"%@", [args objectAtIndex:1]];
           return [NSNumber numberWithInt: ([v1 intValue] % [v2 intValue])];
       },
 
-      @"mod": ^(TmlRulesEvaluator *e, NSArray *args) {
-          NSObject *(^fn)(TmlRulesEvaluator *, NSArray *) = [e.context objectForKey:@"%"];
+      @"mod": ^(TMLRulesEvaluator *e, NSArray *args) {
+          NSObject *(^fn)(TMLRulesEvaluator *, NSArray *) = [e.context objectForKey:@"%"];
           return fn(e, args);
       },
 
-      @"true": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"true": ^(TMLRulesEvaluator *e, NSArray *args) {
           return @YES;
       },
 
-      @"false": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"false": ^(TMLRulesEvaluator *e, NSArray *args) {
           return @NO;
       },
 
-      @"!": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"!": ^(TMLRulesEvaluator *e, NSArray *args) {
           return ([[args objectAtIndex:0] isEqual:@YES] ? @NO : @YES);
       },
 
-      @"not": ^(TmlRulesEvaluator *e, NSArray *args) {
-          NSObject *(^fn)(TmlRulesEvaluator *, NSArray *) = [e.context objectForKey:@"!"];
+      @"not": ^(TMLRulesEvaluator *e, NSArray *args) {
+          NSObject *(^fn)(TMLRulesEvaluator *, NSArray *) = [e.context objectForKey:@"!"];
           return fn(e, args);
       },
 
-      @"&&": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"&&": ^(TMLRulesEvaluator *e, NSArray *args) {
           for (NSObject *expr in args) {
             if ([[e evaluateExpression:expr] isEqual:@NO])
                 return @NO;
@@ -174,12 +174,12 @@
           return @YES;
       },
 
-      @"and": ^(TmlRulesEvaluator *e, NSArray *args) {
-          NSObject *(^fn)(TmlRulesEvaluator *, NSArray *) = [e.context objectForKey:@"&&"];
+      @"and": ^(TMLRulesEvaluator *e, NSArray *args) {
+          NSObject *(^fn)(TMLRulesEvaluator *, NSArray *) = [e.context objectForKey:@"&&"];
           return fn(e, args);
       },
       
-      @"||": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"||": ^(TMLRulesEvaluator *e, NSArray *args) {
           for (NSObject *expr in args) {
               if ([[e evaluateExpression:expr] isEqual:@YES])
                   return @YES;
@@ -187,50 +187,50 @@
           return @NO;
       },
       
-      @"or": ^(TmlRulesEvaluator *e, NSArray *args) {
-          NSObject *(^fn)(TmlRulesEvaluator *, NSArray *) = [e.context objectForKey:@"||"];
+      @"or": ^(TMLRulesEvaluator *e, NSArray *args) {
+          NSObject *(^fn)(TMLRulesEvaluator *, NSArray *) = [e.context objectForKey:@"||"];
           return fn(e, args);
       },
       
-      @"if": ^(TmlRulesEvaluator *e, NSArray *args) {
-          NSObject *(^fn)(TmlRulesEvaluator *, NSArray *) = [e.context objectForKey:@"cond"];
+      @"if": ^(TMLRulesEvaluator *e, NSArray *args) {
+          NSObject *(^fn)(TMLRulesEvaluator *, NSArray *) = [e.context objectForKey:@"cond"];
           return fn(e, args);
       },
 
-      @"let": ^(TmlRulesEvaluator *e, NSArray *args) {
-          NSObject *(^fn)(TmlRulesEvaluator *, NSArray *) = [e.context objectForKey:@"label"];
+      @"let": ^(TMLRulesEvaluator *e, NSArray *args) {
+          NSObject *(^fn)(TMLRulesEvaluator *, NSArray *) = [e.context objectForKey:@"label"];
           return fn(e, args);
       },
 
-      @"date": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"date": ^(TMLRulesEvaluator *e, NSArray *args) {
           // TODO: finsih implementation
       },
       
-      @"today": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"today": ^(TMLRulesEvaluator *e, NSArray *args) {
           return [NSDate date];
       },
 
-      @"time": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"time": ^(TMLRulesEvaluator *e, NSArray *args) {
           // TODO: finsih implementation
       },
 
-      @"now": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"now": ^(TMLRulesEvaluator *e, NSArray *args) {
           return [NSDate date];
       },
       
-      @"append": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"append": ^(TMLRulesEvaluator *e, NSArray *args) {
           NSString *str1 = [args objectAtIndex:0];
           NSString *str2 = [args objectAtIndex:1];
           return [str2 stringByAppendingString:str1];
       },
 
-      @"prepend": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"prepend": ^(TMLRulesEvaluator *e, NSArray *args) {
           NSString *str1 = [args objectAtIndex:0];
           NSString *str2 = [args objectAtIndex:1];
           return [str1 stringByAppendingString:str2];
       },
       
-      @"match": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"match": ^(TMLRulesEvaluator *e, NSArray *args) {
           NSRegularExpression *regex = [self.class regularExpressionWithPattern: [args objectAtIndex:0]];
           NSString *value = [NSString stringWithFormat:@"%@", [args objectAtIndex:1]];
           NSRange firstMatch = [regex rangeOfFirstMatchInString:value options: kNilOptions range:NSMakeRange(0, [value length])];
@@ -241,14 +241,14 @@
           return @YES;
       },
       
-      @"replace": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"replace": ^(TMLRulesEvaluator *e, NSArray *args) {
           NSRegularExpression *regex = [self.class regularExpressionWithPattern: [args objectAtIndex:0]];
           NSString *replacement = [args objectAtIndex:1];
           NSString *value = [args objectAtIndex:2];
           return [regex stringByReplacingMatchesInString:value options:0 range:NSMakeRange(0, [value length]) withTemplate:replacement];
       },
       
-      @"in": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"in": ^(TMLRulesEvaluator *e, NSArray *args) {
           NSObject *obj = [args objectAtIndex:1];
           NSString *search = [NSString stringWithFormat:@"%@", obj];
           search = [search stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
@@ -273,7 +273,7 @@
           return @NO;
       },
       
-      @"within": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"within": ^(TMLRulesEvaluator *e, NSArray *args) {
           NSArray *bounds = [[args objectAtIndex:0] componentsSeparatedByString: @".."];
           double value = [[args objectAtIndex:1] doubleValue];
           double left = [[bounds objectAtIndex:0] doubleValue];
@@ -284,7 +284,7 @@
       },
       
       
-      @"count": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"count": ^(TMLRulesEvaluator *e, NSArray *args) {
           NSArray *list;
           if ([[args objectAtIndex:0] isKindOfClass: NSString.class]) {
               list = (NSArray*) [e variableForKey:[args objectAtIndex:0]];
@@ -295,7 +295,7 @@
           return [NSNumber numberWithLong:[list count]];
       },
       
-      @"all": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"all": ^(TMLRulesEvaluator *e, NSArray *args) {
           NSArray *list;
           if ([[args objectAtIndex:0] isKindOfClass: NSString.class]) {
               list = (NSArray*) [e variableForKey:[args objectAtIndex:0]];
@@ -313,7 +313,7 @@
           return @YES;
       },
       
-      @"any": ^(TmlRulesEvaluator *e, NSArray *args) {
+      @"any": ^(TMLRulesEvaluator *e, NSArray *args) {
           NSArray *list;
           if ([[args objectAtIndex:0] isKindOfClass: NSString.class]) {
               list = (NSArray*) [e variableForKey:[args objectAtIndex:0]];
@@ -404,7 +404,7 @@
     if ([self variableForKey:name] != nil)
         return [self variableForKey:name];
     
-    NSObject *(^fn)(TmlRulesEvaluator *, NSArray *) = [self.context objectForKey:name];
+    NSObject *(^fn)(TMLRulesEvaluator *, NSArray *) = [self.context objectForKey:name];
     return fn(self, args);
 }
 

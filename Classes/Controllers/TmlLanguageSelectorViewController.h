@@ -29,13 +29,13 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "TmlLanguage.h"
+#import "TMLLanguage.h"
 
-@protocol TmlLanguageSelectorViewControllerDelegate;
+@protocol TMLLanguageSelectorViewControllerDelegate;
 
-@interface TmlLanguageSelectorViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface TMLLanguageSelectorViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
-@property(nonatomic, assign) id<TmlLanguageSelectorViewControllerDelegate> delegate;
+@property(nonatomic, assign) id<TMLLanguageSelectorViewControllerDelegate> delegate;
 
 + (void) changeLanguageFromController:(UIViewController *) controller;
 
@@ -43,9 +43,9 @@
 
 @end
 
-@protocol TmlLanguageSelectorViewControllerDelegate <NSObject>
+@protocol TMLLanguageSelectorViewControllerDelegate <NSObject>
 
-- (void) tr8nLanguageSelectorViewController:(TmlLanguageSelectorViewController *) tr8nLanguageSelectorViewController didSelectLanguage: (TmlLanguage *) language;
+- (void) tr8nLanguageSelectorViewController:(TMLLanguageSelectorViewController *) tr8nLanguageSelectorViewController didSelectLanguage: (TMLLanguage *) language;
 
 @end
 

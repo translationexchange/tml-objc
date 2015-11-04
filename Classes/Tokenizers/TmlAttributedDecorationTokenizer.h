@@ -30,9 +30,9 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "TmlDecorationTokenizer.h"
+#import "TMLDecorationTokenizer.h"
 
-@interface TmlAttributedDecorationTokenizer : TmlDecorationTokenizer
+@interface TMLAttributedDecorationTokenizer : TMLDecorationTokenizer
 
 @property (nonatomic, strong) NSMutableDictionary *attributes;
 

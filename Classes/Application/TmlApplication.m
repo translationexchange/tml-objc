@@ -28,17 +28,17 @@
  *  THE SOFTWARE.
  */
 
-#import "Tml.h"
-#import "TmlApiClient.h"
-#import "TmlApplication.h"
-#import "TmlCache.h"
-#import "TmlConfiguration.h"
-#import "TmlLanguage.h"
-#import "TmlPostOffice.h"
-#import "TmlSource.h"
-#import "TmlTranslation.h"
+#import "TML.h"
+#import "TMLApiClient.h"
+#import "TMLApplication.h"
+#import "TMLCache.h"
+#import "TMLConfiguration.h"
+#import "TMLLanguage.h"
+#import "TMLPostOffice.h"
+#import "TMLSource.h"
+#import "TMLTranslation.h"
 
-@implementation TmlApplication
+@implementation TMLApplication
 
 @synthesize host, key, accessToken, secret, name, defaultLocale, threshold, features, tools;
 @synthesize translationKeys, translations, languagesByLocales, sourcesByKeys, missingTranslationKeysBySources, scheduler;
@@ -52,8 +52,8 @@
     if (self = [super init]) {
         self.host = appHost;
         self.accessToken = token;
-        self.apiClient = [[TmlApiClient alloc] initWithApplication:self];
-        self.postOffice = [[TmlPostOffice alloc] initWithApplication:self];
+        self.apiClient = [[TMLApiClient alloc] initWithApplication:self];
+        self.postOffice = [[TMLPostOffice alloc] initWithApplication:self];
         
         [self updateAttributes:@{@"name": @"Loading...",
                                  @"default_locale": @"en-US",
@@ -90,7 +90,7 @@
     
     [self.apiClient get: @"applications/current"
                  params: params
-//                options: @{@"realtime": @true, @"cache_key": [TmlApplication cacheKey]}
+//                options: @{@"realtime": @true, @"cache_key": [TMLApplication cacheKey]}
                 options: @{@"realtime": @true}
                 success: ^(id data) {
                    [self updateAttributes:data];
@@ -101,7 +101,7 @@
 }
 
 - (void) log {
-    NSDate *lastLogDate = (NSDate*) [TmlConfiguration persistentValueForKey:@"last_log_date"];
+    NSDate *lastLogDate = (NSDate*) [TMLConfiguration persistentValueForKey:@"last_log_date"];
     
     if (lastLogDate) {
         NSCalendar *cal = [NSCalendar currentCalendar];
@@ -116,13 +116,13 @@
     }
 
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params setObject: [TmlConfiguration uuid] forKey:@"uuid"];
+    [params setObject: [TMLConfiguration uuid] forKey:@"uuid"];
     [params setObject: @"ios" forKey:@"sdk"];
     
     if ([[UIDevice currentDevice] respondsToSelector:@selector(model)])
         [params setObject:[[UIDevice currentDevice] model] forKey:@"client"];
 
-    TmlConfiguration *config = [Tml sharedInstance].configuration;
+    TMLConfiguration *config = [TML sharedInstance].configuration;
     
     if ([[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDevelopmentRegion"])
         [params setObject:[config deviceLocale] forKey:@"client_locale"];
@@ -133,7 +133,7 @@
                  params: params
                 options: @{}
                 success: ^(id data) {
-                    [TmlConfiguration setPersistentValue:[NSDate date] forKey:@"last_log_date"];
+                    [TMLConfiguration setPersistentValue:[NSDate date] forKey:@"last_log_date"];
                 }
                 failure: ^(NSError *error) {
                 }
@@ -145,7 +145,7 @@
 }
 
 - (void) resetTranslationsCacheForLocale: (NSString *) locale {
-    [Tml.cache resetCacheForKey:[self transltionsCacheKeyForLocale:locale]];
+    [TML.cache resetCacheForKey:[self transltionsCacheKeyForLocale:locale]];
 }
 
 - (BOOL) isTranslationCacheEmpty {
@@ -159,7 +159,7 @@
     NSArray *translationsData;
     NSMutableArray *newTranslations;
     
-//    TmlDebug(@"%@", data);
+//    TMLDebug(@"%@", data);
 
     if (!self.translationKeys)
         self.translationKeys = [NSMutableDictionary dictionary];
@@ -176,7 +176,7 @@
         
         newTranslations = [NSMutableArray array];
         for (NSDictionary* translation in translationsData) {
-            [newTranslations addObject:[[TmlTranslation alloc] initWithAttributes:@{
+            [newTranslations addObject:[[TMLTranslation alloc] initWithAttributes:@{
                  @"label": [translation valueForKey:@"label"],
                  @"locale": ([translation valueForKey:@"locale"] == nil ? locale : [translation valueForKey:@"locale"]),
                  @"context": ([translation valueForKey:@"context"] == nil ? @{} : [translation valueForKey:@"context"]),
@@ -201,11 +201,11 @@
                 options: @{@"cache_key": [self transltionsCacheKeyForLocale:locale]}
       success: ^(id responseObject) {
           [self updateTranslations:responseObject forLocale:locale];
-          [[NSNotificationCenter defaultCenter] postNotificationName: TmlLanguageChangedNotification object: locale];
+          [[NSNotificationCenter defaultCenter] postNotificationName: TMLLanguageChangedNotification object: locale];
           success();
       }
       failure: ^(NSError *error) {
-          NSDictionary *data = (NSDictionary *) [Tml.cache fetchObjectForKey: [self transltionsCacheKeyForLocale:locale]];
+          NSDictionary *data = (NSDictionary *) [TML.cache fetchObjectForKey: [self transltionsCacheKeyForLocale:locale]];
           if (data) {
               [self updateTranslations:data forLocale:locale];
               success();
@@ -230,22 +230,22 @@
     self.sourcesByKeys = [NSMutableDictionary dictionary];
 }
 
-- (TmlLanguage *) languageForLocale: (NSString *) locale {
-    TmlLanguage *lang = (self.languagesByLocales == nil) ? nil : self.languagesByLocales[locale];
+- (TMLLanguage *) languageForLocale: (NSString *) locale {
+    TMLLanguage *lang = (self.languagesByLocales == nil) ? nil : self.languagesByLocales[locale];
     if (lang != nil) {
         return lang;
     }
     
-    TmlLanguage *language = [[TmlLanguage alloc] initWithAttributes:@{@"locale": locale, @"application": self}];
+    TMLLanguage *language = [[TMLLanguage alloc] initWithAttributes:@{@"locale": locale, @"application": self}];
     [language load];
     [self.languagesByLocales setObject:language forKey:locale];
     
-    TmlDebug(@"Language: %@", [language description]);
+    TMLDebug(@"Language: %@", [language description]);
     
     return language;
 }
 
-- (TmlSource *) sourceForKey: (NSString *) sourceKey andLocale: (NSString *) locale {
+- (TMLSource *) sourceForKey: (NSString *) sourceKey andLocale: (NSString *) locale {
     if (sourceKey == nil)
         return nil;
     
@@ -253,7 +253,7 @@
         return [self.sourcesByKeys objectForKey:sourceKey];
     }
     
-    TmlSource *source = [[TmlSource alloc] initWithAttributes:@{@"key": sourceKey, @"application": self}];
+    TMLSource *source = [[TMLSource alloc] initWithAttributes:@{@"key": sourceKey, @"application": self}];
     [source loadTranslationsForLocale:locale];
     [self.sourcesByKeys setObject:source forKey:sourceKey];
     
@@ -264,8 +264,8 @@
     [self registerMissingTranslationKey:translationKey forSource:nil];
 }
 
-- (void) registerMissingTranslationKey: (NSObject *) translationKey forSource: (TmlSource *) source {
-    TmlTranslationKey *tkey = (TmlTranslationKey *) translationKey;
+- (void) registerMissingTranslationKey: (NSObject *) translationKey forSource: (TMLSource *) source {
+    TMLTranslationKey *tkey = (TMLTranslationKey *) translationKey;
     if ([tkey.label isEqualToString:@""])
         return;
     
@@ -273,7 +273,7 @@
         self.missingTranslationKeysBySources = [NSMutableDictionary dictionary];
     }
     
-    NSString *sourceKey = @"Tml";
+    NSString *sourceKey = @"TML";
     if (source) sourceKey = source.key;
 
     NSMutableDictionary *sourceKeys = [self.missingTranslationKeysBySources objectForKey:sourceKey];
@@ -287,7 +287,7 @@
     }
     
     if (self.scheduler == nil) {
-        TmlDebug(@"Setting up scheduler for 3 seconds...");
+        TMLDebug(@"Setting up scheduler for 3 seconds...");
         self.scheduler = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(submitMissingTranslationKeys) userInfo:nil repeats:NO];
     }
 }
@@ -298,7 +298,7 @@
         return;
     }
 
-    TmlDebug(@"Submitting missing translations...");
+    TMLDebug(@"Submitting missing translations...");
     
 
     NSMutableArray *params = [NSMutableArray array];
@@ -307,7 +307,7 @@
     for (NSString *sourceKey in sourceKeys) {
         NSDictionary *keys = [self.missingTranslationKeysBySources objectForKey:sourceKey];
         NSMutableArray *keysData = [NSMutableArray array];
-        for (TmlTranslationKey *tkey in [keys allValues]) {
+        for (TMLTranslationKey *tkey in [keys allValues]) {
             [keysData addObject:[tkey toDictionary]];
         }
         
@@ -319,7 +319,7 @@
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:params options:(NSJSONWritingPrettyPrinted) error:&error];
     
-    TmlDebug(@"%@", params);
+    TMLDebug(@"%@", params);
     
     [self.apiClient post: @"sources/register_keys"
         params: @{@"source_keys": [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]}
@@ -327,12 +327,12 @@
        success: ^(id responseObject) {
            for (NSString *sourceKey in sourceKeys) {
                [self.sourcesByKeys removeObjectForKey:sourceKey];
-               [[Tml cache] resetCacheForKey:[TmlSource cacheKeyForLocale:[[Tml currentLanguage] locale] andKey:sourceKey]];
+               [[TML cache] resetCacheForKey:[TMLSource cacheKeyForLocale:[[TML currentLanguage] locale] andKey:sourceKey]];
            }
            
            [self submitMissingTranslationKeys];
        } failure: ^(NSError *error) {
-           TmlError(@"Failed to submit missing translation keys: %@", [error description]);
+           TMLError(@"Failed to submit missing translation keys: %@", [error description]);
            self.scheduler = nil;
        }];
 }
