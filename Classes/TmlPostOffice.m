@@ -99,44 +99,43 @@
     
     if (!token) return;
         
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params setObject:application.key forKey:@"client_id"];
-    [params setObject:application.secret forKey:@"secret"];
-    [params setObject:token forKey:@"device_token"];
-    [params setObject:[[Tml currentLanguage] locale] forKey:@"locale"];
-
-    NSArray *keys = @[@"name", @"first_name", @"last_name", @"gender", @"tokens", @"external_id", @"email", @"phone_number", @"country_code", @"list", @"lists"];
-    for (NSString *key in keys) {
-        if ([options valueForKey:key])
-            [params setObject:[options valueForKey:key] forKey:key];
-    }
-
-    NSMutableDictionary *tokens = [NSMutableDictionary dictionary];
-
-    if ([params objectForKey:@"tokens"]) {
-        [tokens addEntriesFromDictionary: [params objectForKey:@"tokens"]];
-    }
-    
-    if ([params objectForKey:@"tokens"]) {
-        NSError *error;
-        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tokens options:0 error:&error];
-        if (jsonData) {
-            [params setObject:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding] forKey:@"tokens"];
-        }
-    }
-    
-    [self.application.apiClient post: [self apiFullPath: @"contacts/register"]
-                              params: params
-                             options: @{}
-                             success: ^(id responseObject) {
-                                 if (success)
-                                     success(responseObject);
-                             }
-                             failure: ^(NSError *error) {
-                                 if (failure)
-                                     failure(error);
-                             }
-     ];
+//    NSMutableDictionary *params = [NSMutableDictionary dictionary];
+//    [params setObject:application.key forKey:@"client_id"];
+//    [params setObject:token forKey:@"device_token"];
+//    [params setObject:[[Tml currentLanguage] locale] forKey:@"locale"];
+//
+//    NSArray *keys = @[@"name", @"first_name", @"last_name", @"gender", @"tokens", @"external_id", @"email", @"phone_number", @"country_code", @"list", @"lists"];
+//    for (NSString *key in keys) {
+//        if ([options valueForKey:key])
+//            [params setObject:[options valueForKey:key] forKey:key];
+//    }
+//
+//    NSMutableDictionary *tokens = [NSMutableDictionary dictionary];
+//
+//    if ([params objectForKey:@"tokens"]) {
+//        [tokens addEntriesFromDictionary: [params objectForKey:@"tokens"]];
+//    }
+//    
+//    if ([params objectForKey:@"tokens"]) {
+//        NSError *error;
+//        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tokens options:0 error:&error];
+//        if (jsonData) {
+//            [params setObject:[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding] forKey:@"tokens"];
+//        }
+//    }
+//    
+//    [self.application.apiClient post: [self apiFullPath: @"contacts/register"]
+//                              params: params
+//                             options: @{}
+//                             success: ^(id responseObject) {
+//                                 if (success)
+//                                     success(responseObject);
+//                             }
+//                             failure: ^(NSError *error) {
+//                                 if (failure)
+//                                     failure(error);
+//                             }
+//     ];
 }
 
 @end
