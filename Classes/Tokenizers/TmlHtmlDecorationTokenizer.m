@@ -35,7 +35,7 @@
 
 
 - (NSString *) applyToken: (NSString *) token toValue: (NSString *) value {
-    if ([token isEqualToString:TR8N_RESERVED_TOKEN] || ![self isTokenAllowed:token])
+    if ([token isEqualToString:TML_RESERVED_TOKEN] || ![self isTokenAllowed:token])
         return value;
     
     id decoration = [self.tokensData objectForKey:token];
@@ -43,8 +43,8 @@
     if (decoration == nil || [decoration isKindOfClass:NSDictionary.class]) {
         decoration = [[TML configuration] defaultTokenValueForName:token type:@"decoration" format: @"html"];
         if (decoration == nil) return value;
-        
-        NSString *defaultValue = [((NSString *) decoration) stringByReplacingOccurrencesOfString:TR8N_PLACEHOLDER withString:value];
+
+        NSString *defaultValue = [((NSString *) decoration) stringByReplacingOccurrencesOfString:TML_PLACEHOLDER withString:value];
 
         if ([decoration isKindOfClass:NSDictionary.class]) {
             for (NSString *key in [decoration allKeys]) {
@@ -63,7 +63,7 @@
     
     if ([decoration isKindOfClass:NSString.class]) {
         NSString *string = (NSString *) decoration;
-        return [string stringByReplacingOccurrencesOfString:TR8N_PLACEHOLDER withString:value];
+        return [string stringByReplacingOccurrencesOfString:TML_PLACEHOLDER withString:value];
     }
     
     return value;

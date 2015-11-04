@@ -29,7 +29,7 @@
     XCTAssert([result isEqual:expectation]);
     XCTAssert([@[] isEqual:tdt.tokenNames]);
 //    TMLDebug(@"%@", tdt.attributes);
-    attributes = @{@"tr8n": @[@{@"length":@11, @"location": @0}]};
+    attributes = @{@"tml": @[@{@"length":@11, @"location": @0}]};
     XCTAssert([attributes isEqual:tdt.attributes]);
 
     tdt = [[TMLAttributedDecorationTokenizer alloc] initWithLabel: @"Hello [bold: World]"];
@@ -40,7 +40,7 @@
     XCTAssert([result isEqual:expectation]);
     XCTAssert([@[@"bold"] isEqual:tdt.tokenNames]);
 //    TMLDebug(@"%@", tdt.attributes);
-    attributes = @{@"tr8n": @[@{@"length":@11, @"location": @0}], @"bold": @[@{@"length":@5, @"location": @6}]};
+    attributes = @{@"tml": @[@{@"length":@11, @"location": @0}], @"bold": @[@{@"length":@5, @"location": @6}]};
     XCTAssert([attributes isEqual:tdt.attributes]);
 
 //    tdt = [[TMLAttributedDecorationTokenizer alloc] initWithLabel: @"[bold: Hello [italic: World]]"];

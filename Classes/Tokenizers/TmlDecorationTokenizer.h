@@ -44,17 +44,17 @@
 
 #import <Foundation/Foundation.h>
 
-#ifndef TR8N_RESERVED_TOKEN
-    #define TR8N_RESERVED_TOKEN             @"tr8n"
-    #define TR8N_RE_SHORT_TOKEN_START       @"\\[[\\w]*:"
-    #define TR8N_RE_SHORT_TOKEN_END         @"\\]"
-    #define TR8N_RE_LONG_TOKEN_START        @"\\[[\\w]*\\]"
-    #define TR8N_RE_LONG_TOKEN_END          @"\\[\\/[\\w]*\\]"
-    #define TR8N_RE_TEXT                    @"[^\\[\\]]+"
+#ifndef TML_RESERVED_TOKEN
+    #define TML_RESERVED_TOKEN             @"tml"
+    #define TML_RE_SHORT_TOKEN_START       @"\\[[\\w]*:"
+    #define TML_RE_SHORT_TOKEN_END         @"\\]"
+    #define TML_RE_LONG_TOKEN_START        @"\\[[\\w]*\\]"
+    #define TML_RE_LONG_TOKEN_END          @"\\[\\/[\\w]*\\]"
+    #define TML_RE_TEXT                    @"[^\\[\\]]+"
 
-    #define TR8N_TOKEN_TYPE_SHORT           @"short"
-    #define TR8N_TOKEN_TYPE_LONG            @"long"
-    #define TR8N_PLACEHOLDER                @"{$0}"
+    #define TML_TOKEN_TYPE_SHORT           @"short"
+    #define TML_TOKEN_TYPE_LONG            @"long"
+    #define TML_PLACEHOLDER                @"{$0}"
 #endif
 
 @interface TMLDecorationTokenizer : NSObject

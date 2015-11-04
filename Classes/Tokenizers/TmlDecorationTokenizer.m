@@ -45,7 +45,7 @@
 
 - (id) initWithLabel: (NSString *) newLabel andAllowedTokenNames: (NSArray *) newAllowedTokenNames {
     if (self = [super init]) {
-        self.label = [NSString stringWithFormat:@"[%@]%@[/%@]", TR8N_RESERVED_TOKEN, newLabel, TR8N_RESERVED_TOKEN];
+        self.label = [NSString stringWithFormat:@"[%@]%@[/%@]", TML_RESERVED_TOKEN, newLabel, TML_RESERVED_TOKEN];
         self.tokenNames = [NSMutableArray array];
         self.allowedTokenNames = newAllowedTokenNames;
         [self fragmentize];
@@ -56,11 +56,11 @@
 }
 
 - (void) fragmentize {
-    NSArray *elements = @[TR8N_RE_SHORT_TOKEN_START,
-                          TR8N_RE_SHORT_TOKEN_END,
-                          TR8N_RE_LONG_TOKEN_START,
-                          TR8N_RE_LONG_TOKEN_END,
-                          TR8N_RE_TEXT];
+    NSArray *elements = @[TML_RE_SHORT_TOKEN_START,
+                          TML_RE_SHORT_TOKEN_END,
+                          TML_RE_LONG_TOKEN_START,
+                          TML_RE_LONG_TOKEN_END,
+                          TML_RE_TEXT];
     NSString *pattern = [elements componentsJoinedByString:@"|"];
 
     NSError *error = NULL;
@@ -136,14 +136,14 @@
 - (NSObject *) parse {
     NSString *token = [self pop];
     
-    if ([self token:token matchesExpression:TR8N_RE_SHORT_TOKEN_START]) {
+    if ([self token:token matchesExpression:TML_RE_SHORT_TOKEN_START]) {
         token = [token stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"[:"]];
-        return [self parseTree: token type: TR8N_TOKEN_TYPE_SHORT];
+        return [self parseTree: token type: TML_TOKEN_TYPE_SHORT];
     }
 
-    if ([self token:token matchesExpression:TR8N_RE_LONG_TOKEN_START]) {
+    if ([self token:token matchesExpression:TML_RE_LONG_TOKEN_START]) {
         token = [token stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"[]"]];
-        return [self parseTree: token type: TR8N_TOKEN_TYPE_LONG];
+        return [self parseTree: token type: TML_TOKEN_TYPE_LONG];
     }
     
     return token;
@@ -153,13 +153,13 @@
     NSMutableArray *tree = [NSMutableArray array];
     [tree addObject:name];
     
-    if (![self.tokenNames containsObject:name] && ![name isEqualToString:TR8N_RESERVED_TOKEN]) {
+    if (![self.tokenNames containsObject:name] && ![name isEqualToString:TML_RESERVED_TOKEN]) {
         [self.tokenNames addObject:name];
     }
 
-    if ([type isEqualToString:TR8N_TOKEN_TYPE_SHORT]) {
+    if ([type isEqualToString:TML_TOKEN_TYPE_SHORT]) {
         BOOL first = YES;
-        while ([self peek] != nil && ![self token:[self peek] matchesExpression:TR8N_RE_SHORT_TOKEN_END]) {
+        while ([self peek] != nil && ![self token:[self peek] matchesExpression:TML_RE_SHORT_TOKEN_END]) {
             NSObject *value = [self parse];
             if (first && [value isKindOfClass:NSString.class]) {
                 NSString *str = (NSString *) value;
@@ -168,8 +168,8 @@
             }
             [tree addObject:value];
         }
-    } else if ([type isEqualToString:TR8N_TOKEN_TYPE_LONG]) {
-        while ([self peek] != nil && ![self token:[self peek] matchesExpression:TR8N_RE_LONG_TOKEN_END]) {
+    } else if ([type isEqualToString:TML_TOKEN_TYPE_LONG]) {
+        while ([self peek] != nil && ![self token:[self peek] matchesExpression:TML_RE_LONG_TOKEN_END]) {
             [tree addObject:[self parse]];
         }
     }

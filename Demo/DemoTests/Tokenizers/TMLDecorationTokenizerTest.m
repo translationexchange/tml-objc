@@ -21,65 +21,65 @@
     NSArray *expectation;
     
     tdt = [[TMLDecorationTokenizer alloc] initWithLabel: @"Hello World"];
-    expectation = @[@"[tr8n]", @"Hello World", @"[/tr8n]"];
+    expectation = @[@"[tml]", @"Hello World", @"[/tml]"];
     XCTAssert([tdt.fragments isEqual:expectation]);
-    expectation = @[@"tr8n", @"Hello World"];
+    expectation = @[@"tml", @"Hello World"];
     XCTAssert([tdt.expression isEqual:expectation]);
     
     tdt = [[TMLDecorationTokenizer alloc] initWithLabel: @"[bold: Hello World]"];
-    expectation = @[@"[tr8n]", @"[bold:", @" Hello World", @"]", @"[/tr8n]"];
+    expectation = @[@"[tml]", @"[bold:", @" Hello World", @"]", @"[/tml]"];
     XCTAssert([tdt.fragments isEqual:expectation]);
-    expectation = @[@"tr8n", @[@"bold", @"Hello World"]];
+    expectation = @[@"tml", @[@"bold", @"Hello World"]];
     XCTAssert([tdt.expression isEqual:expectation]);
 
     // broken
     tdt = [[TMLDecorationTokenizer alloc] initWithLabel: @"[bold: Hello World"];
-    expectation = @[@"[tr8n]", @"[bold:", @" Hello World", @"[/tr8n]"];
+    expectation = @[@"[tml]", @"[bold:", @" Hello World", @"[/tml]"];
     XCTAssert([tdt.fragments isEqual:expectation]);
-    expectation = @[@"tr8n", @[@"bold", @"Hello World"]];
+    expectation = @[@"tml", @[@"bold", @"Hello World"]];
     XCTAssert([tdt.expression isEqual:expectation]);
 
     tdt = [[TMLDecorationTokenizer alloc] initWithLabel: @"[bold: Hello [strong: World]]"];
-    expectation = @[@"[tr8n]", @"[bold:", @" Hello ", @"[strong:", @" World", @"]", @"]", @"[/tr8n]"];
+    expectation = @[@"[tml]", @"[bold:", @" Hello ", @"[strong:", @" World", @"]", @"]", @"[/tml]"];
     XCTAssert([tdt.fragments isEqual:expectation]);
-    expectation = @[@"tr8n", @[@"bold", @"Hello ", @[@"strong", @"World"]]];
+    expectation = @[@"tml", @[@"bold", @"Hello ", @[@"strong", @"World"]]];
     XCTAssert([tdt.expression isEqual:expectation]);
 
     // broken
     tdt = [[TMLDecorationTokenizer alloc] initWithLabel: @"[bold: Hello [strong: World]"];
-    expectation = @[@"[tr8n]", @"[bold:", @" Hello ", @"[strong:", @" World", @"]", @"[/tr8n]"];
+    expectation = @[@"[tml]", @"[bold:", @" Hello ", @"[strong:", @" World", @"]", @"[/tml]"];
     XCTAssert([tdt.fragments isEqual:expectation]);
-    expectation = @[@"tr8n", @[@"bold", @"Hello ", @[@"strong", @"World"]]];
+    expectation = @[@"tml", @[@"bold", @"Hello ", @[@"strong", @"World"]]];
     XCTAssert([tdt.expression isEqual:expectation]);
     
     tdt = [[TMLDecorationTokenizer alloc] initWithLabel: @"[bold1: Hello [strong22: World]]"];
-    expectation = @[@"[tr8n]", @"[bold1:", @" Hello ", @"[strong22:", @" World", @"]", @"]", @"[/tr8n]"];
+    expectation = @[@"[tml]", @"[bold1:", @" Hello ", @"[strong22:", @" World", @"]", @"]", @"[/tml]"];
     XCTAssert([tdt.fragments isEqual:expectation]);
-    expectation = @[@"tr8n", @[@"bold1", @"Hello ", @[@"strong22", @"World"]]];
+    expectation = @[@"tml", @[@"bold1", @"Hello ", @[@"strong22", @"World"]]];
     XCTAssert([tdt.expression isEqual:expectation]);
     
     tdt = [[TMLDecorationTokenizer alloc] initWithLabel: @"[bold: Hello, [strong: how] [weak: are] you?]"];
-    expectation = @[@"[tr8n]", @"[bold:", @" Hello, ", @"[strong:", @" how", @"]", @" ", @"[weak:", @" are", @"]", @" you?", @"]", @"[/tr8n]"];
+    expectation = @[@"[tml]", @"[bold:", @" Hello, ", @"[strong:", @" how", @"]", @" ", @"[weak:", @" are", @"]", @" you?", @"]", @"[/tml]"];
     XCTAssert([tdt.fragments isEqual:expectation]);
-    expectation = @[@"tr8n", @[@"bold", @"Hello, ", @[@"strong", @"how"], @" ", @[@"weak", @"are"], @" you?"]];
+    expectation = @[@"tml", @[@"bold", @"Hello, ", @[@"strong", @"how"], @" ", @[@"weak", @"are"], @" you?"]];
     XCTAssert([tdt.expression isEqual:expectation]);
 
     tdt = [[TMLDecorationTokenizer alloc] initWithLabel: @"[bold: Hello, [strong: how [weak: are] you?]"];
-    expectation = @[@"[tr8n]", @"[bold:", @" Hello, ", @"[strong:", @" how ", @"[weak:", @" are", @"]", @" you?", @"]", @"[/tr8n]"];
+    expectation = @[@"[tml]", @"[bold:", @" Hello, ", @"[strong:", @" how ", @"[weak:", @" are", @"]", @" you?", @"]", @"[/tml]"];
     XCTAssert([tdt.fragments isEqual:expectation]);
-    expectation = @[@"tr8n", @[@"bold", @"Hello, ", @[@"strong", @"how ", @[@"weak", @"are"], @" you?"]]];
+    expectation = @[@"tml", @[@"bold", @"Hello, ", @[@"strong", @"how ", @[@"weak", @"are"], @" you?"]]];
     XCTAssert([tdt.expression isEqual:expectation]);
 
     tdt = [[TMLDecorationTokenizer alloc] initWithLabel: @"[link: you have [italic: [bold: {count}] messages] [light: in your mailbox]]"];
-    expectation = @[@"[tr8n]", @"[link:", @" you have ", @"[italic:", @" ", @"[bold:", @" {count}", @"]", @" messages", @"]", @" ", @"[light:", @" in your mailbox", @"]", @"]", @"[/tr8n]"];
+    expectation = @[@"[tml]", @"[link:", @" you have ", @"[italic:", @" ", @"[bold:", @" {count}", @"]", @" messages", @"]", @" ", @"[light:", @" in your mailbox", @"]", @"]", @"[/tml]"];
     XCTAssert([tdt.fragments isEqual:expectation]);
-    expectation = @[@"tr8n", @[@"link", @"you have ", @[@"italic", @"", @[@"bold", @"{count}"], @" messages"], @" ", @[@"light", @"in your mailbox"]]];
+    expectation = @[@"tml", @[@"link", @"you have ", @[@"italic", @"", @[@"bold", @"{count}"], @" messages"], @" ", @[@"light", @"in your mailbox"]]];
     XCTAssert([tdt.expression isEqual:expectation]);
 
     tdt = [[TMLDecorationTokenizer alloc] initWithLabel: @"[link] you have [italic: [bold: {count}] messages] [light: in your mailbox] [/link]"];
-    expectation = @[@"[tr8n]", @"[link]", @" you have ", @"[italic:", @" ", @"[bold:", @" {count}", @"]", @" messages", @"]", @" ", @"[light:", @" in your mailbox", @"]", @" ", @"[/link]", @"[/tr8n]"];
+    expectation = @[@"[tml]", @"[link]", @" you have ", @"[italic:", @" ", @"[bold:", @" {count}", @"]", @" messages", @"]", @" ", @"[light:", @" in your mailbox", @"]", @" ", @"[/link]", @"[/tml]"];
     XCTAssert([tdt.fragments isEqual:expectation]);
-    expectation = @[@"tr8n", @[@"link", @" you have ",@[@"italic", @"", @[@"bold", @"{count}"], @" messages"], @" ", @[@"light", @"in your mailbox"], @" "]];
+    expectation = @[@"tml", @[@"link", @" you have ",@[@"italic", @"", @[@"bold", @"{count}"], @" messages"], @" ", @[@"light", @"in your mailbox"], @" "]];
 //    TMLDebug(@"%@", result);
     XCTAssert([tdt.expression isEqual:expectation]);
 }
