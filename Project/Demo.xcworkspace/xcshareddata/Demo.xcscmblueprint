@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "99B6B8D127C7E87753F5F66F72C80311FF7C465B",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "56F6A573D981D28008CBA441F0BB3096E6ED6A7C" : 0,
+    "99B6B8D127C7E87753F5F66F72C80311FF7C465B" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "A5A18675-D359-4B69-B8C6-35A4E52420AB",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "56F6A573D981D28008CBA441F0BB3096E6ED6A7C" : "tml-objc-samples-wammer\/",
+    "99B6B8D127C7E87753F5F66F72C80311FF7C465B" : "tml-objc\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Demo",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Project\/Demo.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:translationexchange\/tml-objc-samples-wammer.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "56F6A573D981D28008CBA441F0BB3096E6ED6A7C"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "github.com:translationexchange\/tml-objc.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "99B6B8D127C7E87753F5F66F72C80311FF7C465B"
+    }
+  ]
+}

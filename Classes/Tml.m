@@ -34,7 +34,6 @@
 #import "TmlCache.h"
 #import "TmlDataToken.h"
 #import "TmlLanguageCase.h"
-#import "TmlReachability.h"
 #import "TmlTranslation.h"
 #import "TmlTranslationKey.h"
 #import <CommonCrypto/CommonDigest.h>
@@ -51,14 +50,13 @@
 @synthesize currentApplication, defaultLanguage, currentLanguage, currentSource, currentUser, delegate;
 @synthesize blockOptions;
 
-static Tml *sharedInstance = nil;
 
 // Shared instance of Tml
 + (Tml *)sharedInstance {
-    static dispatch_once_t onceToken;
+    static Tml *sharedInstance = nil;
+    static dispatch_once_t onceToken = 0;
     dispatch_once(&onceToken, ^{
-        sharedInstance = [[super alloc] init];
-        sharedInstance.configuration = [[TmlConfiguration alloc] init];
+        sharedInstance = [[Tml alloc] init];
     });
     return sharedInstance;
 }
@@ -75,14 +73,20 @@ static Tml *sharedInstance = nil;
 /************************************************************************************
  ** Initialization
  ************************************************************************************/
+
+- (id) init {
+    if (self == [super init]) {
+        self.configuration = [[TmlConfiguration alloc] init];
+    }
+    return self;
+}
+
 #pragma mark - Initialization
 - (void) updateWithToken: (NSString *) token launchOptions: (NSDictionary *) launchOptions {
     self.cache = [[TmlCache alloc] initWithKey: token];
     
     NSString *host = [launchOptions objectForKey:@"host"];
     if (!host) host = kTmlServiceHost;
-    
-    [self initReachabilityForHost: host];
     
     TmlApplication *app = [[TmlApplication alloc] initWithToken: token host:host];
     self.currentApplication = app;
@@ -100,26 +104,6 @@ static Tml *sharedInstance = nil;
     }];
     
     [app log];
-}
-
-- (void) initReachabilityForHost: (NSString *) host {
-    TmlDebug(@"Initializing reachability for %@", host);
-    TmlReachability *reachability = self.reachability;
-    if (reachability != nil) {
-        [reachability stopNotifier];
-    }
-    
-    reachability = [TmlReachability reachabilityForInternetConnection];
-    reachability.reachableBlock = ^(TmlReachability*reach) {
-        TmlDebug(@"Tml connection is available");
-        [[NSNotificationCenter defaultCenter] postNotificationName: TmlIsReachableNotification object: nil];
-    };
-    reachability.unreachableBlock = ^(TmlReachability*reach) {
-        TmlDebug(@"Tml connection is not available");
-        [[NSNotificationCenter defaultCenter] postNotificationName: TmlIsUnreachableNotification object: nil];
-    };
-    self.reachability = reachability;
-    [reachability startNotifier];
 }
 
 - (NSArray *) findLocalTranslationBundles {
@@ -203,12 +187,8 @@ static Tml *sharedInstance = nil;
  ** Configuration
  ************************************************************************************/
 
-+ (BOOL) isReachable {
-    return [[Tml sharedInstance].reachability isReachable];
-}
-
 + (void) configure:(void (^)(TmlConfiguration *config)) changes {
-    changes([Tml sharedInstance].configuration);
+    changes([Tml configuration]);
 }
 
 + (TmlConfiguration *) configuration {

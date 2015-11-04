@@ -35,7 +35,6 @@
 #import "TmlSource.h"
 #import "TmlConfiguration.h"
 #import "TmlCache.h"
-#import "TmlReachability.h"
 #import "TmlLogger.h"
 
 #define TmlLanguageChangedNotification @"TmlLanguageChangedNotification"
@@ -73,9 +72,6 @@
 // Tml delegate
 @property(nonatomic, assign) id <TmlDelegate> delegate;
 
-// Whether Tml service is reachable
-@property(nonatomic, strong) TmlReachability *reachability;
-
 + (Tml *) sharedInstance;
 
 + (Tml *) sharedInstanceWithToken: (NSString *) token;
@@ -90,8 +86,6 @@
 
 // Returns cache
 + (TmlCache *) cache;
-
-+ (BOOL) isReachable;
 
 // HTML Translation Methods
 + (NSString *) translate:(NSString *) label withDescription:(NSString *) description andTokens: (NSDictionary *) tokens andOptions: (NSDictionary *) options;

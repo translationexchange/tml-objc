@@ -8,11 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		23EBD41BB7AB4911A4BF6EA2 /* libPods-DemoTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 568004C1C8454EA8AD9E4612 /* libPods-DemoTests.a */; };
-		4C183DDC1A0C71CC005B942B /* TmlPostOffice.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C183DDB1A0C71CC005B942B /* TmlPostOffice.m */; };
 		4C26E3F61A7B41B500D72574 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C26E3F51A7B41B500D72574 /* logo.png */; };
 		4C36258419EF4E5700356B51 /* StaticTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C36258319EF4E5700356B51 /* StaticTableViewController.m */; };
 		4C36258719EF590400356B51 /* StaticViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C36258619EF590400356B51 /* StaticViewController.m */; };
-		4C36258B19F0509D00356B51 /* CHANGELOG.md in Sources */ = {isa = PBXBuildFile; fileRef = 4C36258A19F0509D00356B51 /* CHANGELOG.md */; };
 		4C4233E918B9B38700B76555 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C4233E818B9B38700B76555 /* Foundation.framework */; };
 		4C4233EB18B9B38700B76555 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C4233EA18B9B38700B76555 /* CoreGraphics.framework */; };
 		4C4233ED18B9B38700B76555 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C4233EC18B9B38700B76555 /* UIKit.framework */; };
@@ -26,73 +24,15 @@
 		4C42340A18B9B38700B76555 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C4233EC18B9B38700B76555 /* UIKit.framework */; };
 		4C42341218B9B38700B76555 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C42341018B9B38700B76555 /* InfoPlist.strings */; };
 		4C7A863418BD1C0800C2375D /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4C7A863318BD1C0800C2375D /* Podfile */; };
-		4C7A86D018BD1F9500C2375D /* Tml.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A869818BD1F9500C2375D /* Tml.m */; };
-		4C7A86D118BD1F9500C2375D /* TmlApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A869A18BD1F9500C2375D /* TmlApplication.m */; };
-		4C7A86D218BD1F9500C2375D /* TmlAttributedDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A869C18BD1F9500C2375D /* TmlAttributedDecorationTokenizer.m */; };
-		4C7A86D318BD1F9500C2375D /* TmlBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A869E18BD1F9500C2375D /* TmlBase.m */; };
-		4C7A86D418BD1F9500C2375D /* TmlCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86A018BD1F9500C2375D /* TmlCache.m */; };
-		4C7A86D518BD1F9500C2375D /* TmlConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86A218BD1F9500C2375D /* TmlConfiguration.m */; };
-		4C7A86D618BD1F9500C2375D /* TmlDataToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86A418BD1F9500C2375D /* TmlDataToken.m */; };
-		4C7A86D718BD1F9500C2375D /* TmlDataTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86A618BD1F9500C2375D /* TmlDataTokenizer.m */; };
-		4C7A86D818BD1F9500C2375D /* TmlDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86A818BD1F9500C2375D /* TmlDecorationTokenizer.m */; };
-		4C7A86D918BD1F9500C2375D /* TmlHtmlDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86AA18BD1F9500C2375D /* TmlHtmlDecorationTokenizer.m */; };
-		4C7A86DA18BD1F9500C2375D /* TmlLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86AC18BD1F9500C2375D /* TmlLanguage.m */; };
-		4C7A86DB18BD1F9500C2375D /* TmlLanguageCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86AE18BD1F9500C2375D /* TmlLanguageCase.m */; };
-		4C7A86DC18BD1F9500C2375D /* TmlLanguageCaseRule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86B018BD1F9500C2375D /* TmlLanguageCaseRule.m */; };
-		4C7A86DD18BD1F9500C2375D /* TmlLanguageContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86B218BD1F9500C2375D /* TmlLanguageContext.m */; };
-		4C7A86DE18BD1F9500C2375D /* TmlLanguageContextRule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86B418BD1F9500C2375D /* TmlLanguageContextRule.m */; };
-		4C7A86DF18BD1F9500C2375D /* TmlLanguageSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86B618BD1F9500C2375D /* TmlLanguageSelectorViewController.m */; };
-		4C7A86E018BD1F9500C2375D /* TmlMethodToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86B818BD1F9500C2375D /* TmlMethodToken.m */; };
-		4C7A86E118BD1F9500C2375D /* TmlPipedToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86BA18BD1F9500C2375D /* TmlPipedToken.m */; };
-		4C7A86E218BD1F9500C2375D /* TmlRulesEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86BC18BD1F9500C2375D /* TmlRulesEvaluator.m */; };
-		4C7A86E318BD1F9500C2375D /* TmlRulesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86BE18BD1F9500C2375D /* TmlRulesParser.m */; };
-		4C7A86E418BD1F9500C2375D /* TmlSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86C018BD1F9500C2375D /* TmlSource.m */; };
-		4C7A86E518BD1F9500C2375D /* TmlTranslation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86C218BD1F9500C2375D /* TmlTranslation.m */; };
-		4C7A86E618BD1F9500C2375D /* TmlTranslationKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86C418BD1F9500C2375D /* TmlTranslationKey.m */; };
-		4C7A86E718BD1F9500C2375D /* TmlTranslatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86C618BD1F9500C2375D /* TmlTranslatorViewController.m */; };
-		4C7A86E818BD1F9500C2375D /* TmlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86C818BD1F9500C2375D /* TmlViewController.m */; };
-		4C7A86EA18BD1F9500C2375D /* UIViewController+Tml.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86CC18BD1F9500C2375D /* UIViewController+Tml.m */; };
-		4C7A86EC18BD204B00C2375D /* Tml.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A869818BD1F9500C2375D /* Tml.m */; };
-		4C7A86ED18BD204B00C2375D /* TmlApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A869A18BD1F9500C2375D /* TmlApplication.m */; };
-		4C7A86EE18BD204B00C2375D /* TmlAttributedDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A869C18BD1F9500C2375D /* TmlAttributedDecorationTokenizer.m */; };
-		4C7A86EF18BD204B00C2375D /* TmlBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A869E18BD1F9500C2375D /* TmlBase.m */; };
-		4C7A86F018BD204B00C2375D /* TmlCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86A018BD1F9500C2375D /* TmlCache.m */; };
-		4C7A86F118BD204B00C2375D /* TmlConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86A218BD1F9500C2375D /* TmlConfiguration.m */; };
-		4C7A86F218BD204B00C2375D /* TmlDataToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86A418BD1F9500C2375D /* TmlDataToken.m */; };
-		4C7A86F318BD204B00C2375D /* TmlDataTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86A618BD1F9500C2375D /* TmlDataTokenizer.m */; };
-		4C7A86F418BD204B00C2375D /* TmlDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86A818BD1F9500C2375D /* TmlDecorationTokenizer.m */; };
-		4C7A86F518BD204B00C2375D /* TmlHtmlDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86AA18BD1F9500C2375D /* TmlHtmlDecorationTokenizer.m */; };
-		4C7A86F618BD204B00C2375D /* TmlLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86AC18BD1F9500C2375D /* TmlLanguage.m */; };
-		4C7A86F718BD204B00C2375D /* TmlLanguageCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86AE18BD1F9500C2375D /* TmlLanguageCase.m */; };
-		4C7A86F818BD204B00C2375D /* TmlLanguageCaseRule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86B018BD1F9500C2375D /* TmlLanguageCaseRule.m */; };
-		4C7A86F918BD204B00C2375D /* TmlLanguageContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86B218BD1F9500C2375D /* TmlLanguageContext.m */; };
-		4C7A86FA18BD204B00C2375D /* TmlLanguageContextRule.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86B418BD1F9500C2375D /* TmlLanguageContextRule.m */; };
-		4C7A86FB18BD204B00C2375D /* TmlLanguageSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86B618BD1F9500C2375D /* TmlLanguageSelectorViewController.m */; };
-		4C7A86FC18BD204B00C2375D /* TmlMethodToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86B818BD1F9500C2375D /* TmlMethodToken.m */; };
-		4C7A86FD18BD204B00C2375D /* TmlPipedToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86BA18BD1F9500C2375D /* TmlPipedToken.m */; };
-		4C7A86FE18BD204B00C2375D /* TmlRulesEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86BC18BD1F9500C2375D /* TmlRulesEvaluator.m */; };
-		4C7A86FF18BD204B00C2375D /* TmlRulesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86BE18BD1F9500C2375D /* TmlRulesParser.m */; };
-		4C7A870018BD204B00C2375D /* TmlSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86C018BD1F9500C2375D /* TmlSource.m */; };
-		4C7A870118BD204B00C2375D /* TmlTranslation.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86C218BD1F9500C2375D /* TmlTranslation.m */; };
-		4C7A870218BD204B00C2375D /* TmlTranslationKey.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86C418BD1F9500C2375D /* TmlTranslationKey.m */; };
-		4C7A870318BD204B00C2375D /* TmlTranslatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86C618BD1F9500C2375D /* TmlTranslatorViewController.m */; };
-		4C7A870418BD204B00C2375D /* TmlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86C818BD1F9500C2375D /* TmlViewController.m */; };
-		4C7A870618BD204B00C2375D /* UIViewController+Tml.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A86CC18BD1F9500C2375D /* UIViewController+Tml.m */; };
 		4C7A870E18BD330000C2375D /* ApplicationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A870B18BD330000C2375D /* ApplicationViewController.m */; };
 		4C7A870F18BD330000C2375D /* ApplicationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A870D18BD330000C2375D /* ApplicationTableViewController.m */; };
 		4C7A871118BD353C00C2375D /* more.png in Resources */ = {isa = PBXBuildFile; fileRef = 4C7A871018BD353C00C2375D /* more.png */; };
-		4C81FCFF1A265A520014DC1D /* TmlReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C81FCFE1A265A520014DC1D /* TmlReachability.m */; };
 		4C81FD011A265B8F0014DC1D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C81FD001A265B8F0014DC1D /* SystemConfiguration.framework */; };
-		4C9E18781A11761A00082FFF /* TmlCacheGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCA27DC1A082F820053E211 /* TmlCacheGenerator.m */; };
-		4C9E18791A11761A00082FFF /* TmlPostOffice.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C183DDB1A0C71CC005B942B /* TmlPostOffice.m */; };
-		4CBCDDF41A71D0CA001EC77D /* TmlReachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C81FCFE1A265A520014DC1D /* TmlReachability.m */; };
 		4CC2EAE218BA7AD900F359F8 /* Icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC2EAE118BA7AD900F359F8 /* Icon-40@2x.png */; };
 		4CC2EAE418BA7AEB00F359F8 /* Icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC2EAE318BA7AEB00F359F8 /* Icon-60@2x.png */; };
 		4CC2EAE618BA7B0800F359F8 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC2EAE518BA7B0800F359F8 /* Icon-Small@2x.png */; };
 		4CCA001E1922D12E00CE4D95 /* arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCA001D1922D12E00CE4D95 /* arrow_down.png */; };
 		4CCA0024192450B100CE4D95 /* en-US.json in Resources */ = {isa = PBXBuildFile; fileRef = 4CCA0023192450B100CE4D95 /* en-US.json */; };
-		4CCA002D1925292300CE4D95 /* TmlApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCA002C1925292300CE4D95 /* TmlApiClient.m */; };
-		4CCA27DD1A082F820053E211 /* TmlCacheGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCA27DC1A082F820053E211 /* TmlCacheGenerator.m */; };
 		4CCBA10918B9B5E900CFCB3A /* app.json in Resources */ = {isa = PBXBuildFile; fileRef = 4CCBA0EB18B9B5E900CFCB3A /* app.json */; };
 		4CCBA10A18B9B5E900CFCB3A /* cs_en-US_plural.json in Resources */ = {isa = PBXBuildFile; fileRef = 4CCBA0EC18B9B5E900CFCB3A /* cs_en-US_plural.json */; };
 		4CCBA10B18B9B5E900CFCB3A /* cs_ru_gen.json in Resources */ = {isa = PBXBuildFile; fileRef = 4CCBA0ED18B9B5E900CFCB3A /* cs_ru_gen.json */; };
@@ -136,9 +76,67 @@
 		4CFA531419284666006E1B43 /* Rakefile in Resources */ = {isa = PBXBuildFile; fileRef = 4CFA531019284666006E1B43 /* Rakefile */; };
 		4CFA531519284666006E1B43 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4CFA531119284666006E1B43 /* README.md */; };
 		4CFA531619284666006E1B43 /* Tml.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 4CFA531219284666006E1B43 /* Tml.podspec */; };
-		4CFA53191928483D006E1B43 /* TmlApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCA002C1925292300CE4D95 /* TmlApiClient.m */; };
 		7763CE239D6940AF971EA5E9 /* libPods-Demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2305CA3DC53F409AB1C35AE2 /* libPods-Demo.a */; };
-		C42BDBAE1BE2C984005D5F10 /* NSString+TmlAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C42BDBAD1BE2C984005D5F10 /* NSString+TmlAdditions.m */; };
+		C02414491BEA709E00013059 /* TmlApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414041BEA709E00013059 /* TmlApiClient.m */; };
+		C024144A1BEA709E00013059 /* TmlApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414041BEA709E00013059 /* TmlApiClient.m */; };
+		C024144B1BEA709E00013059 /* TmlApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414061BEA709E00013059 /* TmlApplication.m */; };
+		C024144C1BEA709E00013059 /* TmlApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414061BEA709E00013059 /* TmlApplication.m */; };
+		C024144D1BEA709E00013059 /* TmlCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414081BEA709E00013059 /* TmlCache.m */; };
+		C024144E1BEA709E00013059 /* TmlCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414081BEA709E00013059 /* TmlCache.m */; };
+		C024144F1BEA709E00013059 /* TmlConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = C024140A1BEA709E00013059 /* TmlConfiguration.m */; };
+		C02414501BEA709E00013059 /* TmlConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = C024140A1BEA709E00013059 /* TmlConfiguration.m */; };
+		C02414511BEA709E00013059 /* TmlPostOffice.m in Sources */ = {isa = PBXBuildFile; fileRef = C024140C1BEA709E00013059 /* TmlPostOffice.m */; };
+		C02414521BEA709E00013059 /* TmlPostOffice.m in Sources */ = {isa = PBXBuildFile; fileRef = C024140C1BEA709E00013059 /* TmlPostOffice.m */; };
+		C02414551BEA709E00013059 /* TmlSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414101BEA709E00013059 /* TmlSource.m */; };
+		C02414561BEA709E00013059 /* TmlSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414101BEA709E00013059 /* TmlSource.m */; };
+		C02414571BEA709E00013059 /* NSString+TmlAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414131BEA709E00013059 /* NSString+TmlAdditions.m */; };
+		C02414581BEA709E00013059 /* NSString+TmlAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414131BEA709E00013059 /* NSString+TmlAdditions.m */; };
+		C02414591BEA709E00013059 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = C02414151BEA709E00013059 /* .gitkeep */; };
+		C024145A1BEA709E00013059 /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = C02414151BEA709E00013059 /* .gitkeep */; };
+		C024145B1BEA709E00013059 /* TmlLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414181BEA709E00013059 /* TmlLanguage.m */; };
+		C024145C1BEA709E00013059 /* TmlLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414181BEA709E00013059 /* TmlLanguage.m */; };
+		C024145D1BEA709E00013059 /* TmlLanguageCase.m in Sources */ = {isa = PBXBuildFile; fileRef = C024141A1BEA709E00013059 /* TmlLanguageCase.m */; };
+		C024145E1BEA709E00013059 /* TmlLanguageCase.m in Sources */ = {isa = PBXBuildFile; fileRef = C024141A1BEA709E00013059 /* TmlLanguageCase.m */; };
+		C024145F1BEA709E00013059 /* TmlLanguageCaseRule.m in Sources */ = {isa = PBXBuildFile; fileRef = C024141C1BEA709E00013059 /* TmlLanguageCaseRule.m */; };
+		C02414601BEA709E00013059 /* TmlLanguageCaseRule.m in Sources */ = {isa = PBXBuildFile; fileRef = C024141C1BEA709E00013059 /* TmlLanguageCaseRule.m */; };
+		C02414611BEA709E00013059 /* TmlLanguageContext.m in Sources */ = {isa = PBXBuildFile; fileRef = C024141E1BEA709E00013059 /* TmlLanguageContext.m */; };
+		C02414621BEA709E00013059 /* TmlLanguageContext.m in Sources */ = {isa = PBXBuildFile; fileRef = C024141E1BEA709E00013059 /* TmlLanguageContext.m */; };
+		C02414631BEA709E00013059 /* TmlLanguageContextRule.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414201BEA709E00013059 /* TmlLanguageContextRule.m */; };
+		C02414641BEA709E00013059 /* TmlLanguageContextRule.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414201BEA709E00013059 /* TmlLanguageContextRule.m */; };
+		C02414651BEA709E00013059 /* TmlRulesEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414231BEA709E00013059 /* TmlRulesEvaluator.m */; };
+		C02414661BEA709E00013059 /* TmlRulesEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414231BEA709E00013059 /* TmlRulesEvaluator.m */; };
+		C02414671BEA709E00013059 /* TmlRulesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414251BEA709E00013059 /* TmlRulesParser.m */; };
+		C02414681BEA709E00013059 /* TmlRulesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414251BEA709E00013059 /* TmlRulesParser.m */; };
+		C02414691BEA709E00013059 /* Tml.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414271BEA709E00013059 /* Tml.m */; };
+		C024146A1BEA709E00013059 /* Tml.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414271BEA709E00013059 /* Tml.m */; };
+		C024146B1BEA709E00013059 /* TmlBase.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414291BEA709E00013059 /* TmlBase.m */; };
+		C024146C1BEA709E00013059 /* TmlBase.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414291BEA709E00013059 /* TmlBase.m */; };
+		C024146D1BEA709E00013059 /* TmlAttributedDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C024142D1BEA709E00013059 /* TmlAttributedDecorationTokenizer.m */; };
+		C024146E1BEA709E00013059 /* TmlAttributedDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C024142D1BEA709E00013059 /* TmlAttributedDecorationTokenizer.m */; };
+		C024146F1BEA709E00013059 /* TmlDataTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C024142F1BEA709E00013059 /* TmlDataTokenizer.m */; };
+		C02414701BEA709E00013059 /* TmlDataTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C024142F1BEA709E00013059 /* TmlDataTokenizer.m */; };
+		C02414711BEA709E00013059 /* TmlDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414311BEA709E00013059 /* TmlDecorationTokenizer.m */; };
+		C02414721BEA709E00013059 /* TmlDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414311BEA709E00013059 /* TmlDecorationTokenizer.m */; };
+		C02414731BEA709E00013059 /* TmlHtmlDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414331BEA709E00013059 /* TmlHtmlDecorationTokenizer.m */; };
+		C02414741BEA709E00013059 /* TmlHtmlDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414331BEA709E00013059 /* TmlHtmlDecorationTokenizer.m */; };
+		C02414751BEA709E00013059 /* TmlDataToken.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414361BEA709E00013059 /* TmlDataToken.m */; };
+		C02414761BEA709E00013059 /* TmlDataToken.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414361BEA709E00013059 /* TmlDataToken.m */; };
+		C02414771BEA709E00013059 /* TmlMethodToken.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414381BEA709E00013059 /* TmlMethodToken.m */; };
+		C02414781BEA709E00013059 /* TmlMethodToken.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414381BEA709E00013059 /* TmlMethodToken.m */; };
+		C02414791BEA709E00013059 /* TmlPipedToken.m in Sources */ = {isa = PBXBuildFile; fileRef = C024143A1BEA709E00013059 /* TmlPipedToken.m */; };
+		C024147A1BEA709E00013059 /* TmlPipedToken.m in Sources */ = {isa = PBXBuildFile; fileRef = C024143A1BEA709E00013059 /* TmlPipedToken.m */; };
+		C024147B1BEA709E00013059 /* TmlTranslation.m in Sources */ = {isa = PBXBuildFile; fileRef = C024143D1BEA709E00013059 /* TmlTranslation.m */; };
+		C024147C1BEA709E00013059 /* TmlTranslation.m in Sources */ = {isa = PBXBuildFile; fileRef = C024143D1BEA709E00013059 /* TmlTranslation.m */; };
+		C024147D1BEA709E00013059 /* TmlTranslationKey.m in Sources */ = {isa = PBXBuildFile; fileRef = C024143F1BEA709E00013059 /* TmlTranslationKey.m */; };
+		C024147E1BEA709E00013059 /* TmlTranslationKey.m in Sources */ = {isa = PBXBuildFile; fileRef = C024143F1BEA709E00013059 /* TmlTranslationKey.m */; };
+		C024147F1BEA709E00013059 /* TmlLanguageSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414421BEA709E00013059 /* TmlLanguageSelectorViewController.m */; };
+		C02414801BEA709E00013059 /* TmlLanguageSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414421BEA709E00013059 /* TmlLanguageSelectorViewController.m */; };
+		C02414811BEA709E00013059 /* TmlTranslatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414441BEA709E00013059 /* TmlTranslatorViewController.m */; };
+		C02414821BEA709E00013059 /* TmlTranslatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414441BEA709E00013059 /* TmlTranslatorViewController.m */; };
+		C02414831BEA709E00013059 /* TmlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414461BEA709E00013059 /* TmlViewController.m */; };
+		C02414841BEA709E00013059 /* TmlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414461BEA709E00013059 /* TmlViewController.m */; };
+		C02414851BEA709E00013059 /* UIViewController+Tml.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414481BEA709E00013059 /* UIViewController+Tml.m */; };
+		C02414861BEA709E00013059 /* UIViewController+Tml.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414481BEA709E00013059 /* UIViewController+Tml.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -154,14 +152,11 @@
 /* Begin PBXFileReference section */
 		2305CA3DC53F409AB1C35AE2 /* libPods-Demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Demo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3EC5E4639492FBCE50FA374A /* Pods-DemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DemoTests/Pods-DemoTests.release.xcconfig"; sourceTree = "<group>"; };
-		4C183DDA1A0C71CC005B942B /* TmlPostOffice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlPostOffice.h; sourceTree = "<group>"; };
-		4C183DDB1A0C71CC005B942B /* TmlPostOffice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlPostOffice.m; sourceTree = "<group>"; };
 		4C26E3F51A7B41B500D72574 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		4C36258219EF4E5700356B51 /* StaticTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticTableViewController.h; sourceTree = "<group>"; };
 		4C36258319EF4E5700356B51 /* StaticTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaticTableViewController.m; sourceTree = "<group>"; };
 		4C36258519EF590400356B51 /* StaticViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticViewController.h; sourceTree = "<group>"; };
 		4C36258619EF590400356B51 /* StaticViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaticViewController.m; sourceTree = "<group>"; };
-		4C36258A19F0509D00356B51 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = ../CHANGELOG.md; sourceTree = "<group>"; };
 		4C4233E518B9B38700B76555 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C4233E818B9B38700B76555 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4C4233EA18B9B38700B76555 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -179,75 +174,17 @@
 		4C42340F18B9B38700B76555 /* DemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DemoTests-Info.plist"; sourceTree = "<group>"; };
 		4C42341118B9B38700B76555 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4C7A863318BD1C0800C2375D /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		4C7A869718BD1F9500C2375D /* Tml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tml.h; sourceTree = "<group>"; };
-		4C7A869818BD1F9500C2375D /* Tml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tml.m; sourceTree = "<group>"; };
-		4C7A869918BD1F9500C2375D /* TmlApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlApplication.h; sourceTree = "<group>"; };
-		4C7A869A18BD1F9500C2375D /* TmlApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlApplication.m; sourceTree = "<group>"; };
-		4C7A869B18BD1F9500C2375D /* TmlAttributedDecorationTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlAttributedDecorationTokenizer.h; sourceTree = "<group>"; };
-		4C7A869C18BD1F9500C2375D /* TmlAttributedDecorationTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlAttributedDecorationTokenizer.m; sourceTree = "<group>"; };
-		4C7A869D18BD1F9500C2375D /* TmlBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlBase.h; sourceTree = "<group>"; };
-		4C7A869E18BD1F9500C2375D /* TmlBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlBase.m; sourceTree = "<group>"; };
-		4C7A869F18BD1F9500C2375D /* TmlCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlCache.h; sourceTree = "<group>"; };
-		4C7A86A018BD1F9500C2375D /* TmlCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlCache.m; sourceTree = "<group>"; };
-		4C7A86A118BD1F9500C2375D /* TmlConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlConfiguration.h; sourceTree = "<group>"; };
-		4C7A86A218BD1F9500C2375D /* TmlConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlConfiguration.m; sourceTree = "<group>"; };
-		4C7A86A318BD1F9500C2375D /* TmlDataToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlDataToken.h; sourceTree = "<group>"; };
-		4C7A86A418BD1F9500C2375D /* TmlDataToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlDataToken.m; sourceTree = "<group>"; };
-		4C7A86A518BD1F9500C2375D /* TmlDataTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlDataTokenizer.h; sourceTree = "<group>"; };
-		4C7A86A618BD1F9500C2375D /* TmlDataTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlDataTokenizer.m; sourceTree = "<group>"; };
-		4C7A86A718BD1F9500C2375D /* TmlDecorationTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlDecorationTokenizer.h; sourceTree = "<group>"; };
-		4C7A86A818BD1F9500C2375D /* TmlDecorationTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlDecorationTokenizer.m; sourceTree = "<group>"; };
-		4C7A86A918BD1F9500C2375D /* TmlHtmlDecorationTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlHtmlDecorationTokenizer.h; sourceTree = "<group>"; };
-		4C7A86AA18BD1F9500C2375D /* TmlHtmlDecorationTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlHtmlDecorationTokenizer.m; sourceTree = "<group>"; };
-		4C7A86AB18BD1F9500C2375D /* TmlLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlLanguage.h; sourceTree = "<group>"; };
-		4C7A86AC18BD1F9500C2375D /* TmlLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlLanguage.m; sourceTree = "<group>"; };
-		4C7A86AD18BD1F9500C2375D /* TmlLanguageCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlLanguageCase.h; sourceTree = "<group>"; };
-		4C7A86AE18BD1F9500C2375D /* TmlLanguageCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlLanguageCase.m; sourceTree = "<group>"; };
-		4C7A86AF18BD1F9500C2375D /* TmlLanguageCaseRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlLanguageCaseRule.h; sourceTree = "<group>"; };
-		4C7A86B018BD1F9500C2375D /* TmlLanguageCaseRule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlLanguageCaseRule.m; sourceTree = "<group>"; };
-		4C7A86B118BD1F9500C2375D /* TmlLanguageContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlLanguageContext.h; sourceTree = "<group>"; };
-		4C7A86B218BD1F9500C2375D /* TmlLanguageContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlLanguageContext.m; sourceTree = "<group>"; };
-		4C7A86B318BD1F9500C2375D /* TmlLanguageContextRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlLanguageContextRule.h; sourceTree = "<group>"; };
-		4C7A86B418BD1F9500C2375D /* TmlLanguageContextRule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlLanguageContextRule.m; sourceTree = "<group>"; };
-		4C7A86B518BD1F9500C2375D /* TmlLanguageSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlLanguageSelectorViewController.h; sourceTree = "<group>"; };
-		4C7A86B618BD1F9500C2375D /* TmlLanguageSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlLanguageSelectorViewController.m; sourceTree = "<group>"; };
-		4C7A86B718BD1F9500C2375D /* TmlMethodToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlMethodToken.h; sourceTree = "<group>"; };
-		4C7A86B818BD1F9500C2375D /* TmlMethodToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlMethodToken.m; sourceTree = "<group>"; };
-		4C7A86B918BD1F9500C2375D /* TmlPipedToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlPipedToken.h; sourceTree = "<group>"; };
-		4C7A86BA18BD1F9500C2375D /* TmlPipedToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlPipedToken.m; sourceTree = "<group>"; };
-		4C7A86BB18BD1F9500C2375D /* TmlRulesEvaluator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlRulesEvaluator.h; sourceTree = "<group>"; };
-		4C7A86BC18BD1F9500C2375D /* TmlRulesEvaluator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlRulesEvaluator.m; sourceTree = "<group>"; };
-		4C7A86BD18BD1F9500C2375D /* TmlRulesParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlRulesParser.h; sourceTree = "<group>"; };
-		4C7A86BE18BD1F9500C2375D /* TmlRulesParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlRulesParser.m; sourceTree = "<group>"; };
-		4C7A86BF18BD1F9500C2375D /* TmlSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlSource.h; sourceTree = "<group>"; };
-		4C7A86C018BD1F9500C2375D /* TmlSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlSource.m; sourceTree = "<group>"; };
-		4C7A86C118BD1F9500C2375D /* TmlTranslation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlTranslation.h; sourceTree = "<group>"; };
-		4C7A86C218BD1F9500C2375D /* TmlTranslation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlTranslation.m; sourceTree = "<group>"; };
-		4C7A86C318BD1F9500C2375D /* TmlTranslationKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlTranslationKey.h; sourceTree = "<group>"; };
-		4C7A86C418BD1F9500C2375D /* TmlTranslationKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlTranslationKey.m; sourceTree = "<group>"; };
-		4C7A86C518BD1F9500C2375D /* TmlTranslatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlTranslatorViewController.h; sourceTree = "<group>"; };
-		4C7A86C618BD1F9500C2375D /* TmlTranslatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlTranslatorViewController.m; sourceTree = "<group>"; };
-		4C7A86C718BD1F9500C2375D /* TmlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlViewController.h; sourceTree = "<group>"; };
-		4C7A86C818BD1F9500C2375D /* TmlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlViewController.m; sourceTree = "<group>"; };
-		4C7A86CB18BD1F9500C2375D /* UIViewController+Tml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Tml.h"; sourceTree = "<group>"; };
-		4C7A86CC18BD1F9500C2375D /* UIViewController+Tml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Tml.m"; sourceTree = "<group>"; };
 		4C7A870A18BD330000C2375D /* ApplicationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationViewController.h; sourceTree = "<group>"; };
 		4C7A870B18BD330000C2375D /* ApplicationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationViewController.m; sourceTree = "<group>"; };
 		4C7A870C18BD330000C2375D /* ApplicationTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationTableViewController.h; sourceTree = "<group>"; };
 		4C7A870D18BD330000C2375D /* ApplicationTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationTableViewController.m; sourceTree = "<group>"; };
 		4C7A871018BD353C00C2375D /* more.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = more.png; sourceTree = "<group>"; };
-		4C81FCFD1A265A520014DC1D /* TmlReachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlReachability.h; sourceTree = "<group>"; };
-		4C81FCFE1A265A520014DC1D /* TmlReachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlReachability.m; sourceTree = "<group>"; };
 		4C81FD001A265B8F0014DC1D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4CC2EAE118BA7AD900F359F8 /* Icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40@2x.png"; sourceTree = "<group>"; };
 		4CC2EAE318BA7AEB00F359F8 /* Icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@2x.png"; sourceTree = "<group>"; };
 		4CC2EAE518BA7B0800F359F8 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
 		4CCA001D1922D12E00CE4D95 /* arrow_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_down.png; sourceTree = "<group>"; };
 		4CCA0023192450B100CE4D95 /* en-US.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "en-US.json"; sourceTree = "<group>"; };
-		4CCA002B1925292300CE4D95 /* TmlApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlApiClient.h; sourceTree = "<group>"; };
-		4CCA002C1925292300CE4D95 /* TmlApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlApiClient.m; sourceTree = "<group>"; };
-		4CCA27DB1A082F820053E211 /* TmlCacheGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlCacheGenerator.h; sourceTree = "<group>"; };
-		4CCA27DC1A082F820053E211 /* TmlCacheGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlCacheGenerator.m; sourceTree = "<group>"; };
 		4CCBA0EB18B9B5E900CFCB3A /* app.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = app.json; sourceTree = "<group>"; };
 		4CCBA0EC18B9B5E900CFCB3A /* cs_en-US_plural.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cs_en-US_plural.json"; sourceTree = "<group>"; };
 		4CCBA0ED18B9B5E900CFCB3A /* cs_ru_gen.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cs_ru_gen.json; sourceTree = "<group>"; };
@@ -286,7 +223,6 @@
 		4CCBA12C18B9B69A00CFCB3A /* TMLTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTableViewCell.m; sourceTree = "<group>"; };
 		4CCBA12D18B9B69A00CFCB3A /* TranslationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TranslationViewController.h; sourceTree = "<group>"; };
 		4CCBA12E18B9B69A00CFCB3A /* TranslationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TranslationViewController.m; sourceTree = "<group>"; };
-		4CDE2B971A675B9600A3B959 /* TmlLogger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TmlLogger.h; sourceTree = "<group>"; };
 		4CE06A0318BD37A40088AB3E /* WelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WelcomeViewController.h; sourceTree = "<group>"; };
 		4CE06A0418BD37A40088AB3E /* WelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WelcomeViewController.m; sourceTree = "<group>"; };
 		4CE06A0618BD3D2E0088AB3E /* DecorationTokensDemoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DecorationTokensDemoViewController.h; sourceTree = "<group>"; };
@@ -309,8 +245,66 @@
 		84922E9709A1E82DE15D4D88 /* Pods-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		A6A3AC3DD938835FB92F9194 /* Pods-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		BD38CEACE6D239B51CE90063 /* Pods-DemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DemoTests/Pods-DemoTests.debug.xcconfig"; sourceTree = "<group>"; };
-		C42BDBAC1BE2C984005D5F10 /* NSString+TmlAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+TmlAdditions.h"; sourceTree = "<group>"; };
-		C42BDBAD1BE2C984005D5F10 /* NSString+TmlAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+TmlAdditions.m"; sourceTree = "<group>"; };
+		C02414031BEA709E00013059 /* TmlApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlApiClient.h; sourceTree = "<group>"; };
+		C02414041BEA709E00013059 /* TmlApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlApiClient.m; sourceTree = "<group>"; };
+		C02414051BEA709E00013059 /* TmlApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlApplication.h; sourceTree = "<group>"; };
+		C02414061BEA709E00013059 /* TmlApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlApplication.m; sourceTree = "<group>"; };
+		C02414071BEA709E00013059 /* TmlCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlCache.h; sourceTree = "<group>"; };
+		C02414081BEA709E00013059 /* TmlCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlCache.m; sourceTree = "<group>"; };
+		C02414091BEA709E00013059 /* TmlConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlConfiguration.h; sourceTree = "<group>"; };
+		C024140A1BEA709E00013059 /* TmlConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlConfiguration.m; sourceTree = "<group>"; };
+		C024140B1BEA709E00013059 /* TmlPostOffice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlPostOffice.h; sourceTree = "<group>"; };
+		C024140C1BEA709E00013059 /* TmlPostOffice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlPostOffice.m; sourceTree = "<group>"; };
+		C024140F1BEA709E00013059 /* TmlSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlSource.h; sourceTree = "<group>"; };
+		C02414101BEA709E00013059 /* TmlSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlSource.m; sourceTree = "<group>"; };
+		C02414121BEA709E00013059 /* NSString+TmlAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+TmlAdditions.h"; sourceTree = "<group>"; };
+		C02414131BEA709E00013059 /* NSString+TmlAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+TmlAdditions.m"; sourceTree = "<group>"; };
+		C02414151BEA709E00013059 /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		C02414171BEA709E00013059 /* TmlLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlLanguage.h; sourceTree = "<group>"; };
+		C02414181BEA709E00013059 /* TmlLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlLanguage.m; sourceTree = "<group>"; };
+		C02414191BEA709E00013059 /* TmlLanguageCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlLanguageCase.h; sourceTree = "<group>"; };
+		C024141A1BEA709E00013059 /* TmlLanguageCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlLanguageCase.m; sourceTree = "<group>"; };
+		C024141B1BEA709E00013059 /* TmlLanguageCaseRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlLanguageCaseRule.h; sourceTree = "<group>"; };
+		C024141C1BEA709E00013059 /* TmlLanguageCaseRule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlLanguageCaseRule.m; sourceTree = "<group>"; };
+		C024141D1BEA709E00013059 /* TmlLanguageContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlLanguageContext.h; sourceTree = "<group>"; };
+		C024141E1BEA709E00013059 /* TmlLanguageContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlLanguageContext.m; sourceTree = "<group>"; };
+		C024141F1BEA709E00013059 /* TmlLanguageContextRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlLanguageContextRule.h; sourceTree = "<group>"; };
+		C02414201BEA709E00013059 /* TmlLanguageContextRule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlLanguageContextRule.m; sourceTree = "<group>"; };
+		C02414221BEA709E00013059 /* TmlRulesEvaluator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlRulesEvaluator.h; sourceTree = "<group>"; };
+		C02414231BEA709E00013059 /* TmlRulesEvaluator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlRulesEvaluator.m; sourceTree = "<group>"; };
+		C02414241BEA709E00013059 /* TmlRulesParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlRulesParser.h; sourceTree = "<group>"; };
+		C02414251BEA709E00013059 /* TmlRulesParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlRulesParser.m; sourceTree = "<group>"; };
+		C02414261BEA709E00013059 /* Tml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tml.h; sourceTree = "<group>"; };
+		C02414271BEA709E00013059 /* Tml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tml.m; sourceTree = "<group>"; };
+		C02414281BEA709E00013059 /* TmlBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlBase.h; sourceTree = "<group>"; };
+		C02414291BEA709E00013059 /* TmlBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlBase.m; sourceTree = "<group>"; };
+		C024142A1BEA709E00013059 /* TmlLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlLogger.h; sourceTree = "<group>"; };
+		C024142C1BEA709E00013059 /* TmlAttributedDecorationTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlAttributedDecorationTokenizer.h; sourceTree = "<group>"; };
+		C024142D1BEA709E00013059 /* TmlAttributedDecorationTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlAttributedDecorationTokenizer.m; sourceTree = "<group>"; };
+		C024142E1BEA709E00013059 /* TmlDataTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlDataTokenizer.h; sourceTree = "<group>"; };
+		C024142F1BEA709E00013059 /* TmlDataTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlDataTokenizer.m; sourceTree = "<group>"; };
+		C02414301BEA709E00013059 /* TmlDecorationTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlDecorationTokenizer.h; sourceTree = "<group>"; };
+		C02414311BEA709E00013059 /* TmlDecorationTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlDecorationTokenizer.m; sourceTree = "<group>"; };
+		C02414321BEA709E00013059 /* TmlHtmlDecorationTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlHtmlDecorationTokenizer.h; sourceTree = "<group>"; };
+		C02414331BEA709E00013059 /* TmlHtmlDecorationTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlHtmlDecorationTokenizer.m; sourceTree = "<group>"; };
+		C02414351BEA709E00013059 /* TmlDataToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlDataToken.h; sourceTree = "<group>"; };
+		C02414361BEA709E00013059 /* TmlDataToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlDataToken.m; sourceTree = "<group>"; };
+		C02414371BEA709E00013059 /* TmlMethodToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlMethodToken.h; sourceTree = "<group>"; };
+		C02414381BEA709E00013059 /* TmlMethodToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlMethodToken.m; sourceTree = "<group>"; };
+		C02414391BEA709E00013059 /* TmlPipedToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlPipedToken.h; sourceTree = "<group>"; };
+		C024143A1BEA709E00013059 /* TmlPipedToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlPipedToken.m; sourceTree = "<group>"; };
+		C024143C1BEA709E00013059 /* TmlTranslation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlTranslation.h; sourceTree = "<group>"; };
+		C024143D1BEA709E00013059 /* TmlTranslation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlTranslation.m; sourceTree = "<group>"; };
+		C024143E1BEA709E00013059 /* TmlTranslationKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlTranslationKey.h; sourceTree = "<group>"; };
+		C024143F1BEA709E00013059 /* TmlTranslationKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlTranslationKey.m; sourceTree = "<group>"; };
+		C02414411BEA709E00013059 /* TmlLanguageSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlLanguageSelectorViewController.h; sourceTree = "<group>"; };
+		C02414421BEA709E00013059 /* TmlLanguageSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlLanguageSelectorViewController.m; sourceTree = "<group>"; };
+		C02414431BEA709E00013059 /* TmlTranslatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlTranslatorViewController.h; sourceTree = "<group>"; };
+		C02414441BEA709E00013059 /* TmlTranslatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlTranslatorViewController.m; sourceTree = "<group>"; };
+		C02414451BEA709E00013059 /* TmlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlViewController.h; sourceTree = "<group>"; };
+		C02414461BEA709E00013059 /* TmlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlViewController.m; sourceTree = "<group>"; };
+		C02414471BEA709E00013059 /* UIViewController+Tml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Tml.h"; sourceTree = "<group>"; };
+		C02414481BEA709E00013059 /* UIViewController+Tml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Tml.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -447,20 +441,20 @@
 		4C7A869018BD1F9500C2375D /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				4C7A869718BD1F9500C2375D /* Tml.h */,
-				4C7A869818BD1F9500C2375D /* Tml.m */,
-				4C7A869D18BD1F9500C2375D /* TmlBase.h */,
-				4C7A869E18BD1F9500C2375D /* TmlBase.m */,
-				4CDE2B971A675B9600A3B959 /* TmlLogger.h */,
-				4CCA27DA1A082F5E0053E211 /* Generators */,
-				4CE06A1018BD3F6A0088AB3E /* Application */,
-				4CE06A0A18BD3EC90088AB3E /* Language */,
-				4CE06A0E18BD3F180088AB3E /* Translations */,
-				4CE06A0D18BD3F040088AB3E /* Tokenizers */,
-				4CE06A0B18BD3EDC0088AB3E /* Rules Engine */,
-				4CE06A0918BD3EC00088AB3E /* UI */,
-				C42BDBAC1BE2C984005D5F10 /* NSString+TmlAdditions.h */,
-				C42BDBAD1BE2C984005D5F10 /* NSString+TmlAdditions.m */,
+				C02414261BEA709E00013059 /* Tml.h */,
+				C02414271BEA709E00013059 /* Tml.m */,
+				C02414281BEA709E00013059 /* TmlBase.h */,
+				C02414291BEA709E00013059 /* TmlBase.m */,
+				C024142A1BEA709E00013059 /* TmlLogger.h */,
+				C02414021BEA709E00013059 /* Application */,
+				C02414111BEA709E00013059 /* Extensions */,
+				C02414141BEA709E00013059 /* ios */,
+				C02414161BEA709E00013059 /* Language */,
+				C02414211BEA709E00013059 /* Rules Engine */,
+				C024142B1BEA709E00013059 /* Tokenizers */,
+				C02414341BEA709E00013059 /* Tokens */,
+				C024143B1BEA709E00013059 /* Translations */,
+				C02414401BEA709E00013059 /* UI */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -582,119 +576,6 @@
 			name = Translations;
 			sourceTree = "<group>";
 		};
-		4CCA27DA1A082F5E0053E211 /* Generators */ = {
-			isa = PBXGroup;
-			children = (
-				4CCA27DB1A082F820053E211 /* TmlCacheGenerator.h */,
-				4CCA27DC1A082F820053E211 /* TmlCacheGenerator.m */,
-			);
-			name = Generators;
-			sourceTree = "<group>";
-		};
-		4CE06A0918BD3EC00088AB3E /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				4C7A86CB18BD1F9500C2375D /* UIViewController+Tml.h */,
-				4C7A86CC18BD1F9500C2375D /* UIViewController+Tml.m */,
-				4C7A86C718BD1F9500C2375D /* TmlViewController.h */,
-				4C7A86C818BD1F9500C2375D /* TmlViewController.m */,
-				4C7A86C518BD1F9500C2375D /* TmlTranslatorViewController.h */,
-				4C7A86C618BD1F9500C2375D /* TmlTranslatorViewController.m */,
-				4C7A86B518BD1F9500C2375D /* TmlLanguageSelectorViewController.h */,
-				4C7A86B618BD1F9500C2375D /* TmlLanguageSelectorViewController.m */,
-			);
-			name = UI;
-			sourceTree = "<group>";
-		};
-		4CE06A0A18BD3EC90088AB3E /* Language */ = {
-			isa = PBXGroup;
-			children = (
-				4C7A86AB18BD1F9500C2375D /* TmlLanguage.h */,
-				4C7A86AC18BD1F9500C2375D /* TmlLanguage.m */,
-				4C7A86AD18BD1F9500C2375D /* TmlLanguageCase.h */,
-				4C7A86AE18BD1F9500C2375D /* TmlLanguageCase.m */,
-				4C7A86AF18BD1F9500C2375D /* TmlLanguageCaseRule.h */,
-				4C7A86B018BD1F9500C2375D /* TmlLanguageCaseRule.m */,
-				4C7A86B118BD1F9500C2375D /* TmlLanguageContext.h */,
-				4C7A86B218BD1F9500C2375D /* TmlLanguageContext.m */,
-				4C7A86B318BD1F9500C2375D /* TmlLanguageContextRule.h */,
-				4C7A86B418BD1F9500C2375D /* TmlLanguageContextRule.m */,
-			);
-			name = Language;
-			sourceTree = "<group>";
-		};
-		4CE06A0B18BD3EDC0088AB3E /* Rules Engine */ = {
-			isa = PBXGroup;
-			children = (
-				4C7A86BB18BD1F9500C2375D /* TmlRulesEvaluator.h */,
-				4C7A86BC18BD1F9500C2375D /* TmlRulesEvaluator.m */,
-				4C7A86BD18BD1F9500C2375D /* TmlRulesParser.h */,
-				4C7A86BE18BD1F9500C2375D /* TmlRulesParser.m */,
-			);
-			name = "Rules Engine";
-			sourceTree = "<group>";
-		};
-		4CE06A0C18BD3EEE0088AB3E /* Tokens */ = {
-			isa = PBXGroup;
-			children = (
-				4C7A86A318BD1F9500C2375D /* TmlDataToken.h */,
-				4C7A86A418BD1F9500C2375D /* TmlDataToken.m */,
-				4C7A86B718BD1F9500C2375D /* TmlMethodToken.h */,
-				4C7A86B818BD1F9500C2375D /* TmlMethodToken.m */,
-				4C7A86B918BD1F9500C2375D /* TmlPipedToken.h */,
-				4C7A86BA18BD1F9500C2375D /* TmlPipedToken.m */,
-			);
-			name = Tokens;
-			sourceTree = "<group>";
-		};
-		4CE06A0D18BD3F040088AB3E /* Tokenizers */ = {
-			isa = PBXGroup;
-			children = (
-				4CE06A0C18BD3EEE0088AB3E /* Tokens */,
-				4C7A86A518BD1F9500C2375D /* TmlDataTokenizer.h */,
-				4C7A86A618BD1F9500C2375D /* TmlDataTokenizer.m */,
-				4C7A86A718BD1F9500C2375D /* TmlDecorationTokenizer.h */,
-				4C7A86A818BD1F9500C2375D /* TmlDecorationTokenizer.m */,
-				4C7A86A918BD1F9500C2375D /* TmlHtmlDecorationTokenizer.h */,
-				4C7A86AA18BD1F9500C2375D /* TmlHtmlDecorationTokenizer.m */,
-				4C7A869B18BD1F9500C2375D /* TmlAttributedDecorationTokenizer.h */,
-				4C7A869C18BD1F9500C2375D /* TmlAttributedDecorationTokenizer.m */,
-			);
-			name = Tokenizers;
-			sourceTree = "<group>";
-		};
-		4CE06A0E18BD3F180088AB3E /* Translations */ = {
-			isa = PBXGroup;
-			children = (
-				4C7A86C118BD1F9500C2375D /* TmlTranslation.h */,
-				4C7A86C218BD1F9500C2375D /* TmlTranslation.m */,
-				4C7A86C318BD1F9500C2375D /* TmlTranslationKey.h */,
-				4C7A86C418BD1F9500C2375D /* TmlTranslationKey.m */,
-			);
-			name = Translations;
-			sourceTree = "<group>";
-		};
-		4CE06A1018BD3F6A0088AB3E /* Application */ = {
-			isa = PBXGroup;
-			children = (
-				4C7A869918BD1F9500C2375D /* TmlApplication.h */,
-				4C7A869A18BD1F9500C2375D /* TmlApplication.m */,
-				4CCA002B1925292300CE4D95 /* TmlApiClient.h */,
-				4CCA002C1925292300CE4D95 /* TmlApiClient.m */,
-				4C7A869F18BD1F9500C2375D /* TmlCache.h */,
-				4C7A86A018BD1F9500C2375D /* TmlCache.m */,
-				4C7A86A118BD1F9500C2375D /* TmlConfiguration.h */,
-				4C7A86A218BD1F9500C2375D /* TmlConfiguration.m */,
-				4C7A86BF18BD1F9500C2375D /* TmlSource.h */,
-				4C7A86C018BD1F9500C2375D /* TmlSource.m */,
-				4C183DDA1A0C71CC005B942B /* TmlPostOffice.h */,
-				4C183DDB1A0C71CC005B942B /* TmlPostOffice.m */,
-				4C81FCFD1A265A520014DC1D /* TmlReachability.h */,
-				4C81FCFE1A265A520014DC1D /* TmlReachability.m */,
-			);
-			name = Application;
-			sourceTree = "<group>";
-		};
 		4CE06A1A18BD826F0088AB3E /* Base */ = {
 			isa = PBXGroup;
 			children = (
@@ -767,7 +648,6 @@
 		4CFA53171928466D006E1B43 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				4C36258A19F0509D00356B51 /* CHANGELOG.md */,
 				4CFA530F19284666006E1B43 /* LICENSE */,
 				4CFA531019284666006E1B43 /* Rakefile */,
 				4CFA531119284666006E1B43 /* README.md */,
@@ -785,6 +665,124 @@
 				3EC5E4639492FBCE50FA374A /* Pods-DemoTests.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		C02414021BEA709E00013059 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				C02414031BEA709E00013059 /* TmlApiClient.h */,
+				C02414041BEA709E00013059 /* TmlApiClient.m */,
+				C02414051BEA709E00013059 /* TmlApplication.h */,
+				C02414061BEA709E00013059 /* TmlApplication.m */,
+				C02414071BEA709E00013059 /* TmlCache.h */,
+				C02414081BEA709E00013059 /* TmlCache.m */,
+				C02414091BEA709E00013059 /* TmlConfiguration.h */,
+				C024140A1BEA709E00013059 /* TmlConfiguration.m */,
+				C024140B1BEA709E00013059 /* TmlPostOffice.h */,
+				C024140C1BEA709E00013059 /* TmlPostOffice.m */,
+				C024140F1BEA709E00013059 /* TmlSource.h */,
+				C02414101BEA709E00013059 /* TmlSource.m */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		C02414111BEA709E00013059 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C02414121BEA709E00013059 /* NSString+TmlAdditions.h */,
+				C02414131BEA709E00013059 /* NSString+TmlAdditions.m */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C02414141BEA709E00013059 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				C02414151BEA709E00013059 /* .gitkeep */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
+		C02414161BEA709E00013059 /* Language */ = {
+			isa = PBXGroup;
+			children = (
+				C02414171BEA709E00013059 /* TmlLanguage.h */,
+				C02414181BEA709E00013059 /* TmlLanguage.m */,
+				C02414191BEA709E00013059 /* TmlLanguageCase.h */,
+				C024141A1BEA709E00013059 /* TmlLanguageCase.m */,
+				C024141B1BEA709E00013059 /* TmlLanguageCaseRule.h */,
+				C024141C1BEA709E00013059 /* TmlLanguageCaseRule.m */,
+				C024141D1BEA709E00013059 /* TmlLanguageContext.h */,
+				C024141E1BEA709E00013059 /* TmlLanguageContext.m */,
+				C024141F1BEA709E00013059 /* TmlLanguageContextRule.h */,
+				C02414201BEA709E00013059 /* TmlLanguageContextRule.m */,
+			);
+			path = Language;
+			sourceTree = "<group>";
+		};
+		C02414211BEA709E00013059 /* Rules Engine */ = {
+			isa = PBXGroup;
+			children = (
+				C02414221BEA709E00013059 /* TmlRulesEvaluator.h */,
+				C02414231BEA709E00013059 /* TmlRulesEvaluator.m */,
+				C02414241BEA709E00013059 /* TmlRulesParser.h */,
+				C02414251BEA709E00013059 /* TmlRulesParser.m */,
+			);
+			path = "Rules Engine";
+			sourceTree = "<group>";
+		};
+		C024142B1BEA709E00013059 /* Tokenizers */ = {
+			isa = PBXGroup;
+			children = (
+				C024142C1BEA709E00013059 /* TmlAttributedDecorationTokenizer.h */,
+				C024142D1BEA709E00013059 /* TmlAttributedDecorationTokenizer.m */,
+				C024142E1BEA709E00013059 /* TmlDataTokenizer.h */,
+				C024142F1BEA709E00013059 /* TmlDataTokenizer.m */,
+				C02414301BEA709E00013059 /* TmlDecorationTokenizer.h */,
+				C02414311BEA709E00013059 /* TmlDecorationTokenizer.m */,
+				C02414321BEA709E00013059 /* TmlHtmlDecorationTokenizer.h */,
+				C02414331BEA709E00013059 /* TmlHtmlDecorationTokenizer.m */,
+			);
+			path = Tokenizers;
+			sourceTree = "<group>";
+		};
+		C02414341BEA709E00013059 /* Tokens */ = {
+			isa = PBXGroup;
+			children = (
+				C02414351BEA709E00013059 /* TmlDataToken.h */,
+				C02414361BEA709E00013059 /* TmlDataToken.m */,
+				C02414371BEA709E00013059 /* TmlMethodToken.h */,
+				C02414381BEA709E00013059 /* TmlMethodToken.m */,
+				C02414391BEA709E00013059 /* TmlPipedToken.h */,
+				C024143A1BEA709E00013059 /* TmlPipedToken.m */,
+			);
+			path = Tokens;
+			sourceTree = "<group>";
+		};
+		C024143B1BEA709E00013059 /* Translations */ = {
+			isa = PBXGroup;
+			children = (
+				C024143C1BEA709E00013059 /* TmlTranslation.h */,
+				C024143D1BEA709E00013059 /* TmlTranslation.m */,
+				C024143E1BEA709E00013059 /* TmlTranslationKey.h */,
+				C024143F1BEA709E00013059 /* TmlTranslationKey.m */,
+			);
+			path = Translations;
+			sourceTree = "<group>";
+		};
+		C02414401BEA709E00013059 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				C02414411BEA709E00013059 /* TmlLanguageSelectorViewController.h */,
+				C02414421BEA709E00013059 /* TmlLanguageSelectorViewController.m */,
+				C02414431BEA709E00013059 /* TmlTranslatorViewController.h */,
+				C02414441BEA709E00013059 /* TmlTranslatorViewController.m */,
+				C02414451BEA709E00013059 /* TmlViewController.h */,
+				C02414461BEA709E00013059 /* TmlViewController.m */,
+				C02414471BEA709E00013059 /* UIViewController+Tml.h */,
+				C02414481BEA709E00013059 /* UIViewController+Tml.m */,
+			);
+			path = UI;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -837,9 +835,12 @@
 		4C4233DD18B9B38600B76555 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = "TmlHub Inc";
 				TargetAttributes = {
+					4C4233E418B9B38700B76555 = {
+						DevelopmentTeam = SHZ47SPEXT;
+					};
 					4C42340518B9B38700B76555 = {
 						TestTargetID = 4C4233E418B9B38700B76555;
 					};
@@ -884,6 +885,7 @@
 				4CFA531519284666006E1B43 /* README.md in Resources */,
 				4C4233FC18B9B38700B76555 /* Main.storyboard in Resources */,
 				4CFA531419284666006E1B43 /* Rakefile in Resources */,
+				C02414591BEA709E00013059 /* .gitkeep in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -899,6 +901,7 @@
 				4CCBA10A18B9B5E900CFCB3A /* cs_en-US_plural.json in Resources */,
 				4CCBA10918B9B5E900CFCB3A /* app.json in Resources */,
 				4CCBA11118B9B5E900CFCB3A /* es.json in Resources */,
+				C024145A1BEA709E00013059 /* .gitkeep in Resources */,
 				4CCBA11018B9B5E900CFCB3A /* en-US.json in Resources */,
 				4CCBA10C18B9B5E900CFCB3A /* ctx_en-US_gender.json in Resources */,
 				4CCBA10B18B9B5E900CFCB3A /* cs_ru_gen.json in Resources */,
@@ -1006,55 +1009,52 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4C183DDC1A0C71CC005B942B /* TmlPostOffice.m in Sources */,
-				4C7A86E418BD1F9500C2375D /* TmlSource.m in Sources */,
-				4C7A86E118BD1F9500C2375D /* TmlPipedToken.m in Sources */,
-				4C7A86D118BD1F9500C2375D /* TmlApplication.m in Sources */,
 				4C4233F918B9B38700B76555 /* AppDelegate.m in Sources */,
-				4C7A86D818BD1F9500C2375D /* TmlDecorationTokenizer.m in Sources */,
+				C024146D1BEA709E00013059 /* TmlAttributedDecorationTokenizer.m in Sources */,
 				4CE06A1D18BD85830088AB3E /* TokensDemoViewController.m in Sources */,
-				4C7A86D518BD1F9500C2375D /* TmlConfiguration.m in Sources */,
-				4C7A86DC18BD1F9500C2375D /* TmlLanguageCaseRule.m in Sources */,
+				C024145B1BEA709E00013059 /* TmlLanguage.m in Sources */,
 				4CE06A2018BD882F0088AB3E /* User.m in Sources */,
 				4CCBA12F18B9B69A00CFCB3A /* MenuViewController.m in Sources */,
+				C02414671BEA709E00013059 /* TmlRulesParser.m in Sources */,
+				C02414631BEA709E00013059 /* TmlLanguageContextRule.m in Sources */,
+				C024146B1BEA709E00013059 /* TmlBase.m in Sources */,
+				C024144B1BEA709E00013059 /* TmlApplication.m in Sources */,
+				C02414811BEA709E00013059 /* TmlTranslatorViewController.m in Sources */,
+				C02414511BEA709E00013059 /* TmlPostOffice.m in Sources */,
 				4CE06A1618BD823B0088AB3E /* DataTokensDemoViewController.m in Sources */,
-				C42BDBAE1BE2C984005D5F10 /* NSString+TmlAdditions.m in Sources */,
 				4C36258419EF4E5700356B51 /* StaticTableViewController.m in Sources */,
-				4C7A86E518BD1F9500C2375D /* TmlTranslation.m in Sources */,
-				4CCA002D1925292300CE4D95 /* TmlApiClient.m in Sources */,
-				4C7A86E318BD1F9500C2375D /* TmlRulesParser.m in Sources */,
-				4C7A86DD18BD1F9500C2375D /* TmlLanguageContext.m in Sources */,
-				4C7A86DE18BD1F9500C2375D /* TmlLanguageContextRule.m in Sources */,
-				4C7A86D318BD1F9500C2375D /* TmlBase.m in Sources */,
-				4C7A86E718BD1F9500C2375D /* TmlTranslatorViewController.m in Sources */,
-				4C7A86E018BD1F9500C2375D /* TmlMethodToken.m in Sources */,
-				4C36258B19F0509D00356B51 /* CHANGELOG.md in Sources */,
-				4CCA27DD1A082F820053E211 /* TmlCacheGenerator.m in Sources */,
+				C02414711BEA709E00013059 /* TmlDecorationTokenizer.m in Sources */,
+				C02414551BEA709E00013059 /* TmlSource.m in Sources */,
+				C024146F1BEA709E00013059 /* TmlDataTokenizer.m in Sources */,
+				C024145F1BEA709E00013059 /* TmlLanguageCaseRule.m in Sources */,
+				C02414751BEA709E00013059 /* TmlDataToken.m in Sources */,
+				C02414831BEA709E00013059 /* TmlViewController.m in Sources */,
+				C024144F1BEA709E00013059 /* TmlConfiguration.m in Sources */,
+				C02414851BEA709E00013059 /* UIViewController+Tml.m in Sources */,
+				C02414571BEA709E00013059 /* NSString+TmlAdditions.m in Sources */,
+				C024145D1BEA709E00013059 /* TmlLanguageCase.m in Sources */,
+				C02414791BEA709E00013059 /* TmlPipedToken.m in Sources */,
 				4CE06A0818BD3D2E0088AB3E /* DecorationTokensDemoViewController.m in Sources */,
+				C02414611BEA709E00013059 /* TmlLanguageContext.m in Sources */,
 				4CCBA13218B9B69A00CFCB3A /* TMLTableViewCell.m in Sources */,
-				4C7A86DA18BD1F9500C2375D /* TmlLanguage.m in Sources */,
-				4C81FCFF1A265A520014DC1D /* TmlReachability.m in Sources */,
-				4C7A86E818BD1F9500C2375D /* TmlViewController.m in Sources */,
+				C02414491BEA709E00013059 /* TmlApiClient.m in Sources */,
 				4C36258719EF590400356B51 /* StaticViewController.m in Sources */,
 				4C7A870E18BD330000C2375D /* ApplicationViewController.m in Sources */,
+				C024147F1BEA709E00013059 /* TmlLanguageSelectorViewController.m in Sources */,
 				4CE06A1918BD82660088AB3E /* CombinedTokensDemoViewController.m in Sources */,
-				4C7A86D618BD1F9500C2375D /* TmlDataToken.m in Sources */,
 				4CE06A0518BD37A40088AB3E /* WelcomeViewController.m in Sources */,
-				4C7A86D418BD1F9500C2375D /* TmlCache.m in Sources */,
-				4C7A86DF18BD1F9500C2375D /* TmlLanguageSelectorViewController.m in Sources */,
+				C02414651BEA709E00013059 /* TmlRulesEvaluator.m in Sources */,
+				C02414691BEA709E00013059 /* Tml.m in Sources */,
+				C024147B1BEA709E00013059 /* TmlTranslation.m in Sources */,
+				C024147D1BEA709E00013059 /* TmlTranslationKey.m in Sources */,
+				C02414731BEA709E00013059 /* TmlHtmlDecorationTokenizer.m in Sources */,
 				4CCBA13118B9B69A00CFCB3A /* TMLConsoleViewController.m in Sources */,
-				4C7A86EA18BD1F9500C2375D /* UIViewController+Tml.m in Sources */,
 				4C7A870F18BD330000C2375D /* ApplicationTableViewController.m in Sources */,
-				4C7A86D018BD1F9500C2375D /* Tml.m in Sources */,
 				4C4233F518B9B38700B76555 /* main.m in Sources */,
-				4C7A86D918BD1F9500C2375D /* TmlHtmlDecorationTokenizer.m in Sources */,
 				4CE06A1318BD42D30088AB3E /* TMLSampleTableViewCell.m in Sources */,
-				4C7A86D218BD1F9500C2375D /* TmlAttributedDecorationTokenizer.m in Sources */,
-				4C7A86E218BD1F9500C2375D /* TmlRulesEvaluator.m in Sources */,
-				4C7A86E618BD1F9500C2375D /* TmlTranslationKey.m in Sources */,
-				4C7A86DB18BD1F9500C2375D /* TmlLanguageCase.m in Sources */,
+				C02414771BEA709E00013059 /* TmlMethodToken.m in Sources */,
+				C024144D1BEA709E00013059 /* TmlCache.m in Sources */,
 				4CCBA13318B9B69A00CFCB3A /* TranslationViewController.m in Sources */,
-				4C7A86D718BD1F9500C2375D /* TmlDataTokenizer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1062,53 +1062,52 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CBCDDF41A71D0CA001EC77D /* TmlReachability.m in Sources */,
-				4C9E18781A11761A00082FFF /* TmlCacheGenerator.m in Sources */,
-				4C9E18791A11761A00082FFF /* TmlPostOffice.m in Sources */,
-				4CFA53191928483D006E1B43 /* TmlApiClient.m in Sources */,
-				4C7A86EC18BD204B00C2375D /* Tml.m in Sources */,
-				4C7A86ED18BD204B00C2375D /* TmlApplication.m in Sources */,
-				4C7A86EE18BD204B00C2375D /* TmlAttributedDecorationTokenizer.m in Sources */,
-				4C7A86EF18BD204B00C2375D /* TmlBase.m in Sources */,
-				4C7A86F018BD204B00C2375D /* TmlCache.m in Sources */,
-				4C7A86F118BD204B00C2375D /* TmlConfiguration.m in Sources */,
-				4C7A86F218BD204B00C2375D /* TmlDataToken.m in Sources */,
-				4C7A86F318BD204B00C2375D /* TmlDataTokenizer.m in Sources */,
-				4C7A86F418BD204B00C2375D /* TmlDecorationTokenizer.m in Sources */,
-				4C7A86F518BD204B00C2375D /* TmlHtmlDecorationTokenizer.m in Sources */,
-				4C7A86F618BD204B00C2375D /* TmlLanguage.m in Sources */,
-				4C7A86F718BD204B00C2375D /* TmlLanguageCase.m in Sources */,
-				4C7A86F818BD204B00C2375D /* TmlLanguageCaseRule.m in Sources */,
-				4C7A86F918BD204B00C2375D /* TmlLanguageContext.m in Sources */,
-				4C7A86FA18BD204B00C2375D /* TmlLanguageContextRule.m in Sources */,
-				4C7A86FB18BD204B00C2375D /* TmlLanguageSelectorViewController.m in Sources */,
-				4C7A86FC18BD204B00C2375D /* TmlMethodToken.m in Sources */,
-				4C7A86FD18BD204B00C2375D /* TmlPipedToken.m in Sources */,
-				4C7A86FE18BD204B00C2375D /* TmlRulesEvaluator.m in Sources */,
-				4C7A86FF18BD204B00C2375D /* TmlRulesParser.m in Sources */,
-				4C7A870018BD204B00C2375D /* TmlSource.m in Sources */,
-				4C7A870118BD204B00C2375D /* TmlTranslation.m in Sources */,
-				4C7A870218BD204B00C2375D /* TmlTranslationKey.m in Sources */,
-				4C7A870318BD204B00C2375D /* TmlTranslatorViewController.m in Sources */,
-				4C7A870418BD204B00C2375D /* TmlViewController.m in Sources */,
-				4C7A870618BD204B00C2375D /* UIViewController+Tml.m in Sources */,
+				C02414721BEA709E00013059 /* TmlDecorationTokenizer.m in Sources */,
+				C024146A1BEA709E00013059 /* Tml.m in Sources */,
 				4CCBA12118B9B5E900CFCB3A /* TmlTestBase.m in Sources */,
+				C02414801BEA709E00013059 /* TmlLanguageSelectorViewController.m in Sources */,
 				4CCBA12418B9B5E900CFCB3A /* TmlTranslationKeyTest.m in Sources */,
+				C02414821BEA709E00013059 /* TmlTranslatorViewController.m in Sources */,
 				4CCBA11418B9B5E900CFCB3A /* TmlAttributedDecorationTokenizerTest.m in Sources */,
+				C02414581BEA709E00013059 /* NSString+TmlAdditions.m in Sources */,
+				C02414521BEA709E00013059 /* TmlPostOffice.m in Sources */,
+				C02414701BEA709E00013059 /* TmlDataTokenizer.m in Sources */,
+				C024147C1BEA709E00013059 /* TmlTranslation.m in Sources */,
 				4CCBA11918B9B5E900CFCB3A /* TmlLanguageCaseRuleTest.m in Sources */,
+				C02414781BEA709E00013059 /* TmlMethodToken.m in Sources */,
 				4CCBA11D18B9B5E900CFCB3A /* TmlPipedTokenTest.m in Sources */,
+				C02414501BEA709E00013059 /* TmlConfiguration.m in Sources */,
+				C024144A1BEA709E00013059 /* TmlApiClient.m in Sources */,
+				C024144E1BEA709E00013059 /* TmlCache.m in Sources */,
 				4CCBA12018B9B5E900CFCB3A /* TmlTest.m in Sources */,
 				4CCBA11A18B9B5E900CFCB3A /* TmlLanguageCaseTest.m in Sources */,
+				C02414741BEA709E00013059 /* TmlHtmlDecorationTokenizer.m in Sources */,
+				C02414561BEA709E00013059 /* TmlSource.m in Sources */,
+				C02414841BEA709E00013059 /* TmlViewController.m in Sources */,
 				4CCBA11F18B9B5E900CFCB3A /* TmlRulesParserTest.m in Sources */,
+				C024145E1BEA709E00013059 /* TmlLanguageCase.m in Sources */,
+				C02414681BEA709E00013059 /* TmlRulesParser.m in Sources */,
+				C02414621BEA709E00013059 /* TmlLanguageContext.m in Sources */,
+				C02414661BEA709E00013059 /* TmlRulesEvaluator.m in Sources */,
+				C024145C1BEA709E00013059 /* TmlLanguage.m in Sources */,
+				C02414601BEA709E00013059 /* TmlLanguageCaseRule.m in Sources */,
 				4CCBA11718B9B5E900CFCB3A /* TmlDecorationTokenizerTest.m in Sources */,
+				C024147E1BEA709E00013059 /* TmlTranslationKey.m in Sources */,
+				C024144C1BEA709E00013059 /* TmlApplication.m in Sources */,
+				C024147A1BEA709E00013059 /* TmlPipedToken.m in Sources */,
 				4CCBA11318B9B5E900CFCB3A /* TmlApplicationTest.m in Sources */,
 				4CCBA11618B9B5E900CFCB3A /* TmlDataTokenTest.m in Sources */,
+				C02414641BEA709E00013059 /* TmlLanguageContextRule.m in Sources */,
+				C024146E1BEA709E00013059 /* TmlAttributedDecorationTokenizer.m in Sources */,
 				4CCBA11518B9B5E900CFCB3A /* TmlConfigurationTest.m in Sources */,
+				C024146C1BEA709E00013059 /* TmlBase.m in Sources */,
 				4CCBA11818B9B5E900CFCB3A /* TmlHtmlDecorationTokenizerTest.m in Sources */,
 				4CCBA11E18B9B5E900CFCB3A /* TmlRulesEvaluatorTest.m in Sources */,
+				C02414861BEA709E00013059 /* UIViewController+Tml.m in Sources */,
 				4CCBA11C18B9B5E900CFCB3A /* TmlLanguageContextTest.m in Sources */,
 				4CCBA11B18B9B5E900CFCB3A /* TmlLanguageContextRuleTest.m in Sources */,
 				4CCBA12318B9B5E900CFCB3A /* TmlTestUser.m in Sources */,
+				C02414761BEA709E00013059 /* TmlDataToken.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1168,6 +1167,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -1228,13 +1228,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Michael Berkovich (VZ37P672Q5)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Michael Berkovich (VZ37P672Q5)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Demo/Demo-Prefix.pch";
 				INFOPLIST_FILE = "Demo/Demo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.translationexchange.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0fc00e20-d7ea-4f6d-a9f3-56ff87cbc8cd";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1245,11 +1247,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Demo/Demo-Prefix.pch";
 				INFOPLIST_FILE = "Demo/Demo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.translationexchange.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "0fc00e20-d7ea-4f6d-a9f3-56ff87cbc8cd";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -1271,6 +1277,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "DemoTests/DemoTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tr8nhub.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -1290,6 +1297,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Demo/Demo-Prefix.pch";
 				INFOPLIST_FILE = "DemoTests/DemoTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.tr8nhub.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
