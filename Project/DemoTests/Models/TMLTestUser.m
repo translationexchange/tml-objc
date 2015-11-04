@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 TmlHub. All rights reserved.
 //
 
-#import "TmlTestUser.h"
+#import "TMLTestUser.h"
 
-@implementation TmlTestUser
+@implementation TMLTestUser
 
 @synthesize firstName, lastName, gender, age;
 

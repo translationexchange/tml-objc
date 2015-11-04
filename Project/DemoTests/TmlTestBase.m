@@ -20,9 +20,9 @@
  *  THE SOFTWARE.
  */
 
-#import "TmlTestBase.h"
+#import "TMLTestBase.h"
 
-@implementation TmlTestBase
+@implementation TMLTestBase
 
 - (NSDictionary *) loadJSON: (NSString *) name {
     NSBundle *bundle = [NSBundle bundleForClass:[self class]];

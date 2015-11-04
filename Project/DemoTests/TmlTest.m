@@ -24,11 +24,11 @@
 #import <Foundation/Foundation.h>
 #import "TmlTestBase.h"
 
-@interface TmlTest : TmlTestBase
+@interface TMLTest : TMLTestBase
 
 @end
 
-@implementation TmlTest
+@implementation TMLTest
 
 - (void) testApplicationInit {
     

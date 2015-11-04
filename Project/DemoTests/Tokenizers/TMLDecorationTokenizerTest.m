@@ -8,13 +8,13 @@
 
 #import  "TmlDecorationTokenizer.h"
 #import <Foundation/Foundation.h>
-#import "TmlTestBase.h"
+#import "TMLTestBase.h"
 
-@interface TmlDecorationTokenizerTest : TmlTestBase
+@interface TMLDecorationTokenizerTest : TMLTestBase
 
 @end
 
-@implementation TmlDecorationTokenizerTest
+@implementation TMLDecorationTokenizerTest
 
 - (void) testParsing {
     TmlDecorationTokenizer *tdt;

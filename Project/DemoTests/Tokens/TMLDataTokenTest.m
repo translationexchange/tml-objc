@@ -9,14 +9,14 @@
 #import "TmlDataToken.h"
 #import "TmlTestUser.h"
 #import <Foundation/Foundation.h>
-#import "TmlTestBase.h"
+#import "TMLTestBase.h"
 
-@interface TmlDataTokenTest : TmlTestBase
+@interface TMLDataTokenTest : TMLTestBase
 
 @end
 
 
-@implementation TmlDataTokenTest
+@implementation TMLDataTokenTest
 
 - (void) testParsing {
     TmlDataToken *token = [[TmlDataToken alloc] initWithName:@"{user}"];
@@ -111,7 +111,7 @@
 - (void) testTokenValue {
     TmlDataToken *token = [[TmlDataToken alloc] initWithName:@"{user}"];
     
-    TmlTestUser *user = [[TmlTestUser alloc] initWithFirstName:@"Michael" andLastName:@"Berkovich" andGender:@"male"];
+    TMLTestUser *user = [[TMLTestUser alloc] initWithFirstName:@"Michael" andLastName:@"Berkovich" andGender:@"male"];
     
     NSString *value = [token tokenValue:@{@"user": user}];
     XCTAssertEqualObjects(@"Michael Berkovich", value);
@@ -135,7 +135,7 @@
     
     TmlDataToken *token = [[TmlDataToken alloc] initWithName:@"{user}"];
     
-    TmlTestUser *user = [[TmlTestUser alloc] initWithFirstName:@"Michael" andLastName:@"Berkovich" andGender:@"male"];
+    TMLTestUser *user = [[TMLTestUser alloc] initWithFirstName:@"Michael" andLastName:@"Berkovich" andGender:@"male"];
     
     NSString *result = [token substituteInLabel:@"Hello {user}" usingTokens:@{@"user": user} forLanguage:language withOptions:@{}];
     XCTAssert([result isEqual: @"Hello Michael Berkovich"]);
@@ -146,7 +146,7 @@
 }
 
 - (void) testTokenObjectForName {
-    TmlTestUser *user = [[TmlTestUser alloc] initWithFirstName:@"Michael" andLastName:@"Berkovich" andGender:@"male"];
+    TMLTestUser *user = [[TMLTestUser alloc] initWithFirstName:@"Michael" andLastName:@"Berkovich" andGender:@"male"];
 
     NSObject *result = [TmlDataToken tokenObjectForName:@"user" fromTokens:@{@"user": user}];
     XCTAssert([user isEqual:result]);

@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TmlTestUser : NSObject
+@interface TMLTestUser : NSObject
 
 @property (nonatomic, strong) NSString *firstName;
 

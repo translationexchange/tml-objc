@@ -11,13 +11,13 @@
 #import "Tml.h"
 #import "TmlLanguageContextRule.h"
 #import <Foundation/Foundation.h>
-#import "TmlTestBase.h"
+#import "TMLTestBase.h"
 
-@interface TmlLanguageContextTest : TmlTestBase
+@interface TMLLanguageContextTest : TMLTestBase
 
 @end
 
-@implementation TmlLanguageContextTest
+@implementation TMLLanguageContextTest
 
 - (void) testApplicableToTokenName {
     TmlLanguageContext *context = [[TmlLanguageContext alloc] initWithAttributes: [self loadJSON: @"ctx_en-US_gender"]];
@@ -31,7 +31,7 @@
 
 - (void) testVariables {
     TmlLanguageContext *context = [[TmlLanguageContext alloc] initWithAttributes: [self loadJSON: @"ctx_en-US_gender"]];
-    TmlTestUser *user = [[TmlTestUser alloc] initWithFirstName:@"Michael" andLastName:@"Berkovich" andGender:@"male"];
+    TMLTestUser *user = [[TMLTestUser alloc] initWithFirstName:@"Michael" andLastName:@"Berkovich" andGender:@"male"];
     
     [Tml configure:^(TmlConfiguration *config) {
         [config setVariableMethod:@"@gender" forContext:@"gender" andVariableName:@"@gender"];
@@ -61,7 +61,7 @@
 
 - (void) testFindMatchingRule {
     TmlLanguageContext *context = [[TmlLanguageContext alloc] initWithAttributes: [self loadJSON: @"ctx_en-US_gender"]];
-    TmlTestUser *user = [[TmlTestUser alloc] initWithFirstName:@"Michael" andLastName:@"Berkovich" andGender:@"male"];
+    TMLTestUser *user = [[TMLTestUser alloc] initWithFirstName:@"Michael" andLastName:@"Berkovich" andGender:@"male"];
     
     [Tml configure:^(TmlConfiguration *config) {
         [config setVariableMethod:@"@gender" forContext:@"gender" andVariableName:@"@gender"];

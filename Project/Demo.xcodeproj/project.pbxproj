@@ -33,34 +33,7 @@
 		4CC2EAE618BA7B0800F359F8 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC2EAE518BA7B0800F359F8 /* Icon-Small@2x.png */; };
 		4CCA001E1922D12E00CE4D95 /* arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCA001D1922D12E00CE4D95 /* arrow_down.png */; };
 		4CCA0024192450B100CE4D95 /* en-US.json in Resources */ = {isa = PBXBuildFile; fileRef = 4CCA0023192450B100CE4D95 /* en-US.json */; };
-		4CCBA10918B9B5E900CFCB3A /* app.json in Resources */ = {isa = PBXBuildFile; fileRef = 4CCBA0EB18B9B5E900CFCB3A /* app.json */; };
-		4CCBA10A18B9B5E900CFCB3A /* cs_en-US_plural.json in Resources */ = {isa = PBXBuildFile; fileRef = 4CCBA0EC18B9B5E900CFCB3A /* cs_en-US_plural.json */; };
-		4CCBA10B18B9B5E900CFCB3A /* cs_ru_gen.json in Resources */ = {isa = PBXBuildFile; fileRef = 4CCBA0ED18B9B5E900CFCB3A /* cs_ru_gen.json */; };
-		4CCBA10C18B9B5E900CFCB3A /* ctx_en-US_gender.json in Resources */ = {isa = PBXBuildFile; fileRef = 4CCBA0EE18B9B5E900CFCB3A /* ctx_en-US_gender.json */; };
-		4CCBA10D18B9B5E900CFCB3A /* ctx_en-US_number.json in Resources */ = {isa = PBXBuildFile; fileRef = 4CCBA0EF18B9B5E900CFCB3A /* ctx_en-US_number.json */; };
-		4CCBA10E18B9B5E900CFCB3A /* ctx_ru_gender.json in Resources */ = {isa = PBXBuildFile; fileRef = 4CCBA0F018B9B5E900CFCB3A /* ctx_ru_gender.json */; };
-		4CCBA10F18B9B5E900CFCB3A /* ctx_ru_number.json in Resources */ = {isa = PBXBuildFile; fileRef = 4CCBA0F118B9B5E900CFCB3A /* ctx_ru_number.json */; };
-		4CCBA11018B9B5E900CFCB3A /* en-US.json in Resources */ = {isa = PBXBuildFile; fileRef = 4CCBA0F218B9B5E900CFCB3A /* en-US.json */; };
-		4CCBA11118B9B5E900CFCB3A /* es.json in Resources */ = {isa = PBXBuildFile; fileRef = 4CCBA0F318B9B5E900CFCB3A /* es.json */; };
-		4CCBA11218B9B5E900CFCB3A /* ru.json in Resources */ = {isa = PBXBuildFile; fileRef = 4CCBA0F418B9B5E900CFCB3A /* ru.json */; };
-		4CCBA11318B9B5E900CFCB3A /* TmlApplicationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA0F518B9B5E900CFCB3A /* TmlApplicationTest.m */; };
-		4CCBA11418B9B5E900CFCB3A /* TmlAttributedDecorationTokenizerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA0F618B9B5E900CFCB3A /* TmlAttributedDecorationTokenizerTest.m */; };
-		4CCBA11518B9B5E900CFCB3A /* TmlConfigurationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA0F718B9B5E900CFCB3A /* TmlConfigurationTest.m */; };
-		4CCBA11618B9B5E900CFCB3A /* TmlDataTokenTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA0F818B9B5E900CFCB3A /* TmlDataTokenTest.m */; };
-		4CCBA11718B9B5E900CFCB3A /* TmlDecorationTokenizerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA0F918B9B5E900CFCB3A /* TmlDecorationTokenizerTest.m */; };
-		4CCBA11818B9B5E900CFCB3A /* TmlHtmlDecorationTokenizerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA0FA18B9B5E900CFCB3A /* TmlHtmlDecorationTokenizerTest.m */; };
-		4CCBA11918B9B5E900CFCB3A /* TmlLanguageCaseRuleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA0FB18B9B5E900CFCB3A /* TmlLanguageCaseRuleTest.m */; };
-		4CCBA11A18B9B5E900CFCB3A /* TmlLanguageCaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA0FC18B9B5E900CFCB3A /* TmlLanguageCaseTest.m */; };
-		4CCBA11B18B9B5E900CFCB3A /* TmlLanguageContextRuleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA0FD18B9B5E900CFCB3A /* TmlLanguageContextRuleTest.m */; };
-		4CCBA11C18B9B5E900CFCB3A /* TmlLanguageContextTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA0FE18B9B5E900CFCB3A /* TmlLanguageContextTest.m */; };
-		4CCBA11D18B9B5E900CFCB3A /* TmlPipedTokenTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA0FF18B9B5E900CFCB3A /* TmlPipedTokenTest.m */; };
-		4CCBA11E18B9B5E900CFCB3A /* TmlRulesEvaluatorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA10018B9B5E900CFCB3A /* TmlRulesEvaluatorTest.m */; };
-		4CCBA11F18B9B5E900CFCB3A /* TmlRulesParserTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA10118B9B5E900CFCB3A /* TmlRulesParserTest.m */; };
-		4CCBA12018B9B5E900CFCB3A /* TmlTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA10218B9B5E900CFCB3A /* TmlTest.m */; };
-		4CCBA12118B9B5E900CFCB3A /* TmlTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA10418B9B5E900CFCB3A /* TmlTestBase.m */; };
 		4CCBA12218B9B5E900CFCB3A /* TmlTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CCBA10518B9B5E900CFCB3A /* TmlTests-Info.plist */; };
-		4CCBA12318B9B5E900CFCB3A /* TmlTestUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA10718B9B5E900CFCB3A /* TmlTestUser.m */; };
-		4CCBA12418B9B5E900CFCB3A /* TmlTranslationKeyTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA10818B9B5E900CFCB3A /* TmlTranslationKeyTest.m */; };
 		4CCBA12F18B9B69A00CFCB3A /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA12618B9B69A00CFCB3A /* MenuViewController.m */; };
 		4CCBA13118B9B69A00CFCB3A /* TMLConsoleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA12A18B9B69A00CFCB3A /* TMLConsoleViewController.m */; };
 		4CCBA13218B9B69A00CFCB3A /* TMLTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA12C18B9B69A00CFCB3A /* TMLTableViewCell.m */; };
@@ -143,6 +116,33 @@
 		C024149F1BEA78F000013059 /* TMLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414991BEA78F000013059 /* TMLViewController.m */; };
 		C02414A21BEA796700013059 /* UIButton+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414A11BEA796700013059 /* UIButton+TML.m */; };
 		C02414A31BEA796700013059 /* UIButton+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414A11BEA796700013059 /* UIButton+TML.m */; };
+		C0F80C641BEA7E310048DF2D /* TMLApplicationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C3C1BEA7E310048DF2D /* TMLApplicationTest.m */; };
+		C0F80C651BEA7E310048DF2D /* TMLConfigurationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C3D1BEA7E310048DF2D /* TMLConfigurationTest.m */; };
+		C0F80C661BEA7E310048DF2D /* app.json in Resources */ = {isa = PBXBuildFile; fileRef = C0F80C3F1BEA7E310048DF2D /* app.json */; };
+		C0F80C671BEA7E310048DF2D /* cs_en-US_plural.json in Resources */ = {isa = PBXBuildFile; fileRef = C0F80C421BEA7E310048DF2D /* cs_en-US_plural.json */; };
+		C0F80C681BEA7E310048DF2D /* ctx_en-US_gender.json in Resources */ = {isa = PBXBuildFile; fileRef = C0F80C431BEA7E310048DF2D /* ctx_en-US_gender.json */; };
+		C0F80C691BEA7E310048DF2D /* ctx_en-US_number.json in Resources */ = {isa = PBXBuildFile; fileRef = C0F80C441BEA7E310048DF2D /* ctx_en-US_number.json */; };
+		C0F80C6A1BEA7E310048DF2D /* en-US.json in Resources */ = {isa = PBXBuildFile; fileRef = C0F80C451BEA7E310048DF2D /* en-US.json */; };
+		C0F80C6B1BEA7E310048DF2D /* es.json in Resources */ = {isa = PBXBuildFile; fileRef = C0F80C471BEA7E310048DF2D /* es.json */; };
+		C0F80C6C1BEA7E310048DF2D /* cs_ru_gen.json in Resources */ = {isa = PBXBuildFile; fileRef = C0F80C491BEA7E310048DF2D /* cs_ru_gen.json */; };
+		C0F80C6D1BEA7E310048DF2D /* ctx_ru_gender.json in Resources */ = {isa = PBXBuildFile; fileRef = C0F80C4A1BEA7E310048DF2D /* ctx_ru_gender.json */; };
+		C0F80C6E1BEA7E310048DF2D /* ctx_ru_number.json in Resources */ = {isa = PBXBuildFile; fileRef = C0F80C4B1BEA7E310048DF2D /* ctx_ru_number.json */; };
+		C0F80C6F1BEA7E310048DF2D /* ru.json in Resources */ = {isa = PBXBuildFile; fileRef = C0F80C4C1BEA7E310048DF2D /* ru.json */; };
+		C0F80C701BEA7E310048DF2D /* TMLLanguageCaseRuleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C4E1BEA7E310048DF2D /* TMLLanguageCaseRuleTest.m */; };
+		C0F80C711BEA7E310048DF2D /* TMLLanguageCaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C4F1BEA7E310048DF2D /* TMLLanguageCaseTest.m */; };
+		C0F80C721BEA7E310048DF2D /* TMLLanguageContextRuleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C501BEA7E310048DF2D /* TMLLanguageContextRuleTest.m */; };
+		C0F80C731BEA7E310048DF2D /* TMLLanguageContextTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C511BEA7E310048DF2D /* TMLLanguageContextTest.m */; };
+		C0F80C741BEA7E310048DF2D /* TMLTestUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C541BEA7E310048DF2D /* TMLTestUser.m */; };
+		C0F80C751BEA7E310048DF2D /* TMLRulesEvaluatorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C561BEA7E310048DF2D /* TMLRulesEvaluatorTest.m */; };
+		C0F80C761BEA7E310048DF2D /* TMLRulesParserTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C571BEA7E310048DF2D /* TMLRulesParserTest.m */; };
+		C0F80C771BEA7E310048DF2D /* TMLTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C581BEA7E310048DF2D /* TMLTest.m */; };
+		C0F80C781BEA7E310048DF2D /* TMLTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C5A1BEA7E310048DF2D /* TMLTestBase.m */; };
+		C0F80C791BEA7E310048DF2D /* TMLAttributedDecorationTokenizerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C5C1BEA7E310048DF2D /* TMLAttributedDecorationTokenizerTest.m */; };
+		C0F80C7A1BEA7E310048DF2D /* TMLDecorationTokenizerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C5D1BEA7E310048DF2D /* TMLDecorationTokenizerTest.m */; };
+		C0F80C7B1BEA7E310048DF2D /* TMLHtmlDecorationTokenizerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C5E1BEA7E310048DF2D /* TMLHtmlDecorationTokenizerTest.m */; };
+		C0F80C7C1BEA7E310048DF2D /* TMLDataTokenTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C601BEA7E310048DF2D /* TMLDataTokenTest.m */; };
+		C0F80C7D1BEA7E310048DF2D /* TMLPipedTokenTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C611BEA7E310048DF2D /* TMLPipedTokenTest.m */; };
+		C0F80C7E1BEA7E310048DF2D /* TMLTranslationKeyTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C631BEA7E310048DF2D /* TMLTranslationKeyTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -191,36 +191,7 @@
 		4CC2EAE518BA7B0800F359F8 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
 		4CCA001D1922D12E00CE4D95 /* arrow_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_down.png; sourceTree = "<group>"; };
 		4CCA0023192450B100CE4D95 /* en-US.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "en-US.json"; sourceTree = "<group>"; };
-		4CCBA0EB18B9B5E900CFCB3A /* app.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = app.json; sourceTree = "<group>"; };
-		4CCBA0EC18B9B5E900CFCB3A /* cs_en-US_plural.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cs_en-US_plural.json"; sourceTree = "<group>"; };
-		4CCBA0ED18B9B5E900CFCB3A /* cs_ru_gen.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cs_ru_gen.json; sourceTree = "<group>"; };
-		4CCBA0EE18B9B5E900CFCB3A /* ctx_en-US_gender.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "ctx_en-US_gender.json"; sourceTree = "<group>"; };
-		4CCBA0EF18B9B5E900CFCB3A /* ctx_en-US_number.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "ctx_en-US_number.json"; sourceTree = "<group>"; };
-		4CCBA0F018B9B5E900CFCB3A /* ctx_ru_gender.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ctx_ru_gender.json; sourceTree = "<group>"; };
-		4CCBA0F118B9B5E900CFCB3A /* ctx_ru_number.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ctx_ru_number.json; sourceTree = "<group>"; };
-		4CCBA0F218B9B5E900CFCB3A /* en-US.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "en-US.json"; sourceTree = "<group>"; };
-		4CCBA0F318B9B5E900CFCB3A /* es.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = es.json; sourceTree = "<group>"; };
-		4CCBA0F418B9B5E900CFCB3A /* ru.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ru.json; sourceTree = "<group>"; };
-		4CCBA0F518B9B5E900CFCB3A /* TmlApplicationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlApplicationTest.m; sourceTree = "<group>"; };
-		4CCBA0F618B9B5E900CFCB3A /* TmlAttributedDecorationTokenizerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlAttributedDecorationTokenizerTest.m; sourceTree = "<group>"; };
-		4CCBA0F718B9B5E900CFCB3A /* TmlConfigurationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlConfigurationTest.m; sourceTree = "<group>"; };
-		4CCBA0F818B9B5E900CFCB3A /* TmlDataTokenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlDataTokenTest.m; sourceTree = "<group>"; };
-		4CCBA0F918B9B5E900CFCB3A /* TmlDecorationTokenizerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlDecorationTokenizerTest.m; sourceTree = "<group>"; };
-		4CCBA0FA18B9B5E900CFCB3A /* TmlHtmlDecorationTokenizerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlHtmlDecorationTokenizerTest.m; sourceTree = "<group>"; };
-		4CCBA0FB18B9B5E900CFCB3A /* TmlLanguageCaseRuleTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlLanguageCaseRuleTest.m; sourceTree = "<group>"; };
-		4CCBA0FC18B9B5E900CFCB3A /* TmlLanguageCaseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlLanguageCaseTest.m; sourceTree = "<group>"; };
-		4CCBA0FD18B9B5E900CFCB3A /* TmlLanguageContextRuleTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlLanguageContextRuleTest.m; sourceTree = "<group>"; };
-		4CCBA0FE18B9B5E900CFCB3A /* TmlLanguageContextTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlLanguageContextTest.m; sourceTree = "<group>"; };
-		4CCBA0FF18B9B5E900CFCB3A /* TmlPipedTokenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlPipedTokenTest.m; sourceTree = "<group>"; };
-		4CCBA10018B9B5E900CFCB3A /* TmlRulesEvaluatorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlRulesEvaluatorTest.m; sourceTree = "<group>"; };
-		4CCBA10118B9B5E900CFCB3A /* TmlRulesParserTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlRulesParserTest.m; sourceTree = "<group>"; };
-		4CCBA10218B9B5E900CFCB3A /* TmlTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlTest.m; sourceTree = "<group>"; };
-		4CCBA10318B9B5E900CFCB3A /* TmlTestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlTestBase.h; sourceTree = "<group>"; };
-		4CCBA10418B9B5E900CFCB3A /* TmlTestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlTestBase.m; sourceTree = "<group>"; };
 		4CCBA10518B9B5E900CFCB3A /* TmlTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TmlTests-Info.plist"; sourceTree = "<group>"; };
-		4CCBA10618B9B5E900CFCB3A /* TmlTestUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlTestUser.h; sourceTree = "<group>"; };
-		4CCBA10718B9B5E900CFCB3A /* TmlTestUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlTestUser.m; sourceTree = "<group>"; };
-		4CCBA10818B9B5E900CFCB3A /* TmlTranslationKeyTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlTranslationKeyTest.m; sourceTree = "<group>"; };
 		4CCBA12518B9B69A00CFCB3A /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		4CCBA12618B9B69A00CFCB3A /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		4CCBA12918B9B69A00CFCB3A /* TMLConsoleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLConsoleViewController.h; sourceTree = "<group>"; };
@@ -317,6 +288,35 @@
 		C02414991BEA78F000013059 /* TMLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLViewController.m; sourceTree = "<group>"; };
 		C02414A01BEA796700013059 /* UIButton+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+TML.h"; sourceTree = "<group>"; };
 		C02414A11BEA796700013059 /* UIButton+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+TML.m"; sourceTree = "<group>"; };
+		C0F80C3C1BEA7E310048DF2D /* TMLApplicationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLApplicationTest.m; sourceTree = "<group>"; };
+		C0F80C3D1BEA7E310048DF2D /* TMLConfigurationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLConfigurationTest.m; sourceTree = "<group>"; };
+		C0F80C3F1BEA7E310048DF2D /* app.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = app.json; sourceTree = "<group>"; };
+		C0F80C421BEA7E310048DF2D /* cs_en-US_plural.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cs_en-US_plural.json"; sourceTree = "<group>"; };
+		C0F80C431BEA7E310048DF2D /* ctx_en-US_gender.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "ctx_en-US_gender.json"; sourceTree = "<group>"; };
+		C0F80C441BEA7E310048DF2D /* ctx_en-US_number.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "ctx_en-US_number.json"; sourceTree = "<group>"; };
+		C0F80C451BEA7E310048DF2D /* en-US.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "en-US.json"; sourceTree = "<group>"; };
+		C0F80C471BEA7E310048DF2D /* es.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = es.json; sourceTree = "<group>"; };
+		C0F80C491BEA7E310048DF2D /* cs_ru_gen.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cs_ru_gen.json; sourceTree = "<group>"; };
+		C0F80C4A1BEA7E310048DF2D /* ctx_ru_gender.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ctx_ru_gender.json; sourceTree = "<group>"; };
+		C0F80C4B1BEA7E310048DF2D /* ctx_ru_number.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ctx_ru_number.json; sourceTree = "<group>"; };
+		C0F80C4C1BEA7E310048DF2D /* ru.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ru.json; sourceTree = "<group>"; };
+		C0F80C4E1BEA7E310048DF2D /* TMLLanguageCaseRuleTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguageCaseRuleTest.m; sourceTree = "<group>"; };
+		C0F80C4F1BEA7E310048DF2D /* TMLLanguageCaseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguageCaseTest.m; sourceTree = "<group>"; };
+		C0F80C501BEA7E310048DF2D /* TMLLanguageContextRuleTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguageContextRuleTest.m; sourceTree = "<group>"; };
+		C0F80C511BEA7E310048DF2D /* TMLLanguageContextTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguageContextTest.m; sourceTree = "<group>"; };
+		C0F80C531BEA7E310048DF2D /* TMLTestUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLTestUser.h; sourceTree = "<group>"; };
+		C0F80C541BEA7E310048DF2D /* TMLTestUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTestUser.m; sourceTree = "<group>"; };
+		C0F80C561BEA7E310048DF2D /* TMLRulesEvaluatorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLRulesEvaluatorTest.m; sourceTree = "<group>"; };
+		C0F80C571BEA7E310048DF2D /* TMLRulesParserTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLRulesParserTest.m; sourceTree = "<group>"; };
+		C0F80C581BEA7E310048DF2D /* TMLTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTest.m; sourceTree = "<group>"; };
+		C0F80C591BEA7E310048DF2D /* TMLTestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLTestBase.h; sourceTree = "<group>"; };
+		C0F80C5A1BEA7E310048DF2D /* TMLTestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTestBase.m; sourceTree = "<group>"; };
+		C0F80C5C1BEA7E310048DF2D /* TMLAttributedDecorationTokenizerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAttributedDecorationTokenizerTest.m; sourceTree = "<group>"; };
+		C0F80C5D1BEA7E310048DF2D /* TMLDecorationTokenizerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLDecorationTokenizerTest.m; sourceTree = "<group>"; };
+		C0F80C5E1BEA7E310048DF2D /* TMLHtmlDecorationTokenizerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLHtmlDecorationTokenizerTest.m; sourceTree = "<group>"; };
+		C0F80C601BEA7E310048DF2D /* TMLDataTokenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLDataTokenTest.m; sourceTree = "<group>"; };
+		C0F80C611BEA7E310048DF2D /* TMLPipedTokenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLPipedTokenTest.m; sourceTree = "<group>"; };
+		C0F80C631BEA7E310048DF2D /* TMLTranslationKeyTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTranslationKeyTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -425,18 +425,19 @@
 		4C42340D18B9B38700B76555 /* DemoTests */ = {
 			isa = PBXGroup;
 			children = (
-				4CCA002A192525A600CE4D95 /* Translations */,
-				4CCA00291925258200CE4D95 /* Rules Engine */,
-				4CCA00281925256300CE4D95 /* Tokenizers */,
-				4CCA00271925254700CE4D95 /* Models */,
-				4CCA00261925253100CE4D95 /* Language */,
-				4CCA00251925252B00CE4D95 /* Application */,
-				4CE06A2218BEDE690088AB3E /* Fixtures */,
-				4CCBA10218B9B5E900CFCB3A /* TmlTest.m */,
-				4CCBA10318B9B5E900CFCB3A /* TmlTestBase.h */,
-				4CCBA10418B9B5E900CFCB3A /* TmlTestBase.m */,
-				4CCBA10518B9B5E900CFCB3A /* TmlTests-Info.plist */,
 				4C42340E18B9B38700B76555 /* Supporting Files */,
+				C0F80C3B1BEA7E310048DF2D /* Application */,
+				C0F80C3E1BEA7E310048DF2D /* Fixtures */,
+				C0F80C4D1BEA7E310048DF2D /* Language */,
+				C0F80C521BEA7E310048DF2D /* Models */,
+				C0F80C551BEA7E310048DF2D /* Rules Engine */,
+				C0F80C5B1BEA7E310048DF2D /* Tokenizers */,
+				C0F80C5F1BEA7E310048DF2D /* Tokens */,
+				C0F80C621BEA7E310048DF2D /* Translations */,
+				4CCBA10518B9B5E900CFCB3A /* TmlTests-Info.plist */,
+				C0F80C581BEA7E310048DF2D /* TMLTest.m */,
+				C0F80C591BEA7E310048DF2D /* TMLTestBase.h */,
+				C0F80C5A1BEA7E310048DF2D /* TMLTestBase.m */,
 			);
 			path = DemoTests;
 			sourceTree = "<group>";
@@ -530,64 +531,6 @@
 			path = ../Assets;
 			sourceTree = "<group>";
 		};
-		4CCA00251925252B00CE4D95 /* Application */ = {
-			isa = PBXGroup;
-			children = (
-				4CCBA0F718B9B5E900CFCB3A /* TmlConfigurationTest.m */,
-				4CCBA0F518B9B5E900CFCB3A /* TmlApplicationTest.m */,
-			);
-			name = Application;
-			sourceTree = "<group>";
-		};
-		4CCA00261925253100CE4D95 /* Language */ = {
-			isa = PBXGroup;
-			children = (
-				4CCBA0FB18B9B5E900CFCB3A /* TmlLanguageCaseRuleTest.m */,
-				4CCBA0FC18B9B5E900CFCB3A /* TmlLanguageCaseTest.m */,
-				4CCBA0FD18B9B5E900CFCB3A /* TmlLanguageContextRuleTest.m */,
-				4CCBA0FE18B9B5E900CFCB3A /* TmlLanguageContextTest.m */,
-			);
-			name = Language;
-			sourceTree = "<group>";
-		};
-		4CCA00271925254700CE4D95 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				4CCBA10618B9B5E900CFCB3A /* TmlTestUser.h */,
-				4CCBA10718B9B5E900CFCB3A /* TmlTestUser.m */,
-			);
-			name = Models;
-			sourceTree = "<group>";
-		};
-		4CCA00281925256300CE4D95 /* Tokenizers */ = {
-			isa = PBXGroup;
-			children = (
-				4CCBA0FF18B9B5E900CFCB3A /* TmlPipedTokenTest.m */,
-				4CCBA0F818B9B5E900CFCB3A /* TmlDataTokenTest.m */,
-				4CCBA0F918B9B5E900CFCB3A /* TmlDecorationTokenizerTest.m */,
-				4CCBA0FA18B9B5E900CFCB3A /* TmlHtmlDecorationTokenizerTest.m */,
-				4CCBA0F618B9B5E900CFCB3A /* TmlAttributedDecorationTokenizerTest.m */,
-			);
-			name = Tokenizers;
-			sourceTree = "<group>";
-		};
-		4CCA00291925258200CE4D95 /* Rules Engine */ = {
-			isa = PBXGroup;
-			children = (
-				4CCBA10018B9B5E900CFCB3A /* TmlRulesEvaluatorTest.m */,
-				4CCBA10118B9B5E900CFCB3A /* TmlRulesParserTest.m */,
-			);
-			name = "Rules Engine";
-			sourceTree = "<group>";
-		};
-		4CCA002A192525A600CE4D95 /* Translations */ = {
-			isa = PBXGroup;
-			children = (
-				4CCBA10818B9B5E900CFCB3A /* TmlTranslationKeyTest.m */,
-			);
-			name = Translations;
-			sourceTree = "<group>";
-		};
 		4CE06A1A18BD826F0088AB3E /* Base */ = {
 			isa = PBXGroup;
 			children = (
@@ -606,55 +549,6 @@
 				4CE06A1F18BD882F0088AB3E /* User.m */,
 			);
 			name = Models;
-			sourceTree = "<group>";
-		};
-		4CE06A2218BEDE690088AB3E /* Fixtures */ = {
-			isa = PBXGroup;
-			children = (
-				4CE06A2318BEDE780088AB3E /* Languages */,
-				4CCBA0EB18B9B5E900CFCB3A /* app.json */,
-			);
-			name = Fixtures;
-			sourceTree = "<group>";
-		};
-		4CE06A2318BEDE780088AB3E /* Languages */ = {
-			isa = PBXGroup;
-			children = (
-				4CE06A2718BEDEB30088AB3E /* es */,
-				4CE06A2618BEDEA60088AB3E /* ru */,
-				4CE06A2518BEDE990088AB3E /* en-US */,
-			);
-			name = Languages;
-			sourceTree = "<group>";
-		};
-		4CE06A2518BEDE990088AB3E /* en-US */ = {
-			isa = PBXGroup;
-			children = (
-				4CCBA0EC18B9B5E900CFCB3A /* cs_en-US_plural.json */,
-				4CCBA0F218B9B5E900CFCB3A /* en-US.json */,
-				4CCBA0EE18B9B5E900CFCB3A /* ctx_en-US_gender.json */,
-				4CCBA0EF18B9B5E900CFCB3A /* ctx_en-US_number.json */,
-			);
-			name = "en-US";
-			sourceTree = "<group>";
-		};
-		4CE06A2618BEDEA60088AB3E /* ru */ = {
-			isa = PBXGroup;
-			children = (
-				4CCBA0ED18B9B5E900CFCB3A /* cs_ru_gen.json */,
-				4CCBA0F018B9B5E900CFCB3A /* ctx_ru_gender.json */,
-				4CCBA0F118B9B5E900CFCB3A /* ctx_ru_number.json */,
-				4CCBA0F418B9B5E900CFCB3A /* ru.json */,
-			);
-			name = ru;
-			sourceTree = "<group>";
-		};
-		4CE06A2718BEDEB30088AB3E /* es */ = {
-			isa = PBXGroup;
-			children = (
-				4CCBA0F318B9B5E900CFCB3A /* es.json */,
-			);
-			name = es;
 			sourceTree = "<group>";
 		};
 		4CFA53171928466D006E1B43 /* Configuration */ = {
@@ -803,6 +697,120 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		C0F80C3B1BEA7E310048DF2D /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				C0F80C3C1BEA7E310048DF2D /* TMLApplicationTest.m */,
+				C0F80C3D1BEA7E310048DF2D /* TMLConfigurationTest.m */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		C0F80C3E1BEA7E310048DF2D /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				C0F80C3F1BEA7E310048DF2D /* app.json */,
+				C0F80C401BEA7E310048DF2D /* languages */,
+			);
+			path = Fixtures;
+			sourceTree = "<group>";
+		};
+		C0F80C401BEA7E310048DF2D /* languages */ = {
+			isa = PBXGroup;
+			children = (
+				C0F80C411BEA7E310048DF2D /* en-US */,
+				C0F80C461BEA7E310048DF2D /* es */,
+				C0F80C481BEA7E310048DF2D /* ru */,
+			);
+			path = languages;
+			sourceTree = "<group>";
+		};
+		C0F80C411BEA7E310048DF2D /* en-US */ = {
+			isa = PBXGroup;
+			children = (
+				C0F80C421BEA7E310048DF2D /* cs_en-US_plural.json */,
+				C0F80C431BEA7E310048DF2D /* ctx_en-US_gender.json */,
+				C0F80C441BEA7E310048DF2D /* ctx_en-US_number.json */,
+				C0F80C451BEA7E310048DF2D /* en-US.json */,
+			);
+			path = "en-US";
+			sourceTree = "<group>";
+		};
+		C0F80C461BEA7E310048DF2D /* es */ = {
+			isa = PBXGroup;
+			children = (
+				C0F80C471BEA7E310048DF2D /* es.json */,
+			);
+			path = es;
+			sourceTree = "<group>";
+		};
+		C0F80C481BEA7E310048DF2D /* ru */ = {
+			isa = PBXGroup;
+			children = (
+				C0F80C491BEA7E310048DF2D /* cs_ru_gen.json */,
+				C0F80C4A1BEA7E310048DF2D /* ctx_ru_gender.json */,
+				C0F80C4B1BEA7E310048DF2D /* ctx_ru_number.json */,
+				C0F80C4C1BEA7E310048DF2D /* ru.json */,
+			);
+			path = ru;
+			sourceTree = "<group>";
+		};
+		C0F80C4D1BEA7E310048DF2D /* Language */ = {
+			isa = PBXGroup;
+			children = (
+				C0F80C4E1BEA7E310048DF2D /* TMLLanguageCaseRuleTest.m */,
+				C0F80C4F1BEA7E310048DF2D /* TMLLanguageCaseTest.m */,
+				C0F80C501BEA7E310048DF2D /* TMLLanguageContextRuleTest.m */,
+				C0F80C511BEA7E310048DF2D /* TMLLanguageContextTest.m */,
+			);
+			path = Language;
+			sourceTree = "<group>";
+		};
+		C0F80C521BEA7E310048DF2D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C0F80C531BEA7E310048DF2D /* TMLTestUser.h */,
+				C0F80C541BEA7E310048DF2D /* TMLTestUser.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C0F80C551BEA7E310048DF2D /* Rules Engine */ = {
+			isa = PBXGroup;
+			children = (
+				C0F80C561BEA7E310048DF2D /* TMLRulesEvaluatorTest.m */,
+				C0F80C571BEA7E310048DF2D /* TMLRulesParserTest.m */,
+			);
+			path = "Rules Engine";
+			sourceTree = "<group>";
+		};
+		C0F80C5B1BEA7E310048DF2D /* Tokenizers */ = {
+			isa = PBXGroup;
+			children = (
+				C0F80C5C1BEA7E310048DF2D /* TMLAttributedDecorationTokenizerTest.m */,
+				C0F80C5D1BEA7E310048DF2D /* TMLDecorationTokenizerTest.m */,
+				C0F80C5E1BEA7E310048DF2D /* TMLHtmlDecorationTokenizerTest.m */,
+			);
+			path = Tokenizers;
+			sourceTree = "<group>";
+		};
+		C0F80C5F1BEA7E310048DF2D /* Tokens */ = {
+			isa = PBXGroup;
+			children = (
+				C0F80C601BEA7E310048DF2D /* TMLDataTokenTest.m */,
+				C0F80C611BEA7E310048DF2D /* TMLPipedTokenTest.m */,
+			);
+			path = Tokens;
+			sourceTree = "<group>";
+		};
+		C0F80C621BEA7E310048DF2D /* Translations */ = {
+			isa = PBXGroup;
+			children = (
+				C0F80C631BEA7E310048DF2D /* TMLTranslationKeyTest.m */,
+			);
+			path = Translations;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -911,19 +919,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4CCBA10E18B9B5E900CFCB3A /* ctx_ru_gender.json in Resources */,
+				C0F80C691BEA7E310048DF2D /* ctx_en-US_number.json in Resources */,
+				C0F80C6F1BEA7E310048DF2D /* ru.json in Resources */,
 				4C42341218B9B38700B76555 /* InfoPlist.strings in Resources */,
+				C0F80C6A1BEA7E310048DF2D /* en-US.json in Resources */,
+				C0F80C6B1BEA7E310048DF2D /* es.json in Resources */,
+				C0F80C661BEA7E310048DF2D /* app.json in Resources */,
+				C0F80C6C1BEA7E310048DF2D /* cs_ru_gen.json in Resources */,
+				C0F80C6D1BEA7E310048DF2D /* ctx_ru_gender.json in Resources */,
+				C0F80C6E1BEA7E310048DF2D /* ctx_ru_number.json in Resources */,
 				4CCBA12218B9B5E900CFCB3A /* TmlTests-Info.plist in Resources */,
-				4CCBA11218B9B5E900CFCB3A /* ru.json in Resources */,
-				4CCBA10D18B9B5E900CFCB3A /* ctx_en-US_number.json in Resources */,
-				4CCBA10A18B9B5E900CFCB3A /* cs_en-US_plural.json in Resources */,
-				4CCBA10918B9B5E900CFCB3A /* app.json in Resources */,
-				4CCBA11118B9B5E900CFCB3A /* es.json in Resources */,
+				C0F80C671BEA7E310048DF2D /* cs_en-US_plural.json in Resources */,
 				C024145A1BEA709E00013059 /* .gitkeep in Resources */,
-				4CCBA11018B9B5E900CFCB3A /* en-US.json in Resources */,
-				4CCBA10C18B9B5E900CFCB3A /* ctx_en-US_gender.json in Resources */,
-				4CCBA10B18B9B5E900CFCB3A /* cs_ru_gen.json in Resources */,
-				4CCBA10F18B9B5E900CFCB3A /* ctx_ru_number.json in Resources */,
+				C0F80C681BEA7E310048DF2D /* ctx_en-US_gender.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1084,52 +1092,52 @@
 			buildActionMask = 2147483647;
 			files = (
 				C02414721BEA709E00013059 /* TmlDecorationTokenizer.m in Sources */,
+				C0F80C771BEA7E310048DF2D /* TMLTest.m in Sources */,
+				C0F80C781BEA7E310048DF2D /* TMLTestBase.m in Sources */,
+				C0F80C701BEA7E310048DF2D /* TMLLanguageCaseRuleTest.m in Sources */,
 				C024146A1BEA709E00013059 /* Tml.m in Sources */,
-				4CCBA12118B9B5E900CFCB3A /* TmlTestBase.m in Sources */,
-				4CCBA12418B9B5E900CFCB3A /* TmlTranslationKeyTest.m in Sources */,
-				4CCBA11418B9B5E900CFCB3A /* TmlAttributedDecorationTokenizerTest.m in Sources */,
 				C02414581BEA709E00013059 /* NSString+TmlAdditions.m in Sources */,
 				C02414521BEA709E00013059 /* TmlPostOffice.m in Sources */,
 				C02414701BEA709E00013059 /* TmlDataTokenizer.m in Sources */,
+				C0F80C7C1BEA7E310048DF2D /* TMLDataTokenTest.m in Sources */,
 				C024147C1BEA709E00013059 /* TmlTranslation.m in Sources */,
-				4CCBA11918B9B5E900CFCB3A /* TmlLanguageCaseRuleTest.m in Sources */,
+				C0F80C731BEA7E310048DF2D /* TMLLanguageContextTest.m in Sources */,
 				C02414781BEA709E00013059 /* TmlMethodToken.m in Sources */,
-				4CCBA11D18B9B5E900CFCB3A /* TmlPipedTokenTest.m in Sources */,
+				C0F80C721BEA7E310048DF2D /* TMLLanguageContextRuleTest.m in Sources */,
 				C02414501BEA709E00013059 /* TmlConfiguration.m in Sources */,
+				C0F80C7D1BEA7E310048DF2D /* TMLPipedTokenTest.m in Sources */,
 				C024144A1BEA709E00013059 /* TmlApiClient.m in Sources */,
 				C02414A31BEA796700013059 /* UIButton+TML.m in Sources */,
+				C0F80C751BEA7E310048DF2D /* TMLRulesEvaluatorTest.m in Sources */,
 				C024144E1BEA709E00013059 /* TmlCache.m in Sources */,
-				4CCBA12018B9B5E900CFCB3A /* TmlTest.m in Sources */,
-				4CCBA11A18B9B5E900CFCB3A /* TmlLanguageCaseTest.m in Sources */,
 				C02414741BEA709E00013059 /* TmlHtmlDecorationTokenizer.m in Sources */,
+				C0F80C7B1BEA7E310048DF2D /* TMLHtmlDecorationTokenizerTest.m in Sources */,
 				C02414561BEA709E00013059 /* TmlSource.m in Sources */,
 				C02414921BEA788D00013059 /* UIViewController+TML.m in Sources */,
-				4CCBA11F18B9B5E900CFCB3A /* TmlRulesParserTest.m in Sources */,
 				C024145E1BEA709E00013059 /* TmlLanguageCase.m in Sources */,
 				C02414681BEA709E00013059 /* TmlRulesParser.m in Sources */,
+				C0F80C711BEA7E310048DF2D /* TMLLanguageCaseTest.m in Sources */,
 				C02414621BEA709E00013059 /* TmlLanguageContext.m in Sources */,
 				C02414661BEA709E00013059 /* TmlRulesEvaluator.m in Sources */,
+				C0F80C791BEA7E310048DF2D /* TMLAttributedDecorationTokenizerTest.m in Sources */,
 				C024149B1BEA78F000013059 /* TmlLanguageSelectorViewController.m in Sources */,
 				C024149D1BEA78F000013059 /* TmlTranslatorViewController.m in Sources */,
 				C024145C1BEA709E00013059 /* TmlLanguage.m in Sources */,
 				C02414601BEA709E00013059 /* TmlLanguageCaseRule.m in Sources */,
-				4CCBA11718B9B5E900CFCB3A /* TmlDecorationTokenizerTest.m in Sources */,
+				C0F80C741BEA7E310048DF2D /* TMLTestUser.m in Sources */,
+				C0F80C651BEA7E310048DF2D /* TMLConfigurationTest.m in Sources */,
 				C024147E1BEA709E00013059 /* TmlTranslationKey.m in Sources */,
 				C024144C1BEA709E00013059 /* TmlApplication.m in Sources */,
 				C024147A1BEA709E00013059 /* TmlPipedToken.m in Sources */,
-				4CCBA11318B9B5E900CFCB3A /* TmlApplicationTest.m in Sources */,
-				4CCBA11618B9B5E900CFCB3A /* TmlDataTokenTest.m in Sources */,
 				C02414641BEA709E00013059 /* TmlLanguageContextRule.m in Sources */,
+				C0F80C7E1BEA7E310048DF2D /* TMLTranslationKeyTest.m in Sources */,
 				C024148A1BEA743500013059 /* NSObject+TML.m in Sources */,
+				C0F80C761BEA7E310048DF2D /* TMLRulesParserTest.m in Sources */,
 				C024146E1BEA709E00013059 /* TmlAttributedDecorationTokenizer.m in Sources */,
-				4CCBA11518B9B5E900CFCB3A /* TmlConfigurationTest.m in Sources */,
+				C0F80C641BEA7E310048DF2D /* TMLApplicationTest.m in Sources */,
 				C024146C1BEA709E00013059 /* TmlBase.m in Sources */,
-				4CCBA11818B9B5E900CFCB3A /* TmlHtmlDecorationTokenizerTest.m in Sources */,
-				4CCBA11E18B9B5E900CFCB3A /* TmlRulesEvaluatorTest.m in Sources */,
+				C0F80C7A1BEA7E310048DF2D /* TMLDecorationTokenizerTest.m in Sources */,
 				C024149F1BEA78F000013059 /* TMLViewController.m in Sources */,
-				4CCBA11C18B9B5E900CFCB3A /* TmlLanguageContextTest.m in Sources */,
-				4CCBA11B18B9B5E900CFCB3A /* TmlLanguageContextRuleTest.m in Sources */,
-				4CCBA12318B9B5E900CFCB3A /* TmlTestUser.m in Sources */,
 				C024148E1BEA76A300013059 /* UILabel+TML.m in Sources */,
 				C02414761BEA709E00013059 /* TmlDataToken.m in Sources */,
 			);

@@ -23,13 +23,13 @@
 #import "TmlRulesEvaluator.h"
 #import "TmlRulesParser.h"
 #import <Foundation/Foundation.h>
-#import "TmlTestBase.h"
+#import "TMLTestBase.h"
 
-@interface TmlRulesEvaluatorTest : TmlTestBase
+@interface TMLRulesEvaluatorTest : TMLTestBase
 
 @end
 
-@implementation TmlRulesEvaluatorTest
+@implementation TMLRulesEvaluatorTest
 
 - (void) testBasicFunctions {
     TmlRulesEvaluator *e = [[TmlRulesEvaluator alloc] init];

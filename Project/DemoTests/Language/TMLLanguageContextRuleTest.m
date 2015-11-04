@@ -8,13 +8,13 @@
 
 #import "TmlLanguageContextRule.h"
 #import <Foundation/Foundation.h>
-#import "TmlTestBase.h"
+#import "TMLTestBase.h"
 
-@interface TmlLanguageContextRuleTest : TmlTestBase
+@interface TMLLanguageContextRuleTest : TMLTestBase
 
 @end
 
-@implementation TmlLanguageContextRuleTest
+@implementation TMLLanguageContextRuleTest
 
 - (void) testEvaluation {
     TmlLanguageContextRule *rule = [[TmlLanguageContextRule alloc] initWithAttributes:@{

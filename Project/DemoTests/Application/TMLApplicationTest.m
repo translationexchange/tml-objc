@@ -21,14 +21,15 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TmlTestBase.h"
+#import "TMLTestBase.h"
 
-@interface TmlApplicationTest : TmlTestBase
+@interface TMLApplicationTest : TMLTestBase
 
 @end
 
-@implementation TmlApplicationTest
+@implementation TMLApplicationTest
 
 - (void) testApplicationInit {
 }
+
 @end

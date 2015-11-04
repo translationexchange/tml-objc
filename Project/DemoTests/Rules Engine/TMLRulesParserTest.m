@@ -22,13 +22,13 @@
 
 #import "TmlRulesParser.h"
 #import <Foundation/Foundation.h>
-#import "TmlTestBase.h"
+#import "TMLTestBase.h"
 
-@interface TmlRulesParserTest : TmlTestBase
+@interface TMLRulesParserTest : TMLTestBase
 
 @end
 
-@implementation TmlRulesParserTest
+@implementation TMLRulesParserTest
 
 - (void)testSplitting {
     TmlRulesParser *p = [TmlRulesParser parserWithExpression: @"(= 1 (mod n 10))"];

@@ -6,15 +6,15 @@
 //  Copyright (c) 2014 TmlHub. All rights reserved.
 //
 
+#import "TMLTestBase.h"
 #import "TmlTranslationKey.h"
-#import "TmlTestBase.h"
 #import "Tml.h"
 
-@interface TmlTranslationKeyTest : TmlTestBase
+@interface TMLTranslationKeyTest : TMLTestBase
 
 @end
 
-@implementation TmlTranslationKeyTest
+@implementation TMLTranslationKeyTest
 
 - (void) testSubstitution {
     TmlApplication *app = [self application];

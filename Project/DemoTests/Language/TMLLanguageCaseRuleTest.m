@@ -7,13 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TmlTestBase.h"
+#import "TMLTestBase.h"
 
-@interface TmlLanguageCaseRuleTest : TmlTestBase
+@interface TMLLanguageCaseRuleTest : TMLTestBase
 
 @end
 
-@implementation TmlLanguageCaseRuleTest
+@implementation TMLLanguageCaseRuleTest
 
 - (void) testEvaluation {
     

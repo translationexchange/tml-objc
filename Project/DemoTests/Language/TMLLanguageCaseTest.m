@@ -8,13 +8,13 @@
 
 #import "TmlLanguageCase.h"
 #import <Foundation/Foundation.h>
-#import "TmlTestBase.h"
+#import "TMLTestBase.h"
 
-@interface TmlLanguageCaseTest : TmlTestBase
+@interface TMLLanguageCaseTest : TMLTestBase
 
 @end
 
-@implementation TmlLanguageCaseTest
+@implementation TMLLanguageCaseTest
 
 - (void) testEvaluation {
     TmlLanguageCase *lcase = [[TmlLanguageCase alloc] initWithAttributes: [self loadJSON: @"cs_en-US_plural"]];

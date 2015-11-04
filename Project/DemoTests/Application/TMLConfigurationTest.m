@@ -23,13 +23,13 @@
 #import "TmlConfiguration.h"
 #import "Tml.h"
 #import <Foundation/Foundation.h>
-#import "TmlTestBase.h"
+#import "TMLTestBase.h"
 
-@interface TmlConfigurationTest : TmlTestBase
+@interface TMLConfigurationTest : TMLTestBase
 
 @end
 
-@implementation TmlConfigurationTest
+@implementation TMLConfigurationTest
 
 - (void) testUpdateSettings {
     TmlConfiguration *config = [[TmlConfiguration alloc] init];

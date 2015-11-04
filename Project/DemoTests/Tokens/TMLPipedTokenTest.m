@@ -9,13 +9,13 @@
 #import "TmlPipedToken.h"
 #import "TmlLanguageContext.h"
 #import <Foundation/Foundation.h>
-#import "TmlTestBase.h"
+#import "TMLTestBase.h"
 
-@interface TmlPipedTokenTest : TmlTestBase
+@interface TMLPipedTokenTest : TMLTestBase
 
 @end
 
-@implementation TmlPipedTokenTest
+@implementation TMLPipedTokenTest
 
 /***********************************************************************
  #

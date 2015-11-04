@@ -22,10 +22,10 @@
 
 #import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
-#import "TmlLanguage.h"
-#import "TmlApplication.h"
+#import "TMLLanguage.h"
+#import "TMLApplication.h"
 
-@interface TmlTestBase : XCTestCase
+@interface TMLTestBase : XCTestCase
 
 - (NSDictionary *) loadJSON: (NSString *) name;
 
