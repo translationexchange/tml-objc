@@ -129,14 +129,20 @@
 		C024147C1BEA709E00013059 /* TmlTranslation.m in Sources */ = {isa = PBXBuildFile; fileRef = C024143D1BEA709E00013059 /* TmlTranslation.m */; };
 		C024147D1BEA709E00013059 /* TmlTranslationKey.m in Sources */ = {isa = PBXBuildFile; fileRef = C024143F1BEA709E00013059 /* TmlTranslationKey.m */; };
 		C024147E1BEA709E00013059 /* TmlTranslationKey.m in Sources */ = {isa = PBXBuildFile; fileRef = C024143F1BEA709E00013059 /* TmlTranslationKey.m */; };
-		C024147F1BEA709E00013059 /* TmlLanguageSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414421BEA709E00013059 /* TmlLanguageSelectorViewController.m */; };
-		C02414801BEA709E00013059 /* TmlLanguageSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414421BEA709E00013059 /* TmlLanguageSelectorViewController.m */; };
-		C02414811BEA709E00013059 /* TmlTranslatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414441BEA709E00013059 /* TmlTranslatorViewController.m */; };
-		C02414821BEA709E00013059 /* TmlTranslatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414441BEA709E00013059 /* TmlTranslatorViewController.m */; };
-		C02414831BEA709E00013059 /* TmlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414461BEA709E00013059 /* TmlViewController.m */; };
-		C02414841BEA709E00013059 /* TmlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414461BEA709E00013059 /* TmlViewController.m */; };
-		C02414851BEA709E00013059 /* UIViewController+Tml.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414481BEA709E00013059 /* UIViewController+Tml.m */; };
-		C02414861BEA709E00013059 /* UIViewController+Tml.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414481BEA709E00013059 /* UIViewController+Tml.m */; };
+		C02414891BEA743500013059 /* NSObject+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414881BEA743500013059 /* NSObject+TML.m */; };
+		C024148A1BEA743500013059 /* NSObject+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414881BEA743500013059 /* NSObject+TML.m */; };
+		C024148D1BEA76A300013059 /* UILabel+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C024148C1BEA76A300013059 /* UILabel+TML.m */; };
+		C024148E1BEA76A300013059 /* UILabel+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C024148C1BEA76A300013059 /* UILabel+TML.m */; };
+		C02414911BEA788D00013059 /* UIViewController+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414901BEA788D00013059 /* UIViewController+TML.m */; };
+		C02414921BEA788D00013059 /* UIViewController+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414901BEA788D00013059 /* UIViewController+TML.m */; };
+		C024149A1BEA78F000013059 /* TmlLanguageSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414951BEA78F000013059 /* TmlLanguageSelectorViewController.m */; };
+		C024149B1BEA78F000013059 /* TmlLanguageSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414951BEA78F000013059 /* TmlLanguageSelectorViewController.m */; };
+		C024149C1BEA78F000013059 /* TmlTranslatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414971BEA78F000013059 /* TmlTranslatorViewController.m */; };
+		C024149D1BEA78F000013059 /* TmlTranslatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414971BEA78F000013059 /* TmlTranslatorViewController.m */; };
+		C024149E1BEA78F000013059 /* TMLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414991BEA78F000013059 /* TMLViewController.m */; };
+		C024149F1BEA78F000013059 /* TMLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414991BEA78F000013059 /* TMLViewController.m */; };
+		C02414A21BEA796700013059 /* UIButton+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414A11BEA796700013059 /* UIButton+TML.m */; };
+		C02414A31BEA796700013059 /* UIButton+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C02414A11BEA796700013059 /* UIButton+TML.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -297,14 +303,20 @@
 		C024143D1BEA709E00013059 /* TmlTranslation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlTranslation.m; sourceTree = "<group>"; };
 		C024143E1BEA709E00013059 /* TmlTranslationKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlTranslationKey.h; sourceTree = "<group>"; };
 		C024143F1BEA709E00013059 /* TmlTranslationKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlTranslationKey.m; sourceTree = "<group>"; };
-		C02414411BEA709E00013059 /* TmlLanguageSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlLanguageSelectorViewController.h; sourceTree = "<group>"; };
-		C02414421BEA709E00013059 /* TmlLanguageSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlLanguageSelectorViewController.m; sourceTree = "<group>"; };
-		C02414431BEA709E00013059 /* TmlTranslatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlTranslatorViewController.h; sourceTree = "<group>"; };
-		C02414441BEA709E00013059 /* TmlTranslatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlTranslatorViewController.m; sourceTree = "<group>"; };
-		C02414451BEA709E00013059 /* TmlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlViewController.h; sourceTree = "<group>"; };
-		C02414461BEA709E00013059 /* TmlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlViewController.m; sourceTree = "<group>"; };
-		C02414471BEA709E00013059 /* UIViewController+Tml.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Tml.h"; sourceTree = "<group>"; };
-		C02414481BEA709E00013059 /* UIViewController+Tml.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Tml.m"; sourceTree = "<group>"; };
+		C02414871BEA743500013059 /* NSObject+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TML.h"; sourceTree = "<group>"; };
+		C02414881BEA743500013059 /* NSObject+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TML.m"; sourceTree = "<group>"; };
+		C024148B1BEA76A300013059 /* UILabel+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+TML.h"; sourceTree = "<group>"; };
+		C024148C1BEA76A300013059 /* UILabel+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+TML.m"; sourceTree = "<group>"; };
+		C024148F1BEA788D00013059 /* UIViewController+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+TML.h"; sourceTree = "<group>"; };
+		C02414901BEA788D00013059 /* UIViewController+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+TML.m"; sourceTree = "<group>"; };
+		C02414941BEA78F000013059 /* TmlLanguageSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlLanguageSelectorViewController.h; sourceTree = "<group>"; };
+		C02414951BEA78F000013059 /* TmlLanguageSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlLanguageSelectorViewController.m; sourceTree = "<group>"; };
+		C02414961BEA78F000013059 /* TmlTranslatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TmlTranslatorViewController.h; sourceTree = "<group>"; };
+		C02414971BEA78F000013059 /* TmlTranslatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TmlTranslatorViewController.m; sourceTree = "<group>"; };
+		C02414981BEA78F000013059 /* TMLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLViewController.h; sourceTree = "<group>"; };
+		C02414991BEA78F000013059 /* TMLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLViewController.m; sourceTree = "<group>"; };
+		C02414A01BEA796700013059 /* UIButton+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+TML.h"; sourceTree = "<group>"; };
+		C02414A11BEA796700013059 /* UIButton+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+TML.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -454,7 +466,7 @@
 				C024142B1BEA709E00013059 /* Tokenizers */,
 				C02414341BEA709E00013059 /* Tokens */,
 				C024143B1BEA709E00013059 /* Translations */,
-				C02414401BEA709E00013059 /* UI */,
+				C02414931BEA78F000013059 /* Controllers */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -689,8 +701,16 @@
 		C02414111BEA709E00013059 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				C024148F1BEA788D00013059 /* UIViewController+TML.h */,
+				C02414901BEA788D00013059 /* UIViewController+TML.m */,
 				C02414121BEA709E00013059 /* NSString+TmlAdditions.h */,
 				C02414131BEA709E00013059 /* NSString+TmlAdditions.m */,
+				C02414871BEA743500013059 /* NSObject+TML.h */,
+				C02414881BEA743500013059 /* NSObject+TML.m */,
+				C024148B1BEA76A300013059 /* UILabel+TML.h */,
+				C024148C1BEA76A300013059 /* UILabel+TML.m */,
+				C02414A01BEA796700013059 /* UIButton+TML.h */,
+				C02414A11BEA796700013059 /* UIButton+TML.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -770,19 +790,17 @@
 			path = Translations;
 			sourceTree = "<group>";
 		};
-		C02414401BEA709E00013059 /* UI */ = {
+		C02414931BEA78F000013059 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				C02414411BEA709E00013059 /* TmlLanguageSelectorViewController.h */,
-				C02414421BEA709E00013059 /* TmlLanguageSelectorViewController.m */,
-				C02414431BEA709E00013059 /* TmlTranslatorViewController.h */,
-				C02414441BEA709E00013059 /* TmlTranslatorViewController.m */,
-				C02414451BEA709E00013059 /* TmlViewController.h */,
-				C02414461BEA709E00013059 /* TmlViewController.m */,
-				C02414471BEA709E00013059 /* UIViewController+Tml.h */,
-				C02414481BEA709E00013059 /* UIViewController+Tml.m */,
+				C02414941BEA78F000013059 /* TmlLanguageSelectorViewController.h */,
+				C02414951BEA78F000013059 /* TmlLanguageSelectorViewController.m */,
+				C02414961BEA78F000013059 /* TmlTranslatorViewController.h */,
+				C02414971BEA78F000013059 /* TmlTranslatorViewController.m */,
+				C02414981BEA78F000013059 /* TMLViewController.h */,
+				C02414991BEA78F000013059 /* TMLViewController.m */,
 			);
-			path = UI;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1019,41 +1037,44 @@
 				C02414631BEA709E00013059 /* TmlLanguageContextRule.m in Sources */,
 				C024146B1BEA709E00013059 /* TmlBase.m in Sources */,
 				C024144B1BEA709E00013059 /* TmlApplication.m in Sources */,
-				C02414811BEA709E00013059 /* TmlTranslatorViewController.m in Sources */,
 				C02414511BEA709E00013059 /* TmlPostOffice.m in Sources */,
 				4CE06A1618BD823B0088AB3E /* DataTokensDemoViewController.m in Sources */,
 				4C36258419EF4E5700356B51 /* StaticTableViewController.m in Sources */,
 				C02414711BEA709E00013059 /* TmlDecorationTokenizer.m in Sources */,
+				C02414A21BEA796700013059 /* UIButton+TML.m in Sources */,
 				C02414551BEA709E00013059 /* TmlSource.m in Sources */,
 				C024146F1BEA709E00013059 /* TmlDataTokenizer.m in Sources */,
 				C024145F1BEA709E00013059 /* TmlLanguageCaseRule.m in Sources */,
 				C02414751BEA709E00013059 /* TmlDataToken.m in Sources */,
-				C02414831BEA709E00013059 /* TmlViewController.m in Sources */,
 				C024144F1BEA709E00013059 /* TmlConfiguration.m in Sources */,
-				C02414851BEA709E00013059 /* UIViewController+Tml.m in Sources */,
 				C02414571BEA709E00013059 /* NSString+TmlAdditions.m in Sources */,
+				C02414911BEA788D00013059 /* UIViewController+TML.m in Sources */,
 				C024145D1BEA709E00013059 /* TmlLanguageCase.m in Sources */,
 				C02414791BEA709E00013059 /* TmlPipedToken.m in Sources */,
 				4CE06A0818BD3D2E0088AB3E /* DecorationTokensDemoViewController.m in Sources */,
 				C02414611BEA709E00013059 /* TmlLanguageContext.m in Sources */,
+				C024149A1BEA78F000013059 /* TmlLanguageSelectorViewController.m in Sources */,
+				C024149C1BEA78F000013059 /* TmlTranslatorViewController.m in Sources */,
 				4CCBA13218B9B69A00CFCB3A /* TMLTableViewCell.m in Sources */,
 				C02414491BEA709E00013059 /* TmlApiClient.m in Sources */,
 				4C36258719EF590400356B51 /* StaticViewController.m in Sources */,
 				4C7A870E18BD330000C2375D /* ApplicationViewController.m in Sources */,
-				C024147F1BEA709E00013059 /* TmlLanguageSelectorViewController.m in Sources */,
 				4CE06A1918BD82660088AB3E /* CombinedTokensDemoViewController.m in Sources */,
 				4CE06A0518BD37A40088AB3E /* WelcomeViewController.m in Sources */,
 				C02414651BEA709E00013059 /* TmlRulesEvaluator.m in Sources */,
 				C02414691BEA709E00013059 /* Tml.m in Sources */,
+				C02414891BEA743500013059 /* NSObject+TML.m in Sources */,
 				C024147B1BEA709E00013059 /* TmlTranslation.m in Sources */,
 				C024147D1BEA709E00013059 /* TmlTranslationKey.m in Sources */,
 				C02414731BEA709E00013059 /* TmlHtmlDecorationTokenizer.m in Sources */,
 				4CCBA13118B9B69A00CFCB3A /* TMLConsoleViewController.m in Sources */,
 				4C7A870F18BD330000C2375D /* ApplicationTableViewController.m in Sources */,
 				4C4233F518B9B38700B76555 /* main.m in Sources */,
+				C024149E1BEA78F000013059 /* TMLViewController.m in Sources */,
 				4CE06A1318BD42D30088AB3E /* TMLSampleTableViewCell.m in Sources */,
 				C02414771BEA709E00013059 /* TmlMethodToken.m in Sources */,
 				C024144D1BEA709E00013059 /* TmlCache.m in Sources */,
+				C024148D1BEA76A300013059 /* UILabel+TML.m in Sources */,
 				4CCBA13318B9B69A00CFCB3A /* TranslationViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1065,9 +1086,7 @@
 				C02414721BEA709E00013059 /* TmlDecorationTokenizer.m in Sources */,
 				C024146A1BEA709E00013059 /* Tml.m in Sources */,
 				4CCBA12118B9B5E900CFCB3A /* TmlTestBase.m in Sources */,
-				C02414801BEA709E00013059 /* TmlLanguageSelectorViewController.m in Sources */,
 				4CCBA12418B9B5E900CFCB3A /* TmlTranslationKeyTest.m in Sources */,
-				C02414821BEA709E00013059 /* TmlTranslatorViewController.m in Sources */,
 				4CCBA11418B9B5E900CFCB3A /* TmlAttributedDecorationTokenizerTest.m in Sources */,
 				C02414581BEA709E00013059 /* NSString+TmlAdditions.m in Sources */,
 				C02414521BEA709E00013059 /* TmlPostOffice.m in Sources */,
@@ -1078,17 +1097,20 @@
 				4CCBA11D18B9B5E900CFCB3A /* TmlPipedTokenTest.m in Sources */,
 				C02414501BEA709E00013059 /* TmlConfiguration.m in Sources */,
 				C024144A1BEA709E00013059 /* TmlApiClient.m in Sources */,
+				C02414A31BEA796700013059 /* UIButton+TML.m in Sources */,
 				C024144E1BEA709E00013059 /* TmlCache.m in Sources */,
 				4CCBA12018B9B5E900CFCB3A /* TmlTest.m in Sources */,
 				4CCBA11A18B9B5E900CFCB3A /* TmlLanguageCaseTest.m in Sources */,
 				C02414741BEA709E00013059 /* TmlHtmlDecorationTokenizer.m in Sources */,
 				C02414561BEA709E00013059 /* TmlSource.m in Sources */,
-				C02414841BEA709E00013059 /* TmlViewController.m in Sources */,
+				C02414921BEA788D00013059 /* UIViewController+TML.m in Sources */,
 				4CCBA11F18B9B5E900CFCB3A /* TmlRulesParserTest.m in Sources */,
 				C024145E1BEA709E00013059 /* TmlLanguageCase.m in Sources */,
 				C02414681BEA709E00013059 /* TmlRulesParser.m in Sources */,
 				C02414621BEA709E00013059 /* TmlLanguageContext.m in Sources */,
 				C02414661BEA709E00013059 /* TmlRulesEvaluator.m in Sources */,
+				C024149B1BEA78F000013059 /* TmlLanguageSelectorViewController.m in Sources */,
+				C024149D1BEA78F000013059 /* TmlTranslatorViewController.m in Sources */,
 				C024145C1BEA709E00013059 /* TmlLanguage.m in Sources */,
 				C02414601BEA709E00013059 /* TmlLanguageCaseRule.m in Sources */,
 				4CCBA11718B9B5E900CFCB3A /* TmlDecorationTokenizerTest.m in Sources */,
@@ -1098,15 +1120,17 @@
 				4CCBA11318B9B5E900CFCB3A /* TmlApplicationTest.m in Sources */,
 				4CCBA11618B9B5E900CFCB3A /* TmlDataTokenTest.m in Sources */,
 				C02414641BEA709E00013059 /* TmlLanguageContextRule.m in Sources */,
+				C024148A1BEA743500013059 /* NSObject+TML.m in Sources */,
 				C024146E1BEA709E00013059 /* TmlAttributedDecorationTokenizer.m in Sources */,
 				4CCBA11518B9B5E900CFCB3A /* TmlConfigurationTest.m in Sources */,
 				C024146C1BEA709E00013059 /* TmlBase.m in Sources */,
 				4CCBA11818B9B5E900CFCB3A /* TmlHtmlDecorationTokenizerTest.m in Sources */,
 				4CCBA11E18B9B5E900CFCB3A /* TmlRulesEvaluatorTest.m in Sources */,
-				C02414861BEA709E00013059 /* UIViewController+Tml.m in Sources */,
+				C024149F1BEA78F000013059 /* TMLViewController.m in Sources */,
 				4CCBA11C18B9B5E900CFCB3A /* TmlLanguageContextTest.m in Sources */,
 				4CCBA11B18B9B5E900CFCB3A /* TmlLanguageContextRuleTest.m in Sources */,
 				4CCBA12318B9B5E900CFCB3A /* TmlTestUser.m in Sources */,
+				C024148E1BEA76A300013059 /* UILabel+TML.m in Sources */,
 				C02414761BEA709E00013059 /* TmlDataToken.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

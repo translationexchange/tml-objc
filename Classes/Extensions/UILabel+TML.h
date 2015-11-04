@@ -28,9 +28,9 @@
  *  THE SOFTWARE.
  */
 
-
 #import <UIKit/UIKit.h>
+#import "NSObject+TML.h"
 
-@interface TmlViewController : UIViewController
+@interface UILabel (TML)
 
 @end

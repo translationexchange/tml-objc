@@ -29,7 +29,7 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "UIViewController+Tml.h"
+#import "UIViewController+TML.h"
 #import "Tml.h"
 #import "TmlTranslatorViewController.h"
 
@@ -41,7 +41,7 @@ NSString const *TmlViewData = @"TmlViewData";
 NSString const *TmlKeyData = @"TmlKeyData";
 NSString const *TmlViewTapRecognizer = @"TmlViewTapRecognizer";
 
-@implementation UIViewController (Tml)
+@implementation UIViewController (TML)
 
 - (NSString *) tmlSourceKey {
     return NSStringFromClass([self class]);
@@ -263,11 +263,11 @@ NSString const *TmlViewTapRecognizer = @"TmlViewTapRecognizer";
     }
 }
 
-- (void) translateView: (UIView *) view {
-    [self translateView:view withTokens:@{}];
+- (void) localizeView: (UIView *) view {
+    [self localizeView:view withTokens:@{}];
 }
 
-- (void) translateView: (UIView *) view withTokens: (NSDictionary *) tokens {
+- (void) localizeView: (UIView *) view withTokens: (NSDictionary *) tokens {
     if (view == nil) return;
     
     // TmlDebug(@"Translating: %@", NSStringFromClass([view class]));
@@ -290,18 +290,18 @@ NSString const *TmlViewTapRecognizer = @"TmlViewTapRecognizer";
             for (int j=0; j<[tableView numberOfRowsInSection:i]; j++) {
                 UITableViewCell *cell = [tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:j inSection:i]];
                 for (UIView *view in cell.subviews) {
-                    [self translateView:view withTokens:tokens];
+                    [self localizeView:view withTokens:tokens];
                 }
             }
         }
     } else {
         for (UIView *subview in view.subviews) {
-            [self translateView:subview withTokens:tokens];
+            [self localizeView:subview withTokens:tokens];
         }
     }
 }
 
-- (void) translateView: (UIView *) view withLabel: (NSString *) label description: (NSString *) description tokens: (NSDictionary *) tokens options: (NSDictionary *) options {
+- (void) localizeView: (UIView *) view withLabel: (NSString *) label description: (NSString *) description tokens: (NSDictionary *) tokens options: (NSDictionary *) options {
 
     if (view == nil) return;
     

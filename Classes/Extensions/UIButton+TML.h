@@ -28,26 +28,9 @@
  *  THE SOFTWARE.
  */
 
+#import <Foundation/Foundation.h>
+#import "NSObject+TML.h"
 
-#import "TmlViewController.h"
-#import "UIViewController+Tml.h"
-#import "Tml.h"
-
-@interface TmlViewController ()
-
-@end
-
-@implementation TmlViewController
-
-- (void) translate {
-    TmlBeginBlockWithOptions(@{@"source": [self tmlSourceKey]})
-    [self translateView:self.view];
-    TmlEndBlockWithOptions
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [self translate];
-}
+@interface UIButton (TML)
 
 @end
