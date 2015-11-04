@@ -117,7 +117,7 @@
 - (NSString *) host {
     TmlApplication *app = [Tml sharedInstance].currentApplication;
     NSString *host = [app.tools objectForKey: @"host"];
-    if(!host) host = @"http://tools.translationexchange.com";
+    if(!host) host = @"https://translation-center.translationexchange.com";
     return host;
 }
 
