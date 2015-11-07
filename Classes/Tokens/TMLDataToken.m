@@ -48,8 +48,10 @@
  #
  ***********************************************************************/
 
-#import "TMLDataToken.h"
 #import "TML.h"
+#import "TMLConfiguration.h"
+#import "TMLDataToken.h"
+#import "TMLLanguage.h"
 #import "TMLLanguageCase.h"
 
 @interface TMLDataToken ()

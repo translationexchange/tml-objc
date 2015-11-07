@@ -30,8 +30,6 @@
 
 #import "TMLPostOffice.h"
 #import "TMLApplication.h"
-#import "TMLApiClient.h"
-#import "TML.h"
 
 @implementation TMLPostOffice
 
@@ -54,34 +52,19 @@
     return [NSString stringWithFormat:@"%@/api/v1/%@", [self host], path];
 }
 
-- (void) deliver: (NSString *) template_keyword
-              to: (NSString *) to
-          tokens: (NSDictionary *) tokens
-      options: (NSDictionary *) options
-      success: (void (^)(id responseObject)) success
-      failure: (void (^)(NSError *error)) failure
+- (void) deliver:(NSString *)templateKeyword
+              to:(NSString *)to
+          tokens:(NSDictionary *)tokens
+ completionBlock:(TMLAPIResponseHandler)completionBlock
 {
  
     NSMutableDictionary *params = [NSMutableDictionary dictionary];
     [params setObject:tokens forKey:@"tokens"];
     [params setObject:to forKey:@"to"];
-
-    NSArray *keys = @[@"via", @"from", @"locale", @"realtime"];
-    for (NSString *key in keys) {
-        if ([options valueForKey:key])
-            [params setObject:[options valueForKey:key] forKey:key];
-    }
-
-    [self.application.apiClient post: [self apiFullPath:[NSString stringWithFormat:@"templates/%@/deliver", template_keyword]]
-                              params: params
-                             options: @{}
-                             success: ^(id responseObject) {
-                                        success(responseObject);
-                                    }
-                             failure: ^(NSError *error) {
-                                        failure(error);
-                                    }
-     ];
+    
+    [self.application.apiClient post:[self apiFullPath:[NSString stringWithFormat:@"templates/%@/deliver", templateKeyword]]
+                          parameters:params
+                     completionBlock:completionBlock];
 }
 
 - (void) registerToken: (NSString *) token {
@@ -89,16 +72,18 @@
 }
 
 - (void) registerToken: (NSString *) token options: (NSDictionary *) options {
-    [self registerToken:token options:options success:nil failure:nil];
+    [self registerToken:token
+                options:options
+        completionBlock:nil];
 }
 
-- (void) registerToken: (NSString *) token options: (NSDictionary *) options
-               success: (void (^)(id responseObject)) success
-               failure: (void (^)(NSError *error)) failure
+- (void) registerToken:(NSString *)token
+               options:(NSDictionary *)options
+               completionBlock:(TMLAPIResponseHandler)completionBlock;
 {
-    
-    if (!token) return;
-        
+//    
+//    if (!token) return;
+//        
 //    NSMutableDictionary *params = [NSMutableDictionary dictionary];
 //    [params setObject:application.key forKey:@"client_id"];
 //    [params setObject:token forKey:@"device_token"];
@@ -125,16 +110,8 @@
 //    }
 //    
 //    [self.application.apiClient post: [self apiFullPath: @"contacts/register"]
-//                              params: params
-//                             options: @{}
-//                             success: ^(id responseObject) {
-//                                 if (success)
-//                                     success(responseObject);
-//                             }
-//                             failure: ^(NSError *error) {
-//                                 if (failure)
-//                                     failure(error);
-//                             }
+//                          parameters: params
+//                     completionBlock:completionBlock
 //     ];
 }
 

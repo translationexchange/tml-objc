@@ -28,15 +28,17 @@
  *  THE SOFTWARE.
  */
 
-#import "TMLTranslationKey.h"
-#import "TMLTranslation.h"
-#import "TMLTranslation.h"
+#import "TML.h"
+#import "TMLApplication.h"
+#import "TMLAttributedDecorationTokenizer.h"
+#import "TMLConfiguration.h"
+#import "TMLDataToken.h"
 #import "TMLDataTokenizer.h"
 #import "TMLDecorationTokenizer.h"
-#import "TMLDataToken.h"
-#import "TMLAttributedDecorationTokenizer.h"
 #import "TMLHtmlDecorationTokenizer.h"
-#import "TML.h"
+#import "TMLLanguage.h"
+#import "TMLTranslation.h"
+#import "TMLTranslationKey.h"
 
 @implementation TMLTranslationKey
 @synthesize application, key, label, description, locale, level, translations;

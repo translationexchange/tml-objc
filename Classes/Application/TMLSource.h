@@ -30,9 +30,8 @@
 
 #import <Foundation/Foundation.h>
 #import "TMLBase.h"
-#import "TMLApplication.h"
-#import "TMLLanguage.h"
-#import "TMLTranslationKey.h"
+
+@class TMLApplication;
 
 @interface TMLSource : TMLBase
 

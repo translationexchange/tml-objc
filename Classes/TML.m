@@ -31,9 +31,13 @@
 
 #import "NSString+TMLAdditions.h"
 #import "TML.h"
-#import "TMLCache.h"
+#import "TMLApplication.h"
+#import "TMLConfiguration.h"
 #import "TMLDataToken.h"
+#import "TMLLanguage.h"
 #import "TMLLanguageCase.h"
+#import "TMLLogger.h"
+#import "TMLSource.h"
 #import "TMLTranslation.h"
 #import "TMLTranslationKey.h"
 #import <CommonCrypto/CommonDigest.h>
@@ -46,9 +50,7 @@
 
 @implementation TML
 
-@synthesize configuration, cache;
-@synthesize currentApplication, defaultLanguage, currentLanguage, currentSource, currentUser, delegate;
-@synthesize blockOptions;
+@synthesize configuration, currentApplication, defaultLanguage, currentLanguage, currentSource, currentUser, delegate, blockOptions;
 
 
 // Shared instance of TML
@@ -83,8 +85,6 @@
 
 #pragma mark - Initialization
 - (void) updateWithToken: (NSString *) token launchOptions: (NSDictionary *) launchOptions {
-    self.cache = [[TMLCache alloc] initWithKey: token];
-    
     NSString *host = [launchOptions objectForKey:@"host"];
     if (!host) host = kTMLServiceHost;
     
@@ -97,11 +97,16 @@
     
     [self loadLocalLocalizationBundle];
     
-    [app loadTranslationsForLocale:self.currentLanguage.locale withOptions:@{} success:^{
-        TMLDebug(@"Loaded translations for current locale!");
-    } failure:^(NSError *error) {
-        TMLDebug(@"Failed to load translations!");
-    }];
+    NSString *localeToLoad = self.currentLanguage.locale;
+    [app loadTranslationsForLocale:localeToLoad
+                   completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+                       if (apiResponse == nil) {
+                           TMLError(@"Failed to load translations: %@", error);
+                       }
+                       else {
+                           TMLDebug(@"Loaded translations for locale: %@", localeToLoad);
+                       }
+                   }];
     
     [app log];
 }
@@ -138,20 +143,21 @@
 }
 
 - (void) loadLocalLocalizationBundle {
-    NSString *latestLocalBundlePath = [self latestLocalTranslationBundlePath];
-    NSString *latestLocalBundleVersion = [latestLocalBundlePath tmlTranslationBundleVersionFromPath];
-    TMLCache *ourCache = self.cache;
-    if (latestLocalBundlePath != nil
-        && [[NSFileManager defaultManager] fileExistsAtPath:[ourCache cachePathForTranslationBundleVersion:latestLocalBundleVersion]] == NO) {
-        [ourCache installContentsOfTranslationBundleAtPath:latestLocalBundlePath completion:^(NSString *destinationPath, BOOL success, NSError *error) {
-            if (success == YES && destinationPath != nil) {
-                NSString *latestCachedVersion = [ourCache latestTranslationBundleVersion];
-                if ([latestLocalBundleVersion compareToTMLTranslationBundleVersion:latestCachedVersion] != NSOrderedDescending) {
-                    [ourCache selectCachedTranslationBundleWithVersion:latestLocalBundleVersion];
-                }
-            }
-        }];
-    }
+    // TODO: no longer using cache, so this would have to be stashed elsewhere...
+//    NSString *latestLocalBundlePath = [self latestLocalTranslationBundlePath];
+//    NSString *latestLocalBundleVersion = [latestLocalBundlePath tmlTranslationBundleVersionFromPath];
+//    TMLCache *ourCache = self.cache;
+//    if (latestLocalBundlePath != nil
+//        && [[NSFileManager defaultManager] fileExistsAtPath:[ourCache cachePathForTranslationBundleVersion:latestLocalBundleVersion]] == NO) {
+//        [ourCache installContentsOfTranslationBundleAtPath:latestLocalBundlePath completion:^(NSString *destinationPath, BOOL success, NSError *error) {
+//            if (success == YES && destinationPath != nil) {
+//                NSString *latestCachedVersion = [ourCache latestTranslationBundleVersion];
+//                if ([latestLocalBundleVersion compareToTMLTranslationBundleVersion:latestCachedVersion] != NSOrderedDescending) {
+//                    [ourCache selectCachedTranslationBundleWithVersion:latestLocalBundleVersion];
+//                }
+//            }
+//        }];
+//    }
 }
 
 + (NSString *) translate:(NSString *) label withDescription:(NSString *) description andTokens: (NSDictionary *) tokens andOptions: (NSDictionary *) options {
@@ -193,10 +199,6 @@
 
 + (TMLConfiguration *) configuration {
     return [[TML sharedInstance] configuration];
-}
-
-+ (TMLCache *) cache {
-    return [[TML sharedInstance] cache];
 }
 
 /************************************************************************************
@@ -262,48 +264,54 @@
     return [[TML sharedInstance] currentLanguage];
 }
 
-+ (void) changeLocale: (NSString *) locale success: (void (^)()) success failure: (void (^)(NSError *error)) failure {
-    [[TML sharedInstance] changeLocale:locale success:success failure:failure];
-}
-
-- (void) changeLocale: (NSString *) locale success: (void (^)()) success failure: (void (^)(NSError *error)) failure {
-    NSString *previousLocale = self.configuration.currentLocale;
-    self.configuration.currentLocale = locale;
-    BOOL hasBackup = [cache backupCacheForLocale: locale];
+- (void) changeLocale: (NSString *) locale completionBlock:(TMLAPIResponseHandler)completionBlock {
+    TMLConfiguration *config = self.configuration;
+    NSString *previousLocale = config.currentLocale;
+    config.currentLocale = locale;
+    // TODO: no more cache; perhaps utilize TML to backup localizataion bundles?!
+    //    BOOL hasBackup = [cache backupCacheForLocale: locale];
+    BOOL hasBackup = NO;
+    
+    TMLApplication *app = self.currentApplication;
     
     TMLLanguage *previousLanguage = self.currentLanguage;
-    self.currentLanguage = (TMLLanguage *) [self.currentApplication languageForLocale: locale];
+    self.currentLanguage = (TMLLanguage *) [app languageForLocale: locale];
     
-    [self.currentApplication resetTranslations];
-    [self.currentApplication loadTranslationsForLocale:self.currentLanguage.locale withOptions:@{@"offline": @YES} success:^{
-        if ([self.delegate respondsToSelector:@selector(tr8nDidLoadTranslations)]) {
-            [self.delegate tr8nDidLoadTranslations];
-        }
-        
-        success();
-        
-    } failure:^(NSError *error) {
-        // restore backup folder and load translation from previous backup
-        [cache restoreCacheBackupForLocale:locale];
-        
-        if (hasBackup) {
-            [self.currentApplication resetTranslations];
-            [self.currentApplication loadTranslationsForLocale:self.currentLanguage.locale withOptions:@{@"offline": @YES} success:^{
-                if ([self.delegate respondsToSelector:@selector(tr8nDidLoadTranslations)]) {
-                    [self.delegate tr8nDidLoadTranslations];
-                }
-                success();
-            } failure:^(NSError *error) {
-                self.configuration.currentLocale = previousLocale;
-                self.currentLanguage = previousLanguage;
-                failure(error);
-            }];
-        } else {
-            self.configuration.currentLocale = previousLocale;
-            self.currentLanguage = previousLanguage;
-            failure(error);
-        }
-    }];
+    [app resetTranslations];
+    [app loadTranslationsForLocale:self.currentLanguage.locale
+                   completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+                       if (apiResponse != nil) {
+                           if ([self.delegate respondsToSelector:@selector(tr8nDidLoadTranslations)]) {
+                               [self.delegate tr8nDidLoadTranslations];
+                           }
+                       }
+                       else {
+                           // restore backup folder and load translation from previous backup
+                           // TODO: no more caches, keeping commented out in case we will end up restoring this behavior
+//                           [cache restoreCacheBackupForLocale:locale];
+                           
+                           if (hasBackup) {
+                               [app resetTranslations];
+                               [app loadTranslationsForLocale:self.currentLanguage.locale
+                                              completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+                                                  if (apiResponse != nil) {
+                                                      if ([self.delegate respondsToSelector:@selector(tr8nDidLoadTranslations)]) {
+                                                          [self.delegate tr8nDidLoadTranslations];
+                                                      }
+                                                  }
+                                                  else {
+                                                      self.configuration.currentLocale = previousLocale;
+                                                      self.currentLanguage = previousLanguage;
+                                                  }
+                                                  completionBlock(apiResponse, response, error);
+                                              }];
+                           } else {
+                               completionBlock(apiResponse, response, error);
+                           }
+                           self.configuration.currentLocale = previousLocale;
+                           self.currentLanguage = previousLanguage;
+                       }
+                   }];
 }
 
 + (void) reloadTranslations {
@@ -311,15 +319,20 @@
 }
 
 - (void) reloadTranslations {
-    [cache backupCacheForLocale: self.currentLanguage.locale];
+    // TODO: no more cache, need to create backup in another way
+//    [cache backupCacheForLocale: self.currentLanguage.locale];
 
     [self.currentApplication resetTranslations];
-    [self.currentApplication loadTranslationsForLocale:self.currentLanguage.locale withOptions:@{@"offline": @YES} success:^{
-        if ([self.delegate respondsToSelector:@selector(tr8nDidLoadTranslations)]) {
-            [self.delegate tr8nDidLoadTranslations];
+    [self.currentApplication loadTranslationsForLocale:self.currentLanguage.locale completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+        if (apiResponse != nil) {
+            if ([self.delegate respondsToSelector:@selector(tr8nDidLoadTranslations)]) {
+                [self.delegate tr8nDidLoadTranslations];
+            }
         }
-    } failure:^(NSError *error) {
-        [cache restoreCacheBackupForLocale: self.currentLanguage.locale];
+        else {
+            // TODO: no more cache
+//            [cache restoreCacheBackupForLocale: self.currentLanguage.locale];
+        }
     }];
 }
 

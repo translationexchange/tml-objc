@@ -30,11 +30,9 @@
 
 #import <Foundation/Foundation.h>
 #import "TMLBase.h"
+#import "TMLApiClient.h"
 
-@class TMLApiClient;
-@class TMLPostOffice;
-@class TMLLanguage;
-@class TMLSource;
+@class TMLPostOffice, TMLLanguage, TMLSource;
 
 @interface TMLApplication : TMLBase
 
@@ -80,9 +78,6 @@
 // Sources by keys
 @property(nonatomic, strong) NSMutableDictionary *sourcesByKeys;
 
-// Translation keys
-@property(nonatomic, strong) NSMutableDictionary *translationKeys;
-
 // Translations by keys
 @property(nonatomic, strong) NSDictionary *translations;
 
@@ -92,11 +87,7 @@
 - (id) initWithToken: (NSString *) token host: (NSString *) appHost;
 
 - (void) loadTranslationsForLocale: (NSString *) locale
-                       withOptions: (NSDictionary *) options
-                           success: (void (^)()) success
-                           failure: (void (^)(NSError *error)) failure;
-
-- (void) resetTranslationsCacheForLocale: (NSString *) locale;
+                   completionBlock:(TMLAPIResponseHandler)completionBlock;
 
 - (void) resetTranslations;
 

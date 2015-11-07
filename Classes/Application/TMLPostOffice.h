@@ -29,6 +29,7 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "TMLApiClient.h"
 
 @class TMLApplication;
 
@@ -38,19 +39,18 @@
 
 - (id) initWithApplication: (TMLApplication *) owner;
 
-- (void) deliver: (NSString *) template_keyword
-              to: (NSString *) to
-          tokens: (NSDictionary *) tokens
-         options: (NSDictionary *) options
-         success: (void (^)(id responseObject)) success
-         failure: (void (^)(NSError *error)) failure;
+- (void) deliver:(NSString *)templateKeyword
+              to:(NSString *)to
+          tokens:(NSDictionary *)tokens
+ completionBlock:(TMLAPIResponseHandler)completionBlock;
 
-- (void) registerToken: (NSString *) token;
+- (void) registerToken:(NSString *)token;
 
-- (void) registerToken: (NSString *) token options: (NSDictionary *) options;
+- (void) registerToken:(NSString *)token
+               options:(NSDictionary *)options;
 
-- (void) registerToken: (NSString *) token options: (NSDictionary *) options
-               success: (void (^)(id responseObject)) success
-               failure: (void (^)(NSError *error)) failure;
+- (void) registerToken:(NSString *)token
+               options:(NSDictionary *)options
+       completionBlock:(TMLAPIResponseHandler)completionBlock;
 
 @end

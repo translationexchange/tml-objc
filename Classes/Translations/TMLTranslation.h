@@ -30,11 +30,10 @@
 
 
 #import <Foundation/Foundation.h>
-#import "TMLBase.h"
-#import "TMLTranslationKey.h"
-#import "TMLLanguage.h"
 
-@interface TMLTranslation : TMLBase
+@class TMLTranslationKey, TMLLanguage;
+
+@interface TMLTranslation : NSObject
 
 // Reference to the translation key it belongs to
 @property(nonatomic, weak) TMLTranslationKey *translationKey;

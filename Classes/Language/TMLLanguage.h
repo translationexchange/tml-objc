@@ -30,12 +30,12 @@
 
 #import <Foundation/Foundation.h>
 #import "TMLBase.h"
-#import "TMLApplication.h"
 
-@class TMLLanguageContext;
-@class TMLLanguageCase;
+@class TMLLanguageContext, TMLLanguageCase, TMLApplication;
 
 @interface TMLLanguage : TMLBase
+
+@property (nonatomic, assign) NSInteger languageID;
 
 // Holds reference to the application it belongs to
 @property(nonatomic, weak) TMLApplication *application;
@@ -53,13 +53,15 @@
 @property(nonatomic, strong) NSNumber *rightToLeft;
 
 // Url of the language flag image
-@property(nonatomic, strong) NSString *flagUrl;
+@property(nonatomic, strong) NSURL *flagUrl;
 
 // Hash of all language contexts
 @property(nonatomic, strong) NSDictionary *contexts;
 
 // Hash of all language cases
 @property(nonatomic, strong) NSDictionary *cases;
+
+@property(nonatomic, strong) NSString *status;
 
 + (TMLLanguage *) defaultLanguage;
 

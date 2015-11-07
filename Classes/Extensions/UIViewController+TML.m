@@ -28,14 +28,14 @@
  *  THE SOFTWARE.
  */
 
-#import <UIKit/UIKit.h>
-#import "UIViewController+TML.h"
 #import "TML.h"
+#import "TMLConfiguration.h"
+#import "TMLTranslationKey.h"
 #import "TMLTranslatorViewController.h"
-
-#import <objc/runtime.h>
+#import "UIViewController+TML.h"
 #import <QuartzCore/QuartzCore.h>
-#import <float.h>
+#import <UIKit/UIKit.h>
+#import <objc/runtime.h>
 
 NSString const *TMLViewData = @"TMLViewData";
 NSString const *TMLKeyData = @"TMLKeyData";

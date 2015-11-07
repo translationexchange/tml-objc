@@ -37,7 +37,7 @@
 @property(nonatomic, retain) NSMutableArray *expression;
 @property(nonatomic, retain) NSMutableArray *tokens;
 
-+ (TMLRulesParser *) parserWithExpression: (NSString *)expression;
++ (instancetype) parserWithExpression: (NSString *)expression;
 
 - (id) initWithExpression: (NSString *)expression;
 

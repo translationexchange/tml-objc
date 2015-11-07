@@ -28,9 +28,10 @@
  *  THE SOFTWARE.
  */
 
-#import "TMLSource.h"
 #import "TMLApiClient.h"
+#import "TMLApplication.h"
 #import "TMLConfiguration.h"
+#import "TMLSource.h"
 #import "TMLTranslation.h"
 
 @implementation TMLSource
@@ -49,49 +50,21 @@
     self.translations = @{};
 }
 
-- (void) updateTranslations:(NSDictionary *) data forLocale: locale {
-    NSMutableDictionary *localeTranslations = [NSMutableDictionary dictionary];
-    
-    data = [data objectForKey:@"results"];
-    NSArray *translationsData;
-    NSMutableArray *newTranslations;
-    
-    for (NSString *tkey in [data allKeys]) {
-        if (![data objectForKey:tkey]) continue;
-        
-        if ([[data objectForKey:tkey] isKindOfClass:[NSDictionary class]])
-            translationsData = [[data objectForKey:tkey] objectForKey:@"translations"];
-        else if ([[data objectForKey:tkey] isKindOfClass:[NSArray class]])
-            translationsData = [data objectForKey:tkey];
-        else
-            continue;
-        
-        newTranslations = [NSMutableArray array];
-        for (NSDictionary* translation in translationsData) {
-            [newTranslations addObject:[[TMLTranslation alloc] initWithAttributes:@{
-                 @"label": [translation valueForKey:@"label"],
-                 @"locale": ([translation valueForKey:@"locale"] == nil ? locale : [translation valueForKey:@"locale"]),
-                 @"context": ([translation valueForKey:@"context"] == nil ? @{} : [translation valueForKey:@"context"]),
-             }]];
-        }
-        
-        [localeTranslations setObject:newTranslations forKey:tkey];
-    }
-    
-    NSMutableDictionary *trans = [NSMutableDictionary dictionaryWithDictionary:self.translations];
-    [trans setObject:localeTranslations forKey:locale];
-    self.translations = trans;
+- (void) updateTranslations:(NSDictionary *)translationInfo forLocale:(NSString *)locale {
+    NSMutableDictionary *newTranslations = [self.translations mutableCopy];
+    newTranslations[locale]=translationInfo;
+    self.translations = (NSDictionary *)newTranslations;
 }
 
-- (void) loadTranslationsForLocale: (NSString *) locale {
+- (void) loadTranslationsForLocale:(NSString *)locale {
     [self.application.apiClient get: [NSString stringWithFormat: @"sources/%@/translations", [TMLConfiguration md5: self.key]]
-                             params: @{@"locale": locale, @"all": @"true"}
-                            options: @{@"realtime": @true, @"cache_key": [TMLSource cacheKeyForLocale:locale andKey: self.key]}
-                            success:^(id data) {
-                                [self updateTranslations:data forLocale:locale];
-                            }
-                            failure:^(NSError *error) {
-                            }
+                         parameters: @{@"locale": locale, @"all": @"true"}
+                    completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+                             if (apiResponse != nil) {
+                                 [self updateTranslations:[apiResponse resultsAsTranslations] forLocale:locale];
+                             }
+                         }
+     
      ];
 }
 

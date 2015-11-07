@@ -31,25 +31,62 @@
 #ifndef TMLLogger_h
 #define TMLLogger_h
 
-static inline void TMLLog(NSString *format, ...) {
+typedef NS_ENUM(NSInteger, TMLLogLevel) {
+    TMLLogLevelError = 1,
+    TMLLogLevelWarning,
+    TMLLogLevelInfo,
+    TMLLogLevelDebug
+};
+
+static inline void TMLLog(TMLLogLevel level, NSString *format, ...) {
     __block va_list arg_list;
     va_start (arg_list, format);
     NSString *formattedString = [[NSString alloc] initWithFormat:format arguments:arg_list];
     va_end(arg_list);
-    NSLog(@"[TML] %@", formattedString);
+    NSString *levelString = nil;
+    switch (level) {
+        case TMLLogLevelError:
+            levelString = @"Error";
+            break;
+        case TMLLogLevelInfo:
+            levelString = @"Info";
+            break;
+        case TMLLogLevelWarning:
+            levelString = @"Warning";
+            break;
+        case TMLLogLevelDebug:
+            levelString = @"Debug";
+            break;
+        default:
+            levelString = @"Unknown";
+            break;
+    }
+    NSLog(@"[TML %@] %@", levelString, formattedString);
 }
 
-#ifdef TML_ERROR
-#define TMLError(...) TMLLog(__VA_ARGS__)
+#if TML_DEBUG >= TMLLogLevelError
+#define TMLError(...) TMLLog(TMLLogLevelError, __VA_ARGS__)
 #else
 #define TMLError(...)
 #endif
 
-//#ifdef TML_DEBUG
-#define TMLDebug(...) TMLLog(__VA_ARGS__)
-//#else
-//#define TMLDebug(...)
-//#endif
+#if TML_DEBUG >= TMLLogLevelWarning
+#define TMLWarn(...) TMLLog(TMLLogLevelWarning, __VA_ARGS__)
+#else 
+#define TMLWarn(...)
+#endif
+
+#if TML_DEBUG >= TMLLogLevelInfo
+#define TMLInfo(...) TMLLog(TMLLogLevelInfo, __VA_ARGS__)
+#else
+#define TMLInfo(...)
+#endif
+
+#if TML_DEBUG >= TMLLogLevelDebug
+#define TMLDebug(...) TMLLog(TMLLogLevelDebug, __VA_ARGS__)
+#else
+#define TMLDebug(...)
+#endif
 
 #ifdef TML_MESSAGING_DEBUG
 #define MessagingDebug(...) TMLLog(__VA_ARGS__)

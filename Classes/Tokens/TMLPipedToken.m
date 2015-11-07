@@ -43,9 +43,11 @@
  #
  ***********************************************************************/
 #import "TML.h"
-#import "TMLPipedToken.h"
+#import "TMLLanguage.h"
 #import "TMLLanguageCase.h"
+#import "TMLLanguageContext.h"
 #import "TMLLanguageContextRule.h"
+#import "TMLPipedToken.h"
 
 @implementation TMLPipedToken
 

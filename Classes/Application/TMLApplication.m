@@ -29,19 +29,18 @@
  */
 
 #import "TML.h"
-#import "TMLApiClient.h"
 #import "TMLApplication.h"
-#import "TMLCache.h"
 #import "TMLConfiguration.h"
 #import "TMLLanguage.h"
 #import "TMLPostOffice.h"
 #import "TMLSource.h"
 #import "TMLTranslation.h"
+#import "TMLTranslationKey.h"
 
 @implementation TMLApplication
 
 @synthesize host, key, accessToken, secret, name, defaultLocale, threshold, features, tools;
-@synthesize translationKeys, translations, languagesByLocales, sourcesByKeys, missingTranslationKeysBySources, scheduler;
+@synthesize translations, languagesByLocales, sourcesByKeys, missingTranslationKeysBySources, scheduler;
 @synthesize apiClient, postOffice;
 
 + (NSString *) cacheKey {
@@ -88,15 +87,13 @@
     if ([[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"])
         [params setObject:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"] forKey:@"display_name"];
     
-    [self.apiClient get: @"applications/current"
-                 params: params
-//                options: @{@"realtime": @true, @"cache_key": [TMLApplication cacheKey]}
-                options: @{@"realtime": @true}
-                success: ^(id data) {
-                   [self updateAttributes:data];
-                }
-                failure: ^(NSError *error) {
-                }
+    [self.apiClient get:@"applications/current"
+             parameters:params
+        completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+            if (apiResponse != nil) {
+                [self updateAttributes:apiResponse.results];
+            }
+        }
      ];
 }
 
@@ -129,94 +126,43 @@
     if ([[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDevelopmentRegion"])
         [params setObject:[config currentLocale] forKey:@"selected_locale"];
     
-    [self.apiClient get: @"applications/current/log"
-                 params: params
-                options: @{}
-                success: ^(id data) {
-                    [TMLConfiguration setPersistentValue:[NSDate date] forKey:@"last_log_date"];
-                }
-                failure: ^(NSError *error) {
+    [self.apiClient get:@"applications/current/log"
+                 parameters:params
+                completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+                    if (apiResponse != nil) {
+                        [TMLConfiguration setPersistentValue:[NSDate date] forKey:@"last_log_date"];
+                    }
                 }
      ];
-}
-
-- (NSString *) transltionsCacheKeyForLocale: (NSString *) locale {
-    return [NSString stringWithFormat:@"%@/translations", locale];
-}
-
-- (void) resetTranslationsCacheForLocale: (NSString *) locale {
-    [TML.cache resetCacheForKey:[self transltionsCacheKeyForLocale:locale]];
 }
 
 - (BOOL) isTranslationCacheEmpty {
     return (self.translations == nil || [self.translations allKeys].count == 0);
 }
 
-- (void) updateTranslations:(NSDictionary *) data forLocale: locale {
-    NSMutableDictionary *localeTranslations = [NSMutableDictionary dictionary];
-    
-    NSDictionary *results = [data objectForKey:@"results"];
-    NSArray *translationsData;
-    NSMutableArray *newTranslations;
-    
-//    TMLDebug(@"%@", data);
-
-    if (!self.translationKeys)
-        self.translationKeys = [NSMutableDictionary dictionary];
-    
-    for (NSString *tkey in [results allKeys]) {
-        [self.translationKeys setObject: tkey forKey:tkey];
-        
-        if ([[results objectForKey:tkey] isKindOfClass:[NSDictionary class]])
-            translationsData = [[results objectForKey:tkey] objectForKey:@"translations"];
-        else if ([[results objectForKey:tkey] isKindOfClass:[NSArray class]])
-            translationsData = [results objectForKey:tkey];
-        else
-            continue;
-        
-        newTranslations = [NSMutableArray array];
-        for (NSDictionary* translation in translationsData) {
-            [newTranslations addObject:[[TMLTranslation alloc] initWithAttributes:@{
-                 @"label": [translation valueForKey:@"label"],
-                 @"locale": ([translation valueForKey:@"locale"] == nil ? locale : [translation valueForKey:@"locale"]),
-                 @"context": ([translation valueForKey:@"context"] == nil ? @{} : [translation valueForKey:@"context"]),
-            }]];
-        }
-        
-        [localeTranslations setObject:newTranslations forKey:tkey];
-    }
-    
-    NSMutableDictionary *trans = [NSMutableDictionary dictionaryWithDictionary:self.translations];
-    [trans setObject:localeTranslations forKey:locale];
-    self.translations = trans;
+- (void) updateTranslations:(NSDictionary *)translationInfo forLocale:(NSString *)locale {
+    NSMutableDictionary *newTranslations = [self.translations mutableCopy];
+    newTranslations[locale] = translationInfo;
+    self.translations = newTranslations;
 }
 
 - (void) loadTranslationsForLocale: (NSString *) locale
-                       withOptions: (NSDictionary *) options
-                           success: (void (^)()) success
-                           failure: (void (^)(NSError *error)) failure
+                   completionBlock:(TMLAPIResponseHandler)completionBlock
 {
     [self.apiClient get: @"applications/current/translations"
-                 params: @{@"locale": locale, @"all": @"true"}
-                options: @{@"cache_key": [self transltionsCacheKeyForLocale:locale]}
-      success: ^(id responseObject) {
-          [self updateTranslations:responseObject forLocale:locale];
-          [[NSNotificationCenter defaultCenter] postNotificationName: TMLLanguageChangedNotification object: locale];
-          success();
-      }
-      failure: ^(NSError *error) {
-          NSDictionary *data = (NSDictionary *) [TML.cache fetchObjectForKey: [self transltionsCacheKeyForLocale:locale]];
-          if (data) {
-              [self updateTranslations:data forLocale:locale];
-              success();
-              return;
-          }
-          failure(error);
-      }];
+             parameters: @{@"locale": locale, @"all": @"true"}
+        completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+            if (apiResponse != nil) {
+                NSDictionary *newTranslations = [apiResponse resultsAsTranslations];
+                [self updateTranslations:newTranslations forLocale:locale];
+                [[NSNotificationCenter defaultCenter] postNotificationName: TMLLanguageChangedNotification object: locale];
+            }
+            completionBlock(apiResponse, response, error);
+        }];
 }
 
 - (BOOL) isTranslationKeyRegistered: (NSString *) translationKey {
-    return [self.translationKeys objectForKey:translationKey] != nil;
+    return self.translations[translationKey] != nil;
 }
 
 - (NSArray *) translationsForKey:(NSString *) translationKey inLanguage: (NSString *) locale {
@@ -225,8 +171,7 @@
 }
 
 - (void) resetTranslations {
-    self.translations = @{};
-    self.translationKeys = [NSMutableDictionary dictionary];
+    self.translations = [NSMutableDictionary dictionary];
     self.sourcesByKeys = [NSMutableDictionary dictionary];
 }
 
@@ -299,7 +244,6 @@
     }
 
     TMLDebug(@"Submitting missing translations...");
-    
 
     NSMutableArray *params = [NSMutableArray array];
 
@@ -319,22 +263,21 @@
     NSError *error;
     NSData *jsonData = [NSJSONSerialization dataWithJSONObject:params options:(NSJSONWritingPrettyPrinted) error:&error];
     
-    TMLDebug(@"%@", params);
-    
     [self.apiClient post: @"sources/register_keys"
-        params: @{@"source_keys": [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]}
-       options: @{}
-       success: ^(id responseObject) {
-           for (NSString *sourceKey in sourceKeys) {
-               [self.sourcesByKeys removeObjectForKey:sourceKey];
-               [[TML cache] resetCacheForKey:[TMLSource cacheKeyForLocale:[[TML currentLanguage] locale] andKey:sourceKey]];
-           }
-           
-           [self submitMissingTranslationKeys];
-       } failure: ^(NSError *error) {
-           TMLError(@"Failed to submit missing translation keys: %@", [error description]);
-           self.scheduler = nil;
-       }];
+              parameters: @{@"source_keys": [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]}
+         completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+             if (apiResponse != nil) {
+                 for (NSString *sourceKey in sourceKeys) {
+                     [self.sourcesByKeys removeObjectForKey:sourceKey];
+                 }
+                 
+                 [self submitMissingTranslationKeys];
+             }
+             else {
+                 TMLError(@"Failed to submit missing translation keys: %@", [error description]);
+                 self.scheduler = nil;
+             }
+         }];
 }
 
 @end

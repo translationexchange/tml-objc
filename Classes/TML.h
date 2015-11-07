@@ -28,14 +28,10 @@
  *  THE SOFTWARE.
  */
 
-
 #import <Foundation/Foundation.h>
-#import "TMLApplication.h"
-#import "TMLLanguage.h"
-#import "TMLSource.h"
-#import "TMLConfiguration.h"
-#import "TMLCache.h"
 #import "TMLLogger.h"
+
+@class TMLConfiguration, TMLLanguage, TMLApplication;
 
 #define TMLLanguageChangedNotification @"TMLLanguageChangedNotification"
 #define TMLIsReachableNotification @"TMLIsReachableNotification"
@@ -47,9 +43,6 @@
 
 // Holds TML configuration settings
 @property(nonatomic, strong) TMLConfiguration *configuration;
-
-// Holds reference to the cache object
-@property(nonatomic, strong) TMLCache *cache;
 
 // Holds the application information
 @property(nonatomic, strong) TMLApplication *currentApplication;
@@ -83,9 +76,6 @@
 
 // Returns configuration
 + (TMLConfiguration *) configuration;
-
-// Returns cache
-+ (TMLCache *) cache;
 
 // HTML Translation Methods
 + (NSString *) translate:(NSString *) label withDescription:(NSString *) description andTokens: (NSDictionary *) tokens andOptions: (NSDictionary *) options;

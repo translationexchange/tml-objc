@@ -29,7 +29,8 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TMLLanguage.h"
+
+@class TMLLanguage;
 
 @interface TMLDataTokenizer : NSObject
 

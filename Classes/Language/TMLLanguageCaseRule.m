@@ -28,10 +28,12 @@
  *  THE SOFTWARE.
  */
 
+#import "TMLLanguage.h"
+#import "TMLLanguageCase.h"
 #import "TMLLanguageCaseRule.h"
-#import "TMLRulesParser.h"
-#import "TMLRulesEvaluator.h"
 #import "TMLLanguageContext.h"
+#import "TMLRulesEvaluator.h"
+#import "TMLRulesParser.h"
 
 @implementation TMLLanguageCaseRule
 

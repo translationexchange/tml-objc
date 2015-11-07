@@ -30,7 +30,8 @@
 
 #import <Foundation/Foundation.h>
 #import "TMLBase.h"
-#import "TMLLanguage.h"
+
+@class TMLLanguage;
 
 @interface TMLLanguageContext : TMLBase
 

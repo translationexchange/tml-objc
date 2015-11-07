@@ -28,10 +28,11 @@
  *  THE SOFTWARE.
  */
 
+#import "TML.h"
 #import "TMLAttributedDecorationTokenizer.h"
+#import "TMLConfiguration.h"
 #import <UIKit/UIKit.h>
 #include "MPColorTools.h"
-#import "TML.h"
 
 @interface TMLAttributedDecorationTokenizer ()
 

@@ -29,8 +29,9 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TMLLanguageCase.h"
 #import "TMLBase.h"
+
+@class TMLLanguageCase;
 
 @interface TMLLanguageCaseRule : TMLBase
 

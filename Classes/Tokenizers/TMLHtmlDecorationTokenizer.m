@@ -28,8 +28,9 @@
  *  THE SOFTWARE.
  */
 
-#import "TMLHtmlDecorationTokenizer.h"
 #import "TML.h"
+#import "TMLConfiguration.h"
+#import "TMLHtmlDecorationTokenizer.h"
 
 @implementation TMLHtmlDecorationTokenizer
 

@@ -28,9 +28,11 @@
  *  THE SOFTWARE.
  */
 
+#import "TML.h"
+#import "TMLConfiguration.h"
+#import "TMLLanguage.h"
 #import "TMLLanguageContext.h"
 #import "TMLLanguageContextRule.h"
-#import "TML.h"
 
 @implementation TMLLanguageContext
 

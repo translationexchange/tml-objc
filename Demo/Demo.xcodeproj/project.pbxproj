@@ -155,6 +155,8 @@
 		C0F80D231BEA866D0048DF2D /* UITextField+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D211BEA866D0048DF2D /* UITextField+TML.m */; };
 		C0F80D261BEA86800048DF2D /* UITextView+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D251BEA86800048DF2D /* UITextView+TML.m */; };
 		C0F80D271BEA86800048DF2D /* UITextView+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D251BEA86800048DF2D /* UITextView+TML.m */; };
+		C41646AA1BEBF979004B3FB3 /* TMLAPIResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C41646A91BEBF979004B3FB3 /* TMLAPIResponse.m */; };
+		C41647AB1BEE97D2004B3FB3 /* TMLGlobals.m in Sources */ = {isa = PBXBuildFile; fileRef = C41647AA1BEE97D2004B3FB3 /* TMLGlobals.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -342,6 +344,10 @@
 		C0F80D211BEA866D0048DF2D /* UITextField+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+TML.m"; sourceTree = "<group>"; };
 		C0F80D241BEA86800048DF2D /* UITextView+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+TML.h"; sourceTree = "<group>"; };
 		C0F80D251BEA86800048DF2D /* UITextView+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+TML.m"; sourceTree = "<group>"; };
+		C41646A81BEBF979004B3FB3 /* TMLAPIResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAPIResponse.h; sourceTree = "<group>"; };
+		C41646A91BEBF979004B3FB3 /* TMLAPIResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPIResponse.m; sourceTree = "<group>"; };
+		C41647A91BEE97D2004B3FB3 /* TMLGlobals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLGlobals.h; sourceTree = "<group>"; };
+		C41647AA1BEE97D2004B3FB3 /* TMLGlobals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLGlobals.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -492,6 +498,8 @@
 				C0F80CB21BEA83DE0048DF2D /* TMLBase.h */,
 				C0F80CB31BEA83DE0048DF2D /* TMLBase.m */,
 				C0F80CB41BEA83DE0048DF2D /* TMLLogger.h */,
+				C41647A91BEE97D2004B3FB3 /* TMLGlobals.h */,
+				C41647AA1BEE97D2004B3FB3 /* TMLGlobals.m */,
 			);
 			name = Classes;
 			path = ../Classes;
@@ -726,6 +734,8 @@
 				C0F80C891BEA83DE0048DF2D /* TMLPostOffice.m */,
 				C0F80C8A1BEA83DE0048DF2D /* TMLSource.h */,
 				C0F80C8B1BEA83DE0048DF2D /* TMLSource.m */,
+				C41646A81BEBF979004B3FB3 /* TMLAPIResponse.h */,
+				C41646A91BEBF979004B3FB3 /* TMLAPIResponse.m */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -1073,6 +1083,7 @@
 				C0F80CE21BEA83DE0048DF2D /* UILabel+TML.m in Sources */,
 				C0F80CCE1BEA83DE0048DF2D /* TMLCache.m in Sources */,
 				C0F80CDE1BEA83DE0048DF2D /* NSString+TmlAdditions.m in Sources */,
+				C41646AA1BEBF979004B3FB3 /* TMLAPIResponse.m in Sources */,
 				C0F80D121BEA86260048DF2D /* UINavigationItem+TML.m in Sources */,
 				C0F80CD21BEA83DE0048DF2D /* TMLPostOffice.m in Sources */,
 				C0F80CFE1BEA83DE0048DF2D /* TMLDecorationTokenizer.m in Sources */,
@@ -1098,6 +1109,7 @@
 				C0F80CEE1BEA83DE0048DF2D /* TMLLanguageContext.m in Sources */,
 				C0F80D261BEA86800048DF2D /* UITextView+TML.m in Sources */,
 				C0F80D001BEA83DE0048DF2D /* TMLHtmlDecorationTokenizer.m in Sources */,
+				C41647AB1BEE97D2004B3FB3 /* TMLGlobals.m in Sources */,
 				C0F80D061BEA83DE0048DF2D /* TMLPipedToken.m in Sources */,
 				C0F80D1A1BEA86480048DF2D /* UISegmentedControl+TML.m in Sources */,
 				4CCBA13118B9B69A00CFCB3A /* TMLConsoleViewController.m in Sources */,
@@ -1306,6 +1318,11 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Demo/Demo-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"COCOAPODS=1",
+					"TML_DEBUG=4",
+				);
 				INFOPLIST_FILE = "Demo/Demo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.translationexchange.$(PRODUCT_NAME:rfc1034identifier)";

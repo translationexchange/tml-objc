@@ -29,7 +29,6 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TMLLanguage.h"
 
 @interface TMLConfiguration : NSObject
 

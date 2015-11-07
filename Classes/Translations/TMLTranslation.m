@@ -28,10 +28,11 @@
  *  THE SOFTWARE.
  */
 
-#import "TMLTranslation.h"
+#import "TMLDataToken.h"
+#import "TMLLanguage.h"
 #import "TMLLanguageContext.h"
 #import "TMLLanguageContextRule.h"
-#import "TMLDataToken.h"
+#import "TMLTranslation.h"
 
 @implementation TMLTranslation
 

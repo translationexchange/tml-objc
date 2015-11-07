@@ -28,13 +28,16 @@
  *  THE SOFTWARE.
  */
 
-#import "TMLLanguage.h"
-#import "TMLApplication.h"
-#import "TMLLanguageCase.h"
-#import "TMLLanguageContext.h"
-#import "TMLBase.h"
 #import "TML.h"
 #import "TMLApiClient.h"
+#import "TMLApplication.h"
+#import "TMLBase.h"
+#import "TMLConfiguration.h"
+#import "TMLLanguage.h"
+#import "TMLLanguageCase.h"
+#import "TMLLanguageContext.h"
+#import "TMLSource.h"
+#import "TMLTranslationKey.h"
 
 @implementation TMLLanguage
 
@@ -90,14 +93,14 @@
 }
 
 - (void) load {
-    [self.application.apiClient get: [NSString stringWithFormat: @"languages/%@", self.locale]
-                             params: @{@"definition": @"true"}
-                            options: @{@"realtime": @true, @"cache_key": [self cacheKey]}
-                            success:^(id data) {
-                                [self updateAttributes:data];
-                            }
-                            failure:^(NSError *error) {
-                            }
+    TMLApiClient *apiClient = [[self application] apiClient];
+    [apiClient get: [NSString stringWithFormat: @"languages/%@", self.locale]
+        parameters:@{@"definition": @"true"}
+   completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+       if (apiResponse != nil) {
+           [self updateAttributes:apiResponse.userInfo];
+       }
+   }
      ];
 }
 
@@ -188,7 +191,11 @@
     return [[TMLTranslationKey alloc] initWithAttributes:keyAttributes];
 }
 
-- (NSObject *) translate:(NSString *) label withDescription:(NSString *) description andTokens: (NSDictionary *) tokens andOptions: (NSDictionary *) options {
+- (NSObject *) translate:(NSString *)label
+         withDescription:(NSString *)description
+               andTokens:(NSDictionary *)tokens
+              andOptions:(NSDictionary *)options
+{
     NSString *keyHash = [TMLTranslationKey generateKeyForLabel:label andDescription:description];
     TMLTranslationKey *translationKey = (TMLTranslationKey *) [self translationKeyWithKey:keyHash label:label description:description options:options];
     

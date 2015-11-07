@@ -29,7 +29,8 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "TMLLanguage.h"
+
+@class TMLLanguage;
 
 @protocol TMLLanguageSelectorViewControllerDelegate;
 

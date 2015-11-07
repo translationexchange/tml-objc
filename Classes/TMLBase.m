@@ -42,11 +42,11 @@
 
 // Should be overloaded by all extending models
 - (void) updateAttributes:(NSDictionary *)newAttributes {
-    TMLDebug(@"Update attributes method is not implemented...");
+    TMLRaiseAbstractInvocation();
 }
 
 - (void) load {
-    TMLDebug(@"Reload method is not implemented...");
+    TMLRaiseAbstractInvocation();
 }
 
 @end

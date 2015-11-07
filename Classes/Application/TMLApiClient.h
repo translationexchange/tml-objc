@@ -29,6 +29,11 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "TMLAPIResponse.h"
+
+extern NSString * const TMLAPIResponseResultKey;
+
+typedef void (^TMLAPIResponseHandler)(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error);
 
 @class TMLApplication;
 
@@ -38,17 +43,67 @@
 
 - (id) initWithApplication: (TMLApplication *) owner;
 
-- (void) get: (NSString *) path
-      params: (NSDictionary *) params
-     options: (NSDictionary *) options
-     success: (void (^)(id responseObject)) success
-     failure: (void (^)(NSError *error)) failure;
+/**
+ *  Convinience method for get:parameters:cachePolicy:completionBlock:
+ *  Using default protocol cache policy...
+ *
+ *  @see get:parameters:cachePolicy:completionBlock:
+ *
+ *  @param path            API Path
+ *  @param parameters      NSDictionary of API parameters
+ *  @param completionBlock Completion block
+ */
+- (void) get:(NSString *)path
+  parameters:(NSDictionary *)parameters
+completionBlock:(TMLAPIResponseHandler)completionBlock;
 
-- (void) post: (NSString *) path
-       params: (NSDictionary *) params
-      options: (NSDictionary *) options
-      success: (void (^)(id responseObject)) success
-      failure: (void (^)(NSError *error)) failure;
+/**
+ *  Convinience method for post:parameters:cachePolicy:completionBlock:
+ *  Using default protocol cache policy...
+ *
+ *  @see get:parameters:cachePolicy:completionBlock:
+ *
+ *  @param path            API Path
+ *  @param parameters      NSDictionary of API parameters
+ *  @param completionBlock Completion block
+ */
+- (void) post:(NSString *)path
+   parameters:(NSDictionary *)parameters
+completionBlock:(TMLAPIResponseHandler)completionBlock;
+
+/**
+ *  Performs API request, using GET HTTP method and specified cache policy,
+ *  to the specified path within the API, with specified parameters.
+ *  Completion block is called when the requests finishes or fails, passing it
+ *  the resuling response object, NSURLResponse object and NSError if applicable.
+ *  Successful response should not have an error and should contain a response object.
+ *
+ *  @param path            API Path
+ *  @param parameters      NSDictionary of API parameters
+ *  @param cachePolicy     NSURLRequestCachePolicy to use for request (or 0 to use NSURLRequestUseProtocolCachePolicy)
+ *  @param completionBlock Completion block
+ */
+- (void) get:(NSString *)path
+  parameters:(NSDictionary *)parameters
+ cachePolicy:(NSURLRequestCachePolicy)cachePolicy
+completionBlock:(TMLAPIResponseHandler)completionBlock;
+
+/**
+ *  Performs API request, using GET POST method and specified cache policy,
+ *  to the specified path within the API, with specified parameters.
+ *  Completion block is called when the requests finishes or fails, passing it
+ *  the resuling response object, NSURLResponse object and NSError if applicable.
+ *  Successful response should not have an error and should contain a response object.
+ *
+ *  @param path            API Path
+ *  @param parameters      NSDictionary of API parameters
+ *  @param cachePolicy     NSURLRequestCachePolicy to use for request (or 0 to use NSURLRequestUseProtocolCachePolicy)
+ *  @param completionBlock Completion block
+ */
+- (void) post:(NSString *)path
+   parameters:(NSDictionary *)parameters
+  cachePolicy:(NSURLRequestCachePolicy)cachePolicy
+completionBlock:(TMLAPIResponseHandler)completionBlock;
 
 
 @end

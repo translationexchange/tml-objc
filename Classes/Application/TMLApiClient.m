@@ -28,13 +28,17 @@
  *  THE SOFTWARE.
  */
 
-#import "TMLApiClient.h"
 #import "TML.h"
+#import "TMLApiClient.h"
 #import "TMLApplication.h"
+
+NSString * const TMLAPIResponseResultKey = @"results";
 
 @implementation TMLApiClient
 
 @synthesize application;
+
+#pragma mark - Init
 
 - (id) initWithApplication: (TMLApplication *) owner {
     if (self == [super init]) {
@@ -43,13 +47,22 @@
     return self;
 }
 
-- (NSString *) apiFullPath: (NSString *) path {
-    if ([path rangeOfString:@"http"].location != NSNotFound)
-        return path;
-    return [NSString stringWithFormat:@"%@/v1/%@", self.application.host, path];
+#pragma mark - URL Construction
+
+- (NSURL *) URLForAPIPath: (NSString *)path parameters:(NSDictionary *)parameters {
+    NSMutableString *pathString = [NSMutableString stringWithFormat:@"%@/v1/%@", self.application.host, path];
+    if (parameters != nil) {
+        [pathString appendString:@"?"];
+        NSDictionary *requestParameters = [self prepareAPIParameters:parameters];
+        for (NSString *key in requestParameters) {
+            id value = [parameters objectForKey:key];
+            [pathString appendFormat:@"%@=%@", [self urlEncode:key], [self urlEncode:value]];
+        }
+    }
+    return [NSURL URLWithString:pathString];
 }
 
-- (NSDictionary *) apiParameters: (NSDictionary *) params {
+- (NSDictionary *) prepareAPIParameters:(NSDictionary *)params {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:params];
     [parameters setObject: self.application.accessToken forKey: @"access_token"];
     return parameters;
@@ -60,20 +73,19 @@
     return [string stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
 }
 
-- (NSString*) urlEncodedStringFromParams: (NSDictionary *) params {
+- (NSString*) urlEncodedStringFromParameters:(NSDictionary *)parameters {
     NSMutableArray *parts = [NSMutableArray array];
-    for (id paramKey in params) {
-        id paramValue = [params objectForKey: paramKey];
+    for (id paramKey in parameters) {
+        id paramValue = [parameters objectForKey: paramKey];
         NSString *part = [NSString stringWithFormat: @"%@=%@", [self urlEncode: paramKey], [self urlEncode: paramValue]];
         [parts addObject: part];
     }
     return [parts componentsJoinedByString: @"&"];
 }
 
+#pragma mark - Response Handling
+
 - (NSObject *) parseData: (NSData *) data {
-//    NSString *json = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//    TMLDebug(@"Response: %@", json);
-    
     NSError *error = nil;
     NSObject *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
     
@@ -93,46 +105,44 @@
     return responseObject;
 }
 
-- (void) processResponseWithData: (NSData *)data
-                           error: (NSError *)error
-                         options: (NSDictionary *) options
-                         success: (void (^)(id responseObject)) success
-                         failure: (void (^)(NSError *error)) failure {
+- (void) processResponse:(NSURLResponse *)response
+                    data:(NSData *)data
+                   error:(NSError *)error
+         completionBlock:(TMLAPIResponseHandler)completionBlock
+{
     if (error) {
-        TMLDebug(@"Error: %@", error);
-        failure(error);
-        return;
+        TMLError(@"Error: %@", error);
     }
     
-    if (!data) {
-        success(nil);
-        return;
+    id responseData = [self parseData:data];
+    if (!responseData) {
+        TMLWarn(@"Empty response object: %@", responseData);
+        if (error == nil) {
+            error = [NSError errorWithDomain:@"Failed to retrieve data" code:0 userInfo:nil];
+        }
     }
     
-    NSObject *responseObject = [self parseData:data];
-//    if (!responseObject) {
-//        error = [NSError errorWithDomain:@"Failed to retrieve data" code:0 userInfo:nil];
-//        failure(error);
-//        return;
-//    }
+    TMLAPIResponse *apiResponse = [[TMLAPIResponse alloc] initFromResponseResultObject:responseData];
     
-    if ([options objectForKey:@"cache_key"]) {
-        [TML.cache storeData: data forKey: [options objectForKey:@"cache_key"] withOptions: options];
+    if (completionBlock != nil) {
+        completionBlock(apiResponse, response, error);
     }
-    
-    success(responseObject);
 }
 
+#pragma mark - Requests
+
 - (void) request: (NSURLRequest *) request
-         options: (NSDictionary *) options
-         success: (void (^)(id responseObject)) success
-         failure: (void (^)(NSError *error)) failure
+     cachePolicy:(NSURLRequestCachePolicy)cachePolicy
+ completionBlock:(TMLAPIResponseHandler)completionBlock
 {
     if (NSClassFromString(@"NSURLSession") != nil) {
         [[[NSURLSession sharedSession] dataTaskWithRequest: request
                                          completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
                                              dispatch_async(dispatch_get_main_queue(), ^(void){
-                                                 [self processResponseWithData:data error:error options:options success:success failure:failure];
+                                                 [self processResponse:response
+                                                                  data:data
+                                                                 error:error
+                                                       completionBlock:completionBlock];
                                              });
                                          }] resume];
         
@@ -141,58 +151,64 @@
                                            queue: [NSOperationQueue mainQueue]
                                completionHandler: ^(NSURLResponse *response, NSData *data, NSError *error) {
                                    dispatch_async(dispatch_get_main_queue(), ^(void){
-                                       [self processResponseWithData:data error:error options:options success:success failure:failure];
+                                       [self processResponse:response
+                                                        data:data
+                                                       error:error
+                                             completionBlock:completionBlock];
                                    });
                                }];
     }
 }
 
-- (void) get: (NSString *) path
-      params: (NSDictionary *) params
-     options: (NSDictionary *) options
-     success: (void (^)(id responseObject)) success
-     failure: (void (^)(NSError *error)) failure
+- (void) get:(NSString *)path
+  parameters:(NSDictionary *)parameters
+completionBlock:(TMLAPIResponseHandler)completionBlock
 {
-    
-    if ([options objectForKey:@"cache_key"]) {
-        NSObject *data = [TML.cache fetchObjectForKey:[options objectForKey:@"cache_key"]];
-        if (data) {
-            success(data);
-            return;
-        }
-    }
-    
-    NSString *fullPathWithQuery = [NSString stringWithFormat:@"%@?%@", [self apiFullPath: path], [self urlEncodedStringFromParams: [self apiParameters: params]]];
-    TMLDebug(@"GET %@", fullPathWithQuery);
-
-    NSURL *url = [NSURL URLWithString:fullPathWithQuery];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-    if ([options objectForKey:@"realtime"]) {
-        // Synchronous get for loading sources realtime - in translation mode only
-        NSURLResponse *response = nil;
-        NSError *error = nil;
-        NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-        [self processResponseWithData:data error:error options:options success:success failure:failure];
-    } else {
-        [self request:request options:options success:success failure:failure];
-    }
+    [self get:path
+   parameters:parameters
+  cachePolicy:NSURLRequestUseProtocolCachePolicy
+completionBlock:completionBlock];
 }
 
-- (void) post: (NSString *) path
-       params: (NSDictionary *) params
-      options: (NSDictionary *) options
-      success: (void (^)(id responseObject)) success
-      failure: (void (^)(NSError *error)) failure
+- (void) post:(NSString *)path
+   parameters:(NSDictionary *)parameters
+completionBlock:(TMLAPIResponseHandler)completionBlock
 {
-//    TMLDebug(@"POST %@", [self apiFullPath: path]);
+    [self post:path
+    parameters:parameters
+   cachePolicy:NSURLRequestUseProtocolCachePolicy
+completionBlock:completionBlock];
+}
 
-    NSURL *url = [NSURL URLWithString:[self apiFullPath: path]];
+
+- (void) get:(NSString *)path
+  parameters:(NSDictionary *)parameters
+ cachePolicy:(NSURLRequestCachePolicy)cachePolicy
+completionBlock:(TMLAPIResponseHandler)completionBlock
+{
+    NSURL *url = [self URLForAPIPath:path parameters:parameters];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    
+    TMLDebug(@"GET %@", url);
+    [self request:request
+      cachePolicy:cachePolicy
+  completionBlock:completionBlock];
+}
+
+- (void) post:(NSString *)path
+   parameters:(NSDictionary *)parameters
+  cachePolicy:(NSURLRequestCachePolicy)cachePolicy
+completionBlock:(TMLAPIResponseHandler)completionBlock
+{
+    NSURL *url = [self URLForAPIPath:path parameters:nil];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"POST"];
-    [request setHTTPBody:[[self urlEncodedStringFromParams: [self apiParameters: params]] dataUsingEncoding:NSUTF8StringEncoding]];
+    [request setHTTPBody:[[self urlEncodedStringFromParameters: [self prepareAPIParameters: parameters]] dataUsingEncoding:NSUTF8StringEncoding]];
     
-    [self request:request options:options success:success failure:failure];
+    TMLDebug(@"POST %@", url);
+    [self request:request
+      cachePolicy:cachePolicy
+  completionBlock:completionBlock];
 }
 
 @end
