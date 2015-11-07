@@ -31,12 +31,12 @@
 #ifndef TMLLogger_h
 #define TMLLogger_h
 
-typedef NS_ENUM(NSInteger, TMLLogLevel) {
-    TMLLogLevelError = 1,
-    TMLLogLevelWarning,
-    TMLLogLevelInfo,
-    TMLLogLevelDebug
-};
+#define TMLLogLevelError 0
+#define TMLLogLevelWarning 1
+#define TMLLogLevelInfo 2
+#define TMLLogLevelDebug 3
+
+typedef NSInteger TMLLogLevel;
 
 static inline void TMLLog(TMLLogLevel level, NSString *format, ...) {
     __block va_list arg_list;
