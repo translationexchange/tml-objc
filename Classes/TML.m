@@ -281,8 +281,8 @@
     [app loadTranslationsForLocale:self.currentLanguage.locale
                    completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
                        if (apiResponse != nil) {
-                           if ([self.delegate respondsToSelector:@selector(tr8nDidLoadTranslations)]) {
-                               [self.delegate tr8nDidLoadTranslations];
+                           if ([self.delegate respondsToSelector:@selector(tmlDidLoadTranslations)]) {
+                               [self.delegate tmlDidLoadTranslations];
                            }
                        }
                        else {
@@ -295,8 +295,8 @@
                                [app loadTranslationsForLocale:self.currentLanguage.locale
                                               completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
                                                   if (apiResponse != nil) {
-                                                      if ([self.delegate respondsToSelector:@selector(tr8nDidLoadTranslations)]) {
-                                                          [self.delegate tr8nDidLoadTranslations];
+                                                      if ([self.delegate respondsToSelector:@selector(tmlDidLoadTranslations)]) {
+                                                          [self.delegate tmlDidLoadTranslations];
                                                       }
                                                   }
                                                   else {
@@ -325,8 +325,8 @@
     [self.currentApplication resetTranslations];
     [self.currentApplication loadTranslationsForLocale:self.currentLanguage.locale completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
         if (apiResponse != nil) {
-            if ([self.delegate respondsToSelector:@selector(tr8nDidLoadTranslations)]) {
-                [self.delegate tr8nDidLoadTranslations];
+            if ([self.delegate respondsToSelector:@selector(tmlDidLoadTranslations)]) {
+                [self.delegate tmlDidLoadTranslations];
             }
         }
         else {

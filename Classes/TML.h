@@ -119,7 +119,7 @@
 
 @protocol TMLDelegate <NSObject>
 
-- (void) tr8nDidLoadTranslations;
+- (void) tmlDidLoadTranslations;
 
 @end
 
