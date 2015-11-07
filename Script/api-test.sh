@@ -22,7 +22,12 @@ fetch() {
 	if [ ! -f $cookiesFile ]; then
 		touch $cookiesFile
 	fi
-	curl -L -m 15 -b $cookiesFile -c $cookiesFile -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/601.2.7 (KHTML, like Gecko) Version/9.0.1 Safari/601.2.7" "${url}" 2>/dev/null
+	
+	if [[ $browseMode -gt 0 ]]; then
+		curl -L -m 15 -b $cookiesFile -c $cookiesFile -A "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/601.2.7 (KHTML, like Gecko) Version/9.0.1 Safari/601.2.7" "${url}" 2>/dev/null
+	else
+		curl -L -m 15 -b $cookiesFile -c $cookiesFile "${url}" 2>/dev/null
+	fi
 }
 
 prepTempDir() {
