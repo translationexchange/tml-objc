@@ -32,6 +32,8 @@
 #import <CommonCrypto/CommonDigest.h>
 #import "TML.h"
 
+NSString * const TMLUUIDKey = @"TMLUUID";
+
 @interface TMLConfiguration () {
     NSCalendar *calendar;
     NSDateFormatter *dateFormatter;
@@ -52,13 +54,13 @@
 }
 
 + (NSString *) uuid {
-    NSString *uuid = [self persistentValueForKey:@"tr8nUUID"];
+    NSString *uuid = [self persistentValueForKey:TMLUUIDKey];
     if (!uuid) {
         CFUUIDRef uuidRef = CFUUIDCreate(NULL);
         CFStringRef uuidStringRef = CFUUIDCreateString(NULL, uuidRef);
         CFRelease(uuidRef);
         uuid = (__bridge_transfer NSString *)uuidStringRef;
-        [self setPersistentValue:uuid forKey:@"tr8nUUID"];
+        [self setPersistentValue:uuid forKey:TMLUUIDKey];
     }
     return uuid;
 }

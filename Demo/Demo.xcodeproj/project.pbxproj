@@ -1368,7 +1368,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = "DemoTests/DemoTests-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.tr8nhub.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.translationexchange.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;
@@ -1388,7 +1388,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Demo/Demo-Prefix.pch";
 				INFOPLIST_FILE = "DemoTests/DemoTests-Info.plist";
-				PRODUCT_BUNDLE_IDENTIFIER = "com.tr8nhub.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.translationexchange.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
 				WRAPPER_EXTENSION = xctest;

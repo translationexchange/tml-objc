@@ -46,7 +46,7 @@
 
 @protocol TMLLanguageSelectorViewControllerDelegate <NSObject>
 
-- (void) tr8nLanguageSelectorViewController:(TMLLanguageSelectorViewController *) tr8nLanguageSelectorViewController didSelectLanguage: (TMLLanguage *) language;
+- (void) tmlLanguageSelectorViewController:(TMLLanguageSelectorViewController *) tmlLanguageSelectorViewController didSelectLanguage: (TMLLanguage *) language;
 
 @end
 

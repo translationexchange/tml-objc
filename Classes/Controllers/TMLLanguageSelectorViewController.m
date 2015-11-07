@@ -162,8 +162,8 @@
 
     [TML changeLocale:language.locale completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
         if (apiResponse != nil) {
-            if (delegate && [delegate respondsToSelector:@selector(tr8nLanguageSelectorViewController:didSelectLanguage:)]) {
-                [delegate tr8nLanguageSelectorViewController:self didSelectLanguage:language];
+            if (delegate && [delegate respondsToSelector:@selector(tmlLanguageSelectorViewController:didSelectLanguage:)]) {
+                [delegate tmlLanguageSelectorViewController:self didSelectLanguage:language];
             }
             
             hud.labelText = TMLLocalizedString(@"Language changed");
@@ -174,8 +174,8 @@
             });
         }
         else {
-            if (delegate && [delegate respondsToSelector:@selector(tr8nLanguageSelectorViewController:didSelectLanguage:)]) {
-                [delegate tr8nLanguageSelectorViewController:self didSelectLanguage:language];
+            if (delegate && [delegate respondsToSelector:@selector(tmlLanguageSelectorViewController:didSelectLanguage:)]) {
+                [delegate tmlLanguageSelectorViewController:self didSelectLanguage:language];
             }
             
             hud.labelText = TMLLocalizedString(@"Language changed");
