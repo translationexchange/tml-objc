@@ -87,7 +87,7 @@
 }
 
 - (NSString *) description {
-    return [NSString stringWithFormat:@"%@ (%@)", self.label, self.context];
+    return [NSString stringWithFormat:@"%@ [%@](Language: %@; Context: %@)", self.label, self.locale, self.language, self.context];
 }
 
 

@@ -65,12 +65,16 @@ NSString * const TMLAPIResponseLanguageStatusKey = @"status";
     NSDictionary *results = self.results;
     NSMutableDictionary *translations = [NSMutableDictionary dictionary];
     for (NSString *hash in results) {
-        TMLTranslation *translation = [[TMLTranslation alloc] init];
-        NSDictionary *info = results[hash];
-        translation.label = info[TMLAPIResponseTranslationLabelKey];
-        translation.locale = info[TMLAPIResponseTranslationLocaleKey];
-        translation.context = info[TMLAPIResponseTranslationContextKey];
-        translations[hash] = translation;
+        NSMutableArray *infos = [results[hash] mutableCopy];
+        for (NSInteger i=0; i<infos.count; i++) {
+            NSDictionary *info = infos[i];
+            TMLTranslation *translation = [[TMLTranslation alloc] init];
+            translation.label = info[TMLAPIResponseTranslationLabelKey];
+            translation.locale = info[TMLAPIResponseTranslationLocaleKey];
+            translation.context = info[TMLAPIResponseTranslationContextKey];
+            [infos replaceObjectAtIndex:i withObject:translation];
+        }
+        translations[hash] = infos;
     }
     return translations;
 }
