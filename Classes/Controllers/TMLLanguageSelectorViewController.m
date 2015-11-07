@@ -160,28 +160,31 @@
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText = TMLLocalizedString(@"Switching language...");
 
-    [TML changeLocale:language.locale success:^{
-        if (delegate && [delegate respondsToSelector:@selector(tr8nLanguageSelectorViewController:didSelectLanguage:)]) {
-            [delegate tr8nLanguageSelectorViewController:self didSelectLanguage:language];
+    [TML changeLocale:language.locale completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+        if (apiResponse != nil) {
+            if (delegate && [delegate respondsToSelector:@selector(tr8nLanguageSelectorViewController:didSelectLanguage:)]) {
+                [delegate tr8nLanguageSelectorViewController:self didSelectLanguage:language];
+            }
+            
+            hud.labelText = TMLLocalizedString(@"Language changed");
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
+                [hud hide:YES];
+                [self dismissViewControllerAnimated:YES completion:nil];
+            });
         }
-        
-        hud.labelText = TMLLocalizedString(@"Language changed");
-
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
-            [hud hide:YES];
-            [self dismissViewControllerAnimated:YES completion:nil];
-        });
-    } failure:^(NSError *error) {
-        if (delegate && [delegate respondsToSelector:@selector(tr8nLanguageSelectorViewController:didSelectLanguage:)]) {
-            [delegate tr8nLanguageSelectorViewController:self didSelectLanguage:language];
+        else {
+            if (delegate && [delegate respondsToSelector:@selector(tr8nLanguageSelectorViewController:didSelectLanguage:)]) {
+                [delegate tr8nLanguageSelectorViewController:self didSelectLanguage:language];
+            }
+            
+            hud.labelText = TMLLocalizedString(@"Language changed");
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
+                [hud hide:YES];
+                [self dismissViewControllerAnimated:YES completion:nil];
+            });
         }
-        
-        hud.labelText = TMLLocalizedString(@"Language changed");
-        
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
-            [hud hide:YES];
-            [self dismissViewControllerAnimated:YES completion:nil];
-        });
     }];
 }
 

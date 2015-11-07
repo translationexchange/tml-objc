@@ -30,6 +30,7 @@
 
 #import <Foundation/Foundation.h>
 #import "TMLLogger.h"
+#import "TMLAPIClient.h"
 
 @class TMLConfiguration, TMLLanguage, TMLApplication;
 
@@ -106,7 +107,7 @@
 
 + (TMLLanguage *) currentLanguage;
 
-+ (void) changeLocale: (NSString *) locale success: (void (^)()) success failure: (void (^)(NSError *error)) failure;
++ (void) changeLocale:(NSString *)locale completionBlock:(TMLAPIResponseHandler)completionBlock;
 
 + (void) reloadTranslations;
 
