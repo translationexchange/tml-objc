@@ -38,10 +38,6 @@
 
 @synthesize application, key, translations;
 
-+ (NSString *) cacheKeyForLocale: (NSString *) locale andKey: (NSString *) key {
-    return [NSString stringWithFormat:@"%@/sources/%@", locale, key];
-}
-
 - (void) updateAttributes: (NSDictionary *) attributes {
     if ([attributes objectForKey:@"application"])
         self.application = [attributes objectForKey:@"application"];

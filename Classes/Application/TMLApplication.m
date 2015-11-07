@@ -43,10 +43,6 @@
 @synthesize translations, languagesByLocales, sourcesByKeys, missingTranslationKeysBySources, scheduler;
 @synthesize apiClient, postOffice;
 
-+ (NSString *) cacheKey {
-    return @"application";
-}
-
 - (id) initWithToken: (NSString *) token host: (NSString *) appHost {
     if (self = [super init]) {
         self.host = appHost;

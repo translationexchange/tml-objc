@@ -44,8 +44,6 @@
 // Translations registered with the source
 @property(nonatomic, strong) NSDictionary *translations;
 
-+ (NSString *) cacheKeyForLocale: (NSString *) locale andKey: (NSString *) key;
-
 // Loads translations for the source
 - (void) loadTranslationsForLocale: (NSString *) locale;
 

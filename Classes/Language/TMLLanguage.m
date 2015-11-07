@@ -51,10 +51,6 @@
     return [[TMLLanguage alloc] initWithAttributes:attributes];
 }
 
-- (NSString *) cacheKey {
-    return [NSString stringWithFormat:@"%@/language", locale];
-}
-
 - (void) updateAttributes: (NSDictionary *) attributes {
     if ([attributes objectForKey:@"application"])
         self.application = [attributes objectForKey:@"application"];
