@@ -54,9 +54,11 @@ NSString * const TMLAPIResponseResultKey = @"results";
     if (parameters != nil) {
         [pathString appendString:@"?"];
         NSDictionary *requestParameters = [self prepareAPIParameters:parameters];
+        NSInteger index = 0;
         for (NSString *key in requestParameters) {
-            id value = [parameters objectForKey:key];
-            [pathString appendFormat:@"%@=%@", [self urlEncode:key], [self urlEncode:value]];
+            id value = [requestParameters objectForKey:key];
+            [pathString appendFormat:@"%@%@=%@", (index > 0) ? @"&": @"", [self urlEncode:key], [self urlEncode:value]];
+            index++;
         }
     }
     return [NSURL URLWithString:pathString];
@@ -64,7 +66,7 @@ NSString * const TMLAPIResponseResultKey = @"results";
 
 - (NSDictionary *) prepareAPIParameters:(NSDictionary *)params {
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:params];
-    [parameters setObject: self.application.accessToken forKey: @"access_token"];
+    parameters[@"access_token"] = self.application.accessToken;
     return parameters;
 }
 
