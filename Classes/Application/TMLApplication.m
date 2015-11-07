@@ -51,7 +51,7 @@
     if (self = [super init]) {
         self.host = appHost;
         self.accessToken = token;
-        self.apiClient = [[TMLApiClient alloc] initWithApplication:self];
+        self.apiClient = [[TMLAPIClient alloc] initWithApplication:self];
         self.postOffice = [[TMLPostOffice alloc] initWithApplication:self];
         
         [self updateAttributes:@{@"name": @"Loading...",

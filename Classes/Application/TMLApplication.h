@@ -30,7 +30,7 @@
 
 #import <Foundation/Foundation.h>
 #import "TMLBase.h"
-#import "TMLApiClient.h"
+#import "TMLAPIClient.h"
 
 @class TMLPostOffice, TMLLanguage, TMLSource;
 
@@ -49,7 +49,7 @@
 @property(nonatomic, strong) NSString *accessToken;
 
 // API Client
-@property(nonatomic, strong) TMLApiClient *apiClient;
+@property(nonatomic, strong) TMLAPIClient *apiClient;
 
 // PostOffice Client
 @property(nonatomic, strong) TMLPostOffice *postOffice;

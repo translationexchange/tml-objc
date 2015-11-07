@@ -37,7 +37,7 @@ typedef void (^TMLAPIResponseHandler)(TMLAPIResponse *apiResponse, NSURLResponse
 
 @class TMLApplication;
 
-@interface TMLApiClient : NSObject
+@interface TMLAPIClient : NSObject
 
 @property(nonatomic, strong) TMLApplication *application;
 

@@ -29,12 +29,12 @@
  */
 
 #import "TML.h"
-#import "TMLApiClient.h"
+#import "TMLAPIClient.h"
 #import "TMLApplication.h"
 
 NSString * const TMLAPIResponseResultKey = @"results";
 
-@implementation TMLApiClient
+@implementation TMLAPIClient
 
 @synthesize application;
 

@@ -31,7 +31,7 @@
 
 #import "MBProgressHUD.h"
 #import "TML.h"
-#import "TMLApiClient.h"
+#import "TMLAPIClient.h"
 #import "TMLApplication.h"
 #import "TMLLanguage.h"
 #import "TMLLanguageSelectorViewController.h"
@@ -91,7 +91,7 @@
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText = TMLLocalizedString(@"Loading Languages...");
-    TMLApiClient *apiClient = [[[TML sharedInstance] currentApplication] apiClient];
+    TMLAPIClient *apiClient = [[[TML sharedInstance] currentApplication] apiClient];
     
     [apiClient get:@"applications/current/languages"
         parameters:nil

@@ -29,7 +29,7 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TMLApiClient.h"
+#import "TMLAPIClient.h"
 
 @class TMLApplication;
 

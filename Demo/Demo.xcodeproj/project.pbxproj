@@ -77,8 +77,8 @@
 		C0F80C7C1BEA7E310048DF2D /* TMLDataTokenTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C601BEA7E310048DF2D /* TMLDataTokenTest.m */; };
 		C0F80C7D1BEA7E310048DF2D /* TMLPipedTokenTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C611BEA7E310048DF2D /* TMLPipedTokenTest.m */; };
 		C0F80C7E1BEA7E310048DF2D /* TMLTranslationKeyTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C631BEA7E310048DF2D /* TMLTranslationKeyTest.m */; };
-		C0F80CCA1BEA83DE0048DF2D /* TMLApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C811BEA83DE0048DF2D /* TMLApiClient.m */; };
-		C0F80CCB1BEA83DE0048DF2D /* TMLApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C811BEA83DE0048DF2D /* TMLApiClient.m */; };
+		C0F80CCA1BEA83DE0048DF2D /* TMLAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C811BEA83DE0048DF2D /* TMLAPIClient.m */; };
+		C0F80CCB1BEA83DE0048DF2D /* TMLAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C811BEA83DE0048DF2D /* TMLAPIClient.m */; };
 		C0F80CCC1BEA83DE0048DF2D /* TMLApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C831BEA83DE0048DF2D /* TMLApplication.m */; };
 		C0F80CCD1BEA83DE0048DF2D /* TMLApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C831BEA83DE0048DF2D /* TMLApplication.m */; };
 		C0F80CCE1BEA83DE0048DF2D /* TMLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C851BEA83DE0048DF2D /* TMLCache.m */; };
@@ -265,8 +265,8 @@
 		C0F80C601BEA7E310048DF2D /* TMLDataTokenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLDataTokenTest.m; sourceTree = "<group>"; };
 		C0F80C611BEA7E310048DF2D /* TMLPipedTokenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLPipedTokenTest.m; sourceTree = "<group>"; };
 		C0F80C631BEA7E310048DF2D /* TMLTranslationKeyTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTranslationKeyTest.m; sourceTree = "<group>"; };
-		C0F80C801BEA83DE0048DF2D /* TMLApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLApiClient.h; sourceTree = "<group>"; };
-		C0F80C811BEA83DE0048DF2D /* TMLApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLApiClient.m; sourceTree = "<group>"; };
+		C0F80C801BEA83DE0048DF2D /* TMLAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAPIClient.h; sourceTree = "<group>"; };
+		C0F80C811BEA83DE0048DF2D /* TMLAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPIClient.m; sourceTree = "<group>"; };
 		C0F80C821BEA83DE0048DF2D /* TMLApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLApplication.h; sourceTree = "<group>"; };
 		C0F80C831BEA83DE0048DF2D /* TMLApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLApplication.m; sourceTree = "<group>"; };
 		C0F80C841BEA83DE0048DF2D /* TMLCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLCache.h; sourceTree = "<group>"; };
@@ -722,8 +722,8 @@
 		C0F80C7F1BEA83DE0048DF2D /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				C0F80C801BEA83DE0048DF2D /* TMLApiClient.h */,
-				C0F80C811BEA83DE0048DF2D /* TMLApiClient.m */,
+				C0F80C801BEA83DE0048DF2D /* TMLAPIClient.h */,
+				C0F80C811BEA83DE0048DF2D /* TMLAPIClient.m */,
 				C0F80C821BEA83DE0048DF2D /* TMLApplication.h */,
 				C0F80C831BEA83DE0048DF2D /* TMLApplication.m */,
 				C0F80C841BEA83DE0048DF2D /* TMLCache.h */,
@@ -1124,7 +1124,7 @@
 				C0F80D1E1BEA865F0048DF2D /* UITabBarItem+TML.m in Sources */,
 				4C4233F518B9B38700B76555 /* main.m in Sources */,
 				C0F80CF21BEA83DE0048DF2D /* TMLRulesEvaluator.m in Sources */,
-				C0F80CCA1BEA83DE0048DF2D /* TMLApiClient.m in Sources */,
+				C0F80CCA1BEA83DE0048DF2D /* TMLAPIClient.m in Sources */,
 				C0F80CFC1BEA83DE0048DF2D /* TMLDataTokenizer.m in Sources */,
 				C0F80D0A1BEA83DE0048DF2D /* TMLTranslationKey.m in Sources */,
 				C0F80CCC1BEA83DE0048DF2D /* TMLApplication.m in Sources */,
@@ -1187,7 +1187,7 @@
 				C0F80D1F1BEA865F0048DF2D /* UITabBarItem+TML.m in Sources */,
 				C0F80C761BEA7E310048DF2D /* TMLRulesParserTest.m in Sources */,
 				C0F80CF31BEA83DE0048DF2D /* TMLRulesEvaluator.m in Sources */,
-				C0F80CCB1BEA83DE0048DF2D /* TMLApiClient.m in Sources */,
+				C0F80CCB1BEA83DE0048DF2D /* TMLAPIClient.m in Sources */,
 				C0F80CFD1BEA83DE0048DF2D /* TMLDataTokenizer.m in Sources */,
 				C0F80D0B1BEA83DE0048DF2D /* TMLTranslationKey.m in Sources */,
 				C0F80CCD1BEA83DE0048DF2D /* TMLApplication.m in Sources */,

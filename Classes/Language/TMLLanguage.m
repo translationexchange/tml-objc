@@ -29,7 +29,7 @@
  */
 
 #import "TML.h"
-#import "TMLApiClient.h"
+#import "TMLAPIClient.h"
 #import "TMLApplication.h"
 #import "TMLBase.h"
 #import "TMLConfiguration.h"
@@ -93,7 +93,7 @@
 }
 
 - (void) load {
-    TMLApiClient *apiClient = [[self application] apiClient];
+    TMLAPIClient *apiClient = [[self application] apiClient];
     [apiClient get: [NSString stringWithFormat: @"languages/%@", self.locale]
         parameters:@{@"definition": @"true"}
    completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {

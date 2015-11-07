@@ -28,7 +28,7 @@
  *  THE SOFTWARE.
  */
 
-#import "TMLApiClient.h"
+#import "TMLAPIClient.h"
 #import "TMLApplication.h"
 #import "TMLConfiguration.h"
 #import "TMLSource.h"
