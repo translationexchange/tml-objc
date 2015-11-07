@@ -103,10 +103,6 @@
     TMLLocalizeViewWithLabel(self.titleLabel, @"Main Menu");
 }
 
-- (NSString *) tr8nSourceKey {
-    return @"Menu options";
-}
-
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *sectionHeader = [[UIView alloc] init];
     sectionHeader.backgroundColor = [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1];
