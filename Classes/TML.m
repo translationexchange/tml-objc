@@ -266,6 +266,13 @@ NSString * const TMLOptionsHostName = @"host";
     return [[TML sharedInstance] currentLanguage];
 }
 
++ (void) changeLocale:(NSString *)locale
+      completionBlock:(TMLAPIResponseHandler)completionBlock
+{
+    [[TML sharedInstance] changeLocale:locale
+                       completionBlock:completionBlock];
+}
+
 - (void) changeLocale: (NSString *) locale completionBlock:(TMLAPIResponseHandler)completionBlock {
     TMLConfiguration *config = self.configuration;
     NSString *previousLocale = config.currentLocale;
