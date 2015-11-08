@@ -157,6 +157,8 @@
 		C0F80D271BEA86800048DF2D /* UITextView+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D251BEA86800048DF2D /* UITextView+TML.m */; };
 		C41646AA1BEBF979004B3FB3 /* TMLAPIResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C41646A91BEBF979004B3FB3 /* TMLAPIResponse.m */; };
 		C41647AB1BEE97D2004B3FB3 /* TMLGlobals.m in Sources */ = {isa = PBXBuildFile; fileRef = C41647AA1BEE97D2004B3FB3 /* TMLGlobals.m */; };
+		C41647AE1BEEDD6D004B3FB3 /* TMLBundleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C41647AD1BEEDD6D004B3FB3 /* TMLBundleManager.m */; };
+		C41647B11BEEDD77004B3FB3 /* TMLBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = C41647B01BEEDD77004B3FB3 /* TMLBundle.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -348,6 +350,10 @@
 		C41646A91BEBF979004B3FB3 /* TMLAPIResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPIResponse.m; sourceTree = "<group>"; };
 		C41647A91BEE97D2004B3FB3 /* TMLGlobals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLGlobals.h; sourceTree = "<group>"; };
 		C41647AA1BEE97D2004B3FB3 /* TMLGlobals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLGlobals.m; sourceTree = "<group>"; };
+		C41647AC1BEEDD6D004B3FB3 /* TMLBundleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLBundleManager.h; sourceTree = "<group>"; };
+		C41647AD1BEEDD6D004B3FB3 /* TMLBundleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLBundleManager.m; sourceTree = "<group>"; };
+		C41647AF1BEEDD77004B3FB3 /* TMLBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLBundle.h; sourceTree = "<group>"; };
+		C41647B01BEEDD77004B3FB3 /* TMLBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLBundle.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -736,6 +742,10 @@
 				C0F80C8B1BEA83DE0048DF2D /* TMLSource.m */,
 				C41646A81BEBF979004B3FB3 /* TMLAPIResponse.h */,
 				C41646A91BEBF979004B3FB3 /* TMLAPIResponse.m */,
+				C41647AC1BEEDD6D004B3FB3 /* TMLBundleManager.h */,
+				C41647AD1BEEDD6D004B3FB3 /* TMLBundleManager.m */,
+				C41647AF1BEEDD77004B3FB3 /* TMLBundle.h */,
+				C41647B01BEEDD77004B3FB3 /* TMLBundle.m */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -1073,6 +1083,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C41647AE1BEEDD6D004B3FB3 /* TMLBundleManager.m in Sources */,
 				C0F80D221BEA866D0048DF2D /* UITextField+TML.m in Sources */,
 				C0F80CDA1BEA83DE0048DF2D /* TMLViewController.m in Sources */,
 				4C4233F918B9B38700B76555 /* AppDelegate.m in Sources */,
@@ -1097,6 +1108,7 @@
 				4CE06A0818BD3D2E0088AB3E /* DecorationTokensDemoViewController.m in Sources */,
 				C0F80CD81BEA83DE0048DF2D /* TMLTranslatorViewController.m in Sources */,
 				C0F80CF61BEA83DE0048DF2D /* TML.m in Sources */,
+				C41647B11BEEDD77004B3FB3 /* TMLBundle.m in Sources */,
 				4CCBA13218B9B69A00CFCB3A /* TMLTableViewCell.m in Sources */,
 				4C36258719EF590400356B51 /* StaticViewController.m in Sources */,
 				C0F80D081BEA83DE0048DF2D /* TMLTranslation.m in Sources */,
