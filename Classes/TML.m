@@ -48,6 +48,8 @@
  ** Implementation
  ************************************************************************************/
 
+NSString * const TMLOptionsHostName = @"host";
+
 @implementation TML
 
 @synthesize configuration, currentApplication, defaultLanguage, currentLanguage, currentSource, currentUser, delegate, blockOptions;
@@ -85,7 +87,7 @@
 
 #pragma mark - Initialization
 - (void) updateWithToken: (NSString *) token launchOptions: (NSDictionary *) launchOptions {
-    NSString *host = [launchOptions objectForKey:@"host"];
+    NSString *host = launchOptions[TMLOptionsHostName];
     if (!host) host = kTMLServiceHost;
     
     TMLApplication *app = [[TMLApplication alloc] initWithToken: token host:host];
