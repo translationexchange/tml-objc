@@ -59,6 +59,26 @@
     return self;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+    TMLApplication *aCopy = [[TMLApplication alloc] init];
+    aCopy.host = [host copyWithZone:zone];
+    aCopy.key = [key copyWithZone:zone];
+    aCopy.secret = [secret copyWithZone:zone];
+    aCopy.accessToken = [accessToken copyWithZone:zone];
+    aCopy.apiClient = apiClient;
+    aCopy.postOffice = postOffice;
+    aCopy.name = [name copyWithZone:zone];
+    aCopy.defaultLocale = [defaultLocale copyWithZone:zone];
+    aCopy.threshold = [threshold copyWithZone:zone];
+    aCopy.features = [features copyWithZone:zone];
+    aCopy.tools = [tools copyWithZone:zone];
+    aCopy.languagesByLocales = [languagesByLocales copyWithZone:zone];
+    aCopy.sourcesByKeys = [sourcesByKeys copyWithZone:zone];
+    aCopy.translations = [translations copyWithZone:zone];
+    aCopy.missingTranslationKeysBySources = [missingTranslationKeysBySources copyWithZone:zone];
+    return aCopy;
+}
+
 - (void) updateAttributes: (NSDictionary *) attributes {
     self.key = [attributes objectForKey:@"key"];
     self.name = [attributes objectForKey:@"name"];

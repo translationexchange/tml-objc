@@ -33,10 +33,10 @@
 
 @class TMLLanguageContext;
 
-@interface TMLLanguageContextRule : TMLBase
+@interface TMLLanguageContextRule : TMLBase <NSCopying>
 
 // Holds reference to the language context it belongs to
-@property(nonatomic, weak) TMLLanguageContext *languageContext;
+@property(nonatomic, strong) TMLLanguageContext *languageContext;
 
 // Unique key of the context within the language
 @property(nonatomic, strong) NSString *keyword;

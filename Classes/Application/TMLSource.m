@@ -38,6 +38,18 @@
 
 @synthesize application, key, translations;
 
+- (id)copyWithZone:(NSZone *)zone {
+    TMLSource *aCopy = [[TMLSource alloc] init];
+    aCopy.application = [self.application copyWithZone:zone];
+    aCopy.key = [self.key copyWithZone:zone];
+    aCopy.translations = [self.translations copyWithZone:zone];
+    return aCopy;
+}
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"%@ Key: %@", [super description], self.key];
+}
+
 - (void) updateAttributes: (NSDictionary *) attributes {
     if ([attributes objectForKey:@"application"])
         self.application = [attributes objectForKey:@"application"];

@@ -33,10 +33,10 @@
 
 @class TMLLanguage;
 
-@interface TMLLanguageCase : TMLBase
+@interface TMLLanguageCase : TMLBase <NSCopying>
 
 // Holds reference back to the language it belongs to
-@property(nonatomic, weak) TMLLanguage *language;
+@property(nonatomic, strong) TMLLanguage *language;
 
 // How to apply the case: "phrase" or "words"
 @property(nonatomic, strong) NSString *application;

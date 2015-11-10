@@ -39,6 +39,18 @@
 
 @synthesize languageCase, description, examples, conditions, compiledConditions, operations, compiledOperations;
 
+- (id)copyWithZone:(NSZone *)zone {
+    TMLLanguageCaseRule *aCopy = [[TMLLanguageCaseRule alloc] init];
+    aCopy.languageCase = [self.languageCase copyWithZone:zone];
+    aCopy.description = [self.description copyWithZone:zone];
+    aCopy.examples = [self.examples copyWithZone:zone];
+    aCopy.conditions = [self.conditions copyWithZone:zone];
+    aCopy.compiledConditions = [self.compiledConditions copyWithZone:zone];
+    aCopy.operations = [self.operations copyWithZone:zone];
+    aCopy.compiledOperations = [self.compiledOperations copyWithZone:zone];
+    return aCopy;
+}
+
 - (void) updateAttributes: (NSDictionary *) attributes {
     if ([attributes objectForKey:@"language_case"])
         self.languageCase = [attributes objectForKey:@"language_case"];

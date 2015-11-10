@@ -114,6 +114,16 @@
     return self;
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+    TMLDataToken *aCopy = [[TMLDataToken alloc] init];
+    aCopy.label = [self.label copyWithZone:zone];
+    aCopy.fullName = [self.fullName copyWithZone:zone];
+    aCopy.shortName = [self.shortName copyWithZone:zone];
+    aCopy.caseKeys = [self.caseKeys copyWithZone:zone];
+    aCopy.contextKeys = [self.contextKeys copyWithZone:zone];
+    return aCopy;
+}
+
 + (NSString *) sanitizeValue: (NSString *) value {
     return [value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 }

@@ -33,12 +33,12 @@
 
 @class TMLLanguageContext, TMLLanguageCase, TMLApplication;
 
-@interface TMLLanguage : TMLBase
+@interface TMLLanguage : TMLBase <NSCopying>
 
 @property (nonatomic, assign) NSInteger languageID;
 
 // Holds reference to the application it belongs to
-@property(nonatomic, weak) TMLApplication *application;
+@property(nonatomic, strong) TMLApplication *application;
 
 // Language locale based on TML notation
 @property(nonatomic, strong) NSString *locale;

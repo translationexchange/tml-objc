@@ -39,6 +39,21 @@
 @synthesize language, keyword, description, keys, tokenExpression, variableNames, tokenMapping, rules, fallbackRule;
 @synthesize tokenRegularExpression;
 
+- (id)copyWithZone:(NSZone *)zone {
+    TMLLanguageContext *aCopy = [[TMLLanguageContext alloc] init];
+    aCopy.language = [self.language copyWithZone:zone];
+    aCopy.keyword = [self.keyword copyWithZone:zone];
+    aCopy.description = [self.description copyWithZone:zone];
+    aCopy.keys = [self.keys copyWithZone:zone];
+    aCopy.tokenExpression = [self.tokenExpression copyWithZone:zone];
+    aCopy.tokenRegularExpression = [self.tokenRegularExpression copyWithZone:zone];
+    aCopy.variableNames = [self.variableNames copyWithZone:zone];
+    aCopy.tokenMapping = [self.tokenMapping copyWithZone:zone];
+    aCopy.rules = [self.rules copyWithZone:zone];
+    aCopy.fallbackRule = [self.fallbackRule copyWithZone:zone];
+    return aCopy;
+}
+
 - (void) updateAttributes: (NSDictionary *) attributes {
     if ([attributes objectForKey:@"language"])
         self.language = [attributes valueForKey:@"language"];

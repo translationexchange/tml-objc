@@ -33,10 +33,10 @@
 
 @class TMLApplication;
 
-@interface TMLSource : TMLBase
+@interface TMLSource : TMLBase <NSCopying>
 
 // Reference back to the application it belongs to
-@property(nonatomic, weak) TMLApplication *application;
+@property(nonatomic, strong) TMLApplication *application;
 
 // Source key
 @property(nonatomic, strong) NSString *key;

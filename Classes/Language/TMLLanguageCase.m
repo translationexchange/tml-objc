@@ -30,10 +30,23 @@
 
 #import "TMLLanguageCase.h"
 #import "TMLLanguageCaseRule.h"
+#import "TMLLanguage.h"
 
 @implementation TMLLanguageCase
 
 @synthesize language, application, keyword, latinName, nativeName, description, rules;
+
+- (id)copyWithZone:(NSZone *)zone {
+    TMLLanguageCase *aCopy = [[TMLLanguageCase alloc] init];
+    aCopy.language = [self.language copyWithZone:zone];
+    aCopy.application = [self.application copyWithZone:zone];
+    aCopy.keyword = [self.keyword copyWithZone:zone];
+    aCopy.latinName = [self.latinName copyWithZone:zone];
+    aCopy.nativeName = [self.nativeName copyWithZone:zone];
+    aCopy.description = [self.description copyWithZone:zone];
+    aCopy.rules = [self.rules copyWithZone:zone];
+    return aCopy;
+}
 
 - (void) updateAttributes: (NSDictionary *) attributes {
     if ([attributes objectForKey:@"language"])

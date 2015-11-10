@@ -43,6 +43,20 @@
 @implementation TMLTranslationKey
 @synthesize application, key, label, description, locale, level, translations;
 
+- (id)copyWithZone:(NSZone *)zone {
+    TMLTranslationKey *aCopy = [[TMLTranslationKey alloc] init];
+    aCopy.application = [self.application copyWithZone:zone];
+    aCopy.key = [self.key copyWithZone:zone];
+    aCopy.label = [self.label copyWithZone:zone];
+    aCopy.description = [self.description copyWithZone:zone];
+    aCopy.locale = [self.locale copyWithZone:zone];
+    aCopy.level = [self.level copyWithZone:zone];
+    aCopy.translations = [self.translations copyWithZone:zone];
+    aCopy.dataTokens = [self.dataTokens copyWithZone:zone];
+    aCopy.decorationTokens = [self.decorationTokens copyWithZone:zone];
+    return aCopy;
+}
+
 + (NSString *) generateKeyForLabel: (NSString *) label {
     return [self generateKeyForLabel:label andDescription:@""];
 }

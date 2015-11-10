@@ -34,7 +34,7 @@
 
 @class TMLPostOffice, TMLLanguage, TMLSource;
 
-@interface TMLApplication : TMLBase
+@interface TMLApplication : TMLBase <NSCopying>
 
 // Application host - points to the TMLHub server
 @property(nonatomic, strong) NSString *host;

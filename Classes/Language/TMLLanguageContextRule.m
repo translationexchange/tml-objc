@@ -28,13 +28,25 @@
  *  THE SOFTWARE.
  */
 
+#import "TMLLanguageContext.h"
 #import "TMLLanguageContextRule.h"
-#import "TMLRulesParser.h"
 #import "TMLRulesEvaluator.h"
+#import "TMLRulesParser.h"
 
 @implementation TMLLanguageContextRule
 
 @synthesize languageContext, keyword, description, examples, conditions, compiledConditions;
+
+- (id)copyWithZone:(NSZone *)zone {
+    TMLLanguageContextRule *aCopy = [[TMLLanguageContextRule alloc] init];
+    aCopy.languageContext = [self.languageContext copyWithZone:zone];
+    aCopy.keyword = [self.keyword copyWithZone:zone];
+    aCopy.description = [self.description copyWithZone:zone];
+    aCopy.examples = [self.examples copyWithZone:zone];
+    aCopy.conditions = [self.conditions copyWithZone:zone];
+    aCopy.compiledConditions = [self.compiledConditions copyWithZone:zone];
+    return aCopy;
+}
 
 - (void) updateAttributes: (NSDictionary *) attributes {
     if ([attributes objectForKey:@"language_context"])

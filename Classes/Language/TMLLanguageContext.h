@@ -33,10 +33,10 @@
 
 @class TMLLanguage;
 
-@interface TMLLanguageContext : TMLBase
+@interface TMLLanguageContext : TMLBase <NSCopying>
 
 // Reference back to the language it belongs to
-@property(nonatomic, weak) TMLLanguage *language;
+@property(nonatomic, strong) TMLLanguage *language;
 
 // Unique key identifying the context => num, gender, list, etc..
 @property(nonatomic, strong) NSString *keyword;
@@ -57,13 +57,13 @@
 @property(nonatomic, strong) NSArray *variableNames;
 
 // Mapping of parameters to rules
-@property(nonatomic, strong) NSObject *tokenMapping;
+@property(nonatomic, strong) NSObject <NSCopying>*tokenMapping;
 
 // Hash of all the rules for the context => {one: rule, few: rule, ...}
 @property(nonatomic, strong) NSDictionary *rules;
 
 // Fallback rule for the context
-@property(nonatomic, strong) NSObject *fallbackRule;
+@property(nonatomic, strong) NSObject <NSCopying>*fallbackRule;
 
 // Checks whether the case is applicable to the token with a given name
 - (BOOL) isApplicableToTokenName: (NSString *) tokenName;

@@ -51,6 +51,21 @@
     return [[TMLLanguage alloc] initWithAttributes:attributes];
 }
 
+- (id)copyWithZone:(NSZone *)zone {
+    TMLLanguage *aCopy = [[TMLLanguage alloc] init];
+    aCopy.languageID = self.languageID;
+    aCopy.application = [self.application copyWithZone:zone];
+    aCopy.locale = [self.locale copyWithZone:zone];
+    aCopy.englishName = [self.englishName copyWithZone:zone];
+    aCopy.nativeName = [self.nativeName copyWithZone:zone];
+    aCopy.rightToLeft = [self.rightToLeft copyWithZone:zone];
+    aCopy.flagUrl = [self.flagUrl copyWithZone:zone];
+    aCopy.contexts = [self.contexts copyWithZone:zone];
+    aCopy.cases = [self.cases copyWithZone:zone];
+    aCopy.status = [self.status copyWithZone:zone];
+    return aCopy;
+}
+
 - (void) updateAttributes: (NSDictionary *) attributes {
     if ([attributes objectForKey:@"application"])
         self.application = [attributes objectForKey:@"application"];
