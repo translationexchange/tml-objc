@@ -12,6 +12,8 @@
 #import "TMLBundleManager.h"
 #import <SSZipArchive/SSZipArchive.h>
 
+NSString * const TMLBundleManagerActiveBundleLinkName = @"active";
+
 @implementation TMLBundleManager
 
 + (instancetype) defaultManager {
@@ -170,6 +172,33 @@
         }
     }
     return bundles;
+}
+
+#pragma mark - Selection
+
+- (void)setActiveBundle:(TMLBundle *)bundle {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *link = [NSString stringWithFormat:@"%@/%@", [self defaultBundleInstallationPath], TMLBundleManagerActiveBundleLinkName];
+    NSError *error = nil;
+    [fileManager removeItemAtPath:link error:&error];
+    if (error != nil) {
+        TMLError(@"Error removing symlink to active bundle: %@", error);
+    }
+    
+    NSString *path = bundle.path;
+    [fileManager createSymbolicLinkAtPath:link withDestinationPath:path error:&error];
+    if (error != nil) {
+        TMLError(@"Error linking bundle as active: %@", error);
+    }
+}
+
+- (TMLBundle *)activeBundle {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *activeBundlePath = [NSString stringWithFormat:@"%@/%@", [self defaultBundleInstallationPath], TMLBundleManagerActiveBundleLinkName];
+    if ([fileManager fileExistsAtPath:activeBundlePath] == YES) {
+        return [[TMLBundle alloc] initWithContentsOfDirectory:activeBundlePath];
+    }
+    return nil;
 }
 
 @end

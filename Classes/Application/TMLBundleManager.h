@@ -12,6 +12,8 @@ typedef void (^TMLBundleInstallBlock)(NSString *path, NSError *error);
 
 @interface TMLBundleManager : NSObject
 
++ (instancetype) defaultManager;
+
 #pragma mark - Installation
 
 - (void) installBundleFromPath:(NSString *)aPath completionBlock:(TMLBundleInstallBlock)completionBlock;
@@ -21,5 +23,10 @@ typedef void (^TMLBundleInstallBlock)(NSString *path, NSError *error);
 
 - (NSString *) fetchPublishedBundleInfo:(void(^)(NSDictionary *info, NSError *error))completionBlock;
 - (NSArray *) installedBundles;
+
+#pragma mark - Selection
+
+- (void) setActiveBundle:(TMLBundle *)bundle;
+- (TMLBundle *)activeBundle;
 
 @end
