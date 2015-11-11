@@ -118,15 +118,11 @@
 }
 
 - (void) load {
-    TMLAPIClient *apiClient = [[self application] apiClient];
-    [apiClient get: [NSString stringWithFormat: @"languages/%@", self.locale]
-        parameters:@{@"definition": @"true"}
-   completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-       if (apiResponse != nil) {
-           [self updateAttributes:apiResponse.userInfo];
-       }
-   }
-     ];
+    [self.application.apiClient getLanguageForLocale:self.locale options:@{TMLAPIOptionsIncludeDefinition: @YES} completionBlock:^(TMLLanguage *language, NSError *error) {
+        if (language != nil) {
+            [self updateAttributes:language];
+        }
+    }];
 }
 
 - (TMLLanguageContext *) contextByKeyword: (NSString *) keyword {
