@@ -30,3 +30,5 @@ Project/Distributions
 Project/Provisioning
 Project/.testflight
 Project/FLIGHTLOG
+
+Demo/Demo/TMLPrivateConfig.h
