@@ -28,6 +28,7 @@
  *  THE SOFTWARE.
  */
 
+#import "NSObject+TMLJSON.h"
 #import "TML.h"
 #import "TMLAPIClient.h"
 #import "TMLApplication.h"
@@ -46,8 +47,7 @@
 + (TMLLanguage *) defaultLanguage {
     NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"en-US" ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:jsonPath];
-    NSError *error = nil;
-    NSDictionary *attributes = (NSDictionary *) [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error];
+    NSDictionary *attributes = [data tmlJSONObject];
     return [[TMLLanguage alloc] initWithAttributes:attributes];
 }
 

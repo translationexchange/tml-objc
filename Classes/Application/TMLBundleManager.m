@@ -6,6 +6,7 @@
 //  Copyright © 2015 TmlHub Inc. All rights reserved.
 //
 
+#import "NSObject+TMLJSON.h"
 #import "TML.h"
 #import "TMLApplication.h"
 #import "TMLBundle.h"
@@ -138,9 +139,7 @@ NSString * const TMLBundleManagerActiveBundleLinkName = @"active";
     NSURL *publishedVersionURL = [NSURL URLWithString:[NSString stringWithFormat:@"https://cdn.translationexchange.com/%@/version.json", [[TML currentApplication] key]]];
     NSData *data = [NSData dataWithContentsOfURL:publishedVersionURL];
     NSError *error = nil;
-    NSDictionary *versionInfo = [NSJSONSerialization JSONObjectWithData:data
-                                                                options:0
-                                                                  error:&error];
+    NSDictionary *versionInfo = [data tmlJSONObject];
     if (versionInfo == nil) {
         TMLError(@"Error fetching published bundle info: %@", error);
         return nil;

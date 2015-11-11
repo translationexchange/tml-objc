@@ -28,8 +28,9 @@
  *  THE SOFTWARE.
  */
 
-#import "TranslationViewController.h"
+#import "NSObject+TMLJSON.h"
 #import "TML.h"
+#import "TranslationViewController.h"
 #import "UIViewController+TML.h"
 
 @interface TranslationViewController ()
@@ -67,12 +68,11 @@
         return @{};
     }
     
-    NSData *jsonData = [self.tokens dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *error = nil;
-    NSDictionary *result = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
+    NSDictionary *result = [self.tokens tmlJSONObject];
     
-    if (error)
-        return [NSDictionary dictionary];
+    if (result == nil) {
+        result = [NSDictionary dictionary];
+    }
     
     return  result;
 }
@@ -82,12 +82,11 @@
         return @{};
     }
     
-    NSData *jsonData = [self.options dataUsingEncoding:NSUTF8StringEncoding];
-    NSError *error = nil;
-    NSDictionary *result = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
+    NSDictionary *result = [self.options tmlJSONObject];
     
-    if (error)
-        return [NSDictionary dictionary];
+    if (result == nil) {
+        result = [NSDictionary dictionary];
+    }
     
     return  result;
 }

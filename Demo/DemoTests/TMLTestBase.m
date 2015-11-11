@@ -20,6 +20,7 @@
  *  THE SOFTWARE.
  */
 
+#import "NSObject+TMLJSON.h"
 #import "TMLTestBase.h"
 
 @implementation TMLTestBase
@@ -29,10 +30,7 @@
     NSString *path = [bundle pathForResource:name ofType:@"json"];
 
     NSData *jsonData = [NSData dataWithContentsOfFile:path];
-//    NSString *jsonString = [NSString stringWithUTF8String:[jsonData bytes]];
-    
-    NSError *error = nil;
-    NSDictionary *result = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
+    NSDictionary *result = [jsonData tmlJSONObject];
     return  result;
 }
 

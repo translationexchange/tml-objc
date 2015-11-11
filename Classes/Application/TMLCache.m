@@ -28,6 +28,7 @@
  *  THE SOFTWARE.
  */
 
+#import "NSObject+TMLJSON.h"
 #import "NSString+TMLAdditions.h"
 #import "TMLCache.h"
 #import "TMLLogger.h"
@@ -86,22 +87,17 @@
 - (NSObject *) fetchObjectForKey: (NSString *) key {
     NSString *objectPath = [self cachePathForKey: key];
     
-//    TMLDebug(@"Loading %@ at path %@", key, objectPath);
-    
     if (![[NSFileManager defaultManager] fileExistsAtPath:objectPath]) {
         TMLDebug(@"Cache miss: %@", key);
         return nil;
     }
     
     NSData *jsonData = [NSData dataWithContentsOfFile:objectPath];
-//    NSString* jsonString = [NSString stringWithUTF8String:[jsonData bytes]];
-//    TMLDebug(@"%@", jsonString);
     
-    NSError *error = nil;
-    NSObject *result = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:&error];
+    NSObject *result = [jsonData tmlJSONObject];
     
-    if (error) {
-        TMLDebug(@"Error trace: %@", error);
+    if (result == nil) {
+        TMLDebug(@"Error fetching object for key: %@", key);
         return nil;
     }
     

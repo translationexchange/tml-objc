@@ -6,11 +6,12 @@
 //  Copyright © 2015 TmlHub Inc. All rights reserved.
 //
 
+#import "NSObject+TMLJSON.h"
+#import "NSString+TmlAdditions.h"
 #import "TML.h"
 #import "TMLApplication.h"
 #import "TMLBundle.h"
 #import "TMLBundleManager.h"
-#import "NSString+TmlAdditions.h"
 
 NSString * const TMLBundleVersionFileName = @"snapshot.json";
 NSString * const TMLBundleApplicationFileName = @"application.json";
@@ -48,10 +49,7 @@ NSString * const TMLBundleVersionKey = @"bundle";
     if (self = [super init]) {
         NSString *versionFilePath = [NSString stringWithFormat:@"%@/%@", path, TMLBundleVersionFileName];
         NSData *versionData = [NSData dataWithContentsOfFile:versionFilePath];
-        NSError *error = nil;
-        NSDictionary *versionInfo = [NSJSONSerialization JSONObjectWithData:versionData
-                                                                    options:0
-                                                                      error:&error];
+        NSDictionary *versionInfo = [versionData tmlJSONObject];
         if (versionInfo == nil) {
             TMLError(@"Could not determine version of bundle at path: %@", path);
             return nil;
@@ -59,9 +57,7 @@ NSString * const TMLBundleVersionKey = @"bundle";
         self.version = versionInfo[TMLBundleVersionKey];
         self.path = path;
         NSData *applicationData = [NSData dataWithContentsOfFile:[NSString stringWithFormat:@"%@/%@", path, TMLBundleApplicationFileName]];
-        NSDictionary *applicationInfo = [NSJSONSerialization JSONObjectWithData:applicationData
-                                                                        options:0
-                                                                          error:&error];
+        NSDictionary *applicationInfo = [applicationData tmlJSONObject];
         if (applicationInfo == nil) {
             TMLError(@"Could not determin application info of bundle at path: %@", path);
             return nil;
