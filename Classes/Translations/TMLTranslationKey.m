@@ -179,7 +179,7 @@
 }
 
 - (NSString *) description {
-    return self.label;
+    return [NSString stringWithFormat:@"%@; Key: %@; Label: %@", [super description], self.key, self.label];
 }
 
 @end
