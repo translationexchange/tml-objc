@@ -31,8 +31,15 @@
 #import "TML.h"
 #import "TMLAPIClient.h"
 #import "TMLApplication.h"
+#import "TMLConfiguration.h"
+#import "TMLLanguage.h"
+#import "TMLSource.h"
 
-NSString * const TMLAPIResponseResultKey = @"results";
+NSString * const TMLAPIOptionsLocale = @"locale";
+NSString * const TMLAPIOptionsIncludeAll = @"all";
+NSString * const TMLAPIOptionsClientName = @"client";
+NSString * const TMLAPIOptionsIncludeDefinition = @"definition";
+NSString * const TMLAPIOptionsSourceKeys = @"source_keys";
 
 @implementation TMLAPIClient
 
@@ -51,15 +58,15 @@ NSString * const TMLAPIResponseResultKey = @"results";
 
 - (NSURL *) URLForAPIPath: (NSString *)path parameters:(NSDictionary *)parameters {
     NSMutableString *pathString = [NSMutableString stringWithFormat:@"%@/v1/%@", self.application.host, path];
-    if (parameters != nil) {
-        [pathString appendString:@"?"];
-        NSDictionary *requestParameters = [self prepareAPIParameters:parameters];
-        NSInteger index = 0;
-        for (NSString *key in requestParameters) {
-            id value = [requestParameters objectForKey:key];
-            [pathString appendFormat:@"%@%@=%@", (index > 0) ? @"&": @"", [self urlEncode:key], [self urlEncode:value]];
-            index++;
+    [pathString appendString:@"?"];
+    NSDictionary *requestParameters = [self prepareAPIParameters:parameters];
+    for (NSString *key in requestParameters) {
+        id value = [requestParameters objectForKey:key];
+        NSString *valueClass = NSStringFromClass([value class]);
+        if ([valueClass rangeOfString:@"Boolean"].location != NSNotFound) {
+            value = ([value boolValue] == YES) ? @"true" : @"false";
         }
+        [pathString appendFormat:@"%@%@=%@", @"&", [self urlEncode:key], [self urlEncode:value]];
     }
     return [NSURL URLWithString:pathString];
 }
@@ -87,48 +94,35 @@ NSString * const TMLAPIResponseResultKey = @"results";
 
 #pragma mark - Response Handling
 
-- (NSObject *) parseData: (NSData *) data {
-    NSError *error = nil;
-    NSObject *responseObject = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
-    
-    if (error) {
-        TMLDebug(@"Error trace: %@", error);
-        return nil;
-    }
-    
-    if ([responseObject isKindOfClass:NSDictionary.class]) {
-        NSDictionary *responseData = (NSDictionary *) responseObject;
-        if ([responseData valueForKey:@"error"] != nil) {
-            TMLDebug(@"Error trace: %@", [responseData valueForKey:@"error"]);
-            return nil;
-        }
-    }
-    
-    return responseObject;
-}
-
 - (void) processResponse:(NSURLResponse *)response
                     data:(NSData *)data
                    error:(NSError *)error
          completionBlock:(TMLAPIResponseHandler)completionBlock
 {
-    if (error) {
-        TMLError(@"Error: %@", error);
+    if (error != nil) {
+        TMLError(@"Request Error: %@", error);
     }
     
-    id responseData = [self parseData:data];
-    if (!responseData) {
-        TMLWarn(@"Empty response object: %@", responseData);
-        if (error == nil) {
-            error = [NSError errorWithDomain:@"Failed to retrieve data" code:0 userInfo:nil];
-        }
+    if (completionBlock == nil) {
+        return;
     }
     
-    TMLAPIResponse *apiResponse = [[TMLAPIResponse alloc] initFromResponseResultObject:responseData];
-    
-    if (completionBlock != nil) {
-        completionBlock(apiResponse, response, error);
+    TMLAPIResponse *apiResponse = [[TMLAPIResponse alloc] initWithData:data];
+    NSError *relevantError = nil;
+    if (error != nil) {
+        relevantError = error;
     }
+    if (apiResponse != nil && relevantError == nil) {
+        relevantError = apiResponse.error;
+    }
+    if (apiResponse == nil && relevantError == nil) {
+        TMLWarn(@"Unrecognized response object");
+        relevantError = [NSError errorWithDomain:@"Unrecognized response"
+                                            code:0
+                                        userInfo:nil];
+    }
+    
+    completionBlock(apiResponse, response, relevantError);
 }
 
 #pragma mark - Requests
@@ -182,7 +176,6 @@ completionBlock:(TMLAPIResponseHandler)completionBlock
 completionBlock:completionBlock];
 }
 
-
 - (void) get:(NSString *)path
   parameters:(NSDictionary *)parameters
  cachePolicy:(NSURLRequestCachePolicy)cachePolicy
@@ -211,6 +204,145 @@ completionBlock:(TMLAPIResponseHandler)completionBlock
     [self request:request
       cachePolicy:cachePolicy
   completionBlock:completionBlock];
+}
+
+#pragma mark - Methods
+
+- (void) getTranslationsForLocale:(NSString *)locale
+                           source:(TMLSource *)source
+                          options:(NSDictionary *)options
+                  completionBlock:(void(^)(NSDictionary <NSString *,TMLTranslation *>*translations, NSError *error))completionBlock
+{
+    NSString *path = nil;
+    NSString *sourceKey = source.key;
+    if (sourceKey != nil) {
+        path = [NSString stringWithFormat: @"sources/%@/translations", [TMLConfiguration md5:sourceKey]];
+    }
+    else {
+        path = [NSString stringWithFormat:@"projects/current/translations"];
+    }
+    
+    NSMutableDictionary *params = nil;
+    if (options != nil) {
+        params = [options mutableCopy];
+    }
+    else {
+        params = [NSMutableDictionary dictionaryWithDictionary:@{TMLAPIOptionsIncludeAll: @YES}];
+    }
+    params[TMLAPIOptionsLocale] = locale;
+    
+    [self get:path
+   parameters:params
+completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+    NSDictionary <NSString *, TMLTranslation *>*translations = nil;
+    if (apiResponse != nil) {
+        translations = [apiResponse resultsAsTranslations];
+    }
+    else {
+        TMLError(@"Error fetching translations for locale: %@; source: %@. Error: %@", locale, source, error);
+    }
+    if (completionBlock != nil) {
+        completionBlock(translations, error);
+    }
+}
+     
+     ];
+}
+
+- (void)getProjectInfoWithOptions:(NSDictionary *)options
+                  completionBlock:(void (^)(NSDictionary *, NSError *))completionBlock
+{
+    NSMutableDictionary *params = nil;
+    if (options != nil) {
+        params = [options mutableCopy];
+    }
+    else {
+        params = [NSMutableDictionary dictionary];
+    }
+    params[TMLAPIOptionsClientName] = @"ios";
+    
+    [self get:@"projects/current"
+             parameters:params
+        completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+            NSMutableDictionary *projectInfo = nil;
+            if (apiResponse != nil) {
+                projectInfo = [apiResponse.userInfo mutableCopy];
+                
+                // marshal languages; application info response will include languages structs
+                // directly under "languages" key the top-level object, as opposed to "results"
+                NSArray *langs = [apiResponse resultsAsLanguages];
+                if (langs != nil) {
+                    projectInfo[TMLAPIResponseResultsLanguagesKey] = langs;
+                }
+            }
+            else {
+                TMLError(@"Error fetching current project description: %@", error);
+            }
+            if (completionBlock != nil) {
+                completionBlock((NSDictionary *)projectInfo, error);
+            }
+        }
+     ];
+}
+
+- (void)getLanguageForLocale:(NSString *)locale
+                     options:(NSDictionary *)options
+             completionBlock:(void (^)(TMLLanguage *, NSError *))completionBlock
+{
+    [self get: [NSString stringWithFormat: @"languages/%@", locale]
+   parameters:options
+completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+    TMLLanguage *lang = nil;
+    if (apiResponse != nil) {
+        lang = [[TMLLanguage alloc] initWithAttributes:apiResponse.userInfo];
+    }
+    else {
+        TMLError(@"Error fetching languages description for locale: %@. Error: %@", locale, error);
+    }
+    if (completionBlock != nil) {
+        completionBlock(lang, error);
+    }
+}
+     ];
+}
+
+- (void)getProjectLanguagesWithOptions:(NSDictionary *)options
+                       completionBlock:(void (^)(NSArray<TMLLanguage *> *, NSError *))completionBlock
+{
+    [self get:@"projects/current/languages"
+   parameters:options
+completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+    NSArray <TMLLanguage *>*languages = nil;
+    if (apiResponse != nil) {
+        languages = [apiResponse resultsAsLanguages];
+    }
+    else {
+        TMLError(@"Error fetching descriptions of all languages for current project: %@", error);
+    }
+    if (completionBlock != nil) {
+        completionBlock(languages, error);
+    }
+}];
+}
+
+- (void)registerTranslationKeysBySource:(NSDictionary<TMLSource *,TMLTranslationKey *> *)sourceKeys
+                        completionBlock:(void (^)(BOOL))completionBlock
+{
+    NSMutableArray *sourceKeysList = [NSMutableArray array];
+    for (TMLSource *source in sourceKeys) {
+        [sourceKeysList addObject:@{@"source": [source key], @"keys": sourceKeys[source]}];
+    }
+    [self post:@"sources/register_keys"
+    parameters:@{TMLAPIOptionsSourceKeys: sourceKeysList}
+completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+    BOOL success = [apiResponse isSuccessfulResponse];
+    if (success == NO) {
+        TMLError(@"Error submitting translation keys by source: %@", error);
+    }
+    if (completionBlock != nil) {
+        completionBlock(success);
+    }
+}];
 }
 
 @end

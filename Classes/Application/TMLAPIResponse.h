@@ -8,19 +8,61 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const TMLAPIResponseErrorDomain;
+
+extern NSString * const TMLAPIResponsePaginationKey;
+extern NSString * const TMLAPIResponseCurrentPageKey;
+extern NSString * const TMLAPIResponseResultsPerPageKey;
+extern NSString * const TMLAPIResponseTotalResultsKey;
+extern NSString * const TMLAPIResponseTotalPagesKey;
+extern NSString * const TMLAPIResponsePageLinksKey;
+extern NSString * const TMLAPIResponseFirstPageLinkKey;
+extern NSString * const TMLAPIResponseLastPageLinkKey;
+extern NSString * const TMLAPIResponseNextPageLinkKey;
+extern NSString * const TMLAPIResponseCurrentPageLinkKey;
+
+extern NSString * const TMLAPIResponseResultsKey;
+extern NSString * const TMLAPIResponseResultsTranslationsKey;
+extern NSString * const TMLAPIResponseResultsLanguagesKey;
+
+extern NSString * const TMLAPIResponseTranslationLabelKey;
+extern NSString * const TMLAPIResponseTranslationLocaleKey;
+extern NSString * const TMLAPIResponseTranslationContextKey;
+
+extern NSString * const TMLAPIResponseLanguageEnglishNameKey;
+extern NSString * const TMLAPIResponseLanguageFlagURLKey;
+extern NSString * const TMLAPIResponseLanguageIDKey;
+extern NSString * const TMLAPIResponseLanguageLocaleKey;
+extern NSString * const TMLAPIResponseLanguageNativeNameKey;
+extern NSString * const TMLAPIResponseLanguageRTLKey;
+extern NSString * const TMLAPIResponseLanguageStatusKey;
+
+extern NSString * const TMLAPIResponseStatusKey;
+extern NSString * const TMLAPIResponseStatusOK;
+extern NSString * const TMLAPIResponseStatusError;
+
+extern NSString * const TMLAPIResponseErrorDescriptionKey;
+extern NSString * const TMLAPIResponseErrorCodeKey;
+
 @class TMLTranslation, TMLLanguage;
 
 @interface TMLAPIResponse : NSObject
 
 #pragma mark - Init
 
-- (instancetype) initFromResponseResultObject:(id)resultObject;
+- (instancetype) initWithData:(NSData *)data;
 
 #pragma mark - Results
 @property (readonly, nonatomic) NSDictionary *userInfo;
 @property (readonly, nonatomic) id results;
-
 - (NSDictionary<NSString *,TMLTranslation *>*) resultsAsTranslations;
 - (NSArray<TMLLanguage *>*) resultsAsLanguages;
+
+#pragma mark - Status
+@property (readonly, nonatomic) NSString *status;
+@property (readonly, nonatomic, getter=isSuccessfulResponse) BOOL successfulResponse;
+
+#pragma mark - Errors
+@property (readonly, nonatomic) NSError *error;
 
 @end

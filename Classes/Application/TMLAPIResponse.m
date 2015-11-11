@@ -6,9 +6,12 @@
 //  Copyright © 2015 TmlHub Inc. All rights reserved.
 //
 
+#import "NSObject+tmlJSON.h"
 #import "TMLAPIResponse.h"
 #import "TMLLanguage.h"
 #import "TMLTranslation.h"
+
+NSString * const TMLAPIResponseErrorDomain = @"TMLAPIResponseErrorDomain";
 
 NSString * const TMLAPIResponsePaginationKey = @"pagination";
 NSString * const TMLAPIResponseCurrentPageKey = @"current_page";
@@ -23,6 +26,7 @@ NSString * const TMLAPIResponseCurrentPageLinkKey = @"self";
 
 NSString * const TMLAPIResponseResultsKey = @"results";
 NSString * const TMLAPIResponseResultsTranslationsKey = @"translations";
+NSString * const TMLAPIResponseResultsLanguagesKey = @"languages";
 
 NSString * const TMLAPIResponseTranslationLabelKey = @"label";
 NSString * const TMLAPIResponseTranslationLocaleKey = @"locale";
@@ -36,6 +40,13 @@ NSString * const TMLAPIResponseLanguageNativeNameKey = @"native_name";
 NSString * const TMLAPIResponseLanguageRTLKey = @"right_to_left";
 NSString * const TMLAPIResponseLanguageStatusKey = @"status";
 
+NSString * const TMLAPIResponseStatusKey = @"status";
+NSString * const TMLAPIResponseStatusOK = @"ok";
+NSString * const TMLAPIResponseStatusError = @"error";
+
+NSString * const TMLAPIResponseErrorDescriptionKey = @"error";
+NSString * const TMLAPIResponseErrorCodeKey = @"code";
+
 @interface TMLAPIResponse()
 @property (readwrite, nonatomic) NSDictionary *userInfo;
 @end
@@ -44,11 +55,10 @@ NSString * const TMLAPIResponseLanguageStatusKey = @"status";
 
 #pragma mark - Init
 
-- (instancetype)initFromResponseResultObject:(id)resultObject {
+- (instancetype)initWithData:(NSData *)data {
     if (self = [super init]) {
-        if ([resultObject isKindOfClass:[NSDictionary class]] == YES) {
-            self.userInfo = (NSDictionary *)resultObject;
-        }
+        NSDictionary *userInfo = [data tmlJSONObject];
+        self.userInfo = (NSDictionary *)userInfo;
     }
     return self;
 }
@@ -59,12 +69,17 @@ NSString * const TMLAPIResponseLanguageStatusKey = @"status";
 }
 
 - (NSDictionary<NSString *,TMLTranslation *> *)resultsAsTranslations {
-    if ([self.results isKindOfClass:[NSDictionary class]] == NO) {
+    id results = self.results;
+    if (results == nil) {
+        results = self.userInfo[TMLAPIResponseResultsTranslationsKey];
+    }
+    
+    if ([results isKindOfClass:[NSDictionary class]] == NO) {
         return nil;
     }
-    NSDictionary *results = self.results;
+
     NSMutableDictionary *translations = [NSMutableDictionary dictionary];
-    for (NSString *hash in results) {
+    for (NSString *hash in (NSDictionary *)results) {
         NSMutableArray *infos = [results[hash] mutableCopy];
         for (NSInteger i=0; i<infos.count; i++) {
             NSDictionary *info = infos[i];
@@ -80,12 +95,17 @@ NSString * const TMLAPIResponseLanguageStatusKey = @"status";
 }
 
 - (NSArray<TMLLanguage *> *)resultsAsLanguages {
-    if ([self.results isKindOfClass:[NSArray class]] == NO) {
+    id results = self.results;
+    if (results == nil) {
+        results = self.userInfo[TMLAPIResponseResultsLanguagesKey];
+    }
+    
+    if ([results isKindOfClass:[NSArray class]] == NO) {
         return nil;
     }
-    NSArray *results = self.results;
+    
     NSMutableArray *languages = [NSMutableArray array];
-    for (NSDictionary *info in results) {
+    for (NSDictionary *info in (NSArray *)results) {
         TMLLanguage *language = [[TMLLanguage alloc] init];
         language.languageID = [info[TMLAPIResponseLanguageIDKey] integerValue];
         language.locale = info[TMLAPIResponseLanguageLocaleKey];
@@ -97,6 +117,44 @@ NSString * const TMLAPIResponseLanguageStatusKey = @"status";
         [languages addObject:language];
     }
     return languages;
+}
+
+#pragma mark - Status
+
+- (NSString *)status {
+    return self.userInfo[TMLAPIResponseStatusKey];
+}
+
+- (BOOL)isSuccessfulResponse {
+    // if we spot results in the response - we can assume - it's a successful response
+    id results = self.results;
+    if (results != nil) {
+        return YES;
+    }
+    
+    // not all responses contain results, some may contain arbitrary data, but some will contain "status"
+    NSString *status = self.status;
+    if (status != nil) {
+        return [status isEqualToString:TMLAPIResponseStatusOK];
+    }
+    
+    // otherwise, let's assume we're ok for now...
+    return YES;
+}
+
+#pragma mark - Errors
+- (NSError *)error {
+    NSString *status = self.status;
+    NSError *anError = nil;
+    if ([status isEqualToString:TMLAPIResponseStatusError] == YES) {
+        NSDictionary *userInfo = self.userInfo;
+        NSInteger code = [userInfo[TMLAPIResponseErrorCodeKey] integerValue];
+        NSString *description = userInfo[TMLAPIResponseErrorDescriptionKey];
+        anError = [NSError errorWithDomain:TMLAPIResponseErrorDomain
+                                      code:code
+                                  userInfo:@{NSLocalizedDescriptionKey: description}];
+    }
+    return anError;
 }
 
 @end

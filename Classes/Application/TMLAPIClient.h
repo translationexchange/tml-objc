@@ -31,11 +31,25 @@
 #import <Foundation/Foundation.h>
 #import "TMLAPIResponse.h"
 
-extern NSString * const TMLAPIResponseResultKey;
+extern NSString * const TMLAPIOptionsLocale;
+extern NSString * const TMLAPIOptionsIncludeAll;
+extern NSString * const TMLAPIOptionsClientName;
+extern NSString * const TMLAPIOptionsIncludeDefinition;
 
+/**
+ *  Handler for TML's API responses. A successful response would normally 
+ *  be indicated by a non-nil apiResponse parameter and a nil error parameter.
+ *  An error parameter would indicate either an error with response or an erroneous response.
+ *  The former are typically related to bad requests or network problems. The latter are
+ *  errors returned by the API, and as such, would also be indicated in apiResponse.error.
+ *
+ *  @param apiResponse API Response object
+ *  @param response    NSURLResponse object from which apiResponse is derived
+ *  @param error       Error indicating either an error with response or an erroneous response.
+ */
 typedef void (^TMLAPIResponseHandler)(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error);
 
-@class TMLApplication;
+@class TMLApplication, TMLSource, TMLTranslation, TMLTranslationKey;
 
 @interface TMLAPIClient : NSObject
 
@@ -105,5 +119,59 @@ completionBlock:(TMLAPIResponseHandler)completionBlock;
   cachePolicy:(NSURLRequestCachePolicy)cachePolicy
 completionBlock:(TMLAPIResponseHandler)completionBlock;
 
+#pragma mark - Methods
+
+/**
+ *  Fetches list of translations for specified locale. If source is given, 
+ *  list will be restricted to that source, otherwise results will be
+ *  for the entire project.
+ *
+ *  @param locale          Locale
+ *  @param options         Dictionary of API options, using TMLAPIOptions for keys
+ *  @param source          Source, or nil for project-wide translations
+ *  @param completionBlock Completion block
+ */
+- (void) getTranslationsForLocale:(NSString *)locale
+                           source:(TMLSource *)source
+                          options:(NSDictionary *)options
+                  completionBlock:(void(^)(NSDictionary <NSString *,TMLTranslation *>*translations, NSError *error))completionBlock;
+
+/**
+ *  Fetches project info.
+ *
+ *  @param completionBlock Completion block
+ */
+- (void) getProjectInfoWithOptions:(NSDictionary *)options
+                   completionBlock:(void(^)(NSDictionary *projectInfo, NSError *error))completionBlock;
+
+/**
+ *  Fetches language info for given locale.
+ *
+ *  @param locale          Locale for lanuages (i.e. "en")
+ *  @param options         Dictionary of options with TMLAPIOptions for keys. For example @{TMLAPIOptionsIncludeDefition: @YES}
+ *  @param completionBlock Completion block
+ */
+- (void) getLanguageForLocale:(NSString *)locale
+                      options:(NSDictionary *)options
+              completionBlock:(void(^)(TMLLanguage *language, NSError *error))completionBlock;
+
+/**
+ *  Fetches list of languages defined in current project
+ *
+ *  @param options         Dictionary of options witih TMLAPIOptions for keys
+ *  @param completionBlock Completion block
+ */
+- (void) getProjectLanguagesWithOptions:(NSDictionary *)options
+                        completionBlock:(void(^)(NSArray <TMLLanguage *>* languages, NSError *error))completionBlock;
+
+/**
+ *  Register source and translation key associations.
+ *  Data passed in sourceKeys parameter will be copied...
+ *
+ *  @param sourceKeys      Dictionary listing translation keys for each source
+ *  @param completionBlock Completion block, indicating successful submissions
+ */
+- (void) registerTranslationKeysBySource:(NSDictionary <TMLSource *, TMLTranslationKey *>*)sourceKeys
+                         completionBlock:(void(^)(BOOL success))completionBlock;
 
 @end
