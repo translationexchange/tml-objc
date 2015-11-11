@@ -326,7 +326,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
 }
 
 - (void)registerTranslationKeysBySource:(NSDictionary<TMLSource *,TMLTranslationKey *> *)sourceKeys
-                        completionBlock:(void (^)(BOOL))completionBlock
+                        completionBlock:(void (^)(BOOL, NSError *))completionBlock
 {
     NSMutableArray *sourceKeysList = [NSMutableArray array];
     for (TMLSource *source in sourceKeys) {
@@ -340,7 +340,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
         TMLError(@"Error submitting translation keys by source: %@", error);
     }
     if (completionBlock != nil) {
-        completionBlock(success);
+        completionBlock(success, error);
     }
 }];
 }

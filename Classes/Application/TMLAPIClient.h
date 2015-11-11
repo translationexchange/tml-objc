@@ -172,6 +172,6 @@ completionBlock:(TMLAPIResponseHandler)completionBlock;
  *  @param completionBlock Completion block, indicating successful submissions
  */
 - (void) registerTranslationKeysBySource:(NSDictionary <TMLSource *, TMLTranslationKey *>*)sourceKeys
-                         completionBlock:(void(^)(BOOL success))completionBlock;
+                         completionBlock:(void(^)(BOOL success, NSError *error))completionBlock;
 
 @end

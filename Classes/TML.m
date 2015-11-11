@@ -101,11 +101,8 @@ NSString * const TMLOptionsHostName = @"host";
     
     NSString *localeToLoad = self.currentLanguage.locale;
     [app loadTranslationsForLocale:localeToLoad completionBlock:^(BOOL success) {
-        if (success == NO) {
-            TMLError(@"Failed to load translations for locale: %@", localeToLoad);
-        }
-        else {
-            TMLDebug(@"Loaded translations for locale: %@", localeToLoad);
+        if (success == YES) {
+            TMLInfo(@"Loaded translations for locale: %@", localeToLoad);
         }
     }];
 }
