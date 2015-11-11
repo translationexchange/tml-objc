@@ -93,37 +93,35 @@
     hud.labelText = TMLLocalizedString(@"Loading Languages...");
     TMLAPIClient *apiClient = [[[TML sharedInstance] currentApplication] apiClient];
     
-    [apiClient get:@"applications/current/languages"
-        parameters:nil
-   completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-       if (apiResponse != nil) {
-           self.languages = [[apiResponse resultsAsLanguages] mutableCopy];
-           [self.tableView reloadData];
-           
-           hud.labelText = TMLLocalizedString(@"Languages updated");
-           
-           dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
-               [hud hide:YES];
-           });
-       }
-       else {
-           // TODO: no more cache; should use bundles
-//           NSArray *locales = [[TML cache] cachedLocales];
-//           NSArray *locales = nil;
-//           
-//           self.languages = [NSMutableArray array];
-//           for (NSString *locale in locales) {
-//               [self.languages addObject:[[TML currentApplication] languageForLocale:locale]];
-//           }
-//           [self.tableView reloadData];
-//           
-//           hud.labelText = TMLLocalizedString(@"Loaded cached languages");
-//           
-//           dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
-//               [hud hide:YES];
-//           });
-       }
-   }];
+    [apiClient getProjectLanguagesWithOptions:nil completionBlock:^(NSArray<TMLLanguage *> *newLanguages, NSError *error) {
+        if (newLanguages != nil) {
+            self.languages = [newLanguages mutableCopy];
+            [self.tableView reloadData];
+            
+            hud.labelText = TMLLocalizedString(@"Languages updated");
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
+                [hud hide:YES];
+            });
+        }
+        else {
+            // TODO: no more cache; should use bundles
+            //           NSArray *locales = [[TML cache] cachedLocales];
+            //           NSArray *locales = nil;
+            //
+            //           self.languages = [NSMutableArray array];
+            //           for (NSString *locale in locales) {
+            //               [self.languages addObject:[[TML currentApplication] languageForLocale:locale]];
+            //           }
+            //           [self.tableView reloadData];
+            //
+            //           hud.labelText = TMLLocalizedString(@"Loaded cached languages");
+            //
+                       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
+                           [hud hide:YES];
+                       });
+        }
+    }];
 }
 
 -(IBAction)dismiss:(id)sender {
@@ -160,8 +158,8 @@
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText = TMLLocalizedString(@"Switching language...");
 
-    [TML changeLocale:language.locale completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-        if (apiResponse != nil) {
+    [TML changeLocale:language.locale completionBlock:^(BOOL success) {
+        if (success == YES) {
             if (delegate && [delegate respondsToSelector:@selector(tmlLanguageSelectorViewController:didSelectLanguage:)]) {
                 [delegate tmlLanguageSelectorViewController:self didSelectLanguage:language];
             }
