@@ -42,7 +42,7 @@
 @property(nonatomic, strong) NSString *keyword;
 
 // Description of the context
-@property(nonatomic, strong) NSString *description;
+@property(nonatomic, strong) NSString *contextDescription;
 
 // List of available rule keys. num => [one, few, many, other]
 @property(nonatomic, strong) NSArray *keys;

@@ -39,7 +39,7 @@
 @property(nonatomic, strong) TMLLanguageCase *languageCase;
 
 // Rule description
-@property(nonatomic, strong) NSString *description;
+@property(nonatomic, strong) NSString *ruleDescription;
 
 // Rule evaluation examples
 @property(nonatomic, strong) NSString *examples;

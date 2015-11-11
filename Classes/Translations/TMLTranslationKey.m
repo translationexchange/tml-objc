@@ -41,14 +41,15 @@
 #import "TMLTranslationKey.h"
 
 @implementation TMLTranslationKey
-@synthesize application, key, label, description, locale, level, translations;
+
+# pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone {
     TMLTranslationKey *aCopy = [[TMLTranslationKey alloc] init];
     aCopy.application = [self.application copyWithZone:zone];
     aCopy.key = [self.key copyWithZone:zone];
     aCopy.label = [self.label copyWithZone:zone];
-    aCopy.description = [self.description copyWithZone:zone];
+    aCopy.translationKeyDescription = [self.description copyWithZone:zone];
     aCopy.locale = [self.locale copyWithZone:zone];
     aCopy.level = [self.level copyWithZone:zone];
     aCopy.translations = [self.translations copyWithZone:zone];
@@ -71,13 +72,15 @@
     return ([self.application isEqualToApplication:translationKey.application] == YES
             && [self.key isEqualToString:translationKey.key] == YES
             && [self.label isEqualToString:translationKey.label] == YES
-            && [self.description isEqualToString:translationKey.description] == YES
+            && [self.translationKeyDescription isEqualToString:translationKey.translationKeyDescription] == YES
             && [self.locale isEqualToString:translationKey.locale] == YES
             && [self.level isEqualToNumber:translationKey.level] == YES
             && [self.translations isEqualToArray:translationKey.translations] == YES
             && [self.dataTokens isEqualToArray:translationKey.dataTokens] == YES
             && [self.decorationTokens isEqualToArray:translationKey.decorationTokens] == YES);
 }
+
+#pragma mark -
 
 + (NSString *) generateKeyForLabel: (NSString *) label {
     return [self generateKeyForLabel:label andDescription:@""];
@@ -93,7 +96,7 @@
         self.application = [attributes objectForKey:@"application"];
 
     self.label = [attributes objectForKey:@"label"];
-    self.description = [attributes objectForKey:@"description"];
+    self.translationKeyDescription = [attributes objectForKey:@"translationKeyDescription"];
     
     if ([attributes objectForKey:@"key"]) {
         self.key = [attributes objectForKey:@"key"];
@@ -198,6 +201,13 @@
     }
     
     return translatedLabel;
+}
+
+- (NSString *)translationKeyDescription {
+    if (_translationKeyDescription == nil) {
+        return self.label;
+    }
+    return _translationKeyDescription;
 }
 
 - (NSString *) description {

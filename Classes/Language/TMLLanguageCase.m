@@ -34,8 +34,6 @@
 
 @implementation TMLLanguageCase
 
-@synthesize language, application, keyword, latinName, nativeName, description, rules;
-
 - (id)copyWithZone:(NSZone *)zone {
     TMLLanguageCase *aCopy = [[TMLLanguageCase alloc] init];
     aCopy.language = [self.language copyWithZone:zone];
@@ -43,7 +41,7 @@
     aCopy.keyword = [self.keyword copyWithZone:zone];
     aCopy.latinName = [self.latinName copyWithZone:zone];
     aCopy.nativeName = [self.nativeName copyWithZone:zone];
-    aCopy.description = [self.description copyWithZone:zone];
+    aCopy.caseDescription = [self.caseDescription copyWithZone:zone];
     aCopy.rules = [self.rules copyWithZone:zone];
     return aCopy;
 }
@@ -73,7 +71,7 @@
     self.keyword = [attributes objectForKey:@"keyword"];
     self.latinName = [attributes objectForKey:@"latin_name"];
     self.nativeName = [attributes objectForKey:@"native_name"];
-    self.description = [attributes objectForKey:@"description"];
+    self.caseDescription = [attributes objectForKey:@"caseDescription"];
     
     NSMutableArray *caseRules = [NSMutableArray array];
     if ([attributes objectForKey:@"rules"]) {

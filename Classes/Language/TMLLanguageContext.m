@@ -36,14 +36,11 @@
 
 @implementation TMLLanguageContext
 
-@synthesize language, keyword, description, keys, tokenExpression, variableNames, tokenMapping, rules, fallbackRule;
-@synthesize tokenRegularExpression;
-
 - (id)copyWithZone:(NSZone *)zone {
     TMLLanguageContext *aCopy = [[TMLLanguageContext alloc] init];
     aCopy.language = [self.language copyWithZone:zone];
     aCopy.keyword = [self.keyword copyWithZone:zone];
-    aCopy.description = [self.description copyWithZone:zone];
+    aCopy.contextDescription = [self.contextDescription copyWithZone:zone];
     aCopy.keys = [self.keys copyWithZone:zone];
     aCopy.tokenExpression = [self.tokenExpression copyWithZone:zone];
     aCopy.tokenRegularExpression = [self.tokenRegularExpression copyWithZone:zone];
@@ -59,7 +56,7 @@
         self.language = [attributes valueForKey:@"language"];
     
     self.keyword = [attributes objectForKey:@"keyword"];
-    self.description = [attributes objectForKey:@"description"];
+    self.contextDescription = [attributes objectForKey:@"contextDescription"];
     self.keys = [attributes objectForKey:@"keys"];
     self.tokenExpression = [attributes objectForKey:@"token_expression"];
     self.variableNames = [attributes objectForKey:@"variables"];
@@ -183,8 +180,11 @@
     return self.fallbackRule;
 }
 
-- (NSString *) description {
-    return [NSString stringWithFormat:@"%@ (%@)", self.keyword, self.language.locale];
+- (NSString *) contextDescription {
+    if (_contextDescription == nil) {
+        return [NSString stringWithFormat:@"%@ (%@)", self.keyword, self.language.locale];
+    }
+    return _contextDescription;
 }
 
 

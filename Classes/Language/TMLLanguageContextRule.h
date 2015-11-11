@@ -42,7 +42,7 @@
 @property(nonatomic, strong) NSString *keyword;
 
 // Description of the rule
-@property(nonatomic, strong) NSString *description;
+@property(nonatomic, strong) NSString *ruleDescription;
 
 // Examples of the rule application
 @property(nonatomic, strong) NSString *examples;

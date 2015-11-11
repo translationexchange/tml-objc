@@ -51,7 +51,7 @@
 @property(nonatomic, strong) NSString *nativeName;
 
 // Description of the language case
-@property(nonatomic, strong) NSString *description;
+@property(nonatomic, strong) NSString *caseDescription;
 
 // List of all rules for the language case
 @property(nonatomic, strong) NSArray *rules;

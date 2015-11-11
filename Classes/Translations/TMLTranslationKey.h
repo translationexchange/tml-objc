@@ -45,7 +45,7 @@
 @property(nonatomic, strong) NSString *label;
 
 // Description of the text to be translated
-@property(nonatomic, strong) NSString *description;
+@property(nonatomic, strong) NSString *translationKeyDescription;
 
 // Locale of the text to be translated
 @property(nonatomic, strong) NSString *locale;

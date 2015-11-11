@@ -37,12 +37,10 @@
 
 @implementation TMLLanguageCaseRule
 
-@synthesize languageCase, description, examples, conditions, compiledConditions, operations, compiledOperations;
-
 - (id)copyWithZone:(NSZone *)zone {
     TMLLanguageCaseRule *aCopy = [[TMLLanguageCaseRule alloc] init];
     aCopy.languageCase = [self.languageCase copyWithZone:zone];
-    aCopy.description = [self.description copyWithZone:zone];
+    aCopy.ruleDescription = [self.ruleDescription copyWithZone:zone];
     aCopy.examples = [self.examples copyWithZone:zone];
     aCopy.conditions = [self.conditions copyWithZone:zone];
     aCopy.compiledConditions = [self.compiledConditions copyWithZone:zone];
@@ -71,7 +69,7 @@
     if ([attributes objectForKey:@"language_case"])
         self.languageCase = [attributes objectForKey:@"language_case"];
 
-    self.description = [attributes objectForKey:@"description"];
+    self.ruleDescription = [attributes objectForKey:@"ruleDescription"];
     self.examples = [attributes objectForKey:@"examples"];
     self.conditions = [attributes objectForKey:@"conditions"];
     self.compiledConditions = [attributes objectForKey:@"conditions_expression"];
@@ -147,8 +145,11 @@
     return (NSString *) [p evaluateExpression:[self operationsExpression]];
 }
 
-- (NSString *) description {
-    return self.conditions;
+- (NSString *) ruleDescription {
+    if (_ruleDescription == nil) {
+        return self.conditions;
+    }
+    return _ruleDescription;
 }
 
 @end
