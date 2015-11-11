@@ -86,6 +86,8 @@
 
 - (id) initWithToken: (NSString *) token host: (NSString *) appHost;
 
+- (BOOL)isEqualToApplication:(TMLApplication *)application;
+
 - (void) loadTranslationsForLocale: (NSString *) locale
                    completionBlock:(TMLAPIResponseHandler)completionBlock;
 

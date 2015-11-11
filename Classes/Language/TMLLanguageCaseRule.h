@@ -56,6 +56,8 @@
 // Compiled operations in the array form
 @property(nonatomic, strong) NSArray *compiledOperations;
 
+- (BOOL)isEqualToLanguageCaseRule:(TMLLanguageCaseRule *)languageCaseRule;
+
 // Compiled conditions expression
 - (NSArray *) conditionsExpression;
 

@@ -51,6 +51,22 @@
     return aCopy;
 }
 
+- (BOOL)isEqual:(id)object {
+    if (self == object) {
+        return YES;
+    }
+    if ([object isKindOfClass:[self class]] == NO) {
+        return NO;
+    }
+    return [self isEqualToLanguageCaseRule:(TMLLanguageCaseRule *)object];
+}
+
+- (BOOL)isEqualToLanguageCaseRule:(TMLLanguageCaseRule *)languageCaseRule {
+    return ([self.languageCase isEqualToLanguageCase:languageCaseRule.languageCase] == YES
+            && [self.conditions isEqualToString:languageCaseRule.conditions] == YES
+            && [self.operations isEqualToString:languageCaseRule.conditions]);
+}
+
 - (void) updateAttributes: (NSDictionary *) attributes {
     if ([attributes objectForKey:@"language_case"])
         self.languageCase = [attributes objectForKey:@"language_case"];

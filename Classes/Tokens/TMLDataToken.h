@@ -69,6 +69,8 @@
 // Initialized a new token
 - (id) initWithName: (NSString *) newFullName inLabel: (NSString *) newLabel;
 
+- (BOOL)isEqualToDataToken:(TMLDataToken *)dataToken;
+
 // Parsing token data
 - (void) parse;
 

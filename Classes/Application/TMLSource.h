@@ -44,6 +44,8 @@
 // Translations registered with the source
 @property(nonatomic, strong) NSDictionary *translations;
 
+- (BOOL)isEqualToSource:(TMLSource *)source;
+
 // Loads translations for the source
 - (void) loadTranslationsForLocale: (NSString *) locale;
 

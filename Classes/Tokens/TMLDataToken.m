@@ -124,6 +124,24 @@
     return aCopy;
 }
 
+- (BOOL)isEqual:(id)object {
+    if (self == object) {
+        return YES;
+    }
+    if ([object isKindOfClass:[self class]] == NO) {
+        return NO;
+    }
+    return [self isEqualToDataToken:(TMLDataToken *)object];
+}
+
+- (BOOL)isEqualToDataToken:(TMLDataToken *)dataToken {
+    return ([self.label isEqualToString:dataToken.label] == YES
+            && [self.fullName isEqualToString:dataToken.fullName] == YES
+            && [self.shortName isEqualToString:dataToken.shortName] == YES
+            && [self.caseKeys isEqualToArray:dataToken.caseKeys] == YES
+            && [self.contextKeys isEqualToArray:dataToken.contextKeys] == YES);
+}
+
 + (NSString *) sanitizeValue: (NSString *) value {
     return [value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 }

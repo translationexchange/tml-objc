@@ -65,6 +65,8 @@
 
 + (TMLLanguage *) defaultLanguage;
 
+- (BOOL)isEqualToLanguage:(TMLLanguage *)language;
+
 - (NSString *) name;
 
 - (NSString *) fullName;

@@ -48,6 +48,23 @@
     return aCopy;
 }
 
+- (BOOL)isEqual:(id)object {
+    if (self == object) {
+        return YES;
+    }
+    if ([object isKindOfClass:[self class]] == NO) {
+        return NO;
+    }
+    return [self isEqualToLanguageCase:(TMLLanguageCase *)object];
+}
+
+- (BOOL)isEqualToLanguageCase:(TMLLanguageCase *)languageCase {
+    return ([self.language isEqualToLanguage:languageCase.language] == YES
+            && [self.application isEqualToString:languageCase.application] == YES
+            && [self.latinName isEqualToString:languageCase.latinName] == YES
+            && [self.rules isEqualToArray:languageCase.rules] == YES);
+}
+
 - (void) updateAttributes: (NSDictionary *) attributes {
     if ([attributes objectForKey:@"language"])
         self.language = [attributes objectForKey:@"language"];

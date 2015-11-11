@@ -57,6 +57,28 @@
     return aCopy;
 }
 
+- (BOOL)isEqual:(id)object {
+    if (self == object) {
+        return YES;
+    }
+    if ([object isKindOfClass:[self class]] == NO) {
+        return NO;
+    }
+    return [self isEqualToTranslationKey:(TMLTranslationKey *)object];
+}
+
+- (BOOL)isEqualToTranslationKey:(TMLTranslationKey *)translationKey {
+    return ([self.application isEqualToApplication:translationKey.application] == YES
+            && [self.key isEqualToString:translationKey.key] == YES
+            && [self.label isEqualToString:translationKey.label] == YES
+            && [self.description isEqualToString:translationKey.description] == YES
+            && [self.locale isEqualToString:translationKey.locale] == YES
+            && [self.level isEqualToNumber:translationKey.level] == YES
+            && [self.translations isEqualToArray:translationKey.translations] == YES
+            && [self.dataTokens isEqualToArray:translationKey.dataTokens] == YES
+            && [self.decorationTokens isEqualToArray:translationKey.decorationTokens] == YES);
+}
+
 + (NSString *) generateKeyForLabel: (NSString *) label {
     return [self generateKeyForLabel:label andDescription:@""];
 }

@@ -50,6 +50,26 @@
     return [NSString stringWithFormat:@"%@ Key: %@", [super description], self.key];
 }
 
+- (BOOL)isEqualToSource:(TMLSource *)source {
+    return [self.key isEqualToString:source.key];
+}
+
+- (BOOL)isEqual:(id)object {
+    if (self == object) {
+        return YES;
+    }
+    
+    if ([object isKindOfClass:[self class]] == NO) {
+        return NO;
+    }
+    
+    return [self isEqualToSource:(TMLSource *)object];
+}
+
+- (NSUInteger)hash {
+    return [self.key hash];
+}
+
 - (void) updateAttributes: (NSDictionary *) attributes {
     if ([attributes objectForKey:@"application"])
         self.application = [attributes objectForKey:@"application"];

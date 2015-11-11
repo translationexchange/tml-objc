@@ -66,6 +66,20 @@
     return aCopy;
 }
 
+- (BOOL)isEqualToLanguage:(TMLLanguage *)language {
+    return self.languageID = language.languageID && self.locale == language.locale;
+}
+
+- (BOOL)isEqual:(id)object {
+    if (self == object) {
+        return YES;
+    }
+    if ([object isKindOfClass:[self class]] == NO) {
+        return NO;
+    }
+    return [self isEqualToLanguage:(TMLLanguage *)object];
+}
+
 - (void) updateAttributes: (NSDictionary *) attributes {
     if ([attributes objectForKey:@"application"])
         self.application = [attributes objectForKey:@"application"];

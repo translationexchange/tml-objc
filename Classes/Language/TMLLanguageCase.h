@@ -56,6 +56,8 @@
 // List of all rules for the language case
 @property(nonatomic, strong) NSArray *rules;
 
+- (BOOL)isEqualToLanguageCase:(TMLLanguageCase *)languageCase;
+
 // Finds matching rule for value
 - (NSObject *) findMatchingRule: (NSString *) value;
 

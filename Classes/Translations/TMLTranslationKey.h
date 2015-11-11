@@ -68,6 +68,8 @@
 // Generates unique hash key for the translation key using label and description
 + (NSString *) generateKeyForLabel: (NSString *) label andDescription: (NSString *) description;
 
+- (BOOL)isEqualToTranslationKey:(TMLTranslationKey *)translationKey;
+
 // Returns YES if there are translations available for the key
 - (BOOL) hasTranslations;
 

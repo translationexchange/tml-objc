@@ -79,6 +79,23 @@
     return aCopy;
 }
 
+- (BOOL)isEqual:(id)object {
+    if (self == object) {
+        return YES;
+    }
+    if ([object isKindOfClass:[self class]] == NO) {
+        return NO;
+    }
+    return [self isEqualToApplication:(TMLApplication *)object];
+}
+
+- (BOOL)isEqualToApplication:(TMLApplication *)application {
+    return ([self.host isEqualToString:application.host] == YES
+            && [self.key isEqualToString:application.key] == YES
+            && [self.secret isEqualToString:application.secret] == YES
+            && [self.accessToken isEqualToString:application.accessToken] == YES);
+}
+
 - (void) updateAttributes: (NSDictionary *) attributes {
     self.key = [attributes objectForKey:@"key"];
     self.name = [attributes objectForKey:@"name"];
