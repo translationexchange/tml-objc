@@ -360,7 +360,7 @@
 		C42C562A1BF2674D00207911 /* TMLJSONValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLJSONValueTransformer.m; sourceTree = "<group>"; };
 		C42C562F1BF2695700207911 /* NSObject+TMLJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TMLJSON.h"; sourceTree = "<group>"; };
 		C42C56301BF2695700207911 /* NSObject+TMLJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TMLJSON.m"; sourceTree = "<group>"; };
-		C42C56321BF316BE00207911 /* TMLPrivateConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLPrivateConfig.h; sourceTree = "<group>"; };
+		C42C56331BF31A6600207911 /* TMLPrivateConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLPrivateConfig.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -442,13 +442,13 @@
 		4C4233EE18B9B38700B76555 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				C42C56331BF31A6600207911 /* TMLPrivateConfig.h */,
 				4CE06A2118BD883A0088AB3E /* Models */,
 				4C4233EF18B9B38700B76555 /* Supporting Files */,
 				4C7A871318BD354B00C2375D /* Controllers */,
 				4C7A871218BD354100C2375D /* Assets */,
 				4C4233F718B9B38700B76555 /* AppDelegate.h */,
 				4C4233F818B9B38700B76555 /* AppDelegate.m */,
-				C42C56321BF316BE00207911 /* TMLPrivateConfig.h */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
