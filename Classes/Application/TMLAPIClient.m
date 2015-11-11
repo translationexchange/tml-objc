@@ -235,7 +235,7 @@ completionBlock:(TMLAPIResponseHandler)completionBlock
    parameters:params
 completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
     NSDictionary <NSString *, TMLTranslation *>*translations = nil;
-    if (apiResponse != nil) {
+    if ([apiResponse isSuccessfulResponse] == YES) {
         translations = [apiResponse resultsAsTranslations];
     }
     else {
@@ -265,7 +265,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
              parameters:params
         completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
             NSMutableDictionary *projectInfo = nil;
-            if (apiResponse != nil) {
+            if ([apiResponse isSuccessfulResponse] == YES) {
                 projectInfo = [apiResponse.userInfo mutableCopy];
                 
                 // marshal languages; application info response will include languages structs
@@ -293,7 +293,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
    parameters:options
 completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
     TMLLanguage *lang = nil;
-    if (apiResponse != nil) {
+    if ([apiResponse isSuccessfulResponse] == YES) {
         lang = [[TMLLanguage alloc] initWithAttributes:apiResponse.userInfo];
     }
     else {
@@ -313,7 +313,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
    parameters:options
 completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
     NSArray <TMLLanguage *>*languages = nil;
-    if (apiResponse != nil) {
+    if ([apiResponse isSuccessfulResponse] == YES) {
         languages = [apiResponse resultsAsLanguages];
     }
     else {
