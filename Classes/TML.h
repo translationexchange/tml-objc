@@ -107,7 +107,7 @@
 
 + (TMLLanguage *) currentLanguage;
 
-+ (void) changeLocale:(NSString *)locale completionBlock:(TMLAPIResponseHandler)completionBlock;
++ (void) changeLocale:(NSString *)locale completionBlock:(void(^)(BOOL success))completionBlock;
 
 + (void) reloadTranslations;
 
