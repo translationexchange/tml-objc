@@ -143,17 +143,21 @@
 - (void) loadTranslationsForLocale: (NSString *) locale
                    completionBlock:(void(^)(BOOL success))completionBlock
 {
-    [self.apiClient getTranslationsForLocale:locale source:nil options:@{TMLAPIOptionsIncludeAll: @YES} completionBlock:^(NSDictionary <NSString *,TMLTranslation *> *newTranslations, NSError *error) {
-        BOOL success = NO;
-        if (newTranslations != nil) {
-            success = YES;
-            [self updateTranslations:newTranslations forLocale:locale];
-            [[NSNotificationCenter defaultCenter] postNotificationName: TMLLanguageChangedNotification object: locale];
-        }
-        if (completionBlock != nil) {
-            completionBlock(success);
-        }
-    }];
+    [self.apiClient getTranslationsForLocale:locale
+                                      source:nil
+                                     options:@{TMLAPIOptionsIncludeAll: @YES}
+                             completionBlock:^(NSDictionary <NSString *,TMLTranslation *> *newTranslations, NSError *error) {
+                                 BOOL success = NO;
+                                 if (newTranslations != nil) {
+                                     success = YES;
+                                     [self updateTranslations:newTranslations forLocale:locale];
+                                     [[NSNotificationCenter defaultCenter] postNotificationName:TMLLanguageChangedNotification
+                                                                                         object: locale];
+                                 }
+                                 if (completionBlock != nil) {
+                                     completionBlock(success);
+                                 }
+                             }];
 }
 
 - (BOOL) isTranslationKeyRegistered: (NSString *) translationKey {
@@ -250,14 +254,15 @@
     TMLInfo(@"Submitting missing translations...");
     
     NSMutableDictionary *missingTranslations = self.missingTranslationKeysBySources;
-    [self.apiClient registerTranslationKeysBySource:missingTranslations completionBlock:^(BOOL success) {
-        if (success == YES) {
-            NSMutableDictionary *existingSources = self.sourcesByKeys;
-            for (TMLSource *source in missingTranslations) {
-                [existingSources removeObjectForKey:source.key];
-            }
-        }
-    }];
+    [self.apiClient registerTranslationKeysBySource:missingTranslations
+                                    completionBlock:^(BOOL success, NSError *error) {
+                                        if (success == YES) {
+                                            NSMutableDictionary *existingSources = self.sourcesByKeys;
+                                            for (TMLSource *source in missingTranslations) {
+                                                [existingSources removeObjectForKey:source.key];
+                                            }
+                                        }
+                                    }];
     
     [missingTranslations removeAllObjects];
 }
