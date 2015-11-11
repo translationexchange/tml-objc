@@ -13,11 +13,19 @@
 #import "TMLApplication.h"
 #import "TMLPostOffice.h"
 
+#ifdef TMLPrivateConfig_h
+#include "TMLPrivateConfig.h"
+#endif
+
+#ifndef TMLAPIKey
+#define TMLAPIKey @"8641229aae46c7d39e78657e9da0c86c80f432c21e4e4fb5bf0934673499be7a"
+#endif
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    [TML sharedInstanceWithToken:@"8641229aae46c7d39e78657e9da0c86c80f432c21e4e4fb5bf0934673499be7a"];
+    [TML sharedInstanceWithToken:TMLAPIKey];
 
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
     self.window.rootViewController = [[IIViewDeckController alloc] initWithCenterViewController:[mainStoryboard instantiateViewControllerWithIdentifier: @"WelcomeViewController"]
