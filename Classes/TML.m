@@ -42,7 +42,13 @@
 #import "TMLTranslationKey.h"
 #import <CommonCrypto/CommonDigest.h>
 
+#define USE_STAGING 1
+
+#if USE_STAGING
+#define kTMLServiceHost @"https://staging-api.translationexchange.com"
+#else
 #define kTMLServiceHost @"https://api.translationexchange.com"
+#endif
 
 /************************************************************************************
  ** Implementation
