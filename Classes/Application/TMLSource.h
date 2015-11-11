@@ -51,7 +51,8 @@ extern NSString * const TMLSourceDefaultKey;
 - (BOOL)isEqualToSource:(TMLSource *)source;
 
 // Loads translations for the source
-- (void) loadTranslationsForLocale: (NSString *) locale;
+- (void) loadTranslationsForLocale: (NSString *) locale
+                   completionBlock:(void(^)(BOOL success))completionBlock;
 
 // Returns translations for a key in selected locale
 - (NSArray *) translationsForKey:(NSString *) translationKey inLanguage: (NSString *) locale;
