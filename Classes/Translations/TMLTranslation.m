@@ -36,7 +36,7 @@
 
 @implementation TMLTranslation
 
-@synthesize translationKey, language, locale, label, context;
+
 
 - (void) updateAttributes: (NSDictionary *) attributes {
     if ([attributes objectForKey:@"language"])

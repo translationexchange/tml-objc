@@ -58,8 +58,6 @@ NSString * const TMLOptionsHostName = @"host";
 
 @implementation TML
 
-@synthesize configuration, currentApplication, defaultLanguage, currentLanguage, currentSource, currentUser, delegate, blockOptions;
-
 
 // Shared instance of TML
 + (TML *)sharedInstance {

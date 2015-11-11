@@ -32,7 +32,7 @@
 
 @implementation User
 
-@synthesize firstName, lastName, gender, age;
+
 
 - (id) initWithFirstName: (NSString *) fName {
     return [self initWithFirstName:fName andLastName:@""];
@@ -57,7 +57,7 @@
 }
 
 - (NSString *) name {
-    NSMutableString *name = [NSMutableString stringWithString:firstName];
+    NSMutableString *name = [NSMutableString stringWithString:_firstName];
     if ([self.lastName length] > 0) {
         [name appendFormat:@" %@", self.lastName];
     }

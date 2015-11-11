@@ -41,8 +41,6 @@
 
 @implementation TMLCache
 
-@synthesize appKey, path;
-
 - (id) initWithKey: (NSString *) key {
     if (self == [super init]) {
         self.appKey = key;
@@ -256,7 +254,7 @@
 {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if ([fileManager fileExistsAtPath:aPath isDirectory:nil] == NO) {
-        TMLError(@"Tried to load contents of localization bundle but none could be found at path: %@", path);
+        TMLError(@"Tried to load contents of localization bundle but none could be found at path: %@", _path);
         return;
     }
     NSString *bundleVersion = [[aPath lastPathComponent] tmlTranslationBundleVersionFromPath];

@@ -38,8 +38,6 @@ NSString * const TMLSourceDefaultKey = @"TML";
 
 @implementation TMLSource
 
-@synthesize application, key, translations;
-
 + (instancetype)defaultSource {
     TMLSource *source = [[TMLSource alloc] init];
     source.key = TMLSourceDefaultKey;

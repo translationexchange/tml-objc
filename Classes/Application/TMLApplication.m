@@ -46,10 +46,6 @@
 
 @implementation TMLApplication
 
-@synthesize host, key, accessToken, secret, name, defaultLocale, threshold, features, tools;
-@synthesize translations, languagesByLocales, sourcesByKeys, missingTranslationKeysBySources;
-@synthesize apiClient, postOffice;
-
 - (id) initWithToken: (NSString *) token host: (NSString *) appHost {
     if (self = [super init]) {
         self.host = appHost;
@@ -72,21 +68,21 @@
 
 - (id)copyWithZone:(NSZone *)zone {
     TMLApplication *aCopy = [[TMLApplication alloc] init];
-    aCopy.host = [host copyWithZone:zone];
-    aCopy.key = [key copyWithZone:zone];
-    aCopy.secret = [secret copyWithZone:zone];
-    aCopy.accessToken = [accessToken copyWithZone:zone];
-    aCopy.apiClient = apiClient;
-    aCopy.postOffice = postOffice;
-    aCopy.name = [name copyWithZone:zone];
-    aCopy.defaultLocale = [defaultLocale copyWithZone:zone];
-    aCopy.threshold = [threshold copyWithZone:zone];
-    aCopy.features = [features copyWithZone:zone];
-    aCopy.tools = [tools copyWithZone:zone];
-    aCopy.languagesByLocales = [languagesByLocales copyWithZone:zone];
-    aCopy.sourcesByKeys = [sourcesByKeys copyWithZone:zone];
-    aCopy.translations = [translations copyWithZone:zone];
-    aCopy.missingTranslationKeysBySources = [missingTranslationKeysBySources copyWithZone:zone];
+    aCopy.host = [_host copyWithZone:zone];
+    aCopy.key = [_key copyWithZone:zone];
+    aCopy.secret = [_secret copyWithZone:zone];
+    aCopy.accessToken = [_accessToken copyWithZone:zone];
+    aCopy.apiClient = _apiClient;
+    aCopy.postOffice = _postOffice;
+    aCopy.name = [_name copyWithZone:zone];
+    aCopy.defaultLocale = [_defaultLocale copyWithZone:zone];
+    aCopy.threshold = [_threshold copyWithZone:zone];
+    aCopy.features = [_features copyWithZone:zone];
+    aCopy.tools = [_tools copyWithZone:zone];
+    aCopy.languagesByLocales = [_languagesByLocales copyWithZone:zone];
+    aCopy.sourcesByKeys = [_sourcesByKeys copyWithZone:zone];
+    aCopy.translations = [_translations copyWithZone:zone];
+    aCopy.missingTranslationKeysBySources = [_missingTranslationKeysBySources copyWithZone:zone];
     return aCopy;
 }
 

@@ -39,8 +39,6 @@
 
 @implementation ApplicationViewController
 
-@synthesize titleLabel;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     

@@ -38,8 +38,6 @@
 
 @implementation ApplicationTableViewController
 
-@synthesize itemsTableView, items;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 }

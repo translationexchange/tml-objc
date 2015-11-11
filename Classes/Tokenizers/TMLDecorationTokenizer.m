@@ -37,8 +37,6 @@
 
 @implementation TMLDecorationTokenizer
 
-@synthesize tokenNames, fragments, tokensData, label, expression, allowedTokenNames, options;
-
 - (id) initWithLabel: (NSString *) newLabel {
     return [self initWithLabel:newLabel andAllowedTokenNames:nil];
 }

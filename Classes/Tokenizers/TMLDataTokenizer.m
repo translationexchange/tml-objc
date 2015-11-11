@@ -35,7 +35,6 @@
 #import "TMLLanguage.h"
 
 @implementation TMLDataTokenizer
-@synthesize label, tokens, allowedTokenNames;
 
 - (id) initWithLabel: (NSString *) newLabel {
     return [self initWithLabel:newLabel andAllowedTokenNames:nil];

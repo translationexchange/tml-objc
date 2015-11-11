@@ -40,8 +40,6 @@
 
 @implementation TMLAttributedDecorationTokenizer
 
-@synthesize attributes;
-
 + (void)addStroke:(NSObject *)data toRange: (NSRange) range inAttributedString: (NSMutableAttributedString *) attributedString {
     NSDictionary *styles = ((NSDictionary *) data);
 

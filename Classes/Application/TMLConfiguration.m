@@ -41,8 +41,6 @@ NSString * const TMLUUIDKey = @"TMLUUID";
 @end
 
 @implementation TMLConfiguration
-@synthesize currentLocale, defaultLocale, contextRules, defaultTokens, viewingUser;
-@synthesize inContextTranslatorEnabled, defaultLocalization;
 
 + (id) persistentValueForKey: (NSString *) key {
     return [[NSUserDefaults standardUserDefaults] valueForKey:key];
@@ -133,12 +131,12 @@ NSString * const TMLUUIDKey = @"TMLUUID";
 }
 
 - (void) setCurrentLocale:(NSString *)newLocale {
-    currentLocale = newLocale;
+    _currentLocale = newLocale;
     [TMLConfiguration setPersistentValue:newLocale forKey:@"current_locale"];
 }
 
 - (void) setDefaultLocale:(NSString *)newLocale {
-    defaultLocale = newLocale;
+    _defaultLocale = newLocale;
     [TMLConfiguration setPersistentValue:newLocale forKey:@"default_locale"];
 }
 

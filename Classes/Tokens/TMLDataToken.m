@@ -60,8 +60,6 @@
 
 @implementation TMLDataToken
 
-@synthesize label, fullName, shortName, caseKeys, contextKeys;
-
 + (NSString *) pattern {
     return @"(\\{[^_:][\\w]*(:[\\w]+)*(::[\\w]+)*\\})";
 }

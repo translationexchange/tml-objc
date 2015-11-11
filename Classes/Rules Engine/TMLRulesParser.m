@@ -43,7 +43,6 @@
 @end
 
 @implementation TMLRulesParser
-@synthesize tokens;
 
 + (NSRegularExpression *) tokensRegularExpression {
     NSString *pattern = @"[()]|\\w+|@\\w+|[\\+\\-\\!\\|\\=>&<\\*\\/%]+|\".*?\"|'.*?'";
@@ -70,7 +69,7 @@
         self.tokens = [NSMutableArray array];
         for (NSTextCheckingResult *match in matches) {
             NSString *str = [expression substringWithRange:[match range]];
-            [tokens addObject:str];
+            [_tokens addObject:str];
         }
     }
 

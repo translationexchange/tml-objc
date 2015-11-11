@@ -42,8 +42,6 @@
 
 @implementation TMLLanguage
 
-@synthesize application, locale, englishName, nativeName, rightToLeft, contexts, cases, flagUrl;
-
 + (TMLLanguage *) defaultLanguage {
     NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"en-US" ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:jsonPath];
@@ -252,8 +250,8 @@
         return [translationKey translateToLanguage: self withTokens: tokens andOptions: options];
     }
     
-    if (![application isTranslationKeyRegistered:keyHash]) {
-        [self.application registerMissingTranslationKey:translationKey];
+    if (![_application isTranslationKeyRegistered:keyHash]) {
+        [_application registerMissingTranslationKey:translationKey];
     }
     
     return [translationKey translateToLanguage: self withTokens: tokens andOptions: options];

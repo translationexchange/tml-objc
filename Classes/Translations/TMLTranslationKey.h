@@ -73,8 +73,6 @@
 // Returns YES if there are translations available for the key
 - (BOOL) hasTranslations;
 
-- (NSDictionary *) toDictionary;
-
 // Translation methods
 - (NSObject *) translateToLanguage: (TMLLanguage *) language;
 - (NSObject *) translateToLanguage: (TMLLanguage *) language withTokens: (NSDictionary *) tokens;

@@ -51,8 +51,6 @@
 
 @implementation TMLPipedToken
 
-@synthesize separator, parameters;
-
 + (NSString *) pattern {
     return @"(\\{[^_:|][\\w]*(:[\\w]+)*(::[\\w]+)*\\s*\\|\\|?[^{^}]+\\})";
 }

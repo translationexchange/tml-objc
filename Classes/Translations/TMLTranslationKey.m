@@ -58,6 +58,22 @@
     return aCopy;
 }
 
+#pragma mark - NSCoding
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    
+}
+
+- (void)decodeWithCoder:(NSCoder *)aDecoder {
+    TMLApplication *application = [aDecoder decodeObjectForKey:@"application"];
+    if (application != nil) {
+        self.application = application;
+    }
+    
+}
+
+#pragma mark - Equality
+
 - (BOOL)isEqual:(id)object {
     if (self == object) {
         return YES;
@@ -114,18 +130,6 @@
 
 - (BOOL) hasTranslations {
     return [self.translations count] > 0;
-}
-
-- (NSDictionary *) toDictionary {
-    NSMutableDictionary *data = [NSMutableDictionary dictionary];
-    [data setObject:label forKey:@"label"];
-    if (locale!= nil && [locale length] > 0)
-        [data setObject:locale forKey:@"locale"];
-    if (description!= nil && [description length] > 0)
-        [data setObject:description forKey:@"description"];
-    if (level!=nil)
-        [data setObject:level forKey:@"level"];
-    return data;
 }
 
 - (TMLTranslation *) findFirstAcceptableTranslationForTokens: (NSDictionary *) tokens {

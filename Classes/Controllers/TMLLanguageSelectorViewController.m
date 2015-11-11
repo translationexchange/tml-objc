@@ -48,8 +48,6 @@
 @end
 
 @implementation TMLLanguageSelectorViewController
-@synthesize tableView, languages;
-@synthesize delegate;
 
 + (void) changeLanguageFromController:(UIViewController *) controller {
     TMLLanguageSelectorViewController *selector = [[TMLLanguageSelectorViewController alloc] init];
@@ -129,7 +127,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [languages count];
+    return [_languages count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -160,8 +158,8 @@
 
     [TML changeLocale:language.locale completionBlock:^(BOOL success) {
         if (success == YES) {
-            if (delegate && [delegate respondsToSelector:@selector(tmlLanguageSelectorViewController:didSelectLanguage:)]) {
-                [delegate tmlLanguageSelectorViewController:self didSelectLanguage:language];
+            if (_delegate && [_delegate respondsToSelector:@selector(tmlLanguageSelectorViewController:didSelectLanguage:)]) {
+                [_delegate tmlLanguageSelectorViewController:self didSelectLanguage:language];
             }
             
             hud.labelText = TMLLocalizedString(@"Language changed");
@@ -172,8 +170,8 @@
             });
         }
         else {
-            if (delegate && [delegate respondsToSelector:@selector(tmlLanguageSelectorViewController:didSelectLanguage:)]) {
-                [delegate tmlLanguageSelectorViewController:self didSelectLanguage:language];
+            if (_delegate && [_delegate respondsToSelector:@selector(tmlLanguageSelectorViewController:didSelectLanguage:)]) {
+                [_delegate tmlLanguageSelectorViewController:self didSelectLanguage:language];
             }
             
             hud.labelText = TMLLocalizedString(@"Language changed");

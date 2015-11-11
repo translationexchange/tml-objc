@@ -32,8 +32,6 @@
 
 @implementation TMLMethodToken
 
-@synthesize objectMethod, objectName;
-
 + (NSString *) pattern {
     return @"(\\{[^_:.][\\w]*(\\.[\\w]+)(:[\\w]+)*(::[\\w]+)*\\})";
 }

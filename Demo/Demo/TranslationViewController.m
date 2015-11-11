@@ -49,9 +49,9 @@
 
 @implementation TranslationViewController
 
-@synthesize label, context, tokens, options;
 
-@synthesize navigationItem;
+
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];

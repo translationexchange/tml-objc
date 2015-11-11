@@ -43,8 +43,6 @@ NSString * const TMLAPIOptionsSourceKeys = @"source_keys";
 
 @implementation TMLAPIClient
 
-@synthesize application;
-
 #pragma mark - Init
 
 - (id) initWithApplication: (TMLApplication *) owner {

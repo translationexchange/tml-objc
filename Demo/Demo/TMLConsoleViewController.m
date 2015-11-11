@@ -45,20 +45,16 @@
 
 @implementation TMLConsoleViewController
 
-@synthesize itemsTableView, selectedTextView, textViewToolbar;
-
-@synthesize label, context, tokens, options;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 
     self.textViewToolbar = [[UIToolbar alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
-    textViewToolbar.items = [NSArray arrayWithObjects:
+    _textViewToolbar.items = [NSArray arrayWithObjects:
                              [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
                              [[UIBarButtonItem alloc]initWithTitle:@"Translate" style:UIBarButtonItemStyleDone target:self action:@selector(submitTML:)],
                              [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil],
                            nil];
-    [textViewToolbar sizeToFit];
+    [_textViewToolbar sizeToFit];
     
     self.label = @"Hello World";
     self.context = @"";
@@ -80,14 +76,14 @@
 }
 
 - (IBAction) submitTML: (id)sender {
-    [selectedTextView resignFirstResponder];
+    [_selectedTextView resignFirstResponder];
 
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
     TranslationViewController *controller = [mainStoryboard instantiateViewControllerWithIdentifier:@"TranslationViewController"];
-    controller.label = label;
-    controller.context = context;
-    controller.tokens = tokens;
-    controller.options = options;
+    controller.label = _label;
+    controller.context = _context;
+    controller.tokens = _tokens;
+    controller.options = _options;
     [self presentViewController:controller animated:YES completion:nil];
 }
 
@@ -118,33 +114,33 @@
         cell.titleLabel.text = TMLLocalizedString(@"Label");
         cell.descriptionLabel.text = TMLLocalizedString(@"Text to be translated");
         cell.textView.delegate = self;
-        cell.textView.inputAccessoryView = textViewToolbar;
+        cell.textView.inputAccessoryView = _textViewToolbar;
         cell.textView.tag = 0;
-        cell.textView.text = label;
+        cell.textView.text = _label;
         cell.optionalLabel.text = TMLLocalizedString(@"required");
     } else if (indexPath.row == 1) {
         cell.titleLabel.text = TMLLocalizedString(@"Description");
         cell.descriptionLabel.text = TMLLocalizedString(@"Context of the label");
         cell.textView.delegate = self;
-        cell.textView.inputAccessoryView = textViewToolbar;
+        cell.textView.inputAccessoryView = _textViewToolbar;
         cell.textView.tag = 1;
-        cell.textView.text = context;
+        cell.textView.text = _context;
         cell.optionalLabel.text = TMLLocalizedString(@"optional");
     } else if (indexPath.row == 2) {
         cell.titleLabel.text = TMLLocalizedString(@"Tokens");
         cell.descriptionLabel.text = TMLLocalizedString(@"Token values");
         cell.textView.delegate = self;
-        cell.textView.inputAccessoryView = textViewToolbar;
+        cell.textView.inputAccessoryView = _textViewToolbar;
         cell.textView.tag = 2;
-        cell.textView.text = tokens;
+        cell.textView.text = _tokens;
         cell.optionalLabel.text = TMLLocalizedString(@"optional");
     } else if (indexPath.row == 3) {
         cell.titleLabel.text = TMLLocalizedString(@"Options");
         cell.descriptionLabel.text = TMLLocalizedString(@"Additional options");
         cell.textView.delegate = self;
-        cell.textView.inputAccessoryView = textViewToolbar;
+        cell.textView.inputAccessoryView = _textViewToolbar;
         cell.textView.tag = 3;
-        cell.textView.text = options;
+        cell.textView.text = _options;
         cell.optionalLabel.text = TMLLocalizedString(@"optional");
     }
     

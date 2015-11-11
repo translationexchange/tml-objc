@@ -53,7 +53,7 @@
 
 @implementation TMLTranslatorViewController
 
-@synthesize webView, translationKey;
+
 
 + (void) toggleInAppTranslationsFromController:(UIViewController *) controller {
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:controller.view animated:YES];

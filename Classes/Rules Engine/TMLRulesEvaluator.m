@@ -42,8 +42,6 @@
 
 @implementation TMLRulesEvaluator
 
-@synthesize context, variables;
-
 + (NSDictionary *) defaultContext {
     NSDictionary *defaultCtx =
     @{
