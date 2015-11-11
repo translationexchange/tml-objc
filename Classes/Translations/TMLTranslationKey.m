@@ -49,7 +49,7 @@
     aCopy.application = [self.application copyWithZone:zone];
     aCopy.key = [self.key copyWithZone:zone];
     aCopy.label = [self.label copyWithZone:zone];
-    aCopy.translationKeyDescription = [self.description copyWithZone:zone];
+    aCopy.keyDescription = [self.keyDescription copyWithZone:zone];
     aCopy.locale = [self.locale copyWithZone:zone];
     aCopy.level = [self.level copyWithZone:zone];
     aCopy.translations = [self.translations copyWithZone:zone];
@@ -112,7 +112,7 @@
         self.application = [attributes objectForKey:@"application"];
 
     self.label = [attributes objectForKey:@"label"];
-    self.translationKeyDescription = [attributes objectForKey:@"translationKeyDescription"];
+    self.keyDescription = [attributes objectForKey:@"keyDescription"];
     
     if ([attributes objectForKey:@"key"]) {
         self.key = [attributes objectForKey:@"key"];
@@ -207,11 +207,11 @@
     return translatedLabel;
 }
 
-- (NSString *)translationKeyDescription {
-    if (_translationKeyDescription == nil) {
+- (NSString *)keyDescription {
+    if (_keyDescription == nil) {
         return self.label;
     }
-    return _translationKeyDescription;
+    return _keyDescription;
 }
 
 - (NSString *) description {
