@@ -29,6 +29,7 @@
  */
 
 #import "TML.h"
+#import "TMLAPIClient.h"
 #import "TMLApplication.h"
 #import "TMLConfiguration.h"
 #import "TMLLanguage.h"
@@ -37,10 +38,16 @@
 #import "TMLTranslation.h"
 #import "TMLTranslationKey.h"
 
+@interface TMLApplication() {
+    NSTimer *_timer;
+}
+
+@end
+
 @implementation TMLApplication
 
 @synthesize host, key, accessToken, secret, name, defaultLocale, threshold, features, tools;
-@synthesize translations, languagesByLocales, sourcesByKeys, missingTranslationKeysBySources, scheduler;
+@synthesize translations, languagesByLocales, sourcesByKeys, missingTranslationKeysBySources;
 @synthesize apiClient, postOffice;
 
 - (id) initWithToken: (NSString *) token host: (NSString *) appHost {
@@ -57,6 +64,10 @@
         [self load];
     }
     return self;
+}
+
+- (void)dealloc {
+    [self stopSubmissionTimerIfNecessary];
 }
 
 - (id)copyWithZone:(NSZone *)zone {
@@ -111,62 +122,12 @@
 }
 
 - (void) load {
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params setObject:@"true" forKey:@"definition"];
-    [params setObject:@"ios" forKey:@"client"];
-
-    if ([[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"])
-        [params setObject:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleIdentifier"] forKey:@"bundle_id"];
-    if ([[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"])
-        [params setObject:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"] forKey:@"display_name"];
-    
-    [self.apiClient get:@"applications/current"
-             parameters:params
-        completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-            if (apiResponse != nil) {
-                [self updateAttributes:apiResponse.results];
-            }
-        }
-     ];
-}
-
-- (void) log {
-    NSDate *lastLogDate = (NSDate*) [TMLConfiguration persistentValueForKey:@"last_log_date"];
-    
-    if (lastLogDate) {
-        NSCalendar *cal = [NSCalendar currentCalendar];
-        NSDateComponents *components = [cal components:(NSEraCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit) fromDate:[NSDate date]];
-        NSDate *today = [cal dateFromComponents:components];
-        components = [cal components:(NSEraCalendarUnit|NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit) fromDate:lastLogDate];
-        NSDate *otherDate = [cal dateFromComponents:components];
-        
-        if([today isEqualToDate:otherDate]) {
-            return;
-        }
-    }
-
-    NSMutableDictionary *params = [NSMutableDictionary dictionary];
-    [params setObject: [TMLConfiguration uuid] forKey:@"uuid"];
-    [params setObject: @"ios" forKey:@"sdk"];
-    
-    if ([[UIDevice currentDevice] respondsToSelector:@selector(model)])
-        [params setObject:[[UIDevice currentDevice] model] forKey:@"client"];
-
-    TMLConfiguration *config = [TML sharedInstance].configuration;
-    
-    if ([[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDevelopmentRegion"])
-        [params setObject:[config deviceLocale] forKey:@"client_locale"];
-    if ([[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDevelopmentRegion"])
-        [params setObject:[config currentLocale] forKey:@"selected_locale"];
-    
-    [self.apiClient get:@"applications/current/log"
-                 parameters:params
-                completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-                    if (apiResponse != nil) {
-                        [TMLConfiguration setPersistentValue:[NSDate date] forKey:@"last_log_date"];
-                    }
-                }
-     ];
+    [self.apiClient getProjectInfoWithOptions:@{TMLAPIOptionsIncludeDefinition: @YES}
+                              completionBlock:^(NSDictionary *projectInfo, NSError *error) {
+                                  if (projectInfo != nil) {
+                                      [self updateAttributes:projectInfo];
+                                  }
+                              }];
 }
 
 - (BOOL) isTranslationCacheEmpty {
@@ -180,18 +141,19 @@
 }
 
 - (void) loadTranslationsForLocale: (NSString *) locale
-                   completionBlock:(TMLAPIResponseHandler)completionBlock
+                   completionBlock:(void(^)(BOOL success))completionBlock
 {
-    [self.apiClient get: @"applications/current/translations"
-             parameters: @{@"locale": locale, @"all": @"true"}
-        completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-            if (apiResponse != nil) {
-                NSDictionary *newTranslations = [apiResponse resultsAsTranslations];
-                [self updateTranslations:newTranslations forLocale:locale];
-                [[NSNotificationCenter defaultCenter] postNotificationName: TMLLanguageChangedNotification object: locale];
-            }
-            completionBlock(apiResponse, response, error);
-        }];
+    [self.apiClient getTranslationsForLocale:locale source:nil options:@{TMLAPIOptionsIncludeAll: @YES} completionBlock:^(NSDictionary <NSString *,TMLTranslation *> *newTranslations, NSError *error) {
+        BOOL success = NO;
+        if (newTranslations != nil) {
+            success = YES;
+            [self updateTranslations:newTranslations forLocale:locale];
+            [[NSNotificationCenter defaultCenter] postNotificationName: TMLLanguageChangedNotification object: locale];
+        }
+        if (completionBlock != nil) {
+            completionBlock(success);
+        }
+    }];
 }
 
 - (BOOL) isTranslationKeyRegistered: (NSString *) translationKey {
@@ -214,8 +176,12 @@
         return lang;
     }
     
-    TMLLanguage *language = [[TMLLanguage alloc] initWithAttributes:@{@"locale": locale, @"application": self}];
-    [language load];
+    __block TMLLanguage *language = [[TMLLanguage alloc] initWithAttributes:@{@"locale": locale, @"application": self}];
+    [self.apiClient getLanguageForLocale:locale
+                                 options:nil
+                         completionBlock:^(TMLLanguage *newLanguage, NSError *error) {
+                             language = newLanguage;
+                         }];
     [self.languagesByLocales setObject:language forKey:locale];
     
     TMLDebug(@"Language: %@", [language description]);
@@ -232,85 +198,88 @@
     }
     
     TMLSource *source = [[TMLSource alloc] initWithAttributes:@{@"key": sourceKey, @"application": self}];
-    [source loadTranslationsForLocale:locale];
+    [source loadTranslationsForLocale:locale completionBlock:nil];
     [self.sourcesByKeys setObject:source forKey:sourceKey];
     
     return source;
 }
 
-- (void) registerMissingTranslationKey: (NSObject *) translationKey {
+- (void) registerMissingTranslationKey: (TMLTranslationKey *) translationKey {
     [self registerMissingTranslationKey:translationKey forSource:nil];
 }
 
-- (void) registerMissingTranslationKey: (NSObject *) translationKey forSource: (TMLSource *) source {
-    TMLTranslationKey *tkey = (TMLTranslationKey *) translationKey;
-    if ([tkey.label isEqualToString:@""])
+- (void) registerMissingTranslationKey:(TMLTranslationKey *)translationKey
+                             forSource:(TMLSource *)source
+{
+    if (translationKey.label.length == 0) {
+        TMLWarn(@"Tried to register missing translation for translationKey with empty label");
         return;
-    
-    if (self.missingTranslationKeysBySources == nil) {
-        self.missingTranslationKeysBySources = [NSMutableDictionary dictionary];
     }
     
-    NSString *sourceKey = @"TML";
-    if (source) sourceKey = source.key;
+    NSMutableDictionary *missingTranslations = self.missingTranslationKeysBySources;
+    if (missingTranslations == nil) {
+        missingTranslations = [NSMutableDictionary dictionary];
+    }
+    
+    TMLSource *actualSource = (source == nil) ? [TMLSource defaultSource] : source;
 
-    NSMutableDictionary *sourceKeys = [self.missingTranslationKeysBySources objectForKey:sourceKey];
+    NSMutableSet *sourceKeys = [missingTranslations objectForKey:actualSource];
     if (sourceKeys == nil) {
-        sourceKeys = [NSMutableDictionary dictionary];
-        [self.missingTranslationKeysBySources setObject:sourceKeys forKey:sourceKey];
+        sourceKeys = [NSMutableSet set];
     }
     
-    if ([sourceKeys objectForKey:tkey.key] == nil) {
-        [sourceKeys setObject:tkey forKey:tkey.key];
+    [sourceKeys addObject:translationKey];
+    missingTranslations[actualSource] = sourceKeys;
+    self.missingTranslationKeysBySources = missingTranslations;
+ 
+    if ([missingTranslations count] > 0) {
+        [self startSubmissionTimerIfNecessary];
     }
-    
-    if (self.scheduler == nil) {
-        TMLDebug(@"Setting up scheduler for 3 seconds...");
-        self.scheduler = [NSTimer scheduledTimerWithTimeInterval:3 target:self selector:@selector(submitMissingTranslationKeys) userInfo:nil repeats:NO];
+    else {
+        [self stopSubmissionTimerIfNecessary];
     }
 }
 
 - (void) submitMissingTranslationKeys {
-    if (self.missingTranslationKeysBySources == nil || [[self.missingTranslationKeysBySources allKeys] count] == 0) {
-        self.scheduler = nil;
+    if (self.missingTranslationKeysBySources == nil
+        || [self.missingTranslationKeysBySources count] == 0) {
+        [self stopSubmissionTimerIfNecessary];
         return;
     }
 
-    TMLDebug(@"Submitting missing translations...");
-
-    NSMutableArray *params = [NSMutableArray array];
-
-    NSArray *sourceKeys = [self.missingTranslationKeysBySources allKeys];
-    for (NSString *sourceKey in sourceKeys) {
-        NSDictionary *keys = [self.missingTranslationKeysBySources objectForKey:sourceKey];
-        NSMutableArray *keysData = [NSMutableArray array];
-        for (TMLTranslationKey *tkey in [keys allValues]) {
-            [keysData addObject:[tkey toDictionary]];
+    TMLInfo(@"Submitting missing translations...");
+    
+    NSMutableDictionary *missingTranslations = self.missingTranslationKeysBySources;
+    [self.apiClient registerTranslationKeysBySource:missingTranslations completionBlock:^(BOOL success) {
+        if (success == YES) {
+            NSMutableDictionary *existingSources = self.sourcesByKeys;
+            for (TMLSource *source in missingTranslations) {
+                [existingSources removeObjectForKey:source.key];
+            }
         }
-        
-        [params addObject:@{@"source": sourceKey, @"keys": keysData}];
+    }];
+    
+    [missingTranslations removeAllObjects];
+}
+
+#pragma mark - Timer
+- (void)startSubmissionTimerIfNecessary {
+    if (_timer != nil) {
+        return;
     }
-    
-    [self.missingTranslationKeysBySources removeAllObjects];
-    
-    NSError *error;
-    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:params options:(NSJSONWritingPrettyPrinted) error:&error];
-    
-    [self.apiClient post: @"sources/register_keys"
-              parameters: @{@"source_keys": [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]}
-         completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-             if (apiResponse != nil) {
-                 for (NSString *sourceKey in sourceKeys) {
-                     [self.sourcesByKeys removeObjectForKey:sourceKey];
-                 }
-                 
-                 [self submitMissingTranslationKeys];
-             }
-             else {
-                 TMLError(@"Failed to submit missing translation keys: %@", [error description]);
-                 self.scheduler = nil;
-             }
-         }];
+    _timer = [NSTimer timerWithTimeInterval:3.
+                                     target:self
+                                   selector:@selector(submitMissingTranslationKeys)
+                                   userInfo:nil
+                                    repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:_timer forMode:NSDefaultRunLoopMode];
+}
+
+- (void)stopSubmissionTimerIfNecessary {
+    if (_timer != nil) {
+        [_timer invalidate];
+        _timer = nil;
+    }
 }
 
 @end

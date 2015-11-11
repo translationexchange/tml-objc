@@ -34,9 +34,17 @@
 #import "TMLSource.h"
 #import "TMLTranslation.h"
 
+NSString * const TMLSourceDefaultKey = @"TML";
+
 @implementation TMLSource
 
 @synthesize application, key, translations;
+
++ (instancetype)defaultSource {
+    TMLSource *source = [[TMLSource alloc] init];
+    source.key = TMLSourceDefaultKey;
+    return source;
+}
 
 - (id)copyWithZone:(NSZone *)zone {
     TMLSource *aCopy = [[TMLSource alloc] init];

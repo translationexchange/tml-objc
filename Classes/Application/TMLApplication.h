@@ -54,9 +54,6 @@
 // PostOffice Client
 @property(nonatomic, strong) TMLPostOffice *postOffice;
 
-// Holds scheduler for background tasks
-@property(nonatomic, strong) NSTimer *scheduler;
-
 // Application name
 @property(nonatomic, strong) NSString *name;
 
@@ -82,14 +79,14 @@
 @property(nonatomic, strong) NSDictionary *translations;
 
 // Missing translation keys
-@property(nonatomic, strong) NSMutableDictionary *missingTranslationKeysBySources;
+@property(nonatomic, strong) NSMutableDictionary <TMLSource *, NSMutableSet *>*missingTranslationKeysBySources;
 
 - (id) initWithToken: (NSString *) token host: (NSString *) appHost;
 
 - (BOOL)isEqualToApplication:(TMLApplication *)application;
 
 - (void) loadTranslationsForLocale: (NSString *) locale
-                   completionBlock:(TMLAPIResponseHandler)completionBlock;
+                   completionBlock:(void(^)(BOOL success))completionBlock;
 
 - (void) resetTranslations;
 
@@ -103,13 +100,11 @@
 
 - (BOOL) isTranslationKeyRegistered: (NSString *) translationKey;
 
-- (void) registerMissingTranslationKey: (NSObject *) translationKey;
+- (void) registerMissingTranslationKey: (TMLTranslationKey *) translationKey;
 
-- (void) registerMissingTranslationKey: (NSObject *) translationKey forSource: (NSObject *) source;
+- (void) registerMissingTranslationKey: (TMLTranslationKey *) translationKey forSource: (NSObject *) source;
 
 - (void) submitMissingTranslationKeys;
-
-- (void) log;
 
 @end
 

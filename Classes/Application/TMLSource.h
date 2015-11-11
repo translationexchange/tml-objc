@@ -31,6 +31,8 @@
 #import <Foundation/Foundation.h>
 #import "TMLBase.h"
 
+extern NSString * const TMLSourceDefaultKey;
+
 @class TMLApplication;
 
 @interface TMLSource : TMLBase <NSCopying>
@@ -43,6 +45,8 @@
 
 // Translations registered with the source
 @property(nonatomic, strong) NSDictionary *translations;
+
++ (instancetype) defaultSource;
 
 - (BOOL)isEqualToSource:(TMLSource *)source;
 
