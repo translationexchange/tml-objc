@@ -34,6 +34,7 @@
 #import "TMLConfiguration.h"
 #import "TMLLanguage.h"
 #import "TMLSource.h"
+#import "NSObject+TMLJSON.h"
 
 NSString * const TMLAPIOptionsLocale = @"locale";
 NSString * const TMLAPIOptionsIncludeAll = @"all";
@@ -84,7 +85,8 @@ NSString * const TMLAPIOptionsSourceKeys = @"source_keys";
     NSMutableArray *parts = [NSMutableArray array];
     for (id paramKey in parameters) {
         id paramValue = [parameters objectForKey: paramKey];
-        NSString *part = [NSString stringWithFormat: @"%@=%@", [self urlEncode: paramKey], [self urlEncode: paramValue]];
+        NSString *paramString = ([paramValue isKindOfClass:[NSString class]] == YES) ? (NSString *)paramValue : [paramValue tmlJSONString];
+        NSString *part = [NSString stringWithFormat: @"%@=%@", [self urlEncode: paramKey], [self urlEncode: paramString]];
         [parts addObject: part];
     }
     return [parts componentsJoinedByString: @"&"];
