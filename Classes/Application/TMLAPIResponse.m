@@ -133,7 +133,7 @@ NSString * const TMLAPIResponseErrorCodeKey = @"code";
     }
     
     // not all responses contain results, some may contain arbitrary data, but some will contain "status"
-    NSString *status = self.status;
+    NSString *status = [self.status lowercaseString];
     if (status != nil) {
         return [status isEqualToString:TMLAPIResponseStatusOK];
     }
