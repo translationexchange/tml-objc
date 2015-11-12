@@ -88,7 +88,7 @@
     return ([self.application isEqualToApplication:translationKey.application] == YES
             && [self.key isEqualToString:translationKey.key] == YES
             && [self.label isEqualToString:translationKey.label] == YES
-            && [self.translationKeyDescription isEqualToString:translationKey.translationKeyDescription] == YES
+            && [self.keyDescription isEqualToString:translationKey.keyDescription] == YES
             && [self.locale isEqualToString:translationKey.locale] == YES
             && [self.level isEqualToNumber:translationKey.level] == YES
             && [self.translations isEqualToArray:translationKey.translations] == YES
