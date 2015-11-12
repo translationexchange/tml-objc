@@ -205,11 +205,11 @@
 }
 
 - (void) registerMissingTranslationKey: (TMLTranslationKey *) translationKey {
-    [self registerMissingTranslationKey:translationKey forSource:nil];
+    [self registerMissingTranslationKey:translationKey forSourceKey:nil];
 }
 
 - (void) registerMissingTranslationKey:(TMLTranslationKey *)translationKey
-                             forSource:(TMLSource *)source
+                          forSourceKey:(NSString *)sourceKey
 {
     if (translationKey.label.length == 0) {
         TMLWarn(@"Tried to register missing translation for translationKey with empty label");
@@ -221,15 +221,18 @@
         missingTranslations = [NSMutableDictionary dictionary];
     }
     
-    TMLSource *actualSource = (source == nil) ? [TMLSource defaultSource] : source;
+    NSString *effectiveSourceKey = sourceKey;
+    if (effectiveSourceKey == nil) {
+        effectiveSourceKey = TMLSourceDefaultKey;
+    }
 
-    NSMutableSet *sourceKeys = [missingTranslations objectForKey:actualSource];
+    NSMutableSet *sourceKeys = [missingTranslations objectForKey:effectiveSourceKey];
     if (sourceKeys == nil) {
         sourceKeys = [NSMutableSet set];
     }
     
     [sourceKeys addObject:translationKey];
-    missingTranslations[actualSource] = sourceKeys;
+    missingTranslations[effectiveSourceKey] = sourceKeys;
     self.missingTranslationKeysBySources = missingTranslations;
  
     if ([missingTranslations count] > 0) {
@@ -250,15 +253,15 @@
     TMLInfo(@"Submitting missing translations...");
     
     NSMutableDictionary *missingTranslations = self.missingTranslationKeysBySources;
-    [self.apiClient registerTranslationKeysBySource:missingTranslations
-                                    completionBlock:^(BOOL success, NSError *error) {
-                                        if (success == YES) {
-                                            NSMutableDictionary *existingSources = self.sourcesByKeys;
-                                            for (TMLSource *source in missingTranslations) {
-                                                [existingSources removeObjectForKey:source.key];
-                                            }
-                                        }
-                                    }];
+    [self.apiClient registerTranslationKeysBySourceKey:missingTranslations
+                                       completionBlock:^(BOOL success, NSError *error) {
+                                           if (success == YES) {
+                                               NSMutableDictionary *existingSources = self.sourcesByKeys;
+                                               for (TMLSource *source in missingTranslations) {
+                                                   [existingSources removeObjectForKey:source.key];
+                                               }
+                                           }
+                                       }];
     
     [missingTranslations removeAllObjects];
 }

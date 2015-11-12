@@ -79,7 +79,7 @@
 @property(nonatomic, strong) NSDictionary *translations;
 
 // Missing translation keys
-@property(nonatomic, strong) NSMutableDictionary <TMLSource *, NSMutableSet *>*missingTranslationKeysBySources;
+@property(nonatomic, strong) NSMutableDictionary <NSString *, NSMutableSet *>*missingTranslationKeysBySources;
 
 - (id) initWithToken: (NSString *) token host: (NSString *) appHost;
 
@@ -102,7 +102,7 @@
 
 - (void) registerMissingTranslationKey: (TMLTranslationKey *) translationKey;
 
-- (void) registerMissingTranslationKey: (TMLTranslationKey *) translationKey forSource: (NSObject *) source;
+- (void) registerMissingTranslationKey:(TMLTranslationKey *)translationKey forSourceKey:(NSString *)sourceKey;
 
 - (void) submitMissingTranslationKeys;
 

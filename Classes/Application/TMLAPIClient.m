@@ -34,6 +34,7 @@
 #import "TMLConfiguration.h"
 #import "TMLLanguage.h"
 #import "TMLSource.h"
+#import "TMLTranslationKey.h"
 #import "NSObject+TMLJSON.h"
 
 NSString * const TMLAPIOptionsLocale = @"locale";
@@ -325,12 +326,30 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
 }];
 }
 
-- (void)registerTranslationKeysBySource:(NSDictionary<TMLSource *,TMLTranslationKey *> *)sourceKeys
-                        completionBlock:(void (^)(BOOL, NSError *))completionBlock
+- (void)registerTranslationKeysBySourceKey:(NSDictionary<NSString *, NSSet <TMLTranslationKey *>*> *)keysInfo
+                           completionBlock:(void (^)(BOOL, NSError *))completionBlock
 {
     NSMutableArray *sourceKeysList = [NSMutableArray array];
-    for (TMLSource *source in sourceKeys) {
-        [sourceKeysList addObject:@{@"source": [source key], @"keys": sourceKeys[source]}];
+    for (NSString *sourceKey in keysInfo) {
+        NSSet *keys = keysInfo[sourceKey];
+        NSMutableArray *keysPayload = [NSMutableArray array];
+        for (TMLTranslationKey *key in keys) {
+            NSMutableDictionary *keyParams = [NSMutableDictionary dictionary];
+            if (key.label != nil) {
+                keyParams[@"label"] = key.label;
+            }
+            if (key.locale != nil) {
+                keyParams[@"locale"] = key.locale;
+            }
+            if (key.keyDescription != nil) {
+                keyParams[@"description"] = key.keyDescription;
+            }
+            if (key.level != nil) {
+                keyParams[@"level"] = key.level;
+            }
+            [keysPayload addObject:keyParams];
+        }
+        [sourceKeysList addObject:@{@"source": sourceKey, @"keys": keysPayload}];
     }
     [self post:@"sources/register_keys"
     parameters:@{TMLAPIOptionsSourceKeys: sourceKeysList}

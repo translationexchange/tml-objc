@@ -168,10 +168,10 @@ completionBlock:(TMLAPIResponseHandler)completionBlock;
  *  Register source and translation key associations.
  *  Data passed in sourceKeys parameter will be copied...
  *
- *  @param sourceKeys      Dictionary listing translation keys for each source
+ *  @param sourceKeys      Dictionary with keys indicating TMLSource keys, and values containing an NSSet of TMLTranslationKey's
  *  @param completionBlock Completion block, indicating successful submissions
  */
-- (void) registerTranslationKeysBySource:(NSDictionary <TMLSource *, TMLTranslationKey *>*)sourceKeys
-                         completionBlock:(void(^)(BOOL success, NSError *error))completionBlock;
+- (void) registerTranslationKeysBySourceKey:(NSDictionary <NSString *, NSSet <TMLTranslationKey *>*>*)sourceKeys
+                            completionBlock:(void(^)(BOOL success, NSError *error))completionBlock;
 
 @end

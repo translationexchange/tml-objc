@@ -239,7 +239,7 @@
                 [translationKey setTranslations:translations];
                 return [translationKey translateToLanguage: self withTokens: tokens andOptions: options];
             }
-            [self.application registerMissingTranslationKey:translationKey forSource:source];
+            [self.application registerMissingTranslationKey:translationKey forSourceKey:source.key];
 //            return [translationKey translateToLanguage: self withTokens: tokens andOptions: options];
         }
     }
