@@ -52,6 +52,16 @@ NSString * const TMLSourceDefaultKey = @"TML";
     return aCopy;
 }
 
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject:self.key forKey:@"key"];
+    [aCoder encodeObject:self.translations forKey:@"translations"];
+}
+
+- (void)decodeWithCoder:(NSCoder *)aDecoder {
+    self.key = [aDecoder decodeObjectForKey:@"key"];
+    self.translations = [aDecoder decodeObjectForKey:@"translations"];
+}
+
 - (NSString *)description {
     return [NSString stringWithFormat:@"%@ Key: %@", [super description], self.key];
 }

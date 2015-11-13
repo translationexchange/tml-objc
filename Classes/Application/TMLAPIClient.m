@@ -28,14 +28,15 @@
  *  THE SOFTWARE.
  */
 
+#import "NSObject+TMLJSON.h"
 #import "TML.h"
 #import "TMLAPIClient.h"
+#import "TMLAPISerializer.h"
 #import "TMLApplication.h"
 #import "TMLConfiguration.h"
 #import "TMLLanguage.h"
 #import "TMLSource.h"
 #import "TMLTranslationKey.h"
-#import "NSObject+TMLJSON.h"
 
 NSString * const TMLAPIOptionsLocale = @"locale";
 NSString * const TMLAPIOptionsIncludeAll = @"all";
@@ -334,20 +335,8 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
         NSSet *keys = keysInfo[sourceKey];
         NSMutableArray *keysPayload = [NSMutableArray array];
         for (TMLTranslationKey *key in keys) {
-            NSMutableDictionary *keyParams = [NSMutableDictionary dictionary];
-            if (key.label != nil) {
-                keyParams[@"label"] = key.label;
-            }
-            if (key.locale != nil) {
-                keyParams[@"locale"] = key.locale;
-            }
-            if (key.keyDescription != nil) {
-                keyParams[@"description"] = key.keyDescription;
-            }
-            if (key.level != nil) {
-                keyParams[@"level"] = key.level;
-            }
-            [keysPayload addObject:keyParams];
+            NSData *serialized = [TMLAPISerializer serializeObject:key];
+            [keysPayload addObject:[serialized tmlJSONObject]];
         }
         [sourceKeysList addObject:@{@"source": sourceKey, @"keys": keysPayload}];
     }

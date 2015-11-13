@@ -10,7 +10,6 @@
 #import "TMLJSONValueTransformer.h"
 
 @implementation NSObject (TMLJSON)
-
 - (NSString *)tmlJSONString {
     NSData *data = nil;
     if ([self conformsToProtocol:@protocol(NSCoding)] == YES) {
@@ -26,7 +25,12 @@
     }
     return [jsonData tmlJSONString];
 }
+@end
 
+@implementation NSNull (TMLJSON)
+- (NSString *)tmlJSONString {
+    return @"null";
+}
 @end
 
 @implementation NSString (TMLJSON)
@@ -45,6 +49,13 @@
         TMLError(@"Error transorming %@ to JSONObject: ", NSStringFromClass([self class]), error);
     }
     return obj;
+}
+@end
+
+@implementation NSNumber (TMLJSON)
+- (NSString *)tmlJSONString {
+    NSString *stringValue = [self stringValue];
+    return stringValue;
 }
 @end
 

@@ -61,15 +61,29 @@
 #pragma mark - NSCoding
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
-    
+    [aCoder encodeObject:self.key forKey:@"key"];
+    [aCoder encodeObject:self.label forKey:@"label"];
+    [aCoder encodeObject:self.keyDescription forKey:@"description"];
+    [aCoder encodeObject:self.locale forKey:@"locale"];
+    [aCoder encodeObject:self.level forKey:@"level"];
+    [aCoder encodeObject:self.translations forKey:@"translations"];
+    [aCoder encodeObject:self.dataTokens forKey:@"data_tokens"];
+    [aCoder encodeObject:self.decorationTokens forKey:@"decoration_tokens"];
 }
 
 - (void)decodeWithCoder:(NSCoder *)aDecoder {
     TMLApplication *application = [aDecoder decodeObjectForKey:@"application"];
-    if (application != nil) {
+    if (application != nil){
         self.application = application;
     }
-    
+    self.key = [aDecoder decodeObjectForKey:@"key"];
+    self.label = [aDecoder decodeObjectForKey:@"label"];
+    self.keyDescription = [aDecoder decodeObjectForKey:@"description"];
+    self.locale = [aDecoder decodeObjectForKey:@"locale"];
+    self.level = [aDecoder decodeObjectForKey:@"level"];
+    self.translations = [aDecoder decodeObjectForKey:@"translations"];
+    self.dataTokens = [aDecoder decodeObjectForKey:@"data_tokens"];
+    self.decorationTokens = [aDecoder decodeObjectForKey:@"decoration_tokens"];
 }
 
 #pragma mark - Equality
@@ -85,15 +99,24 @@
 }
 
 - (BOOL)isEqualToTranslationKey:(TMLTranslationKey *)translationKey {
-    return ([self.application isEqualToApplication:translationKey.application] == YES
-            && [self.key isEqualToString:translationKey.key] == YES
-            && [self.label isEqualToString:translationKey.label] == YES
-            && [self.keyDescription isEqualToString:translationKey.keyDescription] == YES
-            && [self.locale isEqualToString:translationKey.locale] == YES
-            && [self.level isEqualToNumber:translationKey.level] == YES
-            && [self.translations isEqualToArray:translationKey.translations] == YES
-            && [self.dataTokens isEqualToArray:translationKey.dataTokens] == YES
-            && [self.decorationTokens isEqualToArray:translationKey.decorationTokens] == YES);
+    return ((self.application == translationKey.application
+             || [self.application isEqualToApplication:translationKey.application] == YES)
+            && (self.key == translationKey.key
+                || [self.key isEqualToString:translationKey.key] == YES)
+            && (self.label == translationKey.label
+                || [self.label isEqualToString:translationKey.label] == YES)
+            && (self.keyDescription == translationKey.keyDescription
+                || [self.keyDescription isEqualToString:translationKey.keyDescription] == YES)
+            && (self.locale == translationKey.locale
+                || [self.locale isEqualToString:translationKey.locale] == YES)
+            && (self.level == translationKey.level
+                || [self.level isEqualToNumber:translationKey.level] == YES)
+            && (self.translations == translationKey.translations
+                || [self.translations isEqualToArray:translationKey.translations] == YES)
+            && (self.dataTokens == translationKey.dataTokens
+                || [self.dataTokens isEqualToArray:translationKey.dataTokens] == YES)
+            && (self.decorationTokens == translationKey.decorationTokens
+                || [self.decorationTokens isEqualToArray:translationKey.decorationTokens] == YES));
 }
 
 #pragma mark -

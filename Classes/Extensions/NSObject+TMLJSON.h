@@ -12,9 +12,17 @@
 - (NSString *)tmlJSONString;
 @end
 
+@interface NSNull (TMLJSON)
+- (NSString *)tmlJSONString;
+@end
+
 @interface NSString (TMLJSON)
 - (NSString *)tmlJSONString;
 - (id)tmlJSONObject;
+@end
+
+@interface NSNumber (TMLJSON)
+- (NSString *)tmlJSONString;
 @end
 
 @interface NSArray (TMLJSON)

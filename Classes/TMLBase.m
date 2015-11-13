@@ -28,10 +28,25 @@
  *  THE SOFTWARE.
  */
 
-#import "TMLBase.h"
+#import "NSString+TmlAdditions.h"
 #import "TML.h"
+#import "TMLBase.h"
 
 @implementation TMLBase
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder {
+    self = [self init];
+    [self decodeWithCoder:aDecoder];
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    TMLRaiseAbstractInvocation();
+}
+
+- (void)decodeWithCoder:(NSCoder *)aDecoder {
+    TMLRaiseAbstractInvocation();
+}
 
 - (id) initWithAttributes:(NSDictionary *)attributes {
     if (self = [super init]) {
@@ -40,7 +55,6 @@
     return self;
 }
 
-// Should be overloaded by all extending models
 - (void) updateAttributes:(NSDictionary *)newAttributes {
     TMLRaiseAbstractInvocation();
 }
