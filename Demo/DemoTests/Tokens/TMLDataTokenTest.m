@@ -7,9 +7,10 @@
 //
 
 #import "TMLDataToken.h"
+#import "TMLLanguageContext.h"
+#import "TMLTestBase.h"
 #import "TMLTestUser.h"
 #import <Foundation/Foundation.h>
-#import "TMLTestBase.h"
 
 @interface TMLDataTokenTest : TMLTestBase
 

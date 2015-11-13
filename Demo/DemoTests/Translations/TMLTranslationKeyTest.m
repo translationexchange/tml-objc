@@ -6,9 +6,10 @@
 //  Copyright (c) 2014 TMLHub. All rights reserved.
 //
 
+#import "TML.h"
+#import "TMLConfiguration.h"
 #import "TMLTestBase.h"
 #import "TMLTranslationKey.h"
-#import "TML.h"
 
 @interface TMLTranslationKeyTest : TMLTestBase
 

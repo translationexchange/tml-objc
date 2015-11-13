@@ -6,12 +6,13 @@
 //  Copyright (c) 2014 TMLHub. All rights reserved.
 //
 
-#import "TMLLanguageContext.h"
-#import "TMLTestUser.h"
 #import "TML.h"
+#import "TMLConfiguration.h"
+#import "TMLLanguageContext.h"
 #import "TMLLanguageContextRule.h"
-#import <Foundation/Foundation.h>
 #import "TMLTestBase.h"
+#import "TMLTestUser.h"
+#import <Foundation/Foundation.h>
 
 @interface TMLLanguageContextTest : TMLTestBase
 
