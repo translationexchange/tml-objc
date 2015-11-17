@@ -180,4 +180,12 @@
     return _info[key];
 }
 
+- (int64_t)decodeInt64ForKey:(NSString *)key {
+    return [_info[key] integerValue];
+}
+
+- (BOOL)decodeBoolForKey:(NSString *)key {
+    return [_info[key] boolValue];
+}
+
 @end
