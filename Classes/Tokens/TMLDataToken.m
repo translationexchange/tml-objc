@@ -298,30 +298,46 @@
     return [self.class tokenObjectForName:self.shortName fromTokens:tokens];
 }
 
-- (NSString *) applyLanguageCaseWithKey: (NSString *) caseKey value: (NSString *) value object: (NSObject *) object language: (TMLLanguage *) language options: (NSDictionary *) options {
+- (NSString *) applyLanguageCaseWithKey:(NSString *)caseKey
+                                  value:(NSString *)value
+                                 object:(NSObject *)object
+                               language:(TMLLanguage *)language
+{
     TMLLanguageCase *lcase = [language languageCaseByKeyword:caseKey];
     if (lcase == nil)
         return value;
     return [lcase apply:value forObject:object];;
 }
 
-- (NSString *) applyLanguageCasesToValue: (NSString *) tokenValue fromObject: (NSObject *) tokenObject forLanguage: (TMLLanguage *) language andOptions: (NSDictionary *) options {
+- (NSString *) applyLanguageCasesToValue:(NSString *)tokenValue
+                              fromObject:(NSObject *)tokenObject
+                             forLanguage:(TMLLanguage *)language
+{
     if ([self.caseKeys count] > 0) {
         for (NSString *caseKey in self.caseKeys) {
-            tokenValue = [self applyLanguageCaseWithKey:caseKey value:tokenValue object:tokenObject language:language options:options];
+            tokenValue = [self applyLanguageCaseWithKey:caseKey
+                                                  value:tokenValue
+                                                 object:tokenObject
+                                               language:language];
         }
     }
 
     return tokenValue;
 }
 
-- (NSString *) substituteInLabel: (NSString *) translatedLabel usingTokens: (NSDictionary *) tokens forLanguage: (TMLLanguage *) language withOptions: (NSDictionary *) options {
+- (NSString *) substituteInLabel:(NSString *)translatedLabel
+                     usingTokens:(NSDictionary *)tokens
+                     forLanguage:(TMLLanguage *)language
+                     withOptions:(NSDictionary *)options
+{
     NSString *tokenValue = [self tokenValue:tokens withOptions:options];
     
     if ([tokenValue isEqualToString: self.fullName])
         return translatedLabel;
     
-    tokenValue = [self applyLanguageCasesToValue:tokenValue fromObject:[self tokenObjectFromTokens: tokens] forLanguage:language andOptions:options];
+    tokenValue = [self applyLanguageCasesToValue:tokenValue
+                                      fromObject:[self tokenObjectFromTokens: tokens]
+                                     forLanguage:language];
     return [translatedLabel stringByReplacingOccurrencesOfString:self.fullName withString:tokenValue];
 }
 

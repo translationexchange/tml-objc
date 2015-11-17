@@ -83,8 +83,13 @@
 
 - (NSString *) tokenValue: (NSDictionary *) tokens withOptions: (NSDictionary *) options;
 
-- (NSString *) applyLanguageCasesToValue: (NSString *) tokenValue fromObject: (NSObject *) tokenObject forLanguage: (TMLLanguage *) language andOptions: (NSDictionary *) options;
+- (NSString *) applyLanguageCasesToValue:(NSString *)tokenValue
+                              fromObject:(NSObject *)tokenObject
+                             forLanguage:(TMLLanguage *)language;
 
-- (NSString *) substituteInLabel: (NSString *) translatedLabel usingTokens: (NSDictionary *) tokens forLanguage: (TMLLanguage *) language withOptions: (NSDictionary *) options;
+- (NSString *) substituteInLabel:(NSString *)translatedLabel
+                     usingTokens:(NSDictionary *)tokens
+                     forLanguage:(TMLLanguage *)language
+                     withOptions:(NSDictionary *)options;
 
 @end
