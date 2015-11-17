@@ -166,7 +166,11 @@
     return defaultValue;
 }
 
-- (NSObject *) translationKeyWithKey: (NSString *) key label: (NSString *) label description:(NSString *) description options: (NSDictionary *) options {
+- (NSObject *) translationKeyWithKey:(NSString *)key
+                               label:(NSString *)label
+                         description:(NSString *)description
+                             options:(NSDictionary *)options
+{
     NSString *keyLocale = (NSString *) [self valueFromOptions:options forKey:@"locale" withDefault:[[TML sharedInstance] defaultLanguage].locale];
     NSNumber *keyLevel = (NSNumber *) [self valueFromOptions:options forKey:@"level" withDefault:[NSNumber numberWithInt:0]];
 
@@ -178,6 +182,7 @@
     if (description != nil) {
         translationKey.keyDescription = description;
     }
+    return translationKey;
 }
 
 - (NSObject *) translate:(NSString *)label
