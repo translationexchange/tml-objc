@@ -33,13 +33,13 @@
 
 @class TMLTranslationKey, TMLLanguage;
 
-@interface TMLTranslation : NSObject
+@interface TMLTranslation : TMLBase
 
 // Reference to the translation key it belongs to
-@property(nonatomic, weak) TMLTranslationKey *translationKey;
+@property(nonatomic, strong) TMLTranslationKey *translationKey;
 
 // Reference to the language it belongs to
-@property(nonatomic, weak) TMLLanguage *language;
+@property(nonatomic, strong) TMLLanguage *language;
 
 // Locale of the language it belongs to
 @property(nonatomic, strong) NSString *locale;
@@ -47,13 +47,15 @@
 // Translation label
 @property(nonatomic, strong) NSString *label;
 
+@property(assign, nonatomic) BOOL locked;
+
 // Translation context hash:
 // {token1: {context1: rule1}, token2: {context2: rule2}}
 @property(nonatomic, strong) NSDictionary *context;
 
 // Precedence of the translation.
 // The higher the precedence the higher the order of the translation.
-@property(nonatomic, strong) NSNumber *precedence;
+@property(nonatomic, assign) NSInteger precedence;
 
 // Check if the translation has context rules
 - (BOOL) hasContextRules;

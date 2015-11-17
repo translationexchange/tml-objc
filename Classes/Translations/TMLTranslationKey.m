@@ -39,6 +39,7 @@
 #import "TMLLanguage.h"
 #import "TMLTranslation.h"
 #import "TMLTranslationKey.h"
+#import "NSString+TmlAdditions.h"
 
 @implementation TMLTranslationKey
 
@@ -119,27 +120,6 @@
     return [TMLConfiguration md5:[NSString stringWithFormat:@"%@;;;%@", label, description]];
 }
 
-- (void) updateAttributes: (NSDictionary *) attributes {
-    if ([attributes objectForKey:@"application"])
-        self.application = [attributes objectForKey:@"application"];
-
-    self.label = [attributes objectForKey:@"label"];
-    self.keyDescription = [attributes objectForKey:@"keyDescription"];
-    
-    if ([attributes objectForKey:@"key"]) {
-        self.key = [attributes objectForKey:@"key"];
-    } else {
-        self.key = [self.class generateKeyForLabel:self.label andDescription:self.description];
-    }
-    
-    self.locale = [attributes objectForKey:@"locale"];
-    if (self.locale == nil)
-        self.locale = [[[TML sharedInstance] defaultLanguage] locale];
-    
-    self.level = [attributes objectForKey:@"level"];
-    self.translations = @[];
-}
-
 - (BOOL) hasTranslations {
     return [self.translations count] > 0;
 }
@@ -200,20 +180,20 @@
 }
 
 - (NSObject *) substituteTokensInLabel: (NSString *) translatedLabel withTokens: (NSDictionary *) tokens forLanguage: (TMLLanguage *) language andOptions: (NSDictionary *) options {
-    if ([translatedLabel rangeOfString:@"{"].length > 0) {
+    if ([translatedLabel tmlContainsDecoratedTokens] == YES) {
         TMLDataTokenizer *tokenizer = [[TMLDataTokenizer alloc] initWithLabel:translatedLabel andAllowedTokenNames:[self dataTokenNames]];
         translatedLabel = [tokenizer substituteTokensInLabelUsingData:tokens forLanguage:language withOptions:options];
     }
 
     if ([[options objectForKey:@"tokenizer"] isEqual: @"attributed"]) {
-        if ([translatedLabel rangeOfString:@"["].length > 0) {
+        if ([translatedLabel tmlContainsAttributedTokens] == YES) {
             TMLDecorationTokenizer *tokenizer = [[TMLAttributedDecorationTokenizer alloc] initWithLabel:translatedLabel andAllowedTokenNames:[self decorationTokenNames]];
             return [tokenizer substituteTokensInLabelUsingData:tokens withOptions:options];
         }
         return [[NSAttributedString alloc] initWithString:translatedLabel];
     }
     
-    if ([translatedLabel rangeOfString:@"["].length > 0) {
+    if ([translatedLabel tmlContainsAttributedTokens] == YES) {
         TMLDecorationTokenizer *tokenizer = [[TMLHtmlDecorationTokenizer alloc] initWithLabel:translatedLabel andAllowedTokenNames:[self decorationTokenNames]];
         return [tokenizer substituteTokensInLabelUsingData:tokens withOptions:options];
     }

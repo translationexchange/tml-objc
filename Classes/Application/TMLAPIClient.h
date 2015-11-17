@@ -49,13 +49,13 @@ extern NSString * const TMLAPIOptionsIncludeDefinition;
  */
 typedef void (^TMLAPIResponseHandler)(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error);
 
-@class TMLApplication, TMLSource, TMLTranslation, TMLTranslationKey;
+@class TMLSource, TMLTranslation, TMLTranslationKey;
+
 
 @interface TMLAPIClient : NSObject
-
-@property(nonatomic, strong) TMLApplication *application;
-
-- (id) initWithApplication: (TMLApplication *) owner;
+@property (readonly, nonatomic) NSURL *url;
+@property (readonly, nonatomic) NSString *accessToken;
+- (id) initWithURL:(NSURL *)url accessToken:(NSString *)accessToken;
 
 /**
  *  Convinience method for get:parameters:cachePolicy:completionBlock:

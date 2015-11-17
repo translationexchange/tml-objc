@@ -33,7 +33,7 @@
 
 @class TMLLanguageContext, TMLLanguageCase, TMLApplication;
 
-@interface TMLLanguage : TMLBase <NSCopying>
+@interface TMLLanguage : TMLBase
 
 @property (nonatomic, assign) NSInteger languageID;
 
@@ -50,7 +50,7 @@
 @property(nonatomic, strong) NSString *nativeName;
 
 // Whether the language rtl or ltr
-@property(nonatomic, strong) NSNumber *rightToLeft;
+@property(nonatomic, assign) BOOL rightToLeft;
 
 // Url of the language flag image
 @property(nonatomic, strong) NSURL *flagUrl;

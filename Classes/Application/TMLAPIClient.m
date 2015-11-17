@@ -32,7 +32,6 @@
 #import "TML.h"
 #import "TMLAPIClient.h"
 #import "TMLAPISerializer.h"
-#import "TMLApplication.h"
 #import "TMLConfiguration.h"
 #import "TMLLanguage.h"
 #import "TMLSource.h"
@@ -44,13 +43,19 @@ NSString * const TMLAPIOptionsClientName = @"client";
 NSString * const TMLAPIOptionsIncludeDefinition = @"definition";
 NSString * const TMLAPIOptionsSourceKeys = @"source_keys";
 
+@interface TMLAPIClient()
+@property (readwrite, nonatomic) NSURL *url;
+@property (readwrite, nonatomic) NSString *accessToken;
+@end
+
 @implementation TMLAPIClient
 
 #pragma mark - Init
 
-- (id) initWithApplication: (TMLApplication *) owner {
+- (id) initWithURL:(NSURL *)url accessToken:(NSString *)accessToken {
     if (self == [super init]) {
-        self.application = owner;
+        self.url = url;
+        self.accessToken = accessToken;
     }
     return self;
 }
@@ -58,7 +63,7 @@ NSString * const TMLAPIOptionsSourceKeys = @"source_keys";
 #pragma mark - URL Construction
 
 - (NSURL *) URLForAPIPath: (NSString *)path parameters:(NSDictionary *)parameters {
-    NSMutableString *pathString = [NSMutableString stringWithFormat:@"%@/v1/%@", self.application.host, path];
+    NSMutableString *pathString = [NSMutableString stringWithFormat:@"%@/v1/%@", self.url, path];
     [pathString appendString:@"?"];
     NSDictionary *requestParameters = [self prepareAPIParameters:parameters];
     for (NSString *key in requestParameters) {
@@ -73,8 +78,9 @@ NSString * const TMLAPIOptionsSourceKeys = @"source_keys";
 }
 
 - (NSDictionary *) prepareAPIParameters:(NSDictionary *)params {
+    // TODO - should really use an HTTP header for this
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:params];
-    parameters[@"access_token"] = self.application.accessToken;
+    parameters[@"access_token"] = self.accessToken;
     return parameters;
 }
 
@@ -296,7 +302,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
 completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
     TMLLanguage *lang = nil;
     if ([apiResponse isSuccessfulResponse] == YES) {
-        lang = [[TMLLanguage alloc] initWithAttributes:apiResponse.userInfo];
+        lang = [TMLAPISerializer materializeObject:apiResponse.userInfo withClass:[TMLLanguage class] delegate:nil];
     }
     else {
         TMLError(@"Error fetching languages description for locale: %@. Error: %@", locale, error);

@@ -35,16 +35,26 @@ extern NSString * const TMLSourceDefaultKey;
 
 @class TMLApplication;
 
-@interface TMLSource : TMLBase <NSCopying>
+@interface TMLSource : TMLBase
 
-// Reference back to the application it belongs to
-@property(nonatomic, strong) TMLApplication *application;
+#pragma mark - API properties
 
-// Source key
+@property (nonatomic, assign) NSInteger sourceID;
 @property(nonatomic, strong) NSString *key;
+@property (nonatomic, strong) NSDate *created;
+@property (nonatomic, strong) NSDate *updated;
+@property (nonatomic, strong) NSString *displayName;
+@property (nonatomic, strong) NSString *sourceName;
+@property (nonatomic, strong) NSString *type;
+@property (nonatomic, strong) NSString *state;
+
+#pragma mark - Internal Use
 
 // Translations registered with the source
 @property(nonatomic, strong) NSDictionary *translations;
+
+// Reference back to the application it belongs to
+@property(nonatomic, strong) TMLApplication *application;
 
 + (instancetype) defaultSource;
 

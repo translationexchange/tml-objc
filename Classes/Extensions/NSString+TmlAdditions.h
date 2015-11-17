@@ -12,5 +12,9 @@
 
 - (NSString *)tmlTranslationBundleVersionFromPath;
 - (NSComparisonResult)compareToTMLTranslationBundleVersion:(NSString *)version;
+- (NSString *)tmlCamelCaseString;
+- (NSString *)tmlSnakeCaseString;
+- (BOOL)tmlContainsDecoratedTokens;
+- (BOOL)tmlContainsAttributedTokens;
 
 @end

@@ -33,7 +33,7 @@
 
 @class TMLLanguageContext;
 
-@interface TMLLanguageContextRule : TMLBase <NSCopying>
+@interface TMLLanguageContextRule : TMLBase
 
 // Holds reference to the language context it belongs to
 @property(nonatomic, strong) TMLLanguageContext *languageContext;

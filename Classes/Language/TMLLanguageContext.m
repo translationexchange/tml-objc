@@ -51,30 +51,45 @@
     return aCopy;
 }
 
-- (void) updateAttributes: (NSDictionary *) attributes {
-    if ([attributes objectForKey:@"language"])
-        self.language = [attributes valueForKey:@"language"];
-    
-    self.keyword = [attributes objectForKey:@"keyword"];
-    self.contextDescription = [attributes objectForKey:@"contextDescription"];
-    self.keys = [attributes objectForKey:@"keys"];
-    self.tokenExpression = [attributes objectForKey:@"token_expression"];
-    self.variableNames = [attributes objectForKey:@"variables"];
-    self.tokenMapping = [attributes objectForKey:@"token_mapping"];
-    
-    NSMutableDictionary *contextRules = [NSMutableDictionary dictionary];
-    if ([attributes objectForKey:@"rules"]) {
-        NSDictionary *rulesHash = (NSDictionary *) [attributes objectForKey:@"rules"];
-        for (NSString *key in [rulesHash allKeys]) {
-            NSDictionary *ruleData = [rulesHash objectForKey:key];
-            TMLLanguageContextRule *rule = [[TMLLanguageContextRule alloc] initWithAttributes:ruleData];
-            rule.keyword = key;
-            rule.languageContext = self;
-            [contextRules setObject:rule forKey:key];
-            if ([rule isFallback]) self.fallbackRule = rule;
-        }
+- (BOOL)isEqual:(id)object {
+    if (self == object) {
+        return YES;
     }
-    self.rules = contextRules;
+    if ([object isKindOfClass:[self class]] == NO) {
+        return NO;
+    }
+    return [self isEqualToLanguageContext:(TMLLanguageContext *)object];
+}
+
+- (BOOL)isEqualToLanguageContext:(TMLLanguageContext *)languageContext {
+    return ([self.language isEqualToLanguage:languageContext.language] == YES
+            && [self.keyword isEqualToString:languageContext.keyword] == YES
+            && [self.contextDescription isEqualToString:languageContext.contextDescription] == YES
+            && [self.keys isEqualToArray:languageContext.keys] == YES
+            && [self.tokenExpression isEqualToString:languageContext.tokenExpression] == YES
+            && [self.variableNames isEqualToArray:languageContext.variableNames] == YES
+            && [self.tokenMapping isEqual:languageContext.tokenMapping] == YES
+            && [self.rules isEqualToDictionary:languageContext.rules] == YES);
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject:self.keyword forKey:@"keyword"];
+    [aCoder encodeObject:self.contextDescription forKey:@"description"];
+    [aCoder encodeObject:self.keys forKey:@"keys"];
+    [aCoder encodeObject:self.tokenExpression forKey:@"token_expression"];
+    [aCoder encodeObject:self.variableNames forKey:@"variables"];
+    [aCoder encodeObject:self.tokenMapping forKey:@"token_mapping"];
+    [aCoder encodeObject:self.rules forKey:@"rules"];
+}
+
+- (void)decodeWithCoder:(NSCoder *)aDecoder {
+    self.keyword = [aDecoder decodeObjectForKey:@"keyword"];
+    self.contextDescription = [aDecoder decodeObjectForKey:@"description"];
+    self.keys = [aDecoder decodeObjectForKey:@"keys"];
+    self.tokenExpression = [aDecoder decodeObjectForKey:@"expression"];
+    self.variableNames = [aDecoder decodeObjectForKey:@"variables"];
+    self.tokenMapping = [aDecoder decodeObjectForKey:@"token_mapping"];
+    self.rules = [aDecoder decodeObjectForKey:@"rules"];
 }
 
 - (NSRegularExpression *) compiledTokenExpression {

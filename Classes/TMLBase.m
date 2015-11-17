@@ -48,19 +48,4 @@
     TMLRaiseAbstractInvocation();
 }
 
-- (id) initWithAttributes:(NSDictionary *)attributes {
-    if (self = [super init]) {
-        [self updateAttributes:attributes];
-    }
-    return self;
-}
-
-- (void) updateAttributes:(NSDictionary *)newAttributes {
-    TMLRaiseAbstractInvocation();
-}
-
-- (void) load {
-    TMLRaiseAbstractInvocation();
-}
-
 @end

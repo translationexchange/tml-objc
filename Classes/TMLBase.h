@@ -30,14 +30,8 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TMLBase : NSObject <NSCoding>
+@interface TMLBase : NSObject <NSCopying,NSCoding>
 
 - (void)decodeWithCoder:(NSCoder *)aDecoder;
-
-- (id) initWithAttributes:(NSDictionary *)newAttributes;
-
-- (void) updateAttributes:(NSDictionary *)newAttributes;
-
-- (void) load;
 
 @end

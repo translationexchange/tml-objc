@@ -39,29 +39,50 @@
 #import "TMLLanguageContext.h"
 #import "TMLSource.h"
 #import "TMLTranslationKey.h"
+#import "TMLAPISerializer.h"
 
 @implementation TMLLanguage
 
 + (TMLLanguage *) defaultLanguage {
     NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"en-US" ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:jsonPath];
-    NSDictionary *attributes = [data tmlJSONObject];
-    return [[TMLLanguage alloc] initWithAttributes:attributes];
+    TMLLanguage *lang = [TMLAPISerializer materializeData:data withClass:[TMLLanguage class] delegate:nil];
+    return lang;
 }
 
 - (id)copyWithZone:(NSZone *)zone {
     TMLLanguage *aCopy = [[TMLLanguage alloc] init];
     aCopy.languageID = self.languageID;
-    aCopy.application = [self.application copyWithZone:zone];
     aCopy.locale = [self.locale copyWithZone:zone];
     aCopy.englishName = [self.englishName copyWithZone:zone];
     aCopy.nativeName = [self.nativeName copyWithZone:zone];
-    aCopy.rightToLeft = [self.rightToLeft copyWithZone:zone];
+    aCopy.rightToLeft = self.rightToLeft;
     aCopy.flagUrl = [self.flagUrl copyWithZone:zone];
+    aCopy.status = [self.status copyWithZone:zone];
+    
     aCopy.contexts = [self.contexts copyWithZone:zone];
     aCopy.cases = [self.cases copyWithZone:zone];
-    aCopy.status = [self.status copyWithZone:zone];
     return aCopy;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeInteger:self.languageID forKey:@"id"];
+    [aCoder encodeObject:self.locale forKey:@"locale"];
+    [aCoder encodeObject:self.englishName forKey:@"english_name"];
+    [aCoder encodeObject:self.nativeName forKey:@"native_name"];
+    [aCoder encodeBool:self.rightToLeft forKey:@"right_to_left"];
+    [aCoder encodeObject:[self.flagUrl absoluteString] forKey:@"flag_url"];
+    [aCoder encodeObject:self.status forKey:@"status"];
+}
+
+- (void)decodeWithCoder:(NSCoder *)aDecoder {
+    self.languageID = [aDecoder decodeIntegerForKey:@"id"];
+    self.locale = [aDecoder decodeObjectForKey:@"locale"];
+    self.englishName = [aDecoder decodeObjectForKey:@"english_name"];
+    self.nativeName = [aDecoder decodeObjectForKey:@"native_name"];
+    self.rightToLeft = [aDecoder decodeBoolForKey:@"right_to_left"];
+    self.flagUrl = [NSURL URLWithString:[aDecoder decodeObjectForKey:@"flag_url"]];
+    self.status = [aDecoder decodeObjectForKey:@"status"];
 }
 
 - (BOOL)isEqualToLanguage:(TMLLanguage *)language {
@@ -76,51 +97,6 @@
         return NO;
     }
     return [self isEqualToLanguage:(TMLLanguage *)object];
-}
-
-- (void) updateAttributes: (NSDictionary *) attributes {
-    if ([attributes objectForKey:@"application"])
-        self.application = [attributes objectForKey:@"application"];
-    
-    self.locale = [attributes objectForKey:@"locale"];
-    self.englishName = [attributes objectForKey:@"english_name"];
-    self.nativeName = [attributes objectForKey:@"native_name"];
-    self.rightToLeft = [attributes objectForKey:@"right_to_left"];
-    self.flagUrl = [attributes objectForKey:@"flag_url"];
-    
-    NSMutableDictionary *languageCases = [NSMutableDictionary dictionary];
-    if ([attributes objectForKey:@"cases"]) {
-        NSDictionary *casesHash = (NSDictionary *) [attributes objectForKey:@"cases"];
-        for (NSString *key in [casesHash allKeys]) {
-            NSDictionary *caseData = [casesHash objectForKey:key];
-            TMLLanguageCase *lcase = [[TMLLanguageCase alloc] initWithAttributes:caseData];
-            lcase.keyword = key;
-            lcase.language = self;
-            [languageCases setObject:lcase forKey:key];
-        }
-    }
-    self.cases = languageCases;
-    
-    NSMutableDictionary *languageContexts = [NSMutableDictionary dictionary];
-    if ([attributes objectForKey:@"contexts"]) {
-        NSDictionary *contextsHash = (NSDictionary *) [attributes objectForKey:@"contexts"];
-        for (NSString *key in [contextsHash allKeys]) {
-            NSDictionary *contextData = [contextsHash objectForKey:key];
-            TMLLanguageContext *lcontext = [[TMLLanguageContext alloc] initWithAttributes:contextData];
-            lcontext.keyword = key;
-            lcontext.language = self;
-            [languageContexts setObject:lcontext forKey:key];
-        }
-    }
-    self.contexts = languageContexts;
-}
-
-- (void) load {
-    [self.application.apiClient getLanguageForLocale:self.locale options:@{TMLAPIOptionsIncludeDefinition: @YES} completionBlock:^(TMLLanguage *language, NSError *error) {
-        if (language != nil) {
-            [self updateAttributes:language];
-        }
-    }];
 }
 
 - (TMLLanguageContext *) contextByKeyword: (NSString *) keyword {
@@ -193,21 +169,15 @@
 - (NSObject *) translationKeyWithKey: (NSString *) key label: (NSString *) label description:(NSString *) description options: (NSDictionary *) options {
     NSString *keyLocale = (NSString *) [self valueFromOptions:options forKey:@"locale" withDefault:[[TML sharedInstance] defaultLanguage].locale];
     NSNumber *keyLevel = (NSNumber *) [self valueFromOptions:options forKey:@"level" withDefault:[NSNumber numberWithInt:0]];
-    
-    NSMutableDictionary *keyAttributes = [NSMutableDictionary dictionaryWithDictionary:@{
-        @"key":             key,
-        @"label":           label,
-        @"locale":          keyLocale,
-        @"level":           keyLevel
-    }];
 
-    if (description)
-        [keyAttributes setObject:description forKey:@"description"];
-    
-    if (self.application)
-        [keyAttributes setObject:self.application forKey:@"application"];
-
-    return [[TMLTranslationKey alloc] initWithAttributes:keyAttributes];
+    TMLTranslationKey *translationKey = [[TMLTranslationKey alloc] init];
+    translationKey.key = key;
+    translationKey.locale = keyLocale;
+    translationKey.label = label;
+    translationKey.level = keyLevel;
+    if (description != nil) {
+        translationKey.keyDescription = description;
+    }
 }
 
 - (NSObject *) translate:(NSString *)label
@@ -217,12 +187,6 @@
 {
     NSString *keyHash = [TMLTranslationKey generateKeyForLabel:label andDescription:description];
     TMLTranslationKey *translationKey = (TMLTranslationKey *) [self translationKeyWithKey:keyHash label:label description:description options:options];
-    
-//    TMLDebug(@"Translating %@", label);
-    
-    if ([self.application isTranslationCacheEmpty]) {
-        return [translationKey translateToLanguage: self withTokens: tokens andOptions: options];
-    }
     
     if ([tokens objectForKey:@"viewing_user"] == nil && [TML configuration].viewingUser != nil) {
         NSMutableDictionary *tokensWithViewingUser = [NSMutableDictionary dictionaryWithDictionary:tokens];

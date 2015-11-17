@@ -32,12 +32,12 @@
 #import "TMLBase.h"
 #import "TMLAPIClient.h"
 
-@class TMLPostOffice, TMLLanguage, TMLSource;
+@class TMLPostOffice, TMLLanguage, TMLSource, TMLTranslation, TMLDecorationTokenizer, TMLConfiguration;
 
-@interface TMLApplication : TMLBase <NSCopying>
+@interface TMLApplication : TMLBase
 
-// Application host - points to the TMLHub server
-@property(nonatomic, strong) NSString *host;
+// Application identifier
+@property (nonatomic, assign) NSInteger applicationID;
 
 // Application key - must always be specified
 @property(nonatomic, strong) NSString *key;
@@ -48,12 +48,6 @@
 // Application access token
 @property(nonatomic, strong) NSString *accessToken;
 
-// API Client
-@property(nonatomic, strong) TMLAPIClient *apiClient;
-
-// PostOffice Client
-@property(nonatomic, strong) TMLPostOffice *postOffice;
-
 // Application name
 @property(nonatomic, strong) NSString *name;
 
@@ -61,7 +55,7 @@
 @property(nonatomic, strong) NSString *defaultLocale;
 
 // Application threshold
-@property(nonatomic, strong) NSNumber *threshold;
+@property(nonatomic, assign) NSInteger threshold;
 
 // Application features
 @property(nonatomic, strong) NSDictionary *features;
@@ -69,36 +63,39 @@
 // Application tools url
 @property(nonatomic, strong) NSDictionary *tools;
 
-// Languages by locale
-@property(nonatomic, strong) NSMutableDictionary *languagesByLocales;
+// Languages
+@property(nonatomic, strong) NSArray <TMLLanguage *>*languages;
 
 // Sources by keys
-@property(nonatomic, strong) NSMutableDictionary *sourcesByKeys;
+@property(nonatomic, strong) NSArray <TMLSource *>*sources;
 
-// Translations by keys
-@property(nonatomic, strong) NSDictionary *translations;
+/**
+ *  Translations organized by translation key (@see TMLTranslationKey)
+ */
+@property(nonatomic, strong) NSDictionary <NSString *,TMLTranslation *>*translations;
 
-// Missing translation keys
+#pragma mark - Internal Use
+@property(nonatomic, readonly) TMLConfiguration *configuration;
 @property(nonatomic, strong) NSMutableDictionary <NSString *, NSMutableSet *>*missingTranslationKeysBySources;
+@property(nonatomic, strong) TMLAPIClient *apiClient;
+@property(nonatomic, strong) TMLPostOffice *postOffice;
 
-- (id) initWithToken: (NSString *) token host: (NSString *) appHost;
+- (id) initWithAccessToken:(NSString *)accessToken configuration:(TMLConfiguration *)configuration;
 
-- (BOOL)isEqualToApplication:(TMLApplication *)application;
+- (BOOL) isEqualToApplication:(TMLApplication *)application;
 
 - (void) loadTranslationsForLocale: (NSString *) locale
                    completionBlock:(void(^)(BOOL success))completionBlock;
 
 - (void) resetTranslations;
 
-- (TMLLanguage *) languageForLocale: (NSString *) locale;
+- (TMLLanguage *) languageForLocale:(NSString *)locale;
 
-- (TMLSource *) sourceForKey: (NSString *) sourceKey andLocale: (NSString *) locale;
-
-- (BOOL) isTranslationCacheEmpty;
+- (TMLSource *) sourceForKey:(NSString *)sourceKey;
 
 - (NSArray *) translationsForKey:(NSString *) translationKey inLanguage: (NSString *) locale;
 
-- (BOOL) isTranslationKeyRegistered: (NSString *) translationKey;
+- (BOOL) hasTranslationForKey: (NSString *) translationKey;
 
 - (void) registerMissingTranslationKey: (TMLTranslationKey *) translationKey;
 

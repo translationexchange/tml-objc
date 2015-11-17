@@ -46,15 +46,35 @@
     return aCopy;
 }
 
-- (void) updateAttributes: (NSDictionary *) attributes {
-    if ([attributes objectForKey:@"language_context"])
-        self.languageContext = [attributes objectForKey:@"language_context"];
-    
-    self.keyword = [attributes objectForKey:@"keyword"];
-    self.ruleDescription = [attributes objectForKey:@"ruleDescription"];
-    self.examples = [attributes objectForKey:@"examples"];
-    self.conditions = [attributes objectForKey:@"conditions"];
-    self.compiledConditions = [attributes objectForKey:@"conditions_expression"];
+- (BOOL)isEqual:(id)object {
+    if (self == object) {
+        return YES;
+    }
+    if ([object isKindOfClass:[self class]] == NO) {
+        return NO;
+    }
+    return [self isEqualToContextRule:(TMLLanguageContextRule *)object];
+}
+
+- (BOOL)isEqualToContextRule:(TMLLanguageContextRule *)rule {
+    return ([self.keyword isEqualToString:rule.keyword] == YES
+            && [self.ruleDescription isEqualToString:rule.ruleDescription] == YES
+            && [self.examples isEqualToString:rule.examples] == YES
+            && [self.conditions isEqualToString:rule.conditions] == YES);
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject:self.keyword forKey:@"keyword"];
+    [aCoder encodeObject:self.ruleDescription forKey:@"description"];
+    [aCoder encodeObject:self.examples forKey:@"examples"];
+    [aCoder encodeObject:self.conditions forKey:@"conditions"];
+}
+
+- (void)decodeWithCoder:(NSCoder *)aDecoder {
+    self.keyword = [aDecoder decodeObjectForKey:@"keyword"];
+    self.ruleDescription = [aDecoder decodeObjectForKey:@"description"];
+    self.examples = [aDecoder decodeObjectForKey:@"examples"];
+    self.conditions = [aDecoder decodeObjectForKey:@"conditions"];
 }
 
 + (BOOL) isFallback: (NSString *) keyword {

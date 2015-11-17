@@ -59,29 +59,28 @@
 - (BOOL)isEqualToLanguageCase:(TMLLanguageCase *)languageCase {
     return ([self.language isEqualToLanguage:languageCase.language] == YES
             && [self.application isEqualToString:languageCase.application] == YES
+            && [self.caseDescription isEqualToString:languageCase.caseDescription] == YES
             && [self.latinName isEqualToString:languageCase.latinName] == YES
+            && [self.nativeName isEqualToString:languageCase.nativeName] == YES
             && [self.rules isEqualToArray:languageCase.rules] == YES);
 }
 
-- (void) updateAttributes: (NSDictionary *) attributes {
-    if ([attributes objectForKey:@"language"])
-        self.language = [attributes objectForKey:@"language"];
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject:self.application forKey:@"application"];
+    [aCoder encodeObject:self.keyword forKey:@"keyword"];
+    [aCoder encodeObject:self.latinName forKey:@"latin_name"];
+    [aCoder encodeObject:self.nativeName forKey:@"native_name"];
+    [aCoder encodeObject:self.caseDescription forKey:@"description"];
+    [aCoder encodeObject:self.rules forKey:@"rules"];
+}
 
-    self.application = [attributes objectForKey:@"application"];
-    self.keyword = [attributes objectForKey:@"keyword"];
-    self.latinName = [attributes objectForKey:@"latin_name"];
-    self.nativeName = [attributes objectForKey:@"native_name"];
-    self.caseDescription = [attributes objectForKey:@"caseDescription"];
-    
-    NSMutableArray *caseRules = [NSMutableArray array];
-    if ([attributes objectForKey:@"rules"]) {
-        for (NSDictionary *ruleData in [attributes objectForKey:@"rules"]) {
-            TMLLanguageCaseRule *rule = [[TMLLanguageCaseRule alloc] initWithAttributes:ruleData];
-            rule.languageCase = self;
-            [caseRules addObject:rule];
-        }
-    }
-    self.rules = caseRules;
+- (void)decodeWithCoder:(NSCoder *)aDecoder {
+    self.application = [aDecoder decodeObjectForKey:@"application"];
+    self.keyword = [aDecoder decodeObjectForKey:@"keyword"];
+    self.latinName = [aDecoder decodeObjectForKey:@"latin_name"];
+    self.nativeName = [aDecoder decodeObjectForKey:@"native_name"];
+    self.caseDescription = [aDecoder decodeObjectForKey:@"description"];
+    self.rules = [aDecoder decodeObjectForKey:@"rules"];
 }
 
 - (NSObject *) findMatchingRule: (NSString *) value {

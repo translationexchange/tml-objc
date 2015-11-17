@@ -33,7 +33,7 @@
 
 @class TMLLanguageCase;
 
-@interface TMLLanguageCaseRule : TMLBase <NSCopying>
+@interface TMLLanguageCaseRule : TMLBase
 
 // Reference back to the language case the rule belongs to
 @property(nonatomic, strong) TMLLanguageCase *languageCase;

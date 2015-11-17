@@ -41,4 +41,61 @@
     return NSOrderedSame;
 }
 
+- (NSString *)tmlCamelCaseString {
+    static NSCharacterSet *charSet = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSMutableCharacterSet *mutableCharSet = [[NSCharacterSet whitespaceCharacterSet] mutableCopy];
+        [mutableCharSet addCharactersInString:@"_"];
+        charSet = [mutableCharSet copy];
+    });
+    NSArray *parts = [self componentsSeparatedByCharactersInSet:charSet];
+    NSMutableString *result = [NSMutableString string];
+    for (NSUInteger i=0; i<parts.count; i++) {
+        if (i == 0) {
+            [result appendString:parts[i]];
+        }
+        else {
+            [result appendString:[parts[i] capitalizedString]];
+        }
+    }
+    return result;
+}
+
+- (NSString *)tmlSnakeCaseString {
+    NSCharacterSet *whiteSpaceCharSet = [NSCharacterSet whitespaceCharacterSet];
+    NSCharacterSet *upperCaseCharSet = [NSCharacterSet uppercaseLetterCharacterSet];
+    NSMutableCharacterSet *lowerNumCharSet = [[NSCharacterSet lowercaseLetterCharacterSet] mutableCopy];
+    [lowerNumCharSet formUnionWithCharacterSet:[NSCharacterSet decimalDigitCharacterSet]];
+    NSScanner *scanner = [NSScanner scannerWithString:self];
+    scanner.caseSensitive = YES;
+    NSString *buffer = nil;
+    NSMutableString *result = [NSMutableString string];
+    while ([scanner isAtEnd] == NO) {
+        if ([scanner scanCharactersFromSet:whiteSpaceCharSet intoString:&buffer] == YES) {
+            [result appendString:@"_"];
+        }
+        if ([scanner scanCharactersFromSet:upperCaseCharSet intoString:&buffer] == YES) {
+            if (buffer.length == 1 || [scanner isAtEnd] == YES) {
+                [result appendString:[NSString stringWithFormat:@"_%@", [buffer lowercaseString]]];
+            }
+            else {
+                [result appendString:[NSString stringWithFormat:@"_%@_%@", [[buffer substringWithRange:NSMakeRange(0, buffer.length - 1)] lowercaseString], [[buffer substringFromIndex:buffer.length-1] lowercaseString]]];
+            }
+        }
+        if ([scanner scanCharactersFromSet:lowerNumCharSet intoString:&buffer] == YES) {
+            [result appendString:buffer];
+        }
+    }
+    return result;
+}
+
+- (BOOL)tmlContainsDecoratedTokens {
+    return [self rangeOfString:@"{"].location != NSNotFound;
+}
+
+- (BOOL)tmlContainsAttributedTokens {
+    return [self rangeOfString:@"["].location != NSNotFound;
+}
+
 @end

@@ -33,7 +33,7 @@
 
 @class TMLLanguage;
 
-@interface TMLLanguageCase : TMLBase <NSCopying>
+@interface TMLLanguageCase : TMLBase
 
 // Holds reference back to the language it belongs to
 @property(nonatomic, strong) TMLLanguage *language;

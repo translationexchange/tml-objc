@@ -46,24 +46,42 @@ NSString * const TMLSourceDefaultKey = @"TML";
 
 - (id)copyWithZone:(NSZone *)zone {
     TMLSource *aCopy = [[TMLSource alloc] init];
-    aCopy.application = [self.application copyWithZone:zone];
-    aCopy.key = [self.key copyWithZone:zone];
     aCopy.translations = [self.translations copyWithZone:zone];
+    aCopy.sourceID = self.sourceID;
+    aCopy.key = [self.key copyWithZone:zone];
+    aCopy.created = [self.created copyWithZone:zone];
+    aCopy.updated = [self.updated copyWithZone:zone];
+    aCopy.displayName = [self.displayName copyWithZone:zone];
+    aCopy.sourceName = [self.sourceName copyWithZone:zone];
+    aCopy.type = [self.type copyWithZone:zone];
+    aCopy.state = [self.state copyWithZone:zone];
     return aCopy;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeInteger:self.sourceID forKey:@"id"];
     [aCoder encodeObject:self.key forKey:@"key"];
-    [aCoder encodeObject:self.translations forKey:@"translations"];
+    [aCoder encodeObject:self.created forKey:@"created_at"];
+    [aCoder encodeObject:self.updated forKey:@"updated_at"];
+    [aCoder encodeObject:self.displayName forKey:@"display_name"];
+    [aCoder encodeObject:self.sourceName forKey:@"source"];
+    [aCoder encodeObject:self.type forKey:@"type"];
+    [aCoder encodeObject:self.state forKey:@"state"];
 }
 
 - (void)decodeWithCoder:(NSCoder *)aDecoder {
+    self.sourceID = [aDecoder decodeIntegerForKey:@"id"];
     self.key = [aDecoder decodeObjectForKey:@"key"];
-    self.translations = [aDecoder decodeObjectForKey:@"translations"];
+    self.created = [aDecoder decodeObjectForKey:@"created_at"];
+    self.updated = [aDecoder decodeObjectForKey:@"updated_at"];
+    self.displayName = [aDecoder decodeObjectForKey:@"display_name"];
+    self.sourceName = [aDecoder decodeObjectForKey:@"source"];
+    self.type = [aDecoder decodeObjectForKey:@"type"];
+    self.state = [aDecoder decodeObjectForKey:@"state"];
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"%@ Key: %@", [super description], self.key];
+    return [NSString stringWithFormat:@"<%@ %@>", NSStringFromClass([self class]), self.key];
 }
 
 - (BOOL)isEqualToSource:(TMLSource *)source {
@@ -84,14 +102,6 @@ NSString * const TMLSourceDefaultKey = @"TML";
 
 - (NSUInteger)hash {
     return [self.key hash];
-}
-
-- (void) updateAttributes: (NSDictionary *) attributes {
-    if ([attributes objectForKey:@"application"])
-        self.application = [attributes objectForKey:@"application"];
-
-    self.key = [attributes objectForKey:@"key"];
-    self.translations = @{};
 }
 
 - (void) updateTranslations:(NSDictionary *)translationInfo forLocale:(NSString *)locale {

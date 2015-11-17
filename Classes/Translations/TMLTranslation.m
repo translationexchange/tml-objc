@@ -33,20 +33,30 @@
 #import "TMLLanguageContext.h"
 #import "TMLLanguageContextRule.h"
 #import "TMLTranslation.h"
+#import "TMLTranslationKey.h"
 
 @implementation TMLTranslation
 
+- (id)copyWithZone:(NSZone *)zone {
+    TMLTranslation *aCopy = [[TMLTranslation alloc] init];
+    aCopy.label = [self.label copyWithZone:zone];
+    aCopy.locked = self.locked;
+    aCopy.context = [self.context copyWithZone:zone];
+    aCopy.language = [self.language copyWithZone:zone];
+    aCopy.translationKey = [self.translationKey copyWithZone:zone];
+    return aCopy;
+}
 
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject:self.label forKey:@"label"];
+    [aCoder encodeBool:self.locked forKey:@"locked"];
+    [aCoder encodeObject:self.context forKey:@"context"];
+}
 
-- (void) updateAttributes: (NSDictionary *) attributes {
-    if ([attributes objectForKey:@"language"])
-        self.language = [attributes objectForKey:@"language"];
-    if ([attributes objectForKey:@"translation_key"])
-        self.translationKey = [attributes objectForKey:@"translation_key"];
-    
-    self.locale = [attributes objectForKey:@"locale"];
-    self.label = [attributes objectForKey:@"label"];
-    self.context = [attributes objectForKey:@"context"];
+- (void)decodeWithCoder:(NSCoder *)aDecoder {
+    self.label = [aDecoder decodeObjectForKey:@"label"];
+    self.locked = [aDecoder decodeBoolForKey:@"locked"];
+    self.context = [aDecoder decodeObjectForKey:@"context"];
 }
 
 - (BOOL) hasContextRules {

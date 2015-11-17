@@ -33,10 +33,7 @@
 
 @class TMLApplication, TMLLanguage;
 
-@interface TMLTranslationKey : TMLBase <NSCopying>
-
-// Reference to the application where the key came from
-@property(nonatomic, strong) TMLApplication *application;
+@interface TMLTranslationKey : TMLBase
 
 // Unique key (md5 hash) identifying this translation key
 @property(nonatomic, strong) NSString *key;

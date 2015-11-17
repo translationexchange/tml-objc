@@ -65,18 +65,6 @@
             && [self.operations isEqualToString:languageCaseRule.conditions]);
 }
 
-- (void) updateAttributes: (NSDictionary *) attributes {
-    if ([attributes objectForKey:@"language_case"])
-        self.languageCase = [attributes objectForKey:@"language_case"];
-
-    self.ruleDescription = [attributes objectForKey:@"ruleDescription"];
-    self.examples = [attributes objectForKey:@"examples"];
-    self.conditions = [attributes objectForKey:@"conditions"];
-    self.compiledConditions = [attributes objectForKey:@"conditions_expression"];
-    self.operations = [attributes objectForKey:@"operations"];
-    self.compiledOperations = [attributes objectForKey:@"operations_expression"];
-}
-
 - (NSArray *) conditionsExpression {
     if (self.compiledConditions == nil) {
         TMLRulesParser *p = [TMLRulesParser parserWithExpression: self.conditions];

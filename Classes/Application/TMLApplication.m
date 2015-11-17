@@ -37,26 +37,27 @@
 #import "TMLSource.h"
 #import "TMLTranslation.h"
 #import "TMLTranslationKey.h"
+#import "NSString+TmlAdditions.h"
+#import "TMLDataTokenizer.h"
+#import "TMLAttributedDecorationTokenizer.h"
 
 @interface TMLApplication() {
     NSTimer *_timer;
 }
+@property(nonatomic, readwrite) TMLConfiguration *configuration;
 
 @end
 
 @implementation TMLApplication
 
-- (id) initWithToken: (NSString *) token host: (NSString *) appHost {
+- (id) initWithAccessToken:(NSString *)accessToken configuration:(TMLConfiguration *)configuration
+{
     if (self = [super init]) {
-        self.host = appHost;
-        self.accessToken = token;
-        self.apiClient = [[TMLAPIClient alloc] initWithApplication:self];
+        self.accessToken = accessToken;
+        self.configuration = configuration;
+        self.apiClient = [[TMLAPIClient alloc] initWithURL:configuration.apiURL
+                                               accessToken:accessToken];
         self.postOffice = [[TMLPostOffice alloc] initWithApplication:self];
-        
-        [self updateAttributes:@{@"name": @"Loading...",
-                                 @"default_locale": @"en-US",
-                                 @"treshold": [NSNumber numberWithInt:0]}];
-        
         [self load];
     }
     return self;
@@ -66,24 +67,31 @@
     [self stopSubmissionTimerIfNecessary];
 }
 
-- (id)copyWithZone:(NSZone *)zone {
-    TMLApplication *aCopy = [[TMLApplication alloc] init];
-    aCopy.host = [_host copyWithZone:zone];
-    aCopy.key = [_key copyWithZone:zone];
-    aCopy.secret = [_secret copyWithZone:zone];
-    aCopy.accessToken = [_accessToken copyWithZone:zone];
-    aCopy.apiClient = _apiClient;
-    aCopy.postOffice = _postOffice;
-    aCopy.name = [_name copyWithZone:zone];
-    aCopy.defaultLocale = [_defaultLocale copyWithZone:zone];
-    aCopy.threshold = [_threshold copyWithZone:zone];
-    aCopy.features = [_features copyWithZone:zone];
-    aCopy.tools = [_tools copyWithZone:zone];
-    aCopy.languagesByLocales = [_languagesByLocales copyWithZone:zone];
-    aCopy.sourcesByKeys = [_sourcesByKeys copyWithZone:zone];
-    aCopy.translations = [_translations copyWithZone:zone];
-    aCopy.missingTranslationKeysBySources = [_missingTranslationKeysBySources copyWithZone:zone];
-    return aCopy;
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeInteger:self.applicationID forKey:@"id"];
+    [aCoder encodeObject:self.key forKey:@"key"];
+    [aCoder encodeObject:self.secret forKey:@"secret"];
+    [aCoder encodeObject:self.accessToken forKey:@"access_token"];
+    [aCoder encodeObject:self.name forKey:@"name"];
+    [aCoder encodeObject:self.defaultLocale forKey:@"defaultLocale"];
+    [aCoder encodeInteger:self.threshold forKey:@"threshold"];
+    [aCoder encodeObject:self.features forKey:@"features"];
+    [aCoder encodeObject:self.tools forKey:@"tools"];
+    [aCoder encodeObject:self.languages forKey:@"languages"];
+    [aCoder encodeObject:self.translations forKey:@"translations"];
+}
+
+- (void)decodeWithCoder:(NSCoder *)aDecoder {
+    self.applicationID = [aDecoder decodeIntegerForKey:@"id"];
+    self.key = [aDecoder decodeObjectForKey:@"key"];
+    self.secret = [aDecoder decodeObjectForKey:@"secret"];
+    self.accessToken = [aDecoder decodeObjectForKey:@"access_token"];
+    self.name = [aDecoder decodeObjectForKey:@"name"];
+    self.defaultLocale = [aDecoder decodeObjectForKey:@"defaultLocale"];
+    self.threshold = [aDecoder decodeIntegerForKey:@"threshold"];
+    self.features = [aDecoder decodeObjectForKey:@"features"];
+    self.languages = [aDecoder decodeObjectForKey:@"languages"];
+    self.translations = [aDecoder decodeObjectForKey:@"translations"];
 }
 
 - (BOOL)isEqual:(id)object {
@@ -97,38 +105,21 @@
 }
 
 - (BOOL)isEqualToApplication:(TMLApplication *)application {
-    return ([self.host isEqualToString:application.host] == YES
-            && [self.key isEqualToString:application.key] == YES
-            && [self.secret isEqualToString:application.secret] == YES
-            && [self.accessToken isEqualToString:application.accessToken] == YES);
+    return self.applicationID == application.applicationID;
 }
 
-- (void) updateAttributes: (NSDictionary *) attributes {
-    self.key = [attributes objectForKey:@"key"];
-    self.name = [attributes objectForKey:@"name"];
-    self.defaultLocale = [attributes objectForKey:@"default_locale"];
-    self.threshold = [attributes objectForKey:@"threshold"];
-    self.features = [attributes objectForKey:@"features"];
-    self.tools = [attributes objectForKey:@"tools"];
-
-    self.translations = [NSMutableDictionary dictionary];
-    self.languagesByLocales = [NSMutableDictionary dictionary];
-    self.sourcesByKeys = [NSMutableDictionary dictionary];
-    self.missingTranslationKeysBySources = [NSMutableDictionary dictionary];
-}
+#pragma mark - Loading
 
 - (void) load {
     [self.apiClient getProjectInfoWithOptions:@{TMLAPIOptionsIncludeDefinition: @YES}
                               completionBlock:^(NSDictionary *projectInfo, NSError *error) {
                                   if (projectInfo != nil) {
-                                      [self updateAttributes:projectInfo];
+//                                      [self updateAttributes:projectInfo];
                                   }
                               }];
 }
 
-- (BOOL) isTranslationCacheEmpty {
-    return (self.translations == nil || [self.translations allKeys].count == 0);
-}
+#pragma mark - Translations
 
 - (void) updateTranslations:(NSDictionary *)translationInfo forLocale:(NSString *)locale {
     NSMutableDictionary *newTranslations = [self.translations mutableCopy];
@@ -156,7 +147,7 @@
                              }];
 }
 
-- (BOOL) isTranslationKeyRegistered: (NSString *) translationKey {
+- (BOOL) hasTranslationForKey:(NSString *)translationKey {
     return self.translations[translationKey] != nil;
 }
 
@@ -166,42 +157,37 @@
 }
 
 - (void) resetTranslations {
-    self.translations = [NSMutableDictionary dictionary];
-    self.sourcesByKeys = [NSMutableDictionary dictionary];
+    self.translations = [NSDictionary dictionary];
+    self.sources= [NSArray array];
 }
 
-- (TMLLanguage *) languageForLocale: (NSString *) locale {
-    TMLLanguage *lang = (self.languagesByLocales == nil) ? nil : self.languagesByLocales[locale];
-    if (lang != nil) {
-        return lang;
+#pragma mark - Languages
+
+- (TMLLanguage *) languageForLocale:(NSString *)locale {
+    TMLLanguage *result = nil;
+    for (TMLLanguage *lang in self.languages) {
+        if ([lang.locale isEqualToString:locale] == YES) {
+            result = lang;
+            break;
+        }
     }
-    
-    __block TMLLanguage *language = [[TMLLanguage alloc] initWithAttributes:@{@"locale": locale, @"application": self}];
-    [self.apiClient getLanguageForLocale:locale
-                                 options:nil
-                         completionBlock:^(TMLLanguage *newLanguage, NSError *error) {
-                             language = newLanguage;
-                         }];
-    [self.languagesByLocales setObject:language forKey:locale];
-    
-    TMLDebug(@"Language: %@", [language description]);
-    
-    return language;
+    return result;
 }
 
-- (TMLSource *) sourceForKey: (NSString *) sourceKey andLocale: (NSString *) locale {
+#pragma mark - Sources
+
+- (TMLSource *) sourceForKey:(NSString *)sourceKey {
     if (sourceKey == nil)
         return nil;
     
-    if ([self.sourcesByKeys objectForKey:sourceKey] != nil) {
-        return [self.sourcesByKeys objectForKey:sourceKey];
+    TMLSource *result = nil;
+    for (TMLSource *source in self.sources) {
+        if ([source.key isEqualToString:sourceKey] == YES) {
+            result = source;
+        }
     }
     
-    TMLSource *source = [[TMLSource alloc] initWithAttributes:@{@"key": sourceKey, @"application": self}];
-    [source loadTranslationsForLocale:locale completionBlock:nil];
-    [self.sourcesByKeys setObject:source forKey:sourceKey];
-    
-    return source;
+    return result;
 }
 
 - (void) registerMissingTranslationKey: (TMLTranslationKey *) translationKey {

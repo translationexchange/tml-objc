@@ -33,7 +33,7 @@
 
 @class TMLLanguage, TMLLanguageContext;
 
-@interface TMLDataToken : TMLBase <NSCopying>
+@interface TMLDataToken : TMLBase
 
 // Original label from where the token was extracted
 @property (nonatomic, strong) NSString *label;
