@@ -213,7 +213,8 @@
         }
     }
 
-    NSArray *matchedTranslations = [self.application translationsForKey:keyHash inLanguage:self.locale];
+    TMLApplication *application = self.application;
+    NSArray *matchedTranslations = [application translationsForKey:keyHash locale:self.locale];
     if (matchedTranslations != nil) {
         [translationKey setTranslations:matchedTranslations];
         return [translationKey translateToLanguage: self withTokens: tokens andOptions: options];
