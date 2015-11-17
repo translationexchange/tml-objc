@@ -201,7 +201,7 @@
 
     NSString *sourceKey = (NSString *) [self valueFromOptions:options forKey:@"source" withDefault:[[TML sharedInstance] currentSource]];
     if (sourceKey) {
-        TMLSource *source = (TMLSource *) [self.application sourceForKey:sourceKey andLocale: self.locale];
+        TMLSource *source = (TMLSource *) [self.application sourceForKey:sourceKey];
         if (source) {
             NSArray *translations = [source translationsForKey:keyHash inLanguage:self.locale];
             if (translations != nil) {
