@@ -131,13 +131,13 @@
 }
 
 - (NSString *) htmlDirection {
-    if ([self.rightToLeft isEqual:@YES])
+    if (self.rightToLeft == YES)
         return @"rtl";
     return @"ltr";
 }
 
 - (NSString *) htmlAlignmentWithLtrDefault: (NSString *) defaultAlignment {
-    if ([self.rightToLeft isEqual:@YES])
+    if (self.rightToLeft == YES)
         return defaultAlignment;
     if ([defaultAlignment isEqual: @"right"])
         return @"left";
