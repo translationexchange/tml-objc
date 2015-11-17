@@ -50,9 +50,6 @@
 #define kTMLServiceHost @"https://api.translationexchange.com"
 #endif
 
-/************************************************************************************
- ** Implementation
- ************************************************************************************/
 
 NSString * const TMLOptionsHostName = @"host";
 
@@ -70,17 +67,15 @@ NSString * const TMLOptionsHostName = @"host";
 }
 
 + (TML *) sharedInstanceWithToken: (NSString *) token {
-    return [self sharedInstanceWithToken:token launchOptions:nil];
+    return [self sharedInstanceWithToken:token configuration:nil];
 }
 
-+ (TML *) sharedInstanceWithToken: (NSString *) token launchOptions: (NSDictionary *) launchOptions {
-    [[self sharedInstance] updateWithToken:token launchOptions:launchOptions];
++ (TML *) sharedInstanceWithToken:(NSString *)token configuration:(TMLConfiguration *)configuration {
+    [[self sharedInstance] updateWithToken:token configuration:configuration];
     return [self sharedInstance];
 }
 
-/************************************************************************************
- ** Initialization
- ************************************************************************************/
+#pragma mark - Init
 
 - (id) init {
     if (self == [super init]) {
@@ -90,16 +85,17 @@ NSString * const TMLOptionsHostName = @"host";
 }
 
 #pragma mark - Initialization
-- (void) updateWithToken: (NSString *) token launchOptions: (NSDictionary *) launchOptions {
-    NSString *host = launchOptions[TMLOptionsHostName];
-    if (!host) host = kTMLServiceHost;
+- (void) updateWithToken:(NSString *)token configuration:(TMLConfiguration *)configuration {
+    if (configuration.apiURL == nil) {
+        configuration.apiURL = [NSURL URLWithString:kTMLServiceHost];
+    }
     
-    TMLApplication *app = [[TMLApplication alloc] initWithToken: token host:host];
+    TMLApplication *app = [[TMLApplication alloc] initWithAccessToken:token configuration:configuration];
     self.currentApplication = app;
     
-    TMLConfiguration *config = self.configuration;
-    self.defaultLanguage = [app languageForLocale: config.defaultLocale];
-    self.currentLanguage = [app languageForLocale: config.currentLocale];
+    self.configuration = configuration;
+    self.defaultLanguage = [app languageForLocale: configuration.defaultLocale];
+    self.currentLanguage = [app languageForLocale: configuration.currentLocale];
     
     [self loadLocalLocalizationBundle];
     

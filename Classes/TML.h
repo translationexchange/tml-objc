@@ -68,9 +68,9 @@
 
 + (TML *) sharedInstance;
 
-+ (TML *) sharedInstanceWithToken: (NSString *) token;
++ (TML *) sharedInstanceWithToken:(NSString *)token;
 
-+ (TML *) sharedInstanceWithToken: (NSString *) token launchOptions: (NSDictionary *) launchOptions;
++ (TML *) sharedInstanceWithToken:(NSString *)token configuration:(TMLConfiguration *)configuration;
 
 // Configuration methods
 + (void) configure:(void (^)(TMLConfiguration *config)) changes;
