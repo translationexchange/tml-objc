@@ -22,24 +22,33 @@
 
 #import "NSObject+TMLJSON.h"
 #import "TMLTestBase.h"
+#import "TMLAPISerializer.h"
 
 @implementation TMLTestBase
 
 - (NSDictionary *) loadJSON: (NSString *) name {
-    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-    NSString *path = [bundle pathForResource:name ofType:@"json"];
-
-    NSData *jsonData = [NSData dataWithContentsOfFile:path];
+    NSData *jsonData = [self loadJSONDataFromResource:name];
     NSDictionary *result = [jsonData tmlJSONObject];
     return  result;
 }
 
+- (NSData *) loadJSONDataFromResource:(NSString *)name {
+    NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+    NSString *path = [bundle pathForResource:name ofType:@"json"];
+    NSData *jsonData = [NSData dataWithContentsOfFile:path];
+    return jsonData;
+}
+
 - (TMLApplication *) application {
-    return [[TMLApplication alloc] initWithAttributes:[self loadJSON:@"app"]];
+    NSData *jsonData = [self loadJSONDataFromResource:@"app"];
+    TMLApplication *app = [TMLAPISerializer materializeData:jsonData withClass:[TMLApplication class] delegate:nil];
+    return app;
 }
 
 - (TMLLanguage *) languageForLocale: (NSString *) locale {
-    return [[TMLLanguage alloc] initWithAttributes:[self loadJSON:locale]];
+    NSData *jsonData = [self loadJSONDataFromResource:locale];
+    TMLLanguage *lang = [TMLAPISerializer materializeData:jsonData withClass:[TMLLanguage class] delegate:nil];
+    return lang;
 }
 
 - (void)setUp {

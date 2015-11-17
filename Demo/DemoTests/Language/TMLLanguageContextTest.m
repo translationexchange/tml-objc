@@ -13,6 +13,7 @@
 #import "TMLTestBase.h"
 #import "TMLTestUser.h"
 #import <Foundation/Foundation.h>
+#import "TMLAPISerializer.h"
 
 @interface TMLLanguageContextTest : TMLTestBase
 
@@ -20,8 +21,14 @@
 
 @implementation TMLLanguageContextTest
 
+- (TMLLanguageContext *)languageContextFromResource:(NSString *)fileName {
+    NSData *jsonData = [self loadJSONDataFromResource:fileName];
+    TMLLanguageContext *context = [TMLAPISerializer materializeData:jsonData withClass:[TMLLanguageContext class] delegate:nil];
+    return context;
+}
+
 - (void) testApplicableToTokenName {
-    TMLLanguageContext *context = [[TMLLanguageContext alloc] initWithAttributes: [self loadJSON: @"ctx_en-US_gender"]];
+    TMLLanguageContext *context = [self languageContextFromResource:@"ctx_en-US_gender"];
     XCTAssert([context isApplicableToTokenName:@"user"]);
     XCTAssert([context isApplicableToTokenName:@"user1"]);
     XCTAssert([context isApplicableToTokenName:@"translator"]);
@@ -31,7 +38,7 @@
 }
 
 - (void) testVariables {
-    TMLLanguageContext *context = [[TMLLanguageContext alloc] initWithAttributes: [self loadJSON: @"ctx_en-US_gender"]];
+    TMLLanguageContext *context = [self languageContextFromResource:@"ctx_en-US_gender"];
     TMLTestUser *user = [[TMLTestUser alloc] initWithFirstName:@"Michael" andLastName:@"Berkovich" andGender:@"male"];
     
     [TML configure:^(TMLConfiguration *config) {
@@ -61,7 +68,7 @@
 }
 
 - (void) testFindMatchingRule {
-    TMLLanguageContext *context = [[TMLLanguageContext alloc] initWithAttributes: [self loadJSON: @"ctx_en-US_gender"]];
+    TMLLanguageContext *context = [self languageContextFromResource:@"ctx_en-US_gender"];
     TMLTestUser *user = [[TMLTestUser alloc] initWithFirstName:@"Michael" andLastName:@"Berkovich" andGender:@"male"];
     
     [TML configure:^(TMLConfiguration *config) {
@@ -71,8 +78,7 @@
     TMLLanguageContextRule *rule = (TMLLanguageContextRule *) [context findMatchingRule:user];
     XCTAssert([@"male" isEqual:rule.keyword]);
     
-    
-    context = [[TMLLanguageContext alloc] initWithAttributes: [self loadJSON: @"ctx_ru_number"]];
+    context = [self languageContextFromResource:@"ctx_ru_number"];
     
     [TML configure:^(TMLConfiguration *config) {
         [config setVariableMethod:@"@@self" forContext:@"number" andVariableName:@"@n"];

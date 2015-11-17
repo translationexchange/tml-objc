@@ -28,6 +28,7 @@
 @interface TMLTestBase : XCTestCase
 
 - (NSDictionary *) loadJSON: (NSString *) name;
+- (NSData *) loadJSONDataFromResource:(NSString *)name;
 
 - (TMLApplication *) application;
 

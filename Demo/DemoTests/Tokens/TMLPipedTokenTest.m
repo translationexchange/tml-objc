@@ -10,6 +10,7 @@
 #import "TMLLanguageContext.h"
 #import <Foundation/Foundation.h>
 #import "TMLTestBase.h"
+#import "TMLAPISerializer.h"
 
 @interface TMLPipedTokenTest : TMLTestBase
 
@@ -31,6 +32,12 @@
  # {count || message, messages}  - will include count:  "5 messages"
  #
  ***********************************************************************/
+
+- (TMLLanguageContext *)languageContextFromResource:(NSString *)fileName {
+    NSData *jsonData = [self loadJSONDataFromResource:@"ctx_en-US_gender"];
+    TMLLanguageContext *context = [TMLAPISerializer materializeData:jsonData withClass:[TMLLanguageContext class] delegate:nil];
+    return context;
+}
 
 - (void) testParsing {
     TMLPipedToken *token;
@@ -169,7 +176,7 @@
     TMLPipedToken *token;
     NSDictionary *expectation;
     
-    TMLLanguageContext *context = [[TMLLanguageContext alloc] initWithAttributes: [self loadJSON: @"ctx_en-US_gender"]];
+    TMLLanguageContext *context = [self languageContextFromResource:@"ctx_en-US_gender"];
 
     token = [[TMLPipedToken alloc] initWithName:@"{user:gender| other: Born on}"];
     expectation = @{@"other": @"Born on"};
@@ -195,7 +202,7 @@
     expectation = @{@"male": @"He", @"female": @"She", @"other": @"She/He"};
     XCTAssert([expectation isEqual: [token generateValueMapForContext:context]]);
     
-    context = [[TMLLanguageContext alloc] initWithAttributes: [self loadJSON: @"ctx_en-US_number"]];
+    context = [self languageContextFromResource:@"ctx_en-US_number"];
     
     token = [[TMLPipedToken alloc] initWithName:@"{count|| one: message, many: messages}"];
     expectation = @{@"one": @"message", @"many": @"messages"};
@@ -209,7 +216,7 @@
 //    expectation = @{@"one": @"message", @"other": @"messages"};
 //    XCTAssert([expectation isEqual: [token generateValueMapForContext:context]]);
     
-    context = [[TMLLanguageContext alloc] initWithAttributes: [self loadJSON: @"ctx_ru_gender"]];
+    context = [self languageContextFromResource:@"ctx_ru_gender"];
     
     token = [[TMLPipedToken alloc] initWithName:@"{user| female: родилась, other: родился}"];
     expectation = @{@"female": @"родилась", @"other": @"родился"};
@@ -223,7 +230,7 @@
     expectation = @{@"other": @"родился"};
     XCTAssert([expectation isEqual: [token generateValueMapForContext:context]]);
     
-    context = [[TMLLanguageContext alloc] initWithAttributes: [self loadJSON: @"ctx_ru_number"]];
+    context = [self languageContextFromResource:@"ctx_ru_number"];
     
     token = [[TMLPipedToken alloc] initWithName:@"{count|| one: сообщение, few: сообщения, other: сообщений}"];
     expectation = @{@"one": @"сообщение", @"few": @"сообщения", @"other": @"сообщений"};

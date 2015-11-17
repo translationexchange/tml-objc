@@ -10,6 +10,7 @@
 #import "TMLConfiguration.h"
 #import "TMLTestBase.h"
 #import "TMLTranslationKey.h"
+#import "TMLAPISerializer.h"
 
 @interface TMLTranslationKeyTest : TMLTestBase
 
@@ -18,19 +19,21 @@
 @implementation TMLTranslationKeyTest
 
 - (void) testSubstitution {
-    TMLApplication *app = [self application];
     TMLLanguage *en = [self languageForLocale:@"en-US"];
     
-    TMLTranslationKey *tk = [[TMLTranslationKey alloc] initWithAttributes:@{@"locale": @"en-US", @"label": @"Hello World", @"application": app}];
+    TMLTranslationKey *tk = [[TMLTranslationKey alloc] init];
+    tk.locale = @"en-US";
+    tk.label = @"Hello World";
     XCTAssertEqualObjects([tk translateToLanguage:en], @"Hello World");
 
-    tk = [[TMLTranslationKey alloc] initWithAttributes:@{@"locale": @"en-US", @"label": @"[bold: Hello World]", @"application": app}];
+    tk = [[TMLTranslationKey alloc] init];
+    tk.locale = @"en-US";
+    tk.label = @"[bold: Hello World]";
     XCTAssertEqualObjects([tk translateToLanguage:en withTokens:@{@"bold": @"<b>{$0}</b>"}], @"<b>Hello World</b>");
 }
 
 
 - (void) testDefaultTokens {
-    TMLApplication *app = [self application];
     TMLLanguage *en = [self languageForLocale:@"en-US"];
     
     [TML configure:^(TMLConfiguration *config) {
@@ -38,10 +41,14 @@
         [config setDefaultTokenValue:@"World" forName:@"world" type:@"data"];
     }];
     
-    TMLTranslationKey *tk = [[TMLTranslationKey alloc] initWithAttributes:@{@"locale": @"en-US", @"label": @"[indent: Hello World]", @"application": app}];
+    TMLTranslationKey *tk = [[TMLTranslationKey alloc] init];
+    tk.locale = @"en-US";
+    tk.label = @"[indent: Hello World]";
     XCTAssertEqualObjects([tk translateToLanguage:en], @"<strong>Hello World</strong>");
     
-    tk = [[TMLTranslationKey alloc] initWithAttributes:@{@"locale": @"en-US", @"label": @"[indent: Hello {world}]", @"application": app}];
+    tk = [[TMLTranslationKey alloc] init];
+    tk.locale = @"en-US";
+    tk.label = @"[indent: Hello {world}]";
     XCTAssertEqualObjects([tk translateToLanguage:en], @"<strong>Hello World</strong>");
 }
 

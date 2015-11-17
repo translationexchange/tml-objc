@@ -9,6 +9,7 @@
 #import "TMLLanguageCase.h"
 #import <Foundation/Foundation.h>
 #import "TMLTestBase.h"
+#import "TMLAPISerializer.h"
 
 @interface TMLLanguageCaseTest : TMLTestBase
 
@@ -17,7 +18,8 @@
 @implementation TMLLanguageCaseTest
 
 - (void) testEvaluation {
-    TMLLanguageCase *lcase = [[TMLLanguageCase alloc] initWithAttributes: [self loadJSON: @"cs_en-US_plural"]];
+    NSData *jsonData = [self loadJSONDataFromResource:@"cs_en-US_plural"];
+    TMLLanguageCase *lcase = [TMLAPISerializer materializeData:jsonData withClass:[TMLLanguageCase class] delegate:nil];
 
     XCTAssert([@"sheep" isEqual:[lcase apply:@"sheep"]]);
     XCTAssert([@"fish" isEqual:[lcase apply:@"fish"]]);
