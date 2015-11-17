@@ -56,12 +56,6 @@
 // List of translations ordered by precedence
 @property(nonatomic, strong) NSArray *translations;
 
-// Holds all data tokens found in the translation key
-@property(nonatomic, strong) NSArray *dataTokens;
-
-// Holds all decoration tokens found in the translation key
-@property(nonatomic, strong) NSArray *decorationTokens;
-
 // Generates unique hash key for the translation key using label
 + (NSString *) generateKeyForLabel: (NSString *) label;
 

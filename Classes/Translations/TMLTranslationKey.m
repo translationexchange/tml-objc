@@ -46,15 +46,12 @@
 
 - (id)copyWithZone:(NSZone *)zone {
     TMLTranslationKey *aCopy = [[TMLTranslationKey alloc] init];
-    aCopy.application = [self.application copyWithZone:zone];
     aCopy.key = [self.key copyWithZone:zone];
     aCopy.label = [self.label copyWithZone:zone];
     aCopy.keyDescription = [self.keyDescription copyWithZone:zone];
     aCopy.locale = [self.locale copyWithZone:zone];
     aCopy.level = [self.level copyWithZone:zone];
     aCopy.translations = [self.translations copyWithZone:zone];
-    aCopy.dataTokens = [self.dataTokens copyWithZone:zone];
-    aCopy.decorationTokens = [self.decorationTokens copyWithZone:zone];
     return aCopy;
 }
 
@@ -66,24 +63,24 @@
     [aCoder encodeObject:self.keyDescription forKey:@"description"];
     [aCoder encodeObject:self.locale forKey:@"locale"];
     [aCoder encodeObject:self.level forKey:@"level"];
-    [aCoder encodeObject:self.translations forKey:@"translations"];
-    [aCoder encodeObject:self.dataTokens forKey:@"data_tokens"];
-    [aCoder encodeObject:self.decorationTokens forKey:@"decoration_tokens"];
 }
 
 - (void)decodeWithCoder:(NSCoder *)aDecoder {
-    TMLApplication *application = [aDecoder decodeObjectForKey:@"application"];
-    if (application != nil){
-        self.application = application;
+    NSString *label = [aDecoder decodeObjectForKey:@"label"];
+    self.label = label;
+    NSString *description = [aDecoder decodeObjectForKey:@"description"];
+    self.keyDescription = description;
+    NSString *locale = [aDecoder decodeObjectForKey:@"locale"];
+    if (locale == nil) {
+        locale = [[TML defaultLanguage] locale];
     }
-    self.key = [aDecoder decodeObjectForKey:@"key"];
-    self.label = [aDecoder decodeObjectForKey:@"label"];
-    self.keyDescription = [aDecoder decodeObjectForKey:@"description"];
-    self.locale = [aDecoder decodeObjectForKey:@"locale"];
+    self.locale = locale;
     self.level = [aDecoder decodeObjectForKey:@"level"];
-    self.translations = [aDecoder decodeObjectForKey:@"translations"];
-    self.dataTokens = [aDecoder decodeObjectForKey:@"data_tokens"];
-    self.decorationTokens = [aDecoder decodeObjectForKey:@"decoration_tokens"];
+    NSString *key = [aDecoder decodeObjectForKey:@"key"];
+    if (key == nil || [[NSNull null] isEqual:key] == YES) {
+        key = [[self class] generateKeyForLabel:label andDescription:description];
+    }
+    self.key = key;
 }
 
 #pragma mark - Equality
@@ -99,9 +96,7 @@
 }
 
 - (BOOL)isEqualToTranslationKey:(TMLTranslationKey *)translationKey {
-    return ((self.application == translationKey.application
-             || [self.application isEqualToApplication:translationKey.application] == YES)
-            && (self.key == translationKey.key
+    return ((self.key == translationKey.key
                 || [self.key isEqualToString:translationKey.key] == YES)
             && (self.label == translationKey.label
                 || [self.label isEqualToString:translationKey.label] == YES)
@@ -110,13 +105,7 @@
             && (self.locale == translationKey.locale
                 || [self.locale isEqualToString:translationKey.locale] == YES)
             && (self.level == translationKey.level
-                || [self.level isEqualToNumber:translationKey.level] == YES)
-            && (self.translations == translationKey.translations
-                || [self.translations isEqualToArray:translationKey.translations] == YES)
-            && (self.dataTokens == translationKey.dataTokens
-                || [self.dataTokens isEqualToArray:translationKey.dataTokens] == YES)
-            && (self.decorationTokens == translationKey.decorationTokens
-                || [self.decorationTokens isEqualToArray:translationKey.decorationTokens] == YES));
+                || [self.level isEqualToNumber:translationKey.level] == YES));
 }
 
 #pragma mark -
@@ -171,7 +160,7 @@
             return t;
     }
     
-//    TMLDebug(@"No acceptable ranslations found");
+    TMLWarn(@"No acceptable ranslations found for key: %@", self.label);
     return nil;
 }
 
@@ -194,7 +183,9 @@
         return [self substituteTokensInLabel:translation.label withTokens:tokens forLanguage:language andOptions:options];
     }
     
-    language = (TMLLanguage *)[self.application languageForLocale:self.locale];
+    // TODO: This should be done by TMLApplication
+    TMLApplication *application = [[TML sharedInstance] currentApplication];
+    language = (TMLLanguage *)[application languageForLocale:self.locale];
     return [self substituteTokensInLabel:self.label withTokens:tokens forLanguage:language andOptions:options];
 }
 
