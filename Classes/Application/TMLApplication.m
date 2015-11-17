@@ -147,18 +147,24 @@
                              }];
 }
 
-- (BOOL) hasTranslationForKey:(NSString *)translationKey {
-    return self.translations[translationKey] != nil;
-}
-
-- (NSArray *) translationsForKey:(NSString *) translationKey inLanguage: (NSString *) locale {
-    if (!self.translations && ![self.translations objectForKey:locale]) return nil;
-    return [[self.translations objectForKey:locale] objectForKey:translationKey];
+- (NSArray *) translationsForKey:(NSString *)translationKey locale:(NSString *)locale {
+    NSDictionary *translations = self.translations;
+    if (translations.count == 0) {
+        return nil;
+    }
+    NSDictionary *localeTranslations = translations[locale];
+    return localeTranslations[translationKey];
 }
 
 - (void) resetTranslations {
     self.translations = [NSDictionary dictionary];
     self.sources= [NSArray array];
+}
+
+- (BOOL)isTranslationKeyRegistered:(NSString *)translationKey {
+    NSDictionary *translations = self.translations;
+    NSArray *results = [[translations allValues] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"key == %@", translationKey]];
+    return results.count > 0;
 }
 
 #pragma mark - Languages

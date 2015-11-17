@@ -70,9 +70,9 @@
 @property(nonatomic, strong) NSArray <TMLSource *>*sources;
 
 /**
- *  Translations organized by translation key (@see TMLTranslationKey)
+ *  Translations organized by location, then by translation key (@see TMLTranslationKey)
  */
-@property(nonatomic, strong) NSDictionary <NSString *,TMLTranslation *>*translations;
+@property(nonatomic, strong) NSDictionary *translations;
 
 #pragma mark - Internal Use
 @property(nonatomic, readonly) TMLConfiguration *configuration;
@@ -93,9 +93,9 @@
 
 - (TMLSource *) sourceForKey:(NSString *)sourceKey;
 
-- (NSArray *) translationsForKey:(NSString *) translationKey inLanguage: (NSString *) locale;
+- (NSArray *) translationsForKey:(NSString *)translationKey locale:(NSString *)locale;
 
-- (BOOL) hasTranslationForKey: (NSString *) translationKey;
+- (BOOL) isTranslationKeyRegistered:(NSString *)translationKey;
 
 - (void) registerMissingTranslationKey: (TMLTranslationKey *) translationKey;
 
