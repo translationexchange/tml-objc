@@ -34,6 +34,11 @@
 
 @implementation TMLBase
 
+- (id)copyWithZone:(NSZone *)zone {
+    TMLRaiseAbstractInvocation();
+    return nil;
+}
+
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
     self = [self init];
     [self decodeWithCoder:aDecoder];
