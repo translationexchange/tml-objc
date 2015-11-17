@@ -247,12 +247,16 @@
     NSMutableDictionary *missingTranslations = self.missingTranslationKeysBySources;
     [self.apiClient registerTranslationKeysBySourceKey:missingTranslations
                                        completionBlock:^(BOOL success, NSError *error) {
-                                           if (success == YES) {
-                                               NSMutableDictionary *existingSources = self.sourcesByKeys;
-                                               for (TMLSource *source in missingTranslations) {
-                                                   [existingSources removeObjectForKey:source.key];
-                                               }
-                                           }
+//                                           if (success == YES && missingTranslations.count > 0) {
+//                                               NSMutableDictionary *existingSources = [NSMutableDictionary dictionary];
+//                                               for (TMLSource *source in existingSources) {
+//                                                   existingSources[source.key] = source;
+//                                               }
+//                                               for (NSString *sourceKey in missingTranslations) {
+//                                                   [existingSources removeObjectForKey:sourceKey];
+//                                               }
+//                                               self.sources = [existingSources allValues];
+//                                           }
                                        }];
     
     [missingTranslations removeAllObjects];
