@@ -95,8 +95,7 @@
                            @"key": key.key,
                            @"description": key.keyDescription,
                            @"level": key.level,
-                           @"locale": key.locale,
-                           @"translations": key.translations
+                           @"locale": key.locale
                            };
     NSString *result = [[TMLAPISerializer serializeObject:key] tmlJSONString];
     XCTAssertNotEqualObjects([result tmlJSONObject], dict);
@@ -132,10 +131,11 @@
     source.key = @"Test Source";
     source.translations = @{@"en": @[key, anotherKey]};
     NSDictionary *sourceDict = @{
+                                 @"id": @0,
                                  @"key": source.key,
-                                 @"translations": @{
-                                         @"en": @[dict, anotherDict]
-                                         }
+//                                 @"translations": @{
+//                                         @"en": @[dict, anotherDict]
+//                                         }
                                  };
     result = [[TMLAPISerializer serializeObject:source] tmlJSONString];
     XCTAssertEqualObjects([result tmlJSONObject], sourceDict);
