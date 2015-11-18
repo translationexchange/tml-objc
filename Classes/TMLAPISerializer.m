@@ -94,6 +94,9 @@
                delegate:(id<TMLAPISerializerDelegate>)delegate
 {
     id result = nil;
+    if ([object isKindOfClass:aClass] == YES) {
+        return object;
+    }
     if (object == nil || [[NSNull null] isEqual:object] == YES) {
         return [NSNull null];
     }
