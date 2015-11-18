@@ -34,7 +34,7 @@
  ***********************************************************************/
 
 - (TMLLanguageContext *)languageContextFromResource:(NSString *)fileName {
-    NSData *jsonData = [self loadJSONDataFromResource:@"ctx_en-US_gender"];
+    NSData *jsonData = [self loadJSONDataFromResource:fileName];
     TMLLanguageContext *context = [TMLAPISerializer materializeData:jsonData withClass:[TMLLanguageContext class] delegate:nil];
     return context;
 }
