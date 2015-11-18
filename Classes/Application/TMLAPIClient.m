@@ -36,6 +36,7 @@
 #import "TMLLanguage.h"
 #import "TMLSource.h"
 #import "TMLTranslationKey.h"
+#import "TMLApplication.h"
 
 NSString * const TMLAPIOptionsLocale = @"locale";
 NSString * const TMLAPIOptionsIncludeAll = @"all";
@@ -257,8 +258,8 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
      ];
 }
 
-- (void)getProjectInfoWithOptions:(NSDictionary *)options
-                  completionBlock:(void (^)(NSDictionary *, NSError *))completionBlock
+- (void)getCurrentProjectWithOptions:(NSDictionary *)options
+                     completionBlock:(void (^)(TMLApplication *, NSError *))completionBlock
 {
     NSMutableDictionary *params = nil;
     if (options != nil) {
@@ -272,22 +273,17 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
     [self get:@"projects/current"
              parameters:params
         completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-            NSMutableDictionary *projectInfo = nil;
+            TMLApplication *app = nil;
             if ([apiResponse isSuccessfulResponse] == YES) {
-                projectInfo = [apiResponse.userInfo mutableCopy];
-                
-                // marshal languages; application info response will include languages structs
-                // directly under "languages" key the top-level object, as opposed to "results"
-                NSArray *langs = [apiResponse resultsAsLanguages];
-                if (langs != nil) {
-                    projectInfo[TMLAPIResponseResultsLanguagesKey] = langs;
-                }
+                app = [TMLAPISerializer materializeObject:apiResponse.userInfo
+                                                                withClass:[TMLApplication class]
+                                                                 delegate:nil];
             }
             else {
                 TMLError(@"Error fetching current project description: %@", error);
             }
             if (completionBlock != nil) {
-                completionBlock((NSDictionary *)projectInfo, error);
+                completionBlock(app, error);
             }
         }
      ];

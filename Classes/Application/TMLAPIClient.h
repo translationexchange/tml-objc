@@ -49,7 +49,7 @@ extern NSString * const TMLAPIOptionsIncludeDefinition;
  */
 typedef void (^TMLAPIResponseHandler)(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error);
 
-@class TMLSource, TMLTranslation, TMLTranslationKey;
+@class TMLSource, TMLTranslation, TMLTranslationKey, TMLApplication;
 
 
 @interface TMLAPIClient : NSObject
@@ -141,8 +141,8 @@ completionBlock:(TMLAPIResponseHandler)completionBlock;
  *
  *  @param completionBlock Completion block
  */
-- (void) getProjectInfoWithOptions:(NSDictionary *)options
-                   completionBlock:(void(^)(NSDictionary *projectInfo, NSError *error))completionBlock;
+- (void) getCurrentProjectWithOptions:(NSDictionary *)options
+                      completionBlock:(void(^)(TMLApplication *application, NSError *error))completionBlock;
 
 /**
  *  Fetches language info for given locale.
