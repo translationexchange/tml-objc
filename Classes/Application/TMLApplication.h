@@ -66,11 +66,13 @@
 // Languages
 @property(nonatomic, strong) NSArray <TMLLanguage *>*languages;
 
+@property(nonatomic, strong) TMLLanguage *defaultLanguage;
+
 // Sources by keys
 @property(nonatomic, strong) NSArray <TMLSource *>*sources;
 
 /**
- *  Translations organized by location, then by translation key (@see TMLTranslationKey)
+ *  Translations organized by locale, then by translation key (@see TMLTranslationKey)
  */
 @property(nonatomic, strong) NSDictionary *translations;
 

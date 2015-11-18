@@ -28,18 +28,19 @@
  *  THE SOFTWARE.
  */
 
+#import "NSString+TmlAdditions.h"
 #import "TML.h"
 #import "TMLAPIClient.h"
+#import "TMLAPISerializer.h"
 #import "TMLApplication.h"
+#import "TMLAttributedDecorationTokenizer.h"
 #import "TMLConfiguration.h"
+#import "TMLDataTokenizer.h"
 #import "TMLLanguage.h"
 #import "TMLPostOffice.h"
 #import "TMLSource.h"
 #import "TMLTranslation.h"
 #import "TMLTranslationKey.h"
-#import "NSString+TmlAdditions.h"
-#import "TMLDataTokenizer.h"
-#import "TMLAttributedDecorationTokenizer.h"
 
 @interface TMLApplication() {
     NSTimer *_timer;
@@ -82,6 +83,8 @@
     [aCoder encodeObject:self.tools forKey:@"tools"];
     [aCoder encodeObject:self.languages forKey:@"languages"];
     [aCoder encodeObject:self.translations forKey:@"translations"];
+    [aCoder encodeObject:self.sources forKey:@"sources"];
+    [aCoder encodeObject:self.defaultLanguage forKey:@"default_language"];
 }
 
 - (void)decodeWithCoder:(NSCoder *)aDecoder {
@@ -93,8 +96,49 @@
     self.defaultLocale = [aDecoder decodeObjectForKey:@"defaultLocale"];
     self.threshold = [aDecoder decodeIntegerForKey:@"threshold"];
     self.features = [aDecoder decodeObjectForKey:@"features"];
-    self.languages = [aDecoder decodeObjectForKey:@"languages"];
-    self.translations = [aDecoder decodeObjectForKey:@"translations"];
+    NSArray *languages = [aDecoder decodeObjectForKey:@"languages"];
+    if (languages != nil && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
+        languages = [TMLAPISerializer materializeObject:languages
+                                              withClass:[TMLLanguage class]
+                                               delegate:nil];
+    }
+    self.languages = languages;
+    id defaultLanguage = [aDecoder decodeObjectForKey:@"default_language"];
+    if (defaultLanguage != nil && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
+        defaultLanguage = [TMLAPISerializer materializeObject:defaultLanguage
+                                                    withClass:[TMLLanguage class]
+                                                     delegate:nil];
+    }
+    self.defaultLanguage = defaultLanguage;
+    NSArray *sources = [aDecoder decodeObjectForKey:@"sources"];
+    if (sources.count > 0 && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
+        sources = [TMLAPISerializer materializeObject:sources
+                                            withClass:[TMLSource class]
+                                             delegate:nil];
+    }
+    self.sources = sources;
+    NSDictionary *translations = [aDecoder decodeObjectForKey:@"translations"];
+    if (translations.count > 0 && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
+        NSMutableDictionary *newTranslations = [NSMutableDictionary dictionary];
+        for (NSString *locale in newTranslations) {
+            NSDictionary *localeTranslations = newTranslations[locale];
+            NSMutableDictionary *newLocaleTranslations = [NSMutableDictionary dictionary];
+            for (NSString *translationKey in localeTranslations) {
+                TMLTranslation *translation = [TMLAPISerializer materializeObject:localeTranslations[translationKey]
+                                                                        withClass:[TMLTranslation class]
+                                                                         delegate:nil];
+                if (translation != nil) {
+                    if (translation.locale == nil) {
+                        translation.locale = locale;
+                    }
+                    newLocaleTranslations[translationKey] = translation;
+                }
+            }
+            newTranslations[locale] = [newLocaleTranslations copy];
+        }
+        translations = [newTranslations copy];
+    }
+    self.translations = translations;
 }
 
 - (BOOL)isEqual:(id)object {
@@ -114,10 +158,10 @@
 #pragma mark - Loading
 
 - (void) load {
-    [self.apiClient getProjectInfoWithOptions:@{TMLAPIOptionsIncludeDefinition: @YES}
-                              completionBlock:^(NSDictionary *projectInfo, NSError *error) {
-                                  if (projectInfo != nil) {
-//                                      [self updateAttributes:projectInfo];
+    [self.apiClient getCurrentProjectWithOptions:@{TMLAPIOptionsIncludeDefinition: @YES}
+                              completionBlock:^(TMLApplication *app, NSError *error) {
+                                  if (app != nil) {
+//                                      [self updateAttributes:app];
                                   }
                               }];
 }
