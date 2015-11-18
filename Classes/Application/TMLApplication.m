@@ -158,12 +158,12 @@
 #pragma mark - Loading
 
 - (void) load {
-    [self.apiClient getCurrentProjectWithOptions:@{TMLAPIOptionsIncludeDefinition: @YES}
-                              completionBlock:^(TMLApplication *app, NSError *error) {
-                                  if (app != nil) {
-//                                      [self updateAttributes:app];
-                                  }
-                              }];
+    [self.apiClient getCurrentApplicationWithOptions:@{TMLAPIOptionsIncludeDefinition: @YES}
+                                     completionBlock:^(TMLApplication *app, NSError *error) {
+                                         if (app != nil) {
+                                             //                                      [self updateAttributes:app];
+                                         }
+                                     }];
 }
 
 #pragma mark - Translations

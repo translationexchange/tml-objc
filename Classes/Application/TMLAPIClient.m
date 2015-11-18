@@ -258,8 +258,8 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
      ];
 }
 
-- (void)getCurrentProjectWithOptions:(NSDictionary *)options
-                     completionBlock:(void (^)(TMLApplication *, NSError *))completionBlock
+- (void)getCurrentApplicationWithOptions:(NSDictionary *)options
+                         completionBlock:(void (^)(TMLApplication *, NSError *))completionBlock
 {
     NSMutableDictionary *params = nil;
     if (options != nil) {

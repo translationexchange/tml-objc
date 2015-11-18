@@ -137,12 +137,12 @@ completionBlock:(TMLAPIResponseHandler)completionBlock;
                   completionBlock:(void(^)(NSDictionary <NSString *,TMLTranslation *>*translations, NSError *error))completionBlock;
 
 /**
- *  Fetches project info.
+ *  Fetches application info.
  *
  *  @param completionBlock Completion block
  */
-- (void) getCurrentProjectWithOptions:(NSDictionary *)options
-                      completionBlock:(void(^)(TMLApplication *application, NSError *error))completionBlock;
+- (void) getCurrentApplicationWithOptions:(NSDictionary *)options
+                          completionBlock:(void(^)(TMLApplication *application, NSError *error))completionBlock;
 
 /**
  *  Fetches language info for given locale.
