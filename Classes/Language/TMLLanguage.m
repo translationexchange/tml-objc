@@ -212,7 +212,7 @@
     translationKey.key = key;
     translationKey.locale = keyLocale;
     translationKey.label = label;
-    translationKey.level = keyLevel;
+    translationKey.level = [keyLevel integerValue];
     if (description != nil) {
         translationKey.keyDescription = description;
     }

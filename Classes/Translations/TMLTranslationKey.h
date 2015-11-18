@@ -48,7 +48,7 @@
 @property(nonatomic, strong) NSString *locale;
 
 // Level of the key
-@property(nonatomic, strong) NSNumber *level;
+@property(nonatomic, assign) NSInteger level;
 
 // List of translations ordered by precedence
 @property(nonatomic, strong) NSArray *translations;

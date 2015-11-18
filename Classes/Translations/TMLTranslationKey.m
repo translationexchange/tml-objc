@@ -51,7 +51,7 @@
     aCopy.label = [self.label copyWithZone:zone];
     aCopy.keyDescription = [self.keyDescription copyWithZone:zone];
     aCopy.locale = [self.locale copyWithZone:zone];
-    aCopy.level = [self.level copyWithZone:zone];
+    aCopy.level = self.level;
     aCopy.translations = [self.translations copyWithZone:zone];
     return aCopy;
 }
@@ -63,7 +63,7 @@
     [aCoder encodeObject:self.label forKey:@"label"];
     [aCoder encodeObject:self.keyDescription forKey:@"description"];
     [aCoder encodeObject:self.locale forKey:@"locale"];
-    [aCoder encodeObject:self.level forKey:@"level"];
+    [aCoder encodeInteger:self.level forKey:@"level"];
 }
 
 - (void)decodeWithCoder:(NSCoder *)aDecoder {
@@ -76,7 +76,7 @@
         locale = [[TML defaultLanguage] locale];
     }
     self.locale = locale;
-    self.level = [aDecoder decodeObjectForKey:@"level"];
+    self.level = [aDecoder decodeIntegerForKey:@"level"];
     NSString *key = [aDecoder decodeObjectForKey:@"key"];
     if (key == nil || [[NSNull null] isEqual:key] == YES) {
         key = [[self class] generateKeyForLabel:label andDescription:description];
@@ -105,8 +105,7 @@
                 || [self.keyDescription isEqualToString:translationKey.keyDescription] == YES)
             && (self.locale == translationKey.locale
                 || [self.locale isEqualToString:translationKey.locale] == YES)
-            && (self.level == translationKey.level
-                || [self.level isEqualToNumber:translationKey.level] == YES));
+            && (self.level == translationKey.level));
 }
 
 #pragma mark -
