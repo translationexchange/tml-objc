@@ -33,6 +33,7 @@
 #import "TMLLanguage.h"
 #import "TMLLanguageContext.h"
 #import "TMLLanguageContextRule.h"
+#import "TMLAPISerializer.h"
 
 @implementation TMLLanguageContext
 
@@ -76,6 +77,7 @@
     [aCoder encodeObject:self.keyword forKey:@"keyword"];
     [aCoder encodeObject:self.contextDescription forKey:@"description"];
     [aCoder encodeObject:self.keys forKey:@"keys"];
+    [aCoder encodeObject:self.defaultKey forKey:@"default_key"];
     [aCoder encodeObject:self.tokenExpression forKey:@"token_expression"];
     [aCoder encodeObject:self.variableNames forKey:@"variables"];
     [aCoder encodeObject:self.tokenMapping forKey:@"token_mapping"];
@@ -86,14 +88,32 @@
     self.keyword = [aDecoder decodeObjectForKey:@"keyword"];
     self.contextDescription = [aDecoder decodeObjectForKey:@"description"];
     self.keys = [aDecoder decodeObjectForKey:@"keys"];
-    self.tokenExpression = [aDecoder decodeObjectForKey:@"expression"];
+    self.defaultKey = [aDecoder decodeObjectForKey:@"default_key"];
+    self.tokenExpression = [aDecoder decodeObjectForKey:@"token_expression"];
     self.variableNames = [aDecoder decodeObjectForKey:@"variables"];
     self.tokenMapping = [aDecoder decodeObjectForKey:@"token_mapping"];
-    self.rules = [aDecoder decodeObjectForKey:@"rules"];
+    NSDictionary *rules = [aDecoder decodeObjectForKey:@"rules"];
+    if (rules.count > 0 && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
+        NSMutableDictionary *newRules = [NSMutableDictionary dictionary];
+        for (NSString *keyword in rules) {
+            TMLLanguageContextRule *aRule = [TMLAPISerializer materializeObject:rules[keyword]
+                                                                      withClass:[TMLLanguageContextRule class] 
+                                                                       delegate:nil];
+            if (aRule != nil) {
+                if (aRule.keyword == nil) {
+                    aRule.keyword = keyword;
+                }
+                newRules[keyword] = aRule;
+            }
+        }
+        rules = [newRules copy];
+    }
+    self.rules = rules;
 }
 
 - (NSRegularExpression *) compiledTokenExpression {
-    if (self.tokenRegularExpression == nil) {
+    if (self.tokenRegularExpression == nil
+        && self.tokenExpression.length > 0) {
         NSError *error = NULL;
         NSString *adjustedExpression = [self.tokenExpression stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"/"]];
         self.tokenRegularExpression = [NSRegularExpression

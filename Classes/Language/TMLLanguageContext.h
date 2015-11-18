@@ -47,6 +47,8 @@
 // List of available rule keys. num => [one, few, many, other]
 @property(nonatomic, strong) NSArray *keys;
 
+@property(nonatomic, strong) NSString *defaultKey;
+
 // Expression indicating which tokens belong to this context
 @property(nonatomic, strong) NSString *tokenExpression;
 
