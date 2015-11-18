@@ -49,6 +49,20 @@
     return aCopy;
 }
 
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeObject:self.ruleDescription forKey:@"description"];
+    [aCoder encodeObject:self.examples forKey:@"examples"];
+    [aCoder encodeObject:self.conditions forKey:@"conditions"];
+    [aCoder encodeObject:self.operations forKey:@"operations"];
+}
+
+- (void)decodeWithCoder:(NSCoder *)aDecoder {
+    self.ruleDescription = [aDecoder decodeObjectForKey:@"description"];
+    self.examples = [aDecoder decodeObjectForKey:@"examples"];
+    self.conditions = [aDecoder decodeObjectForKey:@"conditions"];
+    self.operations = [aDecoder decodeObjectForKey:@"operations"];
+}
+
 - (BOOL)isEqual:(id)object {
     if (self == object) {
         return YES;
@@ -60,7 +74,8 @@
 }
 
 - (BOOL)isEqualToLanguageCaseRule:(TMLLanguageCaseRule *)languageCaseRule {
-    return ([self.languageCase isEqualToLanguageCase:languageCaseRule.languageCase] == YES
+    return ([self.ruleDescription isEqualToString:languageCaseRule.ruleDescription] == YES
+            && [self.examples isEqualToString:languageCaseRule.examples] == YES
             && [self.conditions isEqualToString:languageCaseRule.conditions] == YES
             && [self.operations isEqualToString:languageCaseRule.conditions]);
 }

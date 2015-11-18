@@ -31,6 +31,7 @@
 #import "TMLLanguageCase.h"
 #import "TMLLanguageCaseRule.h"
 #import "TMLLanguage.h"
+#import "TMLAPISerializer.h"
 
 @implementation TMLLanguageCase
 
@@ -80,7 +81,11 @@
     self.latinName = [aDecoder decodeObjectForKey:@"latin_name"];
     self.nativeName = [aDecoder decodeObjectForKey:@"native_name"];
     self.caseDescription = [aDecoder decodeObjectForKey:@"description"];
-    self.rules = [aDecoder decodeObjectForKey:@"rules"];
+    NSArray *rules = [aDecoder decodeObjectForKey:@"rules"];
+    if (rules.count > 0 && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
+        rules = [TMLAPISerializer materializeObject:rules withClass:[TMLLanguageCaseRule class] delegate:nil];
+    }
+    self.rules = rules;
 }
 
 - (NSObject *) findMatchingRule: (NSString *) value {
