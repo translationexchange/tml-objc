@@ -42,14 +42,6 @@
 #import "TMLTranslationKey.h"
 #import <CommonCrypto/CommonDigest.h>
 
-#define USE_STAGING 1
-
-#if USE_STAGING
-#define kTMLServiceHost @"https://staging-api.translationexchange.com"
-#else
-#define kTMLServiceHost @"https://api.translationexchange.com"
-#endif
-
 
 NSString * const TMLOptionsHostName = @"host";
 
@@ -86,10 +78,6 @@ NSString * const TMLOptionsHostName = @"host";
 
 #pragma mark - Initialization
 - (void) updateWithToken:(NSString *)token configuration:(TMLConfiguration *)configuration {
-    if (configuration.apiURL == nil) {
-        configuration.apiURL = [NSURL URLWithString:kTMLServiceHost];
-    }
-    
     TMLApplication *app = [[TMLApplication alloc] initWithAccessToken:token configuration:configuration];
     self.currentApplication = app;
     

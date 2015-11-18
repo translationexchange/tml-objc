@@ -54,6 +54,9 @@
 {
     if (self = [super init]) {
         self.accessToken = accessToken;
+        if (configuration == nil) {
+            configuration = [[TMLConfiguration alloc] init];
+        }
         self.configuration = configuration;
         self.apiClient = [[TMLAPIClient alloc] initWithURL:configuration.apiURL
                                                accessToken:accessToken];

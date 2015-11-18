@@ -32,6 +32,14 @@
 #import <CommonCrypto/CommonDigest.h>
 #import "TML.h"
 
+#define USE_STAGING 1
+
+#if USE_STAGING
+#define kTMLServiceHost @"https://staging-api.translationexchange.com"
+#else
+#define kTMLServiceHost @"https://api.translationexchange.com"
+#endif
+
 NSString * const TMLUUIDKey = @"TMLUUID";
 
 @interface TMLConfiguration () {
@@ -114,6 +122,7 @@ NSString * const TMLUUIDKey = @"TMLUUID";
         [self setupDefaultContextRules];
         [self setupDefaultTokens];
         [self setupLocalization];
+        self.apiURL = [NSURL URLWithString:kTMLServiceHost];
     }
     return self;
 }
