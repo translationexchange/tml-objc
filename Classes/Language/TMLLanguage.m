@@ -73,6 +73,8 @@
     [aCoder encodeBool:self.rightToLeft forKey:@"right_to_left"];
     [aCoder encodeObject:[self.flagUrl absoluteString] forKey:@"flag_url"];
     [aCoder encodeObject:self.status forKey:@"status"];
+    [aCoder encodeObject:self.contexts forKey:@"contexts"];
+    [aCoder encodeObject:self.cases forKey:@"cases"];
 }
 
 - (void)decodeWithCoder:(NSCoder *)aDecoder {
@@ -83,6 +85,38 @@
     self.rightToLeft = [aDecoder decodeBoolForKey:@"right_to_left"];
     self.flagUrl = [NSURL URLWithString:[aDecoder decodeObjectForKey:@"flag_url"]];
     self.status = [aDecoder decodeObjectForKey:@"status"];
+    NSDictionary *contexts = [aDecoder decodeObjectForKey:@"contexts"];
+    if (contexts.count > 0 && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
+        NSMutableDictionary *materializedContexts = [NSMutableDictionary dictionary];
+        for (NSString *keyword in contexts) {
+            TMLLanguageContext *context = [TMLAPISerializer materializeObject:contexts[keyword]
+                                                                    withClass:[TMLLanguageContext class]
+                                                                     delegate:nil];
+            if (context != nil) {
+                if (context.keyword == nil) {
+                    context.keyword = keyword;
+                }
+                materializedContexts[keyword] = context;
+            }
+        }
+        contexts = [materializedContexts copy];
+    }
+    self.contexts = contexts;
+    NSDictionary *cases = [aDecoder decodeObjectForKey:@"cases"];
+    if (cases.count > 0 && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
+        NSMutableDictionary *materializedCases = [NSMutableDictionary dictionary];
+        for (NSString *keyword in cases) {
+            TMLLanguageCase *aCase = [TMLAPISerializer materializeObject:cases[keyword] withClass:[TMLLanguageCase class] delegate:nil];
+            if (aCase != nil) {
+                if (aCase.keyword == nil) {
+                    aCase.keyword = keyword;
+                }
+                materializedCases[keyword] = aCase;
+            }
+        }
+        cases = [materializedCases copy];
+    }
+    self.cases = cases;
 }
 
 - (BOOL)isEqualToLanguage:(TMLLanguage *)language {
