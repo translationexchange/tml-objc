@@ -155,6 +155,8 @@
     return YES;
 }
 
+#pragma mark - Encoding
+
 - (void)encodeObject:(id)objv forKey:(NSString *)key {
     id val = nil;
     if (objv == nil) {
@@ -179,12 +181,42 @@
     }
 }
 
+- (void)encodeInteger:(NSInteger)intv forKey:(NSString *)key {
+    _info[key] = [NSNumber numberWithInteger:intv];
+}
+
+- (void)encodeInt64:(int64_t)intv forKey:(NSString *)key {
+    _info[key] = [NSNumber numberWithInteger:intv];
+}
+
+- (void)encodeInt32:(int32_t)intv forKey:(NSString *)key {
+    _info[key] = [NSNumber numberWithInteger:intv];
+}
+
+- (void)encodeInt:(int)intv forKey:(NSString *)key {
+    _info[key] = [NSNumber numberWithInteger:intv];
+}
+
+#pragma mark - Decoding
+
 - (id)decodeObjectForKey:(NSString *)key {
     return _info[key];
 }
 
-- (int64_t)decodeInt64ForKey:(NSString *)key {
+- (NSInteger)decodeIntegerForKey:(NSString *)key {
     return [_info[key] integerValue];
+}
+
+-(int64_t)decodeInt64ForKey:(NSString *)key {
+    return (int64_t)[_info[key] integerValue];
+}
+
+- (int32_t)decodeInt32ForKey:(NSString *)key {
+    return (int32_t)[_info[key] integerValue];
+}
+
+- (int)decodeIntForKey:(NSString *)key {
+    return (int)[_info[key] integerValue];
 }
 
 - (BOOL)decodeBoolForKey:(NSString *)key {
