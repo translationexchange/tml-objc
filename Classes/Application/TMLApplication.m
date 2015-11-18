@@ -158,7 +158,13 @@
 #pragma mark - Loading
 
 - (void) load {
-    [self.apiClient getCurrentApplicationWithOptions:@{TMLAPIOptionsIncludeDefinition: @YES}
+    NSMutableDictionary *opts = [NSMutableDictionary dictionary];
+    opts[TMLAPIOptionsIncludeDefinition] = @YES;
+    TMLConfiguration *config = self.configuration;
+    if (config.defaultLocale != nil) {
+        opts[TMLAPIOptionsLocale] = config.defaultLocale;
+    }
+    [self.apiClient getCurrentApplicationWithOptions:opts
                                      completionBlock:^(TMLApplication *app, NSError *error) {
                                          if (app != nil) {
                                              //                                      [self updateAttributes:app];

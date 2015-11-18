@@ -270,14 +270,46 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
     }
     params[TMLAPIOptionsClientName] = @"ios";
     
-    [self get:@"projects/current"
+    NSString *path = @"projects/current";
+    if ([params[TMLAPIOptionsIncludeDefinition] boolValue] == YES) {
+        path = [NSString stringWithFormat:@"%@/definition", path];
+        [params removeObjectForKey:TMLAPIOptionsIncludeDefinition];
+    }
+    
+    [self get:path
              parameters:params
         completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
             TMLApplication *app = nil;
             if ([apiResponse isSuccessfulResponse] == YES) {
-                app = [TMLAPISerializer materializeObject:apiResponse.userInfo
-                                                                withClass:[TMLApplication class]
-                                                                 delegate:nil];
+                NSMutableDictionary *userInfo = [apiResponse.userInfo mutableCopy];
+                NSDictionary *extensions = userInfo[@"extensions"];
+                if (extensions != nil) {
+                    NSDictionary *langExtensions = extensions[@"languages"];
+                    NSArray *langs = userInfo[@"languages"];
+                    if (langExtensions.count > 0 && langs.count > 0) {
+                        NSMutableArray *newLanguages = [NSMutableArray array];
+                        for (NSDictionary *lang in langs) {
+                            NSString *locale = lang[@"locale"];
+                            NSDictionary *langExtension = nil;
+                            if (locale != nil) {
+                                langExtension = langExtensions[locale];
+                            }
+                            if (langExtension != nil) {
+                                NSMutableDictionary *newLang = [lang mutableCopy];
+                                newLang[@"cases"] = langExtension[@"cases"];
+                                newLang[@"contexts"] = langExtension[@"contexts"];
+                                [newLanguages addObject:[newLang copy]];
+                            }
+                            else {
+                                [newLanguages addObject:lang];
+                            }
+                        }
+                        userInfo[@"languages"] = [newLanguages copy];
+                    }
+                }
+                app = [TMLAPISerializer materializeObject:[userInfo copy]
+                                                withClass:[TMLApplication class]
+                                                 delegate:nil];
             }
             else {
                 TMLError(@"Error fetching current project description: %@", error);
