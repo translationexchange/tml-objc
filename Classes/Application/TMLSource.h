@@ -33,8 +33,6 @@
 
 extern NSString * const TMLSourceDefaultKey;
 
-@class TMLApplication;
-
 @interface TMLSource : TMLBase
 
 #pragma mark - API properties
@@ -52,9 +50,6 @@ extern NSString * const TMLSourceDefaultKey;
 
 // Translations registered with the source
 @property(nonatomic, strong) NSDictionary *translations;
-
-// Reference back to the application it belongs to
-@property(nonatomic, strong) TMLApplication *application;
 
 + (instancetype) defaultSource;
 

@@ -30,7 +30,6 @@
 
 #import "TML.h"
 #import "TMLAPIClient.h"
-#import "TMLApplication.h"
 #import "TMLConfiguration.h"
 #import "TMLSource.h"
 #import "TMLTranslation.h"
