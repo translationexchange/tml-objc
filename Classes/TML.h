@@ -30,9 +30,8 @@
 
 #import <Foundation/Foundation.h>
 #import "TMLLogger.h"
-#import "TMLAPIClient.h"
 
-@class TMLConfiguration, TMLLanguage, TMLApplication;
+@class TMLConfiguration, TMLLanguage, TMLApplication, TMLAPIClient, TMLPostOffice, TMLTranslationKey;
 
 #define TMLLanguageChangedNotification @"TMLLanguageChangedNotification"
 #define TMLIsReachableNotification @"TMLIsReachableNotification"
@@ -42,54 +41,159 @@
 
 @interface TML : NSObject
 
-// Holds TML configuration settings
-@property(nonatomic, strong) TMLConfiguration *configuration;
+/**
+ *  Application key
+ */
+@property(nonatomic, readonly) NSString *applicationKey;
 
-// Holds the application information
-@property(nonatomic, strong) TMLApplication *currentApplication;
+/**
+ *  Application access token
+ */
+@property(nonatomic, readonly) NSString *accessToken;
 
-// Holds default language of the application
+/**
+ *  Holds TML configuration settings
+ */
+@property(nonatomic, readonly) TMLConfiguration *configuration;
+
+/**
+ *  Holds the application information
+ */
+@property(nonatomic, readonly) TMLApplication *application;
+
+/**
+ *  Holds default language of the application
+ */
 @property(nonatomic, strong) TMLLanguage *defaultLanguage;
 
-// Holds current language, per user selection
+/**
+ *  Holds current language, per user selection
+ */
 @property(nonatomic, strong) TMLLanguage *currentLanguage;
 
-// Holds the current source key
+/**
+ *  Holds the current source key
+ */
 @property(nonatomic, strong) NSString *currentSource;
 
-// Holds the current user object
+/**
+ *  Translations organized by locale, then by translation key (@see TMLTranslationKey)
+ */
+@property(nonatomic, strong) NSDictionary *translations;
+
+/**
+ *  Holds the current user object
+ */
 @property(nonatomic, strong) NSObject *currentUser;
 
-// Holds block options
+/**
+ *  Holds block options
+ */
 @property(nonatomic, strong) NSMutableArray *blockOptions;
 
-// TML delegate
+/**
+ *  Instance of an API Client configured for current project
+ */
+@property(nonatomic, readonly) TMLAPIClient *apiClient;
+
+/**
+ *  Instance of PostOffice configuted for current project
+ */
+@property(nonatomic, readonly) TMLPostOffice *postOffice;
+
+/**
+ *  TML delegate
+ */
 @property(nonatomic, assign) id <TMLDelegate> delegate;
+
+#pragma mark - Instance creation
 
 + (TML *) sharedInstance;
 
-+ (TML *) sharedInstanceWithToken:(NSString *)token;
++ (TML *) sharedInstanceWithApplicationKey:(NSString *)applicationKey
+                               accessToken:(NSString *)token;
 
-+ (TML *) sharedInstanceWithToken:(NSString *)token configuration:(TMLConfiguration *)configuration;
++ (TML *) sharedInstanceWithApplicationKey:(NSString *)applicationKey
+                               accessToken:(NSString *)token
+                             configuration:(TMLConfiguration *)configuration;
 
-// Configuration methods
+#pragma mark - Configuration
+
+/**
+ *  Modifies current configuration
+ *
+ *  @param changes Performs configuration changes within this block
+ */
 + (void) configure:(void (^)(TMLConfiguration *config)) changes;
 
-// Returns configuration
+/**
+ *  Current configuration object
+ *
+ *  @return Current configuration object
+ */
 + (TMLConfiguration *) configuration;
 
-// HTML Translation Methods
-+ (NSString *) translate:(NSString *) label withDescription:(NSString *) description andTokens: (NSDictionary *) tokens andOptions: (NSDictionary *) options;
+#pragma mark - Translating
 
-// Attributed String Translation Methods
-+ (NSAttributedString *) translateAttributedString:(NSString *) label withDescription:(NSString *) description andTokens: (NSDictionary *) tokens andOptions: (NSDictionary *) options;
+/**
+ *  HTML Translation
+ *
+ *  @param label       String to be translated
+ *  @param description Optional description for the label
+ *  @param tokens      Optional dictionary of translation tokens
+ *  @param options     Optional dictionary of options
+ *
+ *  @return Translated string
+ */
++ (NSString *) translate:(NSString *)label
+         withDescription:(NSString *)description
+               andTokens:(NSDictionary *)tokens
+              andOptions:(NSDictionary *)options;
 
-// Date localization methods
-+ (NSString *) localizeDate:(NSDate *) date withFormat:(NSString *) format andDescription: (NSString *) description;
+/**
+ *  Attributed String Translation Methods
+ *
+ *  @param label       String to be translated
+ *  @param description Optional description for the label
+ *  @param tokens      Optional dictionary of translation tokens
+ *  @param options     Optional dictionary of options
+ *
+ *  @return Translated string
+ */
++ (NSAttributedString *) translateAttributedString:(NSString *)label
+                                   withDescription:(NSString *)description
+                                         andTokens:(NSDictionary *)tokens
+                                        andOptions:(NSDictionary *)options;
 
-/************************************************************************************
- ** Block Options
- ************************************************************************************/
+/**
+ *  Date localization methods
+ *
+ *  @param date        Date to be translated
+ *  @param format      Date format
+ *  @param description Optional description
+ *
+ *  @return Localized string representing the date
+ */
++ (NSString *) localizeDate:(NSDate *)date
+                 withFormat:(NSString *)format
+             andDescription: (NSString *)description;
+
+- (void) loadTranslationsForLocale: (NSString *) locale
+                   completionBlock:(void(^)(BOOL success))completionBlock;
+
+- (void) resetTranslations;
+
+- (NSArray *) translationsForKey:(NSString *)translationKey locale:(NSString *)locale;
+
+- (BOOL) isTranslationKeyRegistered:(NSString *)translationKey;
+
+- (void) registerMissingTranslationKey: (TMLTranslationKey *) translationKey;
+
+- (void) registerMissingTranslationKey:(TMLTranslationKey *)translationKey forSourceKey:(NSString *)sourceKey;
+
+- (void) submitMissingTranslationKeys;
+
+#pragma mark - Block options
 
 + (void) beginBlockWithOptions:(NSDictionary *) options;
 
@@ -97,11 +201,9 @@
 
 + (void) endBlockWithOptions;
 
-/************************************************************************************
- Class Methods
- ************************************************************************************/
+#pragma mark - Class methods
 
-+ (TMLApplication *) currentApplication;
++ (TMLApplication *) application;
 
 + (TMLLanguage *) defaultLanguage;
 
@@ -113,9 +215,7 @@
 
 @end
 
-/************************************************************************************
- TML Delegate
- ************************************************************************************/
+#pragma mark - TML Delegate
 
 @protocol TMLDelegate <NSObject>
 
@@ -123,9 +223,10 @@
 
 @end
 
-/************************************************************************************
- Default TML Macros
- ************************************************************************************/
+
+#pragma mark - 
+#pragma mark Default TML Macros
+
 
 #define TMLTranslationKey(label, description) \
     [TMLTranslationKey generateKeyForLabel: label andDescription: description]
@@ -199,9 +300,12 @@
 #define TMLLocalizedDateWithFormatKeyAndDescription(date, formatKey, description) \
     [TML localizeDate: date withFormatKey: formatKey andDescription: description];
 
-/************************************************************************************
- Overload the defeault localization macros
- ************************************************************************************/
+
+
+#pragma mark - 
+#pragma mark Overload the defeault localization macros
+
+
 
 #undef NSLocalizedString
 #define NSLocalizedString(key, comment) \

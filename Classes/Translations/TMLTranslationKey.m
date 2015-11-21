@@ -163,7 +163,7 @@
     }
     
     // TODO: This should be done by TMLApplication
-    TMLApplication *application = [[TML sharedInstance] currentApplication];
+    TMLApplication *application = [[TML sharedInstance] application];
     language = (TMLLanguage *)[application languageForLocale:self.locale];
     return [self substituteTokensInLabel:self.label withTokens:tokens forLanguage:language andOptions:options];
 }

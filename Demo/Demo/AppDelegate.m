@@ -14,15 +14,18 @@
 #import "TMLPostOffice.h"
 #import "TMLPrivateConfig.h"
 
-#ifndef TMLAPIKey
-#define TMLAPIKey @"8641229aae46c7d39e78657e9da0c86c80f432c21e4e4fb5bf0934673499be7a"
+#ifndef TMLAccessToken
+#define TMLAccessToken @"8641229aae46c7d39e78657e9da0c86c80f432c21e4e4fb5bf0934673499be7a"
+#endif
+#ifndef TMLApplicationKey
+#define TMLApplicationKey @"8641229aae46c7d39e78657e9da0c86c80f432c21e4e4fb5bf0934673499be7a"
 #endif
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    [TML sharedInstanceWithToken:TMLAPIKey];
+    [TML sharedInstanceWithApplicationKey:TMLApplicationKey accessToken:TMLAccessToken];
 
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
     self.window.rootViewController = [[IIViewDeckController alloc] initWithCenterViewController:[mainStoryboard instantiateViewControllerWithIdentifier: @"WelcomeViewController"]
@@ -54,7 +57,7 @@
 }
 
 - (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    [[[TML currentApplication] postOffice] registerToken: [deviceToken description]];
+    [[[TML sharedInstance] postOffice] registerToken: [deviceToken description]];
 }
 
 - (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {

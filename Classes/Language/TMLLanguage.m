@@ -242,20 +242,20 @@
                 [translationKey setTranslations:translations];
                 return [translationKey translateToLanguage: self withTokens: tokens andOptions: options];
             }
-            [self.application registerMissingTranslationKey:translationKey forSourceKey:source.key];
+            [[TML sharedInstance] registerMissingTranslationKey:translationKey forSourceKey:source.key];
 //            return [translationKey translateToLanguage: self withTokens: tokens andOptions: options];
         }
     }
 
-    TMLApplication *application = self.application;
-    NSArray *matchedTranslations = [application translationsForKey:keyHash locale:self.locale];
+    TML *tml = [TML sharedInstance];
+    NSArray *matchedTranslations = [tml translationsForKey:keyHash locale:self.locale];
     if (matchedTranslations != nil) {
         [translationKey setTranslations:matchedTranslations];
         return [translationKey translateToLanguage: self withTokens: tokens andOptions: options];
     }
     
-    if (![_application isTranslationKeyRegistered:keyHash]) {
-        [_application registerMissingTranslationKey:translationKey];
+    if (![tml isTranslationKeyRegistered:keyHash]) {
+        [tml registerMissingTranslationKey:translationKey];
     }
     
     return [translationKey translateToLanguage: self withTokens: tokens andOptions: options];

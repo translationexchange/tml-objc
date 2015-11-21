@@ -45,9 +45,6 @@
 // Application secret - only necessary for submitting keys
 @property(nonatomic, strong) NSString *secret;
 
-// Application access token
-@property(nonatomic, strong) NSString *accessToken;
-
 // Application name
 @property(nonatomic, strong) NSString *name;
 
@@ -71,39 +68,14 @@
 // Sources by keys
 @property(nonatomic, strong) NSArray <TMLSource *>*sources;
 
-/**
- *  Translations organized by locale, then by translation key (@see TMLTranslationKey)
- */
-@property(nonatomic, strong) NSDictionary *translations;
-
 #pragma mark - Internal Use
 @property(nonatomic, readonly) TMLConfiguration *configuration;
-@property(nonatomic, strong) NSMutableDictionary <NSString *, NSMutableSet *>*missingTranslationKeysBySources;
-@property(nonatomic, strong) TMLAPIClient *apiClient;
-@property(nonatomic, strong) TMLPostOffice *postOffice;
-
-- (id) initWithAccessToken:(NSString *)accessToken configuration:(TMLConfiguration *)configuration;
 
 - (BOOL) isEqualToApplication:(TMLApplication *)application;
-
-- (void) loadTranslationsForLocale: (NSString *) locale
-                   completionBlock:(void(^)(BOOL success))completionBlock;
-
-- (void) resetTranslations;
 
 - (TMLLanguage *) languageForLocale:(NSString *)locale;
 
 - (TMLSource *) sourceForKey:(NSString *)sourceKey;
-
-- (NSArray *) translationsForKey:(NSString *)translationKey locale:(NSString *)locale;
-
-- (BOOL) isTranslationKeyRegistered:(NSString *)translationKey;
-
-- (void) registerMissingTranslationKey: (TMLTranslationKey *) translationKey;
-
-- (void) registerMissingTranslationKey:(TMLTranslationKey *)translationKey forSourceKey:(NSString *)sourceKey;
-
-- (void) submitMissingTranslationKeys;
 
 @end
 

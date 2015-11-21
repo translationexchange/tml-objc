@@ -28,6 +28,7 @@
  *  THE SOFTWARE.
  */
 
+#import "TML.h"
 #import "TMLPostOffice.h"
 #import "TMLApplication.h"
 
@@ -60,9 +61,9 @@
     [params setObject:tokens forKey:@"tokens"];
     [params setObject:to forKey:@"to"];
     
-    [self.application.apiClient post:[self apiFullPath:[NSString stringWithFormat:@"templates/%@/deliver", templateKeyword]]
-                          parameters:params
-                     completionBlock:completionBlock];
+    [[[TML sharedInstance] apiClient] post:[self apiFullPath:[NSString stringWithFormat:@"templates/%@/deliver", templateKeyword]]
+                                parameters:params
+                           completionBlock:completionBlock];
 }
 
 - (void) registerToken: (NSString *) token {

@@ -37,6 +37,7 @@
 #import "TMLLanguage.h"
 #import "TMLLanguageCase.h"
 #import "TMLLogger.h"
+#import "TMLPostOffice.h"
 #import "TMLSource.h"
 #import "TMLTranslation.h"
 #import "TMLTranslationKey.h"
@@ -44,6 +45,17 @@
 
 
 NSString * const TMLOptionsHostName = @"host";
+
+@interface TML() {
+    NSTimer *_translationSubmissionTimer;
+}
+@property(strong, nonatomic) TMLConfiguration *configuration;
+@property(strong, nonatomic) NSString *applicationKey;
+@property(strong, nonatomic) NSString *accessToken;
+@property(strong, nonatomic) TMLAPIClient *apiClient;
+@property(strong, nonatomic) TMLPostOffice *postOffice;
+@property(nonatomic, strong) NSMutableDictionary <NSString *, NSMutableSet *>*missingTranslationKeysBySources;
+@end
 
 @implementation TML
 
@@ -58,12 +70,16 @@ NSString * const TMLOptionsHostName = @"host";
     return sharedInstance;
 }
 
-+ (TML *) sharedInstanceWithToken: (NSString *) token {
-    return [self sharedInstanceWithToken:token configuration:nil];
++ (TML *) sharedInstanceWithApplicationKey:(NSString *)applicationKey
+                               accessToken:(NSString *)token
+{
+    return [self sharedInstanceWithApplicationKey:applicationKey
+                                      accessToken:token
+                                    configuration:nil];
 }
 
-+ (TML *) sharedInstanceWithToken:(NSString *)token configuration:(TMLConfiguration *)configuration {
-    [[self sharedInstance] updateWithToken:token configuration:configuration];
++ (TML *) sharedInstanceWithApplicationKey:(NSString *)applicationKey accessToken:(NSString *)token configuration:(TMLConfiguration *)configuration {
+    [[self sharedInstance] updateWithApplicationKey:applicationKey accessToken:token configuration:configuration];
     return [self sharedInstance];
 }
 
@@ -72,20 +88,29 @@ NSString * const TMLOptionsHostName = @"host";
 - (id) init {
     if (self == [super init]) {
         self.configuration = [[TMLConfiguration alloc] init];
+        self.missingTranslationKeysBySources = [NSMutableDictionary dictionary];
     }
     return self;
 }
 
+- (void)dealloc {
+    [self stopSubmissionTimerIfNecessary];
+}
+
 #pragma mark - Initialization
-- (void) updateWithToken:(NSString *)token configuration:(TMLConfiguration *)configuration {
-    TMLApplication *app = [[TMLApplication alloc] initWithAccessToken:token configuration:configuration];
-    self.currentApplication = app;
-    
+- (void) updateWithApplicationKey:(NSString *)applicationKey
+                      accessToken:(NSString *)accessToken
+                    configuration:(TMLConfiguration *)configuration
+{
+    if (configuration == nil) {
+        configuration = [[TMLConfiguration alloc] init];
+    }
+    self.applicationKey = applicationKey;
+    self.accessToken = accessToken;
     self.configuration = configuration;
-    self.defaultLanguage = [app languageForLocale: configuration.defaultLocale];
-    self.currentLanguage = [app languageForLocale: configuration.currentLocale];
-    
-    [self loadLocalLocalizationBundle];
+    TMLAPIClient *apiClient = [[TMLAPIClient alloc] initWithURL:configuration.apiURL
+                                                    accessToken:accessToken];
+    self.apiClient = apiClient;
     
     NSString *localeToLoad = self.currentLanguage.locale;
     [app loadTranslationsForLocale:localeToLoad completionBlock:^(BOOL success) {
@@ -144,6 +169,8 @@ NSString * const TMLOptionsHostName = @"host";
 //    }
 }
 
+#pragma mark - Translating
+
 + (NSString *) translate:(NSString *) label withDescription:(NSString *) description andTokens: (NSDictionary *) tokens andOptions: (NSDictionary *) options {
     NSMutableDictionary *opts = [NSMutableDictionary dictionaryWithDictionary:options];
     [opts setObject:@"html" forKey:@"tokenizer"];
@@ -172,10 +199,7 @@ NSString * const TMLOptionsHostName = @"host";
     return [[self sharedInstance] localizeAttributedDate: date withTokenizedFormat: tokenizedFormat andDescription: description];
 }
 
-
-/************************************************************************************
- ** Configuration
- ************************************************************************************/
+#pragma mark - Configuration
 
 + (void) configure:(void (^)(TMLConfiguration *config)) changes {
     changes([TML configuration]);
@@ -185,9 +209,7 @@ NSString * const TMLOptionsHostName = @"host";
     return [[TML sharedInstance] configuration];
 }
 
-/************************************************************************************
- ** Block Options
- ************************************************************************************/
+#pragma mark - Block Options
 
 + (void) beginBlockWithOptions:(NSDictionary *) options {
     [[TML sharedInstance] beginBlockWithOptions:options];
@@ -232,12 +254,10 @@ NSString * const TMLOptionsHostName = @"host";
     [self.blockOptions removeObjectAtIndex:0];
 }
 
-/************************************************************************************
- ** Class Methods
- ************************************************************************************/
+#pragma mark - Class Methods
 
-+ (TMLApplication *) currentApplication {
-    return [[TML sharedInstance] currentApplication];
++ (TMLApplication *) application {
+    return [[TML sharedInstance] application];
 }
 
 + (TMLLanguage *) defaultLanguage {
@@ -255,6 +275,8 @@ NSString * const TMLOptionsHostName = @"host";
                        completionBlock:completionBlock];
 }
 
+#pragma mark - Locales
+
 - (void) changeLocale:(NSString *)locale
       completionBlock:(void(^)(BOOL success))completionBlock
 {
@@ -262,13 +284,13 @@ NSString * const TMLOptionsHostName = @"host";
     NSString *previousLocale = config.currentLocale;
     config.currentLocale = locale;
     
-    TMLApplication *app = self.currentApplication;
+    TMLApplication *app = self.application;
     
     TMLLanguage *previousLanguage = self.currentLanguage;
     self.currentLanguage = (TMLLanguage *) [app languageForLocale: locale];
     
-    [app resetTranslations];
-    [app loadTranslationsForLocale:self.currentLanguage.locale
+    [self resetTranslations];
+    [self loadTranslationsForLocale:self.currentLanguage.locale
                    completionBlock:^(BOOL success) {
                        if (success == YES) {
                            if ([self.delegate respondsToSelector:@selector(tmlDidLoadTranslations)]) {
@@ -285,31 +307,69 @@ NSString * const TMLOptionsHostName = @"host";
                    }];
 }
 
+#pragma mark - Translations
+
+- (void) updateTranslations:(NSDictionary *)translationInfo forLocale:(NSString *)locale {
+    NSMutableDictionary *newTranslations = [self.translations mutableCopy];
+    if (newTranslations == nil) {
+        newTranslations = [NSMutableDictionary dictionary];
+    }
+    newTranslations[locale] = translationInfo;
+    self.translations = [newTranslations copy];
+}
+
+- (void) loadTranslationsForLocale: (NSString *) locale
+                   completionBlock:(void(^)(BOOL success))completionBlock
+{
+    [self.apiClient getTranslationsForLocale:locale
+                                      source:nil
+                                     options:@{TMLAPIOptionsIncludeAll: @YES}
+                             completionBlock:^(NSDictionary <NSString *,TMLTranslation *> *newTranslations, NSError *error) {
+                                 BOOL success = NO;
+                                 if (newTranslations != nil) {
+                                     success = YES;
+                                     [self updateTranslations:newTranslations forLocale:locale];
+                                     [[NSNotificationCenter defaultCenter] postNotificationName:TMLLanguageChangedNotification
+                                                                                         object: locale];
+                                 }
+                                 if (completionBlock != nil) {
+                                     completionBlock(success);
+                                 }
+                             }];
+}
+
+- (NSArray *) translationsForKey:(NSString *)translationKey locale:(NSString *)locale {
+    NSDictionary *translations = self.translations;
+    if (translations.count == 0) {
+        return nil;
+    }
+    NSDictionary *localeTranslations = translations[locale];
+    return localeTranslations[translationKey];
+}
+
+- (void) resetTranslations {
+    self.translations = [NSDictionary dictionary];
+}
+
+- (BOOL)isTranslationKeyRegistered:(NSString *)translationKey {
+    NSDictionary *translations = self.translations;
+    NSArray *results = [[translations allValues] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"key == %@", translationKey]];
+    return results.count > 0;
+}
+
 + (void) reloadTranslations {
     [[TML sharedInstance] reloadTranslations];
 }
 
 - (void) reloadTranslations {
-    [self.currentApplication resetTranslations];
-    [self.currentApplication loadTranslationsForLocale:self.currentLanguage.locale completionBlock:^(BOOL success) {
+    [self resetTranslations];
+    [self loadTranslationsForLocale:self.currentLanguage.locale completionBlock:^(BOOL success) {
         if (success == YES) {
             if ([self.delegate respondsToSelector:@selector(tmlDidLoadTranslations)]) {
                 [self.delegate tmlDidLoadTranslations];
             }
         }
     }];
-}
-
-/************************************************************************************
- ** Translation Methods
- ************************************************************************************/
-
-- (NSString *) callerClass {
-    NSArray *stack = [NSThread callStackSymbols];
-    NSString *caller = [[[stack objectAtIndex:2] componentsSeparatedByString:@"["] objectAtIndex:1];
-    caller = [[caller componentsSeparatedByString:@" "] objectAtIndex:0];
-    TMLDebug(@"caller: %@", stack);
-    return caller;
 }
 
 - (NSObject *) translate:(NSString *) label withDescription:(NSString *) description andTokens: (NSDictionary *) tokens andOptions: (NSDictionary *) options {
@@ -321,10 +381,15 @@ NSString * const TMLOptionsHostName = @"host";
     return [self.currentLanguage translate:label withDescription:description andTokens:tokens andOptions:options];
 }
 
+#pragma mark - Utility Methods
 
-/************************************************************************************
- ** Localization Methods
- ************************************************************************************/
+- (NSString *) callerClass {
+    NSArray *stack = [NSThread callStackSymbols];
+    NSString *caller = [[[stack objectAtIndex:2] componentsSeparatedByString:@"["] objectAtIndex:1];
+    caller = [[caller componentsSeparatedByString:@" "] objectAtIndex:0];
+    TMLDebug(@"caller: %@", stack);
+    return caller;
+}
 
 - (NSDictionary *) tokenValuesForDate: (NSDate *) date fromTokenizedFormat:(NSString *) tokenizedFormat {
     NSMutableDictionary *tokens = [NSMutableDictionary dictionary];
@@ -412,5 +477,90 @@ NSString * const TMLOptionsHostName = @"host";
     return TMLLocalizedStringWithDescriptionAndTokens(tokenizedFormat, description, tokens);
 }
 
+- (void) registerMissingTranslationKey: (TMLTranslationKey *) translationKey {
+    [self registerMissingTranslationKey:translationKey forSourceKey:nil];
+}
+
+- (void) registerMissingTranslationKey:(TMLTranslationKey *)translationKey
+                          forSourceKey:(NSString *)sourceKey
+{
+    if (translationKey.label.length == 0) {
+        TMLWarn(@"Tried to register missing translation for translationKey with empty label");
+        return;
+    }
+    
+    NSMutableDictionary *missingTranslations = self.missingTranslationKeysBySources;
+    if (missingTranslations == nil) {
+        missingTranslations = [NSMutableDictionary dictionary];
+    }
+    
+    NSString *effectiveSourceKey = sourceKey;
+    if (effectiveSourceKey == nil) {
+        effectiveSourceKey = TMLSourceDefaultKey;
+    }
+    
+    NSMutableSet *sourceKeys = [missingTranslations objectForKey:effectiveSourceKey];
+    if (sourceKeys == nil) {
+        sourceKeys = [NSMutableSet set];
+    }
+    
+    [sourceKeys addObject:translationKey];
+    missingTranslations[effectiveSourceKey] = sourceKeys;
+    self.missingTranslationKeysBySources = missingTranslations;
+    
+    if ([missingTranslations count] > 0) {
+        [self startSubmissionTimerIfNecessary];
+    }
+    else {
+        [self stopSubmissionTimerIfNecessary];
+    }
+}
+
+- (void) submitMissingTranslationKeys {
+    if (self.missingTranslationKeysBySources == nil
+        || [self.missingTranslationKeysBySources count] == 0) {
+        [self stopSubmissionTimerIfNecessary];
+        return;
+    }
+    
+    TMLInfo(@"Submitting missing translations...");
+    
+    NSMutableDictionary *missingTranslations = self.missingTranslationKeysBySources;
+    [[[TML sharedInstance] apiClient] registerTranslationKeysBySourceKey:missingTranslations
+                                                         completionBlock:^(BOOL success, NSError *error) {
+                                                             //                                           if (success == YES && missingTranslations.count > 0) {
+                                                             //                                               NSMutableDictionary *existingSources = [NSMutableDictionary dictionary];
+                                                             //                                               for (TMLSource *source in existingSources) {
+                                                             //                                                   existingSources[source.key] = source;
+                                                             //                                               }
+                                                             //                                               for (NSString *sourceKey in missingTranslations) {
+                                                             //                                                   [existingSources removeObjectForKey:sourceKey];
+                                                             //                                               }
+                                                             //                                               self.sources = [existingSources allValues];
+                                                             //                                           }
+                                                         }];
+    
+    [missingTranslations removeAllObjects];
+}
+
+#pragma mark - Timer
+- (void)startSubmissionTimerIfNecessary {
+    if (_translationSubmissionTimer != nil) {
+        return;
+    }
+    _translationSubmissionTimer = [NSTimer timerWithTimeInterval:3.
+                                     target:self
+                                   selector:@selector(submitMissingTranslationKeys)
+                                   userInfo:nil
+                                    repeats:YES];
+    [[NSRunLoop mainRunLoop] addTimer:_translationSubmissionTimer forMode:NSDefaultRunLoopMode];
+}
+
+- (void)stopSubmissionTimerIfNecessary {
+    if (_translationSubmissionTimer != nil) {
+        [_translationSubmissionTimer invalidate];
+        _translationSubmissionTimer = nil;
+    }
+}
 
 @end

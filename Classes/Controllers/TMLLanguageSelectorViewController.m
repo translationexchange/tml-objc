@@ -89,7 +89,7 @@
     
     MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText = TMLLocalizedString(@"Loading Languages...");
-    TMLAPIClient *apiClient = [[[TML sharedInstance] currentApplication] apiClient];
+    TMLAPIClient *apiClient = [[TML sharedInstance] apiClient];
     
     [apiClient getProjectLanguagesWithOptions:nil completionBlock:^(NSArray<TMLLanguage *> *newLanguages, NSError *error) {
         if (newLanguages != nil) {

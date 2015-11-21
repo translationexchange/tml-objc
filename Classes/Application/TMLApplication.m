@@ -42,47 +42,23 @@
 #import "TMLTranslation.h"
 #import "TMLTranslationKey.h"
 
-@interface TMLApplication() {
-    NSTimer *_timer;
-}
+@interface TMLApplication()
 @property(nonatomic, readwrite) TMLConfiguration *configuration;
 
 @end
 
 @implementation TMLApplication
 
-- (id) initWithAccessToken:(NSString *)accessToken configuration:(TMLConfiguration *)configuration
-{
-    if (self = [super init]) {
-        self.accessToken = accessToken;
-        if (configuration == nil) {
-            configuration = [[TMLConfiguration alloc] init];
-        }
-        self.configuration = configuration;
-        self.apiClient = [[TMLAPIClient alloc] initWithURL:configuration.apiURL
-                                               accessToken:accessToken];
-        self.postOffice = [[TMLPostOffice alloc] initWithApplication:self];
-        [self load];
-    }
-    return self;
-}
-
-- (void)dealloc {
-    [self stopSubmissionTimerIfNecessary];
-}
-
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeInteger:self.applicationID forKey:@"id"];
     [aCoder encodeObject:self.key forKey:@"key"];
     [aCoder encodeObject:self.secret forKey:@"secret"];
-    [aCoder encodeObject:self.accessToken forKey:@"access_token"];
     [aCoder encodeObject:self.name forKey:@"name"];
     [aCoder encodeObject:self.defaultLocale forKey:@"defaultLocale"];
     [aCoder encodeInteger:self.threshold forKey:@"threshold"];
     [aCoder encodeObject:self.features forKey:@"features"];
     [aCoder encodeObject:self.tools forKey:@"tools"];
     [aCoder encodeObject:self.languages forKey:@"languages"];
-    [aCoder encodeObject:self.translations forKey:@"translations"];
     [aCoder encodeObject:self.sources forKey:@"sources"];
     [aCoder encodeObject:self.defaultLanguage forKey:@"default_language"];
 }
@@ -91,7 +67,6 @@
     self.applicationID = [aDecoder decodeIntegerForKey:@"id"];
     self.key = [aDecoder decodeObjectForKey:@"key"];
     self.secret = [aDecoder decodeObjectForKey:@"secret"];
-    self.accessToken = [aDecoder decodeObjectForKey:@"access_token"];
     self.name = [aDecoder decodeObjectForKey:@"name"];
     self.defaultLocale = [aDecoder decodeObjectForKey:@"defaultLocale"];
     self.threshold = [aDecoder decodeIntegerForKey:@"threshold"];
@@ -110,6 +85,7 @@
                                                      delegate:nil];
     }
     self.defaultLanguage = defaultLanguage;
+    
     NSArray *sources = [aDecoder decodeObjectForKey:@"sources"];
     if (sources.count > 0 && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
         sources = [TMLAPISerializer materializeObject:sources
@@ -117,28 +93,6 @@
                                              delegate:nil];
     }
     self.sources = sources;
-    NSDictionary *translations = [aDecoder decodeObjectForKey:@"translations"];
-    if (translations.count > 0 && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
-        NSMutableDictionary *newTranslations = [NSMutableDictionary dictionary];
-        for (NSString *locale in newTranslations) {
-            NSDictionary *localeTranslations = newTranslations[locale];
-            NSMutableDictionary *newLocaleTranslations = [NSMutableDictionary dictionary];
-            for (NSString *translationKey in localeTranslations) {
-                TMLTranslation *translation = [TMLAPISerializer materializeObject:localeTranslations[translationKey]
-                                                                        withClass:[TMLTranslation class]
-                                                                         delegate:nil];
-                if (translation != nil) {
-                    if (translation.locale == nil) {
-                        translation.locale = locale;
-                    }
-                    newLocaleTranslations[translationKey] = translation;
-                }
-            }
-            newTranslations[locale] = [newLocaleTranslations copy];
-        }
-        translations = [newTranslations copy];
-    }
-    self.translations = translations;
 }
 
 - (BOOL)isEqual:(id)object {
@@ -153,71 +107,6 @@
 
 - (BOOL)isEqualToApplication:(TMLApplication *)application {
     return self.applicationID == application.applicationID;
-}
-
-#pragma mark - Loading
-
-- (void) load {
-    NSMutableDictionary *opts = [NSMutableDictionary dictionary];
-    opts[TMLAPIOptionsIncludeDefinition] = @YES;
-    TMLConfiguration *config = self.configuration;
-    if (config.defaultLocale != nil) {
-        opts[TMLAPIOptionsLocale] = config.defaultLocale;
-    }
-    [self.apiClient getCurrentApplicationWithOptions:opts
-                                     completionBlock:^(TMLApplication *app, NSError *error) {
-                                         if (app != nil) {
-                                             //                                      [self updateAttributes:app];
-                                         }
-                                     }];
-}
-
-#pragma mark - Translations
-
-- (void) updateTranslations:(NSDictionary *)translationInfo forLocale:(NSString *)locale {
-    NSMutableDictionary *newTranslations = [self.translations mutableCopy];
-    newTranslations[locale] = translationInfo;
-    self.translations = newTranslations;
-}
-
-- (void) loadTranslationsForLocale: (NSString *) locale
-                   completionBlock:(void(^)(BOOL success))completionBlock
-{
-    [self.apiClient getTranslationsForLocale:locale
-                                      source:nil
-                                     options:@{TMLAPIOptionsIncludeAll: @YES}
-                             completionBlock:^(NSDictionary <NSString *,TMLTranslation *> *newTranslations, NSError *error) {
-                                 BOOL success = NO;
-                                 if (newTranslations != nil) {
-                                     success = YES;
-                                     [self updateTranslations:newTranslations forLocale:locale];
-                                     [[NSNotificationCenter defaultCenter] postNotificationName:TMLLanguageChangedNotification
-                                                                                         object: locale];
-                                 }
-                                 if (completionBlock != nil) {
-                                     completionBlock(success);
-                                 }
-                             }];
-}
-
-- (NSArray *) translationsForKey:(NSString *)translationKey locale:(NSString *)locale {
-    NSDictionary *translations = self.translations;
-    if (translations.count == 0) {
-        return nil;
-    }
-    NSDictionary *localeTranslations = translations[locale];
-    return localeTranslations[translationKey];
-}
-
-- (void) resetTranslations {
-    self.translations = [NSDictionary dictionary];
-    self.sources= [NSArray array];
-}
-
-- (BOOL)isTranslationKeyRegistered:(NSString *)translationKey {
-    NSDictionary *translations = self.translations;
-    NSArray *results = [[translations allValues] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"key == %@", translationKey]];
-    return results.count > 0;
 }
 
 #pragma mark - Languages
@@ -247,92 +136,6 @@
     }
     
     return result;
-}
-
-- (void) registerMissingTranslationKey: (TMLTranslationKey *) translationKey {
-    [self registerMissingTranslationKey:translationKey forSourceKey:nil];
-}
-
-- (void) registerMissingTranslationKey:(TMLTranslationKey *)translationKey
-                          forSourceKey:(NSString *)sourceKey
-{
-    if (translationKey.label.length == 0) {
-        TMLWarn(@"Tried to register missing translation for translationKey with empty label");
-        return;
-    }
-    
-    NSMutableDictionary *missingTranslations = self.missingTranslationKeysBySources;
-    if (missingTranslations == nil) {
-        missingTranslations = [NSMutableDictionary dictionary];
-    }
-    
-    NSString *effectiveSourceKey = sourceKey;
-    if (effectiveSourceKey == nil) {
-        effectiveSourceKey = TMLSourceDefaultKey;
-    }
-
-    NSMutableSet *sourceKeys = [missingTranslations objectForKey:effectiveSourceKey];
-    if (sourceKeys == nil) {
-        sourceKeys = [NSMutableSet set];
-    }
-    
-    [sourceKeys addObject:translationKey];
-    missingTranslations[effectiveSourceKey] = sourceKeys;
-    self.missingTranslationKeysBySources = missingTranslations;
- 
-    if ([missingTranslations count] > 0) {
-        [self startSubmissionTimerIfNecessary];
-    }
-    else {
-        [self stopSubmissionTimerIfNecessary];
-    }
-}
-
-- (void) submitMissingTranslationKeys {
-    if (self.missingTranslationKeysBySources == nil
-        || [self.missingTranslationKeysBySources count] == 0) {
-        [self stopSubmissionTimerIfNecessary];
-        return;
-    }
-
-    TMLInfo(@"Submitting missing translations...");
-    
-    NSMutableDictionary *missingTranslations = self.missingTranslationKeysBySources;
-    [self.apiClient registerTranslationKeysBySourceKey:missingTranslations
-                                       completionBlock:^(BOOL success, NSError *error) {
-//                                           if (success == YES && missingTranslations.count > 0) {
-//                                               NSMutableDictionary *existingSources = [NSMutableDictionary dictionary];
-//                                               for (TMLSource *source in existingSources) {
-//                                                   existingSources[source.key] = source;
-//                                               }
-//                                               for (NSString *sourceKey in missingTranslations) {
-//                                                   [existingSources removeObjectForKey:sourceKey];
-//                                               }
-//                                               self.sources = [existingSources allValues];
-//                                           }
-                                       }];
-    
-    [missingTranslations removeAllObjects];
-}
-
-#pragma mark - Timer
-- (void)startSubmissionTimerIfNecessary {
-    if (_timer != nil) {
-        return;
-    }
-    _timer = [NSTimer timerWithTimeInterval:3.
-                                     target:self
-                                   selector:@selector(submitMissingTranslationKeys)
-                                   userInfo:nil
-                                    repeats:YES];
-    [[NSRunLoop mainRunLoop] addTimer:_timer forMode:NSDefaultRunLoopMode];
-}
-
-- (void)stopSubmissionTimerIfNecessary {
-    if (_timer != nil) {
-        [_timer invalidate];
-        _timer = nil;
-    }
 }
 
 @end

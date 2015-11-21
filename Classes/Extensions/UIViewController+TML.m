@@ -68,7 +68,7 @@ NSString const *TMLViewTapRecognizer = @"TMLViewTapRecognizer";
 }
 
 - (TMLApplication *) tmlCurrentApplication {
-    return [[TML sharedInstance] currentApplication];
+    return [[TML sharedInstance] application];
 }
 
 - (NSObject *) tmlCurrentUser {
