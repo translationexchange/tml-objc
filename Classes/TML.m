@@ -104,12 +104,14 @@ NSString * const TMLOptionsHostName = @"host";
                       accessToken:(NSString *)accessToken
                     configuration:(TMLConfiguration *)configuration
 {
-    if (configuration == nil) {
-        configuration = [[TMLConfiguration alloc] init];
-    }
     self.applicationKey = applicationKey;
     self.accessToken = accessToken;
-    self.configuration = configuration;
+    if (configuration != nil) {
+        self.configuration = configuration;
+    }
+    else {
+        configuration = self.configuration;
+    }
     TMLAPIClient *apiClient = [[TMLAPIClient alloc] initWithURL:configuration.apiURL
                                                     accessToken:accessToken];
     self.apiClient = apiClient;
