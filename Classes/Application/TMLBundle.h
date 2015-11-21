@@ -12,6 +12,8 @@ extern NSString * const TMLBundleVersionFileName;
 extern NSString * const TMLBundleApplicationFileName;
 extern NSString * const TMLBundleVersionKey;
 
+@class TMLApplication;
+
 @interface TMLBundle : NSObject
 
 /**
@@ -43,6 +45,6 @@ extern NSString * const TMLBundleVersionKey;
 /**
  *  Application info included in the bundle
  */
-@property (readonly, nonatomic) NSDictionary *applicationInfo;
+@property (readonly, nonatomic) TMLApplication *application;
 
 @end

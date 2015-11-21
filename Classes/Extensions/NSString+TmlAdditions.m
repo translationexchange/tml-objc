@@ -13,7 +13,7 @@
 
 - (NSString *)tmlTranslationBundleVersionFromPath {
     NSError *error = nil;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"tml_([0-9]+)\\.zip"
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[^0-9]+"
                                                                            options:NSRegularExpressionCaseInsensitive
                                                                              error:&error];
     if (error != nil) {
@@ -21,11 +21,11 @@
         return nil;
     }
     
-    NSString *lastComponent = [self lastPathComponent];
-    NSString *version = [regex stringByReplacingMatchesInString:lastComponent
+    NSString *filename = [[self lastPathComponent] stringByDeletingPathExtension];
+    NSString *version = [regex stringByReplacingMatchesInString:filename
                                                         options:NSMatchingReportCompletion
-                                                          range:NSMakeRange(0, lastComponent.length)
-                                                   withTemplate:@"$1"];
+                                                          range:NSMakeRange(0, filename.length)
+                                                   withTemplate:@""];
     return version;
 }
 

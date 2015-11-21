@@ -138,8 +138,7 @@ NSString * const TMLAPIResponseErrorCodeKey = @"code";
         return [status isEqualToString:TMLAPIResponseStatusOK];
     }
     
-    // otherwise, let's assume we're ok for now...
-    return YES;
+    return self.userInfo != nil;
 }
 
 #pragma mark - Errors

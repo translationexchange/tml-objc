@@ -32,6 +32,8 @@
 #import "NSString+TMLAdditions.h"
 #import "TML.h"
 #import "TMLApplication.h"
+#import "TMLBundle.h"
+#import "TMLBundleManager.h"
 #import "TMLConfiguration.h"
 #import "TMLDataToken.h"
 #import "TMLLanguage.h"
@@ -112,15 +114,96 @@ NSString * const TMLOptionsHostName = @"host";
                                                     accessToken:accessToken];
     self.apiClient = apiClient;
     
-    NSString *localeToLoad = self.currentLanguage.locale;
-    [app loadTranslationsForLocale:localeToLoad completionBlock:^(BOOL success) {
-        if (success == YES) {
-            TMLInfo(@"Loaded translations for locale: %@", localeToLoad);
+    [self initTranslationBundle:^(TMLBundle *bundle) {
+        if (bundle == nil) {
+            TMLError(@"Failed to initialize translation bundle");
+        }
+        else {
+            [self updateWithBundle:bundle];
         }
     }];
 }
 
-- (NSArray *) findLocalTranslationBundles {
+- (void) updateWithBundle:(TMLBundle *)bundle {
+    if (bundle == nil) {
+        return;
+    }
+    TMLApplication *newApplication = [bundle application];
+    TMLInfo(@"Initializing from local bundle: %@", bundle.version);
+    self.application = newApplication;
+}
+
+#pragma mark - Bundles
+
+- (void) initTranslationBundle:(void(^)(TMLBundle *bundle))completion {
+    // Check if there's a main bundle already set up
+    TMLBundle *bundle = [TMLBundle mainBundle];
+
+    // Check if we have a locally availale archive
+    // use it if we have no main bundle, or archived version supersedes
+    NSString *archivePath = [self latestLocalBundleArchivePath];
+    NSString *archivedVersion = [archivePath tmlTranslationBundleVersionFromPath];
+    BOOL hasNewerArchive = NO;
+    if (archivedVersion != nil) {
+        hasNewerArchive = [archivedVersion compareToTMLTranslationBundleVersion:bundle.version] == NSOrderedAscending;
+    }
+    
+    TMLBundleManager *bundleManager = [TMLBundleManager defaultManager];
+    
+    // Install archived bundle if we got one
+    if (hasNewerArchive == YES) {
+        __block TMLBundle *latestArchivedBundle = nil;
+        [bundleManager installBundleFromPath:archivePath completionBlock:^(NSString *path, NSError *error) {
+            if (path != nil && error == nil) {
+                latestArchivedBundle = [[TMLBundle alloc] initWithContentsOfDirectory:path];
+            }
+            if (latestArchivedBundle != nil) {
+                [bundleManager setActiveBundle:latestArchivedBundle];
+            }
+            if (completion != nil) {
+                completion(latestArchivedBundle);
+            }
+        }];
+        return;
+    }
+    // Otherwise, if we got nothing at all, look up on CDN
+    else if (bundle == nil) {
+        [bundleManager fetchPublishedBundleInfo:^(NSDictionary *info, NSError *error) {
+            NSString *publishedVersion = info[TMLBundleManagerVersionKey];
+            if (publishedVersion != nil) {
+                NSMutableArray *locales = [NSMutableArray array];
+                NSString *defaultLocale = self.defaultLanguage.locale;
+                NSString *currentLocale = self.currentLanguage.locale;
+                if (defaultLocale != nil) {
+                    [locales addObject:defaultLocale];
+                }
+                if (currentLocale != nil && [locales containsObject:currentLocale] == NO) {
+                    [locales addObject:currentLocale];
+                }
+                [bundleManager installPublishedBundleWithVersion:publishedVersion
+                                                         locales:locales
+                                                 completionBlock:^(NSString *path, NSError *error) {
+                                                     TMLBundle *newBundle = nil;
+                                                     if (path != nil && error == nil) {
+                                                         newBundle = [[TMLBundle alloc] initWithContentsOfDirectory:path];
+                                                     }
+                                                     if (newBundle != nil) {
+                                                         [bundleManager setActiveBundle:newBundle];
+                                                     }
+                                                     if (completion != nil) {
+                                                         completion(newBundle);
+                                                     }
+                                                 }];
+            }
+        }];
+        return;
+    }
+    if (completion != nil) {
+        completion(bundle);
+    }
+}
+
+- (NSArray *) findLocalBundleArchives {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSError *error = nil;
     NSArray *contents = [fileManager contentsOfDirectoryAtPath:[[NSBundle mainBundle] bundlePath] error:&error];
@@ -134,8 +217,8 @@ NSString * const TMLOptionsHostName = @"host";
     return bundles;
 }
 
-- (NSString *) latestLocalTranslationBundlePath {
-    NSArray *localBundleZipFiles = [self findLocalTranslationBundles];
+- (NSString *) latestLocalBundleArchivePath {
+    NSArray *localBundleZipFiles = [self findLocalBundleArchives];
     if (localBundleZipFiles.count == 0) {
         TMLDebug(@"No local localization bundles found");
         return nil;
@@ -151,22 +234,61 @@ NSString * const TMLOptionsHostName = @"host";
     return latest;
 }
 
-- (void) loadLocalLocalizationBundle {
-    // TODO: no longer using cache, so this would have to be stashed elsewhere...
-//    NSString *latestLocalBundlePath = [self latestLocalTranslationBundlePath];
-//    NSString *latestLocalBundleVersion = [latestLocalBundlePath tmlTranslationBundleVersionFromPath];
-//    TMLCache *ourCache = self.cache;
-//    if (latestLocalBundlePath != nil
-//        && [[NSFileManager defaultManager] fileExistsAtPath:[ourCache cachePathForTranslationBundleVersion:latestLocalBundleVersion]] == NO) {
-//        [ourCache installContentsOfTranslationBundleAtPath:latestLocalBundlePath completion:^(NSString *destinationPath, BOOL success, NSError *error) {
-//            if (success == YES && destinationPath != nil) {
-//                NSString *latestCachedVersion = [ourCache latestTranslationBundleVersion];
-//                if ([latestLocalBundleVersion compareToTMLTranslationBundleVersion:latestCachedVersion] != NSOrderedDescending) {
-//                    [ourCache selectCachedTranslationBundleWithVersion:latestLocalBundleVersion];
-//                }
-//            }
-//        }];
-//    }
+- (void) checkForBundleUpdate:(BOOL)install
+                   completion:(void(^)(NSString *version, NSString *path, NSError *error))completion
+{
+    TMLBundleManager *bundleManager = [TMLBundleManager defaultManager];
+    [bundleManager fetchPublishedBundleInfo:^(NSDictionary *info, NSError *error) {
+        NSString *version = info[TMLBundleVersionKey];
+        TMLBundle *mainBundle = [TMLBundle mainBundle];
+        if (mainBundle == nil
+            || [mainBundle.version compareToTMLTranslationBundleVersion:version] == NSOrderedAscending) {
+            if (install == YES) {
+                NSString *defaultLocale = self.defaultLanguage.locale;
+                NSString *currentLocale = self.currentLanguage.locale;
+                NSMutableArray *localesToFetch = [NSMutableArray array];
+                if (defaultLocale != nil) {
+                    [localesToFetch addObject:defaultLocale];
+                }
+                if (currentLocale != nil) {
+                    [localesToFetch addObject:localesToFetch];
+                }
+                [bundleManager installPublishedBundleWithVersion:version
+                                                         locales:localesToFetch
+                                                 completionBlock:^(NSString *path, NSError *error) {
+                                                     if (completion != nil) {
+                                                         completion(version, path, error);
+                                                     }
+                                                 }];
+            }
+            else {
+                if (completion != nil) {
+                    completion(version, nil, nil);
+                }
+            }
+        }
+    }];
+}
+
+#pragma mark - Application
+
+- (void)setApplication:(TMLApplication *)application {
+    if (_application == application) {
+        return;
+    }
+    _application = application;
+    if (application != nil) {
+        TMLConfiguration *configuration = self.configuration;
+        self.postOffice = [[TMLPostOffice alloc] initWithApplication:application];
+        self.defaultLanguage = [application languageForLocale: configuration.defaultLocale];
+        self.currentLanguage = [application languageForLocale: configuration.currentLocale];
+        NSString *localeToLoad = self.currentLanguage.locale;
+        [self loadTranslationsForLocale:localeToLoad completionBlock:^(BOOL success) {
+            if (success == YES) {
+                TMLInfo(@"Loaded translations for locale: %@", localeToLoad);
+            }
+        }];
+    }
 }
 
 #pragma mark - Translating

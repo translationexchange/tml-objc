@@ -140,29 +140,15 @@ NSString * const TMLAPIOptionsSourceKeys = @"source_keys";
      cachePolicy:(NSURLRequestCachePolicy)cachePolicy
  completionBlock:(TMLAPIResponseHandler)completionBlock
 {
-    if (NSClassFromString(@"NSURLSession") != nil) {
-        [[[NSURLSession sharedSession] dataTaskWithRequest: request
-                                         completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
-                                             dispatch_async(dispatch_get_main_queue(), ^(void){
-                                                 [self processResponse:response
-                                                                  data:data
-                                                                 error:error
-                                                       completionBlock:completionBlock];
-                                             });
-                                         }] resume];
-        
-    } else {
-        [NSURLConnection sendAsynchronousRequest: request
-                                           queue: [NSOperationQueue mainQueue]
-                               completionHandler: ^(NSURLResponse *response, NSData *data, NSError *error) {
-                                   dispatch_async(dispatch_get_main_queue(), ^(void){
-                                       [self processResponse:response
-                                                        data:data
-                                                       error:error
-                                             completionBlock:completionBlock];
-                                   });
-                               }];
-    }
+    [[[NSURLSession sharedSession] dataTaskWithRequest: request
+                                     completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
+                                         dispatch_async(dispatch_get_main_queue(), ^(void){
+                                             [self processResponse:response
+                                                              data:data
+                                                             error:error
+                                                   completionBlock:completionBlock];
+                                         });
+                                     }] resume];
 }
 
 - (void) get:(NSString *)path

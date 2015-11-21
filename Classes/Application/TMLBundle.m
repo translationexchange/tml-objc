@@ -9,19 +9,20 @@
 #import "NSObject+TMLJSON.h"
 #import "NSString+TmlAdditions.h"
 #import "TML.h"
+#import "TMLAPISerializer.h"
 #import "TMLApplication.h"
 #import "TMLBundle.h"
 #import "TMLBundleManager.h"
 
 NSString * const TMLBundleVersionFileName = @"snapshot.json";
 NSString * const TMLBundleApplicationFileName = @"application.json";
-NSString * const TMLBundleVersionKey = @"bundle";
+NSString * const TMLBundleVersionKey = @"version";
 
 @interface TMLBundle()
 @property (readwrite, nonatomic) NSString *version;
 @property (readwrite, nonatomic) NSString *path;
 @property (readwrite, nonatomic) NSArray *languages;
-@property (readwrite, nonatomic) NSDictionary *applicationInfo;
+@property (readwrite, nonatomic) TMLApplication *application;
 @end
 
 @implementation TMLBundle
@@ -39,7 +40,9 @@ NSString * const TMLBundleVersionKey = @"bundle";
             }];
         }
         TMLBundle *latestBundle = [bundles lastObject];
-        [bundleManager setActiveBundle:latestBundle];
+        if (latestBundle != nil) {
+            [bundleManager setActiveBundle:latestBundle];
+        }
         return latestBundle;
     }
     return activeBundle;
@@ -62,7 +65,9 @@ NSString * const TMLBundleVersionKey = @"bundle";
             TMLError(@"Could not determin application info of bundle at path: %@", path);
             return nil;
         }
-        self.applicationInfo = applicationInfo;
+        self.application = [TMLAPISerializer materializeObject:applicationInfo
+                                                     withClass:[TMLApplication class]
+                                                      delegate:nil];
     }
     return self;
 }

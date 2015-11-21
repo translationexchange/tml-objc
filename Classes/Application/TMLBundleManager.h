@@ -8,6 +8,17 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const TMLBundleManagerErrorDomain;
+
+typedef NS_ENUM(NSInteger, TMLBundleManagerErrorCode) {
+    TMLBundleManagerInvalidApplicationKeyError,
+    TMLBundleManagerInvalidVersionError,
+    TMLBundleManagerInvalidData,
+    TMLBundleManagerIncompleteData
+};
+
+extern NSString * const TMLBundleManagerVersionKey;
+
 typedef void (^TMLBundleInstallBlock)(NSString *path, NSError *error);
 
 @interface TMLBundleManager : NSObject
@@ -18,10 +29,13 @@ typedef void (^TMLBundleInstallBlock)(NSString *path, NSError *error);
 
 - (void) installBundleFromPath:(NSString *)aPath completionBlock:(TMLBundleInstallBlock)completionBlock;
 - (void) installBundleFromURL:(NSURL *)aURL completionBlock:(TMLBundleInstallBlock)completionBlock;
+- (void) installPublishedBundleWithVersion:(NSString *)version
+                                   locales:(NSArray *)locales
+                           completionBlock:(TMLBundleInstallBlock)completionBlock;
 
 #pragma mark - Query
 
-- (NSString *) fetchPublishedBundleInfo:(void(^)(NSDictionary *info, NSError *error))completionBlock;
+- (void) fetchPublishedBundleInfo:(void(^)(NSDictionary *info, NSError *error))completionBlock;
 - (NSArray *) installedBundles;
 
 #pragma mark - Selection
