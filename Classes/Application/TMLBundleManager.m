@@ -444,8 +444,7 @@ NSString * const TMLBundleManagerVersionKey = @"version";
     }
     
     NSString *path = bundle.path;
-    [fileManager createSymbolicLinkAtPath:link withDestinationPath:path error:&error];
-    if (error != nil) {
+    if ([fileManager createSymbolicLinkAtPath:link withDestinationPath:path error:&error] == NO) {
         TMLError(@"Error linking bundle as active: %@", error);
     }
 }
