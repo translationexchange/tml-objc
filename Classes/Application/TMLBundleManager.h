@@ -14,9 +14,11 @@ typedef NS_ENUM(NSInteger, TMLBundleManagerErrorCode) {
     TMLBundleManagerInvalidApplicationKeyError,
     TMLBundleManagerInvalidVersionError,
     TMLBundleManagerInvalidData,
-    TMLBundleManagerIncompleteData
+    TMLBundleManagerIncompleteData,
+    TMLBundleManagerUnsupportedArchive
 };
 
+extern NSString * const TMLBundleManagerFilenameKey;
 extern NSString * const TMLBundleManagerVersionKey;
 
 typedef void (^TMLBundleInstallBlock)(NSString *path, NSError *error);
@@ -32,15 +34,26 @@ typedef void (^TMLBundleInstallBlock)(NSString *path, NSError *error);
 - (void) installPublishedBundleWithVersion:(NSString *)version
                                    locales:(NSArray *)locales
                            completionBlock:(TMLBundleInstallBlock)completionBlock;
+- (void) installResourceFromPath:(NSString *)resourcePath
+          withRelativeBundlePath:(NSString *)relativeBundlePath
+               intoBundleVersion:(NSString *)bundleVersion
+                 completionBlock:(void(^)(NSString *path, NSError *error))completionBlock;
 
 #pragma mark - Query
 
-- (void) fetchPublishedBundleInfo:(void(^)(NSDictionary *info, NSError *error))completionBlock;
 - (NSArray *) installedBundles;
+
+#pragma mark - Fetching
+
+- (void) fetchPublishedBundleInfo:(void(^)(NSDictionary *info, NSError *error))completionBlock;
+- (void) fetchPublishedResources:(NSArray *)resourcePaths
+                   bundleVersion:(NSString *)bundleVersion
+                   baseDirectory:(NSString *)baseDirectory
+                 completionBlock:(void(^)(BOOL success, NSArray *paths, NSArray *errors))completionBlock;
 
 #pragma mark - Selection
 
-- (void) setActiveBundle:(TMLBundle *)bundle;
-- (TMLBundle *)activeBundle;
+@property (nonatomic, strong) TMLBundle *activeBundle;
+@property (nonatomic, readonly) TMLBundle *apiBundle;
 
 @end

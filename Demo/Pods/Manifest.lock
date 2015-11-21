@@ -1,18 +1,21 @@
 PODS:
   - MBProgressHUD (0.9)
   - MPColorTools (1.6.1)
+  - NVHTarGzip (1.0.1)
   - SSZipArchive (0.3.3)
   - ViewDeck (2.2.11)
 
 DEPENDENCIES:
   - MBProgressHUD (~> 0.9)
   - MPColorTools (~> 1.6)
+  - NVHTarGzip
   - SSZipArchive
   - ViewDeck (~> 2.2.11)
 
 SPEC CHECKSUMS:
   MBProgressHUD: d8e7ea388dc1549a42e0d219067cf5f2c898fb66
   MPColorTools: a5d2a09fc44750aea0366f666aa52c80565c0764
+  NVHTarGzip: 74cc227b902e5725900d37eb6d79b57e93005a73
   SSZipArchive: 2cf2a6d3ac9f03252b7d96f93728b9b983be9afb
   ViewDeck: ce795f929d00d1e0fd63f61d79cc92a9ea050ec9
 

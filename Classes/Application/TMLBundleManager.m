@@ -8,20 +8,27 @@
 
 #import "NSObject+TMLJSON.h"
 #import "TML.h"
+#import "TMLAPIBundle.h"
 #import "TMLAPISerializer.h"
 #import "TMLApplication.h"
 #import "TMLBundle.h"
 #import "TMLBundleManager.h"
+#import <NVHTarGzip/NVHTarGzip.h>
 #import <SSZipArchive/SSZipArchive.h>
 
 NSString * const TMLBundleManagerErrorDomain = @"TMLBundleManagerErrorDomain";
 NSString * const TMLBundleManagerActiveBundleLinkName = @"active";
 NSString * const TMLBundleManagerVersionKey = @"version";
+NSString * const TMLBundleManagerFilenameKey = @"filename";
+
+NSString * const TMLBundleManagerAPIBundleDirectoryName = @"api";
 
 @interface TMLBundleManager() {
     NSURLSession *_downloadSession;
+    TMLBundle *_activeBundle;
 }
 @property(strong, nonatomic) NSURL *archiveURL;
+@property(strong, nonatomic) TMLBundle *apiBundle;
 @end
 
 @implementation TMLBundleManager
@@ -91,7 +98,7 @@ NSString * const TMLBundleManagerVersionKey = @"version";
     NSString *extension = [[aPath pathExtension] lowercaseString];
     
     if (isDirectory == YES) {
-        NSString *applicationFilePath = [NSString stringWithFormat:@"%@/%@", aPath, TMLBundleApplicationFileName];
+        NSString *applicationFilePath = [aPath stringByAppendingPathComponent:TMLBundleApplicationFilename];
         NSError *installError;
         BOOL success = YES;
         if ([fileManager fileExistsAtPath:applicationFilePath] == NO) {
@@ -121,12 +128,12 @@ NSString * const TMLBundleManagerVersionKey = @"version";
         if (success == YES) {
             destinationPath = [NSString stringWithFormat:@"%@/%@", [self bundleInstallationPathForApplicationKey:application.key], bundleName];
             
-            if ([fileManager fileExistsAtPath:destinationPath] == YES) {
-                if ([fileManager removeItemAtPath:destinationPath error:&installError] == NO) {
-                    TMLError(@"Error removing old cached translation bundle: %@", installError);
-                    success = NO;
-                }
-            }
+//            if ([fileManager fileExistsAtPath:destinationPath] == YES) {
+//                if ([fileManager removeItemAtPath:destinationPath error:&installError] == NO) {
+//                    TMLError(@"Error removing old cached translation bundle: %@", installError);
+//                    success = NO;
+//                }
+//            }
             NSString *destinationDir = [destinationPath stringByDeletingLastPathComponent];
             if ([fileManager fileExistsAtPath:destinationDir] == NO) {
                 if ([fileManager createDirectoryAtPath:destinationDir
@@ -138,6 +145,7 @@ NSString * const TMLBundleManagerVersionKey = @"version";
                 }
             }
             if (success == YES
+                && [aPath isEqualToString:destinationPath] == NO
                 && [fileManager moveItemAtPath:aPath toPath:destinationPath error:&installError] == NO) {
                 TMLError(@"Error installing uncompressed translation bundle: %@", installError);
                 success = NO;
@@ -155,10 +163,22 @@ NSString * const TMLBundleManagerVersionKey = @"version";
         }
     }
     else if ([@"zip" isEqualToString:extension] == YES) {
-        [self installBundleFromZipArchive:aPath completionBlock:completionBlock];
+        [self installBundleFromZipArchive:aPath
+                          completionBlock:completionBlock];
     }
-    else {
+    else if ([@[@"gzip", @"gz", @"tar", @"tar.gz", @"tar.gzip"] containsObject:extension] == YES) {
+        [self installBundleFromTarball:aPath
+                       completionBlock:completionBlock];
+    } else {
         TMLError(@"Don't know how to install bundle from path '%@'", aPath);
+        if (completionBlock != nil) {
+            NSError *error = [NSError errorWithDomain:TMLBundleManagerErrorDomain
+                                                 code:TMLBundleManagerUnsupportedArchive
+                                             userInfo:@{
+                                                        TMLBundleManagerFilenameKey: aPath
+                                                        }];
+            completionBlock(nil, error);
+        }
     }
 }
 
@@ -194,6 +214,56 @@ NSString * const TMLBundleManagerVersionKey = @"version";
                         completionBlock(nil, error);
                     }
                 }];
+}
+
+- (void) installBundleFromTarball:(NSString *)aPath
+                  completionBlock:(TMLBundleInstallBlock)completionBlock
+{
+    NSString *bundleName = [[aPath lastPathComponent] stringByDeletingPathExtension];
+    NSString *tempPath = [NSString stringWithFormat:@"%@/%@", NSTemporaryDirectory(), bundleName];
+    NSString *lowercasePath = [aPath lowercaseString];
+    void(^finish)(NSError *) = ^(NSError *error){
+        if (error != nil) {
+            TMLError(@"Error extracting bundle from archive '%@' %@", aPath, error);
+            if (completionBlock != nil) {
+                completionBlock(nil, error);
+            }
+        }
+        else {
+            [self installBundleFromPath:tempPath
+                        completionBlock:completionBlock];
+        }
+    };
+    if ([lowercasePath hasSuffix:@"tar.gz"] == YES
+        || [lowercasePath hasSuffix:@"tar.gzip"] == YES) {
+        [[NVHTarGzip sharedInstance] unTarGzipFileAtPath:aPath
+                                                  toPath:tempPath
+                                              completion:finish];
+        return;
+    }
+    NSString *extension = [lowercasePath pathExtension];
+    if ([@"gzip" isEqualToString:extension] == YES
+        || [@"gz" isEqualToString:extension] == YES) {
+        [[NVHTarGzip sharedInstance] unGzipFileAtPath:aPath
+                                               toPath:tempPath
+                                           completion:finish];
+        return;
+    }
+    else if ([@"tar" isEqualToString:extension] == YES) {
+        [[NVHTarGzip sharedInstance] unTarFileAtPath:aPath
+                                              toPath:tempPath
+                                          completion:finish];
+        return;
+    }
+    
+    if (completionBlock != nil) {
+        NSError *error = [NSError errorWithDomain:TMLBundleManagerErrorDomain
+                                             code:TMLBundleManagerUnsupportedArchive
+                                         userInfo:@{
+                                                    TMLBundleManagerFilenameKey: aPath
+                                                    }];
+        completionBlock(nil, error);
+    }
 }
 
 - (void) installBundleFromURL:(NSURL *)aURL completionBlock:(TMLBundleInstallBlock)completionBlock {
@@ -316,7 +386,10 @@ NSString * const TMLBundleManagerVersionKey = @"version";
                   baseDirectory:(NSString *)baseDirectory
                 completionBlock:(void(^)(NSString *path, NSError *error))completionBlock
 {
-    NSString *destination = [NSString stringWithFormat:@"%@/%@", baseDirectory, resourcePath];
+    if (baseDirectory == nil) {
+        baseDirectory = [[self downloadDirectory] stringByAppendingPathComponent:bundleVersion];
+    }
+    NSString *destination = [baseDirectory stringByAppendingPathComponent:resourcePath];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
     // Check if the file already exists. We may have downloaded it previously
@@ -374,8 +447,6 @@ NSString * const TMLBundleManagerVersionKey = @"version";
     return _downloadSession;
 }
 
-#pragma mark - Query
-
 - (void) fetchPublishedBundleInfo:(void(^)(NSDictionary *info, NSError *error))completionBlock {
     NSError *error = nil;
     NSString *applicationKey = [[TML sharedInstance] applicationKey];
@@ -405,6 +476,36 @@ NSString * const TMLBundleManagerVersionKey = @"version";
     }
 }
 
+- (void) installResourceFromPath:(NSString *)resourcePath
+          withRelativeBundlePath:(NSString *)relativeBundlePath
+               intoBundleVersion:(NSString *)bundleVersion
+                 completionBlock:(void(^)(NSString *path, NSError *error))completionBlock
+{
+    NSString *bundleRootPath = [self installPathForBundleVersion:bundleVersion];
+    NSString *destinationPath = [bundleRootPath stringByAppendingPathComponent:relativeBundlePath];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *destinationRoot = [destinationPath stringByDeletingLastPathComponent];
+    NSError *error;
+    if ([fileManager fileExistsAtPath:destinationRoot] == NO) {
+        if ([fileManager createDirectoryAtPath:destinationRoot
+                   withIntermediateDirectories:YES
+                                    attributes:nil
+                                         error:&error] == NO){
+            TMLError(@"Error creating installation directory for resource '%@': %@", relativeBundlePath, error);
+        }
+    }
+    if (error == nil) {
+        if ([fileManager moveItemAtPath:resourcePath toPath:destinationPath error:&error] == NO) {
+            TMLError(@"Error installing resource '%@' for bundle '%@': %@", relativeBundlePath, bundleVersion, error);
+        }
+    }
+    if (completionBlock != nil) {
+        completionBlock((error) ? nil : destinationPath, error);
+    }
+}
+
+#pragma mark - Query
+
 - (NSArray *) installedBundles {
     NSString *installPath = [self defaultBundleInstallationPath];
     NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -431,21 +532,28 @@ NSString * const TMLBundleManagerVersionKey = @"version";
     return bundles;
 }
 
-#pragma mark - Selection
+#pragma mark - Active Bundle
 
 - (void)setActiveBundle:(TMLBundle *)bundle {
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *link = [NSString stringWithFormat:@"%@/%@", [self defaultBundleInstallationPath], TMLBundleManagerActiveBundleLinkName];
-    NSError *error = nil;
-    NSDictionary *attrs = [fileManager attributesOfItemAtPath:link error:&error];
-    if (attrs != nil
-        && [fileManager removeItemAtPath:link error:&error] == NO) {
-        TMLError(@"Error removing symlink to active bundle: %@", error);
+    if (_activeBundle == bundle) {
+        return;
     }
     
-    NSString *path = bundle.path;
-    if ([fileManager createSymbolicLinkAtPath:link withDestinationPath:path error:&error] == NO) {
-        TMLError(@"Error linking bundle as active: %@", error);
+    if (_activeBundle == nil) {
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSString *link = [NSString stringWithFormat:@"%@/%@", [self defaultBundleInstallationPath], TMLBundleManagerActiveBundleLinkName];
+        NSError *error = nil;
+        NSDictionary *attrs = [fileManager attributesOfItemAtPath:link error:&error];
+        if (attrs != nil
+            && [fileManager removeItemAtPath:link error:&error] == NO) {
+            TMLError(@"Error removing symlink to active bundle: %@", error);
+        }
+        
+        NSString *path = bundle.path;
+        if ([fileManager createSymbolicLinkAtPath:link withDestinationPath:path error:&error] == NO) {
+            TMLError(@"Error linking bundle as active: %@", error);
+        }
+        _activeBundle = bundle;
     }
 }
 
@@ -456,6 +564,27 @@ NSString * const TMLBundleManagerVersionKey = @"version";
         return [[TMLBundle alloc] initWithContentsOfDirectory:activeBundlePath];
     }
     return nil;
+}
+
+#pragma mark - API Bundle
+
+- (TMLBundle *)apiBundle {
+    if (_apiBundle == nil) {
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSString *apiBundleDir = [[self defaultBundleInstallationPath] stringByAppendingPathComponent:TMLBundleManagerAPIBundleDirectoryName];
+        NSError *error;
+        if ([fileManager fileExistsAtPath:apiBundleDir] == NO) {
+            if ([fileManager createDirectoryAtPath:apiBundleDir
+                       withIntermediateDirectories:YES
+                                        attributes:nil
+                                             error:&error] == NO) {
+                TMLError(@"Error creating directory structure for API bundle: %@", error);
+                return _apiBundle;
+            }
+        }
+        _apiBundle = [[TMLAPIBundle alloc] initWithContentsOfDirectory:apiBundleDir];
+    }
+    return _apiBundle;
 }
 
 @end

@@ -8,9 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const TMLBundleVersionFileName;
-extern NSString * const TMLBundleApplicationFileName;
+extern NSString * const TMLBundleVersionFilename;
+extern NSString * const TMLBundleApplicationFilename;
+extern NSString * const TMLBundleSourcesFilename;
 extern NSString * const TMLBundleVersionKey;
+extern NSString * const TMLBundleURLKey;
 
 @class TMLApplication;
 
@@ -24,6 +26,8 @@ extern NSString * const TMLBundleVersionKey;
  *  @return Main translation bundle, or nil, if none exist locally.
  */
 + (instancetype)mainBundle;
+
++ (instancetype)apiBundle;
 
 - (instancetype)initWithContentsOfDirectory:(NSString *)path;
 
@@ -43,8 +47,32 @@ extern NSString * const TMLBundleVersionKey;
 @property (readonly, nonatomic) NSArray *languages;
 
 /**
+ *  Array of locales for which there are locally stored translations
+ */
+@property (readonly, nonatomic) NSArray *availableLocales;
+
+/**
+ *  Array of locales supported by the bundle
+ */
+@property (readonly, nonatomic) NSArray *locales;
+
+/**
+ *  List of TMLSource names used in the bundle
+ */
+@property (readonly, nonatomic) NSArray *sources;
+
+/**
  *  Application info included in the bundle
  */
 @property (readonly, nonatomic) TMLApplication *application;
+
+@property (readonly, nonatomic) NSURL *sourceURL;
+
+#pragma mark - Synchronizing
+
+- (void)synchronize:(void(^)(BOOL success))completion;
+- (void)synchronizeApplicationData:(void (^)(BOOL))completion;
+- (void)synchronizeLocales:(NSArray *)locales
+                completion:(void (^)(BOOL))completion;
 
 @end

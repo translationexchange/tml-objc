@@ -139,10 +139,20 @@ completionBlock:(TMLAPIResponseHandler)completionBlock;
 /**
  *  Fetches application info.
  *
+ *  @param options         Dictionary of options with TMLAPIOptions for keys
  *  @param completionBlock Completion block
  */
 - (void) getCurrentApplicationWithOptions:(NSDictionary *)options
                           completionBlock:(void(^)(TMLApplication *application, NSError *error))completionBlock;
+
+/**
+ *  Fetches infromation about translation sources
+ *
+ *  @param options         Dictionary of options with TMLAPIOptions for keys
+ *  @param completionBlock Completion block
+ */
+- (void) getSources:(NSDictionary *)options
+    completionBlock:(void(^)(NSArray *sources, NSError *error))completionBlock;
 
 /**
  *  Fetches language info for given locale.
@@ -158,7 +168,7 @@ completionBlock:(TMLAPIResponseHandler)completionBlock;
 /**
  *  Fetches list of languages defined in current project
  *
- *  @param options         Dictionary of options witih TMLAPIOptions for keys
+ *  @param options         Dictionary of options with TMLAPIOptions for keys
  *  @param completionBlock Completion block
  */
 - (void) getProjectLanguagesWithOptions:(NSDictionary *)options

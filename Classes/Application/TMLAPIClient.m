@@ -307,6 +307,25 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
      ];
 }
 
+- (void)getSources:(NSDictionary *)options
+   completionBlock:(void (^)(NSArray *, NSError *))completionBlock
+{
+    [self get:@"projects/current/sources"
+   parameters:options
+completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+    NSArray *sources = nil;
+    if (apiResponse.successfulResponse == YES) {
+        sources = [TMLAPISerializer materializeData:apiResponse.results
+                                          withClass:[TMLSource class]
+                                           delegate:nil];
+    }
+    TMLDebug(@"Got %i total sources via API", sources.count);
+    if (completionBlock != nil) {
+        completionBlock(sources, error);
+    }
+}];
+}
+
 - (void)getLanguageForLocale:(NSString *)locale
                      options:(NSDictionary *)options
              completionBlock:(void (^)(TMLLanguage *, NSError *))completionBlock

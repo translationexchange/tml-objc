@@ -124,6 +124,11 @@ NSString * const TMLOptionsHostName = @"host";
             [self updateWithBundle:bundle];
         }
     }];
+    
+    TMLBundle *apiBundle = [TMLBundle apiBundle];
+    [apiBundle synchronize:^(BOOL success) {
+        TMLInfo(@"Successfully synchronized API bundle: %@", @(success));
+    }];
 }
 
 - (void) updateWithBundle:(TMLBundle *)bundle {
@@ -502,7 +507,11 @@ NSString * const TMLOptionsHostName = @"host";
         self.defaultLanguage = [TMLLanguage defaultLanguage];
         self.currentLanguage = self.defaultLanguage;
     }
-    return [self.currentLanguage translate:label withDescription:description andTokens:tokens andOptions:options];
+    id result = [self.currentLanguage translate:label
+                                withDescription:description
+                                      andTokens:tokens
+                                     andOptions:options];
+    return result;
 }
 
 #pragma mark - Utility Methods

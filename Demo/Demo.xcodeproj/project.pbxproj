@@ -163,6 +163,7 @@
 		C42C56311BF2695700207911 /* NSObject+TMLJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = C42C56301BF2695700207911 /* NSObject+TMLJSON.m */; };
 		C42C56391BF42D1A00207911 /* TMLAPISerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = C42C56381BF42D1A00207911 /* TMLAPISerializer.m */; };
 		C44281921BF5659200E68194 /* TMLAPISerializationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C44281911BF5659200E68194 /* TMLAPISerializationTest.m */; };
+		C4A095D81C002FB900F2B106 /* TMLAPIBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A095D71C002FB900F2B106 /* TMLAPIBundle.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -366,6 +367,8 @@
 		C42C56371BF42D1A00207911 /* TMLAPISerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAPISerializer.h; sourceTree = "<group>"; };
 		C42C56381BF42D1A00207911 /* TMLAPISerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPISerializer.m; sourceTree = "<group>"; };
 		C44281911BF5659200E68194 /* TMLAPISerializationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPISerializationTest.m; sourceTree = "<group>"; };
+		C4A095D61C002FB900F2B106 /* TMLAPIBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAPIBundle.h; sourceTree = "<group>"; };
+		C4A095D71C002FB900F2B106 /* TMLAPIBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPIBundle.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -764,6 +767,8 @@
 				C41647AD1BEEDD6D004B3FB3 /* TMLBundleManager.m */,
 				C41647AF1BEEDD77004B3FB3 /* TMLBundle.h */,
 				C41647B01BEEDD77004B3FB3 /* TMLBundle.m */,
+				C4A095D61C002FB900F2B106 /* TMLAPIBundle.h */,
+				C4A095D71C002FB900F2B106 /* TMLAPIBundle.m */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -1113,6 +1118,7 @@
 				C0F80CEA1BEA83DE0048DF2D /* TMLLanguageCase.m in Sources */,
 				C0F80CE21BEA83DE0048DF2D /* UILabel+TML.m in Sources */,
 				C0F80CCE1BEA83DE0048DF2D /* TMLCache.m in Sources */,
+				C4A095D81C002FB900F2B106 /* TMLAPIBundle.m in Sources */,
 				C0F80CDE1BEA83DE0048DF2D /* NSString+TmlAdditions.m in Sources */,
 				C41646AA1BEBF979004B3FB3 /* TMLAPIResponse.m in Sources */,
 				C0F80D121BEA86260048DF2D /* UINavigationItem+TML.m in Sources */,
