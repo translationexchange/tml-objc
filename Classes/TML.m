@@ -50,12 +50,14 @@ NSString * const TMLOptionsHostName = @"host";
 
 @interface TML() {
     NSTimer *_translationSubmissionTimer;
+    BOOL _observingNotifications;
 }
 @property(strong, nonatomic) TMLConfiguration *configuration;
 @property(strong, nonatomic) NSString *applicationKey;
 @property(strong, nonatomic) NSString *accessToken;
 @property(strong, nonatomic) TMLAPIClient *apiClient;
 @property(strong, nonatomic) TMLPostOffice *postOffice;
+@property(nonatomic, readwrite) TMLBundle *currentBundle;
 @property(nonatomic, strong) NSMutableDictionary <NSString *, NSMutableSet *>*missingTranslationKeysBySources;
 @end
 
@@ -91,12 +93,14 @@ NSString * const TMLOptionsHostName = @"host";
     if (self == [super init]) {
         self.configuration = [[TMLConfiguration alloc] init];
         self.missingTranslationKeysBySources = [NSMutableDictionary dictionary];
+        [self setupNotificationObserving];
     }
     return self;
 }
 
 - (void)dealloc {
     [self stopSubmissionTimerIfNecessary];
+    [self teardownNotificationObserving];
 }
 
 #pragma mark - Initialization
@@ -121,15 +125,62 @@ NSString * const TMLOptionsHostName = @"host";
             TMLError(@"Failed to initialize translation bundle");
         }
         else {
-            [self updateWithBundle:bundle];
+            if (self.translationEnabled == NO) {
+                self.currentBundle = bundle;
+            }
         }
     }];
     
-    TMLBundle *apiBundle = [TMLBundle apiBundle];
-    [apiBundle synchronize:^(BOOL success) {
-        TMLInfo(@"Successfully synchronized API bundle");
+    if (self.translationEnabled == YES) {
+        TMLBundle *apiBundle = [TMLBundle apiBundle];
+        self.currentBundle = apiBundle;
+        [apiBundle synchronize:^(NSError *error) {
+            if (error != nil) {
+                TMLInfo(@"Successfully synchronized API bundle");
+            }
+        }];
+    }
+}
+
+#pragma mark - Notifications
+
+- (void) setupNotificationObserving {
+    if (_observingNotifications == YES) {
+        return;
+    }
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter addObserver:self
+                           selector:@selector(applicationDidBecomeActive:)
+                               name:UIApplicationDidBecomeActiveNotification
+                             object:nil];
+    _observingNotifications = YES;
+}
+
+- (void) teardownNotificationObserving {
+    if (_observingNotifications == NO) {
+        return;
+    }
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    _observingNotifications = NO;
+}
+
+- (void) applicationDidBecomeActive:(NSNotification *)aNotification {
+    [self checkForBundleUpdate:YES completion:^(NSString *version, NSString *path, NSError *error) {
+        TMLBundle *bundle = nil;
+        if (error == nil) {
+            bundle = [[TMLBundle alloc] initWithContentsOfDirectory:path];
+        }
+        if (bundle != nil) {
+            [[TMLBundleManager defaultManager] setActiveBundle:bundle];
+            TMLInfo(@"Updated translation bundle to version: %@", version);
+        }
+        else {
+            TMLError(@"Failed to update version to %@", version);
+        }
     }];
 }
+
+#pragma mark - Bundles
 
 - (void) updateWithBundle:(TMLBundle *)bundle {
     if (bundle == nil) {
@@ -138,9 +189,25 @@ NSString * const TMLOptionsHostName = @"host";
     TMLApplication *newApplication = [bundle application];
     TMLInfo(@"Initializing from local bundle: %@", bundle.version);
     self.application = newApplication;
+    NSString *ourLocale = self.currentLanguage.locale;
+    if ([bundle.availableLocales containsObject:ourLocale] == NO) {
+        [bundle synchronizeLocales:@[ourLocale] completion:^(NSError *error) {
+            if (error != nil) {
+                TMLError(@"Could not preload current locale '%@' into newly selected bundle: %@", ourLocale, error);
+            }
+        }];
+    }
 }
 
-#pragma mark - Bundles
+- (void)setCurrentBundle:(TMLBundle *)currentBundle {
+    if (_currentBundle == currentBundle) {
+        return;
+    }
+    _currentBundle = currentBundle;
+    if (currentBundle != nil) {
+        [self updateWithBundle:currentBundle];
+    }
+}
 
 - (void) initTranslationBundle:(void(^)(TMLBundle *bundle))completion {
     // Check if there's a main bundle already set up
@@ -258,7 +325,7 @@ NSString * const TMLOptionsHostName = @"host";
                     [localesToFetch addObject:defaultLocale];
                 }
                 if (currentLocale != nil) {
-                    [localesToFetch addObject:localesToFetch];
+                    [localesToFetch addObject:currentLocale];
                 }
                 [bundleManager installPublishedBundleWithVersion:version
                                                          locales:localesToFetch
@@ -410,81 +477,40 @@ NSString * const TMLOptionsHostName = @"host";
 - (void) changeLocale:(NSString *)locale
       completionBlock:(void(^)(BOOL success))completionBlock
 {
-    TMLConfiguration *config = self.configuration;
-    NSString *previousLocale = config.currentLocale;
-    config.currentLocale = locale;
-    
-    TMLApplication *app = self.application;
-    
-    TMLLanguage *previousLanguage = self.currentLanguage;
-    self.currentLanguage = (TMLLanguage *) [app languageForLocale: locale];
-    
-    [self resetTranslations];
-    [self loadTranslationsForLocale:self.currentLanguage.locale
-                   completionBlock:^(BOOL success) {
-                       if (success == YES) {
-                           if ([self.delegate respondsToSelector:@selector(tmlDidLoadTranslations)]) {
-                               [self.delegate tmlDidLoadTranslations];
-                           }
-                       }
-                       else {
-                           self.configuration.currentLocale = previousLocale;
-                           self.currentLanguage = previousLanguage;
-                       }
-                       if (completionBlock != nil) {
-                           completionBlock(success);
-                       }
-                   }];
+    TMLBundle *ourBundle = self.currentBundle;
+    if ([[ourBundle translationsForLocale:locale] count] == 0) {
+        [ourBundle loadTranslationsForLocale:locale completion:^(NSError *error) {
+            TMLLanguage *newLanguage;
+            if (error == nil) {
+                newLanguage = [self.application languageForLocale:locale];
+            }
+            BOOL success = NO;
+            if (newLanguage != nil) {
+                self.currentLanguage = newLanguage;
+                self.configuration.currentLocale = newLanguage.locale;
+                id<TMLDelegate>delegate = self.delegate;
+                if ([delegate respondsToSelector:@selector(tmlDidLoadTranslations)] == YES) {
+                    [delegate tmlDidLoadTranslations];
+                }
+                success = YES;
+            }
+            if (completionBlock != nil) {
+                completionBlock(success);
+            }
+        }];
+    }
 }
 
 #pragma mark - Translations
 
-- (void) updateTranslations:(NSDictionary *)translationInfo forLocale:(NSString *)locale {
-    NSMutableDictionary *newTranslations = [self.translations mutableCopy];
-    if (newTranslations == nil) {
-        newTranslations = [NSMutableDictionary dictionary];
-    }
-    newTranslations[locale] = translationInfo;
-    self.translations = [newTranslations copy];
-}
-
-- (void) loadTranslationsForLocale: (NSString *) locale
-                   completionBlock:(void(^)(BOOL success))completionBlock
-{
-    [self.apiClient getTranslationsForLocale:locale
-                                      source:nil
-                                     options:@{TMLAPIOptionsIncludeAll: @YES}
-                             completionBlock:^(NSDictionary <NSString *,TMLTranslation *> *newTranslations, TMLAPIResponse *response, NSError *error) {
-                                 BOOL success = NO;
-                                 if (newTranslations != nil) {
-                                     success = YES;
-                                     [self updateTranslations:newTranslations forLocale:locale];
-                                     [[NSNotificationCenter defaultCenter] postNotificationName:TMLLanguageChangedNotification
-                                                                                         object: locale];
-                                 }
-                                 if (completionBlock != nil) {
-                                     completionBlock(success);
-                                 }
-                             }];
-}
-
 - (NSArray *) translationsForKey:(NSString *)translationKey locale:(NSString *)locale {
-    NSDictionary *translations = self.translations;
-    if (translations.count == 0) {
-        return nil;
-    }
-    NSDictionary *localeTranslations = translations[locale];
-    return localeTranslations[translationKey];
-}
-
-- (void) resetTranslations {
-    self.translations = [NSDictionary dictionary];
+    NSDictionary *translations = [self.currentBundle translationsForLocale:locale];
+    return translations[translationKey];
 }
 
 - (BOOL)isTranslationKeyRegistered:(NSString *)translationKey {
-    NSDictionary *translations = self.translations;
-    NSArray *results = [[translations allValues] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"key == %@", translationKey]];
-    return results.count > 0;
+    NSArray *results = [self translationsForKey:translationKey locale:self.currentLanguage.locale];
+    return results != nil;
 }
 
 + (void) reloadTranslations {
@@ -492,14 +518,16 @@ NSString * const TMLOptionsHostName = @"host";
 }
 
 - (void) reloadTranslations {
-    [self resetTranslations];
-    [self loadTranslationsForLocale:self.currentLanguage.locale completionBlock:^(BOOL success) {
-        if (success == YES) {
-            if ([self.delegate respondsToSelector:@selector(tmlDidLoadTranslations)]) {
-                [self.delegate tmlDidLoadTranslations];
+    TMLBundle *ourBundle = self.currentBundle;
+    if ([ourBundle isStaticBundle] == NO) {
+        [ourBundle synchronizeLocales:@[self.currentLanguage.locale] completion:^(NSError *error) {
+            if (error == nil) {
+                if ([self.delegate respondsToSelector:@selector(tmlDidLoadTranslations)]) {
+                    [self.delegate tmlDidLoadTranslations];
+                }
             }
-        }
-    }];
+        }];
+    }
 }
 
 - (NSObject *) translate:(NSString *) label withDescription:(NSString *) description andTokens: (NSDictionary *) tokens andOptions: (NSDictionary *) options {

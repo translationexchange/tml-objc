@@ -18,6 +18,14 @@ extern NSString * const TMLBundleSourcesRelativePath;
 extern NSString * const TMLBundleVersionKey;
 extern NSString * const TMLBundleURLKey;
 
+extern NSString * const TMLBundleErrorDomain;
+extern NSString * const TMLBundleResourcePathKey;
+
+typedef NS_ENUM(NSInteger, TMLBundleErrorCode) {
+    TMLBundleInvalidResourcePath,
+    TMLBundleMissingTranslations
+};
+
 @class TMLApplication;
 
 @interface TMLBundle : NSObject
@@ -51,11 +59,6 @@ extern NSString * const TMLBundleURLKey;
 @property (readonly, nonatomic) NSArray *languages;
 
 /**
- *  Dictionary of translations keyed by translation key
- */
-@property (readonly, nonatomic) NSDictionary *translations;
-
-/**
  *  Array of locales for which there are locally stored translations
  */
 @property (readonly, nonatomic) NSArray *availableLocales;
@@ -75,13 +78,24 @@ extern NSString * const TMLBundleURLKey;
  */
 @property (readonly, nonatomic) TMLApplication *application;
 
+/**
+ *  Source URL from which this bundle was derrived
+ */
 @property (readonly, nonatomic) NSURL *sourceURL;
+
+@property (readonly, nonatomic, getter=isStaticBundle) BOOL staticBundle;
+
+#pragma mark - Translations
+
+- (NSDictionary *)translationsForLocale:(NSString *)locale;
+- (void)loadTranslationsForLocale:(NSString *)aLocale
+                       completion:(void(^)(NSError *error))completion;
 
 #pragma mark - Synchronizing
 
-- (void)synchronize:(void(^)(BOOL success))completion;
-- (void)synchronizeApplicationData:(void (^)(BOOL))completion;
+- (void)synchronize:(void(^)(NSError *error))completion;
+- (void)synchronizeApplicationData:(void (^)(NSError *error))completion;
 - (void)synchronizeLocales:(NSArray *)locales
-                completion:(void (^)(BOOL))completion;
+                completion:(void (^)(NSError *))completion;
 
 @end

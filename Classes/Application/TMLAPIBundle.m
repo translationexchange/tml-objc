@@ -36,6 +36,10 @@
     return _syncQueue;
 }
 
+- (BOOL)isStaticBundle {
+    return NO;
+}
+
 #pragma mark - Languages
 
 - (void)addLanguage:(TMLLanguage *)language {
@@ -96,25 +100,25 @@
 
 #pragma mark - Sync
 
-- (void)synchronize:(void (^)(BOOL))completion {
-    [self synchronizeApplicationData:^(BOOL success) {
+- (void)synchronize:(void (^)(NSError *error))completion {
+    [self synchronizeApplicationData:^(NSError *error) {
         NSArray *locales;
-        if (success == YES) {
+        if (error == nil) {
             locales = self.locales;
         }
         if (locales.count > 0) {
             [self synchronizeLocales:locales completion:completion];
         }
         else if (completion != nil) {
-            completion(success);
+            completion(error);
         }
     }];
 }
 
-- (void)synchronizeApplicationData:(void (^)(BOOL))completion {
-    void(^finalize)(BOOL) = ^(BOOL success) {
+- (void)synchronizeApplicationData:(void (^)(NSError *error))completion {
+    void(^finalize)(NSError *) = ^(NSError *err) {
         if (completion != nil) {
-            completion(success);
+            completion(err);
         }
     };
     
@@ -135,7 +139,7 @@
                                      }
                                      count--;
                                      if (count == 0) {
-                                         finalize(error == nil && fileError == nil);
+                                         finalize((error) ? error : fileError);
                                      }
                                  }];
     }]];
@@ -154,23 +158,23 @@
                }
                count--;
                if (count == 0) {
-                   finalize(error == nil && fileError == nil);
+                   finalize((error) ? error: fileError);
                }
            }];
     }]];
 }
 
-- (void)synchronizeLocales:(NSArray *)locales completion:(void (^)(BOOL))completion {
+- (void)synchronizeLocales:(NSArray *)locales completion:(void (^)(NSError *))completion {
     if (locales.count == 0) {
         if (completion != nil) {
-            completion(YES);
+            completion(nil);
         }
         return;
     }
     
-    void(^finalize)(BOOL) = ^(BOOL success) {
+    void(^finalize)(NSError *) = ^(NSError *err) {
         if (completion != nil) {
-            completion(success);
+            completion(err);
         }
     };
     
@@ -178,7 +182,8 @@
     NSOperationQueue *syncQueue = self.syncQueue;
     __block NSInteger count = 0;
     
-    for (NSString *locale in locales) {
+    for (NSString *aLocale in locales) {
+        NSString *locale = [aLocale lowercaseString];
         // fetch translations
         count++;
         [syncQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
@@ -201,7 +206,7 @@
                                  }
                                  
                                  if (count == 0) {
-                                     finalize(error == nil && fileError == nil);
+                                     finalize((error) ? error : fileError);
                                  }
                              }];
         }]];
@@ -225,7 +230,7 @@
                              }
                              
                              if (count == 0) {
-                                 finalize(error == nil && fileError == nil);
+                                 finalize((error) ? error : fileError);
                              }
                          }];
         }]];

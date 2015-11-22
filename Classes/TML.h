@@ -31,7 +31,7 @@
 #import <Foundation/Foundation.h>
 #import "TMLLogger.h"
 
-@class TMLConfiguration, TMLLanguage, TMLApplication, TMLAPIClient, TMLPostOffice, TMLTranslationKey;
+@class TMLConfiguration, TMLLanguage, TMLApplication, TMLAPIClient, TMLPostOffice, TMLTranslationKey, TMLBundle;
 
 #define TMLLanguageChangedNotification @"TMLLanguageChangedNotification"
 #define TMLIsReachableNotification @"TMLIsReachableNotification"
@@ -77,9 +77,18 @@
 @property(nonatomic, strong) NSString *currentSource;
 
 /**
- *  Translations organized by locale, then by translation key (@see TMLTranslationKey)
+ *  Currently utilized localization bundle
  */
-@property(nonatomic, strong) NSDictionary *translations;
+@property(nonatomic, readonly) TMLBundle *currentBundle;
+
+/**
+ *  Indicates whether in-app translation mode is enabled.
+ *  Setting this to YES will utilize translations from the API server
+ *  And would allow making translation changes from within the app.
+ *  Setting this to NO would utilize published translations and not
+ *  allow and translation changes.
+ */
+@property(nonatomic, assign) BOOL translationEnabled;
 
 /**
  *  Holds the current user object
@@ -177,11 +186,6 @@
 + (NSString *) localizeDate:(NSDate *)date
                  withFormat:(NSString *)format
              andDescription: (NSString *)description;
-
-- (void) loadTranslationsForLocale: (NSString *) locale
-                   completionBlock:(void(^)(BOOL success))completionBlock;
-
-- (void) resetTranslations;
 
 - (NSArray *) translationsForKey:(NSString *)translationKey locale:(NSString *)locale;
 
