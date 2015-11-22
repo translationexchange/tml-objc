@@ -107,7 +107,7 @@ NSString * const TMLUUIDKey = @"TMLUUID";
 - (id) init {
     if (self == [super init]) {
         if ([self.class persistentValueForKey:@"default_locale"] == nil) {
-            self.defaultLocale = @"en-US";
+            self.defaultLocale = @"en";
         } else {
             self.defaultLocale = [self.class persistentValueForKey:@"default_locale"];
         }
