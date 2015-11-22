@@ -87,14 +87,14 @@
     TMLTranslationKey *key = [[TMLTranslationKey alloc] init];
     key.key = @"123876234876238476234";
     key.keyDescription = @"Test Key Description";
-    key.level = @(100);
+    key.level = 100;
     key.locale = @"en";
     key.translations = @[];
     key.label = @"Test Label";
     NSDictionary *dict = @{
                            @"key": key.key,
                            @"description": key.keyDescription,
-                           @"level": key.level,
+                           @"level": @(key.level),
                            @"locale": key.locale
                            };
     NSString *result = [[TMLAPISerializer serializeObject:key] tmlJSONString];
@@ -198,14 +198,14 @@
     TMLTranslationKey *key = [[TMLTranslationKey alloc] init];
     key.key = @"123876234876238476234";
     key.keyDescription = @"Test Key Description";
-    key.level = @(100);
+    key.level = 100;
     key.locale = @"en";
     key.translations = @[];
     key.label = @"Test Label";
     NSDictionary *dict = @{
                            @"key": key.key,
                            @"description": key.keyDescription,
-                           @"level": key.level,
+                           @"level": @(key.level),
                            @"locale": key.locale,
                            @"label": key.label,
                            @"translations": key.translations
