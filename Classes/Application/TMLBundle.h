@@ -11,6 +11,10 @@
 extern NSString * const TMLBundleVersionFilename;
 extern NSString * const TMLBundleApplicationFilename;
 extern NSString * const TMLBundleSourcesFilename;
+extern NSString * const TMLBundleTranslationsFilename;
+extern NSString * const TMLBundleLanguageFilename;
+extern NSString * const TMLBundleSourcesRelativePath;
+
 extern NSString * const TMLBundleVersionKey;
 extern NSString * const TMLBundleURLKey;
 
@@ -45,6 +49,11 @@ extern NSString * const TMLBundleURLKey;
  *  Array of languages contained in the bundle
  */
 @property (readonly, nonatomic) NSArray *languages;
+
+/**
+ *  Dictionary of translations keyed by translation key
+ */
+@property (readonly, nonatomic) NSDictionary *translations;
 
 /**
  *  Array of locales for which there are locally stored translations

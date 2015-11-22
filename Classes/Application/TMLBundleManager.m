@@ -494,7 +494,8 @@ NSString * const TMLBundleManagerAPIBundleDirectoryName = @"api";
             TMLError(@"Error creating installation directory for resource '%@': %@", relativeBundlePath, error);
         }
     }
-    if (error == nil) {
+    if (error == nil
+        && [resourcePath isEqualToString:destinationPath] == NO) {
         if ([fileManager moveItemAtPath:resourcePath toPath:destinationPath error:&error] == NO) {
             TMLError(@"Error installing resource '%@' for bundle '%@': %@", relativeBundlePath, bundleVersion, error);
         }

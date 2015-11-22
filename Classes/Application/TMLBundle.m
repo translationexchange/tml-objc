@@ -28,6 +28,7 @@ NSString * const TMLBundleURLKey = @"url";
 @property (readwrite, nonatomic) NSString *version;
 @property (readwrite, nonatomic) NSString *path;
 @property (readwrite, nonatomic) NSArray *languages;
+@property (readwrite, nonatomic) NSDictionary *translations;
 @property (readwrite, nonatomic) NSArray *availableLocales;
 @property (readwrite, nonatomic) NSArray *locales;
 @property (readwrite, nonatomic) TMLApplication *application;

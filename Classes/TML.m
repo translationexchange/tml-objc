@@ -127,7 +127,7 @@ NSString * const TMLOptionsHostName = @"host";
     
     TMLBundle *apiBundle = [TMLBundle apiBundle];
     [apiBundle synchronize:^(BOOL success) {
-        TMLInfo(@"Successfully synchronized API bundle: %@", @(success));
+        TMLInfo(@"Successfully synchronized API bundle");
     }];
 }
 
@@ -289,12 +289,13 @@ NSString * const TMLOptionsHostName = @"host";
         self.postOffice = [[TMLPostOffice alloc] initWithApplication:application];
         self.defaultLanguage = [application languageForLocale: configuration.defaultLocale];
         self.currentLanguage = [application languageForLocale: configuration.currentLocale];
-        NSString *localeToLoad = self.currentLanguage.locale;
-        [self loadTranslationsForLocale:localeToLoad completionBlock:^(BOOL success) {
-            if (success == YES) {
-                TMLInfo(@"Loaded translations for locale: %@", localeToLoad);
-            }
-        }];
+        
+//        NSString *localeToLoad = self.currentLanguage.locale;
+//        [self loadTranslationsForLocale:localeToLoad completionBlock:^(BOOL success) {
+//            if (success == YES) {
+//                TMLInfo(@"Loaded translations for locale: %@", localeToLoad);
+//            }
+//        }];
     }
 }
 
@@ -453,7 +454,7 @@ NSString * const TMLOptionsHostName = @"host";
     [self.apiClient getTranslationsForLocale:locale
                                       source:nil
                                      options:@{TMLAPIOptionsIncludeAll: @YES}
-                             completionBlock:^(NSDictionary <NSString *,TMLTranslation *> *newTranslations, NSError *error) {
+                             completionBlock:^(NSDictionary <NSString *,TMLTranslation *> *newTranslations, TMLAPIResponse *response, NSError *error) {
                                  BOOL success = NO;
                                  if (newTranslations != nil) {
                                      success = YES;

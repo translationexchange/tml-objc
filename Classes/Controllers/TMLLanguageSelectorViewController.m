@@ -91,7 +91,7 @@
     hud.labelText = TMLLocalizedString(@"Loading Languages...");
     TMLAPIClient *apiClient = [[TML sharedInstance] apiClient];
     
-    [apiClient getProjectLanguagesWithOptions:nil completionBlock:^(NSArray<TMLLanguage *> *newLanguages, NSError *error) {
+    [apiClient getProjectLanguagesWithOptions:nil completionBlock:^(NSArray<TMLLanguage *> *newLanguages, TMLAPIResponse *response, NSError *error) {
         if (newLanguages != nil) {
             self.languages = [newLanguages mutableCopy];
             [self.tableView reloadData];

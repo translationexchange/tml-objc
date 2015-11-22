@@ -134,7 +134,7 @@ completionBlock:(TMLAPIResponseHandler)completionBlock;
 - (void) getTranslationsForLocale:(NSString *)locale
                            source:(TMLSource *)source
                           options:(NSDictionary *)options
-                  completionBlock:(void(^)(NSDictionary <NSString *,TMLTranslation *>*translations, NSError *error))completionBlock;
+                  completionBlock:(void(^)(NSDictionary <NSString *,TMLTranslation *>*translations, TMLAPIResponse *response, NSError *error))completionBlock;
 
 /**
  *  Fetches application info.
@@ -143,7 +143,7 @@ completionBlock:(TMLAPIResponseHandler)completionBlock;
  *  @param completionBlock Completion block
  */
 - (void) getCurrentApplicationWithOptions:(NSDictionary *)options
-                          completionBlock:(void(^)(TMLApplication *application, NSError *error))completionBlock;
+                          completionBlock:(void(^)(TMLApplication *application, TMLAPIResponse *response, NSError *error))completionBlock;
 
 /**
  *  Fetches infromation about translation sources
@@ -152,7 +152,7 @@ completionBlock:(TMLAPIResponseHandler)completionBlock;
  *  @param completionBlock Completion block
  */
 - (void) getSources:(NSDictionary *)options
-    completionBlock:(void(^)(NSArray *sources, NSError *error))completionBlock;
+    completionBlock:(void(^)(NSArray *sources, TMLAPIResponse *response, NSError *error))completionBlock;
 
 /**
  *  Fetches language info for given locale.
@@ -163,7 +163,7 @@ completionBlock:(TMLAPIResponseHandler)completionBlock;
  */
 - (void) getLanguageForLocale:(NSString *)locale
                       options:(NSDictionary *)options
-              completionBlock:(void(^)(TMLLanguage *language, NSError *error))completionBlock;
+              completionBlock:(void(^)(TMLLanguage *language, TMLAPIResponse *response, NSError *error))completionBlock;
 
 /**
  *  Fetches list of languages defined in current project
@@ -172,7 +172,7 @@ completionBlock:(TMLAPIResponseHandler)completionBlock;
  *  @param completionBlock Completion block
  */
 - (void) getProjectLanguagesWithOptions:(NSDictionary *)options
-                        completionBlock:(void(^)(NSArray <TMLLanguage *>* languages, NSError *error))completionBlock;
+                        completionBlock:(void(^)(NSArray <TMLLanguage *>* languages, TMLAPIResponse *response, NSError *error))completionBlock;
 
 /**
  *  Register source and translation key associations.

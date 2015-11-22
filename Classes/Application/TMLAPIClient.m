@@ -206,7 +206,7 @@ completionBlock:(TMLAPIResponseHandler)completionBlock
 - (void) getTranslationsForLocale:(NSString *)locale
                            source:(TMLSource *)source
                           options:(NSDictionary *)options
-                  completionBlock:(void(^)(NSDictionary <NSString *,TMLTranslation *>*translations, NSError *error))completionBlock
+                  completionBlock:(void(^)(NSDictionary <NSString *,TMLTranslation *>*translations, TMLAPIResponse *response, NSError *error))completionBlock
 {
     NSString *path = nil;
     NSString *sourceKey = source.key;
@@ -237,7 +237,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
         TMLError(@"Error fetching translations for locale: %@; source: %@. Error: %@", locale, source, error);
     }
     if (completionBlock != nil) {
-        completionBlock(translations, error);
+        completionBlock(translations, apiResponse, error);
     }
 }
      
@@ -245,7 +245,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
 }
 
 - (void)getCurrentApplicationWithOptions:(NSDictionary *)options
-                         completionBlock:(void (^)(TMLApplication *, NSError *))completionBlock
+                         completionBlock:(void (^)(TMLApplication *, TMLAPIResponse *response, NSError *))completionBlock
 {
     NSMutableDictionary *params = nil;
     if (options != nil) {
@@ -301,54 +301,56 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
                 TMLError(@"Error fetching current project description: %@", error);
             }
             if (completionBlock != nil) {
-                completionBlock(app, error);
+                completionBlock(app, apiResponse, error);
             }
         }
      ];
 }
 
 - (void)getSources:(NSDictionary *)options
-   completionBlock:(void (^)(NSArray *, NSError *))completionBlock
+   completionBlock:(void (^)(NSArray *, TMLAPIResponse *response, NSError *))completionBlock
 {
     [self get:@"projects/current/sources"
    parameters:options
 completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
     NSArray *sources = nil;
     if (apiResponse.successfulResponse == YES) {
-        sources = [TMLAPISerializer materializeData:apiResponse.results
-                                          withClass:[TMLSource class]
-                                           delegate:nil];
+        sources = [TMLAPISerializer materializeObject:apiResponse.results
+                                            withClass:[TMLSource class]
+                                             delegate:nil];
     }
     TMLDebug(@"Got %i total sources via API", sources.count);
     if (completionBlock != nil) {
-        completionBlock(sources, error);
+        completionBlock(sources, apiResponse, error);
     }
 }];
 }
 
 - (void)getLanguageForLocale:(NSString *)locale
                      options:(NSDictionary *)options
-             completionBlock:(void (^)(TMLLanguage *, NSError *))completionBlock
+             completionBlock:(void (^)(TMLLanguage *, TMLAPIResponse *response, NSError *))completionBlock
 {
     [self get: [NSString stringWithFormat: @"languages/%@", locale]
    parameters:options
 completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
     TMLLanguage *lang = nil;
     if ([apiResponse isSuccessfulResponse] == YES) {
-        lang = [TMLAPISerializer materializeObject:apiResponse.userInfo withClass:[TMLLanguage class] delegate:nil];
+        lang = [TMLAPISerializer materializeObject:apiResponse.userInfo
+                                         withClass:[TMLLanguage class]
+                                          delegate:nil];
     }
     else {
         TMLError(@"Error fetching languages description for locale: %@. Error: %@", locale, error);
     }
     if (completionBlock != nil) {
-        completionBlock(lang, error);
+        completionBlock(lang, apiResponse, error);
     }
 }
      ];
 }
 
 - (void)getProjectLanguagesWithOptions:(NSDictionary *)options
-                       completionBlock:(void (^)(NSArray<TMLLanguage *> *, NSError *))completionBlock
+                       completionBlock:(void (^)(NSArray<TMLLanguage *> *, TMLAPIResponse *response, NSError *))completionBlock
 {
     [self get:@"projects/current/languages"
    parameters:options
@@ -361,7 +363,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
         TMLError(@"Error fetching descriptions of all languages for current project: %@", error);
     }
     if (completionBlock != nil) {
-        completionBlock(languages, error);
+        completionBlock(languages, apiResponse, error);
     }
 }];
 }
