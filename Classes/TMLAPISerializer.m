@@ -197,6 +197,10 @@
     _info[key] = [NSNumber numberWithInteger:intv];
 }
 
+- (void)encodeBool:(BOOL)boolv forKey:(NSString *)key {
+    _info[key] = @(boolv);
+}
+
 #pragma mark - Decoding
 
 - (id)decodeObjectForKey:(NSString *)key {
