@@ -78,83 +78,44 @@
 		C0F80C7D1BEA7E310048DF2D /* TMLPipedTokenTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C611BEA7E310048DF2D /* TMLPipedTokenTest.m */; };
 		C0F80C7E1BEA7E310048DF2D /* TMLTranslationKeyTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C631BEA7E310048DF2D /* TMLTranslationKeyTest.m */; };
 		C0F80CCA1BEA83DE0048DF2D /* TMLAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C811BEA83DE0048DF2D /* TMLAPIClient.m */; };
-		C0F80CCB1BEA83DE0048DF2D /* TMLAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C811BEA83DE0048DF2D /* TMLAPIClient.m */; };
 		C0F80CCC1BEA83DE0048DF2D /* TMLApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C831BEA83DE0048DF2D /* TMLApplication.m */; };
-		C0F80CCD1BEA83DE0048DF2D /* TMLApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C831BEA83DE0048DF2D /* TMLApplication.m */; };
 		C0F80CCE1BEA83DE0048DF2D /* TMLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C851BEA83DE0048DF2D /* TMLCache.m */; };
-		C0F80CCF1BEA83DE0048DF2D /* TMLCache.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C851BEA83DE0048DF2D /* TMLCache.m */; };
 		C0F80CD01BEA83DE0048DF2D /* TMLConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C871BEA83DE0048DF2D /* TMLConfiguration.m */; };
-		C0F80CD11BEA83DE0048DF2D /* TMLConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C871BEA83DE0048DF2D /* TMLConfiguration.m */; };
 		C0F80CD21BEA83DE0048DF2D /* TMLPostOffice.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C891BEA83DE0048DF2D /* TMLPostOffice.m */; };
-		C0F80CD31BEA83DE0048DF2D /* TMLPostOffice.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C891BEA83DE0048DF2D /* TMLPostOffice.m */; };
 		C0F80CD41BEA83DE0048DF2D /* TMLSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C8B1BEA83DE0048DF2D /* TMLSource.m */; };
-		C0F80CD51BEA83DE0048DF2D /* TMLSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C8B1BEA83DE0048DF2D /* TMLSource.m */; };
 		C0F80CD61BEA83DE0048DF2D /* TMLLanguageSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C8E1BEA83DE0048DF2D /* TMLLanguageSelectorViewController.m */; };
-		C0F80CD71BEA83DE0048DF2D /* TMLLanguageSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C8E1BEA83DE0048DF2D /* TMLLanguageSelectorViewController.m */; };
 		C0F80CD81BEA83DE0048DF2D /* TMLTranslatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C901BEA83DE0048DF2D /* TMLTranslatorViewController.m */; };
-		C0F80CD91BEA83DE0048DF2D /* TMLTranslatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C901BEA83DE0048DF2D /* TMLTranslatorViewController.m */; };
 		C0F80CDA1BEA83DE0048DF2D /* TMLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C921BEA83DE0048DF2D /* TMLViewController.m */; };
-		C0F80CDB1BEA83DE0048DF2D /* TMLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C921BEA83DE0048DF2D /* TMLViewController.m */; };
 		C0F80CDC1BEA83DE0048DF2D /* NSObject+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C951BEA83DE0048DF2D /* NSObject+TML.m */; };
-		C0F80CDD1BEA83DE0048DF2D /* NSObject+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C951BEA83DE0048DF2D /* NSObject+TML.m */; };
 		C0F80CDE1BEA83DE0048DF2D /* NSString+TmlAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C971BEA83DE0048DF2D /* NSString+TmlAdditions.m */; };
-		C0F80CDF1BEA83DE0048DF2D /* NSString+TmlAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C971BEA83DE0048DF2D /* NSString+TmlAdditions.m */; };
 		C0F80CE01BEA83DE0048DF2D /* UIButton+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C991BEA83DE0048DF2D /* UIButton+TML.m */; };
-		C0F80CE11BEA83DE0048DF2D /* UIButton+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C991BEA83DE0048DF2D /* UIButton+TML.m */; };
 		C0F80CE21BEA83DE0048DF2D /* UILabel+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C9B1BEA83DE0048DF2D /* UILabel+TML.m */; };
-		C0F80CE31BEA83DE0048DF2D /* UILabel+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C9B1BEA83DE0048DF2D /* UILabel+TML.m */; };
 		C0F80CE41BEA83DE0048DF2D /* UIViewController+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C9D1BEA83DE0048DF2D /* UIViewController+TML.m */; };
-		C0F80CE51BEA83DE0048DF2D /* UIViewController+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C9D1BEA83DE0048DF2D /* UIViewController+TML.m */; };
 		C0F80CE81BEA83DE0048DF2D /* TMLLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CA21BEA83DE0048DF2D /* TMLLanguage.m */; };
-		C0F80CE91BEA83DE0048DF2D /* TMLLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CA21BEA83DE0048DF2D /* TMLLanguage.m */; };
 		C0F80CEA1BEA83DE0048DF2D /* TMLLanguageCase.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CA41BEA83DE0048DF2D /* TMLLanguageCase.m */; };
-		C0F80CEB1BEA83DE0048DF2D /* TMLLanguageCase.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CA41BEA83DE0048DF2D /* TMLLanguageCase.m */; };
 		C0F80CEC1BEA83DE0048DF2D /* TMLLanguageCaseRule.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CA61BEA83DE0048DF2D /* TMLLanguageCaseRule.m */; };
-		C0F80CED1BEA83DE0048DF2D /* TMLLanguageCaseRule.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CA61BEA83DE0048DF2D /* TMLLanguageCaseRule.m */; };
 		C0F80CEE1BEA83DE0048DF2D /* TMLLanguageContext.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CA81BEA83DE0048DF2D /* TMLLanguageContext.m */; };
-		C0F80CEF1BEA83DE0048DF2D /* TMLLanguageContext.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CA81BEA83DE0048DF2D /* TMLLanguageContext.m */; };
 		C0F80CF01BEA83DE0048DF2D /* TMLLanguageContextRule.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CAA1BEA83DE0048DF2D /* TMLLanguageContextRule.m */; };
-		C0F80CF11BEA83DE0048DF2D /* TMLLanguageContextRule.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CAA1BEA83DE0048DF2D /* TMLLanguageContextRule.m */; };
 		C0F80CF21BEA83DE0048DF2D /* TMLRulesEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CAD1BEA83DE0048DF2D /* TMLRulesEvaluator.m */; };
-		C0F80CF31BEA83DE0048DF2D /* TMLRulesEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CAD1BEA83DE0048DF2D /* TMLRulesEvaluator.m */; };
 		C0F80CF41BEA83DE0048DF2D /* TMLRulesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CAF1BEA83DE0048DF2D /* TMLRulesParser.m */; };
-		C0F80CF51BEA83DE0048DF2D /* TMLRulesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CAF1BEA83DE0048DF2D /* TMLRulesParser.m */; };
 		C0F80CF61BEA83DE0048DF2D /* TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CB11BEA83DE0048DF2D /* TML.m */; };
-		C0F80CF71BEA83DE0048DF2D /* TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CB11BEA83DE0048DF2D /* TML.m */; };
 		C0F80CF81BEA83DE0048DF2D /* TMLBase.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CB31BEA83DE0048DF2D /* TMLBase.m */; };
-		C0F80CF91BEA83DE0048DF2D /* TMLBase.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CB31BEA83DE0048DF2D /* TMLBase.m */; };
 		C0F80CFA1BEA83DE0048DF2D /* TMLAttributedDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CB71BEA83DE0048DF2D /* TMLAttributedDecorationTokenizer.m */; };
-		C0F80CFB1BEA83DE0048DF2D /* TMLAttributedDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CB71BEA83DE0048DF2D /* TMLAttributedDecorationTokenizer.m */; };
 		C0F80CFC1BEA83DE0048DF2D /* TMLDataTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CB91BEA83DE0048DF2D /* TMLDataTokenizer.m */; };
-		C0F80CFD1BEA83DE0048DF2D /* TMLDataTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CB91BEA83DE0048DF2D /* TMLDataTokenizer.m */; };
 		C0F80CFE1BEA83DE0048DF2D /* TMLDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CBB1BEA83DE0048DF2D /* TMLDecorationTokenizer.m */; };
-		C0F80CFF1BEA83DE0048DF2D /* TMLDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CBB1BEA83DE0048DF2D /* TMLDecorationTokenizer.m */; };
 		C0F80D001BEA83DE0048DF2D /* TMLHtmlDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CBD1BEA83DE0048DF2D /* TMLHtmlDecorationTokenizer.m */; };
-		C0F80D011BEA83DE0048DF2D /* TMLHtmlDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CBD1BEA83DE0048DF2D /* TMLHtmlDecorationTokenizer.m */; };
 		C0F80D021BEA83DE0048DF2D /* TMLDataToken.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CC01BEA83DE0048DF2D /* TMLDataToken.m */; };
-		C0F80D031BEA83DE0048DF2D /* TMLDataToken.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CC01BEA83DE0048DF2D /* TMLDataToken.m */; };
 		C0F80D041BEA83DE0048DF2D /* TMLMethodToken.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CC21BEA83DE0048DF2D /* TMLMethodToken.m */; };
-		C0F80D051BEA83DE0048DF2D /* TMLMethodToken.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CC21BEA83DE0048DF2D /* TMLMethodToken.m */; };
 		C0F80D061BEA83DE0048DF2D /* TMLPipedToken.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CC41BEA83DE0048DF2D /* TMLPipedToken.m */; };
-		C0F80D071BEA83DE0048DF2D /* TMLPipedToken.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CC41BEA83DE0048DF2D /* TMLPipedToken.m */; };
 		C0F80D081BEA83DE0048DF2D /* TMLTranslation.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CC71BEA83DE0048DF2D /* TMLTranslation.m */; };
-		C0F80D091BEA83DE0048DF2D /* TMLTranslation.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CC71BEA83DE0048DF2D /* TMLTranslation.m */; };
 		C0F80D0A1BEA83DE0048DF2D /* TMLTranslationKey.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CC91BEA83DE0048DF2D /* TMLTranslationKey.m */; };
-		C0F80D0B1BEA83DE0048DF2D /* TMLTranslationKey.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CC91BEA83DE0048DF2D /* TMLTranslationKey.m */; };
 		C0F80D0E1BEA860F0048DF2D /* UIBarButtonItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D0D1BEA860F0048DF2D /* UIBarButtonItem+TML.m */; };
-		C0F80D0F1BEA860F0048DF2D /* UIBarButtonItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D0D1BEA860F0048DF2D /* UIBarButtonItem+TML.m */; };
 		C0F80D121BEA86260048DF2D /* UINavigationItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D111BEA86260048DF2D /* UINavigationItem+TML.m */; };
-		C0F80D131BEA86260048DF2D /* UINavigationItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D111BEA86260048DF2D /* UINavigationItem+TML.m */; };
 		C0F80D161BEA86370048DF2D /* UISearchBar+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D151BEA86370048DF2D /* UISearchBar+TML.m */; };
-		C0F80D171BEA86370048DF2D /* UISearchBar+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D151BEA86370048DF2D /* UISearchBar+TML.m */; };
 		C0F80D1A1BEA86480048DF2D /* UISegmentedControl+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D191BEA86480048DF2D /* UISegmentedControl+TML.m */; };
-		C0F80D1B1BEA86480048DF2D /* UISegmentedControl+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D191BEA86480048DF2D /* UISegmentedControl+TML.m */; };
 		C0F80D1E1BEA865F0048DF2D /* UITabBarItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D1D1BEA865F0048DF2D /* UITabBarItem+TML.m */; };
-		C0F80D1F1BEA865F0048DF2D /* UITabBarItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D1D1BEA865F0048DF2D /* UITabBarItem+TML.m */; };
 		C0F80D221BEA866D0048DF2D /* UITextField+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D211BEA866D0048DF2D /* UITextField+TML.m */; };
-		C0F80D231BEA866D0048DF2D /* UITextField+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D211BEA866D0048DF2D /* UITextField+TML.m */; };
 		C0F80D261BEA86800048DF2D /* UITextView+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D251BEA86800048DF2D /* UITextView+TML.m */; };
-		C0F80D271BEA86800048DF2D /* UITextView+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D251BEA86800048DF2D /* UITextView+TML.m */; };
 		C41646AA1BEBF979004B3FB3 /* TMLAPIResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C41646A91BEBF979004B3FB3 /* TMLAPIResponse.m */; };
 		C41647AB1BEE97D2004B3FB3 /* TMLGlobals.m in Sources */ = {isa = PBXBuildFile; fileRef = C41647AA1BEE97D2004B3FB3 /* TMLGlobals.m */; };
 		C41647AE1BEEDD6D004B3FB3 /* TMLBundleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C41647AD1BEEDD6D004B3FB3 /* TMLBundleManager.m */; };
@@ -1179,62 +1140,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C0F80D231BEA866D0048DF2D /* UITextField+TML.m in Sources */,
-				C0F80CDB1BEA83DE0048DF2D /* TMLViewController.m in Sources */,
 				C0F80C771BEA7E310048DF2D /* TMLTest.m in Sources */,
-				C0F80CD51BEA83DE0048DF2D /* TMLSource.m in Sources */,
-				C0F80CE51BEA83DE0048DF2D /* UIViewController+TML.m in Sources */,
 				C0F80C781BEA7E310048DF2D /* TMLTestBase.m in Sources */,
-				C0F80CEB1BEA83DE0048DF2D /* TMLLanguageCase.m in Sources */,
-				C0F80CE31BEA83DE0048DF2D /* UILabel+TML.m in Sources */,
-				C0F80CCF1BEA83DE0048DF2D /* TMLCache.m in Sources */,
-				C0F80CDF1BEA83DE0048DF2D /* NSString+TmlAdditions.m in Sources */,
-				C0F80D131BEA86260048DF2D /* UINavigationItem+TML.m in Sources */,
-				C0F80CD31BEA83DE0048DF2D /* TMLPostOffice.m in Sources */,
-				C0F80CFF1BEA83DE0048DF2D /* TMLDecorationTokenizer.m in Sources */,
 				C0F80C701BEA7E310048DF2D /* TMLLanguageCaseRuleTest.m in Sources */,
-				C0F80CD11BEA83DE0048DF2D /* TMLConfiguration.m in Sources */,
-				C0F80CE11BEA83DE0048DF2D /* UIButton+TML.m in Sources */,
 				C0F80C7C1BEA7E310048DF2D /* TMLDataTokenTest.m in Sources */,
 				C0F80C731BEA7E310048DF2D /* TMLLanguageContextTest.m in Sources */,
 				C0F80C721BEA7E310048DF2D /* TMLLanguageContextRuleTest.m in Sources */,
-				C0F80D031BEA83DE0048DF2D /* TMLDataToken.m in Sources */,
 				C0F80C7D1BEA7E310048DF2D /* TMLPipedTokenTest.m in Sources */,
-				C0F80CD91BEA83DE0048DF2D /* TMLTranslatorViewController.m in Sources */,
-				C0F80CF71BEA83DE0048DF2D /* TML.m in Sources */,
 				C0F80C751BEA7E310048DF2D /* TMLRulesEvaluatorTest.m in Sources */,
 				C0F80C7B1BEA7E310048DF2D /* TMLHtmlDecorationTokenizerTest.m in Sources */,
-				C0F80D091BEA83DE0048DF2D /* TMLTranslation.m in Sources */,
 				C0F80C711BEA7E310048DF2D /* TMLLanguageCaseTest.m in Sources */,
-				C0F80D051BEA83DE0048DF2D /* TMLMethodToken.m in Sources */,
-				C0F80CF11BEA83DE0048DF2D /* TMLLanguageContextRule.m in Sources */,
 				C0F80C791BEA7E310048DF2D /* TMLAttributedDecorationTokenizerTest.m in Sources */,
-				C0F80CD71BEA83DE0048DF2D /* TMLLanguageSelectorViewController.m in Sources */,
 				C0F80C741BEA7E310048DF2D /* TMLTestUser.m in Sources */,
-				C0F80CEF1BEA83DE0048DF2D /* TMLLanguageContext.m in Sources */,
-				C0F80D271BEA86800048DF2D /* UITextView+TML.m in Sources */,
-				C0F80D011BEA83DE0048DF2D /* TMLHtmlDecorationTokenizer.m in Sources */,
-				C0F80D071BEA83DE0048DF2D /* TMLPipedToken.m in Sources */,
-				C0F80D1B1BEA86480048DF2D /* UISegmentedControl+TML.m in Sources */,
 				C0F80C651BEA7E310048DF2D /* TMLConfigurationTest.m in Sources */,
-				C0F80CF91BEA83DE0048DF2D /* TMLBase.m in Sources */,
-				C0F80CDD1BEA83DE0048DF2D /* NSObject+TML.m in Sources */,
-				C0F80D171BEA86370048DF2D /* UISearchBar+TML.m in Sources */,
-				C0F80CE91BEA83DE0048DF2D /* TMLLanguage.m in Sources */,
-				C0F80CFB1BEA83DE0048DF2D /* TMLAttributedDecorationTokenizer.m in Sources */,
-				C0F80CED1BEA83DE0048DF2D /* TMLLanguageCaseRule.m in Sources */,
 				C0F80C7E1BEA7E310048DF2D /* TMLTranslationKeyTest.m in Sources */,
-				C0F80D0F1BEA860F0048DF2D /* UIBarButtonItem+TML.m in Sources */,
-				C0F80D1F1BEA865F0048DF2D /* UITabBarItem+TML.m in Sources */,
 				C0F80C761BEA7E310048DF2D /* TMLRulesParserTest.m in Sources */,
-				C0F80CF31BEA83DE0048DF2D /* TMLRulesEvaluator.m in Sources */,
-				C0F80CCB1BEA83DE0048DF2D /* TMLAPIClient.m in Sources */,
-				C0F80CFD1BEA83DE0048DF2D /* TMLDataTokenizer.m in Sources */,
-				C0F80D0B1BEA83DE0048DF2D /* TMLTranslationKey.m in Sources */,
-				C0F80CCD1BEA83DE0048DF2D /* TMLApplication.m in Sources */,
 				C0F80C641BEA7E310048DF2D /* TMLApplicationTest.m in Sources */,
 				C44281921BF5659200E68194 /* TMLAPISerializationTest.m in Sources */,
-				C0F80CF51BEA83DE0048DF2D /* TMLRulesParser.m in Sources */,
 				C0F80C7A1BEA7E310048DF2D /* TMLDecorationTokenizerTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
