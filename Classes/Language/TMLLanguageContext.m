@@ -63,14 +63,24 @@
 }
 
 - (BOOL)isEqualToLanguageContext:(TMLLanguageContext *)languageContext {
-    return ([self.language isEqualToLanguage:languageContext.language] == YES
-            && [self.keyword isEqualToString:languageContext.keyword] == YES
-            && [self.contextDescription isEqualToString:languageContext.contextDescription] == YES
-            && [self.keys isEqualToArray:languageContext.keys] == YES
-            && [self.tokenExpression isEqualToString:languageContext.tokenExpression] == YES
-            && [self.variableNames isEqualToArray:languageContext.variableNames] == YES
-            && [self.tokenMapping isEqual:languageContext.tokenMapping] == YES
-            && [self.rules isEqualToDictionary:languageContext.rules] == YES);
+    return ((self.language == languageContext.language
+             || [self.language isEqualToLanguage:languageContext.language] == YES)
+            && (self.keyword == languageContext.keyword
+                || [self.keyword isEqualToString:languageContext.keyword] == YES)
+            && (self.contextDescription == languageContext.contextDescription
+                || [self.contextDescription isEqualToString:languageContext.contextDescription] == YES)
+            && (self.keys == languageContext.keys
+                || [self.keys isEqualToArray:languageContext.keys] == YES)
+            && (self.tokenExpression == languageContext.tokenExpression
+                || [self.tokenExpression isEqualToString:languageContext.tokenExpression] == YES)
+            && (self.variableNames == languageContext.variableNames
+                || [self.variableNames isEqualToArray:languageContext.variableNames] == YES)
+            && (self.tokenMapping == languageContext.tokenMapping
+                || [self.tokenMapping isEqual:languageContext.tokenMapping] == YES)
+            && (self.rules == languageContext.rules
+                || [self.rules isEqualToDictionary:languageContext.rules] == YES)
+            && (self.fallbackRule == languageContext.fallbackRule
+                || [self.fallbackRule isEqual:languageContext.fallbackRule] == YES));
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {

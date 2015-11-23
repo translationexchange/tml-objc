@@ -58,12 +58,18 @@
 }
 
 - (BOOL)isEqualToLanguageCase:(TMLLanguageCase *)languageCase {
-    return ([self.language isEqualToLanguage:languageCase.language] == YES
-            && [self.application isEqualToString:languageCase.application] == YES
-            && [self.caseDescription isEqualToString:languageCase.caseDescription] == YES
-            && [self.latinName isEqualToString:languageCase.latinName] == YES
-            && [self.nativeName isEqualToString:languageCase.nativeName] == YES
-            && [self.rules isEqualToArray:languageCase.rules] == YES);
+    return ((self.language == languageCase.language
+             || [self.language isEqualToLanguage:languageCase.language] == YES)
+            && (self.application == languageCase.application
+                || [self.application isEqualToString:languageCase.application] == YES)
+            && (self.caseDescription == languageCase.caseDescription
+                || [self.caseDescription isEqualToString:languageCase.caseDescription] == YES)
+            && (self.latinName == languageCase.latinName
+                || [self.latinName isEqualToString:languageCase.latinName] == YES)
+            && (self.nativeName == languageCase.nativeName
+                || [self.nativeName isEqualToString:languageCase.nativeName] == YES)
+            && (self.rules == languageCase.rules
+                || [self.rules isEqualToArray:languageCase.rules] == YES));
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {

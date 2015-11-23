@@ -30,6 +30,7 @@
 
 #import "TML.h"
 #import "TMLAPIClient.h"
+#import "TMLAPISerializer.h"
 #import "TMLConfiguration.h"
 #import "TMLSource.h"
 #import "TMLTranslation.h"
@@ -58,6 +59,36 @@ NSString * const TMLSourceDefaultKey = @"TML";
     return aCopy;
 }
 
+- (BOOL)isEqual:(id)object {
+    if (self == object) {
+        return YES;
+    }
+    
+    if ([object isKindOfClass:[self class]] == NO) {
+        return NO;
+    }
+    
+    return [self isEqualToSource:(TMLSource *)object];
+}
+
+- (BOOL)isEqualToSource:(TMLSource *)source {
+    return (self.sourceID == source.sourceID
+            && (self.key == source.key
+                || [self.key isEqualToString:source.key] == YES)
+            && (self.created == source.created
+                || [self.created isEqualToDate:source.created] == YES)
+            && (self.updated == source.updated
+                || [self.updated isEqualToDate:source.updated] == YES)
+            && (self.displayName == source.displayName
+                || [self.displayName isEqualToString:source.displayName] == YES)
+            && (self.sourceName == source.sourceName
+                || [self.sourceName isEqualToString:source.sourceName] == YES)
+            && (self.type == source.type
+                || [self.type isEqualToString:source.type] == YES)
+            && (self.state == source.state
+                || [self.state isEqualToString:source.state] == YES));
+}
+
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeInteger:self.sourceID forKey:@"id"];
     [aCoder encodeObject:self.key forKey:@"key"];
@@ -82,22 +113,6 @@ NSString * const TMLSourceDefaultKey = @"TML";
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"<%@ %@>", NSStringFromClass([self class]), self.key];
-}
-
-- (BOOL)isEqualToSource:(TMLSource *)source {
-    return [self.key isEqualToString:source.key];
-}
-
-- (BOOL)isEqual:(id)object {
-    if (self == object) {
-        return YES;
-    }
-    
-    if ([object isKindOfClass:[self class]] == NO) {
-        return NO;
-    }
-    
-    return [self isEqualToSource:(TMLSource *)object];
 }
 
 - (NSUInteger)hash {

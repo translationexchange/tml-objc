@@ -63,6 +63,39 @@
     [aCoder encodeObject:self.defaultLanguage forKey:@"default_language"];
 }
 
+- (BOOL)isEqual:(id)object {
+    if (self == object) {
+        return YES;
+    }
+    if ([object isKindOfClass:[self class]] == NO) {
+        return NO;
+    }
+    return [self isEqualToApplication:(TMLApplication *)object];
+}
+
+- (BOOL)isEqualToApplication:(TMLApplication *)application {
+    return (self.applicationID == application.applicationID
+            && (self.key == application.key
+                || [self.key isEqualToString:application.key] == YES)
+            && (self.secret == application.secret
+                || [self.secret isEqualToString:application.secret] == YES)
+            && (self.name == application.name
+                || [self.name isEqualToString:application.name] == YES)
+            && (self.defaultLocale == application.defaultLocale
+                || [self.defaultLocale isEqualToString:application.defaultLocale] == YES)
+            && (self.threshold == application.threshold)
+            && (self.features == application.features
+                || [self.features isEqualToDictionary:application.features] == YES)
+            && (self.tools == application.tools
+                || [self.tools isEqualToDictionary:application.tools] == YES)
+            && (self.languages == application.languages
+                || [self.languages isEqualToArray:application.languages] == YES)
+            && (self.sources == application.sources
+                || [self.sources isEqualToArray:application.sources] == YES)
+            && (self.defaultLanguage == application.defaultLanguage
+                || [self.defaultLanguage isEqualToLanguage:application.defaultLanguage] == YES));
+}
+
 - (void)decodeWithCoder:(NSCoder *)aDecoder {
     self.applicationID = [aDecoder decodeIntegerForKey:@"id"];
     self.key = [aDecoder decodeObjectForKey:@"key"];
@@ -90,20 +123,6 @@
                                             withClass:[TMLSource class]];
     }
     self.sources = sources;
-}
-
-- (BOOL)isEqual:(id)object {
-    if (self == object) {
-        return YES;
-    }
-    if ([object isKindOfClass:[self class]] == NO) {
-        return NO;
-    }
-    return [self isEqualToApplication:(TMLApplication *)object];
-}
-
-- (BOOL)isEqualToApplication:(TMLApplication *)application {
-    return self.applicationID == application.applicationID;
 }
 
 #pragma mark - Languages

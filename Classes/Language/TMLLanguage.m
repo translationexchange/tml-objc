@@ -46,7 +46,7 @@
 + (TMLLanguage *) defaultLanguage {
     NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"en-US" ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:jsonPath];
-    TMLLanguage *lang = [TMLAPISerializer materializeData:data withClass:[TMLLanguage class] delegate:nil];
+    TMLLanguage *lang = [TMLAPISerializer materializeData:data withClass:[TMLLanguage class]];
     return lang;
 }
 
@@ -63,6 +63,35 @@
     aCopy.contexts = [self.contexts copyWithZone:zone];
     aCopy.cases = [self.cases copyWithZone:zone];
     return aCopy;
+}
+
+- (BOOL)isEqual:(id)object {
+    if (self == object) {
+        return YES;
+    }
+    if ([object isKindOfClass:[self class]] == NO) {
+        return NO;
+    }
+    return [self isEqualToLanguage:(TMLLanguage *)object];
+}
+
+- (BOOL)isEqualToLanguage:(TMLLanguage *)language {
+    return (self.languageID == language.languageID
+            && (self.locale == language.locale
+                || [self.locale isEqualToString:language.locale] == YES)
+            && (self.englishName == language.englishName
+                || [self.englishName isEqualToString:language.englishName] == YES)
+            && (self.nativeName == language.nativeName
+                || [self.nativeName isEqualToString:language.nativeName] == YES)
+            && (self.rightToLeft == language.rightToLeft)
+            && (self.flagUrl == language.flagUrl
+                || [self.flagUrl isEqual:language.flagUrl] == YES)
+            && (self.status == language.status
+                || [self.status isEqualToString:language.status] == YES)
+            && (self.contexts == language.contexts
+                || [self.contexts isEqualToDictionary:language.contexts] == YES)
+            && (self.cases == language.cases
+                || [self.cases isEqualToDictionary:language.cases] == YES));
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
@@ -116,20 +145,6 @@
         cases = [materializedCases copy];
     }
     self.cases = cases;
-}
-
-- (BOOL)isEqualToLanguage:(TMLLanguage *)language {
-    return self.languageID = language.languageID && self.locale == language.locale;
-}
-
-- (BOOL)isEqual:(id)object {
-    if (self == object) {
-        return YES;
-    }
-    if ([object isKindOfClass:[self class]] == NO) {
-        return NO;
-    }
-    return [self isEqualToLanguage:(TMLLanguage *)object];
 }
 
 - (TMLLanguageContext *) contextByKeyword: (NSString *) keyword {

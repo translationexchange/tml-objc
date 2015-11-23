@@ -28,12 +28,14 @@
  *  THE SOFTWARE.
  */
 
+#import "TMLAPISerializer.h"
 #import "TMLDataToken.h"
 #import "TMLLanguage.h"
 #import "TMLLanguageContext.h"
 #import "TMLLanguageContextRule.h"
 #import "TMLTranslation.h"
 #import "TMLTranslationKey.h"
+#import "TMLBase.h"
 
 @implementation TMLTranslation
 
@@ -47,16 +49,45 @@
     return aCopy;
 }
 
+- (BOOL)isEqual:(id)object {
+    if (self == object) {
+        return YES;
+    }
+    if ([object isKindOfClass:[self class]] == NO) {
+        return NO;
+    }
+    return [self isEqualToTranslation:(TMLTranslation *)object];
+}
+
+- (BOOL)isEqualToTranslation:(TMLTranslation *)translation {
+    return ((self.label == translation.label
+             || [self.label isEqual:translation.label] == YES)
+            && self.locked == translation.locked
+            && (self.context == translation.context
+                || [self.context isEqualToDictionary:translation.context] == YES)
+            && (self.translationKey == translation.translationKey
+                || [self.translationKey isEqualToTranslationKey:translation.translationKey] == YES));
+}
+
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeObject:self.label forKey:@"label"];
     [aCoder encodeBool:self.locked forKey:@"locked"];
     [aCoder encodeObject:self.context forKey:@"context"];
+    [aCoder encodeObject:self.translationKey forKey:@"translation_key"];
 }
 
 - (void)decodeWithCoder:(NSCoder *)aDecoder {
     self.label = [aDecoder decodeObjectForKey:@"label"];
     self.locked = [aDecoder decodeBoolForKey:@"locked"];
     self.context = [aDecoder decodeObjectForKey:@"context"];
+    id translationKey = [aDecoder decodeObjectForKey:@"translation_key"];
+    if (translationKey != nil && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
+        translationKey = [TMLAPISerializer materializeObject:translationKey
+                                                    withClass:[TMLTranslationKey class]];
+    }
+    if (translationKey != nil) {
+        self.translationKey = translationKey;
+    }
 }
 
 - (BOOL) hasContextRules {

@@ -133,11 +133,16 @@
 }
 
 - (BOOL)isEqualToDataToken:(TMLDataToken *)dataToken {
-    return ([self.label isEqualToString:dataToken.label] == YES
-            && [self.fullName isEqualToString:dataToken.fullName] == YES
-            && [self.shortName isEqualToString:dataToken.shortName] == YES
-            && [self.caseKeys isEqualToArray:dataToken.caseKeys] == YES
-            && [self.contextKeys isEqualToArray:dataToken.contextKeys] == YES);
+    return ((self.label == dataToken.label
+             || [self.label isEqualToString:dataToken.label] == YES)
+            && (self.fullName == dataToken.fullName
+                || [self.fullName isEqualToString:dataToken.fullName] == YES)
+            && (self.shortName == dataToken.shortName
+                || [self.shortName isEqualToString:dataToken.shortName] == YES)
+            && (self.caseKeys == dataToken.caseKeys
+                || [self.caseKeys isEqualToArray:dataToken.caseKeys] == YES)
+            && (self.contextKeys == dataToken.contextKeys
+                || [self.contextKeys isEqualToArray:dataToken.contextKeys] == YES));
 }
 
 + (NSString *) sanitizeValue: (NSString *) value {

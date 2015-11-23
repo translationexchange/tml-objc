@@ -74,10 +74,14 @@
 }
 
 - (BOOL)isEqualToLanguageCaseRule:(TMLLanguageCaseRule *)languageCaseRule {
-    return ([self.ruleDescription isEqualToString:languageCaseRule.ruleDescription] == YES
-            && [self.examples isEqualToString:languageCaseRule.examples] == YES
-            && [self.conditions isEqualToString:languageCaseRule.conditions] == YES
-            && [self.operations isEqualToString:languageCaseRule.conditions]);
+    return ((self.ruleDescription == languageCaseRule.ruleDescription
+             || [self.ruleDescription isEqualToString:languageCaseRule.ruleDescription] == YES)
+            && (self.examples == languageCaseRule.examples
+                || [self.examples isEqualToString:languageCaseRule.examples] == YES)
+            && (self.conditions == languageCaseRule.conditions
+                || [self.conditions isEqualToString:languageCaseRule.conditions] == YES)
+            && (self.operations == languageCaseRule.operations
+                || [self.operations isEqualToString:languageCaseRule.conditions] == YES));
 }
 
 - (NSArray *) conditionsExpression {

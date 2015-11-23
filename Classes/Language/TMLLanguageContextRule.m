@@ -57,10 +57,14 @@
 }
 
 - (BOOL)isEqualToContextRule:(TMLLanguageContextRule *)rule {
-    return ([self.keyword isEqualToString:rule.keyword] == YES
-            && [self.ruleDescription isEqualToString:rule.ruleDescription] == YES
-            && [self.examples isEqualToString:rule.examples] == YES
-            && [self.conditions isEqualToString:rule.conditions] == YES);
+    return ((self.keyword == rule.keyword
+             || [self.keyword isEqualToString:rule.keyword] == YES)
+            && (self.ruleDescription == rule.ruleDescription
+                || [self.ruleDescription isEqualToString:rule.ruleDescription] == YES)
+            && (self.examples == rule.examples
+                || [self.examples isEqualToString:rule.examples] == YES)
+            && (self.conditions == rule.conditions
+                || [self.conditions isEqualToString:rule.conditions] == YES));
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
