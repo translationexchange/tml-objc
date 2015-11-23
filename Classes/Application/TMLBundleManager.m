@@ -321,7 +321,7 @@ NSString * const TMLBundleManagerAPIBundleDirectoryName = @"api";
     }
     
     NSString *bundleDestinationPath = [NSString stringWithFormat:@"%@/%@", [self downloadDirectory], version];
-    [self fetchPublishedResource:@"sources.json"
+    [self fetchPublishedResource:TMLBundleSourcesFilename
                    bundleVersion:version
                    baseDirectory:bundleDestinationPath
                  completionBlock:^(NSString *path, NSError *error) {
@@ -329,7 +329,7 @@ NSString * const TMLBundleManagerAPIBundleDirectoryName = @"api";
                          NSArray *sources = [[NSData dataWithContentsOfFile:path] tmlJSONObject];
                          for (NSString *source in sources) {
                              for (NSString *locale in locales) {
-                                 [resources addObject:[NSString stringWithFormat:@"%@/sources/%@.json", locale, source]];
+                                 [resources addObject:[NSString stringWithFormat:@"%@/%@/%@.json", locale, TMLBundleSourcesRelativePath, source]];
                              }
                          }
                      }
