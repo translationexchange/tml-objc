@@ -19,7 +19,7 @@
 
 - (void) testEvaluation {
     NSData *jsonData = [self loadJSONDataFromResource:@"cs_en-US_plural"];
-    TMLLanguageCase *lcase = [TMLAPISerializer materializeData:jsonData withClass:[TMLLanguageCase class] delegate:nil];
+    TMLLanguageCase *lcase = [TMLAPISerializer materializeData:jsonData withClass:[TMLLanguageCase class]];
 
     XCTAssert([@"sheep" isEqual:[lcase apply:@"sheep"]]);
     XCTAssert([@"fish" isEqual:[lcase apply:@"fish"]]);

@@ -6,13 +6,15 @@
 //  Copyright © 2015 TmlHub Inc. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
-#import "TMLAPISerializer.h"
-#import "TMLTranslationKey.h"
 #import "NSObject+TMLJSON.h"
+#import "TMLAPISerializer.h"
+#import "TMLLanguage.h"
 #import "TMLSource.h"
+#import "TMLTranslation.h"
+#import "TMLTranslationKey.h"
+#import <XCTest/XCTest.h>
 
-@interface TMLAPISerializationTest : XCTestCase <TMLAPISerializerDelegate> {
+@interface TMLAPISerializationTest : XCTestCase {
     NSArray *_in;
     NSArray *_out;
 }
@@ -144,37 +146,37 @@
 - (void)testFoundationMaterialization {
     BOOL aTooth = YES;
     id result = nil;
-    result = [TMLAPISerializer materializeObject:@(aTooth) withClass:nil delegate:nil];
+    result = [TMLAPISerializer materializeObject:@(aTooth) withClass:nil];
     XCTAssert([result isEqual:@1]);
     
     BOOL aLie = NO;
-    result = [TMLAPISerializer materializeObject:@(aLie) withClass:nil delegate:nil];
+    result = [TMLAPISerializer materializeObject:@(aLie) withClass:nil];
     XCTAssert([result isEqual:@0]);
     
-    result = [TMLAPISerializer materializeObject:nil withClass:nil delegate:nil];
+    result = [TMLAPISerializer materializeObject:nil withClass:nil];
     XCTAssert([result isEqual:[NSNull null]]);
     
-    result = [TMLAPISerializer materializeObject:[NSNull null] withClass:nil delegate:nil];
+    result = [TMLAPISerializer materializeObject:[NSNull null] withClass:nil];
     XCTAssert([result isEqual:[NSNull null]]);
     
     NSNumber *number = @3;
-    result = [TMLAPISerializer materializeObject:number withClass:nil delegate:nil];
+    result = [TMLAPISerializer materializeObject:number withClass:nil];
     XCTAssertEqualObjects(result, number);
     
     number = @(3.4);
-    result = [TMLAPISerializer materializeObject:number withClass:nil delegate:nil];
+    result = [TMLAPISerializer materializeObject:number withClass:nil];
     XCTAssertEqualObjects(result, number);
     
     NSString *aString = @"A String";
-    result = [TMLAPISerializer materializeObject:aString withClass:nil delegate:nil];
+    result = [TMLAPISerializer materializeObject:aString withClass:nil];
     XCTAssertEqualObjects(result, aString);
     
     NSArray *array = @[number, aString, @[number, aString, @"Inner Array"], @{@"Foo": @"foo"}];
-    result = [TMLAPISerializer materializeObject:array withClass:nil delegate:nil];
+    result = [TMLAPISerializer materializeObject:array withClass:nil];
     XCTAssertEqualObjects(result, array);
     
     array = @[@"Really nested array", array];
-    result = [TMLAPISerializer materializeObject:array withClass:nil delegate:nil];
+    result = [TMLAPISerializer materializeObject:array withClass:nil];
     XCTAssertEqualObjects(result, array);
     
     NSDictionary *dict = @{
@@ -190,7 +192,7 @@
                                    },
                            @"null": [NSNull null]
                            };
-    result = [TMLAPISerializer materializeObject:dict withClass:nil delegate:nil];
+    result = [TMLAPISerializer materializeObject:dict withClass:nil];
     XCTAssertEqualObjects(result, dict);
 }
 
@@ -210,7 +212,7 @@
                            @"label": key.label,
                            @"translations": key.translations
                            };
-    id result = [TMLAPISerializer materializeObject:dict withClass:[TMLTranslationKey class] delegate:nil];
+    id result = [TMLAPISerializer materializeObject:dict withClass:[TMLTranslationKey class]];
     XCTAssertEqualObjects(result, key);
     
     TMLTranslationKey *anotherKey = [key copy];
@@ -222,19 +224,26 @@
     
     NSArray *keys = @[key, anotherKey];
     NSArray *dicts = @[dict, anotherDict];
-    result = [TMLAPISerializer materializeObject:dicts withClass:[TMLTranslationKey class] delegate:nil];
+    result = [TMLAPISerializer materializeObject:dicts withClass:[TMLTranslationKey class]];
     XCTAssertEqualObjects(result, keys);
     
-    NSDictionary *keyDict = @{
-                              @"Source 1": key,
-                              @"Source 2": anotherKey
-                              };
-    NSDictionary *dictDict = @{
-                               @"Source 1": dict,
-                               @"Source 2": anotherDict
+    TMLLanguage *lang = [[TMLLanguage alloc] init];
+    lang.locale = @"en-ru";
+    lang.englishName = @"Rushun";
+    lang.nativeName = @"Russish";
+    
+    TMLTranslation *translation = [[TMLTranslation alloc] init];
+    translation.language = lang;
+    translation.label = @"A Label";
+    translation.translationKey = key;
+    
+    NSDictionary *translationDict = @{
+                               @"label": @"A Label",
+                               @"locked": @0,
+                               @"translation_key": dict
                                };
-    result = [TMLAPISerializer materializeObject:dictDict withClass:nil delegate:self];
-    XCTAssertEqualObjects(result, keyDict);
+    result = [TMLAPISerializer materializeObject:translationDict withClass:[TMLTranslation class]];
+    XCTAssertEqualObjects(result, translation);
     
     TMLSource *source = [[TMLSource alloc] init];
     source.key = @"Test Source";
@@ -245,13 +254,8 @@
                                          @"en": @[dict, anotherDict]
                                          }
                                  };
-    result = [TMLAPISerializer materializeObject:sourceDict withClass:[TMLSource class] delegate:self];
+    result = [TMLAPISerializer materializeObject:sourceDict withClass:[TMLSource class]];
     XCTAssertEqualObjects(result, source);
-}
-
-#pragma mark - TMLAPISerializerDelegate
-- (Class) classForObject:(id)object withKey:(NSString *)key {
-    return [TMLTranslationKey class];
 }
 
 @end

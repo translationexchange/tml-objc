@@ -90,8 +90,7 @@
         NSMutableDictionary *materializedContexts = [NSMutableDictionary dictionary];
         for (NSString *keyword in contexts) {
             TMLLanguageContext *context = [TMLAPISerializer materializeObject:contexts[keyword]
-                                                                    withClass:[TMLLanguageContext class]
-                                                                     delegate:nil];
+                                                                    withClass:[TMLLanguageContext class]];
             if (context != nil) {
                 if (context.keyword == nil) {
                     context.keyword = keyword;
@@ -106,7 +105,7 @@
     if (cases.count > 0 && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
         NSMutableDictionary *materializedCases = [NSMutableDictionary dictionary];
         for (NSString *keyword in cases) {
-            TMLLanguageCase *aCase = [TMLAPISerializer materializeObject:cases[keyword] withClass:[TMLLanguageCase class] delegate:nil];
+            TMLLanguageCase *aCase = [TMLAPISerializer materializeObject:cases[keyword] withClass:[TMLLanguageCase class]];
             if (aCase != nil) {
                 if (aCase.keyword == nil) {
                     aCase.keyword = keyword;

@@ -115,8 +115,7 @@ NSString * const TMLBundleErrorsKey = @"errors";
     }
     else {
         self.application = [TMLAPISerializer materializeObject:applicationInfo
-                                                     withClass:[TMLApplication class]
-                                                      delegate:nil];
+                                                     withClass:[TMLApplication class]];
     }
 }
 
@@ -242,8 +241,7 @@ NSString * const TMLBundleErrorsKey = @"errors";
             }
             if (translationsList.count > 0) {
                 NSArray *newTranslations = [TMLAPISerializer materializeObject:translationsList
-                                                                     withClass:[TMLTranslation class]
-                                                                      delegate:nil];
+                                                                     withClass:[TMLTranslation class]];
                 translations[key] = newTranslations;
             }
         }

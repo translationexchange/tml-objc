@@ -114,8 +114,7 @@ NSString * const TMLBundleManagerAPIBundleDirectoryName = @"api";
         TMLApplication *application;
         if (success == YES) {
             application = [TMLAPISerializer materializeData:[NSData dataWithContentsOfFile:applicationFilePath]
-                                                  withClass:[TMLApplication class]
-                                                   delegate:nil];
+                                                  withClass:[TMLApplication class]];
         }
         
         if (application.key == nil

@@ -97,8 +97,7 @@
         NSMutableDictionary *newRules = [NSMutableDictionary dictionary];
         for (NSString *keyword in rules) {
             TMLLanguageContextRule *aRule = [TMLAPISerializer materializeObject:rules[keyword]
-                                                                      withClass:[TMLLanguageContextRule class] 
-                                                                       delegate:nil];
+                                                                      withClass:[TMLLanguageContextRule class]];
             if (aRule != nil) {
                 if (aRule.keyword == nil) {
                     aRule.keyword = keyword;

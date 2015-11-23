@@ -69,7 +69,6 @@
 
 + (id)materializeData:(NSData *)data 
             withClass:(Class)aClass
-             delegate:(id<TMLAPISerializerDelegate>)delegate
 {
     NSError *error = nil;
     id result = [NSJSONSerialization JSONObjectWithData:data
@@ -84,14 +83,12 @@
     }
     
     result = [self materializeObject:result 
-                           withClass:aClass 
-                            delegate:delegate];
+                           withClass:aClass ];
     return result;
 }
 
 + (id)materializeObject:(id)object
               withClass:(Class)aClass
-               delegate:(id<TMLAPISerializerDelegate>)delegate
 {
     id result = nil;
     if ([object isKindOfClass:aClass] == YES) {
@@ -105,13 +102,11 @@
         return object;
     }
     TMLAPISerializer *serializer = [[TMLAPISerializer alloc] init];
-    serializer.delegate = delegate;
     if ([object isKindOfClass:[NSArray class]] == YES) {
         NSMutableArray *array = [NSMutableArray array];
         for (id item in (NSArray *)object) {
             id decodedItem = [TMLAPISerializer materializeObject:item
-                                                       withClass:aClass
-                                                        delegate:delegate];
+                                                       withClass:aClass];
             if (decodedItem != nil) {
                 [array addObject:decodedItem];
             }
@@ -128,12 +123,8 @@
             for (NSString *key in (NSDictionary *)object) {
                 Class decodeClass = nil;
                 id item = [(NSDictionary *)object valueForKey:key];
-                if (delegate != nil) {
-                    decodeClass = [delegate classForObject:item withKey:key];
-                }
                 id decodedItem = [TMLAPISerializer materializeObject:item
-                                                           withClass:decodeClass
-                                                            delegate:delegate];
+                                                           withClass:decodeClass];
                 if (decodedItem != nil) {
                     dict[key] = decodedItem;
                 }

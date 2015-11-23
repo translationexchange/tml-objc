@@ -41,13 +41,13 @@
 
 - (TMLApplication *) application {
     NSData *jsonData = [self loadJSONDataFromResource:@"app"];
-    TMLApplication *app = [TMLAPISerializer materializeData:jsonData withClass:[TMLApplication class] delegate:nil];
+    TMLApplication *app = [TMLAPISerializer materializeData:jsonData withClass:[TMLApplication class]];
     return app;
 }
 
 - (TMLLanguage *) languageForLocale: (NSString *) locale {
     NSData *jsonData = [self loadJSONDataFromResource:locale];
-    TMLLanguage *lang = [TMLAPISerializer materializeData:jsonData withClass:[TMLLanguage class] delegate:nil];
+    TMLLanguage *lang = [TMLAPISerializer materializeData:jsonData withClass:[TMLLanguage class]];
     return lang;
 }
 

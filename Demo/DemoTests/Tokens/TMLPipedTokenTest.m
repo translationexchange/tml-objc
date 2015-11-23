@@ -35,7 +35,7 @@
 
 - (TMLLanguageContext *)languageContextFromResource:(NSString *)fileName {
     NSData *jsonData = [self loadJSONDataFromResource:fileName];
-    TMLLanguageContext *context = [TMLAPISerializer materializeData:jsonData withClass:[TMLLanguageContext class] delegate:nil];
+    TMLLanguageContext *context = [TMLAPISerializer materializeData:jsonData withClass:[TMLLanguageContext class]];
     return context;
 }
 

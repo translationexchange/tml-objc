@@ -74,23 +74,20 @@
     NSArray *languages = [aDecoder decodeObjectForKey:@"languages"];
     if (languages != nil && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
         languages = [TMLAPISerializer materializeObject:languages
-                                              withClass:[TMLLanguage class]
-                                               delegate:nil];
+                                              withClass:[TMLLanguage class]];
     }
     self.languages = languages;
     id defaultLanguage = [aDecoder decodeObjectForKey:@"default_language"];
     if (defaultLanguage != nil && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
         defaultLanguage = [TMLAPISerializer materializeObject:defaultLanguage
-                                                    withClass:[TMLLanguage class]
-                                                     delegate:nil];
+                                                    withClass:[TMLLanguage class]];
     }
     self.defaultLanguage = defaultLanguage;
     
     NSArray *sources = [aDecoder decodeObjectForKey:@"sources"];
     if (sources.count > 0 && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
         sources = [TMLAPISerializer materializeObject:sources
-                                            withClass:[TMLSource class]
-                                             delegate:nil];
+                                            withClass:[TMLSource class]];
     }
     self.sources = sources;
 }

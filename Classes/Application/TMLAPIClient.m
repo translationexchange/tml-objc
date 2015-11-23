@@ -294,8 +294,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
                     }
                 }
                 app = [TMLAPISerializer materializeObject:[userInfo copy]
-                                                withClass:[TMLApplication class]
-                                                 delegate:nil];
+                                                withClass:[TMLApplication class]];
             }
             else {
                 TMLError(@"Error fetching current project description: %@", error);
@@ -316,8 +315,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
     NSArray *sources = nil;
     if (apiResponse.successfulResponse == YES) {
         sources = [TMLAPISerializer materializeObject:apiResponse.results
-                                            withClass:[TMLSource class]
-                                             delegate:nil];
+                                            withClass:[TMLSource class]];
     }
     TMLDebug(@"Got %i total sources via API", sources.count);
     if (completionBlock != nil) {
@@ -336,8 +334,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
     TMLLanguage *lang = nil;
     if ([apiResponse isSuccessfulResponse] == YES) {
         lang = [TMLAPISerializer materializeObject:apiResponse.userInfo
-                                         withClass:[TMLLanguage class]
-                                          delegate:nil];
+                                         withClass:[TMLLanguage class]];
     }
     else {
         TMLError(@"Error fetching languages description for locale: %@. Error: %@", locale, error);

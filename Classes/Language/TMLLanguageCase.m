@@ -83,7 +83,7 @@
     self.caseDescription = [aDecoder decodeObjectForKey:@"description"];
     NSArray *rules = [aDecoder decodeObjectForKey:@"rules"];
     if (rules.count > 0 && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
-        rules = [TMLAPISerializer materializeObject:rules withClass:[TMLLanguageCaseRule class] delegate:nil];
+        rules = [TMLAPISerializer materializeObject:rules withClass:[TMLLanguageCaseRule class]];
     }
     self.rules = rules;
 }
