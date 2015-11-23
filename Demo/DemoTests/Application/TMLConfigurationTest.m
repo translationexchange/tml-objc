@@ -34,7 +34,7 @@
 - (void) testUpdateSettings {
     TMLConfiguration *config = [[TMLConfiguration alloc] init];
     
-    XCTAssert([[config defaultLocale] isEqual:@"en-US"]);
+    XCTAssert([[config defaultLocale] isEqual:@"en"]);
     config.currentLocale = @"en-US";
     XCTAssert([[config currentLocale] isEqual:@"en-US"]);
     
