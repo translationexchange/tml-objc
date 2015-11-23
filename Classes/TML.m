@@ -196,7 +196,7 @@ NSString * const TMLOptionsHostName = @"host";
     TMLInfo(@"Initializing from local bundle: %@", bundle.version);
     self.application = newApplication;
     NSString *ourLocale = self.currentLanguage.locale;
-    if ([bundle.availableLocales containsObject:ourLocale] == NO) {
+    if (ourLocale != nil && [bundle.availableLocales containsObject:ourLocale] == NO) {
         [bundle synchronizeLocales:@[ourLocale] completion:^(NSError *error) {
             if (error != nil) {
                 TMLError(@"Could not preload current locale '%@' into newly selected bundle: %@", ourLocale, error);
