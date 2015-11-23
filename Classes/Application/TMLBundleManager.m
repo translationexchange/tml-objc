@@ -20,6 +20,8 @@ NSString * const TMLBundleManagerErrorDomain = @"TMLBundleManagerErrorDomain";
 NSString * const TMLBundleManagerActiveBundleLinkName = @"active";
 NSString * const TMLBundleManagerVersionKey = @"version";
 NSString * const TMLBundleManagerFilenameKey = @"filename";
+NSString * const TMLBundleManagerURLKey = @"url";
+NSString * const TMLBundleManagerPathKey = @"path";
 
 NSString * const TMLBundleManagerAPIBundleDirectoryName = @"api";
 
@@ -313,8 +315,8 @@ NSString * const TMLBundleManagerAPIBundleDirectoryName = @"api";
     __block NSMutableArray *resources = [NSMutableArray arrayWithArray:@[@"application.json", @"snapshot.json"]];
     if (locales.count > 0) {
         for (NSString *locale in locales) {
-            [resources addObject:[NSString stringWithFormat:@"%@/languages.json", locale]];
-            [resources addObject:[NSString stringWithFormat:@"%@/translations.json", locale]];
+            [resources addObject:[locale stringByAppendingPathComponent:TMLBundleLanguageFilename]];
+            [resources addObject:[locale stringByAppendingPathComponent:TMLBundleTranslationsFilename]];
         }
     }
     
@@ -404,6 +406,7 @@ NSString * const TMLBundleManagerAPIBundleDirectoryName = @"api";
     NSError *error;
     NSString *destinationDir = [destination stringByDeletingLastPathComponent];
     
+    // Ensure destination directory exists
     if ([fileManager fileExistsAtPath:destinationDir] == NO) {
         if ([fileManager createDirectoryAtPath:destinationDir
                    withIntermediateDirectories:YES
@@ -419,6 +422,7 @@ NSString * const TMLBundleManagerAPIBundleDirectoryName = @"api";
         return;
     }
     
+    // Fetch resource data
     NSURLSession *downloadSession = [self downloadSession];
     NSURL *resourceURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/%@",
                                                [self archiveURL],
@@ -428,13 +432,27 @@ NSString * const TMLBundleManagerAPIBundleDirectoryName = @"api";
     [[downloadSession dataTaskWithURL:resourceURL
                    completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
                        NSError *ourError = error;
-                       if (data != nil) {
+                       NSInteger responseCode = 0;
+                       if ([response isKindOfClass:[NSHTTPURLResponse class]] == YES) {
+                           responseCode = [(NSHTTPURLResponse *)response statusCode];
+                       }
+                       if (responseCode != 200) {
+                           TMLError(@"Error fetching resource '%@'. HTTP: %i", resourceURL, responseCode);
+                           ourError = [NSError errorWithDomain:TMLBundleManagerErrorDomain
+                                                          code:TMLBundleManagerHTTPError
+                                                      userInfo:@{
+                                                                 TMLBundleManagerPathKey: resourcePath,
+                                                                 TMLBundleManagerURLKey: resourceURL
+                                                                 }];
+                       }
+                       if (ourError == nil && data != nil) {
                            if ([data writeToFile:destination options:NSDataWritingAtomic error:&ourError] == NO) {
                                TMLError(@"Error writing fetched bundle resource '%@': %@", resourcePath, ourError);
                            }
                        }
                        if (completionBlock != nil) {
-                           completionBlock((error) ? nil : destination, error);
+                           NSString *effectiveDestination = (ourError == nil) ? destination : nil;
+                           completionBlock(effectiveDestination, ourError);
                        }
                    }] resume];
 }

@@ -45,6 +45,12 @@
 #import "TMLTranslationKey.h"
 #import <CommonCrypto/CommonDigest.h>
 
+NSString * const TMLLanguageChangedNotification = @"TMLLanguageChangedNotification";
+NSString * const TMLIsReachableNotification = @"TMLIsReachableNotification";
+NSString * const TMLIsUnreachableNotification = @"TMLIsUnreachableNotification";
+
+NSString * const TMLLanguagePreviousLocaleUserInfoKey = @"TMLLanguagePreviousLocaleUserInfoKey";
+
 
 NSString * const TMLOptionsHostName = @"host";
 
@@ -477,8 +483,16 @@ NSString * const TMLOptionsHostName = @"host";
 - (void) changeLocale:(NSString *)locale
       completionBlock:(void(^)(BOOL success))completionBlock
 {
+    void(^finalize)(BOOL) = ^(BOOL success) {
+        if (success == YES) {
+            [self _changeToLocale:locale];
+        }
+        if (completionBlock != nil) {
+            completionBlock(success);
+        }
+    };
     TMLBundle *ourBundle = self.currentBundle;
-    if ([[ourBundle translationsForLocale:locale] count] == 0) {
+    if ([ourBundle translationsForLocale:locale] == nil) {
         [ourBundle loadTranslationsForLocale:locale completion:^(NSError *error) {
             TMLLanguage *newLanguage;
             if (error == nil) {
@@ -486,19 +500,39 @@ NSString * const TMLOptionsHostName = @"host";
             }
             BOOL success = NO;
             if (newLanguage != nil) {
-                self.currentLanguage = newLanguage;
-                self.configuration.currentLocale = newLanguage.locale;
                 id<TMLDelegate>delegate = self.delegate;
                 if ([delegate respondsToSelector:@selector(tmlDidLoadTranslations)] == YES) {
                     [delegate tmlDidLoadTranslations];
                 }
                 success = YES;
             }
-            if (completionBlock != nil) {
-                completionBlock(success);
-            }
+            finalize(success);
         }];
     }
+    else {
+        finalize(YES);
+    }
+}
+
+- (void)_changeToLocale:(NSString *)locale {
+    TMLLanguage *newLanguage = [self.application languageForLocale:locale];
+    if (newLanguage == nil) {
+        return;
+    }
+    // TODO: do we really need toi change both ourselves and config?
+    NSString *oldLocale = self.configuration.currentLocale;
+    self.currentLanguage = newLanguage;
+    self.configuration.currentLocale = newLanguage.locale;
+    [self didChangeFromLocale:oldLocale];
+}
+
+- (void)didChangeFromLocale:(NSString *)previousLocale {
+    NSDictionary *info = @{
+                           TMLLanguagePreviousLocaleUserInfoKey: previousLocale
+                           };
+    [[NSNotificationCenter defaultCenter] postNotificationName:TMLLanguageChangedNotification
+                                                        object:nil
+                                                      userInfo:info];
 }
 
 #pragma mark - Translations

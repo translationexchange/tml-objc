@@ -15,11 +15,14 @@ typedef NS_ENUM(NSInteger, TMLBundleManagerErrorCode) {
     TMLBundleManagerInvalidVersionError,
     TMLBundleManagerInvalidData,
     TMLBundleManagerIncompleteData,
-    TMLBundleManagerUnsupportedArchive
+    TMLBundleManagerUnsupportedArchive,
+    TMLBundleManagerHTTPError
 };
 
 extern NSString * const TMLBundleManagerFilenameKey;
 extern NSString * const TMLBundleManagerVersionKey;
+extern NSString * const TMLBundleManagerURLKey;
+extern NSString * const TMLBundleManagerPathKey;
 
 typedef void (^TMLBundleInstallBlock)(NSString *path, NSError *error);
 

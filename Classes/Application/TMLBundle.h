@@ -19,11 +19,12 @@ extern NSString * const TMLBundleVersionKey;
 extern NSString * const TMLBundleURLKey;
 
 extern NSString * const TMLBundleErrorDomain;
-extern NSString * const TMLBundleResourcePathKey;
+extern NSString * const TMLBundleErrorResourcePathKey;
+extern NSString * const TMLBundleErrorsKey;
 
 typedef NS_ENUM(NSInteger, TMLBundleErrorCode) {
     TMLBundleInvalidResourcePath,
-    TMLBundleMissingTranslations
+    TMLBundleMissingResources
 };
 
 @class TMLApplication;

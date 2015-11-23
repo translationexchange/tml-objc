@@ -33,9 +33,11 @@
 
 @class TMLConfiguration, TMLLanguage, TMLApplication, TMLAPIClient, TMLPostOffice, TMLTranslationKey, TMLBundle;
 
-#define TMLLanguageChangedNotification @"TMLLanguageChangedNotification"
-#define TMLIsReachableNotification @"TMLIsReachableNotification"
-#define TMLIsUnreachableNotification @"TMLIsUnreachableNotification"
+extern NSString * const TMLLanguageChangedNotification;
+extern NSString * const TMLIsReachableNotification;
+extern NSString * const TMLIsUnreachableNotification;
+
+extern NSString * const TMLLanguagePreviousLocaleUserInfoKey;
 
 @protocol TMLDelegate;
 

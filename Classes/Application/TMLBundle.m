@@ -26,7 +26,8 @@ NSString * const TMLBundleVersionKey = @"version";
 NSString * const TMLBundleURLKey = @"url";
 
 NSString * const TMLBundleErrorDomain = @"TMLBundleErrorDomain";
-NSString * const TMLBundleResourcePathKey = @"resourcePath";
+NSString * const TMLBundleErrorResourcePathKey = @"resourcePath";
+NSString * const TMLBundleErrorsKey = @"errors";
 
 @interface TMLBundle()
 @property (readwrite, nonatomic) NSString *version;
@@ -85,6 +86,7 @@ NSString * const TMLBundleResourcePathKey = @"resourcePath";
     self.application = nil;
     self.version = nil;
     self.sourceURL = nil;
+    self.availableLocales = nil;
 }
 
 - (void)reload {
@@ -308,7 +310,7 @@ NSString * const TMLBundleResourcePathKey = @"resourcePath";
         [paths addObject:[locale stringByAppendingPathComponent:TMLBundleLanguageFilename]];
         [paths addObject:[locale stringByAppendingPathComponent:TMLBundleTranslationsFilename]];
         for (NSString *source in sources) {
-            [paths addObject:[[locale stringByAppendingPathComponent:TMLBundleSourcesRelativePath] stringByAppendingPathComponent:source]];
+            [paths addObject:[[locale stringByAppendingPathComponent:TMLBundleSourcesRelativePath] stringByAppendingPathComponent:[source stringByAppendingPathExtension:@"json"]]];
         }
     }
     
@@ -316,7 +318,18 @@ NSString * const TMLBundleResourcePathKey = @"resourcePath";
                                                  bundleVersion:version
                                                  baseDirectory:nil
                                                completionBlock:^(BOOL success, NSArray *paths, NSArray *errors) {
-                                                   [self installResources:paths completion:completion];
+                                                   if (success == YES && paths.count > 0) {
+                                                       [self installResources:paths completion:completion];
+                                                   }
+                                                   else if (completion != nil) {
+                                                       NSDictionary *errorInfo = @{
+                                                                                   TMLBundleErrorsKey: errors
+                                                                                   };
+                                                       NSError *ourError = [NSError errorWithDomain:TMLBundleErrorDomain
+                                                                                               code:TMLBundleMissingResources
+                                                                                           userInfo:errorInfo];
+                                                       completion(ourError);
+                                                   }
                                                }];
 }
 
@@ -347,7 +360,7 @@ NSString * const TMLBundleResourcePathKey = @"resourcePath";
                 installError = [NSError errorWithDomain:TMLBundleErrorDomain
                                                    code:TMLBundleInvalidResourcePath
                                                userInfo:@{
-                                                          TMLBundleResourcePathKey: path
+                                                          TMLBundleErrorResourcePathKey: path
                                                           }];
             }
             continue;
