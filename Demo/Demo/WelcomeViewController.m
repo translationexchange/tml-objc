@@ -41,50 +41,5 @@
 
 @implementation WelcomeViewController
 
-//- (void) localize {
-////   self.welcomeLabel.text = NSLocalizedString(@"Welcome To TML Demo", @"Welcome message");
-//    
-////    TMLLocalizeViewWithLabelAndDescription(self.welcomeLabel, @"Welcome To TML Demo", @"Welcome message");
-//  
-//    TMLLocalizeView(self.view);
-//    
-////    self.welcomeLabel.text = TMLLocalizedString(@"Welcome");
-//    
-//
-//    //    TMLBeginSource(@"Welcome Screen");
-////
-//////    NSDictionary *user = @{@"name": @"Michael", @"gender": @"male"};
-//////    {user:gender::possesive || male: himself, female: herself}
-//////    {birthday:date || past: liked, present: likes, future: will like}
-//////    self.welcomeLabel.attributedText = TMLLocalizedAttributedStringWithTokens(@"{user} uploaded {count || photo} of {user | himself, herself} to {user | his, her} photo album", (@{@"count": @5, @"user": @{@"object": user, @"attribute": @"name"}, @"bold": @{@"font": @{@"family": @"Arial", @"size": @20}, @"color": @"green"}})); //, (@{@"user": @"Michael", @"another": @"test"}));
-////    
-//////    [self setTextValue: TMLLocalizedStringWithDescription(@"Welcome", @"Welcome title") toField:self.titleLabel];
-//////    [self setTextValue: TMLLocalizedAttributedStringWithTokens(@"You have [bold: {count || message}]", (@{@"count": @1, @"bold": @{
-//////                                                                     @"color": @"green",
-//////                                                                     @"font": @{@"name": @"ChalkboardSE", @"size": @18}
-//////                                                                 }}))
-//////               toField:self.welcomeLabel];
-////    
-//////    TMLLocalizeViewWithLabel(self.titleLabel, @"Welcome");
-//////    TMLLocalizeViewWithLabelAndTokens(self.welcomeLabel, @"Welcome to [bold: TML Demo]",
-//////                                        (@{@"bold": @{
-//////                                                   @"underline": @"double",
-//////                                                   @"font": @{@"name": @"ChalkboardSE", @"size": @42}
-//////                                            }
-//////                                        }));
-//////    TMLLocalizeView(self.welcomeText);
-////    
-//////    
-//////    [self setTextValue: TMLLocalizedString(@"Welcome") toField:self.titleLabel];
-//////    [self setTextValue: TMLLocalizedString(@"Welcome to TML Demo") toField:self.self.welcomeLabel];
-//////    [self setTextValue: TMLLocalizedString(@"This application demonstrates TML's capabilities. Use the menu on the left to choose a sample.")
-//////               toField:self.welcomeText];
-////    
-////    TMLLocalizeView(self.view);
-////    
-////    TMLEndSource
-//}
-
-
 @end
 

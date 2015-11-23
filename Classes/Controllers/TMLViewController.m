@@ -37,13 +37,9 @@
 
 - (void) localize {
     TMLBeginBlockWithOptions(@{@"source": [self tmlSourceKey]})
-    [self localizeView:self.view];
+    [super localize];
+//    [self localizeView:self.view];
     TMLEndBlockWithOptions
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [self localize];
 }
 
 @end

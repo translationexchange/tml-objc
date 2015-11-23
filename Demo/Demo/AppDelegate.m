@@ -32,14 +32,15 @@
                                                                              leftViewController:[mainStoryboard instantiateViewControllerWithIdentifier: @"MenuViewController"]];
     [self.window makeKeyAndVisible];
     
-    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
+    UIApplication *app = [UIApplication sharedApplication];
+    if ([app respondsToSelector:@selector(registerUserNotificationSettings:)]) {
         UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge
-                                                                                         |UIRemoteNotificationTypeSound
-                                                                                         |UIRemoteNotificationTypeAlert) categories:nil];
-        [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+                                                                                             |UIRemoteNotificationTypeSound
+                                                                                             |UIRemoteNotificationTypeAlert) categories:nil];
+        [app registerUserNotificationSettings:settings];
     } else {
         UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:myTypes];
+        [app registerForRemoteNotificationTypes:myTypes];
     }
 
     return YES;

@@ -65,8 +65,6 @@
     else
         hud.labelText = @"In-app translator disabled";
     
-    [[NSNotificationCenter defaultCenter] postNotificationName: TMLLanguageChangedNotification object: [TML configuration].currentLocale];
-    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         [hud hide:YES];
         if ([TML configuration].inContextTranslatorEnabled) {

@@ -42,10 +42,6 @@
     [super viewDidLoad];
 }
 
-- (void) localize {
-    // Do nothing. Will localize manually
-}
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [self.items count];
 }

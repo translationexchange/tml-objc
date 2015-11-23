@@ -33,7 +33,9 @@
 #import "TML.h"
 #import "UIViewController+TML.h"
 
-@interface ApplicationViewController ()
+@interface ApplicationViewController () {
+    BOOL _observingNotifications;
+}
 
 @end
 
@@ -41,13 +43,38 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(translationsLoaded)
-                                                 name:TMLLanguageChangedNotification
-                                               object:self.view.window];
-    
     [self localize];
+    [self setupNotificationObserving];
+}
+
+- (void)willMoveToParentViewController:(UIViewController *)parent {
+    if (parent == nil) {
+        [self teardownNotificationObserving];
+    }
+    else {
+        [self setupNotificationObserving];
+    }
+}
+
+#pragma mark - Notifications
+- (void)setupNotificationObserving {
+    if (_observingNotifications == YES) {
+        return;
+    }
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter addObserver:self
+                           selector:@selector(translationsLoaded:)
+                               name:TMLLanguageChangedNotification
+                             object:nil];
+    _observingNotifications = YES;
+}
+
+- (void)teardownNotificationObserving {
+    if (_observingNotifications == NO) {
+        return;
+    }
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    _observingNotifications = NO;
 }
 
 - (IBAction)toggleMenu:(id)sender {
@@ -58,7 +85,7 @@
     TMLLocalizeView(self.view);
 }
 
-- (void) translationsLoaded {
+- (void) translationsLoaded:(NSNotification *)aNotification {
     [self localize];
 }
 

@@ -231,10 +231,6 @@
 	[self.itemsTableView scrollRectToVisible:r animated:YES];
 }
 
-- (void) localize {
-    
-}
-
 - (void) translationsLoaded {
     [self.itemsTableView reloadData];
 }

@@ -29,12 +29,13 @@
  */
 
 #import <UIKit/UIKit.h>
+#import "TMLViewController.h"
 
 @class TMLLanguage;
 
 @protocol TMLLanguageSelectorViewControllerDelegate;
 
-@interface TMLLanguageSelectorViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface TMLLanguageSelectorViewController : TMLViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property(nonatomic, assign) id<TMLLanguageSelectorViewControllerDelegate> delegate;
 

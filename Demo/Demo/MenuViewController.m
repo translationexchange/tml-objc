@@ -99,10 +99,6 @@
                    ];
 }
 
-- (void) localize {
-    TMLLocalizeViewWithLabel(self.titleLabel, @"Main Menu");
-}
-
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *sectionHeader = [[UIView alloc] init];
     sectionHeader.backgroundColor = [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1];
