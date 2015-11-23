@@ -43,38 +43,6 @@ NSString const *TMLViewTapRecognizer = @"TMLViewTapRecognizer";
 
 @implementation UIViewController (TML)
 
-- (NSString *) tmlSourceKey {
-    return NSStringFromClass([self class]);
-}
-
-- (NSDictionary *) tmlPrepareOptions {
-    return [self tmlPrepareOptions: @{}];
-}
-
-- (NSDictionary *) tmlPrepareOptions: (NSDictionary *) options {
-    if (!options) options = @{};
-    NSMutableDictionary *opts = [NSMutableDictionary dictionaryWithDictionary:options];
-    if (![opts objectForKey:@"source"] && ![TML blockOptionForKey:@"source"] && [self tmlSourceKey])
-        [opts setObject: [self tmlSourceKey] forKey:@"source"];
-    return opts;
-}
-
-- (TMLLanguage *) tmlDefaultLanguage {
-    return [[TML sharedInstance] defaultLanguage];
-}
-
-- (TMLLanguage *) tmlCurrentLanguage {
-    return [[TML sharedInstance] currentLanguage];
-}
-
-- (TMLApplication *) tmlCurrentApplication {
-    return [[TML sharedInstance] application];
-}
-
-- (NSObject *) tmlCurrentUser {
-    return [[TML sharedInstance] currentUser];
-}
-
 - (void) setTextValue: (NSObject *) value toField: (id) field {
     if ([field isKindOfClass: UILabel.class]) {
         if ([value isKindOfClass: NSAttributedString.class])
@@ -129,18 +97,16 @@ NSString const *TMLViewTapRecognizer = @"TMLViewTapRecognizer";
     [tmlKeyData setObject:value forKey:key];
 }
 
-- (NSDictionary *) dataForView: (UIView *) view  withDefault: (NSDictionary *(^)()) defaultData {
+- (NSDictionary *)dataForView:(UIView *)view
+                  withDefault:(NSDictionary *(^)())defaultData
+{
     NSValue *key = [self viewHashKey:view];
-    
-//    NSLog(@"Translating view with key: %@", key);
     
     NSDictionary *data = [self originalViewValueForKey:key];
     if (data == nil) {
         data = defaultData();
         [self setOriginalViewValue:data forKey:key];
     }
-    
-//    NSLog(@"View data: %@", data);
 
     return data;
 }
@@ -156,8 +122,12 @@ NSString const *TMLViewTapRecognizer = @"TMLViewTapRecognizer";
     return data;
 }
 
-- (void) translateLabel: (UILabel *) label withTokens: (NSDictionary *) tokens {
-    if (label.text == nil || [label.text isEqualToString:@""]) return;
+- (void) translateLabel:(UILabel *)label
+             withTokens:(NSDictionary *)tokens
+{
+    if (label.text.length == 0) {
+        return;
+    }
 
     NSDictionary *data = [self dataForView:label withDefault:^NSDictionary *{
         return @{
@@ -165,14 +135,11 @@ NSString const *TMLViewTapRecognizer = @"TMLViewTapRecognizer";
         };
     }];
     
-//    NSLog(@"Data: %@", data);
-    
-    if ([[data objectForKey:@"text"] length] > 0) {
-        [self setTranslationKey:TMLTranslationKey([data objectForKey:@"text"], @"") forKey:[self viewHashKey:label]];
-
-//        NSLog(@"%@", [data objectForKey:@"text"]);
-        
-        label.text = TMLLocalizedStringWithTokensAndOptions([data objectForKey:@"text"], tokens, [self tmlPrepareOptions]);
+    NSString *text = data[@"text"];
+    if (text.length > 0) {
+        [self setTranslationKey:TMLTranslationKey([data objectForKey:@"text"], @"")
+                         forKey:[self viewHashKey:label]];
+        label.text = TMLLocalizedStringWithTokensAndOptions([data objectForKey:@"text"], tokens, nil);
     }
     
     [self addInAppTranslatorGestureRecognizer: label];
@@ -190,12 +157,12 @@ NSString const *TMLViewTapRecognizer = @"TMLViewTapRecognizer";
         return data;
     }];
     
-    if ([data objectForKey:@"text_normal"]) [button setTitle:TMLLocalizedStringWithTokensAndOptions([data objectForKey:@"text_normal"], tokens, [self tmlPrepareOptions]) forState:UIControlStateNormal];
-    if ([data objectForKey:@"text_highlighted"]) [button setTitle:TMLLocalizedStringWithTokensAndOptions([data objectForKey:@"text_normal"], tokens, [self tmlPrepareOptions]) forState:UIControlStateHighlighted];
-    if ([data objectForKey:@"text_disabled"]) [button setTitle:TMLLocalizedStringWithTokensAndOptions([data objectForKey:@"text_normal"], tokens, [self tmlPrepareOptions]) forState:UIControlStateDisabled];
-    if ([data objectForKey:@"text_selected"]) [button setTitle:TMLLocalizedStringWithTokensAndOptions([data objectForKey:@"text_normal"], tokens, [self tmlPrepareOptions]) forState:UIControlStateSelected];
-    if ([data objectForKey:@"text_application"]) [button setTitle:TMLLocalizedStringWithTokensAndOptions([data objectForKey:@"text_normal"], tokens, [self tmlPrepareOptions]) forState:UIControlStateApplication];
-    if ([data objectForKey:@"text_reserved"]) [button setTitle:TMLLocalizedStringWithTokensAndOptions([data objectForKey:@"text_normal"], tokens, [self tmlPrepareOptions]) forState:UIControlStateReserved];
+    if ([data objectForKey:@"text_normal"]) [button setTitle:TMLLocalizedStringWithTokensAndOptions([data objectForKey:@"text_normal"], tokens, nil) forState:UIControlStateNormal];
+    if ([data objectForKey:@"text_highlighted"]) [button setTitle:TMLLocalizedStringWithTokensAndOptions([data objectForKey:@"text_normal"], tokens, nil) forState:UIControlStateHighlighted];
+    if ([data objectForKey:@"text_disabled"]) [button setTitle:TMLLocalizedStringWithTokensAndOptions([data objectForKey:@"text_normal"], tokens, nil) forState:UIControlStateDisabled];
+    if ([data objectForKey:@"text_selected"]) [button setTitle:TMLLocalizedStringWithTokensAndOptions([data objectForKey:@"text_normal"], tokens, nil) forState:UIControlStateSelected];
+    if ([data objectForKey:@"text_application"]) [button setTitle:TMLLocalizedStringWithTokensAndOptions([data objectForKey:@"text_normal"], tokens, nil) forState:UIControlStateApplication];
+    if ([data objectForKey:@"text_reserved"]) [button setTitle:TMLLocalizedStringWithTokensAndOptions([data objectForKey:@"text_normal"], tokens, nil) forState:UIControlStateReserved];
     
     [self addInAppTranslatorGestureRecognizer: button];
 }
@@ -208,7 +175,7 @@ NSString const *TMLViewTapRecognizer = @"TMLViewTapRecognizer";
     }];
     
     if ([[data objectForKey:@"placeholder"] length] > 0) {
-        textField.placeholder = TMLLocalizedStringWithOptions([data objectForKey:@"placeholder"], [self tmlPrepareOptions]);
+        textField.placeholder = TMLLocalizedStringWithOptions([data objectForKey:@"placeholder"], nil);
     }
     
     [self addInAppTranslatorGestureRecognizer: textField];
@@ -222,7 +189,7 @@ NSString const *TMLViewTapRecognizer = @"TMLViewTapRecognizer";
     }];
     
     if ([[data objectForKey:@"title"] length] > 0) {
-        barButtonItem.title = TMLLocalizedStringWithOptions([data objectForKey:@"title"], [self tmlPrepareOptions]);
+        barButtonItem.title = TMLLocalizedStringWithOptions([data objectForKey:@"title"], nil);
     }
 }
 
@@ -234,7 +201,7 @@ NSString const *TMLViewTapRecognizer = @"TMLViewTapRecognizer";
     }];
     
     if ([[data objectForKey:@"title"] length] > 0) {
-        navigationItem.title = TMLLocalizedStringWithOptions([data objectForKey:@"title"], [self tmlPrepareOptions]);
+        navigationItem.title = TMLLocalizedStringWithOptions([data objectForKey:@"title"], nil);
     }
 }
 
@@ -251,15 +218,15 @@ NSString const *TMLViewTapRecognizer = @"TMLViewTapRecognizer";
     }];
     
     if ([[data objectForKey:@"text"] length] > 0) {
-        searchBar.text = TMLLocalizedStringWithOptions([data objectForKey:@"text"], [self tmlPrepareOptions]);
+        searchBar.text = TMLLocalizedStringWithOptions([data objectForKey:@"text"], nil);
     }
     
     if ([[data objectForKey:@"placeholder"] length] > 0) {
-        searchBar.placeholder = TMLLocalizedStringWithOptions([data objectForKey:@"placeholder"], [self tmlPrepareOptions]);
+        searchBar.placeholder = TMLLocalizedStringWithOptions([data objectForKey:@"placeholder"], nil);
     }
     
     if ([[data objectForKey:@"prompt"] length] > 0) {
-        searchBar.prompt = TMLLocalizedStringWithOptions([data objectForKey:@"prompt"], [self tmlPrepareOptions]);
+        searchBar.prompt = TMLLocalizedStringWithOptions([data objectForKey:@"prompt"], nil);
     }
 }
 
@@ -304,8 +271,6 @@ NSString const *TMLViewTapRecognizer = @"TMLViewTapRecognizer";
 - (void) localizeView: (UIView *) view withLabel: (NSString *) label description: (NSString *) description tokens: (NSDictionary *) tokens options: (NSDictionary *) options {
 
     if (view == nil) return;
-    
-    // TMLDebug(@"Translating: %@", NSStringFromClass([view class]));
 
     NSString *text = nil;
     NSAttributedString *attributedText = nil;
@@ -313,9 +278,9 @@ NSString const *TMLViewTapRecognizer = @"TMLViewTapRecognizer";
     [self setTranslationKey:TMLTranslationKey(label, description) forKey:[self viewHashKey:view]];
     
     if ([label rangeOfString:@"["].location != NSNotFound) {
-        attributedText = TMLLocalizedAttributedStringWithDescriptionAndTokensAndOptions(label, description, tokens, [self tmlPrepareOptions:options]);
+        attributedText = TMLLocalizedAttributedStringWithDescriptionAndTokensAndOptions(label, description, tokens, options);
     } else {
-        text = TMLLocalizedStringWithDescriptionAndTokensAndOptions(label, description, tokens, [self tmlPrepareOptions:options]);
+        text = TMLLocalizedStringWithDescriptionAndTokensAndOptions(label, description, tokens, options);
     }
         
     if ([view isKindOfClass:UILabel.class]) {

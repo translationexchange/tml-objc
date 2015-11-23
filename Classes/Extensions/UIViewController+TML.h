@@ -38,16 +38,6 @@
 
 @interface UIViewController (TML)
 
-- (NSString *) tmlSourceKey;
-
-- (TMLLanguage *) tmlDefaultLanguage;
-
-- (TMLLanguage *) tmlCurrentLanguage;
-
-- (TMLApplication *) tmlCurrentApplication;
-
-- (NSObject *) tmlCurrentUser;
-
 - (void) setTextValue: (NSObject *) value toField: (id) field;
 
 - (void) localizeView: (UIView *) view;
