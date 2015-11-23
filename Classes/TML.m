@@ -374,16 +374,42 @@ NSString * const TMLOptionsHostName = @"host";
 
 #pragma mark - Translating
 
-+ (NSString *) translate:(NSString *) label withDescription:(NSString *) description andTokens: (NSDictionary *) tokens andOptions: (NSDictionary *) options {
-    NSMutableDictionary *opts = [NSMutableDictionary dictionaryWithDictionary:options];
-    [opts setObject:@"html" forKey:@"tokenizer"];
-    return (NSString *) [[self sharedInstance] translate:label withDescription:description andTokens:tokens andOptions:opts];
++ (NSString *)translate:(NSString *)label
+        withDescription:(NSString *)description
+              andTokens:(NSDictionary *)tokens
+             andOptions:(NSDictionary *)options
+{
+    NSMutableDictionary *opts = nil;
+    if (options != nil) {
+        opts = [NSMutableDictionary dictionaryWithDictionary:options];
+    }
+    else {
+        opts = [NSMutableDictionary dictionary];
+    }
+    opts[@"tokenizer"] = @"html";
+    return (NSString *) [[self sharedInstance] translate:label
+                                         withDescription:description
+                                               andTokens:tokens
+                                              andOptions:opts];
 }
 
-+ (NSAttributedString *) translateAttributedString:(NSString *) label withDescription:(NSString *) description andTokens: (NSDictionary *) tokens andOptions: (NSDictionary *) options {
-    NSMutableDictionary *opts = [NSMutableDictionary dictionaryWithDictionary:options];
-    [opts setObject:@"attributed" forKey:@"tokenizer"];
-    return (NSAttributedString *) [[self sharedInstance] translate:label withDescription:description andTokens:tokens andOptions:opts];
++ (NSAttributedString *)translateAttributedString:(NSString *)attributedString
+                                  withDescription:(NSString *)description
+                                        andTokens:(NSDictionary *)tokens
+                                       andOptions:(NSDictionary *)options
+{
+    NSMutableDictionary *opts = nil;
+    if (options != nil) {
+        opts = [NSMutableDictionary dictionaryWithDictionary:options];
+    }
+    else {
+        opts = [NSMutableDictionary dictionary];
+    }
+    opts[@"tokenizer"] = @"attributed";
+    return (NSAttributedString *) [[self sharedInstance] translate:attributedString
+                                                   withDescription:description
+                                                         andTokens:tokens
+                                                        andOptions:opts];
 }
 
 + (NSString *) localizeDate:(NSDate *) date withFormat:(NSString *) format andDescription: (NSString *) description {
@@ -564,7 +590,11 @@ NSString * const TMLOptionsHostName = @"host";
     }
 }
 
-- (NSObject *) translate:(NSString *) label withDescription:(NSString *) description andTokens: (NSDictionary *) tokens andOptions: (NSDictionary *) options {
+- (NSObject *)translate:(NSString *)label
+        withDescription:(NSString *)description
+              andTokens:(NSDictionary *)tokens
+             andOptions:(NSDictionary *)options
+{
     // if TML is used in a disconnected mode or has not been initialized, fallback onto English US
     if (self.currentLanguage == nil) {
         self.defaultLanguage = [TMLLanguage defaultLanguage];
