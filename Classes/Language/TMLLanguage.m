@@ -279,7 +279,7 @@
 }
 
 - (NSString *) description {
-    return [NSString stringWithFormat:@"%@ name: %@ [%@]", [super description], self.englishName, self.locale];
+    return [NSString stringWithFormat:@"<%@:%@: %p>", [self class], self.locale, self];
 }
 
 @end

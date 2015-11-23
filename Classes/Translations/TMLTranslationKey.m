@@ -208,7 +208,7 @@
 }
 
 - (NSString *) description {
-    return [NSString stringWithFormat:@"TranslationKey: %@", self.label];
+    return [NSString stringWithFormat:@"<%@: %@>", [self class], self.label];
 }
 
 @end
