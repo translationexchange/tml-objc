@@ -134,7 +134,7 @@ completionBlock:(TMLAPIResponseHandler)completionBlock;
 - (void) getTranslationsForLocale:(NSString *)locale
                            source:(TMLSource *)source
                           options:(NSDictionary *)options
-                  completionBlock:(void(^)(NSDictionary <NSString *,TMLTranslation *>*translations, TMLAPIResponse *response, NSError *error))completionBlock;
+                  completionBlock:(void(^)(NSDictionary *translations, TMLAPIResponse *response, NSError *error))completionBlock;
 
 /**
  *  Fetches application info.

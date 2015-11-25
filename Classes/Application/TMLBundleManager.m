@@ -7,6 +7,7 @@
 //
 
 #import "NSObject+TMLJSON.h"
+#import "NSString+TmlAdditions.h"
 #import "TML.h"
 #import "TMLAPIBundle.h"
 #import "TMLAPISerializer.h"
@@ -17,7 +18,7 @@
 #import <SSZipArchive/SSZipArchive.h>
 
 NSString * const TMLBundleManagerErrorDomain = @"TMLBundleManagerErrorDomain";
-NSString * const TMLBundleManagerActiveBundleLinkName = @"active";
+NSString * const TMLBundleManagerLatestBundleLinkName = @"latest";
 NSString * const TMLBundleManagerVersionKey = @"version";
 NSString * const TMLBundleManagerFilenameKey = @"filename";
 NSString * const TMLBundleManagerURLKey = @"url";
@@ -25,12 +26,20 @@ NSString * const TMLBundleManagerPathKey = @"path";
 
 NSString * const TMLBundleManagerAPIBundleDirectoryName = @"api";
 
+NSString * const TMLBundleContentsChangedNotification = @"TMLBundleContentsChangedNotification";
+NSString * const TMLBundleSyncDidStartNotification = @"TMLBundleSyncDidStartNotification";
+NSString * const TMLBundleSyncDidFinishNotification = @"TMLBundleSyncDidFinishNotification";
+
+NSString * const TMLBundleChangeInfoBundleKey = @"bundle";
+NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
+
 @interface TMLBundleManager() {
     NSURLSession *_downloadSession;
-    TMLBundle *_activeBundle;
+    TMLBundle *_latestBundle;
 }
 @property(strong, nonatomic) NSURL *archiveURL;
 @property(strong, nonatomic) TMLBundle *apiBundle;
+@property(strong, nonatomic) TMLBundle *latestBundle;
 @end
 
 @implementation TMLBundleManager
@@ -49,6 +58,7 @@ NSString * const TMLBundleManagerAPIBundleDirectoryName = @"api";
 - (instancetype)init {
     if (self = [super init]) {
         self.archiveURL = [NSURL URLWithString:@"https://cdn.translationexchange.com"];
+        self.maximumBundlesToKeep = 2;
     }
     return self;
 }
@@ -129,12 +139,6 @@ NSString * const TMLBundleManagerAPIBundleDirectoryName = @"api";
         if (success == YES) {
             destinationPath = [NSString stringWithFormat:@"%@/%@", [self bundleInstallationPathForApplicationKey:application.key], bundleName];
             
-//            if ([fileManager fileExistsAtPath:destinationPath] == YES) {
-//                if ([fileManager removeItemAtPath:destinationPath error:&installError] == NO) {
-//                    TMLError(@"Error removing old cached translation bundle: %@", installError);
-//                    success = NO;
-//                }
-//            }
             NSString *destinationDir = [destinationPath stringByDeletingLastPathComponent];
             if ([fileManager fileExistsAtPath:destinationDir] == NO) {
                 if ([fileManager createDirectoryAtPath:destinationDir
@@ -153,6 +157,9 @@ NSString * const TMLBundleManagerAPIBundleDirectoryName = @"api";
             }
         }
         
+        if (success == YES) {
+            self.latestBundle = [[TMLBundle alloc] initWithContentsOfDirectory:destinationPath];
+        }
         
         if (completionBlock != nil) {
             if (success == YES) {
@@ -348,6 +355,40 @@ NSString * const TMLBundleManagerAPIBundleDirectoryName = @"api";
                                        }
                      }];
     }];
+}
+
+- (void)uninstallBundle:(TMLBundle *)bundle {
+    NSString *bundlePath = bundle.path;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if (bundlePath == nil || [fileManager fileExistsAtPath:bundlePath] == NO) {
+        TMLWarn(@"Could not uninstall bundle as its backing path cannot be found: %@", bundlePath);
+        return;
+    }
+    NSError *error;
+    if ([fileManager removeItemAtPath:bundlePath error:&error] == NO) {
+        TMLError(@"Error uninstalling bundle: %@", error);
+    }
+}
+
+- (void)cleanup {
+    NSUInteger keep = self.maximumBundlesToKeep;
+    if (keep == 0) {
+        return;
+    }
+    
+    NSArray *installedBundles = [self installedBundles];
+    if (installedBundles.count > keep) {
+        installedBundles = [installedBundles sortedArrayUsingComparator:^NSComparisonResult(TMLBundle *a, TMLBundle *b) {
+            NSString *aVersion = a.version;
+            NSString *bVersion = b.version;
+            return [aVersion compareToTMLTranslationBundleVersion:bVersion];
+        }];
+    }
+    
+    NSArray *toRemove = [installedBundles subarrayWithRange:NSMakeRange(0, installedBundles.count - keep)];
+    for (TMLBundle *bundle in toRemove) {
+        [self uninstallBundle:bundle];
+    }
 }
 
 #pragma mark - Downloading
@@ -552,14 +593,14 @@ NSString * const TMLBundleManagerAPIBundleDirectoryName = @"api";
 
 #pragma mark - Active Bundle
 
-- (void)setActiveBundle:(TMLBundle *)bundle {
-    if (_activeBundle == bundle) {
+- (void)setLatestBundle:(TMLBundle *)bundle {
+    if (_latestBundle == bundle) {
         return;
     }
     
-    if (_activeBundle == nil) {
+    if (_latestBundle == nil) {
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSString *link = [NSString stringWithFormat:@"%@/%@", [self defaultBundleInstallationPath], TMLBundleManagerActiveBundleLinkName];
+        NSString *link = [NSString stringWithFormat:@"%@/%@", [self defaultBundleInstallationPath], TMLBundleManagerLatestBundleLinkName];
         NSError *error = nil;
         NSDictionary *attrs = [fileManager attributesOfItemAtPath:link error:&error];
         if (attrs != nil
@@ -571,17 +612,30 @@ NSString * const TMLBundleManagerAPIBundleDirectoryName = @"api";
         if ([fileManager createSymbolicLinkAtPath:link withDestinationPath:path error:&error] == NO) {
             TMLError(@"Error linking bundle as active: %@", error);
         }
-        _activeBundle = bundle;
+        _latestBundle = bundle;
     }
 }
 
-- (TMLBundle *)activeBundle {
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *activeBundlePath = [NSString stringWithFormat:@"%@/%@", [self defaultBundleInstallationPath], TMLBundleManagerActiveBundleLinkName];
-    if ([fileManager fileExistsAtPath:activeBundlePath] == YES) {
-        return [[TMLBundle alloc] initWithContentsOfDirectory:activeBundlePath];
+- (TMLBundle *)latestBundle {
+    if (_latestBundle == nil) {
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSString *activeBundlePath = [NSString stringWithFormat:@"%@/%@", [self defaultBundleInstallationPath], TMLBundleManagerLatestBundleLinkName];
+        if ([fileManager fileExistsAtPath:activeBundlePath] == YES) {
+            _latestBundle = [[TMLBundle alloc] initWithContentsOfDirectory:activeBundlePath];
+        }
+        else {
+            NSArray *bundles = [self installedBundles];
+            if (bundles.count > 0) {
+                bundles = [bundles sortedArrayUsingComparator:^NSComparisonResult(TMLBundle *a, TMLBundle *b) {
+                    NSString *aVersion = a.version;
+                    NSString *bVersion = b.version;
+                    return [aVersion compareToTMLTranslationBundleVersion:bVersion];
+                }];
+            }
+            _latestBundle = [bundles lastObject];
+        }
     }
-    return nil;
+    return _latestBundle;
 }
 
 #pragma mark - API Bundle
@@ -603,6 +657,22 @@ NSString * const TMLBundleManagerAPIBundleDirectoryName = @"api";
         _apiBundle = [[TMLAPIBundle alloc] initWithContentsOfDirectory:apiBundleDir];
     }
     return _apiBundle;
+}
+
+#pragma mark - Notifications
+
+- (void) notifyBundleMutation:(NSString *)mutationType
+                       bundle:(TMLBundle *)bundle
+                       errors:(NSArray *)errors
+{
+    NSMutableDictionary *info = [NSMutableDictionary dictionary];
+    info[TMLBundleChangeInfoBundleKey] = bundle;
+    if (errors.count > 0) {
+        info[TMLBundleChangeInfoErrorsKey] = errors;
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:mutationType
+                                                        object:nil
+                                                      userInfo:info];
 }
 
 @end

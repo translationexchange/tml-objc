@@ -24,6 +24,13 @@ extern NSString * const TMLBundleManagerVersionKey;
 extern NSString * const TMLBundleManagerURLKey;
 extern NSString * const TMLBundleManagerPathKey;
 
+extern NSString * const TMLBundleContentsChangedNotification;
+extern NSString * const TMLBundleSyncDidStartNotification;
+extern NSString * const TMLBundleSyncDidFinishNotification;
+
+extern NSString * const TMLBundleChangeInfoBundleKey;
+extern NSString * const TMLBundleChangeInfoErrorsKey;
+
 typedef void (^TMLBundleInstallBlock)(NSString *path, NSError *error);
 
 @interface TMLBundleManager : NSObject
@@ -32,6 +39,7 @@ typedef void (^TMLBundleInstallBlock)(NSString *path, NSError *error);
 
 #pragma mark - Installation
 
+@property (nonatomic, assign) NSUInteger maximumBundlesToKeep;
 - (void) installBundleFromPath:(NSString *)aPath completionBlock:(TMLBundleInstallBlock)completionBlock;
 - (void) installBundleFromURL:(NSURL *)aURL completionBlock:(TMLBundleInstallBlock)completionBlock;
 - (void) installPublishedBundleWithVersion:(NSString *)version
@@ -41,6 +49,8 @@ typedef void (^TMLBundleInstallBlock)(NSString *path, NSError *error);
           withRelativeBundlePath:(NSString *)relativeBundlePath
                intoBundleVersion:(NSString *)bundleVersion
                  completionBlock:(void(^)(NSString *path, NSError *error))completionBlock;
+
+- (void) cleanup;
 
 #pragma mark - Query
 
@@ -56,7 +66,13 @@ typedef void (^TMLBundleInstallBlock)(NSString *path, NSError *error);
 
 #pragma mark - Selection
 
-@property (nonatomic, strong) TMLBundle *activeBundle;
+@property (nonatomic, readonly) TMLBundle *latestBundle;
 @property (nonatomic, readonly) TMLBundle *apiBundle;
+
+#pragma mark - Notifications
+
+- (void) notifyBundleMutation:(NSString *)mutationType
+                       bundle:(TMLBundle *)bundle
+                       errors:(NSArray *)errors;
 
 @end

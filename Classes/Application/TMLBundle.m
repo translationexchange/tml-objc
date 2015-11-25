@@ -44,24 +44,7 @@ NSString * const TMLBundleErrorsKey = @"errors";
 @implementation TMLBundle
 
 + (instancetype)mainBundle {
-    TMLBundleManager *bundleManager = [TMLBundleManager defaultManager];
-    TMLBundle *activeBundle = [bundleManager activeBundle];
-    if (activeBundle == nil) {
-        NSArray *bundles = [bundleManager installedBundles];
-        if (bundles.count > 0) {
-            bundles = [bundles sortedArrayUsingComparator:^NSComparisonResult(TMLBundle *a, TMLBundle *b) {
-                NSString *aVersion = a.version;
-                NSString *bVersion = b.version;
-                return [aVersion compareToTMLTranslationBundleVersion:bVersion];
-            }];
-        }
-        TMLBundle *latestBundle = [bundles lastObject];
-        if (latestBundle != nil) {
-            [bundleManager setActiveBundle:latestBundle];
-        }
-        return latestBundle;
-    }
-    return activeBundle;
+    return [[TMLBundleManager defaultManager] latestBundle];
 }
 
 + (instancetype)apiBundle {
@@ -76,8 +59,8 @@ NSString * const TMLBundleErrorsKey = @"errors";
     return self;
 }
 
-- (BOOL)isStaticBundle {
-    return YES;
+- (BOOL)isMutable {
+    return NO;
 }
 
 - (void)resetData {
@@ -87,10 +70,6 @@ NSString * const TMLBundleErrorsKey = @"errors";
     self.version = nil;
     self.sourceURL = nil;
     self.availableLocales = nil;
-}
-
-- (void)reload {
-    [self resetData];
 }
 
 - (void)reloadVersionInfo {
@@ -256,20 +235,39 @@ NSString * const TMLBundleErrorsKey = @"errors";
     NSString *locale = [aLocale lowercaseString];
     NSDictionary *loadedTranslations = [self translationsForLocale:locale];
     if (loadedTranslations == nil) {
-        [self synchronizeLocales:@[aLocale] completion:^(NSError *error) {
-            if (error == nil) {
-                [self loadLocalTranslationsForLocale:aLocale];
-            }
-            if (completion != nil) {
-                completion(error);
-            }
-        }];
+        
+        NSString *version = self.version;
+        NSMutableArray *paths = [NSMutableArray array];
+        NSArray *sources = [self sources];
+        [paths addObject:[locale stringByAppendingPathComponent:TMLBundleLanguageFilename]];
+        [paths addObject:[locale stringByAppendingPathComponent:TMLBundleTranslationsFilename]];
+        for (NSString *source in sources) {
+            [paths addObject:[[locale stringByAppendingPathComponent:TMLBundleSourcesRelativePath] stringByAppendingPathComponent:[source stringByAppendingPathExtension:@"json"]]];
+        }
+        
+        [[TMLBundleManager defaultManager] fetchPublishedResources:paths
+                                                     bundleVersion:version
+                                                     baseDirectory:nil
+                                                   completionBlock:^(BOOL success, NSArray *paths, NSArray *errors) {
+                                                       if (success == YES && paths.count > 0) {
+                                                           [self installResources:paths completion:completion];
+                                                       }
+                                                       else if (completion != nil) {
+                                                           NSDictionary *errorInfo = @{
+                                                                                       TMLBundleErrorsKey: errors
+                                                                                       };
+                                                           NSError *ourError = [NSError errorWithDomain:TMLBundleErrorDomain
+                                                                                                   code:TMLBundleMissingResources
+                                                                                               userInfo:errorInfo];
+                                                           completion(ourError);
+                                                       }
+                                                   }];
     }
 }
 
 #pragma mark - Synchronization
 
-- (void)synchronize:(void (^)(NSError *))completion {
+- (void)loadCompleteBundle:(void(^)(NSError *error))completion {
     NSURL *url = self.sourceURL;
     TMLBundleManager *manager = [TMLBundleManager defaultManager];
     [manager installBundleFromURL:url completionBlock:^(NSString *path, NSError *error) {
@@ -279,10 +277,13 @@ NSString * const TMLBundleErrorsKey = @"errors";
         else {
             TMLError(@"Bundle failed to synchronize: %@", error);
         }
+        if (completion != nil) {
+            completion(error);
+        }
     }];
 }
 
-- (void)synchronizeApplicationData:(void (^)(NSError *))completion {
+- (void)loadMetaData:(void(^)(NSError *error))completion {
     NSString *version = self.version;
     NSArray *paths = @[
                        TMLBundleApplicationFilename,
@@ -294,42 +295,15 @@ NSString * const TMLBundleErrorsKey = @"errors";
                                                  bundleVersion:version
                                                  baseDirectory:nil
                                                completionBlock:^(BOOL success, NSArray *paths, NSArray *errors) {
-                                                   [self installResources:paths completion:completion];
+                                                   [self installResources:paths completion:^(NSError *error) {
+                                                       if (completion != nil) {
+                                                           completion(error);
+                                                       }
+                                                   }];
                                                }];
 }
 
-- (void)synchronizeLocales:(NSArray *)locales
-                completion:(void (^)(NSError *))completion
-{
-    NSString *version = self.version;
-    NSMutableArray *paths = [NSMutableArray array];
-    NSArray *sources = [self sources];
-    for (NSString *locale in locales) {
-        [paths addObject:[locale stringByAppendingPathComponent:TMLBundleLanguageFilename]];
-        [paths addObject:[locale stringByAppendingPathComponent:TMLBundleTranslationsFilename]];
-        for (NSString *source in sources) {
-            [paths addObject:[[locale stringByAppendingPathComponent:TMLBundleSourcesRelativePath] stringByAppendingPathComponent:[source stringByAppendingPathExtension:@"json"]]];
-        }
-    }
-    
-    [[TMLBundleManager defaultManager] fetchPublishedResources:paths
-                                                 bundleVersion:version
-                                                 baseDirectory:nil
-                                               completionBlock:^(BOOL success, NSArray *paths, NSArray *errors) {
-                                                   if (success == YES && paths.count > 0) {
-                                                       [self installResources:paths completion:completion];
-                                                   }
-                                                   else if (completion != nil) {
-                                                       NSDictionary *errorInfo = @{
-                                                                                   TMLBundleErrorsKey: errors
-                                                                                   };
-                                                       NSError *ourError = [NSError errorWithDomain:TMLBundleErrorDomain
-                                                                                               code:TMLBundleMissingResources
-                                                                                           userInfo:errorInfo];
-                                                       completion(ourError);
-                                                   }
-                                               }];
-}
+#pragma mark - Resources
 
 - (void)installResources:(NSArray *)resourcePaths
               completion:(void(^)(NSError *))completion
@@ -343,8 +317,8 @@ NSString * const TMLBundleErrorsKey = @"errors";
     
     __block NSInteger count = 0;
     NSString *version = self.version;
-    __block NSError *installError;
     TMLBundleManager *bundleManager = [TMLBundleManager defaultManager];
+    __block NSMutableArray *allErrors = [NSMutableArray array];
     
     for (NSString *path in resourcePaths) {
         NSArray *pathComponents = [path pathComponents];
@@ -354,13 +328,12 @@ NSString * const TMLBundleErrorsKey = @"errors";
             relativePath = [NSString pathWithComponents:[pathComponents subarrayWithRange:NSMakeRange(index+1, pathComponents.count - index - 1)]];
         }
         if (relativePath == nil) {
-            if (installError == nil) {
-                installError = [NSError errorWithDomain:TMLBundleErrorDomain
-                                                   code:TMLBundleInvalidResourcePath
-                                               userInfo:@{
-                                                          TMLBundleErrorResourcePathKey: path
-                                                          }];
-            }
+            NSError *installError = [NSError errorWithDomain:TMLBundleErrorDomain
+                                                        code:TMLBundleInvalidResourcePath
+                                                    userInfo:@{
+                                                               TMLBundleErrorResourcePathKey: path
+                                                               }];
+            [allErrors addObject:installError];
             continue;
         }
         [bundleManager installResourceFromPath:path
@@ -368,13 +341,16 @@ NSString * const TMLBundleErrorsKey = @"errors";
                              intoBundleVersion:version
                                completionBlock:^(NSString *path, NSError *error) {
                                    count++;
-                                   if (error != nil && installError == nil) {
-                                       installError = error;
+                                   if (error != nil) {
+                                       [allErrors addObject:error];
                                    }
                                    if (count == resourcePaths.count) {
-                                       [self reload];
+                                       [self resetData];
+                                       [[TMLBundleManager defaultManager] notifyBundleMutation:TMLBundleContentsChangedNotification
+                                                                                        bundle:self
+                                                                                        errors:allErrors];
                                        if (completion != nil) {
-                                           completion(installError);
+                                           completion((allErrors.count > 0) ? [allErrors firstObject] : nil);
                                        }
                                    }
                                }];

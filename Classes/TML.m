@@ -31,6 +31,7 @@
 
 #import "NSString+TMLAdditions.h"
 #import "TML.h"
+#import "TMLAPIBundle.h"
 #import "TMLApplication.h"
 #import "TMLBundle.h"
 #import "TMLBundleManager.h"
@@ -138,13 +139,9 @@ NSString * const TMLOptionsHostName = @"host";
     }];
     
     if (self.translationEnabled == YES) {
-        TMLBundle *apiBundle = [TMLBundle apiBundle];
+        TMLAPIBundle *apiBundle = (TMLAPIBundle *)[TMLBundle apiBundle];
         self.currentBundle = apiBundle;
-        [apiBundle synchronize:^(NSError *error) {
-            if (error != nil) {
-                TMLInfo(@"Successfully synchronized API bundle");
-            }
-        }];
+        [apiBundle sync];
     }
 }
 
@@ -159,6 +156,9 @@ NSString * const TMLOptionsHostName = @"host";
                            selector:@selector(applicationDidBecomeActive:)
                                name:UIApplicationDidBecomeActiveNotification
                              object:nil];
+    [notificationCenter addObserver:self selector:@selector(bundleSyncDidFinish:)
+                               name:TMLBundleSyncDidFinishNotification
+                             object:nil];
     _observingNotifications = YES;
 }
 
@@ -172,16 +172,9 @@ NSString * const TMLOptionsHostName = @"host";
 
 - (void) applicationDidBecomeActive:(NSNotification *)aNotification {
     [self checkForBundleUpdate:YES completion:^(NSString *version, NSString *path, NSError *error) {
-        TMLBundle *bundle = nil;
-        if (error == nil) {
-            bundle = [[TMLBundle alloc] initWithContentsOfDirectory:path];
-        }
-        if (bundle != nil) {
-            [[TMLBundleManager defaultManager] setActiveBundle:bundle];
-            TMLInfo(@"Updated translation bundle to version: %@", version);
-        }
-        else {
-            TMLError(@"Failed to update version to %@", version);
+        if (error == nil
+            && self.translationEnabled == NO) {
+            self.currentBundle = [TMLBundle mainBundle];
         }
     }];
 }
@@ -197,7 +190,7 @@ NSString * const TMLOptionsHostName = @"host";
     self.application = newApplication;
     NSString *ourLocale = self.currentLanguage.locale;
     if (ourLocale != nil && [bundle.availableLocales containsObject:ourLocale] == NO) {
-        [bundle synchronizeLocales:@[ourLocale] completion:^(NSError *error) {
+        [bundle loadTranslationsForLocale:ourLocale completion:^(NSError *error) {
             if (error != nil) {
                 TMLError(@"Could not preload current locale '%@' into newly selected bundle: %@", ourLocale, error);
             }
@@ -212,6 +205,9 @@ NSString * const TMLOptionsHostName = @"host";
     _currentBundle = currentBundle;
     if (currentBundle != nil) {
         [self updateWithBundle:currentBundle];
+    }
+    if ([currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
+        [(TMLAPIBundle *)currentBundle sync];
     }
 }
 
@@ -236,9 +232,6 @@ NSString * const TMLOptionsHostName = @"host";
         [bundleManager installBundleFromPath:archivePath completionBlock:^(NSString *path, NSError *error) {
             if (path != nil && error == nil) {
                 latestArchivedBundle = [[TMLBundle alloc] initWithContentsOfDirectory:path];
-            }
-            if (latestArchivedBundle != nil) {
-                [bundleManager setActiveBundle:latestArchivedBundle];
             }
             if (completion != nil) {
                 completion(latestArchivedBundle);
@@ -266,9 +259,6 @@ NSString * const TMLOptionsHostName = @"host";
                                                      TMLBundle *newBundle = nil;
                                                      if (path != nil && error == nil) {
                                                          newBundle = [[TMLBundle alloc] initWithContentsOfDirectory:path];
-                                                     }
-                                                     if (newBundle != nil) {
-                                                         [bundleManager setActiveBundle:newBundle];
                                                      }
                                                      if (completion != nil) {
                                                          completion(newBundle);
@@ -348,6 +338,15 @@ NSString * const TMLOptionsHostName = @"host";
             }
         }
     }];
+}
+
+- (void)bundleSyncDidFinish:(NSNotification *)aNotification {
+    NSLog(@"%s", __PRETTY_FUNCTION__);
+    NSDictionary *userInfo = aNotification.userInfo;
+    TMLBundle *bundle = userInfo[TMLBundleChangeInfoBundleKey];
+    if (bundle != nil) {
+        [self updateWithBundle:bundle];
+    }
 }
 
 #pragma mark - Application
@@ -436,6 +435,20 @@ NSString * const TMLOptionsHostName = @"host";
 
 + (TMLConfiguration *) configuration {
     return [[TML sharedInstance] configuration];
+}
+
+- (void)setTranslationEnabled:(BOOL)translationEnabled {
+    if (_translationEnabled == translationEnabled) {
+        return;
+    }
+    TMLBundle *newBundle = nil;
+    if (translationEnabled == YES) {
+        newBundle = [TMLBundle apiBundle];
+    }
+    else {
+        newBundle = [TMLBundle mainBundle];
+    }
+    self.currentBundle = newBundle;
 }
 
 #pragma mark - Block Options
@@ -579,14 +592,15 @@ NSString * const TMLOptionsHostName = @"host";
 
 - (void) reloadTranslations {
     TMLBundle *ourBundle = self.currentBundle;
-    if ([ourBundle isStaticBundle] == NO) {
-        [ourBundle synchronizeLocales:@[self.currentLanguage.locale] completion:^(NSError *error) {
-            if (error == nil) {
-                if ([self.delegate respondsToSelector:@selector(tmlDidLoadTranslations)]) {
-                    [self.delegate tmlDidLoadTranslations];
-                }
-            }
-        }];
+    if ([ourBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
+        [(TMLAPIBundle *)ourBundle setNeedsSync];
+//        [ourBundle synchronizeLocales:@[self.currentLanguage.locale] completion:^(NSError *error) {
+//            if (error == nil) {
+//                if ([self.delegate respondsToSelector:@selector(tmlDidLoadTranslations)]) {
+//                    [self.delegate tmlDidLoadTranslations];
+//                }
+//            }
+//        }];
     }
 }
 
@@ -604,7 +618,7 @@ NSString * const TMLOptionsHostName = @"host";
                                 withDescription:description
                                       andTokens:tokens
                                      andOptions:options];
-    return result;
+    return (result == nil) ? label : result;
 }
 
 #pragma mark - Utility Methods
@@ -715,30 +729,9 @@ NSString * const TMLOptionsHostName = @"host";
         return;
     }
     
-    NSMutableDictionary *missingTranslations = self.missingTranslationKeysBySources;
-    if (missingTranslations == nil) {
-        missingTranslations = [NSMutableDictionary dictionary];
-    }
-    
-    NSString *effectiveSourceKey = sourceKey;
-    if (effectiveSourceKey == nil) {
-        effectiveSourceKey = TMLSourceDefaultKey;
-    }
-    
-    NSMutableSet *sourceKeys = [missingTranslations objectForKey:effectiveSourceKey];
-    if (sourceKeys == nil) {
-        sourceKeys = [NSMutableSet set];
-    }
-    
-    [sourceKeys addObject:translationKey];
-    missingTranslations[effectiveSourceKey] = sourceKeys;
-    self.missingTranslationKeysBySources = missingTranslations;
-    
-    if ([missingTranslations count] > 0) {
-        [self startSubmissionTimerIfNecessary];
-    }
-    else {
-        [self stopSubmissionTimerIfNecessary];
+    TMLBundle *currentBundle = self.currentBundle;
+    if ([currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
+        [(TMLAPIBundle *)currentBundle addTranslationKey:translationKey forSource:sourceKey];
     }
 }
 

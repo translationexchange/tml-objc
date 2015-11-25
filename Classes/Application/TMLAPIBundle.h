@@ -10,4 +10,10 @@
 
 @interface TMLAPIBundle : TMLBundle
 
+- (void) addTranslationKey:(TMLTranslationKey *)translationKey
+                 forSource:(NSString *)sourceKey;
+
+- (void)setNeedsSync;
+- (void)sync;
+
 @end

@@ -10,15 +10,23 @@
 #import "TML.h"
 #import "TMLAPIBundle.h"
 #import "TMLAPIClient.h"
+#import "TMLBundleManager.h"
 #import "TMLConfiguration.h"
 #import "TMLLanguage.h"
+#import "TMLSource.h"
+#import "TMLTranslationKey.h"
 
-@interface TMLAPIBundle()
-@property(strong, nonatomic) NSOperationQueue *syncQueue;
-@property(strong, nonatomic) NSArray *sources;
+@interface TMLAPIBundle() {
+    BOOL _needsSync;
+    NSMutableArray *_syncErrors;
+    NSInteger _syncOperationCount;
+}
+@property (strong, nonatomic) NSArray *sources;
 @property (readwrite, nonatomic) NSArray *languages;
 @property (readwrite, nonatomic) TMLApplication *application;
 @property (readwrite, nonatomic) NSDictionary *translations;
+@property (readwrite, nonatomic) NSMutableDictionary *addedTranslations;
+@property (strong, nonatomic) NSOperationQueue *syncQueue;
 @end
 
 @implementation TMLAPIBundle
@@ -29,15 +37,8 @@
     return [[[TML sharedInstance] configuration] apiURL];
 }
 
-- (NSOperationQueue *)syncQueue {
-    if (_syncQueue == nil) {
-        _syncQueue = [[NSOperationQueue alloc] init];
-    }
-    return _syncQueue;
-}
-
-- (BOOL)isStaticBundle {
-    return NO;
+- (BOOL)isMutable {
+    return YES;
 }
 
 #pragma mark - Languages
@@ -55,6 +56,23 @@
 
 #pragma mark - Translations
 
+- (void)loadTranslationsForLocale:(NSString *)aLocale
+                       completion:(void (^)(NSError *))completion
+{
+    TMLAPIClient *client = [[TML sharedInstance] apiClient];
+    [client getTranslationsForLocale:aLocale
+                              source:nil
+                             options:nil
+                     completionBlock:^(NSDictionary *translations, TMLAPIResponse *response, NSError *error) {
+                         if (translations != nil) {
+                             [self setTranslations:translations forLocale:aLocale];
+                         }
+                         if (completion != nil) {
+                             completion(error);
+                         }
+    }];
+}
+
 - (void)setTranslations:(NSDictionary *)translations forLocale:(NSString *)locale {
     NSMutableDictionary *allTranslations = [self.translations mutableCopy];
     if (allTranslations == nil) {
@@ -68,6 +86,66 @@
         allTranslations[locale] = translations;
     }
     self.translations = allTranslations;
+}
+
+- (void)addTranslationKey:(TMLTranslationKey *)translationKey
+                forSource:(NSString *)sourceKey
+{
+    if (translationKey.label.length == 0) {
+        TMLWarn(@"Tried to register missing translation for translationKey with empty label");
+        return;
+    }
+    
+    NSMutableDictionary *addedTranslations = self.addedTranslations;
+    if (addedTranslations == nil) {
+        addedTranslations = [NSMutableDictionary dictionary];
+    }
+    
+    @synchronized(_addedTranslations) {
+        NSString *effectiveSourceKey = sourceKey;
+        if (effectiveSourceKey == nil) {
+            effectiveSourceKey = TMLSourceDefaultKey;
+        }
+        
+        NSMutableSet *keys = addedTranslations[effectiveSourceKey];
+        if (keys == nil) {
+            keys = [NSMutableSet set];
+        }
+        
+        [keys addObject:translationKey];
+        addedTranslations[effectiveSourceKey] = keys;
+        self.addedTranslations = addedTranslations;
+    }
+    
+}
+
+- (void)removeAddedTranslations:(NSDictionary *)translations {
+    @synchronized(_addedTranslations) {
+        if (_addedTranslations.count == 0) {
+            return;
+        }
+        
+        for (NSString *source in translations) {
+            NSMutableSet *keys = [_addedTranslations[source] mutableCopy];
+            for (TMLTranslationKey *key in translations[source]) {
+                [keys removeObject:key];
+            }
+            _addedTranslations[source] = keys;
+        }
+    }
+}
+
+- (void)setAddedTranslations:(NSMutableDictionary *)addedTranslations {
+    if (_addedTranslations == addedTranslations
+        || [_addedTranslations isEqualToDictionary:addedTranslations] == YES) {
+        return;
+    }
+    _addedTranslations = addedTranslations;
+    [self didAddTranslations];
+}
+
+- (void)didAddTranslations {
+    [self setNeedsSync];
 }
 
 #pragma mark - Resource handling
@@ -100,33 +178,86 @@
 
 #pragma mark - Sync
 
-- (void)synchronize:(void (^)(NSError *error))completion {
-    [self synchronizeApplicationData:^(NSError *error) {
-        NSArray *locales;
-        if (error == nil) {
-            locales = self.locales;
-        }
-        if (locales.count > 0) {
-            [self synchronizeLocales:locales completion:completion];
-        }
-        else if (completion != nil) {
-            completion(error);
-        }
-    }];
+-(void)setNeedsSync {
+    _needsSync = YES;
+    [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                             selector:@selector(sync)
+                                               object:nil];
+    [self performSelector:@selector(sync)
+               withObject:nil
+               afterDelay:3.0];
 }
 
-- (void)synchronizeApplicationData:(void (^)(NSError *error))completion {
-    void(^finalize)(NSError *) = ^(NSError *err) {
-        if (completion != nil) {
-            completion(err);
-        }
-    };
+- (NSOperationQueue *)syncQueue {
+    if (_syncQueue == nil) {
+        _syncQueue = [[NSOperationQueue alloc] init];
+    }
+    return _syncQueue;
+}
+
+- (void)addSyncOperation:(NSOperation *)syncOperation {
+    NSOperationQueue *syncQueue = self.syncQueue;
+    [syncQueue addOperation:syncOperation];
+    _syncOperationCount++;
+    if (_syncOperationCount == 1) {
+        [[TMLBundleManager defaultManager] notifyBundleMutation:TMLBundleSyncDidStartNotification
+                                                         bundle:self
+                                                         errors:nil];
+    }
+}
+
+- (void)cancelSync {
+    if (_syncOperationCount == 0) {
+        return;
+    }
+    NSOperationQueue *syncQueue = self.syncQueue;
+    [syncQueue cancelAllOperations];
+    _syncOperationCount = 0;
+}
+
+- (void)sync {
+    if (_syncOperationCount > 0) {
+        return;
+    }
+    
+    _needsSync = NO;
     
     NSOperationQueue *syncQueue = self.syncQueue;
+    syncQueue.suspended = YES;
+    
+    [self syncMetaData];
+    NSMutableArray *locales = [self.availableLocales mutableCopy];
+    if (locales == nil) {
+        locales = [NSMutableArray array];
+    }
+    
+    TML *tml = [TML sharedInstance];
+    NSString *defaultLocale = [[tml defaultLanguage] locale];
+    if (defaultLocale == nil) {
+        defaultLocale = tml.configuration.defaultLocale;
+    }
+    if (defaultLocale != nil && [locales containsObject:defaultLocale] == NO) {
+        [locales addObject:defaultLocale];
+    }
+    
+    NSString *currentLocale = [[tml currentLanguage] locale];
+    if (currentLocale == nil) {
+        currentLocale = tml.configuration.currentLocale;
+    }
+    if (currentLocale != nil && [locales containsObject:currentLocale] == NO) {
+        [locales addObject:currentLocale];
+    }
+    
+    if (locales.count > 0) {
+        [self syncLocales:locales];
+    }
+    [self syncAddedTranslations];
+    syncQueue.suspended = NO;
+}
+
+- (void)syncMetaData {
     TMLAPIClient *client = [[TML sharedInstance] apiClient];
-    __block NSInteger count = 0;
-    count++;
-    [syncQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
+    [self addSyncOperation:[NSBlockOperation blockOperationWithBlock:^{
         [client getCurrentApplicationWithOptions:@{TMLAPIOptionsIncludeDefinition: @YES}
                                  completionBlock:^(TMLApplication *application, TMLAPIResponse *response, NSError *error) {
                                      NSError *fileError;
@@ -137,15 +268,19 @@
                                                   toRelativePath:TMLBundleApplicationFilename
                                                            error:&fileError];
                                      }
-                                     count--;
-                                     if (count == 0) {
-                                         finalize((error) ? error : fileError);
+                                     NSMutableArray *errors = [NSMutableArray array];
+                                     if (error != nil) {
+                                         [errors addObject:error];
                                      }
+                                     if (fileError != nil) {
+                                         [errors addObject:fileError];
+                                     }
+                                     
+                                     [self didFinishSyncOperationWithErrors:errors];
                                  }];
     }]];
     
-    count++;
-    [syncQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
+    [self addSyncOperation:[NSBlockOperation blockOperationWithBlock:^{
         [client getSources:nil
            completionBlock:^(NSArray *sources, TMLAPIResponse *response, NSError *error) {
                NSError *fileError;
@@ -156,44 +291,34 @@
                             toRelativePath:TMLBundleSourcesFilename
                                      error:&fileError];
                }
-               count--;
-               if (count == 0) {
-                   finalize((error) ? error: fileError);
+               NSMutableArray *errors = [NSMutableArray array];
+               if (error != nil) {
+                   [errors addObject:error];
                }
+               if (fileError != nil) {
+                   [errors addObject:fileError];
+               }
+               
+               [self didFinishSyncOperationWithErrors:errors];
            }];
     }]];
 }
 
-- (void)synchronizeLocales:(NSArray *)locales completion:(void (^)(NSError *))completion {
+- (void)syncLocales:(NSArray *)locales {
     if (locales.count == 0) {
-        if (completion != nil) {
-            completion(nil);
-        }
         return;
     }
     
-    void(^finalize)(NSError *) = ^(NSError *err) {
-        if (completion != nil) {
-            completion(err);
-        }
-    };
-    
     TMLAPIClient *client = [[TML sharedInstance] apiClient];
-    NSOperationQueue *syncQueue = self.syncQueue;
-    __block NSInteger count = 0;
-    
     for (NSString *aLocale in locales) {
         NSString *locale = [aLocale lowercaseString];
-        // fetch translations
-        count++;
-        [syncQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
+        // fetch translation
+        [self addSyncOperation:[NSBlockOperation blockOperationWithBlock:^{
             [client getTranslationsForLocale:locale
                                       source:nil
                                      options:nil
                              completionBlock:^(NSDictionary<NSString *,TMLTranslation *> *translations, TMLAPIResponse *response, NSError *error) {
-                                 count--;
                                  NSError *fileError;
-                                 
                                  if (translations != nil) {
                                      [self setTranslations:translations forLocale:locale];
                                      NSDictionary *jsonObj = @{TMLAPIResponseResultsKey: response.userInfo};
@@ -204,22 +329,23 @@
                                               toRelativePath:relativePath
                                                        error:&fileError];
                                  }
-                                 
-                                 if (count == 0) {
-                                     finalize((error) ? error : fileError);
+                                 NSMutableArray *errors = [NSMutableArray array];
+                                 if (error != nil) {
+                                     [errors addObject:error];
                                  }
+                                 if (fileError != nil) {
+                                     [errors addObject:fileError];
+                                 }
+                                 [self didFinishSyncOperationWithErrors:errors];
                              }];
         }]];
         
         // fetch language definition
-        count++;
-        [syncQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
+        [self addSyncOperation:[NSBlockOperation blockOperationWithBlock:^{
             [client getLanguageForLocale:locale
                                  options:@{TMLAPIOptionsIncludeDefinition: @YES}
                          completionBlock:^(TMLLanguage *language, TMLAPIResponse *response, NSError *error) {
-                             count--;
                              NSError *fileError;
-                             
                              if (language != nil) {
                                  [self addLanguage:language];
                                  NSData *writeData = [[response.userInfo tmlJSONString] dataUsingEncoding:NSUTF8StringEncoding];
@@ -229,11 +355,62 @@
                                                    error:&fileError];
                              }
                              
-                             if (count == 0) {
-                                 finalize((error) ? error : fileError);
+                             NSMutableArray *errors = [NSMutableArray array];
+                             if (error != nil) {
+                                 [errors addObject:error];
                              }
+                             if (fileError != nil) {
+                                 [errors addObject:fileError];
+                             }
+                             
+                             [self didFinishSyncOperationWithErrors:errors];
                          }];
         }]];
+    }
+}
+
+- (void)syncAddedTranslations {
+    if (_addedTranslations.count == 0) {
+        return;
+    }
+    NSMutableDictionary *missingTranslations = self.addedTranslations;
+    [self addSyncOperation:[NSBlockOperation blockOperationWithBlock:^{
+        [[[TML sharedInstance] apiClient] registerTranslationKeysBySourceKey:missingTranslations
+                                                             completionBlock:^(BOOL success, NSError *error) {
+                                                                 if (success == YES) {
+                                                                     [self removeAddedTranslations:missingTranslations];
+                                                                 }
+                                                                 NSArray *errors = (error != nil) ? @[error] : nil;
+                                                                 [self didFinishSyncOperationWithErrors:errors];
+                                                             }];
+    }]];
+}
+
+- (void)didFinishSyncOperationWithErrors:(NSArray *)errors {
+    _syncOperationCount--;
+    if (_syncOperationCount < 0) {
+        TMLWarn(@"Unbalanced call to %s", __PRETTY_FUNCTION__);
+        _syncOperationCount = 0;
+    }
+    if (_syncErrors == nil) {
+        _syncErrors = [NSMutableArray array];
+    }
+    if (errors.count > 0) {
+        [_syncErrors addObjectsFromArray:errors];
+    }
+    
+    TMLBundleManager *bundleManager = [TMLBundleManager defaultManager];
+    [bundleManager notifyBundleMutation:TMLBundleContentsChangedNotification
+                                 bundle:self
+                                 errors:errors];
+    
+    if (_syncOperationCount == 0) {
+        if (_needsSync == YES) {
+            [self performSelector:@selector(sync) withObject:nil afterDelay:3.0];
+        }
+        [bundleManager notifyBundleMutation:TMLBundleSyncDidFinishNotification
+                                     bundle:self
+                                     errors:_syncErrors];
     }
 }
 

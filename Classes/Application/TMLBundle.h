@@ -84,19 +84,12 @@ typedef NS_ENUM(NSInteger, TMLBundleErrorCode) {
  */
 @property (readonly, nonatomic) NSURL *sourceURL;
 
-@property (readonly, nonatomic, getter=isStaticBundle) BOOL staticBundle;
+@property (readonly, nonatomic) BOOL isMutable;
 
 #pragma mark - Translations
 
 - (NSDictionary *)translationsForLocale:(NSString *)locale;
 - (void)loadTranslationsForLocale:(NSString *)aLocale
                        completion:(void(^)(NSError *error))completion;
-
-#pragma mark - Synchronizing
-
-- (void)synchronize:(void(^)(NSError *error))completion;
-- (void)synchronizeApplicationData:(void (^)(NSError *error))completion;
-- (void)synchronizeLocales:(NSArray *)locales
-                completion:(void (^)(NSError *))completion;
 
 @end
