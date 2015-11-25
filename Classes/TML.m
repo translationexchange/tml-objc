@@ -171,12 +171,18 @@ NSString * const TMLOptionsHostName = @"host";
 }
 
 - (void) applicationDidBecomeActive:(NSNotification *)aNotification {
-    [self checkForBundleUpdate:YES completion:^(NSString *version, NSString *path, NSError *error) {
-        if (error == nil
-            && self.translationEnabled == NO) {
-            self.currentBundle = [TMLBundle mainBundle];
-        }
-    }];
+    TMLBundle *currentBundle = self.currentBundle;
+    if ([currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
+        [(TMLAPIBundle *)currentBundle setNeedsSync];
+    }
+    else {
+        [self checkForBundleUpdate:YES completion:^(NSString *version, NSString *path, NSError *error) {
+            if (error == nil
+                && self.translationEnabled == NO) {
+                self.currentBundle = [TMLBundle mainBundle];
+            }
+        }];
+    }
 }
 
 #pragma mark - Bundles
