@@ -238,9 +238,6 @@
                andTokens:(NSDictionary *)tokens
               andOptions:(NSDictionary *)options
 {
-    if (description == nil) {
-        description = label;
-    }
     NSString *keyHash = [TMLTranslationKey generateKeyForLabel:label andDescription:description];
     TMLTranslationKey *translationKey = (TMLTranslationKey *) [self translationKeyWithKey:keyHash label:label description:description options:options];
     

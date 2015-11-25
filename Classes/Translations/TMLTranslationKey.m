@@ -202,7 +202,8 @@
 
 - (NSString *)keyDescription {
     if (_keyDescription == nil) {
-        return self.label;
+//        return self.label;
+        return @"";
     }
     return _keyDescription;
 }
