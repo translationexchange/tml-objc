@@ -600,13 +600,6 @@ NSString * const TMLOptionsHostName = @"host";
     TMLBundle *ourBundle = self.currentBundle;
     if ([ourBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
         [(TMLAPIBundle *)ourBundle setNeedsSync];
-//        [ourBundle synchronizeLocales:@[self.currentLanguage.locale] completion:^(NSError *error) {
-//            if (error == nil) {
-//                if ([self.delegate respondsToSelector:@selector(tmlDidLoadTranslations)]) {
-//                    [self.delegate tmlDidLoadTranslations];
-//                }
-//            }
-//        }];
     }
 }
 
