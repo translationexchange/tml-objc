@@ -443,6 +443,7 @@ NSString * const TMLOptionsHostName = @"host";
     if (_translationEnabled == translationEnabled) {
         return;
     }
+    _translationEnabled = translationEnabled;
     TMLBundle *newBundle = nil;
     if (translationEnabled == YES) {
         newBundle = [TMLBundle apiBundle];
