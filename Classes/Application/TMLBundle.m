@@ -357,4 +357,9 @@ NSString * const TMLBundleErrorsKey = @"errors";
     }
 }
 
+#pragma mark -
+- (NSString *)description {
+    return [NSString stringWithFormat:@"<%@:%@: %p>", [self class], self.version, self];
+}
+
 @end
