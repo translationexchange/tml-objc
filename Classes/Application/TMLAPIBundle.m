@@ -414,4 +414,10 @@
     }
 }
 
+#pragma mark -
+
+- (NSString *)description {
+    return [NSString stringWithFormat:@"<%@:API: %p>", [self class], self];
+}
+
 @end
