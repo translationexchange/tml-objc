@@ -284,18 +284,20 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     NSString *downloadsPath = [self downloadDirectory];
     NSString *filename = [[aURL absoluteString] lastPathComponent];
     NSString *destinationPath = [NSString stringWithFormat:@"%@/%@", downloadsPath, filename];
-    [[[NSURLSession sharedSession] dataTaskWithURL:aURL
-                                completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                                    if ([data writeToFile:destinationPath atomically:YES] == YES) {
-                                        [self installBundleFromPath:destinationPath completionBlock:completionBlock];
-                                    }
-                                    else {
-                                        TMLError(@"Error installing bundle from URL: %@", aURL);
-                                        if (completionBlock != nil) {
-                                            completionBlock(nil, error);
-                                        }
-                                    }
-                                }] resume];
+    [self fetchURL:aURL
+   completionBlock:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+       if (error == nil
+           && data != nil
+           && [data writeToFile:destinationPath atomically:YES] == YES) {
+           [self installBundleFromPath:destinationPath completionBlock:completionBlock];
+       }
+       else {
+           TMLError(@"Error installing bundle from URL: %@", aURL);
+           if (completionBlock != nil) {
+               completionBlock(nil, error);
+           }
+       }
+   }];
 }
 
 - (void) installPublishedBundleWithVersion:(NSString *)version
@@ -399,6 +401,37 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 
 #pragma mark - Downloading
 
+- (void)fetchURL:(NSURL *)url
+ completionBlock:(void(^)(NSData * _Nullable data,
+                          NSURLResponse * _Nullable response,
+                          NSError * _Nullable error))completionBlock
+{
+    NSURLSession *downloadSession = [self downloadSession];
+    [[downloadSession dataTaskWithURL:url
+                   completionHandler:^(NSData * _Nullable data,
+                                       NSURLResponse * _Nullable response,
+                                       NSError * _Nullable error) {
+                       NSError *ourError = error;
+                       NSInteger responseCode = 0;
+                       if ([response isKindOfClass:[NSHTTPURLResponse class]] == YES) {
+                           responseCode = [(NSHTTPURLResponse *)response statusCode];
+                       }
+                       if (responseCode != 200 && ourError == nil) {
+                           data = nil;
+                           TMLError(@"Error fetching resource '%@'. HTTP: %i", url, responseCode);
+                           ourError = [NSError errorWithDomain:TMLBundleManagerErrorDomain
+                                                          code:TMLBundleManagerHTTPError
+                                                      userInfo:@{
+                                                                 TMLBundleManagerErrorCodeKey: @(responseCode),
+                                                                 TMLBundleManagerURLKey: url
+                                                                 }];
+                       }
+                       if (completionBlock != nil) {
+                           completionBlock(data, response, error);
+                       }
+                   }] resume];
+}
+
 - (void) fetchPublishedResources:(NSArray *)resourcePaths
                    bundleVersion:(NSString *)bundleVersion
                    baseDirectory:(NSString *)baseDirectory
@@ -475,32 +508,19 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
                                                [[TML sharedInstance] applicationKey],
                                                bundleVersion,
                                                resourcePath]];
-    [[downloadSession dataTaskWithURL:resourceURL
-                   completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                       NSError *ourError = error;
-                       NSInteger responseCode = 0;
-                       if ([response isKindOfClass:[NSHTTPURLResponse class]] == YES) {
-                           responseCode = [(NSHTTPURLResponse *)response statusCode];
-                       }
-                       if (responseCode != 200) {
-                           TMLError(@"Error fetching resource '%@'. HTTP: %i", resourceURL, responseCode);
-                           ourError = [NSError errorWithDomain:TMLBundleManagerErrorDomain
-                                                          code:TMLBundleManagerHTTPError
-                                                      userInfo:@{
-                                                                 TMLBundleManagerPathKey: resourcePath,
-                                                                 TMLBundleManagerURLKey: resourceURL
-                                                                 }];
-                       }
-                       if (ourError == nil && data != nil) {
-                           if ([data writeToFile:destination options:NSDataWritingAtomic error:&ourError] == NO) {
-                               TMLError(@"Error writing fetched bundle resource '%@': %@", resourcePath, ourError);
-                           }
-                       }
-                       if (completionBlock != nil) {
-                           NSString *effectiveDestination = (ourError == nil) ? destination : nil;
-                           completionBlock(effectiveDestination, ourError);
-                       }
-                   }] resume];
+    [self fetchURL:resourceURL
+   completionBlock:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+       NSError *ourError = error;
+        if (ourError == nil && data != nil) {
+            if ([data writeToFile:destination options:NSDataWritingAtomic error:&ourError] == NO) {
+                TMLError(@"Error writing fetched bundle resource '%@': %@", resourcePath, ourError);
+            }
+        }
+        if (completionBlock != nil) {
+            NSString *effectiveDestination = (ourError == nil) ? destination : nil;
+            completionBlock(effectiveDestination, ourError);
+        }
+    }];
 }
 
 - (NSURLSession *)downloadSession {
@@ -523,20 +543,19 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     
     if (error == nil) {
         NSURL *publishedVersionURL = [self.archiveURL URLByAppendingPathComponent:[NSString stringWithFormat:@"%@/version.json", applicationKey]];
-        NSURLSession *urlSession = [self downloadSession];
-        [[urlSession dataTaskWithURL:publishedVersionURL
-                  completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-                      NSDictionary *versionInfo;
-                      if (data != nil) {
-                          versionInfo = [data tmlJSONObject];
-                      }
-                      else {
-                          TMLError(@"Error fetching published bundle info: %@", error);
-                      }
-                      if (completionBlock != nil) {
-                          completionBlock(versionInfo, error);
-                      }
-                  }] resume];
+        [self fetchURL:publishedVersionURL
+       completionBlock:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+           NSDictionary *versionInfo;
+           if (data != nil) {
+               versionInfo = [data tmlJSONObject];
+           }
+           else {
+               TMLError(@"Error fetching published bundle info: %@", error);
+           }
+           if (completionBlock != nil) {
+               completionBlock(versionInfo, error);
+           }
+       }];
     }
 }
 
