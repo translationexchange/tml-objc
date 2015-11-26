@@ -10,6 +10,7 @@
 #import "TML.h"
 #import "TMLAPIBundle.h"
 #import "TMLAPIClient.h"
+#import "TMLApplication.h"
 #import "TMLBundleManager.h"
 #import "TMLConfiguration.h"
 #import "TMLLanguage.h"
@@ -52,6 +53,37 @@
         }
     }
     self.languages = newLanguages;
+}
+
+#pragma mark - Locales
+
+/**
+ *  Cleans up bundle by removing locales that are not in the list of effective locales
+ *
+ *  @param locales Effective locales
+ */
+- (void)cleanupLocales:(NSArray *)locales {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error = nil;
+    NSArray *contents = [fileManager contentsOfDirectoryAtPath:self.path error:&error];
+    if (error != nil) {
+        TMLError(@"Error cleaning up locales of the API bundle: %@", error);
+        return;
+    }
+    BOOL isDir = NO;
+    for (NSString *path in contents) {
+        NSString *fullPath = [self.path stringByAppendingPathComponent:path];
+        if ([fileManager fileExistsAtPath:fullPath isDirectory:&isDir] == NO
+            || isDir == NO) {
+            continue;
+        }
+        if ([locales containsObject:path] == YES) {
+            continue;
+        }
+        if ([fileManager removeItemAtPath:fullPath error:&error] == NO) {
+            TMLError(@"Error cleaning up locale '%@' of API bundle: %@", path, error);
+        }
+    }
 }
 
 #pragma mark - Translations
@@ -263,6 +295,8 @@
                                      NSError *fileError;
                                      if (application != nil) {
                                          self.application = application;
+                                         NSArray *appLocales = [application.languages valueForKeyPath:@"locale"];
+                                         [self cleanupLocales:appLocales];
                                          NSData *writeData = [[response.userInfo tmlJSONString] dataUsingEncoding:NSUTF8StringEncoding];
                                          [self writeResourceData:writeData
                                                   toRelativePath:TMLBundleApplicationFilename
