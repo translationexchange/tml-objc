@@ -370,13 +370,6 @@ NSString * const TMLOptionsHostName = @"host";
         self.postOffice = [[TMLPostOffice alloc] initWithApplication:application];
         self.defaultLanguage = [application languageForLocale: configuration.defaultLocale];
         self.currentLanguage = [application languageForLocale: configuration.currentLocale];
-        
-//        NSString *localeToLoad = self.currentLanguage.locale;
-//        [self loadTranslationsForLocale:localeToLoad completionBlock:^(BOOL success) {
-//            if (success == YES) {
-//                TMLInfo(@"Loaded translations for locale: %@", localeToLoad);
-//            }
-//        }];
     }
 }
 
