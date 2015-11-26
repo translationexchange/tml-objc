@@ -23,12 +23,14 @@ NSString * const TMLBundleManagerVersionKey = @"version";
 NSString * const TMLBundleManagerFilenameKey = @"filename";
 NSString * const TMLBundleManagerURLKey = @"url";
 NSString * const TMLBundleManagerPathKey = @"path";
+NSString * const TMLBundleManagerErrorCodeKey = @"code";
 
 NSString * const TMLBundleManagerAPIBundleDirectoryName = @"api";
 
 NSString * const TMLBundleContentsChangedNotification = @"TMLBundleContentsChangedNotification";
 NSString * const TMLBundleSyncDidStartNotification = @"TMLBundleSyncDidStartNotification";
 NSString * const TMLBundleSyncDidFinishNotification = @"TMLBundleSyncDidFinishNotification";
+NSString * const TMLBundleInstallationDidFinishNotification = @"TMLBundleInstallationDidFinishNotification";
 
 NSString * const TMLBundleChangeInfoBundleKey = @"bundle";
 NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
@@ -164,11 +166,18 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
         }
         
         if (success == YES) {
-            self.latestBundle = [[TMLBundle alloc] initWithContentsOfDirectory:destinationPath];
+            TMLBundle *installedBundle = [[TMLBundle alloc] initWithContentsOfDirectory:destinationPath];
+            self.latestBundle = installedBundle;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self notifyBundleMutation:TMLBundleInstallationDidFinishNotification
+                                    bundle:installedBundle
+                                    errors:nil];
+            });
         }
         
         if (completionBlock != nil) {
             if (success == YES) {
+                [self cleanup];
                 completionBlock(destinationPath, installError);
             }
             else {
