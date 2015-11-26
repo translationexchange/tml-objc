@@ -11,7 +11,7 @@
 extern NSString * const TMLBundleManagerErrorDomain;
 
 typedef NS_ENUM(NSInteger, TMLBundleManagerErrorCode) {
-    TMLBundleManagerInvalidApplicationKeyError,
+    TMLBundleManagerInvalidApplicationKeyError = 1,
     TMLBundleManagerInvalidVersionError,
     TMLBundleManagerInvalidData,
     TMLBundleManagerIncompleteData,
