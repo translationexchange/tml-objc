@@ -39,6 +39,8 @@ extern NSString * const TMLIsUnreachableNotification;
 
 extern NSString * const TMLLanguagePreviousLocaleUserInfoKey;
 
+extern NSString * const TMLBundleDidChangeNotification;
+
 @protocol TMLDelegate;
 
 @interface TML : NSObject

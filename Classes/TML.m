@@ -52,8 +52,9 @@ NSString * const TMLIsUnreachableNotification = @"TMLIsUnreachableNotification";
 
 NSString * const TMLLanguagePreviousLocaleUserInfoKey = @"TMLLanguagePreviousLocaleUserInfoKey";
 
-
 NSString * const TMLOptionsHostName = @"host";
+
+NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotification";
 
 @interface TML() {
     NSTimer *_translationSubmissionTimer;
@@ -159,6 +160,10 @@ NSString * const TMLOptionsHostName = @"host";
     [notificationCenter addObserver:self selector:@selector(bundleSyncDidFinish:)
                                name:TMLBundleSyncDidFinishNotification
                              object:nil];
+    [notificationCenter addObserver:self
+                           selector:@selector(bundleDidInstall:)
+                               name:TMLBundleInstallationDidFinishNotification
+                             object:nil];
     _observingNotifications = YES;
 }
 
@@ -215,6 +220,7 @@ NSString * const TMLOptionsHostName = @"host";
     if ([currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
         [(TMLAPIBundle *)currentBundle sync];
     }
+    [[NSNotificationCenter defaultCenter] postNotificationName:TMLBundleDidChangeNotification object:nil];
 }
 
 - (void) initTranslationBundle:(void(^)(TMLBundle *bundle))completion {
@@ -349,12 +355,23 @@ NSString * const TMLOptionsHostName = @"host";
     }];
 }
 
+#pragma mark - Bundle Notifications
+
 - (void)bundleSyncDidFinish:(NSNotification *)aNotification {
     NSLog(@"%s", __PRETTY_FUNCTION__);
     NSDictionary *userInfo = aNotification.userInfo;
     TMLBundle *bundle = userInfo[TMLBundleChangeInfoBundleKey];
     if (bundle != nil) {
         [self updateWithBundle:bundle];
+    }
+}
+
+- (void) bundleDidInstall:(NSNotification *)aNotification {
+    if (self.translationEnabled == NO) {
+        TMLBundle *newBundle = aNotification.userInfo[TMLBundleChangeInfoBundleKey];
+        if (newBundle != nil) {
+            self.currentBundle = newBundle;
+        }
     }
 }
 
