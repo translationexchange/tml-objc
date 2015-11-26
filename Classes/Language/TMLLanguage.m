@@ -44,9 +44,12 @@
 @implementation TMLLanguage
 
 + (TMLLanguage *) defaultLanguage {
-    NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"en-US" ofType:@"json"];
+    NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"en" ofType:@"json"];
     NSData *data = [NSData dataWithContentsOfFile:jsonPath];
-    TMLLanguage *lang = [TMLAPISerializer materializeData:data withClass:[TMLLanguage class]];
+    TMLLanguage *lang = nil;
+    if (data != nil) {
+        lang = [TMLAPISerializer materializeData:data withClass:[TMLLanguage class]];
+    }
     return lang;
 }
 
