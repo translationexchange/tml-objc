@@ -66,6 +66,9 @@
                            selector:@selector(translationsLoaded:)
                                name:TMLLanguageChangedNotification
                              object:nil];
+    [notificationCenter addObserver:self selector:@selector(bundleDidChange:)
+                               name:TMLBundleDidChangeNotification
+                             object:nil];
     _observingNotifications = YES;
 }
 
@@ -86,6 +89,10 @@
 }
 
 - (void) translationsLoaded:(NSNotification *)aNotification {
+    [self localize];
+}
+
+- (void) bundleDidChange:(NSNotification *)aNotification {
     [self localize];
 }
 

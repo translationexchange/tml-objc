@@ -127,7 +127,9 @@
         if (indexPath.row == 0) {
             TMLChangeLanguage(self);
         } else if (indexPath.row == 1) {
-            TMLToggleInAppTranslations(self);
+            TML *tml = [TML sharedInstance];
+            tml.translationEnabled = !tml.translationEnabled;
+//            TMLToggleInAppTranslations(self);
         } else if (indexPath.row == 2) {
             TMLOpenTranslatorTools(self);
         }
