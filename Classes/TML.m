@@ -317,6 +317,9 @@ NSString * const TMLOptionsHostName = @"host";
     [bundleManager fetchPublishedBundleInfo:^(NSDictionary *info, NSError *error) {
         NSString *version = info[TMLBundleVersionKey];
         TMLBundle *mainBundle = [TMLBundle mainBundle];
+        if (version == nil) {
+            return;
+        }
         if (mainBundle == nil
             || [mainBundle.version compareToTMLTranslationBundleVersion:version] == NSOrderedAscending) {
             if (install == YES) {
