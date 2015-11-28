@@ -25,8 +25,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    TML *tml = [TML sharedInstanceWithApplicationKey:TMLApplicationKey accessToken:TMLAccessToken];
-//    tml.translationEnabled = YES;
+    [TML sharedInstanceWithApplicationKey:TMLApplicationKey accessToken:TMLAccessToken];
 
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
     self.window.rootViewController = [[IIViewDeckController alloc] initWithCenterViewController:[mainStoryboard instantiateViewControllerWithIdentifier: @"WelcomeViewController"]
