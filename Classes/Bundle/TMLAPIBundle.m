@@ -10,7 +10,7 @@
 #import "TML.h"
 #import "TMLAPIBundle.h"
 #import "TMLAPIClient.h"
-#import "TMLProject.h"
+#import "TMLApplication.h"
 #import "TMLBundleManager.h"
 #import "TMLConfiguration.h"
 #import "TMLLanguage.h"
@@ -24,7 +24,7 @@
 }
 @property (strong, nonatomic) NSArray *sources;
 @property (readwrite, nonatomic) NSArray *languages;
-@property (readwrite, nonatomic) TMLProject *application;
+@property (readwrite, nonatomic) TMLApplication *application;
 @property (readwrite, nonatomic) NSDictionary *translations;
 @property (readwrite, nonatomic) NSMutableDictionary *addedTranslations;
 @property (strong, nonatomic) NSOperationQueue *syncQueue;
@@ -291,7 +291,7 @@
     TMLAPIClient *client = [[TML sharedInstance] apiClient];
     [self addSyncOperation:[NSBlockOperation blockOperationWithBlock:^{
         [client getCurrentApplicationWithOptions:@{TMLAPIOptionsIncludeDefinition: @YES}
-                                 completionBlock:^(TMLProject *application, TMLAPIResponse *response, NSError *error) {
+                                 completionBlock:^(TMLApplication *application, TMLAPIResponse *response, NSError *error) {
                                      NSError *fileError;
                                      if (application != nil) {
                                          self.application = application;

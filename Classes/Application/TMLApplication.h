@@ -34,7 +34,7 @@
 
 @class TMLPostOffice, TMLLanguage, TMLSource, TMLTranslation, TMLDecorationTokenizer, TMLConfiguration;
 
-@interface TMLProject : TMLModel
+@interface TMLApplication : TMLModel
 
 // Application identifier
 @property (nonatomic, assign) NSInteger applicationID;
@@ -71,7 +71,7 @@
 #pragma mark - Internal Use
 @property(nonatomic, readonly) TMLConfiguration *configuration;
 
-- (BOOL) isEqualToApplication:(TMLProject *)application;
+- (BOOL) isEqualToApplication:(TMLApplication *)application;
 
 - (TMLLanguage *) languageForLocale:(NSString *)locale;
 

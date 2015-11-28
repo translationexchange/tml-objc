@@ -36,7 +36,7 @@
 #import "TMLLanguage.h"
 #import "TMLSource.h"
 #import "TMLTranslationKey.h"
-#import "TMLProject.h"
+#import "TMLApplication.h"
 
 NSString * const TMLAPIOptionsLocale = @"locale";
 NSString * const TMLAPIOptionsIncludeAll = @"all";
@@ -245,7 +245,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
 }
 
 - (void)getCurrentApplicationWithOptions:(NSDictionary *)options
-                         completionBlock:(void (^)(TMLProject *, TMLAPIResponse *response, NSError *))completionBlock
+                         completionBlock:(void (^)(TMLApplication *, TMLAPIResponse *response, NSError *))completionBlock
 {
     NSMutableDictionary *params = nil;
     if (options != nil) {
@@ -265,7 +265,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
     [self get:path
              parameters:params
         completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-            TMLProject *app = nil;
+            TMLApplication *app = nil;
             if ([apiResponse isSuccessfulResponse] == YES) {
                 NSMutableDictionary *userInfo = [apiResponse.userInfo mutableCopy];
                 NSDictionary *extensions = userInfo[@"extensions"];
@@ -294,7 +294,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
                     }
                 }
                 app = [TMLAPISerializer materializeObject:[userInfo copy]
-                                                withClass:[TMLProject class]];
+                                                withClass:[TMLApplication class]];
             }
             else {
                 TMLError(@"Error fetching current project description: %@", error);

@@ -10,7 +10,7 @@
 #import "NSString+TmlAdditions.h"
 #import "TML.h"
 #import "TMLAPISerializer.h"
-#import "TMLProject.h"
+#import "TMLApplication.h"
 #import "TMLBundle.h"
 #import "TMLBundleManager.h"
 #import "TMLTranslation.h"
@@ -36,7 +36,7 @@ NSString * const TMLBundleErrorsKey = @"errors";
 @property (readwrite, nonatomic) NSMutableDictionary *translations;
 @property (readwrite, nonatomic) NSArray *availableLocales;
 @property (readwrite, nonatomic) NSArray *locales;
-@property (readwrite, nonatomic) TMLProject *application;
+@property (readwrite, nonatomic) TMLApplication *application;
 @property (readwrite, nonatomic) NSArray *sources;
 @property (readwrite, nonatomic) NSURL *sourceURL;
 @end
@@ -94,7 +94,7 @@ NSString * const TMLBundleErrorsKey = @"errors";
     }
     else {
         self.application = [TMLAPISerializer materializeObject:applicationInfo
-                                                     withClass:[TMLProject class]];
+                                                     withClass:[TMLApplication class]];
     }
 }
 
@@ -146,7 +146,7 @@ NSString * const TMLBundleErrorsKey = @"errors";
     return _sourceURL;
 }
 
-- (TMLProject *)application {
+- (TMLApplication *)application {
     if (_application == nil) {
         [self reloadApplicationData];
     }
@@ -173,7 +173,7 @@ NSString * const TMLBundleErrorsKey = @"errors";
 }
 
 - (NSArray *)languages {
-    TMLProject *app = self.application;
+    TMLApplication *app = self.application;
     return app.languages;
 }
 

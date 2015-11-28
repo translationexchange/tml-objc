@@ -32,7 +32,7 @@
 #import "NSString+TMLAdditions.h"
 #import "TML.h"
 #import "TMLAPIBundle.h"
-#import "TMLProject.h"
+#import "TMLApplication.h"
 #import "TMLBundle.h"
 #import "TMLBundleManager.h"
 #import "TMLConfiguration.h"
@@ -196,7 +196,7 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
     if (bundle == nil) {
         return;
     }
-    TMLProject *newApplication = [bundle application];
+    TMLApplication *newApplication = [bundle application];
     TMLInfo(@"Initializing from local bundle: %@", bundle.version);
     self.application = newApplication;
     NSString *ourLocale = self.currentLanguage.locale;
@@ -377,7 +377,7 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
 
 #pragma mark - Application
 
-- (void)setApplication:(TMLProject *)application {
+- (void)setApplication:(TMLApplication *)application {
     if (_application == application) {
         return;
     }
@@ -518,7 +518,7 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
 
 #pragma mark - Class Methods
 
-+ (TMLProject *) application {
++ (TMLApplication *) application {
     return [[TML sharedInstance] application];
 }
 

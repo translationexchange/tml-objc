@@ -10,7 +10,7 @@
 #import "IIViewDeckController.h"
 #import "MenuViewController.h"
 #import "TML.h"
-#import "TMLProject.h"
+#import "TMLApplication.h"
 #import "TMLPostOffice.h"
 #import "TMLPrivateConfig.h"
 

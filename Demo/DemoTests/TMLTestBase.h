@@ -23,14 +23,14 @@
 #import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
 #import "TMLLanguage.h"
-#import "TMLProject.h"
+#import "TMLApplication.h"
 
 @interface TMLTestBase : XCTestCase
 
 - (NSDictionary *) loadJSON: (NSString *) name;
 - (NSData *) loadJSONDataFromResource:(NSString *)name;
 
-- (TMLProject *) application;
+- (TMLApplication *) application;
 
 - (TMLLanguage *) languageForLocale: (NSString *) locale;
 

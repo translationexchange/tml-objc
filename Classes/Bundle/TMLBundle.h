@@ -27,7 +27,7 @@ typedef NS_ENUM(NSInteger, TMLBundleErrorCode) {
     TMLBundleMissingResources
 };
 
-@class TMLProject;
+@class TMLApplication;
 
 @interface TMLBundle : NSObject
 
@@ -77,7 +77,7 @@ typedef NS_ENUM(NSInteger, TMLBundleErrorCode) {
 /**
  *  Application info included in the bundle
  */
-@property (readonly, nonatomic) TMLProject *application;
+@property (readonly, nonatomic) TMLApplication *application;
 
 /**
  *  Source URL from which this bundle was derrived

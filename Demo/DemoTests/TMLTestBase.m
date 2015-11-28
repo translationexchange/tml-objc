@@ -39,7 +39,7 @@
     return jsonData;
 }
 
-- (TMLProject *) application {
+- (TMLApplication *) application {
     NSData *jsonData = [self loadJSONDataFromResource:@"app"];
     TMLApplication *app = [TMLAPISerializer materializeData:jsonData withClass:[TMLApplication class]];
     return app;
