@@ -96,7 +96,7 @@
 		C0F80CF21BEA83DE0048DF2D /* TMLRulesEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CAD1BEA83DE0048DF2D /* TMLRulesEvaluator.m */; };
 		C0F80CF41BEA83DE0048DF2D /* TMLRulesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CAF1BEA83DE0048DF2D /* TMLRulesParser.m */; };
 		C0F80CF61BEA83DE0048DF2D /* TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CB11BEA83DE0048DF2D /* TML.m */; };
-		C0F80CF81BEA83DE0048DF2D /* TMLBase.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CB31BEA83DE0048DF2D /* TMLBase.m */; };
+		C0F80CF81BEA83DE0048DF2D /* TMLModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CB31BEA83DE0048DF2D /* TMLModel.m */; };
 		C0F80CFA1BEA83DE0048DF2D /* TMLAttributedDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CB71BEA83DE0048DF2D /* TMLAttributedDecorationTokenizer.m */; };
 		C0F80CFC1BEA83DE0048DF2D /* TMLDataTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CB91BEA83DE0048DF2D /* TMLDataTokenizer.m */; };
 		C0F80CFE1BEA83DE0048DF2D /* TMLDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CBB1BEA83DE0048DF2D /* TMLDecorationTokenizer.m */; };
@@ -271,8 +271,8 @@
 		C0F80CAF1BEA83DE0048DF2D /* TMLRulesParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLRulesParser.m; sourceTree = "<group>"; };
 		C0F80CB01BEA83DE0048DF2D /* TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TML.h; sourceTree = "<group>"; };
 		C0F80CB11BEA83DE0048DF2D /* TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TML.m; sourceTree = "<group>"; };
-		C0F80CB21BEA83DE0048DF2D /* TMLBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLBase.h; sourceTree = "<group>"; };
-		C0F80CB31BEA83DE0048DF2D /* TMLBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLBase.m; sourceTree = "<group>"; };
+		C0F80CB21BEA83DE0048DF2D /* TMLModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLModel.h; sourceTree = "<group>"; };
+		C0F80CB31BEA83DE0048DF2D /* TMLModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLModel.m; sourceTree = "<group>"; };
 		C0F80CB41BEA83DE0048DF2D /* TMLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLLogger.h; sourceTree = "<group>"; };
 		C0F80CB61BEA83DE0048DF2D /* TMLAttributedDecorationTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAttributedDecorationTokenizer.h; sourceTree = "<group>"; };
 		C0F80CB71BEA83DE0048DF2D /* TMLAttributedDecorationTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAttributedDecorationTokenizer.m; sourceTree = "<group>"; };
@@ -475,8 +475,8 @@
 				C0F80CAB1BEA83DE0048DF2D /* Rules Engine */,
 				C0F80CB01BEA83DE0048DF2D /* TML.h */,
 				C0F80CB11BEA83DE0048DF2D /* TML.m */,
-				C0F80CB21BEA83DE0048DF2D /* TMLBase.h */,
-				C0F80CB31BEA83DE0048DF2D /* TMLBase.m */,
+				C0F80CB21BEA83DE0048DF2D /* TMLModel.h */,
+				C0F80CB31BEA83DE0048DF2D /* TMLModel.m */,
 				C41647A91BEE97D2004B3FB3 /* TMLGlobals.h */,
 				C41647AA1BEE97D2004B3FB3 /* TMLGlobals.m */,
 				C0F80CB41BEA83DE0048DF2D /* TMLLogger.h */,
@@ -1124,7 +1124,7 @@
 				C0F80D1A1BEA86480048DF2D /* UISegmentedControl+TML.m in Sources */,
 				4CCBA13118B9B69A00CFCB3A /* TMLConsoleViewController.m in Sources */,
 				C436C3541C0943F1009B736B /* TMLAPIResponse.m in Sources */,
-				C0F80CF81BEA83DE0048DF2D /* TMLBase.m in Sources */,
+				C0F80CF81BEA83DE0048DF2D /* TMLModel.m in Sources */,
 				C0F80CDC1BEA83DE0048DF2D /* NSObject+TML.m in Sources */,
 				C0F80D161BEA86370048DF2D /* UISearchBar+TML.m in Sources */,
 				C0F80CE81BEA83DE0048DF2D /* TMLLanguage.m in Sources */,

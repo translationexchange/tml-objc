@@ -29,11 +29,11 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TMLBase.h"
+#import "TMLModel.h"
 
 @class TMLLanguage, TMLLanguageContext;
 
-@interface TMLDataToken : TMLBase
+@interface TMLDataToken : TMLModel
 
 // Original label from where the token was extracted
 @property (nonatomic, strong) NSString *label;

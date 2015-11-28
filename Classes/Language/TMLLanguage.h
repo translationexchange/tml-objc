@@ -29,11 +29,11 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TMLBase.h"
+#import "TMLModel.h"
 
 @class TMLLanguageContext, TMLLanguageCase, TMLApplication;
 
-@interface TMLLanguage : TMLBase
+@interface TMLLanguage : TMLModel
 
 @property (nonatomic, assign) NSInteger languageID;
 

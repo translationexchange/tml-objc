@@ -29,11 +29,11 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TMLBase.h"
+#import "TMLModel.h"
 
 @class TMLLanguageContext;
 
-@interface TMLLanguageContextRule : TMLBase
+@interface TMLLanguageContextRule : TMLModel
 
 // Holds reference to the language context it belongs to
 @property(nonatomic, strong) TMLLanguageContext *languageContext;

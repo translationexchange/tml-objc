@@ -33,7 +33,7 @@
 
 @class TMLTranslationKey, TMLLanguage;
 
-@interface TMLTranslation : TMLBase
+@interface TMLTranslation : TMLModel
 
 // Reference to the translation key it belongs to
 @property(nonatomic, strong) TMLTranslationKey *translationKey;

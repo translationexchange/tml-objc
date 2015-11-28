@@ -30,7 +30,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface TMLBase : NSObject <NSCopying,NSCoding>
+@interface TMLModel : NSObject <NSCopying,NSCoding>
 
 - (void)decodeWithCoder:(NSCoder *)aDecoder;
 

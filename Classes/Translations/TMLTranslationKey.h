@@ -29,11 +29,11 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TMLBase.h"
+#import "TMLModel.h"
 
 @class TMLApplication, TMLLanguage;
 
-@interface TMLTranslationKey : TMLBase
+@interface TMLTranslationKey : TMLModel
 
 // Unique key (md5 hash) identifying this translation key
 @property(nonatomic, strong) NSString *key;

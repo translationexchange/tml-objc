@@ -29,12 +29,12 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TMLBase.h"
+#import "TMLModel.h"
 #import "TMLAPIClient.h"
 
 @class TMLPostOffice, TMLLanguage, TMLSource, TMLTranslation, TMLDecorationTokenizer, TMLConfiguration;
 
-@interface TMLApplication : TMLBase
+@interface TMLApplication : TMLModel
 
 // Application identifier
 @property (nonatomic, assign) NSInteger applicationID;

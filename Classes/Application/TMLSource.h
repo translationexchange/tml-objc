@@ -29,11 +29,11 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TMLBase.h"
+#import "TMLModel.h"
 
 extern NSString * const TMLSourceDefaultKey;
 
-@interface TMLSource : TMLBase
+@interface TMLSource : TMLModel
 
 #pragma mark - API properties
 

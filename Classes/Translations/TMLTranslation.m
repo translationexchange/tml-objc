@@ -35,7 +35,7 @@
 #import "TMLLanguageContextRule.h"
 #import "TMLTranslation.h"
 #import "TMLTranslationKey.h"
-#import "TMLBase.h"
+#import "TMLModel.h"
 
 @implementation TMLTranslation
 

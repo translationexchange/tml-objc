@@ -30,9 +30,9 @@
 
 #import "NSString+TmlAdditions.h"
 #import "TML.h"
-#import "TMLBase.h"
+#import "TMLModel.h"
 
-@implementation TMLBase
+@implementation TMLModel
 
 - (id)copyWithZone:(NSZone *)zone {
     TMLRaiseAbstractInvocation();

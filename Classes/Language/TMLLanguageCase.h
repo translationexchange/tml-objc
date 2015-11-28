@@ -29,11 +29,11 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TMLBase.h"
+#import "TMLModel.h"
 
 @class TMLLanguage;
 
-@interface TMLLanguageCase : TMLBase
+@interface TMLLanguageCase : TMLModel
 
 // Holds reference back to the language it belongs to
 @property(nonatomic, strong) TMLLanguage *language;

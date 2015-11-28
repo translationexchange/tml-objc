@@ -8,7 +8,7 @@
 
 #import "NSObject+TMLJSON.h"
 #import "TMLAPISerializer.h"
-#import "TMLBase.h"
+#import "TMLModel.h"
 
 @interface TMLAPISerializer()
 
@@ -164,7 +164,7 @@
     if ([objv isKindOfClass:[NSDictionary class]] == YES) {
         val = [[TMLAPISerializer serializeObject:objv] tmlJSONObject];
     }
-    else if ([objv isKindOfClass:[TMLBase class]] == YES) {
+    else if ([objv isKindOfClass:[TMLModel class]] == YES) {
         val = [[TMLAPISerializer serializeObject:objv] tmlJSONObject];
     }
     if (val != nil) {
