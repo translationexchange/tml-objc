@@ -43,6 +43,7 @@
 NSString * const TMLUUIDDefaultsKey = @"TMLUUID";
 NSString * const TMLDefaultLocaleDefaultsKey = @"default_locale";
 NSString * const TMLCurrentLocaleDefaultsKey = @"current_locale";
+NSString * const TMLTranslationEnabledDefaultsKey = @"translation_enabled";
 
 @interface TMLConfiguration () {
     NSCalendar *calendar;
@@ -125,12 +126,22 @@ NSString * const TMLCurrentLocaleDefaultsKey = @"current_locale";
         [self setupDefaultTokens];
         [self setupLocalization];
         self.apiURL = [NSURL URLWithString:kTMLServiceHost];
+        
+        self.translationEnabled = [[self.class persistentValueForKey:TMLTranslationEnabledDefaultsKey] boolValue];
     }
     return self;
 }
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"%@ (currentLocale: %@; defaultLocalte: %@)", [super description], self.currentLocale, self.defaultLocale];
+}
+
+- (BOOL)isTranslationEnabled {
+    return [[self.class persistentValueForKey:TMLTranslationEnabledDefaultsKey] boolValue];
+}
+
+- (void)setTranslationEnabled:(BOOL)translationEnabled {
+    [self.class setPersistentValue:@(translationEnabled) forKey:TMLTranslationEnabledDefaultsKey];
 }
 
 - (NSString *) deviceLocale {

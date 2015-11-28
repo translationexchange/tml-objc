@@ -48,6 +48,8 @@
 
 @property(nonatomic, strong) NSObject *viewingUser;
 
+@property(nonatomic, assign, getter=isTranslationEnabled) BOOL translationEnabled;
+
 @property(nonatomic) BOOL inContextTranslatorEnabled;
 
 + (id) persistentValueForKey: (NSString *) key;

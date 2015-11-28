@@ -139,6 +139,7 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
         }
     }];
     
+    self.translationEnabled = configuration.translationEnabled;
     if (self.translationEnabled == YES) {
         TMLAPIBundle *apiBundle = (TMLAPIBundle *)[TMLBundle apiBundle];
         self.currentBundle = apiBundle;
@@ -475,6 +476,7 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
         newBundle = [TMLBundle mainBundle];
     }
     self.currentBundle = newBundle;
+    self.configuration.translationEnabled = translationEnabled;
 }
 
 #pragma mark - Block Options
