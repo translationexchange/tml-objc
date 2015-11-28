@@ -32,10 +32,28 @@
 #import "TML.h"
 #import "UIViewController+TML.h"
 
+@interface MenuTableViewCell : UITableViewCell
+@end
+
+@implementation MenuTableViewCell
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    NSArray *subviews = self.subviews;
+    for (UIView *subview in subviews) {
+        if ([subview isKindOfClass:[UIButton class]] == NO) {
+            continue;
+        }
+        CGRect frame = subview.frame;
+        frame.origin.x -= 40;
+        subview.frame = frame;
+    }
+}
+
+@end
+
 @interface MenuViewController ()
-
 @property (weak, nonatomic) IBOutlet UITableView *menuTableView;
-
 @end
 
 @implementation MenuViewController
@@ -110,14 +128,21 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"UITableViewCell"];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"MenuViewControllerCell"];
     
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"UITableViewCell"];
+        cell = [[MenuTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                        reuseIdentifier:@"MenuViewControllerCell"];
     }
     
     NSDictionary *section = (NSDictionary *) [self.items objectAtIndex:indexPath.section];
     NSString *title = [[[section objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"title"];
+    if (indexPath.section == 2 && indexPath.row == 1) {
+        cell.accessoryType = ([[TML sharedInstance] translationEnabled] == YES) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+    }
+    else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
     TMLLocalizeViewWithLabel(cell.textLabel, title);
     return cell;
 }
@@ -129,6 +154,7 @@
         } else if (indexPath.row == 1) {
             TML *tml = [TML sharedInstance];
             tml.translationEnabled = !tml.translationEnabled;
+            [tableView reloadData];
 //            TMLToggleInAppTranslations(self);
         } else if (indexPath.row == 2) {
             TMLOpenTranslatorTools(self);
