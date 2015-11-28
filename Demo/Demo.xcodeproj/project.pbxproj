@@ -32,7 +32,6 @@
 		4CC2EAE418BA7AEB00F359F8 /* Icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC2EAE318BA7AEB00F359F8 /* Icon-60@2x.png */; };
 		4CC2EAE618BA7B0800F359F8 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC2EAE518BA7B0800F359F8 /* Icon-Small@2x.png */; };
 		4CCA001E1922D12E00CE4D95 /* arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCA001D1922D12E00CE4D95 /* arrow_down.png */; };
-		4CCA0024192450B100CE4D95 /* en-US.json in Resources */ = {isa = PBXBuildFile; fileRef = 4CCA0023192450B100CE4D95 /* en-US.json */; };
 		4CCBA12218B9B5E900CFCB3A /* TmlTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CCBA10518B9B5E900CFCB3A /* TmlTests-Info.plist */; };
 		4CCBA12F18B9B69A00CFCB3A /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA12618B9B69A00CFCB3A /* MenuViewController.m */; };
 		4CCBA13118B9B69A00CFCB3A /* TMLConsoleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA12A18B9B69A00CFCB3A /* TMLConsoleViewController.m */; };
@@ -123,6 +122,7 @@
 		C42C562B1BF2674D00207911 /* TMLJSONValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = C42C562A1BF2674D00207911 /* TMLJSONValueTransformer.m */; };
 		C42C56311BF2695700207911 /* NSObject+TMLJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = C42C56301BF2695700207911 /* NSObject+TMLJSON.m */; };
 		C42C56391BF42D1A00207911 /* TMLAPISerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = C42C56381BF42D1A00207911 /* TMLAPISerializer.m */; };
+		C436C34B1C09360F009B736B /* en.json in Resources */ = {isa = PBXBuildFile; fileRef = C436C34A1C09360F009B736B /* en.json */; };
 		C44281921BF5659200E68194 /* TMLAPISerializationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C44281911BF5659200E68194 /* TMLAPISerializationTest.m */; };
 		C4A095D81C002FB900F2B106 /* TMLAPIBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A095D71C002FB900F2B106 /* TMLAPIBundle.m */; };
 /* End PBXBuildFile section */
@@ -172,7 +172,6 @@
 		4CC2EAE318BA7AEB00F359F8 /* Icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@2x.png"; sourceTree = "<group>"; };
 		4CC2EAE518BA7B0800F359F8 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
 		4CCA001D1922D12E00CE4D95 /* arrow_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_down.png; sourceTree = "<group>"; };
-		4CCA0023192450B100CE4D95 /* en-US.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "en-US.json"; sourceTree = "<group>"; };
 		4CCBA10518B9B5E900CFCB3A /* TmlTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TmlTests-Info.plist"; sourceTree = "<group>"; };
 		4CCBA12518B9B69A00CFCB3A /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		4CCBA12618B9B69A00CFCB3A /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
@@ -327,6 +326,7 @@
 		C42C56331BF31A6600207911 /* TMLPrivateConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLPrivateConfig.h; sourceTree = "<group>"; };
 		C42C56371BF42D1A00207911 /* TMLAPISerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAPISerializer.h; sourceTree = "<group>"; };
 		C42C56381BF42D1A00207911 /* TMLAPISerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPISerializer.m; sourceTree = "<group>"; };
+		C436C34A1C09360F009B736B /* en.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = en.json; sourceTree = "<group>"; };
 		C44281911BF5659200E68194 /* TMLAPISerializationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPISerializationTest.m; sourceTree = "<group>"; };
 		C4A095D61C002FB900F2B106 /* TMLAPIBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAPIBundle.h; sourceTree = "<group>"; };
 		C4A095D71C002FB900F2B106 /* TMLAPIBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPIBundle.m; sourceTree = "<group>"; };
@@ -545,7 +545,7 @@
 		4CCA00221924508300CE4D95 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				4CCA0023192450B100CE4D95 /* en-US.json */,
+				C436C34A1C09360F009B736B /* en.json */,
 			);
 			name = Assets;
 			path = ../Assets;
@@ -932,8 +932,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C436C34B1C09360F009B736B /* en.json in Resources */,
 				4C42340118B9B38700B76555 /* Images.xcassets in Resources */,
-				4CCA0024192450B100CE4D95 /* en-US.json in Resources */,
 				4CFA531319284666006E1B43 /* LICENSE in Resources */,
 				4CC2EAE418BA7AEB00F359F8 /* Icon-60@2x.png in Resources */,
 				4CFA531619284666006E1B43 /* Tml.podspec in Resources */,
