@@ -31,13 +31,13 @@
 #import <Foundation/Foundation.h>
 #import "TMLAPIClient.h"
 
-@class TMLApplication;
+@class TMLProject;
 
 @interface TMLPostOffice : NSObject
 
-@property(nonatomic, strong) TMLApplication *application;
+@property(nonatomic, strong) TMLProject *application;
 
-- (id) initWithApplication: (TMLApplication *) owner;
+- (id) initWithApplication: (TMLProject *) owner;
 
 - (void) deliver:(NSString *)templateKeyword
               to:(NSString *)to

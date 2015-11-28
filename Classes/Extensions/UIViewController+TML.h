@@ -32,7 +32,7 @@
 #import <UIKit/UIViewController.h>
 #import <UIKit/UIView.h>
 #import "TMLLanguage.h"
-#import "TMLApplication.h"
+#import "TMLProject.h"
 #import "TMLTranslatorViewController.h"
 #import "TMLLanguageSelectorViewController.h"
 

@@ -30,11 +30,11 @@
 
 #import "TML.h"
 #import "TMLPostOffice.h"
-#import "TMLApplication.h"
+#import "TMLProject.h"
 
 @implementation TMLPostOffice
 
-- (id) initWithApplication: (TMLApplication *) owner {
+- (id) initWithApplication: (TMLProject *) owner {
     if (self == [super init]) {
         self.application = owner;
     }

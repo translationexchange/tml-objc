@@ -31,7 +31,7 @@
 #import <Foundation/Foundation.h>
 #import "TMLLogger.h"
 
-@class TMLConfiguration, TMLLanguage, TMLApplication, TMLAPIClient, TMLPostOffice, TMLTranslationKey, TMLBundle;
+@class TMLConfiguration, TMLLanguage, TMLProject, TMLAPIClient, TMLPostOffice, TMLTranslationKey, TMLBundle;
 
 extern NSString * const TMLLanguageChangedNotification;
 extern NSString * const TMLIsReachableNotification;
@@ -63,7 +63,7 @@ extern NSString * const TMLBundleDidChangeNotification;
 /**
  *  Holds the application information
  */
-@property(nonatomic, readonly) TMLApplication *application;
+@property(nonatomic, readonly) TMLProject *application;
 
 /**
  *  Holds default language of the application
@@ -211,7 +211,7 @@ extern NSString * const TMLBundleDidChangeNotification;
 
 #pragma mark - Class methods
 
-+ (TMLApplication *) application;
++ (TMLProject *) application;
 
 + (TMLLanguage *) defaultLanguage;
 

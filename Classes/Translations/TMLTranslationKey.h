@@ -31,7 +31,7 @@
 #import <Foundation/Foundation.h>
 #import "TMLModel.h"
 
-@class TMLApplication, TMLLanguage;
+@class TMLProject, TMLLanguage;
 
 @interface TMLTranslationKey : TMLModel
 

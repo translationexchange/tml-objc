@@ -76,7 +76,7 @@
 		C0F80C7C1BEA7E310048DF2D /* TMLDataTokenTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C601BEA7E310048DF2D /* TMLDataTokenTest.m */; };
 		C0F80C7D1BEA7E310048DF2D /* TMLPipedTokenTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C611BEA7E310048DF2D /* TMLPipedTokenTest.m */; };
 		C0F80C7E1BEA7E310048DF2D /* TMLTranslationKeyTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C631BEA7E310048DF2D /* TMLTranslationKeyTest.m */; };
-		C0F80CCC1BEA83DE0048DF2D /* TMLApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C831BEA83DE0048DF2D /* TMLApplication.m */; };
+		C0F80CCC1BEA83DE0048DF2D /* TMLProject.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C831BEA83DE0048DF2D /* TMLProject.m */; };
 		C0F80CD01BEA83DE0048DF2D /* TMLConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C871BEA83DE0048DF2D /* TMLConfiguration.m */; };
 		C0F80CD21BEA83DE0048DF2D /* TMLPostOffice.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C891BEA83DE0048DF2D /* TMLPostOffice.m */; };
 		C0F80CD41BEA83DE0048DF2D /* TMLSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C8B1BEA83DE0048DF2D /* TMLSource.m */; };
@@ -231,8 +231,8 @@
 		C0F80C601BEA7E310048DF2D /* TMLDataTokenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLDataTokenTest.m; sourceTree = "<group>"; };
 		C0F80C611BEA7E310048DF2D /* TMLPipedTokenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLPipedTokenTest.m; sourceTree = "<group>"; };
 		C0F80C631BEA7E310048DF2D /* TMLTranslationKeyTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTranslationKeyTest.m; sourceTree = "<group>"; };
-		C0F80C821BEA83DE0048DF2D /* TMLApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLApplication.h; sourceTree = "<group>"; };
-		C0F80C831BEA83DE0048DF2D /* TMLApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLApplication.m; sourceTree = "<group>"; };
+		C0F80C821BEA83DE0048DF2D /* TMLProject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLProject.h; sourceTree = "<group>"; };
+		C0F80C831BEA83DE0048DF2D /* TMLProject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLProject.m; sourceTree = "<group>"; };
 		C0F80C861BEA83DE0048DF2D /* TMLConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLConfiguration.h; sourceTree = "<group>"; };
 		C0F80C871BEA83DE0048DF2D /* TMLConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLConfiguration.m; sourceTree = "<group>"; };
 		C0F80C881BEA83DE0048DF2D /* TMLPostOffice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLPostOffice.h; sourceTree = "<group>"; };
@@ -705,8 +705,8 @@
 		C0F80C7F1BEA83DE0048DF2D /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				C0F80C821BEA83DE0048DF2D /* TMLApplication.h */,
-				C0F80C831BEA83DE0048DF2D /* TMLApplication.m */,
+				C0F80C821BEA83DE0048DF2D /* TMLProject.h */,
+				C0F80C831BEA83DE0048DF2D /* TMLProject.m */,
 				C0F80C861BEA83DE0048DF2D /* TMLConfiguration.h */,
 				C0F80C871BEA83DE0048DF2D /* TMLConfiguration.m */,
 				C0F80C881BEA83DE0048DF2D /* TMLPostOffice.h */,
@@ -1138,7 +1138,7 @@
 				C0F80CF21BEA83DE0048DF2D /* TMLRulesEvaluator.m in Sources */,
 				C0F80CFC1BEA83DE0048DF2D /* TMLDataTokenizer.m in Sources */,
 				C0F80D0A1BEA83DE0048DF2D /* TMLTranslationKey.m in Sources */,
-				C0F80CCC1BEA83DE0048DF2D /* TMLApplication.m in Sources */,
+				C0F80CCC1BEA83DE0048DF2D /* TMLProject.m in Sources */,
 				4CE06A1318BD42D30088AB3E /* TMLSampleTableViewCell.m in Sources */,
 				C0F80CF41BEA83DE0048DF2D /* TMLRulesParser.m in Sources */,
 				4CCBA13318B9B69A00CFCB3A /* TranslationViewController.m in Sources */,

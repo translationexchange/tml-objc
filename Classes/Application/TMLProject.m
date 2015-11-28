@@ -32,7 +32,7 @@
 #import "TML.h"
 #import "TMLAPIClient.h"
 #import "TMLAPISerializer.h"
-#import "TMLApplication.h"
+#import "TMLProject.h"
 #import "TMLAttributedDecorationTokenizer.h"
 #import "TMLConfiguration.h"
 #import "TMLDataTokenizer.h"
@@ -42,12 +42,12 @@
 #import "TMLTranslation.h"
 #import "TMLTranslationKey.h"
 
-@interface TMLApplication()
+@interface TMLProject()
 @property(nonatomic, readwrite) TMLConfiguration *configuration;
 
 @end
 
-@implementation TMLApplication
+@implementation TMLProject
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeInteger:self.applicationID forKey:@"id"];
@@ -70,10 +70,10 @@
     if ([object isKindOfClass:[self class]] == NO) {
         return NO;
     }
-    return [self isEqualToApplication:(TMLApplication *)object];
+    return [self isEqualToApplication:(TMLProject *)object];
 }
 
-- (BOOL)isEqualToApplication:(TMLApplication *)application {
+- (BOOL)isEqualToApplication:(TMLProject *)application {
     return (self.applicationID == application.applicationID
             && (self.key == application.key
                 || [self.key isEqualToString:application.key] == YES)

@@ -29,7 +29,7 @@
  */
 
 #import "TML.h"
-#import "TMLApplication.h"
+#import "TMLProject.h"
 #import "TMLAttributedDecorationTokenizer.h"
 #import "TMLConfiguration.h"
 #import "TMLDataToken.h"
@@ -163,7 +163,7 @@
     }
     
     // TODO: This should be done by TMLApplication
-    TMLApplication *application = [[TML sharedInstance] application];
+    TMLProject *application = [[TML sharedInstance] application];
     language = (TMLLanguage *)[application languageForLocale:self.locale];
     return [self substituteTokensInLabel:self.label withTokens:tokens forLanguage:language andOptions:options];
 }

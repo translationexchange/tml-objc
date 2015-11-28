@@ -31,7 +31,7 @@
 
 #import "MBProgressHUD.h"
 #import "TML.h"
-#import "TMLApplication.h"
+#import "TMLProject.h"
 #import "TMLConfiguration.h"
 #import "TMLLanguage.h"
 #import "TMLTranslatorViewController.h"
@@ -76,7 +76,7 @@
 }
 
 + (void) translateFromController:(UIViewController *) controller withOptions: (NSDictionary *) options {
-    TMLApplication *app = [TML sharedInstance].application;
+    TMLProject *app = [TML sharedInstance].application;
 
     if (![TMLConfiguration isHostAvailable:[app.tools valueForKey:@"host"]]) {
         [[[UIAlertView alloc] initWithTitle: @"Translation Center"
@@ -116,7 +116,7 @@
 }
 
 - (NSString *) host {
-    TMLApplication *app = [TML sharedInstance].application;
+    TMLProject *app = [TML sharedInstance].application;
     NSString *host = [app.tools objectForKey: @"host"];
     if(!host) host = @"https://translation-center.translationexchange.com";
     return host;
@@ -125,7 +125,7 @@
 - (void) viewDidLoad {
     [super viewDidLoad];
     
-    TMLApplication *app = [TML sharedInstance].application;
+    TMLProject *app = [TML sharedInstance].application;
     TMLLanguage *lang = [TML sharedInstance].currentLanguage;
     
     NSString *url = nil;

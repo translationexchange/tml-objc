@@ -31,14 +31,14 @@
 #import <Foundation/Foundation.h>
 #import "TMLModel.h"
 
-@class TMLLanguageContext, TMLLanguageCase, TMLApplication;
+@class TMLLanguageContext, TMLLanguageCase, TMLProject;
 
 @interface TMLLanguage : TMLModel
 
 @property (nonatomic, assign) NSInteger languageID;
 
 // Holds reference to the application it belongs to
-@property(nonatomic, strong) TMLApplication *application;
+@property(nonatomic, strong) TMLProject *application;
 
 // Language locale based on TML notation
 @property(nonatomic, strong) NSString *locale;

@@ -11,7 +11,7 @@
 #import "TML.h"
 #import "TMLAPIBundle.h"
 #import "TMLAPISerializer.h"
-#import "TMLApplication.h"
+#import "TMLProject.h"
 #import "TMLBundle.h"
 #import "TMLBundleManager.h"
 #import <NVHTarGzip/NVHTarGzip.h>
@@ -129,10 +129,10 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
             success = NO;
         }
         
-        TMLApplication *application;
+        TMLProject *application;
         if (success == YES) {
             application = [TMLAPISerializer materializeData:[NSData dataWithContentsOfFile:applicationFilePath]
-                                                  withClass:[TMLApplication class]];
+                                                  withClass:[TMLProject class]];
         }
         
         if (application.key == nil
