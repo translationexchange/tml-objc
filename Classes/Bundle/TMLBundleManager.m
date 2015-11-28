@@ -511,7 +511,6 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     }
     
     // Fetch resource data
-    NSURLSession *downloadSession = [self downloadSession];
     NSURL *resourceURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/%@",
                                                [self archiveURL],
                                                [[TML sharedInstance] applicationKey],
