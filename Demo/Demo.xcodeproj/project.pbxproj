@@ -120,9 +120,9 @@
 		C436C3531C0943F1009B736B /* TMLAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C436C34E1C0943F1009B736B /* TMLAPIClient.m */; };
 		C436C3541C0943F1009B736B /* TMLAPIResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C436C3501C0943F1009B736B /* TMLAPIResponse.m */; };
 		C436C3551C0943F1009B736B /* TMLAPISerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = C436C3521C0943F1009B736B /* TMLAPISerializer.m */; };
-		C436C35D1C0943FF009B736B /* TMLAPIBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = C436C3581C0943FF009B736B /* TMLAPIBundle.m */; };
 		C436C35E1C0943FF009B736B /* TMLBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = C436C35A1C0943FF009B736B /* TMLBundle.m */; };
 		C436C35F1C0943FF009B736B /* TMLBundleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C436C35C1C0943FF009B736B /* TMLBundleManager.m */; };
+		C436C3621C0945A8009B736B /* TMLAPIBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = C436C3611C0945A8009B736B /* TMLAPIBundle.m */; };
 		C44281921BF5659200E68194 /* TMLAPISerializationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C44281911BF5659200E68194 /* TMLAPISerializationTest.m */; };
 /* End PBXBuildFile section */
 
@@ -320,12 +320,12 @@
 		C436C3501C0943F1009B736B /* TMLAPIResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPIResponse.m; sourceTree = "<group>"; };
 		C436C3511C0943F1009B736B /* TMLAPISerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAPISerializer.h; sourceTree = "<group>"; };
 		C436C3521C0943F1009B736B /* TMLAPISerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPISerializer.m; sourceTree = "<group>"; };
-		C436C3571C0943FF009B736B /* TMLAPIBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAPIBundle.h; sourceTree = "<group>"; };
-		C436C3581C0943FF009B736B /* TMLAPIBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPIBundle.m; sourceTree = "<group>"; };
 		C436C3591C0943FF009B736B /* TMLBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLBundle.h; sourceTree = "<group>"; };
 		C436C35A1C0943FF009B736B /* TMLBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLBundle.m; sourceTree = "<group>"; };
 		C436C35B1C0943FF009B736B /* TMLBundleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLBundleManager.h; sourceTree = "<group>"; };
 		C436C35C1C0943FF009B736B /* TMLBundleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLBundleManager.m; sourceTree = "<group>"; };
+		C436C3601C0945A8009B736B /* TMLAPIBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAPIBundle.h; sourceTree = "<group>"; };
+		C436C3611C0945A8009B736B /* TMLAPIBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPIBundle.m; sourceTree = "<group>"; };
 		C44281911BF5659200E68194 /* TMLAPISerializationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPISerializationTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -848,8 +848,8 @@
 		C436C3561C0943FF009B736B /* Bundle */ = {
 			isa = PBXGroup;
 			children = (
-				C436C3571C0943FF009B736B /* TMLAPIBundle.h */,
-				C436C3581C0943FF009B736B /* TMLAPIBundle.m */,
+				C436C3601C0945A8009B736B /* TMLAPIBundle.h */,
+				C436C3611C0945A8009B736B /* TMLAPIBundle.m */,
 				C436C3591C0943FF009B736B /* TMLBundle.h */,
 				C436C35A1C0943FF009B736B /* TMLBundle.m */,
 				C436C35B1C0943FF009B736B /* TMLBundleManager.h */,
@@ -1101,6 +1101,7 @@
 				4C36258419EF4E5700356B51 /* StaticTableViewController.m in Sources */,
 				C0F80D021BEA83DE0048DF2D /* TMLDataToken.m in Sources */,
 				4CE06A0818BD3D2E0088AB3E /* DecorationTokensDemoViewController.m in Sources */,
+				C436C3621C0945A8009B736B /* TMLAPIBundle.m in Sources */,
 				C0F80CD81BEA83DE0048DF2D /* TMLTranslatorViewController.m in Sources */,
 				C0F80CF61BEA83DE0048DF2D /* TML.m in Sources */,
 				4CCBA13218B9B69A00CFCB3A /* TMLTableViewCell.m in Sources */,
@@ -1126,7 +1127,6 @@
 				C0F80CF81BEA83DE0048DF2D /* TMLBase.m in Sources */,
 				C0F80CDC1BEA83DE0048DF2D /* NSObject+TML.m in Sources */,
 				C0F80D161BEA86370048DF2D /* UISearchBar+TML.m in Sources */,
-				C436C35D1C0943FF009B736B /* TMLAPIBundle.m in Sources */,
 				C0F80CE81BEA83DE0048DF2D /* TMLLanguage.m in Sources */,
 				C0F80CFA1BEA83DE0048DF2D /* TMLAttributedDecorationTokenizer.m in Sources */,
 				C0F80CEC1BEA83DE0048DF2D /* TMLLanguageCaseRule.m in Sources */,
