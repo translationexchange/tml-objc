@@ -193,6 +193,9 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
 #pragma mark - Bundles
 
 - (void) updateWithBundle:(TMLBundle *)bundle {
+    // Special handling of nil bundles - this scenario would arise
+    // when switching from API bundle to nothing - b/c no bundles are available
+    // neither locally nor on CDN.
     if (bundle == nil) {
         TMLWarn(@"Setting current bundle not nil");
         self.application = nil;
