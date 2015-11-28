@@ -194,18 +194,23 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
 
 - (void) updateWithBundle:(TMLBundle *)bundle {
     if (bundle == nil) {
-        return;
+        TMLWarn(@"Setting current bundle not nil");
+        self.application = nil;
+        self.currentLanguage = nil;
+        self.defaultLanguage = nil;
     }
-    TMLApplication *newApplication = [bundle application];
-    TMLInfo(@"Initializing from local bundle: %@", bundle.version);
-    self.application = newApplication;
-    NSString *ourLocale = self.currentLanguage.locale;
-    if (ourLocale != nil && [bundle.availableLocales containsObject:ourLocale] == NO) {
-        [bundle loadTranslationsForLocale:ourLocale completion:^(NSError *error) {
-            if (error != nil) {
-                TMLError(@"Could not preload current locale '%@' into newly selected bundle: %@", ourLocale, error);
-            }
-        }];
+    else {
+        TMLApplication *newApplication = [bundle application];
+        TMLInfo(@"Initializing from local bundle: %@", bundle.version);
+        self.application = newApplication;
+        NSString *ourLocale = self.currentLanguage.locale;
+        if (ourLocale != nil && [bundle.availableLocales containsObject:ourLocale] == NO) {
+            [bundle loadTranslationsForLocale:ourLocale completion:^(NSError *error) {
+                if (error != nil) {
+                    TMLError(@"Could not preload current locale '%@' into newly selected bundle: %@", ourLocale, error);
+                }
+            }];
+        }
     }
 }
 
@@ -214,9 +219,7 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
         return;
     }
     _currentBundle = currentBundle;
-    if (currentBundle != nil) {
-        [self updateWithBundle:currentBundle];
-    }
+    [self updateWithBundle:currentBundle];
     if ([currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
         [(TMLAPIBundle *)currentBundle sync];
     }
