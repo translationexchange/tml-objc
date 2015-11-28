@@ -201,6 +201,8 @@ extern NSString * const TMLBundleDidChangeNotification;
 
 - (void) submitMissingTranslationKeys;
 
+- (BOOL) hasLocalTranslationsForLocale:(NSString *)locale;
+
 #pragma mark - Block options
 
 + (void) beginBlockWithOptions:(NSDictionary *) options;

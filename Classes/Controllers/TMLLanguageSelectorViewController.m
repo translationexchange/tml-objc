@@ -37,11 +37,11 @@
 #import "TMLLanguageSelectorViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface TMLLanguageSelectorViewController ()
+@interface TMLLanguageSelectorViewController () <MBProgressHUDDelegate>
 
 @property(nonatomic, strong) IBOutlet UITableView *tableView;
 
-@property(nonatomic, strong) NSMutableArray *languages;
+@property(nonatomic, strong) NSArray *languages;
 
 - (IBAction) dismiss: (id)sender;
 
@@ -86,44 +86,19 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = TMLLocalizedString(@"Loading Languages...");
-    TMLAPIClient *apiClient = [[TML sharedInstance] apiClient];
-    
-    [apiClient getProjectLanguagesWithOptions:nil completionBlock:^(NSArray<TMLLanguage *> *newLanguages, TMLAPIResponse *response, NSError *error) {
-        if (newLanguages != nil) {
-            self.languages = [newLanguages mutableCopy];
-            [self.tableView reloadData];
-            
-            hud.labelText = TMLLocalizedString(@"Languages updated");
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
-                [hud hide:YES];
-            });
-        }
-        else {
-            // TODO: no more cache; should use bundles
-            //           NSArray *locales = [[TML cache] cachedLocales];
-            //           NSArray *locales = nil;
-            //
-            //           self.languages = [NSMutableArray array];
-            //           for (NSString *locale in locales) {
-            //               [self.languages addObject:[[TML currentApplication] languageForLocale:locale]];
-            //           }
-            //           [self.tableView reloadData];
-            //
-            //           hud.labelText = TMLLocalizedString(@"Loaded cached languages");
-            //
-                       dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
-                           [hud hide:YES];
-                       });
-        }
-    }];
+    self.languages = [[[TML sharedInstance] application] languages];
 }
 
 -(IBAction)dismiss:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)setLanguages:(NSArray *)languages {
+    if (_languages == languages || [_languages isEqualToArray:languages] == YES) {
+        return;
+    }
+    _languages = languages;
+    [self.tableView reloadData];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -152,36 +127,36 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     TMLLanguage *language = (TMLLanguage *)[self.languages objectAtIndex:indexPath.row];
+    NSString *newLocale = language.locale;
+    TML *tml = [TML sharedInstance];
+    MBProgressHUD *hud = nil;
+    
+    if ([tml hasLocalTranslationsForLocale:newLocale] == NO) {
+        MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.labelText = TMLLocalizedString(@"Switching language...");
+        hud.delegate = self;
+        [hud show:YES];
+    }
 
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = TMLLocalizedString(@"Switching language...");
+    [TML changeLocale:newLocale
+      completionBlock:^(BOOL success) {
+          if (success == YES) {
+              if (_delegate && [_delegate respondsToSelector:@selector(tmlLanguageSelectorViewController:didSelectLanguage:)]) {
+                  [_delegate tmlLanguageSelectorViewController:self didSelectLanguage:language];
+              }
+          }
+          if (hud != nil) {
+              [hud hide:YES];
+          }
+          else {
+              [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+          }
+      }];
+}
 
-    [TML changeLocale:language.locale completionBlock:^(BOOL success) {
-        if (success == YES) {
-            if (_delegate && [_delegate respondsToSelector:@selector(tmlLanguageSelectorViewController:didSelectLanguage:)]) {
-                [_delegate tmlLanguageSelectorViewController:self didSelectLanguage:language];
-            }
-            
-            hud.labelText = TMLLocalizedString(@"Language changed");
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
-                [hud hide:YES];
-                [self dismissViewControllerAnimated:YES completion:nil];
-            });
-        }
-        else {
-            if (_delegate && [_delegate respondsToSelector:@selector(tmlLanguageSelectorViewController:didSelectLanguage:)]) {
-                [_delegate tmlLanguageSelectorViewController:self didSelectLanguage:language];
-            }
-            
-            hud.labelText = TMLLocalizedString(@"Language changed");
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.3 * NSEC_PER_SEC), dispatch_get_main_queue(), ^(void){
-                [hud hide:YES];
-                [self dismissViewControllerAnimated:YES completion:nil];
-            });
-        }
-    }];
+#pragma mark - MBProgressHUDDelegate
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+    [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

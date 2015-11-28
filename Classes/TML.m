@@ -634,6 +634,14 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
     return (result == nil) ? label : result;
 }
 
+- (BOOL) hasLocalTranslationsForLocale:(NSString *)locale {
+    if (locale == nil) {
+        return NO;
+    }
+    TMLBundle *bundle = self.currentBundle;
+    return [bundle translationsForLocale:locale] != nil;
+}
+
 #pragma mark - Utility Methods
 
 - (NSString *) callerClass {
