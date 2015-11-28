@@ -40,7 +40,9 @@
 #define kTMLServiceHost @"https://api.translationexchange.com"
 #endif
 
-NSString * const TMLUUIDKey = @"TMLUUID";
+NSString * const TMLUUIDDefaultsKey = @"TMLUUID";
+NSString * const TMLDefaultLocaleDefaultsKey = @"default_locale";
+NSString * const TMLCurrentLocaleDefaultsKey = @"current_locale";
 
 @interface TMLConfiguration () {
     NSCalendar *calendar;
@@ -60,13 +62,13 @@ NSString * const TMLUUIDKey = @"TMLUUID";
 }
 
 + (NSString *) uuid {
-    NSString *uuid = [self persistentValueForKey:TMLUUIDKey];
+    NSString *uuid = [self persistentValueForKey:TMLUUIDDefaultsKey];
     if (!uuid) {
         CFUUIDRef uuidRef = CFUUIDCreate(NULL);
         CFStringRef uuidStringRef = CFUUIDCreateString(NULL, uuidRef);
         CFRelease(uuidRef);
         uuid = (__bridge_transfer NSString *)uuidStringRef;
-        [self setPersistentValue:uuid forKey:TMLUUIDKey];
+        [self setPersistentValue:uuid forKey:TMLUUIDDefaultsKey];
     }
     return uuid;
 }
@@ -106,17 +108,17 @@ NSString * const TMLUUIDKey = @"TMLUUID";
 
 - (id) init {
     if (self == [super init]) {
-        if ([self.class persistentValueForKey:@"default_locale"] == nil) {
+        if ([self.class persistentValueForKey:TMLDefaultLocaleDefaultsKey] == nil) {
             self.defaultLocale = @"en";
         } else {
-            self.defaultLocale = [self.class persistentValueForKey:@"default_locale"];
+            self.defaultLocale = [self.class persistentValueForKey:TMLDefaultLocaleDefaultsKey];
         }
 
-        if ([self.class persistentValueForKey:@"current_locale"] == nil) {
+        if ([self.class persistentValueForKey:TMLCurrentLocaleDefaultsKey] == nil) {
             self.currentLocale = [self deviceLocale]; // @"en-US";
             TMLDebug(@"Current locale: %@", self.currentLocale);
         } else {
-            self.currentLocale = [self.class persistentValueForKey:@"current_locale"];
+            self.currentLocale = [self.class persistentValueForKey:TMLCurrentLocaleDefaultsKey];
         }
 
         [self setupDefaultContextRules];
@@ -141,12 +143,12 @@ NSString * const TMLUUIDKey = @"TMLUUID";
 
 - (void) setCurrentLocale:(NSString *)newLocale {
     _currentLocale = newLocale;
-    [TMLConfiguration setPersistentValue:newLocale forKey:@"current_locale"];
+    [TMLConfiguration setPersistentValue:newLocale forKey:TMLCurrentLocaleDefaultsKey];
 }
 
 - (void) setDefaultLocale:(NSString *)newLocale {
     _defaultLocale = newLocale;
-    [TMLConfiguration setPersistentValue:newLocale forKey:@"default_locale"];
+    [TMLConfiguration setPersistentValue:newLocale forKey:TMLCurrentLocaleDefaultsKey];
 }
 
 - (void) setupDefaultContextRules {
