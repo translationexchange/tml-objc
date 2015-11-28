@@ -114,7 +114,6 @@
 		C0F80D221BEA866D0048DF2D /* UITextField+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D211BEA866D0048DF2D /* UITextField+TML.m */; };
 		C0F80D261BEA86800048DF2D /* UITextView+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D251BEA86800048DF2D /* UITextView+TML.m */; };
 		C41647AB1BEE97D2004B3FB3 /* TMLGlobals.m in Sources */ = {isa = PBXBuildFile; fileRef = C41647AA1BEE97D2004B3FB3 /* TMLGlobals.m */; };
-		C42C562B1BF2674D00207911 /* TMLJSONValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = C42C562A1BF2674D00207911 /* TMLJSONValueTransformer.m */; };
 		C42C56311BF2695700207911 /* NSObject+TMLJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = C42C56301BF2695700207911 /* NSObject+TMLJSON.m */; };
 		C436C34B1C09360F009B736B /* en.json in Resources */ = {isa = PBXBuildFile; fileRef = C436C34A1C09360F009B736B /* en.json */; };
 		C436C3531C0943F1009B736B /* TMLAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C436C34E1C0943F1009B736B /* TMLAPIClient.m */; };
@@ -123,6 +122,7 @@
 		C436C35E1C0943FF009B736B /* TMLBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = C436C35A1C0943FF009B736B /* TMLBundle.m */; };
 		C436C35F1C0943FF009B736B /* TMLBundleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C436C35C1C0943FF009B736B /* TMLBundleManager.m */; };
 		C436C3621C0945A8009B736B /* TMLAPIBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = C436C3611C0945A8009B736B /* TMLAPIBundle.m */; };
+		C436C3651C09461F009B736B /* TMLJSONValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = C436C3641C09461F009B736B /* TMLJSONValueTransformer.m */; };
 		C44281921BF5659200E68194 /* TMLAPISerializationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C44281911BF5659200E68194 /* TMLAPISerializationTest.m */; };
 /* End PBXBuildFile section */
 
@@ -308,8 +308,6 @@
 		C0F80D251BEA86800048DF2D /* UITextView+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+TML.m"; sourceTree = "<group>"; };
 		C41647A91BEE97D2004B3FB3 /* TMLGlobals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLGlobals.h; sourceTree = "<group>"; };
 		C41647AA1BEE97D2004B3FB3 /* TMLGlobals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLGlobals.m; sourceTree = "<group>"; };
-		C42C56291BF2674D00207911 /* TMLJSONValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLJSONValueTransformer.h; sourceTree = "<group>"; };
-		C42C562A1BF2674D00207911 /* TMLJSONValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLJSONValueTransformer.m; sourceTree = "<group>"; };
 		C42C562F1BF2695700207911 /* NSObject+TMLJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TMLJSON.h"; sourceTree = "<group>"; };
 		C42C56301BF2695700207911 /* NSObject+TMLJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TMLJSON.m"; sourceTree = "<group>"; };
 		C42C56331BF31A6600207911 /* TMLPrivateConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLPrivateConfig.h; sourceTree = "<group>"; };
@@ -326,6 +324,8 @@
 		C436C35C1C0943FF009B736B /* TMLBundleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLBundleManager.m; sourceTree = "<group>"; };
 		C436C3601C0945A8009B736B /* TMLAPIBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAPIBundle.h; sourceTree = "<group>"; };
 		C436C3611C0945A8009B736B /* TMLAPIBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPIBundle.m; sourceTree = "<group>"; };
+		C436C3631C09461F009B736B /* TMLJSONValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLJSONValueTransformer.h; sourceTree = "<group>"; };
+		C436C3641C09461F009B736B /* TMLJSONValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLJSONValueTransformer.m; sourceTree = "<group>"; };
 		C44281911BF5659200E68194 /* TMLAPISerializationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPISerializationTest.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -479,8 +479,6 @@
 				C0F80CB31BEA83DE0048DF2D /* TMLBase.m */,
 				C41647A91BEE97D2004B3FB3 /* TMLGlobals.h */,
 				C41647AA1BEE97D2004B3FB3 /* TMLGlobals.m */,
-				C42C56291BF2674D00207911 /* TMLJSONValueTransformer.h */,
-				C42C562A1BF2674D00207911 /* TMLJSONValueTransformer.m */,
 				C0F80CB41BEA83DE0048DF2D /* TMLLogger.h */,
 				C0F80CB51BEA83DE0048DF2D /* Tokenizers */,
 				C0F80CBE1BEA83DE0048DF2D /* Tokens */,
@@ -841,6 +839,8 @@
 				C436C3501C0943F1009B736B /* TMLAPIResponse.m */,
 				C436C3511C0943F1009B736B /* TMLAPISerializer.h */,
 				C436C3521C0943F1009B736B /* TMLAPISerializer.m */,
+				C436C3631C09461F009B736B /* TMLJSONValueTransformer.h */,
+				C436C3641C09461F009B736B /* TMLJSONValueTransformer.m */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1092,7 +1092,6 @@
 				C0F80D121BEA86260048DF2D /* UINavigationItem+TML.m in Sources */,
 				C0F80CD21BEA83DE0048DF2D /* TMLPostOffice.m in Sources */,
 				C0F80CFE1BEA83DE0048DF2D /* TMLDecorationTokenizer.m in Sources */,
-				C42C562B1BF2674D00207911 /* TMLJSONValueTransformer.m in Sources */,
 				4CE06A2018BD882F0088AB3E /* User.m in Sources */,
 				C0F80CD01BEA83DE0048DF2D /* TMLConfiguration.m in Sources */,
 				C0F80CE01BEA83DE0048DF2D /* UIButton+TML.m in Sources */,
@@ -1116,6 +1115,7 @@
 				4CE06A1918BD82660088AB3E /* CombinedTokensDemoViewController.m in Sources */,
 				C0F80CD61BEA83DE0048DF2D /* TMLLanguageSelectorViewController.m in Sources */,
 				4CE06A0518BD37A40088AB3E /* WelcomeViewController.m in Sources */,
+				C436C3651C09461F009B736B /* TMLJSONValueTransformer.m in Sources */,
 				C0F80CEE1BEA83DE0048DF2D /* TMLLanguageContext.m in Sources */,
 				C0F80D261BEA86800048DF2D /* UITextView+TML.m in Sources */,
 				C0F80D001BEA83DE0048DF2D /* TMLHtmlDecorationTokenizer.m in Sources */,
