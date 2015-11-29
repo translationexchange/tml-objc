@@ -369,8 +369,9 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
                            completionBlock:(void (^)(BOOL, NSError *))completionBlock
 {
     NSMutableArray *sourceKeysList = [NSMutableArray array];
-    for (NSString *sourceKey in keysInfo) {
-        NSSet *keys = keysInfo[sourceKey];
+    NSDictionary *info = [[NSDictionary alloc] initWithDictionary:keysInfo copyItems:YES];
+    for (NSString *sourceKey in info) {
+        NSSet *keys = info[sourceKey];
         NSMutableArray *keysPayload = [NSMutableArray array];
         for (TMLTranslationKey *key in keys) {
             NSData *serialized = [TMLAPISerializer serializeObject:key];
