@@ -36,6 +36,12 @@
 
 - (IBAction)toggleMenu:(id)sender;
 
-- (void) localize;
+- (void)localize;
+
+#pragma mark - Notifications
+
+- (void)translationsLoaded:(NSNotification *)aNotification;
+- (void)bundleDidChange:(NSNotification *)aNotification;
+- (void)tmlDidFinishSync:(NSNotification *)aNotification;
 
 @end

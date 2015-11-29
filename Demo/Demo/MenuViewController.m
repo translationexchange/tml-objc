@@ -59,17 +59,11 @@
 
 @end
 
-@interface MenuViewController () {
-    BOOL _isObservingNotifications;
-}
+@interface MenuViewController ()
 @property (weak, nonatomic) IBOutlet UITableView *menuTableView;
 @end
 
 @implementation MenuViewController
-
-- (void)dealloc {
-    [self teardownNotificationObserving];
-}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -131,40 +125,6 @@
                                ]
                        },
                    ];
-    
-    [self setupNotificationObserving];
-}
-
-#pragma mark - Notifications
-
-- (void) setupNotificationObserving {
-    if (_isObservingNotifications == YES) {
-        return;
-    }
-    
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self
-               selector:@selector(tmlDidFinishSync:)
-                   name:TMLBundleSyncDidFinishNotification
-                 object:nil];
-    
-    _isObservingNotifications = YES;
-}
-
-- (void) teardownNotificationObserving {
-    if (_isObservingNotifications == NO) {
-        return;
-    }
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    
-    _isObservingNotifications = NO;
-}
-
-#pragma mark - Sync
-
-- (void)tmlDidFinishSync:(NSNotification *)aNotification {
-    [self.menuTableView reloadData];
 }
 
 #pragma mark - UITableViewDelegate

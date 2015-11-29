@@ -31,10 +31,11 @@
 #import "ApplicationViewController.h"
 #import "IIViewDeckController.h"
 #import "TML.h"
+#import "TMLBundleManager.h"
 #import "UIViewController+TML.h"
 
 @interface ApplicationViewController () {
-    BOOL _observingNotifications;
+    BOOL _observingTMLNotifications;
 }
 
 @end
@@ -44,21 +45,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self localize];
-    [self setupNotificationObserving];
+    [self setupTMLNotificationObserving];
 }
 
 - (void)willMoveToParentViewController:(UIViewController *)parent {
     if (parent == nil) {
-        [self teardownNotificationObserving];
+        [self teardownTMLNotificationObserving];
     }
     else {
-        [self setupNotificationObserving];
+        [self setupTMLNotificationObserving];
     }
 }
 
 #pragma mark - Notifications
-- (void)setupNotificationObserving {
-    if (_observingNotifications == YES) {
+- (void)setupTMLNotificationObserving {
+    if (_observingTMLNotifications == YES) {
         return;
     }
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
@@ -69,30 +70,38 @@
     [notificationCenter addObserver:self selector:@selector(bundleDidChange:)
                                name:TMLBundleDidChangeNotification
                              object:nil];
-    _observingNotifications = YES;
+    [notificationCenter addObserver:self
+                           selector:@selector(tmlDidFinishSync:)
+                               name:TMLBundleSyncDidFinishNotification
+                             object:nil];
+    _observingTMLNotifications = YES;
 }
 
-- (void)teardownNotificationObserving {
-    if (_observingNotifications == NO) {
+- (void)teardownTMLNotificationObserving {
+    if (_observingTMLNotifications == NO) {
         return;
     }
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    _observingNotifications = NO;
+    _observingTMLNotifications = NO;
 }
 
 - (IBAction)toggleMenu:(id)sender {
     [self.viewDeckController toggleLeftViewAnimated:YES];
 }
 
-- (void) localize {
+- (void)localize {
     TMLLocalizeView(self.view);
 }
 
-- (void) translationsLoaded:(NSNotification *)aNotification {
+- (void)translationsLoaded:(NSNotification *)aNotification {
     [self localize];
 }
 
-- (void) bundleDidChange:(NSNotification *)aNotification {
+- (void)bundleDidChange:(NSNotification *)aNotification {
+    [self localize];
+}
+
+- (void)tmlDidFinishSync:(NSNotification *)aNotification {
     [self localize];
 }
 
