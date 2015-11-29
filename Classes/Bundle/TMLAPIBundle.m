@@ -450,6 +450,10 @@
 
 #pragma mark -
 
+- (NSString *)version {
+    return @"API";
+}
+
 - (NSString *)description {
     return [NSString stringWithFormat:@"<%@:API: %p>", [self class], self];
 }
