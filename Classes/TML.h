@@ -203,6 +203,8 @@ extern NSString * const TMLBundleDidChangeNotification;
 
 - (BOOL) hasLocalTranslationsForLocale:(NSString *)locale;
 
+- (BOOL) isInlineTranslationsEnabled;
+
 #pragma mark - Block options
 
 + (void) beginBlockWithOptions:(NSDictionary *) options;

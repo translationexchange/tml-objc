@@ -215,6 +215,9 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
             }];
         }
     }
+    if ([self.application isInlineTranslationsEnabled] == NO) {
+        self.configuration.translationEnabled = NO;
+    }
 }
 
 - (void)setCurrentBundle:(TMLBundle *)currentBundle {
@@ -476,6 +479,15 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
     }
     self.currentBundle = newBundle;
     self.configuration.translationEnabled = translationEnabled;
+}
+
+- (BOOL)isInlineTranslationsEnabled {
+    if (self.application == nil) {
+        // application may start up w/o any project metadata (no release available locally or on CDN)
+        // however, we could still try to comminicate with the API
+        return YES;
+    }
+    return [self.application isInlineTranslationsEnabled];
 }
 
 #pragma mark - Block Options
