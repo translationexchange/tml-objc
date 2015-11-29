@@ -149,7 +149,9 @@
               [hud hide:YES];
           }
           else {
-              [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+              dispatch_async(dispatch_get_main_queue(), ^{
+                  [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+              });
           }
       }];
 }
