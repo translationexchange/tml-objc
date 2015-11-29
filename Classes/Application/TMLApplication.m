@@ -56,13 +56,42 @@ NSString * const TMLApplicationInlineTranslationFeatureKey = @"inline_translatio
     [aCoder encodeObject:self.key forKey:@"key"];
     [aCoder encodeObject:self.secret forKey:@"secret"];
     [aCoder encodeObject:self.name forKey:@"name"];
-    [aCoder encodeObject:self.defaultLocale forKey:@"defaultLocale"];
+    [aCoder encodeObject:self.defaultLocale forKey:@"default_locale"];
     [aCoder encodeInteger:self.threshold forKey:@"threshold"];
     [aCoder encodeObject:self.features forKey:@"features"];
     [aCoder encodeObject:self.tools forKey:@"tools"];
     [aCoder encodeObject:self.languages forKey:@"languages"];
     [aCoder encodeObject:self.sources forKey:@"sources"];
     [aCoder encodeObject:self.defaultLanguage forKey:@"default_language"];
+}
+
+- (void)decodeWithCoder:(NSCoder *)aDecoder {
+    self.applicationID = [aDecoder decodeIntegerForKey:@"id"];
+    self.key = [aDecoder decodeObjectForKey:@"key"];
+    self.secret = [aDecoder decodeObjectForKey:@"secret"];
+    self.name = [aDecoder decodeObjectForKey:@"name"];
+    self.defaultLocale = [aDecoder decodeObjectForKey:@"default_locale"];
+    self.threshold = [aDecoder decodeIntegerForKey:@"threshold"];
+    self.features = [aDecoder decodeObjectForKey:@"features"];
+    NSArray *languages = [aDecoder decodeObjectForKey:@"languages"];
+    if (languages != nil && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
+        languages = [TMLAPISerializer materializeObject:languages
+                                              withClass:[TMLLanguage class]];
+    }
+    self.languages = languages;
+    id defaultLanguage = [aDecoder decodeObjectForKey:@"default_language"];
+    if (defaultLanguage != nil && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
+        defaultLanguage = [TMLAPISerializer materializeObject:defaultLanguage
+                                                    withClass:[TMLLanguage class]];
+    }
+    self.defaultLanguage = defaultLanguage;
+    
+    NSArray *sources = [aDecoder decodeObjectForKey:@"sources"];
+    if (sources.count > 0 && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
+        sources = [TMLAPISerializer materializeObject:sources
+                                            withClass:[TMLSource class]];
+    }
+    self.sources = sources;
 }
 
 - (BOOL)isEqual:(id)object {
@@ -96,35 +125,6 @@ NSString * const TMLApplicationInlineTranslationFeatureKey = @"inline_translatio
                 || [self.sources isEqualToArray:application.sources] == YES)
             && (self.defaultLanguage == application.defaultLanguage
                 || [self.defaultLanguage isEqualToLanguage:application.defaultLanguage] == YES));
-}
-
-- (void)decodeWithCoder:(NSCoder *)aDecoder {
-    self.applicationID = [aDecoder decodeIntegerForKey:@"id"];
-    self.key = [aDecoder decodeObjectForKey:@"key"];
-    self.secret = [aDecoder decodeObjectForKey:@"secret"];
-    self.name = [aDecoder decodeObjectForKey:@"name"];
-    self.defaultLocale = [aDecoder decodeObjectForKey:@"defaultLocale"];
-    self.threshold = [aDecoder decodeIntegerForKey:@"threshold"];
-    self.features = [aDecoder decodeObjectForKey:@"features"];
-    NSArray *languages = [aDecoder decodeObjectForKey:@"languages"];
-    if (languages != nil && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
-        languages = [TMLAPISerializer materializeObject:languages
-                                              withClass:[TMLLanguage class]];
-    }
-    self.languages = languages;
-    id defaultLanguage = [aDecoder decodeObjectForKey:@"default_language"];
-    if (defaultLanguage != nil && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
-        defaultLanguage = [TMLAPISerializer materializeObject:defaultLanguage
-                                                    withClass:[TMLLanguage class]];
-    }
-    self.defaultLanguage = defaultLanguage;
-    
-    NSArray *sources = [aDecoder decodeObjectForKey:@"sources"];
-    if (sources.count > 0 && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
-        sources = [TMLAPISerializer materializeObject:sources
-                                            withClass:[TMLSource class]];
-    }
-    self.sources = sources;
 }
 
 #pragma mark - Languages
