@@ -116,7 +116,7 @@
 
 + (NSString *) generateKeyForLabel: (NSString *) label andDescription: (NSString *) description {
     if (description == nil) description = @"";
-    return [TMLConfiguration md5:[NSString stringWithFormat:@"%@;;;%@", label, description]];
+    return [[NSString stringWithFormat:@"%@;;;%@", label, description] tmlMD5];
 }
 
 - (BOOL) hasTranslations {

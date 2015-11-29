@@ -16,5 +16,6 @@
 - (NSString *)tmlSnakeCaseString;
 - (BOOL)tmlContainsDecoratedTokens;
 - (BOOL)tmlContainsAttributedTokens;
+- (NSString *) tmlMD5;
 
 @end

@@ -29,14 +29,15 @@
  */
 
 #import "NSObject+TMLJSON.h"
+#import "NSString+TmlAdditions.h"
 #import "TML.h"
 #import "TMLAPIClient.h"
 #import "TMLAPISerializer.h"
+#import "TMLApplication.h"
 #import "TMLConfiguration.h"
 #import "TMLLanguage.h"
 #import "TMLSource.h"
 #import "TMLTranslationKey.h"
-#import "TMLApplication.h"
 
 NSString * const TMLAPIOptionsLocale = @"locale";
 NSString * const TMLAPIOptionsIncludeAll = @"all";
@@ -211,7 +212,7 @@ completionBlock:(TMLAPIResponseHandler)completionBlock
     NSString *path = nil;
     NSString *sourceKey = source.key;
     if (sourceKey != nil) {
-        path = [NSString stringWithFormat: @"sources/%@/translations", [TMLConfiguration md5:sourceKey]];
+        path = [NSString stringWithFormat: @"sources/%@/translations", [sourceKey tmlMD5]];
     }
     else {
         path = [NSString stringWithFormat:@"projects/current/translations"];
