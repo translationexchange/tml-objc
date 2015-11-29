@@ -42,6 +42,8 @@
 #import "TMLTranslation.h"
 #import "TMLTranslationKey.h"
 
+NSString * const TMLApplicationInlineTranslationFeatureKey = @"inline_translations";
+
 @interface TMLApplication()
 @property(nonatomic, readwrite) TMLConfiguration *configuration;
 
@@ -152,6 +154,12 @@
     }
     
     return result;
+}
+
+#pragma mark - Features
+
+- (BOOL)isInlineTranslationsEnabled {
+    return [_features[TMLApplicationInlineTranslationFeatureKey] boolValue];
 }
 
 @end

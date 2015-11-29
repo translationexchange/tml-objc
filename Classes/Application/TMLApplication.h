@@ -68,6 +68,9 @@
 // Sources by keys
 @property(nonatomic, strong) NSArray <TMLSource *>*sources;
 
+#pragma mark - Features
+@property(nonatomic, readonly, getter=isInlineTranslationsEnabled) BOOL inlineTranslationsEnabled;
+
 #pragma mark - Internal Use
 @property(nonatomic, readonly) TMLConfiguration *configuration;
 
