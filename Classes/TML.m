@@ -47,7 +47,6 @@
 #import <CommonCrypto/CommonDigest.h>
 
 NSString * const TMLLanguageChangedNotification = @"TMLLanguageChangedNotification";
-NSString * const TMLIsReachableNotification = @"TMLIsReachableNotification";
 
 NSString * const TMLLanguagePreviousLocaleUserInfoKey = @"TMLLanguagePreviousLocaleUserInfoKey";
 
