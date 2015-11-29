@@ -57,7 +57,6 @@ NSString * const TMLOptionsHostName = @"host";
 NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotification";
 
 @interface TML() {
-    NSTimer *_translationSubmissionTimer;
     BOOL _observingNotifications;
 }
 @property(strong, nonatomic) TMLConfiguration *configuration;
@@ -107,7 +106,6 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
 }
 
 - (void)dealloc {
-    [self stopSubmissionTimerIfNecessary];
     [self teardownNotificationObserving];
 }
 
@@ -124,6 +122,7 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
     else {
         configuration = self.configuration;
     }
+    
     TMLAPIClient *apiClient = [[TMLAPIClient alloc] initWithURL:configuration.apiURL
                                                     accessToken:accessToken];
     self.apiClient = apiClient;
@@ -765,49 +764,9 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
 }
 
 - (void) submitMissingTranslationKeys {
-    if (self.missingTranslationKeysBySources == nil
-        || [self.missingTranslationKeysBySources count] == 0) {
-        [self stopSubmissionTimerIfNecessary];
-        return;
-    }
-    
-    TMLInfo(@"Submitting missing translations...");
-    
-    NSMutableDictionary *missingTranslations = self.missingTranslationKeysBySources;
-    [[[TML sharedInstance] apiClient] registerTranslationKeysBySourceKey:missingTranslations
-                                                         completionBlock:^(BOOL success, NSError *error) {
-                                                             //                                           if (success == YES && missingTranslations.count > 0) {
-                                                             //                                               NSMutableDictionary *existingSources = [NSMutableDictionary dictionary];
-                                                             //                                               for (TMLSource *source in existingSources) {
-                                                             //                                                   existingSources[source.key] = source;
-                                                             //                                               }
-                                                             //                                               for (NSString *sourceKey in missingTranslations) {
-                                                             //                                                   [existingSources removeObjectForKey:sourceKey];
-                                                             //                                               }
-                                                             //                                               self.sources = [existingSources allValues];
-                                                             //                                           }
-                                                         }];
-    
-    [missingTranslations removeAllObjects];
-}
-
-#pragma mark - Timer
-- (void)startSubmissionTimerIfNecessary {
-    if (_translationSubmissionTimer != nil) {
-        return;
-    }
-    _translationSubmissionTimer = [NSTimer timerWithTimeInterval:3.
-                                     target:self
-                                   selector:@selector(submitMissingTranslationKeys)
-                                   userInfo:nil
-                                    repeats:YES];
-    [[NSRunLoop mainRunLoop] addTimer:_translationSubmissionTimer forMode:NSDefaultRunLoopMode];
-}
-
-- (void)stopSubmissionTimerIfNecessary {
-    if (_translationSubmissionTimer != nil) {
-        [_translationSubmissionTimer invalidate];
-        _translationSubmissionTimer = nil;
+    if ([self.currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
+        TMLAPIBundle *bundle = (TMLAPIBundle *)self.currentBundle;
+        [bundle sync];
     }
 }
 
