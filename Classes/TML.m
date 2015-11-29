@@ -48,9 +48,11 @@
 
 #pragma mark - Notification Constants
 NSString * const TMLLanguageChangedNotification = @"TMLLanguageChangedNotification";
-NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotification";
+NSString * const TMLLocalizationDataChangedNotification = @"TMLLocalizationDataChangedNotification";
 
+#pragma mark - UserInfo Constants
 NSString * const TMLLanguagePreviousLocaleUserInfoKey = @"TMLLanguagePreviousLocaleUserInfoKey";
+
 
 @interface TML() {
     BOOL _observingNotifications;
@@ -223,7 +225,7 @@ NSString * const TMLLanguagePreviousLocaleUserInfoKey = @"TMLLanguagePreviousLoc
     if ([currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
         [(TMLAPIBundle *)currentBundle sync];
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:TMLBundleDidChangeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:TMLLocalizationDataChangedNotification object:nil];
 }
 
 - (void) initTranslationBundle:(void(^)(TMLBundle *bundle))completion {

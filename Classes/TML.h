@@ -35,9 +35,9 @@
 
 #pragma mark - Notifications
 extern NSString * const TMLLanguageChangedNotification;
-extern NSString * const TMLBundleDidChangeNotification;
+extern NSString * const TMLLocalizationDataChangedNotification;
 
-#pragma mark - Keys for looking up object inside info dictionaries passed around by TML
+#pragma mark - UserInfo Keys
 extern NSString * const TMLLanguagePreviousLocaleUserInfoKey;
 
 @protocol TMLDelegate;

@@ -68,7 +68,7 @@
                                name:TMLLanguageChangedNotification
                              object:nil];
     [notificationCenter addObserver:self selector:@selector(bundleDidChange:)
-                               name:TMLBundleDidChangeNotification
+                               name:TMLLocalizationDataChangedNotification
                              object:nil];
     [notificationCenter addObserver:self
                            selector:@selector(tmlDidFinishSync:)
