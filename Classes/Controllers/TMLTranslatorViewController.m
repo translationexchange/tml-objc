@@ -76,16 +76,6 @@
 }
 
 + (void) translateFromController:(UIViewController *) controller withOptions: (NSDictionary *) options {
-    TMLApplication *app = [TML sharedInstance].application;
-
-    if (![TMLConfiguration isHostAvailable:[app.tools valueForKey:@"host"]]) {
-        [[[UIAlertView alloc] initWithTitle: @"Translation Center"
-                                    message: @"You are not currently conntected to the internet. Please enable connection and try again."
-                                   delegate: self
-                          cancelButtonTitle: @"OK"
-                          otherButtonTitles: nil] show];
-    }
-        
     TMLTranslatorViewController *translator = [[TMLTranslatorViewController alloc] init];
     translator.translationKey = [options objectForKey:@"translation_key"];
     [controller presentViewController:translator animated: YES completion: nil];

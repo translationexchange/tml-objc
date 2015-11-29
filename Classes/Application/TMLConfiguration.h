@@ -34,7 +34,9 @@
 
 @property(nonatomic, strong) NSURL *apiURL;
 
-@property(nonatomic, strong) NSMutableDictionary *settings;
+@property(nonatomic, readwrite) NSString *accessToken;
+
+@property(nonatomic, readwrite) NSString *applicationKey;
 
 @property(nonatomic, strong) NSString *defaultLocale;
 
@@ -52,13 +54,9 @@
 
 @property(nonatomic) BOOL inContextTranslatorEnabled;
 
-+ (id) persistentValueForKey: (NSString *) key;
-+ (void) setPersistentValue:(id) value forKey: (NSString *) key;
-+ (BOOL) isHostAvailable: (NSString *) host;
-
-// TODO: this should probably me moved to either NSString+TMLUtils or TMLUtility or something rather
-+ (NSString *) uuid;
-+ (NSString *) md5: (NSString *) value;
+- (instancetype)initWithApplicationKey:(NSString *)applicationKey
+                           accessToken:(NSString *)accessToken;
+@property(readonly, nonatomic, getter=isValidConfiguration) BOOL validConfiguration;
 
 - (id) variableMethodForContext:(NSString *) keyword andVariableName: (NSString *) varName;
 - (void) setVariableMethod: (id) method forContext:(NSString *) keyword andVariableName: (NSString *) varName;

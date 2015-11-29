@@ -39,7 +39,8 @@
 #define kTMLServiceHost @"https://api.translationexchange.com"
 #endif
 
-NSString * const TMLUUIDDefaultsKey = @"TMLUUID";
+#define DEFAULT_LOCALE @"en"
+
 NSString * const TMLDefaultLocaleDefaultsKey = @"default_locale";
 NSString * const TMLCurrentLocaleDefaultsKey = @"current_locale";
 NSString * const TMLTranslationEnabledDefaultsKey = @"translation_enabled";
@@ -52,72 +53,39 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translation_enabled";
 
 @implementation TMLConfiguration
 
-+ (id) persistentValueForKey: (NSString *) key {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:key];
+#pragma mark - Init
+
+- (instancetype)init {
+    return [self initWithApplicationKey:nil accessToken:nil];
 }
 
-+ (void) setPersistentValue:(id) value forKey: (NSString *) key {
-    [[NSUserDefaults standardUserDefaults] setValue:value forKey:key];
-    [[NSUserDefaults standardUserDefaults] synchronize];
-}
-
-+ (NSString *) uuid {
-    NSString *uuid = [self persistentValueForKey:TMLUUIDDefaultsKey];
-    if (!uuid) {
-        CFUUIDRef uuidRef = CFUUIDCreate(NULL);
-        CFStringRef uuidStringRef = CFUUIDCreateString(NULL, uuidRef);
-        CFRelease(uuidRef);
-        uuid = (__bridge_transfer NSString *)uuidStringRef;
-        [self setPersistentValue:uuid forKey:TMLUUIDDefaultsKey];
-    }
-    return uuid;
-}
-
-
-+ (BOOL) isHostAvailable: (NSString *) host {
-    return YES;
-//    CFNetDiagnosticRef dReference;
-//    dReference = CFNetDiagnosticCreateWithURL (NULL, (__bridge CFURLRef)[NSURL URLWithString:host]);
-//    
-//    CFNetDiagnosticStatus status;
-//    status = CFNetDiagnosticCopyNetworkStatusPassively (dReference, NULL);
-//    CFRelease (dReference);
-//    
-//    if ( status == kCFNetDiagnosticConnectionUp )
-//    {
-//        TMLDebug (@"Connection is Available");
-//        return YES;
-//    }
-//    else
-//    {
-//        TMLDebug (@"Connection is down");
-//        return NO;
-//    }
-}
-
-- (id) init {
-    if (self == [super init]) {
-        if ([self.class persistentValueForKey:TMLDefaultLocaleDefaultsKey] == nil) {
-            self.defaultLocale = @"en";
-        } else {
-            self.defaultLocale = [self.class persistentValueForKey:TMLDefaultLocaleDefaultsKey];
-        }
-
-        if ([self.class persistentValueForKey:TMLCurrentLocaleDefaultsKey] == nil) {
-            self.currentLocale = [self deviceLocale]; // @"en-US";
-            TMLDebug(@"Current locale: %@", self.currentLocale);
-        } else {
-            self.currentLocale = [self.class persistentValueForKey:TMLCurrentLocaleDefaultsKey];
-        }
-
+- (instancetype)initWithApplicationKey:(NSString *)applicationKey accessToken:(NSString *)accessToken {
+    if (self = [super init]) {
+        self.applicationKey = applicationKey;
+        self.accessToken = accessToken;
         [self setupDefaultContextRules];
         [self setupDefaultTokens];
         [self setupLocalization];
         self.apiURL = [NSURL URLWithString:kTMLServiceHost];
-        
-        self.translationEnabled = [[self.class persistentValueForKey:TMLTranslationEnabledDefaultsKey] boolValue];
     }
     return self;
+}
+
+#pragma mark - Validation
+
+- (BOOL)isValidConfiguration {
+    return self.accessToken.length > 0 && self.applicationKey.length > 0 && self.apiURL != nil;
+}
+
+#pragma mark - Persistence
+
+- (id) persistentValueForKey: (NSString *) key {
+    return [[NSUserDefaults standardUserDefaults] valueForKey:key];
+}
+
+- (void) setPersistentValue:(id) value forKey: (NSString *) key {
+    [[NSUserDefaults standardUserDefaults] setValue:value forKey:key];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 - (NSString *)description {
@@ -125,12 +93,14 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translation_enabled";
 }
 
 - (BOOL)isTranslationEnabled {
-    return [[self.class persistentValueForKey:TMLTranslationEnabledDefaultsKey] boolValue];
+    return [[self persistentValueForKey:TMLTranslationEnabledDefaultsKey] boolValue];
 }
 
 - (void)setTranslationEnabled:(BOOL)translationEnabled {
-    [self.class setPersistentValue:@(translationEnabled) forKey:TMLTranslationEnabledDefaultsKey];
+    [self setPersistentValue:@(translationEnabled) forKey:TMLTranslationEnabledDefaultsKey];
 }
+
+#pragma mark - Locales
 
 - (NSString *) deviceLocale {
     NSLocale *locale = [NSLocale currentLocale];
@@ -140,14 +110,28 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translation_enabled";
     return deviceLocale;
 }
 
+- (NSString *)currentLocale {
+    NSString *locale = [self persistentValueForKey:TMLCurrentLocaleDefaultsKey];
+    if (locale == nil) {
+        return self.defaultLocale;
+    }
+    return locale;
+}
+
 - (void) setCurrentLocale:(NSString *)newLocale {
-    _currentLocale = newLocale;
-    [TMLConfiguration setPersistentValue:newLocale forKey:TMLCurrentLocaleDefaultsKey];
+    [self setPersistentValue:newLocale forKey:TMLCurrentLocaleDefaultsKey];
+}
+
+- (NSString *)defaultLocale {
+    NSString *locale = [self persistentValueForKey:TMLDefaultLocaleDefaultsKey];
+    if (locale == nil) {
+        locale = DEFAULT_LOCALE;
+    }
+    return locale;
 }
 
 - (void) setDefaultLocale:(NSString *)newLocale {
-    _defaultLocale = newLocale;
-    [TMLConfiguration setPersistentValue:newLocale forKey:TMLCurrentLocaleDefaultsKey];
+    [self setPersistentValue:newLocale forKey:TMLDefaultLocaleDefaultsKey];
 }
 
 - (void) setupDefaultContextRules {

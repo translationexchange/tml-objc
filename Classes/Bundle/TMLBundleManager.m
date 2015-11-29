@@ -88,11 +88,11 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 }
 
 - (NSString *)defaultBundleInstallationDirectory {
-    return [self bundleInstallationDirectoryForApplicationKey:[[TML sharedInstance] applicationKey]];
+    return [self bundleInstallationDirectoryForApplicationKey:[TML applicationKey]];
 }
 
 - (NSString *)installPathForBundleVersion:(NSString *)version {
-    return [self installPathForBundleVersion:version applicationKey:[[TML sharedInstance] applicationKey]];
+    return [self installPathForBundleVersion:version applicationKey:[TML applicationKey]];
 }
 
 - (NSString *)installPathForBundleVersion:(NSString *)version applicationKey:(NSString *)applicationKey {
@@ -136,7 +136,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
         }
         
         if (application.key == nil
-            || [[[TML sharedInstance] applicationKey] isEqualToString:application.key] == NO) {
+            || [[TML applicationKey] isEqualToString:application.key] == NO) {
             installError = [NSError errorWithDomain:TMLBundleManagerErrorDomain
                                                code:TMLBundleManagerInvalidApplicationKeyError
                                            userInfo:nil];
@@ -315,7 +315,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 {
     // Sanity checks
     NSError *error;
-    NSString *appKey = [[TML sharedInstance] applicationKey];
+    NSString *appKey = [TML applicationKey];
     if (version == nil) {
         TMLError(@"Tried to install published bundle w/o a version string");
         error = [NSError errorWithDomain:TMLBundleManagerErrorDomain
@@ -513,7 +513,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     // Fetch resource data
     NSURL *resourceURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/%@",
                                                [self archiveURL],
-                                               [[TML sharedInstance] applicationKey],
+                                               [TML applicationKey],
                                                bundleVersion,
                                                resourcePath]];
     [self fetchURL:resourceURL
@@ -541,7 +541,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 
 - (void) fetchPublishedBundleInfo:(void(^)(NSDictionary *info, NSError *error))completionBlock {
     NSError *error = nil;
-    NSString *applicationKey = [[TML sharedInstance] applicationKey];
+    NSString *applicationKey = [TML applicationKey];
     if (applicationKey == nil) {
         error = [NSError errorWithDomain:TMLBundleManagerErrorDomain
                                     code:TMLBundleManagerInvalidApplicationKeyError

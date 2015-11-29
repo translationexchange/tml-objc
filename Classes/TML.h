@@ -33,27 +33,18 @@
 
 @class TMLConfiguration, TMLLanguage, TMLApplication, TMLAPIClient, TMLPostOffice, TMLTranslationKey, TMLBundle;
 
+#pragma mark - Notifications
 extern NSString * const TMLLanguageChangedNotification;
 extern NSString * const TMLIsReachableNotification;
 extern NSString * const TMLIsUnreachableNotification;
-
-extern NSString * const TMLLanguagePreviousLocaleUserInfoKey;
-
 extern NSString * const TMLBundleDidChangeNotification;
+
+#pragma mark - Keys for looking up object inside info dictionaries passed around by TML
+extern NSString * const TMLLanguagePreviousLocaleUserInfoKey;
 
 @protocol TMLDelegate;
 
 @interface TML : NSObject
-
-/**
- *  Application key
- */
-@property(nonatomic, readonly) NSString *applicationKey;
-
-/**
- *  Application access token
- */
-@property(nonatomic, readonly) NSString *accessToken;
 
 /**
  *  Holds TML configuration settings
@@ -126,9 +117,7 @@ extern NSString * const TMLBundleDidChangeNotification;
 + (TML *) sharedInstanceWithApplicationKey:(NSString *)applicationKey
                                accessToken:(NSString *)token;
 
-+ (TML *) sharedInstanceWithApplicationKey:(NSString *)applicationKey
-                               accessToken:(NSString *)token
-                             configuration:(TMLConfiguration *)configuration;
++ (TML *) sharedInstanceWithConfiguration:(TMLConfiguration *)configuration;
 
 #pragma mark - Configuration
 
@@ -214,6 +203,8 @@ extern NSString * const TMLBundleDidChangeNotification;
 + (void) endBlockWithOptions;
 
 #pragma mark - Class methods
+
++ (NSString *) applicationKey;
 
 + (TMLApplication *) application;
 

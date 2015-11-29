@@ -60,16 +60,12 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
     BOOL _observingNotifications;
 }
 @property(strong, nonatomic) TMLConfiguration *configuration;
-@property(strong, nonatomic) NSString *applicationKey;
-@property(strong, nonatomic) NSString *accessToken;
 @property(strong, nonatomic) TMLAPIClient *apiClient;
 @property(strong, nonatomic) TMLPostOffice *postOffice;
 @property(nonatomic, readwrite) TMLBundle *currentBundle;
-@property(nonatomic, strong) NSMutableDictionary <NSString *, NSMutableSet *>*missingTranslationKeysBySources;
 @end
 
 @implementation TML
-
 
 // Shared instance of TML
 + (TML *)sharedInstance {
@@ -84,22 +80,58 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
 + (TML *) sharedInstanceWithApplicationKey:(NSString *)applicationKey
                                accessToken:(NSString *)token
 {
-    return [self sharedInstanceWithApplicationKey:applicationKey
-                                      accessToken:token
-                                    configuration:nil];
+    TMLConfiguration *config = [[TMLConfiguration alloc] initWithApplicationKey:applicationKey
+                                                                    accessToken:token];
+    return [self sharedInstanceWithConfiguration:config];
 }
 
-+ (TML *) sharedInstanceWithApplicationKey:(NSString *)applicationKey accessToken:(NSString *)token configuration:(TMLConfiguration *)configuration {
-    [[self sharedInstance] updateWithApplicationKey:applicationKey accessToken:token configuration:configuration];
-    return [self sharedInstance];
++ (TML *) sharedInstanceWithConfiguration:(TMLConfiguration *)configuration {
+    TML *tml = [self sharedInstance];
+    tml = [tml initWithConfiguration:configuration];
+    return tml;
+}
+
+#pragma mark - Class side accessors
+
++ (NSString *)applicationKey {
+    return [[[self sharedInstance] configuration] applicationKey];
 }
 
 #pragma mark - Init
 
-- (id) init {
+- (instancetype) initWithConfiguration:(TMLConfiguration *)configuration {
     if (self == [super init]) {
-        self.configuration = [[TMLConfiguration alloc] init];
-        self.missingTranslationKeysBySources = [NSMutableDictionary dictionary];
+        if (configuration == nil) {
+            self.configuration = [[TMLConfiguration alloc] init];
+        }
+        else {
+            self.configuration = configuration;
+        }
+        
+        if (configuration.accessToken != nil) {
+            TMLAPIClient *apiClient = [[TMLAPIClient alloc] initWithURL:configuration.apiURL
+                                                            accessToken:configuration.accessToken];
+            self.apiClient = apiClient;
+        }
+        
+        [self initTranslationBundle:^(TMLBundle *bundle) {
+            if (bundle == nil) {
+                TMLError(@"Failed to initialize translation bundle");
+            }
+            else {
+                if (self.translationEnabled == NO) {
+                    self.currentBundle = bundle;
+                }
+            }
+        }];
+        
+        self.translationEnabled = configuration.translationEnabled;
+        if (self.translationEnabled == YES) {
+            TMLAPIBundle *apiBundle = (TMLAPIBundle *)[TMLBundle apiBundle];
+            self.currentBundle = apiBundle;
+            [apiBundle sync];
+        }
+        
         [self setupNotificationObserving];
     }
     return self;
@@ -107,43 +139,6 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
 
 - (void)dealloc {
     [self teardownNotificationObserving];
-}
-
-#pragma mark - Initialization
-- (void) updateWithApplicationKey:(NSString *)applicationKey
-                      accessToken:(NSString *)accessToken
-                    configuration:(TMLConfiguration *)configuration
-{
-    self.applicationKey = applicationKey;
-    self.accessToken = accessToken;
-    if (configuration != nil) {
-        self.configuration = configuration;
-    }
-    else {
-        configuration = self.configuration;
-    }
-    
-    TMLAPIClient *apiClient = [[TMLAPIClient alloc] initWithURL:configuration.apiURL
-                                                    accessToken:accessToken];
-    self.apiClient = apiClient;
-    
-    [self initTranslationBundle:^(TMLBundle *bundle) {
-        if (bundle == nil) {
-            TMLError(@"Failed to initialize translation bundle");
-        }
-        else {
-            if (self.translationEnabled == NO) {
-                self.currentBundle = bundle;
-            }
-        }
-    }];
-    
-    self.translationEnabled = configuration.translationEnabled;
-    if (self.translationEnabled == YES) {
-        TMLAPIBundle *apiBundle = (TMLAPIBundle *)[TMLBundle apiBundle];
-        self.currentBundle = apiBundle;
-        [apiBundle sync];
-    }
 }
 
 #pragma mark - Notifications
