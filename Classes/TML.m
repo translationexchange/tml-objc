@@ -46,13 +46,11 @@
 #import "TMLTranslationKey.h"
 #import <CommonCrypto/CommonDigest.h>
 
+#pragma mark - Notification Constants
 NSString * const TMLLanguageChangedNotification = @"TMLLanguageChangedNotification";
+NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotification";
 
 NSString * const TMLLanguagePreviousLocaleUserInfoKey = @"TMLLanguagePreviousLocaleUserInfoKey";
-
-NSString * const TMLOptionsHostName = @"host";
-
-NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotification";
 
 @interface TML() {
     BOOL _observingNotifications;
