@@ -63,7 +63,11 @@
 // Languages
 @property(nonatomic, strong) NSArray <TMLLanguage *>*languages;
 
-@property(nonatomic, strong) TMLLanguage *defaultLanguage;
+/**
+ *  Readonly accessor for the default language.
+ *  This is really a shortcut for calling -languageForLocale: witih value of defaultLocale property.
+ */
+@property(nonatomic, readonly) TMLLanguage *defaultLanguage;
 
 // Sources by keys
 @property(nonatomic, strong) NSArray <TMLSource *>*sources;

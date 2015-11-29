@@ -44,7 +44,9 @@
 
 NSString * const TMLApplicationInlineTranslationFeatureKey = @"inline_translations";
 
-@interface TMLApplication()
+@interface TMLApplication() {
+    TMLLanguage *_defaultLanguage;
+}
 @property(nonatomic, readwrite) TMLConfiguration *configuration;
 
 @end
@@ -78,7 +80,6 @@ NSString * const TMLApplicationInlineTranslationFeatureKey = @"inline_translatio
                                               withClass:[TMLLanguage class]];
     }
     self.languages = languages;
-    self.defaultLanguage = [self languageForLocale:self.defaultLocale];
     
     NSArray *sources = [aDecoder decodeObjectForKey:@"sources"];
     if (sources.count > 0 && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
@@ -132,6 +133,40 @@ NSString * const TMLApplicationInlineTranslationFeatureKey = @"inline_translatio
         }
     }
     return result;
+}
+
+- (TMLLanguage *)defaultLanguage {
+    if (_defaultLanguage == nil) {
+        NSString *defaultLocale = self.defaultLocale;
+        for (TMLLanguage *lang in self.languages) {
+            if ([lang.locale isEqualToString:defaultLocale] == YES) {
+                _defaultLanguage = lang;
+                break;
+            }
+        }
+    }
+    return _defaultLanguage;
+}
+
+- (void)setLanguages:(NSArray<TMLLanguage *> *)languages {
+    if (languages == _languages
+        || ([_languages isEqualToArray:languages]) == YES) {
+        return;
+    }
+    
+    _languages = languages;
+    // We'll reconstruct default language
+    _defaultLanguage = nil;
+}
+
+- (void)setDefaultLocale:(NSString *)defaultLocale {
+    if (_defaultLocale == defaultLocale
+        || ([_defaultLocale isEqualToString:defaultLocale]) == YES) {
+        return;
+    }
+    _defaultLocale = defaultLocale;
+    // We'll reconstruct default language
+    _defaultLanguage = nil;
 }
 
 #pragma mark - Sources
