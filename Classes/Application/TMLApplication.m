@@ -62,7 +62,6 @@ NSString * const TMLApplicationInlineTranslationFeatureKey = @"inline_translatio
     [aCoder encodeObject:self.tools forKey:@"tools"];
     [aCoder encodeObject:self.languages forKey:@"languages"];
     [aCoder encodeObject:self.sources forKey:@"sources"];
-    [aCoder encodeObject:self.defaultLanguage forKey:@"default_language"];
 }
 
 - (void)decodeWithCoder:(NSCoder *)aDecoder {
@@ -79,12 +78,7 @@ NSString * const TMLApplicationInlineTranslationFeatureKey = @"inline_translatio
                                               withClass:[TMLLanguage class]];
     }
     self.languages = languages;
-    id defaultLanguage = [aDecoder decodeObjectForKey:@"default_language"];
-    if (defaultLanguage != nil && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
-        defaultLanguage = [TMLAPISerializer materializeObject:defaultLanguage
-                                                    withClass:[TMLLanguage class]];
-    }
-    self.defaultLanguage = defaultLanguage;
+    self.defaultLanguage = [self languageForLocale:self.defaultLocale];
     
     NSArray *sources = [aDecoder decodeObjectForKey:@"sources"];
     if (sources.count > 0 && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
