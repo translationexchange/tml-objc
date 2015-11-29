@@ -47,26 +47,6 @@ extern NSString * const TMLLanguagePreviousLocaleUserInfoKey;
 @interface TML : NSObject
 
 /**
- *  Holds TML configuration settings
- */
-@property(nonatomic, readonly) TMLConfiguration *configuration;
-
-/**
- *  Holds the application information
- */
-@property(nonatomic, readonly) TMLApplication *application;
-
-/**
- *  Holds default language of the application
- */
-@property(nonatomic, strong) TMLLanguage *defaultLanguage;
-
-/**
- *  Holds current language, per user selection
- */
-@property(nonatomic, strong) TMLLanguage *currentLanguage;
-
-/**
  *  Holds the current source key
  */
 @property(nonatomic, strong) NSString *currentSource;
@@ -119,7 +99,23 @@ extern NSString * const TMLLanguagePreviousLocaleUserInfoKey;
 
 + (TML *) sharedInstanceWithConfiguration:(TMLConfiguration *)configuration;
 
+#pragma mark - Application
+
+/**
+ *  Holds the application information
+ */
+@property(nonatomic, readonly) TMLApplication *application;
+
++ (TMLApplication *) application;
+
++ (NSString *) applicationKey;
+
 #pragma mark - Configuration
+
+/**
+ *  Holds TML configuration settings
+ */
+@property(nonatomic, readonly) TMLConfiguration *configuration;
 
 /**
  *  Modifies current configuration
@@ -134,6 +130,26 @@ extern NSString * const TMLLanguagePreviousLocaleUserInfoKey;
  *  @return Current configuration object
  */
 + (TMLConfiguration *) configuration;
+
+#pragma mark - Languages and Locales
+
++ (NSString *) defaultLocale;
+- (NSString *) defaultLocale;
+
++ (TMLLanguage *) defaultLanguage;
+- (TMLLanguage *) defaultLanguage;
+
++ (NSString *) currentLocale;
+- (NSString *) currentLocale;
+
++ (TMLLanguage *) currentLanguage;
+- (TMLLanguage *) currentLanguage;
+
++ (void) changeLocale:(NSString *)locale completionBlock:(void(^)(BOOL success))completionBlock;
+- (void) changeLocale:(NSString *)locale completionBlock:(void(^)(BOOL success))completionBlock;
+
++ (void) reloadTranslations;
+- (void) reloadTranslations;
 
 #pragma mark - Translating
 
@@ -201,20 +217,6 @@ extern NSString * const TMLLanguagePreviousLocaleUserInfoKey;
 + (NSObject *) blockOptionForKey: (NSString *) key;
 
 + (void) endBlockWithOptions;
-
-#pragma mark - Class methods
-
-+ (NSString *) applicationKey;
-
-+ (TMLApplication *) application;
-
-+ (TMLLanguage *) defaultLanguage;
-
-+ (TMLLanguage *) currentLanguage;
-
-+ (void) changeLocale:(NSString *)locale completionBlock:(void(^)(BOOL success))completionBlock;
-
-+ (void) reloadTranslations;
 
 @end
 

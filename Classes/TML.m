@@ -97,6 +97,11 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
     return [[[self sharedInstance] configuration] applicationKey];
 }
 
++ (TMLApplication *) application {
+    return [[TML sharedInstance] application];
+}
+
+
 #pragma mark - Init
 
 - (instancetype) initWithConfiguration:(TMLConfiguration *)configuration {
@@ -194,14 +199,12 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
     if (bundle == nil) {
         TMLWarn(@"Setting current bundle not nil");
         self.application = nil;
-        self.currentLanguage = nil;
-        self.defaultLanguage = nil;
     }
     else {
         TMLApplication *newApplication = [bundle application];
         TMLInfo(@"Initializing from local bundle: %@", bundle.version);
         self.application = newApplication;
-        NSString *ourLocale = self.currentLanguage.locale;
+        NSString *ourLocale = [self currentLocale];
         if (ourLocale != nil && [bundle.availableLocales containsObject:ourLocale] == NO) {
             [bundle loadTranslationsForLocale:ourLocale completion:^(NSError *error) {
                 if (error != nil) {
@@ -261,8 +264,8 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
             NSString *publishedVersion = info[TMLBundleManagerVersionKey];
             if (publishedVersion != nil) {
                 NSMutableArray *locales = [NSMutableArray array];
-                NSString *defaultLocale = self.defaultLanguage.locale;
-                NSString *currentLocale = self.currentLanguage.locale;
+                NSString *defaultLocale = [self defaultLocale];
+                NSString *currentLocale = [self currentLocale];
                 if (defaultLocale != nil) {
                     [locales addObject:defaultLocale];
                 }
@@ -333,8 +336,8 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
         if (mainBundle == nil
             || [mainBundle.version compareToTMLTranslationBundleVersion:version] == NSOrderedAscending) {
             if (install == YES) {
-                NSString *defaultLocale = self.defaultLanguage.locale;
-                NSString *currentLocale = self.currentLanguage.locale;
+                NSString *defaultLocale = [self defaultLocale];
+                NSString *currentLocale = [self currentLocale];
                 NSMutableArray *localesToFetch = [NSMutableArray array];
                 if (defaultLocale != nil) {
                     [localesToFetch addObject:defaultLocale];
@@ -387,10 +390,7 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
     }
     _application = application;
     if (application != nil) {
-        TMLConfiguration *configuration = self.configuration;
         self.postOffice = [[TMLPostOffice alloc] initWithApplication:application];
-        self.defaultLanguage = [application languageForLocale: configuration.defaultLocale];
-        self.currentLanguage = [application languageForLocale: configuration.currentLocale];
     }
 }
 
@@ -530,18 +530,42 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
     [self.blockOptions removeObjectAtIndex:0];
 }
 
-#pragma mark - Class Methods
-
-+ (TMLApplication *) application {
-    return [[TML sharedInstance] application];
-}
+#pragma mark - Languages and Locales
 
 + (TMLLanguage *) defaultLanguage {
     return [[TML sharedInstance] defaultLanguage];
 }
 
+- (TMLLanguage *)defaultLanguage {
+    return [[self application] languageForLocale:[self defaultLocale]];
+}
+
++ (NSString *)defaultLocale {
+    return [[TML sharedInstance] defaultLocale];
+}
+
+- (NSString *)defaultLocale {
+    NSString *locale = self.application.defaultLocale;
+    if (locale == nil) {
+        locale = self.configuration.defaultLocale;
+    }
+    return locale;
+}
+
 + (TMLLanguage *) currentLanguage {
     return [[TML sharedInstance] currentLanguage];
+}
+
+- (TMLLanguage *)currentLanguage {
+    return [[self application] languageForLocale:[self currentLocale]];
+}
+
++ (NSString *)currentLocale {
+    return [[TML sharedInstance] currentLocale];
+}
+
+- (NSString *)currentLocale {
+    return self.configuration.currentLocale;
 }
 
 + (void) changeLocale:(NSString *)locale
@@ -550,8 +574,6 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
     [[TML sharedInstance] changeLocale:locale
                        completionBlock:completionBlock];
 }
-
-#pragma mark - Locales
 
 - (void) changeLocale:(NSString *)locale
       completionBlock:(void(^)(BOOL success))completionBlock
@@ -594,7 +616,6 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
     }
     // TODO: do we really need toi change both ourselves and config?
     NSString *oldLocale = self.configuration.currentLocale;
-    self.currentLanguage = newLanguage;
     self.configuration.currentLocale = newLanguage.locale;
     [self didChangeFromLocale:oldLocale];
 }
@@ -616,7 +637,7 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
 }
 
 - (BOOL)isTranslationKeyRegistered:(NSString *)translationKey {
-    NSArray *results = [self translationsForKey:translationKey locale:self.currentLanguage.locale];
+    NSArray *results = [self translationsForKey:translationKey locale:[self currentLocale]];
     return results != nil;
 }
 
@@ -637,14 +658,18 @@ NSString * const TMLBundleDidChangeNotification = @"TMLBundleDidChangeNotificati
              andOptions:(NSDictionary *)options
 {
     // if TML is used in a disconnected mode or has not been initialized, fallback onto English US
-    if (self.currentLanguage == nil) {
-        self.defaultLanguage = [TMLLanguage defaultLanguage];
-        self.currentLanguage = self.defaultLanguage;
+    NSString *currentLocale = [self currentLocale];
+    TMLLanguage *currentLanguage = nil;
+    if (currentLocale != nil) {
+        currentLanguage = [self.application languageForLocale:currentLocale];
     }
-    id result = [self.currentLanguage translate:label
-                                withDescription:description
-                                      andTokens:tokens
-                                     andOptions:options];
+    if (currentLanguage == nil) {
+        currentLanguage = [TMLLanguage defaultLanguage];
+    }
+    id result = [currentLanguage translate:label
+                           withDescription:description
+                                 andTokens:tokens
+                                andOptions:options];
     return (result == nil) ? label : result;
 }
 

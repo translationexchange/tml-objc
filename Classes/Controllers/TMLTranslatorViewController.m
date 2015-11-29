@@ -115,8 +115,8 @@
 - (void) viewDidLoad {
     [super viewDidLoad];
     
-    TMLApplication *app = [TML sharedInstance].application;
-    TMLLanguage *lang = [TML sharedInstance].currentLanguage;
+    TMLApplication *app = [TML application];
+    TMLLanguage *lang = [TML currentLanguage];
     
     NSString *url = nil;
 

@@ -263,19 +263,12 @@
         locales = [NSMutableArray array];
     }
     
-    TML *tml = [TML sharedInstance];
-    NSString *defaultLocale = [[tml defaultLanguage] locale];
-    if (defaultLocale == nil) {
-        defaultLocale = tml.configuration.defaultLocale;
-    }
+    NSString *defaultLocale = [TML defaultLocale];
     if (defaultLocale != nil && [locales containsObject:defaultLocale] == NO) {
         [locales addObject:defaultLocale];
     }
     
-    NSString *currentLocale = [[tml currentLanguage] locale];
-    if (currentLocale == nil) {
-        currentLocale = tml.configuration.currentLocale;
-    }
+    NSString *currentLocale = [TML currentLocale];
     if (currentLocale != nil && [locales containsObject:currentLocale] == NO) {
         [locales addObject:currentLocale];
     }

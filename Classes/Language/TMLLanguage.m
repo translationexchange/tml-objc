@@ -220,7 +220,7 @@
                          description:(NSString *)description
                              options:(NSDictionary *)options
 {
-    NSString *keyLocale = (NSString *) [self valueFromOptions:options forKey:@"locale" withDefault:[[TML sharedInstance] defaultLanguage].locale];
+    NSString *keyLocale = (NSString *) [self valueFromOptions:options forKey:@"locale" withDefault:[TML defaultLocale]];
     NSNumber *keyLevel = (NSNumber *) [self valueFromOptions:options forKey:@"level" withDefault:[NSNumber numberWithInt:0]];
 
     TMLTranslationKey *translationKey = [[TMLTranslationKey alloc] init];
