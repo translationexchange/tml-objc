@@ -183,7 +183,9 @@
         } else if (indexPath.row == 3) {
             TMLOpenTranslatorTools(self);
         }
+        [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
+    
 }
 
 @end
