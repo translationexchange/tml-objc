@@ -36,7 +36,6 @@
 #pragma mark - Notifications
 extern NSString * const TMLLanguageChangedNotification;
 extern NSString * const TMLIsReachableNotification;
-extern NSString * const TMLIsUnreachableNotification;
 extern NSString * const TMLBundleDidChangeNotification;
 
 #pragma mark - Keys for looking up object inside info dictionaries passed around by TML

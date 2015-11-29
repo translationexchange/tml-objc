@@ -48,7 +48,6 @@
 
 NSString * const TMLLanguageChangedNotification = @"TMLLanguageChangedNotification";
 NSString * const TMLIsReachableNotification = @"TMLIsReachableNotification";
-NSString * const TMLIsUnreachableNotification = @"TMLIsUnreachableNotification";
 
 NSString * const TMLLanguagePreviousLocaleUserInfoKey = @"TMLLanguagePreviousLocaleUserInfoKey";
 
