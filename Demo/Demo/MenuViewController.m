@@ -31,6 +31,7 @@
 #import "MenuViewController.h"
 #import "TML.h"
 #import "UIViewController+TML.h"
+#import "TMLBundleManager.h"
 
 @interface MenuTableViewCell : UITableViewCell
 @end
@@ -48,15 +49,27 @@
         frame.origin.x -= 40;
         subview.frame = frame;
     }
+    
+    UIColor *textColor = [UIColor blackColor];
+    if (self.selectionStyle == UITableViewCellSelectionStyleNone) {
+        textColor = [UIColor grayColor];
+    }
+    [self.textLabel setTextColor:textColor];
 }
 
 @end
 
-@interface MenuViewController ()
+@interface MenuViewController () {
+    BOOL _isObservingNotifications;
+}
 @property (weak, nonatomic) IBOutlet UITableView *menuTableView;
 @end
 
 @implementation MenuViewController
+
+- (void)dealloc {
+    [self teardownNotificationObserving];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -110,12 +123,51 @@
                                    @"title": @"In-App Translations",
                                    },
                                @{
+                                   @"title": @"Submit missing strings",
+                                   },
+                               @{
                                    @"title": @"Translator Tools",
                                    },
                                ]
                        },
                    ];
+    
+    [self setupNotificationObserving];
 }
+
+#pragma mark - Notifications
+
+- (void) setupNotificationObserving {
+    if (_isObservingNotifications == YES) {
+        return;
+    }
+    
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(tmlDidFinishSync:)
+                   name:TMLBundleSyncDidFinishNotification
+                 object:nil];
+    
+    _isObservingNotifications = YES;
+}
+
+- (void) teardownNotificationObserving {
+    if (_isObservingNotifications == NO) {
+        return;
+    }
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+    _isObservingNotifications = NO;
+}
+
+#pragma mark - Sync
+
+- (void)tmlDidFinishSync:(NSNotification *)aNotification {
+    [self.menuTableView reloadData];
+}
+
+#pragma mark - UITableViewDelegate
 
 - (UIView *) tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
     UIView *sectionHeader = [[UIView alloc] init];
@@ -137,17 +189,28 @@
     
     NSDictionary *section = (NSDictionary *) [self.items objectAtIndex:indexPath.section];
     NSString *title = [[[section objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"title"];
+    cell.selectionStyle = UITableViewCellSelectionStyleDefault;
+    cell.accessoryType = UITableViewCellAccessoryNone;
     if (indexPath.section == 2 && indexPath.row == 1) {
-        cell.accessoryType = ([[TML sharedInstance] translationEnabled] == YES) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-    }
-    else {
-        cell.accessoryType = UITableViewCellAccessoryNone;
+        TML *tml = [TML sharedInstance];
+        if ([tml isInlineTranslationsEnabled] == NO) {
+            cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        }
+        else {
+            cell.accessoryType = (tml.translationEnabled == YES) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+        }
     }
     TMLLocalizeViewWithLabel(cell.textLabel, title);
     return cell;
 }
 
+- (BOOL)tableView:(UITableView *)tableView shouldHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
+    return cell.selectionStyle != UITableViewCellSelectionStyleNone;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [super tableView:tableView didSelectRowAtIndexPath:indexPath];
     if (indexPath.section == 2) {
         if (indexPath.row == 0) {
             TMLChangeLanguage(self);
@@ -155,14 +218,12 @@
             TML *tml = [TML sharedInstance];
             tml.translationEnabled = !tml.translationEnabled;
             [tableView reloadData];
-//            TMLToggleInAppTranslations(self);
         } else if (indexPath.row == 2) {
+            [[TML sharedInstance] submitMissingTranslationKeys];
+        } else if (indexPath.row == 3) {
             TMLOpenTranslatorTools(self);
         }
-        return;
     }
-    
-    [super tableView:tableView didSelectRowAtIndexPath:indexPath];
 }
 
 @end
