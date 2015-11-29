@@ -41,9 +41,10 @@
 
 #define DEFAULT_LOCALE @"en"
 
-NSString * const TMLDefaultLocaleDefaultsKey = @"default_locale";
-NSString * const TMLCurrentLocaleDefaultsKey = @"current_locale";
-NSString * const TMLTranslationEnabledDefaultsKey = @"translation_enabled";
+NSString * const TMLApplicationTokenDefaultsKey = @"applicationToken";
+NSString * const TMLDefaultLocaleDefaultsKey = @"defaultLocale";
+NSString * const TMLCurrentLocaleDefaultsKey = @"currentLocale";
+NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
 
 @interface TMLConfiguration () {
     NSCalendar *calendar;
@@ -61,6 +62,11 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translation_enabled";
 
 - (instancetype)initWithApplicationKey:(NSString *)applicationKey accessToken:(NSString *)accessToken {
     if (self = [super init]) {
+        NSString *persistedConfigApplicationKey = self.applicationKey;
+        if (persistedConfigApplicationKey != nil
+            && [persistedConfigApplicationKey isEqualToString:applicationKey] == NO) {
+            [self invalidate];
+        }
         self.applicationKey = applicationKey;
         self.accessToken = accessToken;
         [self setupDefaultContextRules];
@@ -77,19 +83,42 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translation_enabled";
     return self.accessToken.length > 0 && self.applicationKey.length > 0 && self.apiURL != nil;
 }
 
+- (void)invalidate {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removeObjectForKey:TMLDefaultLocaleDefaultsKey];
+    [defaults removeObjectForKey:TMLCurrentLocaleDefaultsKey];
+    [defaults removeObjectForKey:TMLTranslationEnabledDefaultsKey];
+}
+
 #pragma mark - Persistence
 
-- (id) persistentValueForKey: (NSString *) key {
+- (id) persistentValueForKey:(NSString *)key {
     return [[NSUserDefaults standardUserDefaults] valueForKey:key];
 }
 
-- (void) setPersistentValue:(id) value forKey: (NSString *) key {
-    [[NSUserDefaults standardUserDefaults] setValue:value forKey:key];
-    [[NSUserDefaults standardUserDefaults] synchronize];
+- (void)setPersistentValue:(id)value forKey:(NSString *)key {
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    if (key == nil) {
+        [defaults removeObjectForKey:key];
+    }
+    else {
+        [defaults setValue:value forKey:key];
+    }
+    [defaults synchronize];
 }
 
 - (NSString *)description {
     return [NSString stringWithFormat:@"%@ (currentLocale: %@; defaultLocalte: %@)", [super description], self.currentLocale, self.defaultLocale];
+}
+
+#pragma mark - Accessors
+
+- (NSString *)applicationKey {
+    return [self persistentValueForKey:TMLApplicationTokenDefaultsKey];
+}
+
+- (void)setApplicationKey:(NSString *)applicationKey {
+    [self setPersistentValue:applicationKey forKey:TMLApplicationTokenDefaultsKey];
 }
 
 - (BOOL)isTranslationEnabled {
