@@ -95,7 +95,7 @@ You have an option to pre-cache all your translations in your app before you rel
 Internationalization & TML
 ==================
 
-If your application is already internationalized using the standard NSLocalizedString methods, you can simply import the Tml.h header in your .m file and Tml will take over the internationalization macros.
+If your application is already internationalized using the standard NSLocalizedString methods, you can simply import the TML+NSLocalizedString.h header in your .m file and Tml will take over the internationalization macros.
 
 ```objc
 #import "Tml.h"

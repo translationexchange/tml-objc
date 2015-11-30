@@ -308,6 +308,7 @@
 		C0F80D251BEA86800048DF2D /* UITextView+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+TML.m"; sourceTree = "<group>"; };
 		C41647A91BEE97D2004B3FB3 /* TMLGlobals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLGlobals.h; sourceTree = "<group>"; };
 		C41647AA1BEE97D2004B3FB3 /* TMLGlobals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLGlobals.m; sourceTree = "<group>"; };
+		C426179B1C0BF3AD005EE2FA /* TML+NSLocalizedString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TML+NSLocalizedString.h"; sourceTree = "<group>"; };
 		C42C562F1BF2695700207911 /* NSObject+TMLJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TMLJSON.h"; sourceTree = "<group>"; };
 		C42C56301BF2695700207911 /* NSObject+TMLJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TMLJSON.m"; sourceTree = "<group>"; };
 		C42C56331BF31A6600207911 /* TMLPrivateConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLPrivateConfig.h; sourceTree = "<group>"; };
@@ -475,11 +476,12 @@
 				C0F80CAB1BEA83DE0048DF2D /* Rules Engine */,
 				C0F80CB01BEA83DE0048DF2D /* TML.h */,
 				C0F80CB11BEA83DE0048DF2D /* TML.m */,
-				C0F80CB21BEA83DE0048DF2D /* TMLModel.h */,
-				C0F80CB31BEA83DE0048DF2D /* TMLModel.m */,
+				C426179B1C0BF3AD005EE2FA /* TML+NSLocalizedString.h */,
 				C41647A91BEE97D2004B3FB3 /* TMLGlobals.h */,
 				C41647AA1BEE97D2004B3FB3 /* TMLGlobals.m */,
 				C0F80CB41BEA83DE0048DF2D /* TMLLogger.h */,
+				C0F80CB21BEA83DE0048DF2D /* TMLModel.h */,
+				C0F80CB31BEA83DE0048DF2D /* TMLModel.m */,
 				C0F80CB51BEA83DE0048DF2D /* Tokenizers */,
 				C0F80CBE1BEA83DE0048DF2D /* Tokens */,
 				C0F80CC51BEA83DE0048DF2D /* Translations */,
