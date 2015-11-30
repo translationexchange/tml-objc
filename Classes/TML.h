@@ -208,7 +208,7 @@ extern NSString * const TMLLanguagePreviousLocaleUserInfoKey;
  */
 + (NSString *) localizeDate:(NSDate *)date
                  withFormat:(NSString *)format
-             andDescription: (NSString *)description;
+             andDescription:(NSString *)description;
 
 - (NSArray *) translationsForKey:(NSString *)translationKey locale:(NSString *)locale;
 
@@ -226,9 +226,9 @@ extern NSString * const TMLLanguagePreviousLocaleUserInfoKey;
 
 #pragma mark - Block options
 
-+ (void) beginBlockWithOptions:(NSDictionary *) options;
++ (void) beginBlockWithOptions:(NSDictionary *)options;
 
-+ (NSObject *) blockOptionForKey: (NSString *) key;
++ (NSObject *) blockOptionForKey:(NSString *)key;
 
 + (void) endBlockWithOptions;
 
