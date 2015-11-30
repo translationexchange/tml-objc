@@ -2,18 +2,18 @@
   <img src="https://avatars0.githubusercontent.com/u/1316274?v=3&s=200">
 </p>
 
-Tml for Objective C
+TML for Objective C
 ==================
 
 [![Version](http://cocoapod-badges.herokuapp.com/v/Tml/badge.png)](http://cocoadocs.org/docsets/Tml)
 [![Platform](http://cocoapod-badges.herokuapp.com/p/Tml/badge.png)](http://cocoadocs.org/docsets/Tml)
 [![Build Status](https://travis-ci.org/translationexchange/tml-objc.svg?branch=master)](https://travis-ci.org/translationexchange/tml-objc)
 
-Tml SDK for Objective C is an integrated cloud-based translation solution for iOS applications.
+TML SDK for Objective C is an integrated cloud-based translation solution for iOS applications.
 
 It reduces the number of steps required for internationalization and localization of your mobile applications.
 
-Tml SDK integrates with TranslationExchange.com service, where you can manage the entire translation process - enable languages, invite translators, manage translation keys, and much more.
+TML SDK integrates with TranslationExchange.com service, where you can manage the entire translation process - enable languages, invite translators, manage translation keys, and much more.
 
 You never have to touch the resource bundle files - translation keys are extracted from your app's source code on the fly and kept up to date by the SDK.
 
@@ -68,17 +68,17 @@ Before you can proceed with the integration, please visit https://TranslationExc
 
 You only need to provide the secret in the application while you test or translate your app. Apps that have a secret can register new translation keys on the server. When you release your application you should remove the secret and only supply the key.
 
-Tml SDK comes with the English language configuration by default. So if your app's base language is English, you can try out the SDK without even having to initialize it. You get full power of TML and internationalization macros that would improve your code and provide powerful utilities for working with English language. Tml provides default inflectors, pluralizers, contextualizer and language cases.
+TML SDK comes with the English language configuration by default. So if your app's base language is English, you can try out the SDK without even having to initialize it. You get full power of TML and internationalization macros that would improve your code and provide powerful utilities for working with English language. TML provides default inflectors, pluralizers, contextualizer and language cases.
 
-On the other hand, you should initialize the Tml SDK if you plan on taking advantage of the continues integration with TranslationExchange platform, translation memory and analytics.
+On the other hand, you should initialize the TML SDK if you plan on taking advantage of the continues integration with TranslationExchange platform, translation memory and analytics.
 
 
 ```objc
-#import "Tml.h"
+#import "TML.h"
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 
-  [Tml sharedInstanceWithToken: YOUR_TOKEN];
+  [TML sharedInstanceWithToken: YOUR_TOKEN];
 
   return YES;
 }
@@ -87,7 +87,7 @@ On the other hand, you should initialize the Tml SDK if you plan on taking advan
 How does it work?
 ==================
 
-Tml SDK does all the hard work for you. When you use Tml's macros, the library automatically registers translation keys with Translation Exchange service and generates resource bunldes for your app on the fly. Tml always keep your local cache up to date by downloading the latest translations from the service when they become available. At run-time, your app will use translations from your local app cache so your users will not experience any delays.
+TML SDK does all the hard work for you. When you use TML's macros, the library automatically registers translation keys with Translation Exchange service and generates resource bunldes for your app on the fly. TML always keep your local cache up to date by downloading the latest translations from the service when they become available. At run-time, your app will use translations from your local app cache so your users will not experience any delays.
 
 You have an option to pre-cache all your translations in your app before you release it. In that case, the SDK will run in the offline mode. But keeping the SDK connected allows you to release new languages without having to rebuild your app. You will also be able to take advantage of the analytics that show you what languages are used in your app, what the default languages of your users are, where your users are coming from, etc...
 
@@ -95,72 +95,72 @@ You have an option to pre-cache all your translations in your app before you rel
 Internationalization & TML
 ==================
 
-If your application is already internationalized using the standard NSLocalizedString methods, you can simply import the TML+NSLocalizedString.h header in your .m file and Tml will take over the internationalization macros.
+If your application is already internationalized using the standard NSLocalizedString methods, you can simply import the TML+NSLocalizedString.h header in your .m file and TML will take over the internationalization macros.
 
 ```objc
-#import "Tml.h"
+#import "TML.h"
 ```
 
-Tml also provides its own macros for internationalization that enhance the standard iOS macros.
+TML also provides its own macros for internationalization that enhance the standard iOS macros.
 
 ```objc
-TmlLocalizedString(label)
+TMLLocalizedString(label)
 ```
 
 Example:
 
 ```objc
-TmlLocalizedString(@"Hello World")
+TMLLocalizedString(@"Hello World")
 ```
 
 This macro is similar to NSLocalizedString, but it does not require the optional comment to be passed as nil.
 
 
 ```objc
-TmlLocalizedStringWithDescription(label, description)
+TMLLocalizedStringWithDescription(label, description)
 ```
 
 Example:
 
 ```objc
-TmlLocalizedStringWithDescription(@"Invite", @"Invite someone to join the group")
+TMLLocalizedStringWithDescription(@"Invite", @"Invite someone to join the group")
 ```
 
 ```objc
-TmlLocalizedStringWithDescription(@"Invite", @"An invite received from a friend")
+TMLLocalizedStringWithDescription(@"Invite", @"An invite received from a friend")
 ```
 
-Unlike NSLocalizedString, where the second parameter is a comment for a translator, Tml uses the description to contextualize the key. So the above example would actually register two distinct keys, where each would have its own translations.
+Unlike NSLocalizedString, where the second parameter is a comment for a translator, TML uses the description to contextualize the key. So the above example would actually register two distinct keys, where each would have its own translations.
 
 
 ```objc
-TmlLocalizedStringWithTokens(label, tokens)
+TMLLocalizedStringWithTokens(label, tokens)
 ```
 
 Example: 
 
 ```objc
-TmlLocalizedStringWithTokens(@"You have {count || message}.", @{@"count": @4})
-TmlLocalizedStringWithTokens(@"Hello {user}.", @{@"user": @"Michael"})
+TMLLocalizedStringWithTokens(@"You have {count || message}.", @{@"count": @4})
+TMLLocalizedStringWithTokens(@"Hello {user}.", @{@"user": @"Michael"})
 ```
 
 ```objc
 User *user  = [[User alloc] initWithName: @"Michael" gender: @"male"];
 // will use [user description] for substitution value
-TmlLocalizedStringWithTokens(@"Hello {user}.", @{@"user": user})
+TMLLocalizedStringWithTokens(@"Hello {user}.", @{@"user": user})
 // second parameter is used for substitution value
-TmlLocalizedStringWithTokens(@"Hello {user}.", @{@"user": @[user, user.name]})
-TmlLocalizedStringWithTokens(@"Hello {user}.", @{@"user": @[user, @"Mike"]})
+TMLLocalizedStringWithTokens(@"Hello {user}.", @{@"user": @[user, user.name]})
+TMLLocalizedStringWithTokens(@"Hello {user}.", @{@"user": @[user, @"Mike"]})
 ```
 
 ```objc
 NSDictionary *user = @{@"name": @"Michael", @"gender": @"male"};
 // can be used for context rules, but not substitution value
-TmlLocalizedStringWithTokens(@"{user | Born On}.", @{@"user": user})
-TmlLocalizedStringWithTokens(@"Hello {user}.", @{
+TMLLocalizedStringWithTokens(@"{user | Born On}.", @{@"user": user})
+TMLLocalizedStringWithTokens(@"Hello {user}.", @{
           @"user": @{@"object": user, @"property": @"name"}
 })
-TmlLocalizedStringWithTokens(@"Hello {user}.", @{
+TMLLocalizedStringWithTokens(@"Hello {user}.", @{
           @"user": @{@"object": user, @"value": @"Michael"}
 })
 ```
@@ -168,13 +168,13 @@ TmlLocalizedStringWithTokens(@"Hello {user}.", @{
 Tokens can be passed in many different ways. If the token is passed as a primitive type, it would be used for both context rules and displayed value. If it is passed a class or a structure, you can separate the object being used for context rules and the value that would be substituted for the token.
 
 ```objc
-TmlLocalizedStringWithDescriptionAndTokens(label, description, tokens)
+TMLLocalizedStringWithDescriptionAndTokens(label, description, tokens)
 ```
 
 Example: 
 
 ```objc
-TmlLocalizedStringWithDescriptionAndTokens(
+TMLLocalizedStringWithDescriptionAndTokens(
     @"Hello {user}",
     @"A greeting message",
     @{@"user": @"Michael"}
@@ -185,13 +185,13 @@ Same as the two examples above - allows you to provide both description and toke
 
 
 ```objc
-TmlLocalizedStringWithDescriptionAndTokensAndOptions(label, description, tokens, options)
+TMLLocalizedStringWithDescriptionAndTokensAndOptions(label, description, tokens, options)
 ```
 
 Example: 
 
 ```objc
-TmlLocalizedStringWithDescriptionAndTokensAndOptions(
+TMLLocalizedStringWithDescriptionAndTokensAndOptions(
     @"Hello {user}",
     @"A greeting message",
     @{@"user": @"Michael"},
@@ -203,13 +203,13 @@ Only translators of a specific rank are allowed to translate keys of a specific 
 
 
 ```objc
-TmlLocalizedStringWithTokensAndOptions(label, tokens, options)
+TMLLocalizedStringWithTokensAndOptions(label, tokens, options)
 ```
 
 Example: 
 
 ```objc
-TmlLocalizedStringWithTokensAndOptions(
+TMLLocalizedStringWithTokensAndOptions(
     @"You have {count || message}.",
     @{@"count": @4},
     @{@"max-length": @20}
@@ -220,13 +220,13 @@ Allows you to skip the description.
 
 
 ```objc
-TmlLocalizedStringWithOptions(label, options)
+TMLLocalizedStringWithOptions(label, options)
 ```
 
 Example: 
 
 ```objc
-TmlLocalizedStringWithOptions(@"Hello World", @{@"max-length": @20})
+TMLLocalizedStringWithOptions(@"Hello World", @{@"max-length": @20})
 ```
 
 Allows you to skip description and tokens.
@@ -236,7 +236,7 @@ Allows you to skip description and tokens.
 All of the above macros assume that you are working with HTML and will return HTML markup for decorated tokens. For example:
 
 ```objc
-TmlLocalizedStringWithTokens(
+TMLLocalizedStringWithTokens(
     @"You have completed [bold: {count || mile}] on your last run.",
     @{@"count": @4.2}
 )
@@ -244,7 +244,7 @@ TmlLocalizedStringWithTokens(
 
 Will result in: 
 
-```html
+```hTML
 	"You have completed <strong>4.2 miles</strong> on your last run."
 ```
 
@@ -255,10 +255,10 @@ Unless you render it in a browser, you should not use decoration tokens with the
 Default Tokens
 ======================
 
-For tokens that you want to define in once and reuse throughout your application, you can pre-define them in Tml configuration, using the following approach:
+For tokens that you want to define in once and reuse throughout your application, you can pre-define them in TML configuration, using the following approach:
 
 ```objc
-[Tml configure:^(TmlConfiguration *config) {
+[TML configure:^(TMLConfiguration *config) {
   [config setDefaultTokenValue: @"<strong>{$0}</strong>"
                        forName: @"bold"
                           type: @"decoration"
@@ -310,15 +310,15 @@ AttributedString Macros
 Attributed String macros are very similar to the above macros, but will always return an NSAttributedString instead of plain NSString.
 
 ```objc
-TmlLocalizedAttributedString(label)
+TMLLocalizedAttributedString(label)
 ```
 
 Examples:
 
 ```objc
-TmlLocalizedAttributedString(@"Hello World")
-TmlLocalizedAttributedString(@"Hello [bold: World]")
-TmlLocalizedAttributedString(@"This [bold: technology is [shadow: very cool]].")
+TMLLocalizedAttributedString(@"Hello World")
+TMLLocalizedAttributedString(@"Hello [bold: World]")
+TMLLocalizedAttributedString(@"This [bold: technology is [shadow: very cool]].")
 ```
 
 Notice that "very cool" will be bold and have a shadow. Nesting tokens inherits the parent token traits.
@@ -327,18 +327,18 @@ Notice that "very cool" will be bold and have a shadow. Nesting tokens inherits 
 The other Attributed String macros are as follow:
 
 ```objc
-TmlLocalizedAttributedStringWithDescription(label, description)
-TmlLocalizedAttributedStringWithDescriptionAndTokens(label, description, tokens)
-TmlLocalizedAttributedStringWithDescriptionAndTokensAndOptions(label, description, tokens, options)
-TmlLocalizedAttributedStringWithTokens(label, tokens)
-TmlLocalizedAttributedStringWithTokensAndOptions(label, tokens, options)
-TmlLocalizedAttributedStringWithOptions(label, options)
+TMLLocalizedAttributedStringWithDescription(label, description)
+TMLLocalizedAttributedStringWithDescriptionAndTokens(label, description, tokens)
+TMLLocalizedAttributedStringWithDescriptionAndTokensAndOptions(label, description, tokens, options)
+TMLLocalizedAttributedStringWithTokens(label, tokens)
+TMLLocalizedAttributedStringWithTokensAndOptions(label, tokens, options)
+TMLLocalizedAttributedStringWithOptions(label, options)
 ```
 
 The previous example that used HTML as decoration can now be rewritten using the following method:
 
 ```objc
-TmlLocalizedAttributedStringWithTokens(
+TMLLocalizedAttributedStringWithTokens(
     @"You have completed [bold: {count || mile}] on your last run.",
     @{@"count": @4.2}
 )
@@ -350,7 +350,7 @@ This would result in and NSAttributedString with the following value:
   "You have completed **4.2 miles** on the last run."
 
 
-NSAttributedString vs TmlLocalizedAttributedString
+NSAttributedString vs TMLLocalizedAttributedString
 ==================
 
 The benefits of using TML with NSAttributedString is that labels get translated in context. If you tried the above example without using TML, you would end up with code similar to the following:
@@ -385,7 +385,7 @@ The above code has the following issues:
 All of the above code can be replaced with a single line using TML:
 
 ```objc
-TmlLocalizedAttributedStringWithTokens(
+TMLLocalizedAttributedStringWithTokens(
     @"You have completed [bold: {count || mile}] on your last run.",
     @{@"count": @4.2}
 )
@@ -399,13 +399,13 @@ Which is easily translated to Russian:
 Since there are languages, like Hebrew, which depend on the gender of the viewing user, any time you refer to "You", you should always pass the viewing_user as a token.
 
 ```objc
-TmlLocalizedAttributedStringWithTokens(@"You have completed [bold: {count || mile}] on your last run.", @{@"count": @4.2, @"viewing_user": currentUser})
+TMLLocalizedAttributedStringWithTokens(@"You have completed [bold: {count || mile}] on your last run.", @{@"count": @4.2, @"viewing_user": currentUser})
 ```
 
 Or better yet, set it in the configuration, and then you never have to pass it as a token:
 
 ```objc
-[Tml configure:^(TmlConfiguration *config) {
+[TML configure:^(TMLConfiguration *config) {
     config.viewingUser = currentUser;
 }];
 ```
@@ -414,7 +414,7 @@ Or better yet, set it in the configuration, and then you never have to pass it a
 Here is a more complicated example:
 
 ```objc
-TmlLocalizedAttributedStringWithTokens(
+TMLLocalizedAttributedStringWithTokens(
     @"[bold: {user}] has completed [bold: {count || mile}] on {user| his, her} last run.",
     @{
         @"user": friend,
@@ -441,10 +441,10 @@ Will render as:
 Translating UIViews
 ==================
 
-Tml can automatically translate views for you with one line of code. Consider the following example:
+TML can automatically translate views for you with one line of code. Consider the following example:
 
 ```objc
-#import "UIViewController+Tml.h"
+#import "UIViewController+TML.h"
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -452,7 +452,7 @@ Tml can automatically translate views for you with one line of code. Consider th
     [[NSNotificationCenter defaultCenter]
         addObserver: self
            selector: @selector(localize)
-               name: TmlLanguageChangedNotification
+               name: TMLLanguageChangedNotification
              object: self.view.window];
 
     [self localize];
@@ -460,7 +460,7 @@ Tml can automatically translate views for you with one line of code. Consider th
 
 
 - (void) localize {
-    TmlLocalizeView(self.view);
+    TMLLocalizeView(self.view);
 }
 ```
 
@@ -471,24 +471,24 @@ Language Selector
 ==================
 
 
-Tml SDK comes with a language selector that you can use in your application. To open the langugae selector from a view controller, use the following code:
+TML SDK comes with a language selector that you can use in your application. To open the langugae selector from a view controller, use the following code:
 
 ```objc
-#import "TmlLanguageSelectorViewController.h"
+#import "TMLLanguageSelectorViewController.h"
 
-[TmlLanguageSelectorViewController changeLanguageFromController:self];
+[TMLLanguageSelectorViewController changeLanguageFromController:self];
 ```
 
 In-App Translator
 ==================
 
 
-Tml comes with an In-App translator, so users of your app can sign up and translate your app from within your app. To open the in-app translator, use the following code:
+TML comes with an In-App translator, so users of your app can sign up and translate your app from within your app. To open the in-app translator, use the following code:
 
 ```objc
-#import "TmlTranslatorViewController.h"
+#import "TMLTranslatorViewController.h"
 
-[TmlTranslatorViewController translateFromController:self];
+[TMLTranslatorViewController translateFromController:self];
 ```
 
 
