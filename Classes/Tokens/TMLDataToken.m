@@ -239,7 +239,7 @@
 
     // token not provided, fallback onto default, if available
     if ([tokens objectForKey:self.shortName] == nil) {
-        NSString *tokenObject = (NSString *) [[TML configuration] defaultTokenValueForName: self.shortName type:@"data" format: ([[options objectForKey:@"tokenizer"] isEqual: @"attributed"] ? @"attributed" : @"html")];
+        NSString *tokenObject = (NSString *) [[TML configuration] defaultTokenValueForName: self.shortName type:TMLDataTokenType format: ([[options objectForKey:@"tokenizer"] isEqual: @"attributed"] ? TMLAttributedTokenFormat : TMLHTMLTokenFormat)];
         if (tokenObject != nil) return tokenObject;
         return [self description];
     }

@@ -40,12 +40,12 @@
 
 - (void) prepareSamples {
     [TML configure:^(TMLConfiguration *config) {
-        [config setDefaultTokenValue:@{@"font": @{@"name": @"ChalkboardSE-Bold", @"size": @14}} forName:@"font1" type:@"decoration" format:@"attributed"];
-        [config setDefaultTokenValue:@{@"font": [UIFont fontWithName:@"ChalkboardSE-Bold" size:14]} forName:@"font2" type:@"decoration" format:@"attributed"];
-        [config setDefaultTokenValue:@{@"font": @{@"name": @"system", @"size": @14, @"type": @"bold"}} forName:@"bold" type:@"decoration" format:@"attributed"];
-        [config setDefaultTokenValue:@{@"font": @{@"name": @"system", @"size": @14, @"type": @"italic"}} forName:@"italic" type:@"decoration" format:@"attributed"];
-        [config setDefaultTokenValue:@{@"color": @"red"} forName:@"red" type:@"decoration" format:@"attributed"];
-        [config setDefaultTokenValue:@{@"color": [UIColor greenColor]} forName:@"green" type:@"decoration" format:@"attributed"];
+        [config setDefaultTokenValue:@{@"font": @{@"name": @"ChalkboardSE-Bold", @"size": @14}} forName:@"font1" type:TMLDecorationTokenType format:TMLAttributedTokenFormat];
+        [config setDefaultTokenValue:@{@"font": [UIFont fontWithName:@"ChalkboardSE-Bold" size:14]} forName:@"font2" type:TMLDecorationTokenType format:TMLAttributedTokenFormat];
+        [config setDefaultTokenValue:@{@"font": @{@"name": @"system", @"size": @14, @"type": @"bold"}} forName:@"bold" type:TMLDecorationTokenType format:TMLAttributedTokenFormat];
+        [config setDefaultTokenValue:@{@"font": @{@"name": @"system", @"size": @14, @"type": @"italic"}} forName:@"italic" type:TMLDecorationTokenType format:TMLAttributedTokenFormat];
+        [config setDefaultTokenValue:@{@"color": @"red"} forName:@"red" type:TMLDecorationTokenType format:TMLAttributedTokenFormat];
+        [config setDefaultTokenValue:@{@"color": [UIColor greenColor]} forName:@"green" type:TMLDecorationTokenType format:TMLAttributedTokenFormat];
     }];
     
     self.items = @[

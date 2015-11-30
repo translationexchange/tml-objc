@@ -41,7 +41,7 @@
     id decoration = [self.tokensData objectForKey:token];
     
     if (decoration == nil || [decoration isKindOfClass:NSDictionary.class]) {
-        decoration = [[TML configuration] defaultTokenValueForName:token type:@"decoration" format: @"html"];
+        decoration = [[TML configuration] defaultTokenValueForName:token type:TMLDecorationTokenType format:TMLHTMLTokenFormat];
         if (decoration == nil) return value;
 
         NSString *defaultValue = [((NSString *) decoration) stringByReplacingOccurrencesOfString:TML_PLACEHOLDER withString:value];

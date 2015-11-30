@@ -46,6 +46,26 @@ NSString * const TMLDefaultLocaleDefaultsKey = @"defaultLocale";
 NSString * const TMLCurrentLocaleDefaultsKey = @"currentLocale";
 NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
 
+NSString * const TMLDataTokenTypeString = @"data";
+NSString * const TMLDecorationTokenTypeString = @"decoration";
+NSString * const TMLHTMLTokenFormatString = @"html";
+NSString * const TMLAttributedTokenFormatString = @"attributed";
+
+NSString * NSStringFromTokenType(TMLTokenType type) {
+    if (type == TMLDecorationTokenType) {
+        return TMLDecorationTokenTypeString;
+    }
+    return TMLDataTokenTypeString;
+}
+
+NSString * NSStringFromTokenFormat(TMLTokenFormat format) {
+    if (format == TMLAttributedTokenFormat) {
+        return TMLAttributedTokenFormatString;
+    }
+    return TMLHTMLTokenFormatString;
+}
+
+
 @interface TMLConfiguration () {
     NSCalendar *calendar;
     NSDateFormatter *dateFormatter;
@@ -135,7 +155,6 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
     NSLocale *locale = [NSLocale currentLocale];
     NSString *deviceLocale = [locale localeIdentifier];
     deviceLocale = [deviceLocale componentsSeparatedByString:@"_"][0];
-    //        deviceLocale = [deviceLocale stringByReplacingOccurrencesOfString:@"_" withString:@"-"];
     return deviceLocale;
 }
 
@@ -162,6 +181,8 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
 - (void) setDefaultLocale:(NSString *)newLocale {
     [self setPersistentValue:newLocale forKey:TMLDefaultLocaleDefaultsKey];
 }
+
+#pragma mark - Setting up Defaults
 
 - (void) setupDefaultContextRules {
     self.contextRules = [NSMutableDictionary dictionaryWithDictionary: @{
@@ -203,15 +224,10 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
     }];
 }
 
-
-- (NSMutableDictionary *) dictionary: (NSDictionary *) dictionary {
-    return [NSMutableDictionary dictionaryWithDictionary: dictionary];
-}
-
 - (void) setupDefaultTokens {
-    self.defaultTokens = [self dictionary:@{
-        @"html": [self dictionary: @{
-               @"data": [self dictionary: @{
+    self.defaultTokens = [NSMutableDictionary dictionaryWithDictionary:@{
+        @"html": [NSMutableDictionary dictionaryWithDictionary: @{
+               @"data": [NSMutableDictionary dictionaryWithDictionary: @{
                        @"ndash":    @"&ndash;",       // –
                        @"mdash":    @"&mdash;",       // —
                        @"iexcl":    @"&iexcl;",       // ¡
@@ -231,7 +247,7 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
                        @"rbrace":   @"}",
                        @"trade":    @"&trade;"        // TM
                 }],
-               @"decoration": [self dictionary: @{
+               @"decoration": [NSMutableDictionary dictionaryWithDictionary: @{
                        @"strong":   @"<strong>{$0}</strong>",
                        @"bold":     @"<strong>{$0}</strong>",
                        @"b":        @"<strong>{$0}</strong>",
@@ -248,8 +264,8 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
                        @"h3":       @"<h3>{$0}</h3>"
                 }]
         }],
-        @"attributed": [self dictionary: @{
-              @"data":  [self dictionary: @{
+        @"attributed": [NSMutableDictionary dictionaryWithDictionary: @{
+              @"data":  [NSMutableDictionary dictionaryWithDictionary: @{
                       @"ndash":    @"–",        // –
                       @"mdash":    @"–",        // —
                       @"iexcl":    @"¡",        // ¡
@@ -269,7 +285,7 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
                       @"rbrace":   @"}",
                       @"trade":    @"™"         // TM
                 }],
-              @"decoration": [self dictionary: @{
+              @"decoration": [NSMutableDictionary dictionaryWithDictionary: @{
                       @"strong":   @{@"font": @{@"name": @"system", @"size": @14, @"type": @"bold"}},
                       @"bold":     @{@"font": @{@"name": @"system", @"size": @14, @"type": @"bold"}},
                       @"b":        @{@"font": @{@"name": @"system", @"size": @14, @"type": @"bold"}},
@@ -290,12 +306,12 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
 }
 
 - (void) setupLocalization {
-    self.defaultLocalization = [self dictionary:@{
+    self.defaultLocalization = [NSMutableDictionary dictionaryWithDictionary:@{
       @"default_day_names": @[@"Sunday", @"Monday", @"Tuesday", @"Wednesday", @"Thursday", @"Friday", @"Saturday"],
       @"default_abbr_day_names": @[@"Sun", @"Mon", @"Tue", @"Wed", @"Thu", @"Fri", @"Sat"],
       @"default_month_names": @[@"January", @"February", @"March", @"April", @"May", @"June", @"July", @"August", @"September", @"October", @"November", @"December"],
       @"default_abbr_month_names": @[@"Jan", @"Feb", @"Mar", @"Apr", @"May", @"Jun", @"Jul", @"Aug", @"Sep", @"Oct", @"Nov", @"Dec"],
-      @"custom_date_formats": [self dictionary:@{
+      @"custom_date_formats": [NSMutableDictionary dictionaryWithDictionary:@{
         @"default"               : @"mm/d/yyyy",             // 07/4/2008
         @"short_numeric"         : @"mm/d",                  // 07/4
         @"short_numeric_year"    : @"mm/d/yy",               // 07/4/08
@@ -307,7 +323,7 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
         @"monthname_abbr_year"   : @"MMM d, yyyy",           // Jul 4, 2008
         @"date_time"             : @"mm/dd/yyyy at h:m",     // 01/03/1010 at 5:30
     }],
-    @"token_mapping": [self dictionary:@{
+    @"token_mapping": [NSMutableDictionary dictionaryWithDictionary:@{
         @"G": @"{era}",
         @"y": @"{short_year_digit}",
         @"yy": @"{short_year}",
@@ -343,6 +359,8 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
     }]
    }];
 }
+
+#pragma mark - Formatting Dates
 
 - (NSString *) customDateFormatForKey: (NSString *) key {
     return [[self.defaultLocalization objectForKey:@"custom_date_formats"] objectForKey:key];
@@ -428,37 +446,67 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
     [variables setObject:method forKey:varName];
 }
 
-- (id) defaultTokenValueForName: (NSString *) name {
-    return [self defaultTokenValueForName: name type: @"data" format:@"html"];
+#pragma mark - Default Tokens
+
+- (id) defaultTokenValueForName:(NSString *)name {
+    return [self defaultTokenValueForName:name
+                                     type:TMLDataTokenType
+                                   format:TMLHTMLTokenFormat];
 }
 
-- (void) setDefaultTokenValue: (id) value forName: (NSString *) name {
-    [self setDefaultTokenValue:value forName:name type:@"data" format:@"html"];
+- (void) setDefaultTokenValue:(id)value
+                      forName:(NSString *)name
+{
+    [self setDefaultTokenValue:value
+                       forName:name
+                          type:TMLDataTokenType
+                        format:TMLHTMLTokenFormat];
 }
 
-- (id) defaultTokenValueForName: (NSString *) name type: (NSString *) type {
-    return [self defaultTokenValueForName: name type: type format:@"html"];
+- (id) defaultTokenValueForName:(NSString *)name
+                           type:(TMLTokenType)type
+{
+    return [self defaultTokenValueForName:name
+                                     type:type
+                                   format:TMLHTMLTokenFormat];
 }
 
-- (void) setDefaultTokenValue: (id) value forName: (NSString *) name  type: (NSString *) type {
-    [self setDefaultTokenValue:value forName:name type:type format:@"html"];
+- (void) setDefaultTokenValue:(id)value
+                      forName:(NSString *)name
+                         type:(TMLTokenType)type
+{
+    [self setDefaultTokenValue:value
+                       forName:name
+                          type:type
+                        format:TMLHTMLTokenFormat];
 }
 
-- (id) defaultTokenValueForName: (NSString *) name type: (NSString *) type format: (NSString *) format {
-    return [[[self.defaultTokens objectForKey:format] objectForKey:type] objectForKey:name];
+- (id) defaultTokenValueForName:(NSString *)name
+                           type:(TMLTokenType)type
+                         format:(TMLTokenFormat)format
+{
+    return [[[self.defaultTokens objectForKey:NSStringFromTokenFormat(format)]
+             objectForKey:NSStringFromTokenType(type)]
+            objectForKey:name];
 }
 
-- (void) setDefaultTokenValue: (id) value forName: (NSString *) name type: (NSString *) type format: (NSString *) format {
-    NSMutableDictionary *dictFormat = (NSMutableDictionary *) [self.defaultTokens objectForKey:format];
+- (void) setDefaultTokenValue:(id)value
+                      forName:(NSString *)name
+                         type:(TMLTokenType)type
+                       format:(TMLTokenFormat)format
+{
+    NSString *formatString = NSStringFromTokenFormat(format);
+    NSMutableDictionary *dictFormat = (NSMutableDictionary *) [self.defaultTokens objectForKey:formatString];
     if (dictFormat == nil) {
         dictFormat = [NSMutableDictionary dictionary];
-        [self.defaultTokens setObject:dictFormat forKey:format];
+        [self.defaultTokens setObject:dictFormat forKey:formatString];
     }
 
-    NSMutableDictionary *dictType = (NSMutableDictionary *) [dictFormat objectForKey:type];
+    NSString *typeString = NSStringFromTokenType(type);
+    NSMutableDictionary *dictType = (NSMutableDictionary *) [dictFormat objectForKey:typeString];
     if (dictType == nil) {
         dictType = [NSMutableDictionary dictionary];
-        [dictFormat setObject:dictType forKey:format];
+        [dictFormat setObject:dictType forKey:formatString];
     }
 
     [dictType setObject:value forKey:name];

@@ -30,6 +30,16 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, TMLTokenType) {
+    TMLDataTokenType = 1,
+    TMLDecorationTokenType
+};
+
+typedef NS_ENUM(NSInteger, TMLTokenFormat) {
+    TMLHTMLTokenFormat = 1,
+    TMLAttributedTokenFormat
+};
+
 @interface TMLConfiguration : NSObject
 
 @property(nonatomic, strong) NSURL *apiURL;
@@ -58,21 +68,39 @@
                            accessToken:(NSString *)accessToken;
 @property(readonly, nonatomic, getter=isValidConfiguration) BOOL validConfiguration;
 
-- (id) variableMethodForContext:(NSString *) keyword andVariableName: (NSString *) varName;
-- (void) setVariableMethod: (id) method forContext:(NSString *) keyword andVariableName: (NSString *) varName;
-
-- (id) defaultTokenValueForName: (NSString *) name;
-- (id) defaultTokenValueForName: (NSString *) name type: (NSString *) type;
-- (id) defaultTokenValueForName: (NSString *) name type: (NSString *) type format: (NSString *) format;
-
-- (void) setDefaultTokenValue: (id) value forName: (NSString *) name;
-- (void) setDefaultTokenValue: (id) value forName: (NSString *) name type: (NSString *) type;
-- (void) setDefaultTokenValue: (id) value forName: (NSString *) name type: (NSString *) type format: (NSString *) format;
-
 - (NSString *) deviceLocale;
 
-- (NSString *) customDateFormatForKey: (NSString *) key;
-- (NSString *) dateTokenNameForKey: (NSString *) key;
-- (NSObject *) dateValueForToken: (NSString *) token inDate: (NSDate *) date;
+#pragma mark -
+
+- (id) variableMethodForContext:(NSString *)keyword
+                andVariableName:(NSString *)varName;
+- (void) setVariableMethod:(id)method
+                forContext:(NSString *)keyword
+           andVariableName:(NSString *)varName;
+
+#pragma mark - Default Tokens
+
+- (id) defaultTokenValueForName:(NSString *)name;
+- (id) defaultTokenValueForName:(NSString *)name
+                           type:(TMLTokenType)type;
+- (id) defaultTokenValueForName:(NSString *)name
+                           type:(TMLTokenType)type
+                         format:(TMLTokenFormat)format;
+
+- (void) setDefaultTokenValue:(id)value
+                      forName:(NSString *)name;
+- (void) setDefaultTokenValue:(id)value
+                      forName:(NSString *)name
+                         type:(TMLTokenType)type;
+- (void) setDefaultTokenValue:(id)value
+                      forName:(NSString *)name
+                         type:(TMLTokenType)type
+                       format:(TMLTokenFormat)format;
+
+#pragma mark - Dates
+- (NSString *) customDateFormatForKey:(NSString *)key;
+- (NSString *) dateTokenNameForKey:(NSString *)key;
+- (NSObject *) dateValueForToken:(NSString *)token
+                          inDate:(NSDate *)date;
 
 @end
