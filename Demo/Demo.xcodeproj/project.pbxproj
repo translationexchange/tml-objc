@@ -328,6 +328,7 @@
 		C436C3631C09461F009B736B /* TMLJSONValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLJSONValueTransformer.h; sourceTree = "<group>"; };
 		C436C3641C09461F009B736B /* TMLJSONValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLJSONValueTransformer.m; sourceTree = "<group>"; };
 		C44281911BF5659200E68194 /* TMLAPISerializationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPISerializationTest.m; sourceTree = "<group>"; };
+		C4FCD12E1C0CEB5900D723BC /* TML+TMLLocalizedString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TML+TMLLocalizedString.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -477,6 +478,7 @@
 				C0F80CB01BEA83DE0048DF2D /* TML.h */,
 				C0F80CB11BEA83DE0048DF2D /* TML.m */,
 				C426179B1C0BF3AD005EE2FA /* TML+NSLocalizedString.h */,
+				C4FCD12E1C0CEB5900D723BC /* TML+TMLLocalizedString.h */,
 				C41647A91BEE97D2004B3FB3 /* TMLGlobals.h */,
 				C41647AA1BEE97D2004B3FB3 /* TMLGlobals.m */,
 				C0F80CB41BEA83DE0048DF2D /* TMLLogger.h */,
