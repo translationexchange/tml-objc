@@ -261,13 +261,13 @@ For tokens that you want to define in once and reuse throughout your application
 [TML configure:^(TMLConfiguration *config) {
   [config setDefaultTokenValue: @"<strong>{$0}</strong>"
                        forName: @"bold"
-                          type: @"decoration"
-                        format: @"html"];
+                          type: TMLDecorationTokenType
+                        format: TMLHTMLTokenFormat];
 
   [config setDefaultTokenValue: @"<span style='color:green'>{$0}</span>"
                        forName: @"green"
-                          type: @"decoration"
-                        format: @"html"];
+                          type: TMLDecorationTokenType
+                        format: TMLHTMLTokenFormat];
 
   [config setDefaultTokenValue: @{
                      @"font": @{
@@ -278,8 +278,8 @@ For tokens that you want to define in once and reuse throughout your application
                      @"color": @"blue"
                    }
                        forName: @"bold"
-                          type: @"decoration"
-                        format: @"attributed"];
+                          type: TMLDecorationTokenType
+                        format: TMLAttributedTokenFormat];
 
   [config setDefaultTokenValue: @{
                      @"shadow": @{
@@ -290,12 +290,12 @@ For tokens that you want to define in once and reuse throughout your application
                      @"color": @"black"
                                    }
                        forName: @"shadow"
-                          type: @"decoration"
-                        format: @"attributed"];
+                          type: TMLDecorationTokenType
+                        format: TMLAttributedTokenFormat];
 
   [config setDefaultTokenValue: @"My App Name"
                        forName: @"app_name"
-                          type: @"data"];
+                          type: TMLDataTokenType];
 }];
 ```
 
