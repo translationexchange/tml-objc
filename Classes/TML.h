@@ -106,12 +106,22 @@ extern NSString * const TMLLanguagePreviousLocaleUserInfoKey;
 #pragma mark - Application
 
 /**
- *  Holds the application information
+ *  Current application/project
  */
 @property(nonatomic, readonly) TMLApplication *application;
 
+/**
+ *  Currently configured application/project
+ *
+ *  @return Instance of currently configured application or nil, of no application/project data has been loaded yet
+ */
 + (TMLApplication *) application;
 
+/**
+ *  Application key used to configure TML upon initialization
+ *
+ *  @return Application key
+ */
 + (NSString *) applicationKey;
 
 #pragma mark - Configuration
