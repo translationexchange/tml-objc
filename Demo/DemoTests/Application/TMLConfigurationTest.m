@@ -20,7 +20,6 @@
  *  THE SOFTWARE.
  */
 
-#import "TMLConfiguration.h"
 #import "TML.h"
 #import <Foundation/Foundation.h>
 #import "TMLTestBase.h"

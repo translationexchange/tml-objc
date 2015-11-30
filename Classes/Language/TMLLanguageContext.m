@@ -29,8 +29,6 @@
  */
 
 #import "TML.h"
-#import "TMLConfiguration.h"
-#import "TMLLanguage.h"
 #import "TMLLanguageContext.h"
 #import "TMLLanguageContextRule.h"
 #import "TMLAPISerializer.h"

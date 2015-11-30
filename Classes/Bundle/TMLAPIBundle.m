@@ -10,10 +10,7 @@
 #import "TML.h"
 #import "TMLAPIBundle.h"
 #import "TMLAPIClient.h"
-#import "TMLApplication.h"
 #import "TMLBundleManager.h"
-#import "TMLConfiguration.h"
-#import "TMLLanguage.h"
 #import "TMLSource.h"
 #import "TMLTranslationKey.h"
 

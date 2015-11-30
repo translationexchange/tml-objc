@@ -30,9 +30,11 @@
 
 #import <Foundation/Foundation.h>
 #import "TMLModel.h"
-#import "TMLAPIClient.h"
+#import "TMLLanguage.h"
+#import "TMLConfiguration.h"
+#import "TMLSource.h"
 
-@class TMLPostOffice, TMLLanguage, TMLSource, TMLTranslation, TMLDecorationTokenizer, TMLConfiguration;
+@class TMLPostOffice, TMLTranslation, TMLDecorationTokenizer;
 
 @interface TMLApplication : TMLModel
 

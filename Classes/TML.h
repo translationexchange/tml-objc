@@ -28,10 +28,13 @@
  *  THE SOFTWARE.
  */
 
-#import <Foundation/Foundation.h>
+#import "TMLApplication.h"
+#import "TMLConfiguration.h"
+#import "TMLLanguage.h"
 #import "TMLLogger.h"
+#import <Foundation/Foundation.h>
 
-@class TMLConfiguration, TMLLanguage, TMLApplication, TMLAPIClient, TMLPostOffice, TMLTranslationKey, TMLBundle;
+@class TMLAPIClient, TMLPostOffice, TMLTranslationKey, TMLBundle;
 
 #pragma mark - Notifications
 extern NSString * const TMLLanguageChangedNotification;

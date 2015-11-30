@@ -31,8 +31,6 @@
 #import "NSObject+TMLJSON.h"
 #import "TML.h"
 #import "TMLAPISerializer.h"
-#import "TMLApplication.h"
-#import "TMLConfiguration.h"
 #import "TMLLanguage.h"
 #import "TMLLanguageCase.h"
 #import "TMLLanguageContext.h"

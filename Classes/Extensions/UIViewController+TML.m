@@ -29,7 +29,6 @@
  */
 
 #import "TML.h"
-#import "TMLConfiguration.h"
 #import "TMLTranslationKey.h"
 #import "TMLTranslatorViewController.h"
 #import "UIViewController+TML.h"

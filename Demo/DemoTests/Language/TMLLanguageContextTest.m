@@ -7,7 +7,6 @@
 //
 
 #import "TML.h"
-#import "TMLConfiguration.h"
 #import "TMLLanguageContext.h"
 #import "TMLLanguageContextRule.h"
 #import "TMLTestBase.h"

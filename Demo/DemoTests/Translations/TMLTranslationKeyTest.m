@@ -7,7 +7,6 @@
 //
 
 #import "TML.h"
-#import "TMLConfiguration.h"
 #import "TMLTestBase.h"
 #import "TMLTranslationKey.h"
 #import "TMLAPISerializer.h"

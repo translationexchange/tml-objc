@@ -32,13 +32,9 @@
 #import "TML.h"
 #import "TMLAPIClient.h"
 #import "TMLAPISerializer.h"
-#import "TMLApplication.h"
 #import "TMLAttributedDecorationTokenizer.h"
-#import "TMLConfiguration.h"
 #import "TMLDataTokenizer.h"
-#import "TMLLanguage.h"
 #import "TMLPostOffice.h"
-#import "TMLSource.h"
 #import "TMLTranslation.h"
 #import "TMLTranslationKey.h"
 

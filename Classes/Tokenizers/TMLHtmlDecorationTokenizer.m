@@ -29,7 +29,6 @@
  */
 
 #import "TML.h"
-#import "TMLConfiguration.h"
 #import "TMLHtmlDecorationTokenizer.h"
 
 @implementation TMLHtmlDecorationTokenizer

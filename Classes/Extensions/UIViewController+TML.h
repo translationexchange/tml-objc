@@ -31,8 +31,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIViewController.h>
 #import <UIKit/UIView.h>
-#import "TMLLanguage.h"
-#import "TMLApplication.h"
+#import "TML.h"
 #import "TMLTranslatorViewController.h"
 #import "TMLLanguageSelectorViewController.h"
 

@@ -22,8 +22,7 @@
 
 #import <Foundation/Foundation.h>
 #import <XCTest/XCTest.h>
-#import "TMLLanguage.h"
-#import "TMLApplication.h"
+#import "TML.h"
 
 @interface TMLTestBase : XCTestCase
 

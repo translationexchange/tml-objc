@@ -30,7 +30,6 @@
 
 #import "TML.h"
 #import "TMLAttributedDecorationTokenizer.h"
-#import "TMLConfiguration.h"
 #import <UIKit/UIKit.h>
 #include "MPColorTools.h"
 

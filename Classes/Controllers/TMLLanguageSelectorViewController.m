@@ -32,8 +32,6 @@
 #import "MBProgressHUD.h"
 #import "TML.h"
 #import "TMLAPIClient.h"
-#import "TMLApplication.h"
-#import "TMLLanguage.h"
 #import "TMLLanguageSelectorViewController.h"
 #import <QuartzCore/QuartzCore.h>
 

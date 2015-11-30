@@ -31,7 +31,6 @@
 #import "TML.h"
 #import "TMLAPIClient.h"
 #import "TMLAPISerializer.h"
-#import "TMLConfiguration.h"
 #import "TMLSource.h"
 #import "TMLTranslation.h"
 
