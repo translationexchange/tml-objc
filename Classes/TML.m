@@ -49,6 +49,9 @@
 #pragma mark - Notification Constants
 NSString * const TMLLanguageChangedNotification = @"TMLLanguageChangedNotification";
 NSString * const TMLLocalizationDataChangedNotification = @"TMLLocalizationDataChangedNotification";
+NSString * const TMLDidStartSyncNotification = @"TMLDidStartSyncNotification";
+NSString * const TMLDidFinishSyncNotification = @"TMLDidFinishSyncNotification";
+NSString * const TMLLocalizationUpdatesInstalledNotification = @"TMLLocalizationUpdatesInstalledNotification";
 
 #pragma mark - UserInfo Constants
 NSString * const TMLLanguagePreviousLocaleUserInfoKey = @"TMLLanguagePreviousLocaleUserInfoKey";
@@ -156,11 +159,11 @@ NSString * const TMLLanguagePreviousLocaleUserInfoKey = @"TMLLanguagePreviousLoc
                                name:UIApplicationDidBecomeActiveNotification
                              object:nil];
     [notificationCenter addObserver:self selector:@selector(bundleSyncDidFinish:)
-                               name:TMLBundleSyncDidFinishNotification
+                               name:TMLDidFinishSyncNotification
                              object:nil];
     [notificationCenter addObserver:self
                            selector:@selector(bundleDidInstall:)
-                               name:TMLBundleInstallationDidFinishNotification
+                               name:TMLLocalizationUpdatesInstalledNotification
                              object:nil];
     _observingNotifications = YES;
 }

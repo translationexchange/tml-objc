@@ -25,11 +25,6 @@ extern NSString * const TMLBundleManagerURLKey;
 extern NSString * const TMLBundleManagerPathKey;
 extern NSString * const TMLBundleManagerErrorCodeKey;
 
-extern NSString * const TMLBundleContentsChangedNotification;
-extern NSString * const TMLBundleSyncDidStartNotification;
-extern NSString * const TMLBundleSyncDidFinishNotification;
-extern NSString * const TMLBundleInstallationDidFinishNotification;
-
 extern NSString * const TMLBundleChangeInfoBundleKey;
 extern NSString * const TMLBundleChangeInfoErrorsKey;
 

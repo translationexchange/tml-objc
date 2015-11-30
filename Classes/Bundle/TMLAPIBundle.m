@@ -232,7 +232,7 @@
     [syncQueue addOperation:syncOperation];
     _syncOperationCount++;
     if (_syncOperationCount == 1) {
-        [[TMLBundleManager defaultManager] notifyBundleMutation:TMLBundleSyncDidStartNotification
+        [[TMLBundleManager defaultManager] notifyBundleMutation:TMLDidStartSyncNotification
                                                          bundle:self
                                                          errors:nil];
     }
@@ -427,7 +427,7 @@
     }
     
     TMLBundleManager *bundleManager = [TMLBundleManager defaultManager];
-    [bundleManager notifyBundleMutation:TMLBundleContentsChangedNotification
+    [bundleManager notifyBundleMutation:TMLLocalizationDataChangedNotification
                                  bundle:self
                                  errors:errors];
     
@@ -435,7 +435,7 @@
         if (_needsSync == YES) {
             [self performSelector:@selector(sync) withObject:nil afterDelay:3.0];
         }
-        [bundleManager notifyBundleMutation:TMLBundleSyncDidFinishNotification
+        [bundleManager notifyBundleMutation:TMLDidFinishSyncNotification
                                      bundle:self
                                      errors:_syncErrors];
     }

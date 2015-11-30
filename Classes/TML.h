@@ -36,6 +36,9 @@
 #pragma mark - Notifications
 extern NSString * const TMLLanguageChangedNotification;
 extern NSString * const TMLLocalizationDataChangedNotification;
+extern NSString * const TMLDidStartSyncNotification;
+extern NSString * const TMLDidFinishSyncNotification;
+extern NSString * const TMLLocalizationUpdatesInstalledNotification;
 
 #pragma mark - UserInfo Keys
 extern NSString * const TMLLanguagePreviousLocaleUserInfoKey;

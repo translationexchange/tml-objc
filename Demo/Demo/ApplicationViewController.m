@@ -72,7 +72,7 @@
                              object:nil];
     [notificationCenter addObserver:self
                            selector:@selector(tmlDidFinishSync:)
-                               name:TMLBundleSyncDidFinishNotification
+                               name:TMLDidFinishSyncNotification
                              object:nil];
     _observingTMLNotifications = YES;
 }

@@ -346,9 +346,11 @@ NSString * const TMLBundleErrorsKey = @"errors";
                                    }
                                    if (count == resourcePaths.count) {
                                        [self resetData];
-                                       [[TMLBundleManager defaultManager] notifyBundleMutation:TMLBundleContentsChangedNotification
-                                                                                        bundle:self
-                                                                                        errors:allErrors];
+                                       if ([[TML sharedInstance] currentBundle] == self) {
+                                           [[TMLBundleManager defaultManager] notifyBundleMutation:TMLLocalizationDataChangedNotification
+                                                                                            bundle:self
+                                                                                            errors:allErrors];
+                                       }
                                        if (completion != nil) {
                                            completion((allErrors.count > 0) ? [allErrors firstObject] : nil);
                                        }

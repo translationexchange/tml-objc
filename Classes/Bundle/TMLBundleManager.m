@@ -27,11 +27,6 @@ NSString * const TMLBundleManagerErrorCodeKey = @"code";
 
 NSString * const TMLBundleManagerAPIBundleDirectoryName = @"api";
 
-NSString * const TMLBundleContentsChangedNotification = @"TMLBundleContentsChangedNotification";
-NSString * const TMLBundleSyncDidStartNotification = @"TMLBundleSyncDidStartNotification";
-NSString * const TMLBundleSyncDidFinishNotification = @"TMLBundleSyncDidFinishNotification";
-NSString * const TMLBundleInstallationDidFinishNotification = @"TMLBundleInstallationDidFinishNotification";
-
 NSString * const TMLBundleChangeInfoBundleKey = @"bundle";
 NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 
@@ -169,7 +164,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
             TMLBundle *installedBundle = [[TMLBundle alloc] initWithContentsOfDirectory:destinationPath];
             self.latestBundle = installedBundle;
             dispatch_async(dispatch_get_main_queue(), ^{
-                [self notifyBundleMutation:TMLBundleInstallationDidFinishNotification
+                [self notifyBundleMutation:TMLLocalizationUpdatesInstalledNotification
                                     bundle:installedBundle
                                     errors:nil];
             });
