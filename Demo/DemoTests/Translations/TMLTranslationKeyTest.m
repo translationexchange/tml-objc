@@ -28,7 +28,7 @@
     tk = [[TMLTranslationKey alloc] init];
     tk.locale = @"en-US";
     tk.label = @"[bold: Hello World]";
-    XCTAssertEqualObjects([tk translateToLanguage:en withTokens:@{@"bold": @"<b>{$0}</b>"}], @"<b>Hello World</b>");
+    XCTAssertEqualObjects([tk translateToLanguage:en tokens:@{@"bold": @"<b>{$0}</b>"}], @"<b>Hello World</b>");
 }
 
 
@@ -36,8 +36,8 @@
     TMLLanguage *en = [self languageForLocale:@"en-US"];
     
     [TML configure:^(TMLConfiguration *config) {
-        [config setDefaultTokenValue:@"<strong>{$0}</strong>" forName:@"indent" type:@"decoration"];
-        [config setDefaultTokenValue:@"World" forName:@"world" type:@"data"];
+        [config setDefaultTokenValue:@"<strong>{$0}</strong>" forName:@"indent" type:TMLDecorationTokenType];
+        [config setDefaultTokenValue:@"World" forName:@"world" type:TMLDataTokenType];
     }];
     
     TMLTranslationKey *tk = [[TMLTranslationKey alloc] init];

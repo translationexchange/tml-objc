@@ -138,10 +138,10 @@
     
     TMLTestUser *user = [[TMLTestUser alloc] initWithFirstName:@"Michael" andLastName:@"Berkovich" andGender:@"male"];
     
-    NSString *result = [token substituteInLabel:@"Hello {user}" usingTokens:@{@"user": user} forLanguage:language withOptions:@{}];
+    NSString *result = [token substituteInLabel:@"Hello {user}" tokens:@{@"user": user} language:language];
     XCTAssert([result isEqual: @"Hello Michael Berkovich"]);
     
-    result = [token substituteInLabel:@"Hello {user}" usingTokens:@{@"user": @{@"object": @{@"name": @"Mike", @"gender": @"male"}, @"value": @"Michael"}} forLanguage:language withOptions:@{}];
+    result = [token substituteInLabel:@"Hello {user}" tokens:@{@"user": @{@"object": @{@"name": @"Mike", @"gender": @"male"}, @"value": @"Michael"}} language:language ];
     XCTAssert([result isEqual: @"Hello Michael"]);
     
 }
