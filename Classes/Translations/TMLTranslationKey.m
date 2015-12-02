@@ -105,16 +105,55 @@
             && (self.level == translationKey.level));
 }
 
-#pragma mark -
+#pragma mark - Key hash generation
 
-+ (NSString *) generateKeyForLabel: (NSString *) label {
-    return [self generateKeyForLabel:label andDescription:@""];
++ (NSString *) generateKeyForLabel:(NSString *)label {
+    return [self generateKeyForLabel:label description:nil];
 }
 
-+ (NSString *) generateKeyForLabel: (NSString *) label andDescription: (NSString *) description {
++ (NSString *) generateKeyForLabel:(NSString *)label
+                       description:(NSString *)description
+{
     if (description == nil) description = @"";
     return [[NSString stringWithFormat:@"%@;;;%@", label, description] tmlMD5];
 }
+
+- (void) resetKey {
+    _key = nil;
+}
+
+#pragma mark - Accessors
+
+- (void)setLabel:(NSString *)label {
+    if (_label == label
+        || [_label isEqualToString:label] == YES) {
+        return;
+    }
+    _label = label;
+    [self resetKey];
+}
+
+- (NSString *)key {
+    if (_key == nil) {
+        _key = [[self class] generateKeyForLabel:self.label description:self.keyDescription];
+    }
+    return _key;
+}
+
+- (void)setKeyDescription:(NSString *)keyDescription {
+    if (_keyDescription == keyDescription
+        || [_keyDescription isEqualToString:keyDescription] == YES) {
+        return;
+    }
+    _keyDescription = keyDescription;
+    [self resetKey];
+}
+
+- (NSString *) description {
+    return [NSString stringWithFormat:@"<%@:%@: %p>", [self class], self.label, self];
+}
+
+#pragma mark - Translations
 
 - (BOOL) hasTranslations {
     return [self.translations count] > 0;
@@ -195,18 +234,6 @@
     }
     
     return translatedLabel;
-}
-
-- (NSString *)keyDescription {
-    if (_keyDescription == nil) {
-//        return self.label;
-        return @"";
-    }
-    return _keyDescription;
-}
-
-- (NSString *) description {
-    return [NSString stringWithFormat:@"<%@: %@>", [self class], self.label];
 }
 
 @end
