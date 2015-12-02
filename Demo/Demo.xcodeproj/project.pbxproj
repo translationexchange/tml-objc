@@ -124,6 +124,7 @@
 		C436C3621C0945A8009B736B /* TMLAPIBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = C436C3611C0945A8009B736B /* TMLAPIBundle.m */; };
 		C436C3651C09461F009B736B /* TMLJSONValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = C436C3641C09461F009B736B /* TMLJSONValueTransformer.m */; };
 		C44281921BF5659200E68194 /* TMLAPISerializationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C44281911BF5659200E68194 /* TMLAPISerializationTest.m */; };
+		C4FCD12D1C0C1E2F00D723BC /* TMLTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD12C1C0C1E2F00D723BC /* TMLTokenizer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -328,6 +329,8 @@
 		C436C3631C09461F009B736B /* TMLJSONValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLJSONValueTransformer.h; sourceTree = "<group>"; };
 		C436C3641C09461F009B736B /* TMLJSONValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLJSONValueTransformer.m; sourceTree = "<group>"; };
 		C44281911BF5659200E68194 /* TMLAPISerializationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPISerializationTest.m; sourceTree = "<group>"; };
+		C4FCD12B1C0C1E2F00D723BC /* TMLTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLTokenizer.h; sourceTree = "<group>"; };
+		C4FCD12C1C0C1E2F00D723BC /* TMLTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTokenizer.m; sourceTree = "<group>"; };
 		C4FCD12E1C0CEB5900D723BC /* TML+TMLLocalizedString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TML+TMLLocalizedString.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -798,14 +801,16 @@
 		C0F80CB51BEA83DE0048DF2D /* Tokenizers */ = {
 			isa = PBXGroup;
 			children = (
+				C0F80CB61BEA83DE0048DF2D /* TMLAttributedDecorationTokenizer.h */,
+				C0F80CB71BEA83DE0048DF2D /* TMLAttributedDecorationTokenizer.m */,
 				C0F80CB81BEA83DE0048DF2D /* TMLDataTokenizer.h */,
 				C0F80CB91BEA83DE0048DF2D /* TMLDataTokenizer.m */,
 				C0F80CBA1BEA83DE0048DF2D /* TMLDecorationTokenizer.h */,
 				C0F80CBB1BEA83DE0048DF2D /* TMLDecorationTokenizer.m */,
-				C0F80CB61BEA83DE0048DF2D /* TMLAttributedDecorationTokenizer.h */,
-				C0F80CB71BEA83DE0048DF2D /* TMLAttributedDecorationTokenizer.m */,
 				C0F80CBC1BEA83DE0048DF2D /* TMLHtmlDecorationTokenizer.h */,
 				C0F80CBD1BEA83DE0048DF2D /* TMLHtmlDecorationTokenizer.m */,
+				C4FCD12B1C0C1E2F00D723BC /* TMLTokenizer.h */,
+				C4FCD12C1C0C1E2F00D723BC /* TMLTokenizer.m */,
 			);
 			path = Tokenizers;
 			sourceTree = "<group>";
@@ -1101,6 +1106,7 @@
 				C0F80CE01BEA83DE0048DF2D /* UIButton+TML.m in Sources */,
 				4CCBA12F18B9B69A00CFCB3A /* MenuViewController.m in Sources */,
 				4CE06A1618BD823B0088AB3E /* DataTokensDemoViewController.m in Sources */,
+				C4FCD12D1C0C1E2F00D723BC /* TMLTokenizer.m in Sources */,
 				4C36258419EF4E5700356B51 /* StaticTableViewController.m in Sources */,
 				C0F80D021BEA83DE0048DF2D /* TMLDataToken.m in Sources */,
 				4CE06A0818BD3D2E0088AB3E /* DecorationTokensDemoViewController.m in Sources */,
