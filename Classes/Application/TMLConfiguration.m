@@ -39,8 +39,6 @@
 #define kTMLServiceHost @"https://api.translationexchange.com"
 #endif
 
-#define DEFAULT_LOCALE @"en"
-
 NSString * const TMLApplicationTokenDefaultsKey = @"applicationToken";
 NSString * const TMLDefaultLocaleDefaultsKey = @"defaultLocale";
 NSString * const TMLCurrentLocaleDefaultsKey = @"currentLocale";
@@ -173,7 +171,7 @@ NSString * NSStringFromTokenFormat(TMLTokenFormat format) {
 - (NSString *)defaultLocale {
     NSString *locale = [self persistentValueForKey:TMLDefaultLocaleDefaultsKey];
     if (locale == nil) {
-        locale = DEFAULT_LOCALE;
+        locale = [[TMLLanguage defaultLanguage] locale];
     }
     return locale;
 }
