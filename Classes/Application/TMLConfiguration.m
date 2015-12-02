@@ -165,7 +165,9 @@ NSString * NSStringFromTokenFormat(TMLTokenFormat format) {
 }
 
 - (void) setCurrentLocale:(NSString *)newLocale {
+    [self willChangeValueForKey:@"currentLocale"];
     [self setPersistentValue:newLocale forKey:TMLCurrentLocaleDefaultsKey];
+    [self didChangeValueForKey:@"defaultLocale"];
 }
 
 - (NSString *)defaultLocale {
@@ -177,7 +179,9 @@ NSString * NSStringFromTokenFormat(TMLTokenFormat format) {
 }
 
 - (void) setDefaultLocale:(NSString *)newLocale {
+    [self willChangeValueForKey:@"defaultLocale"];
     [self setPersistentValue:newLocale forKey:TMLDefaultLocaleDefaultsKey];
+    [self didChangeValueForKey:@"defaultLocale"];
 }
 
 #pragma mark - Setting up Defaults
