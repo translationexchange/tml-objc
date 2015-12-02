@@ -32,13 +32,13 @@
 #import "NSString+TMLAdditions.h"
 #import "TML.h"
 #import "TMLAPIBundle.h"
+#import "TMLAPIClient.h"
 #import "TMLBundle.h"
 #import "TMLBundleManager.h"
 #import "TMLConfiguration.h"
 #import "TMLDataToken.h"
 #import "TMLLanguageCase.h"
 #import "TMLLogger.h"
-#import "TMLPostOffice.h"
 #import "TMLSource.h"
 #import "TMLTranslation.h"
 #import "TMLTranslationKey.h"
@@ -50,7 +50,6 @@
 }
 @property(strong, nonatomic) TMLConfiguration *configuration;
 @property(strong, nonatomic) TMLAPIClient *apiClient;
-@property(strong, nonatomic) TMLPostOffice *postOffice;
 @property(nonatomic, readwrite) TMLBundle *currentBundle;
 @end
 
@@ -380,9 +379,6 @@
         return;
     }
     _application = application;
-    if (application != nil) {
-        self.postOffice = [[TMLPostOffice alloc] initWithApplication:application];
-    }
 }
 
 #pragma mark - Translating

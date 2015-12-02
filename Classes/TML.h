@@ -34,7 +34,7 @@
 #import "TMLLogger.h"
 #import <Foundation/Foundation.h>
 
-@class TMLAPIClient, TMLPostOffice, TMLTranslationKey, TMLBundle;
+@class TMLAPIClient, TMLTranslationKey, TMLBundle;
 
 @protocol TMLDelegate;
 
@@ -68,11 +68,6 @@
  *  Instance of an API Client configured for current project
  */
 @property(nonatomic, readonly) TMLAPIClient *apiClient;
-
-/**
- *  Instance of PostOffice configuted for current project
- */
-@property(nonatomic, readonly) TMLPostOffice *postOffice;
 
 /**
  *  TML delegate

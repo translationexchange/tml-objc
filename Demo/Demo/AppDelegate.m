@@ -56,10 +56,6 @@
     }
 }
 
-- (void)application:(UIApplication *)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
-    [[[TML sharedInstance] postOffice] registerToken: [deviceToken description]];
-}
-
 - (void)application:(UIApplication *)app didFailToRegisterForRemoteNotificationsWithError:(NSError *)err {
     TMLDebug(@"%@", [err description]);
 }
