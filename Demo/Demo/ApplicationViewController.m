@@ -64,10 +64,10 @@
     }
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self
-                           selector:@selector(translationsLoaded:)
+                           selector:@selector(tmlTranslationsLoaded:)
                                name:TMLLanguageChangedNotification
                              object:nil];
-    [notificationCenter addObserver:self selector:@selector(bundleDidChange:)
+    [notificationCenter addObserver:self selector:@selector(tmlBundleDidChange:)
                                name:TMLLocalizationDataChangedNotification
                              object:nil];
     [notificationCenter addObserver:self
@@ -93,11 +93,11 @@
     TMLLocalizeView(self.view);
 }
 
-- (void)translationsLoaded:(NSNotification *)aNotification {
+- (void)tmlTranslationsLoaded:(NSNotification *)aNotification {
     [self localize];
 }
 
-- (void)bundleDidChange:(NSNotification *)aNotification {
+- (void)tmlBundleDidChange:(NSNotification *)aNotification {
     [self localize];
 }
 
