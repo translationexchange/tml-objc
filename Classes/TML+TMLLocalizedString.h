@@ -12,16 +12,16 @@
 #define TMLTranslationKey(label, description) \
 [TMLTranslationKey generateKeyForLabel: label andDescription: description]
 
-#define TMLLocalizedString(string, description) \
-[TML localize:string description:description tokens:nil options:nil]
+#define TMLLocalizedString(string) \
+[TML localizeString:string description:nil tokens:nil options:nil]
 
-#define TMLLocalizedStringWithTokens(string, description, tokens, options) \
-[TML localize:string description:description tokens:tokens options:options]
+#define TMLLocalizedStringWithOptions(string, description, tokens, options) \
+[TML localizeString:string description:description tokens:tokens options:options]
 
-#define TMLLocalizedAttributedString(attributedString, description) \
-[TML localizeAttributedString:attributedString description:description tokens:nil options:nil]
+#define TMLLocalizedAttributedString(attributedString) \
+[TML localizeAttributedString:attributedString description:nil tokens:nil options:nil]
 
-#define TMLLocalizedAttributedStringWithTokens(attributedString, description, tokens, options) \
+#define TMLLocalizedAttributedStringWithOptions(attributedString, description, tokens, options) \
 [TML localizeAttributedString:string description:description tokens:tokens options:options]
 
 #define TMLLocalizedDateWithFormat(date, format, description) \
