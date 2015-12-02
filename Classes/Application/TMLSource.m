@@ -39,8 +39,12 @@ NSString * const TMLSourceDefaultKey = @"TML";
 @implementation TMLSource
 
 + (instancetype)defaultSource {
-    TMLSource *source = [[TMLSource alloc] init];
-    source.key = TMLSourceDefaultKey;
+    static TMLSource *source;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        source = [[TMLSource alloc] init];
+        source.key = TMLSourceDefaultKey;
+    });
     return source;
 }
 
