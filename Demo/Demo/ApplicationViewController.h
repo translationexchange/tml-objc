@@ -40,8 +40,8 @@
 
 #pragma mark - Notifications
 
-- (void)translationsLoaded:(NSNotification *)aNotification;
-- (void)bundleDidChange:(NSNotification *)aNotification;
+- (void)tmlTranslationsLoaded:(NSNotification *)aNotification;
+- (void)tmlBundleDidChange:(NSNotification *)aNotification;
 - (void)tmlDidFinishSync:(NSNotification *)aNotification;
 
 @end
