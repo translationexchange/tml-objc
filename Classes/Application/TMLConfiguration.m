@@ -136,7 +136,9 @@ NSString * NSStringFromTokenFormat(TMLTokenFormat format) {
 }
 
 - (void)setApplicationKey:(NSString *)applicationKey {
+    [self willChangeValueForKey:@"applicationKey"];
     [self setPersistentValue:applicationKey forKey:TMLApplicationTokenDefaultsKey];
+    [self didChangeValueForKey:@"applicationKey"];
 }
 
 - (BOOL)isTranslationEnabled {
@@ -144,7 +146,9 @@ NSString * NSStringFromTokenFormat(TMLTokenFormat format) {
 }
 
 - (void)setTranslationEnabled:(BOOL)translationEnabled {
+    [self willChangeValueForKey:@"translationEnabled"];
     [self setPersistentValue:@(translationEnabled) forKey:TMLTranslationEnabledDefaultsKey];
+    [self didChangeValueForKey:@"translationEnabled"];
 }
 
 #pragma mark - Locales
