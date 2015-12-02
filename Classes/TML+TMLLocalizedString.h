@@ -9,26 +9,26 @@
 #ifndef TML_TMLLocalizedString_h
 #define TML_TMLLocalizedString_h
 
-#define TMLTranslationKey(label, description) \
-[TMLTranslationKey generateKeyForLabel: label andDescription: description]
+#define TMLTranslationKey(label, desc) \
+[TMLTranslationKey generateKeyForLabel:label description:desc]
 
 #define TMLLocalizedString(string) \
 [TML localizeString:string description:nil tokens:nil options:nil]
 
-#define TMLLocalizedStringWithOptions(string, description, tokens, options) \
-[TML localizeString:string description:description tokens:tokens options:options]
+#define TMLLocalizedStringWithOptions(string, desc, tkns, opts) \
+[TML localizeString:string description:desc tokens:tkns options:opts]
 
 #define TMLLocalizedAttributedString(attributedString) \
 [TML localizeAttributedString:attributedString description:nil tokens:nil options:nil]
 
-#define TMLLocalizedAttributedStringWithOptions(attributedString, description, tokens, options) \
-[TML localizeAttributedString:string description:description tokens:tokens options:options]
+#define TMLLocalizedAttributedStringWithOptions(attributedString, desc, tkns, opts) \
+[TML localizeAttributedString:string description:desc tokens:tkns options:opts]
 
-#define TMLLocalizedDateWithFormat(date, format, description) \
-[TML localizeDate:date withFormat:format description:description];
+#define TMLLocalizedDateWithFormat(date, format, desc) \
+[TML localizeDate:date withFormat:format description:desc];
 
-#define TMLLocalizedAttributedDateWithFormat(date, format, description) \
-[TML localizeAttributedDate:date withFormat:format description:description];
+#define TMLLocalizedAttributedDateWithFormat(date, format, desc) \
+[TML localizeAttributedDate:date withFormat:format description:desc];
 
 #define TMLBeginSource(name) \
 [TML beginBlockWithOptions: @{@"source": name}];
