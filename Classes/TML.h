@@ -38,8 +38,6 @@
 
 @class TMLAPIClient, TMLTranslationKey, TMLBundle;
 
-@protocol TMLDelegate;
-
 @interface TML : NSObject
 
 /**
@@ -70,11 +68,6 @@
  *  Instance of an API Client configured for current project
  */
 @property(nonatomic, readonly) TMLAPIClient *apiClient;
-
-/**
- *  TML delegate
- */
-@property(nonatomic, assign) id <TMLDelegate> delegate;
 
 #pragma mark - Instance creation
 
@@ -295,14 +288,6 @@
 + (NSObject *) blockOptionForKey:(NSString *)key;
 
 + (void) endBlockWithOptions;
-
-@end
-
-#pragma mark - TML Delegate
-
-@protocol TMLDelegate <NSObject>
-
-- (void) tmlDidLoadTranslations;
 
 @end
 

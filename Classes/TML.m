@@ -808,14 +808,7 @@
             if (error == nil) {
                 newLanguage = [self.application languageForLocale:locale];
             }
-            BOOL success = NO;
-            if (newLanguage != nil) {
-                id<TMLDelegate>delegate = self.delegate;
-                if ([delegate respondsToSelector:@selector(tmlDidLoadTranslations)] == YES) {
-                    [delegate tmlDidLoadTranslations];
-                }
-                success = YES;
-            }
+            BOOL success = newLanguage != nil;
             finalize(success);
         }];
     }
