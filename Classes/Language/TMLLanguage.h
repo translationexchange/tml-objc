@@ -31,7 +31,7 @@
 #import <Foundation/Foundation.h>
 #import "TMLModel.h"
 
-@class TMLLanguageContext, TMLLanguageCase, TMLApplication;
+@class TMLLanguageContext, TMLLanguageCase, TMLApplication, TMLTokenizer, TMLTranslationKey, TMLSource;
 
 @interface TMLLanguage : TMLModel
 
@@ -91,14 +91,17 @@
 
 // If browser is used, this will give HTML alignment
 - (NSString *) htmlAlignmentWithLtrDefault: (NSString *) defaultAlignment;
-
-// Retrieves value from options, then block, then defaults
-- (NSObject *) valueFromOptions: (NSDictionary *) options forKey: (NSString *) key withDefault: (NSObject *) defaultValue;
-
-// Generates new translation key
-- (NSObject *) translationKeyWithKey: (NSString *) key label: (NSString *) label description:(NSString *) description options: (NSDictionary *) options;
     
 // Translation method
-- (NSObject *) translate:(NSString *) label withDescription:(NSString *) description andTokens: (NSDictionary *) tokens andOptions: (NSDictionary *) options;
+- (id) translate:(NSString *)label
+     description:(NSString *)description
+          tokens:(NSDictionary *)tokens
+         options:(NSDictionary *)options;
+
+// Translation method
+- (id) translateKey:(TMLTranslationKey *)translationKey
+             source:(TMLSource *)source
+             tokens:(NSDictionary *)tokens
+            options:(NSDictionary *)options;
 
 @end

@@ -231,15 +231,19 @@
  *
  */
 
-- (NSString *) tokenValue: (NSDictionary *) tokens {
-    return [self tokenValue:tokens withOptions:@{@"tokenizer": @"html"}];
+- (NSString *) tokenValue:(NSDictionary *)tokens {
+    return [self tokenValue:tokens tokenFormat:TMLHTMLTokenFormat];
 }
 
-- (NSString *) tokenValue: (NSDictionary *) tokens withOptions: (NSDictionary *) options {
+- (NSString *) tokenValue:(NSDictionary *)tokens
+                tokenFormat:(TMLTokenFormat)tokenFormat
+{
 
     // token not provided, fallback onto default, if available
     if ([tokens objectForKey:self.shortName] == nil) {
-        NSString *tokenObject = (NSString *) [[TML configuration] defaultTokenValueForName: self.shortName type:TMLDataTokenType format: ([[options objectForKey:@"tokenizer"] isEqual: @"attributed"] ? TMLAttributedTokenFormat : TMLHTMLTokenFormat)];
+        NSString *tokenObject = (NSString *) [[TML configuration] defaultTokenValueForName:self.shortName
+                                                                                      type:TMLDataTokenType
+                                                                                    format:tokenFormat];
         if (tokenObject != nil) return tokenObject;
         return [self description];
     }
@@ -329,11 +333,10 @@
 }
 
 - (NSString *) substituteInLabel:(NSString *)translatedLabel
-                     usingTokens:(NSDictionary *)tokens
-                     forLanguage:(TMLLanguage *)language
-                     withOptions:(NSDictionary *)options
+                          tokens:(NSDictionary *)tokens
+                        language:(TMLLanguage *)language
 {
-    NSString *tokenValue = [self tokenValue:tokens withOptions:options];
+    NSString *tokenValue = [self tokenValue:tokens];
     
     if ([tokenValue isEqualToString: self.fullName])
         return translatedLabel;

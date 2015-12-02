@@ -44,25 +44,6 @@ NSString * const TMLDefaultLocaleDefaultsKey = @"defaultLocale";
 NSString * const TMLCurrentLocaleDefaultsKey = @"currentLocale";
 NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
 
-NSString * const TMLDataTokenTypeString = @"data";
-NSString * const TMLDecorationTokenTypeString = @"decoration";
-NSString * const TMLHTMLTokenFormatString = @"html";
-NSString * const TMLAttributedTokenFormatString = @"attributed";
-
-NSString * NSStringFromTokenType(TMLTokenType type) {
-    if (type == TMLDecorationTokenType) {
-        return TMLDecorationTokenTypeString;
-    }
-    return TMLDataTokenTypeString;
-}
-
-NSString * NSStringFromTokenFormat(TMLTokenFormat format) {
-    if (format == TMLAttributedTokenFormat) {
-        return TMLAttributedTokenFormatString;
-    }
-    return TMLHTMLTokenFormatString;
-}
-
 
 @interface TMLConfiguration () {
     NSCalendar *calendar;

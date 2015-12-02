@@ -72,8 +72,6 @@
 
 @property(nonatomic, strong) NSString *label;
 
-@property(nonatomic, strong) NSDictionary *options;
-
 // List of allowed token names from the original label
 @property(nonatomic, strong) NSArray *allowedTokenNames;
 
@@ -92,8 +90,6 @@
 - (BOOL) token: (NSString *) token matchesExpression: (NSString *) re;
 
 - (NSObject *) substituteTokensInLabelUsingData: (NSDictionary *) newTokensData;
-
-- (NSObject *) substituteTokensInLabelUsingData: (NSDictionary *) newTokensData withOptions: (NSDictionary *) newOptions;
 
 @end
 

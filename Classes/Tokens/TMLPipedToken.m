@@ -189,7 +189,10 @@
     return [NSString stringWithFormat:@"#%@#", self.shortName];
 }
 
-- (NSString *) substituteInLabel: (NSString *) translatedLabel usingTokens: (NSDictionary *) tokens forLanguage: (TMLLanguage *) language withOptions: (NSDictionary *) options {
+- (NSString *) substituteInLabel:(NSString *)translatedLabel
+                          tokens:(NSDictionary *)tokens
+                        language:(TMLLanguage *)language
+{
     NSObject *object = [tokens objectForKey:self.shortName];
     
     if (object == nil) {
@@ -238,10 +241,10 @@
     NSMutableString *replacementValue = [NSMutableString string];
 
     if ([self isValueDisplayedInTranslation]) {
-        [replacementValue appendString:[self tokenValue: tokens withOptions:options]];
+        [replacementValue appendString:[self tokenValue:tokens]];
         [replacementValue appendString: @" "];
     } else {
-        value = [value stringByReplacingOccurrencesOfString: [self placeholderName] withString: [self tokenValue: tokens withOptions:options]];
+        value = [value stringByReplacingOccurrencesOfString: [self placeholderName] withString: [self tokenValue:tokens]];
     }
     [replacementValue appendString: value];
     

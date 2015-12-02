@@ -87,15 +87,15 @@
     return [self.allowedTokenNames containsObject:token.shortName];
 }
 
-- (NSString *) substituteTokensInLabelUsingData: (NSDictionary *) tokensData forLanguage:(TMLLanguage *) language {
-    return [self substituteTokensInLabelUsingData:tokensData forLanguage:language];
-}
-
-- (NSString *) substituteTokensInLabelUsingData: (NSDictionary *) tokensData forLanguage:(TMLLanguage *) language withOptions: (NSDictionary *) options {
+- (NSString *) substituteTokensInLabelUsingData:(NSDictionary *)tokensData
+                                       language:(TMLLanguage *)language
+{
 
     NSString *translatedLabel = [NSString stringWithString:self.label];
     for (TMLDataToken *token in self.tokens) {
-        translatedLabel = [token substituteInLabel:translatedLabel usingTokens:tokensData forLanguage:language withOptions:options];
+        translatedLabel = [token substituteInLabel:translatedLabel
+                                            tokens:tokensData
+                                          language:language];
     }
     return translatedLabel;
 }

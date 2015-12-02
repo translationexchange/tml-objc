@@ -416,9 +416,8 @@
     return [self applyToken:token toValue:value];
 }
 
-- (NSObject *) substituteTokensInLabelUsingData: (NSDictionary *) newTokensData withOptions: (NSDictionary *) newOptions {
+- (NSObject *) substituteTokensInLabelUsingData:(NSDictionary *)newTokensData {
     self.tokensData = newTokensData;
-    self.options = newOptions;
     self.attributes = [NSMutableDictionary dictionary];
     NSString *result = [self evaluate: self.expression location:0];
     
@@ -429,7 +428,9 @@
         
         NSDictionary *styles = [self.tokensData objectForKey:tokenName];
         if (styles == nil) {
-            styles = [[TML configuration] defaultTokenValueForName:tokenName type:@"decoration" format: @"attributed"];
+            styles = [[TML configuration] defaultTokenValueForName:tokenName
+                                                              type:TMLDecorationTokenType
+                                                            format:TMLAttributedTokenFormat];
             if (styles == nil) continue;
         }
         

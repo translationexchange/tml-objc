@@ -54,10 +54,10 @@
 @property(nonatomic, strong) NSArray *translations;
 
 // Generates unique hash key for the translation key using label
-+ (NSString *) generateKeyForLabel: (NSString *) label;
++ (NSString *) generateKeyForLabel:(NSString *)label;
 
 // Generates unique hash key for the translation key using label and description
-+ (NSString *) generateKeyForLabel: (NSString *) label andDescription: (NSString *) description;
++ (NSString *) generateKeyForLabel:(NSString *)label description:(NSString *)description;
 
 - (BOOL)isEqualToTranslationKey:(TMLTranslationKey *)translationKey;
 
@@ -65,8 +65,11 @@
 - (BOOL) hasTranslations;
 
 // Translation methods
-- (NSObject *) translateToLanguage: (TMLLanguage *) language;
-- (NSObject *) translateToLanguage: (TMLLanguage *) language withTokens: (NSDictionary *) tokens;
-- (NSObject *) translateToLanguage: (TMLLanguage *) language withTokens: (NSDictionary *) tokens andOptions: (NSDictionary *) options;
+- (NSObject *) translateToLanguage:(TMLLanguage *)language;
+- (NSObject *) translateToLanguage:(TMLLanguage *)language
+                            tokens:(NSDictionary *)tokens;
+- (NSObject *) translateToLanguage:(TMLLanguage *)language
+                            tokens:(NSDictionary *)tokens
+                           options:(NSDictionary *)options;
 
 @end

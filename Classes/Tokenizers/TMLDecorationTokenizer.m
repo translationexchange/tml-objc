@@ -62,10 +62,9 @@
     NSString *pattern = [elements componentsJoinedByString:@"|"];
 
     NSError *error = NULL;
-    NSRegularExpression *regex = [NSRegularExpression
-                                  regularExpressionWithPattern: pattern
-                                  options: NSRegularExpressionCaseInsensitive
-                                  error: &error];
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern
+                                                                           options:NSRegularExpressionCaseInsensitive
+                                                                             error:&error];
     // TODO: check for errors
     NSArray *matches = [regex matchesInString: self.label options: 0 range: NSMakeRange(0, [self.label length])];
     self.elements = [NSMutableArray array];
@@ -95,9 +94,13 @@
 
 - (BOOL) token: (NSString *) token matchesExpression: (NSString *) re {
     NSError *error = NULL;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:re options:0 error:&error];
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:re
+                                                                           options:0
+                                                                             error:&error];
     // TODO: check for errors
-    NSRange firstMatch = [regex rangeOfFirstMatchInString:token options:0 range:NSMakeRange(0, [token length])];
+    NSRange firstMatch = [regex rangeOfFirstMatchInString:token
+                                                  options:0
+                                                    range:NSMakeRange(0, [token length])];
     return (firstMatch.location != NSNotFound);
 }
 
@@ -204,13 +207,8 @@
     return [self applyToken:token toValue:value];
 }
 
-- (NSObject *) substituteTokensInLabelUsingData: (NSDictionary *) newTokensData {
-    return [self substituteTokensInLabelUsingData:newTokensData withOptions:@{}];
-}
-
-- (NSObject *) substituteTokensInLabelUsingData: (NSDictionary *) newTokensData withOptions: (NSDictionary *) newOptions {
+- (NSObject *) substituteTokensInLabelUsingData:(NSDictionary *)newTokensData {
     self.tokensData = newTokensData;
-    self.options = newOptions;
     return [self evaluate: self.expression];
 }
 

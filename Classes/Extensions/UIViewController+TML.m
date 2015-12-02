@@ -136,7 +136,7 @@ NSString const *TMLViewTapRecognizer = @"TMLViewTapRecognizer";
     
     NSString *text = data[@"text"];
     if (text.length > 0) {
-        [self setTranslationKey:TMLTranslationKey([data objectForKey:@"text"], @"")
+        [self setTranslationKey:TMLTranslationKeyMake([data objectForKey:@"text"], nil)
                          forKey:[self viewHashKey:label]];
         label.text = TMLLocalizedStringWithTokensAndOptions([data objectForKey:@"text"], tokens, nil);
     }
@@ -267,14 +267,18 @@ NSString const *TMLViewTapRecognizer = @"TMLViewTapRecognizer";
     }
 }
 
-- (void) localizeView: (UIView *) view withLabel: (NSString *) label description: (NSString *) description tokens: (NSDictionary *) tokens options: (NSDictionary *) options {
-
+- (void) localizeView:(UIView *)view
+            withLabel:(NSString *)label
+          description:(NSString *)description
+               tokens:(NSDictionary *)tokens
+              options:(NSDictionary *)options
+{
     if (view == nil) return;
 
     NSString *text = nil;
     NSAttributedString *attributedText = nil;
     
-    [self setTranslationKey:TMLTranslationKey(label, description) forKey:[self viewHashKey:view]];
+    [self setTranslationKey:TMLTranslationKeyMake(label, description) forKey:[self viewHashKey:view]];
     
     if ([label rangeOfString:@"["].location != NSNotFound) {
         attributedText = TMLLocalizedAttributedStringWithDescriptionAndTokensAndOptions(label, description, tokens, options);

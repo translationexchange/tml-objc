@@ -45,14 +45,12 @@
 @property(nonatomic, strong) NSMutableArray *tokens;
 
 
-- (id) initWithLabel: (NSString *) newLabel;
+- (id) initWithLabel:(NSString *)newLabel;
 
-- (id) initWithLabel: (NSString *) newLabel andAllowedTokenNames: (NSArray *) newAllowedTokenNames;
+- (id) initWithLabel:(NSString *)newLabel andAllowedTokenNames:(NSArray *)newAllowedTokenNames;
 
 - (NSArray *) tokenNames;
 
-- (NSString *) substituteTokensInLabelUsingData: (NSDictionary *) tokensData forLanguage:(TMLLanguage *) language;
-
-- (NSString *) substituteTokensInLabelUsingData: (NSDictionary *) tokensData forLanguage:(TMLLanguage *) language withOptions: (NSDictionary *) options;
+- (NSString *) substituteTokensInLabelUsingData:(NSDictionary *)tokensData language:(TMLLanguage *)language;
 
 @end

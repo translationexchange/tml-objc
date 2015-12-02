@@ -53,7 +53,11 @@
     return @"";
 }
 
-- (NSString *) substituteInLabel: (NSString *) translatedLabel usingTokens: (NSDictionary *) tokens forLanguage: (TMLLanguage *) language withOptions: (NSDictionary *) options {
+- (NSString *) substituteInLabel:(NSString *)translatedLabel
+                          tokens:(NSDictionary *)tokens
+                        language:(TMLLanguage *)language
+                         options:(NSDictionary *)options
+{
     
     NSObject *object = [self.class tokenObjectForName:self.objectName fromTokens:tokens];
     

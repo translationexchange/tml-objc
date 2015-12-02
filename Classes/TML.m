@@ -44,16 +44,6 @@
 #import "TMLTranslationKey.h"
 #import <CommonCrypto/CommonDigest.h>
 
-#pragma mark - Notification Constants
-NSString * const TMLLanguageChangedNotification = @"TMLLanguageChangedNotification";
-NSString * const TMLLocalizationDataChangedNotification = @"TMLLocalizationDataChangedNotification";
-NSString * const TMLDidStartSyncNotification = @"TMLDidStartSyncNotification";
-NSString * const TMLDidFinishSyncNotification = @"TMLDidFinishSyncNotification";
-NSString * const TMLLocalizationUpdatesInstalledNotification = @"TMLLocalizationUpdatesInstalledNotification";
-
-#pragma mark - UserInfo Constants
-NSString * const TMLPreviousLocaleUserInfoKey = @"TMLPreviousLocaleUserInfoKey";
-
 
 @interface TML() {
     BOOL _observingNotifications;
@@ -397,58 +387,270 @@ NSString * const TMLPreviousLocaleUserInfoKey = @"TMLPreviousLocaleUserInfoKey";
 
 #pragma mark - Translating
 
-+ (NSString *)translate:(NSString *)label
-        withDescription:(NSString *)description
-              andTokens:(NSDictionary *)tokens
-             andOptions:(NSDictionary *)options
++ (NSString *)localizeString:(NSString *)string
+                 description:(NSString *)description
+                      tokens:(NSDictionary *)tokens
+                     options:(NSDictionary *)options
 {
-    NSMutableDictionary *opts = nil;
-    if (options != nil) {
-        opts = [NSMutableDictionary dictionaryWithDictionary:options];
+    return [[self sharedInstance] localizeString:string
+                                     description:description
+                                          tokens:tokens
+                                         options:options];
+}
+
++ (NSAttributedString *)localizeAttributedString:(NSString *)attributedString
+                                     description:(NSString *)description
+                                          tokens:(NSDictionary *)tokens
+                                         options:(NSDictionary *)options
+{
+    return [[self sharedInstance] localizeAttributedString:attributedString
+                                               description:description
+                                                    tokens:tokens
+                                                   options:options];
+}
+
++ (NSString *) localizeDate:(NSDate *)date
+                 withFormat:(NSString *)format
+                description:(NSString *)description
+{
+    return [[self sharedInstance] localizeDate:date
+                                    withFormat:format
+                                   description:description];
+}
+
++ (NSAttributedString *)localizeAttributedDate:(NSDate *)date
+                                    withFormat:(NSString *)format
+                                   description:(NSString *)description
+{
+    return [[self sharedInstance] localizeAttributedDate:date
+                                              withFormat:format
+                                             description:description];
+}
+
++ (NSString *) localizeDate:(NSDate *)date
+             withFormatName:(NSString *)formatName
+                description:(NSString *)description
+{
+    return [[self sharedInstance] localizeDate:date
+                                withFormatName:formatName
+                                   description:description];
+}
+
++ (NSAttributedString *) localizeAttributedDate:(NSDate *)date
+                                 withFormatName:(NSString *)formatName
+                                    description:(NSString *)description
+{
+    return [[self sharedInstance] localizeAttributedDate:date
+                                          withFormatName:formatName
+                                             description:description];
+}
+
++ (NSString *) localizeDate:(NSDate *)date
+        withTokenizedFormat:(NSString *)tokenizedFormat
+             description:(NSString *)description
+{
+    return [[self sharedInstance] localizeDate:date
+                           withTokenizedFormat:tokenizedFormat
+                                   description:description];
+}
+
++ (NSAttributedString *) localizeAttributedDate:(NSDate *)date
+                            withTokenizedFormat:(NSString *)tokenizedFormat
+                                 description:(NSString *)description
+{
+    return [[self sharedInstance] localizeAttributedDate:date
+                                     withTokenizedFormat:tokenizedFormat
+                                          description:description];
+}
+
+- (NSString *)localizeString:(NSString *)string
+                 description:(NSString *)description
+                      tokens:(NSDictionary *)tokens
+                     options:(NSDictionary *)options
+{
+    NSMutableDictionary *opts = [NSMutableDictionary dictionary];
+    if (opts != nil) {
+        [opts addEntriesFromDictionary:options];
+    }
+    opts[TMLTokenFormatOptionName] = TMLHTMLTokenFormatString;
+    id result = [[self currentLanguage] translate:string
+                                      description:description
+                                           tokens:tokens
+                                          options:opts];
+    if ([result isKindOfClass:[NSString class]] == YES) {
+        return (NSString *)result;
+    }
+    else if ([result isKindOfClass:[NSAttributedString class]] == YES) {
+        return [(NSAttributedString *)result string];
     }
     else {
-        opts = [NSMutableDictionary dictionary];
+        return string;
     }
-    opts[@"tokenizer"] = @"html";
-    return (NSString *) [[self sharedInstance] translate:label
-                                         withDescription:description
-                                               andTokens:tokens
-                                              andOptions:opts];
 }
 
-+ (NSAttributedString *)translateAttributedString:(NSString *)attributedString
-                                  withDescription:(NSString *)description
-                                        andTokens:(NSDictionary *)tokens
-                                       andOptions:(NSDictionary *)options
+- (NSAttributedString *)localizeAttributedString:(NSString *)string
+                                     description:(NSString *)description
+                                          tokens:(NSDictionary *)tokens
+                                         options:(NSDictionary *)options
 {
-    NSMutableDictionary *opts = nil;
-    if (options != nil) {
-        opts = [NSMutableDictionary dictionaryWithDictionary:options];
+    NSMutableDictionary *opts = [NSMutableDictionary dictionary];
+    if (opts != nil) {
+        [opts addEntriesFromDictionary:options];
+    }
+    opts[TMLTokenFormatOptionName] = TMLAttributedTokenFormatString;
+    id result = [[self currentLanguage] translate:string
+                                      description:description
+                                           tokens:tokens
+                                          options:options];
+    if ([result isKindOfClass:[NSAttributedString class]] == YES) {
+        return (NSAttributedString *)result;
+    }
+    else if ([result isKindOfClass:[NSString class]] == YES) {
+        return [[NSAttributedString alloc] initWithString:(NSString *)result attributes:nil];
     }
     else {
-        opts = [NSMutableDictionary dictionary];
+        return [[NSAttributedString alloc] initWithString:string attributes:nil];
     }
-    opts[@"tokenizer"] = @"attributed";
-    return (NSAttributedString *) [[self sharedInstance] translate:attributedString
-                                                   withDescription:description
-                                                         andTokens:tokens
-                                                        andOptions:opts];
 }
 
-+ (NSString *) localizeDate:(NSDate *) date withFormat:(NSString *) format andDescription: (NSString *) description {
-    return [[self sharedInstance] localizeDate: date withFormat: format andDescription: description];
+- (NSString *) localizeDate:(NSDate *)date
+        withTokenizedFormat:(NSString *)tokenizedFormat
+                description:(NSString *)description
+{
+    NSDictionary *tokens = [self tokenValuesForDate:date fromTokenizedFormat:tokenizedFormat];
+    return [self localizeString:tokenizedFormat
+                    description:description
+                         tokens:tokens
+                        options:nil];
 }
 
-+ (NSString *) localizeDate:(NSDate *) date withFormatKey:(NSString *) formatKey andDescription: (NSString *) description {
-    return [[self sharedInstance] localizeDate: date withFormatKey: formatKey andDescription: description];
+- (NSAttributedString *) localizeAttributedDate:(NSDate *)date
+                            withTokenizedFormat:(NSString *)tokenizedFormat
+                                    description: (NSString *)description
+{
+    NSDictionary *tokens = [self tokenValuesForDate:date fromTokenizedFormat:tokenizedFormat];
+    return [self localizeAttributedString:tokenizedFormat
+                              description:description
+                                   tokens:tokens
+                                  options:nil];
 }
 
-+ (NSString *) localizeDate:(NSDate *) date withTokenizedFormat:(NSString *) tokenizedFormat andDescription: (NSString *) description {
-    return [[self sharedInstance] localizeDate: date withTokenizedFormat: tokenizedFormat andDescription: description];
+- (NSString *) localizeDate:(NSDate *)date
+              withFormatName:(NSString *)formatName
+                description:(NSString *)description
+{
+    NSString *format = [[self configuration] customDateFormatForKey: formatName];
+    if (!format) return formatName;
+    return [self localizeDate:date
+                   withFormat:format
+                  description:description];
 }
 
-+ (NSAttributedString *) localizeAttributedDate:(NSDate *) date withTokenizedFormat:(NSString *) tokenizedFormat andDescription: (NSString *) description {
-    return [[self sharedInstance] localizeAttributedDate: date withTokenizedFormat: tokenizedFormat andDescription: description];
+- (NSAttributedString *) localizeAttributedDate:(NSDate *)date
+                                 withFormatName:(NSString *)formatName
+                                    description:(NSString *)description
+{
+    NSString *format = [[self configuration] customDateFormatForKey: formatName];
+    if (!format) return [[NSAttributedString alloc] initWithString:formatName attributes:nil];
+    return [self localizeAttributedDate:date
+                             withFormat:format
+                            description:description];
+}
+
+- (NSString *)tokenizedDateFormatFromString:(NSString *)string
+                                   withDate:(NSDate *)date
+                                     tokens:(NSDictionary **)tokens
+{
+    NSError *error = NULL;
+    NSRegularExpression *expression = [NSRegularExpression
+                                       regularExpressionWithPattern: @"[\\w]*"
+                                       options: NSRegularExpressionCaseInsensitive
+                                       error: &error];
+    
+    NSString *tokenizedFormat = string;
+    
+    NSArray *matches = [expression matchesInString:string
+                                           options:0
+                                             range:NSMakeRange(0, string.length)];
+    NSMutableArray *elements = [NSMutableArray array];
+    
+    int index = 0;
+    for (NSTextCheckingResult *match in matches) {
+        NSString *element = [string substringWithRange:[match range]];
+        [elements addObject:element];
+        NSString *placeholder = [NSString stringWithFormat: @"{%d}", index++];
+        tokenizedFormat = [tokenizedFormat stringByReplacingOccurrencesOfString:element
+                                                                     withString:placeholder];
+    }
+    
+    NSMutableDictionary *ourTokens = [NSMutableDictionary dictionary];
+    TMLConfiguration *configuration = [self configuration];
+    for (index=0; index<[elements count]; index++) {
+        NSString *element = [elements objectAtIndex:index];
+        NSString *tokenName = [configuration dateTokenNameForKey: element];
+        NSString *placeholder = [NSString stringWithFormat: @"{%d}", index];
+        
+        if (tokenName) {
+            tokenizedFormat = [tokenizedFormat stringByReplacingOccurrencesOfString:placeholder
+                                                                         withString:tokenName];
+            [ourTokens setObject:[configuration dateValueForToken:tokenName inDate:date]
+                          forKey:[tokenName stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"{}"]]];
+        } else
+            tokenizedFormat = [tokenizedFormat stringByReplacingOccurrencesOfString:placeholder
+                                                                         withString:element];
+    }
+    if (tokens != nil) {
+        *tokens = [ourTokens copy];
+    }
+    return tokenizedFormat;
+}
+
+- (NSString *) localizeDate:(NSDate *)date
+                 withFormat:(NSString *)format
+                description:(NSString *)description
+{
+    NSDictionary *tokens = nil;
+    NSString *tokenizedFormat = [self tokenizedDateFormatFromString:format
+                                                           withDate:date
+                                                             tokens:&tokens];
+    return [self localizeString:tokenizedFormat
+                    description:description
+                         tokens:tokens
+                        options:nil];
+}
+
+- (NSAttributedString *) localizeAttributedDate:(NSDate *)date
+                                     withFormat:(NSString *)format
+                                    description:(NSString *)description
+{
+    NSDictionary *tokens = nil;
+    NSString *tokenizedFormat = [self tokenizedDateFormatFromString:format
+                                                           withDate:date
+                                                             tokens:&tokens];
+    return [self localizeAttributedString:tokenizedFormat
+                              description:description
+                                   tokens:tokens
+                                  options:nil];
+}
+
+#pragma mark - Registering new translation keys
+
+- (void) registerMissingTranslationKey: (TMLTranslationKey *) translationKey {
+    [self registerMissingTranslationKey:translationKey forSourceKey:nil];
+}
+
+- (void) registerMissingTranslationKey:(TMLTranslationKey *)translationKey
+                          forSourceKey:(NSString *)sourceKey
+{
+    if (translationKey.label.length == 0) {
+        TMLWarn(@"Tried to register missing translation for translationKey with empty label");
+        return;
+    }
+    
+    TMLBundle *currentBundle = self.currentBundle;
+    if ([currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
+        [(TMLAPIBundle *)currentBundle addTranslationKey:translationKey forSource:sourceKey];
+    }
 }
 
 #pragma mark - Configuration
@@ -529,6 +731,26 @@ NSString * const TMLPreviousLocaleUserInfoKey = @"TMLPreviousLocaleUserInfoKey";
         return;
     
     [self.blockOptions removeObjectAtIndex:0];
+}
+
+#pragma mark - Sources
+
++ (NSString *) currentSource {
+    return [[self sharedInstance] currentSource];
+}
+
+- (void)setCurrentSource:(NSString *)currentSource {
+    if (currentSource != nil) {
+        [self beginBlockWithOptions:@{TMLSourceOptionName : currentSource}];
+    }
+}
+
+- (NSString *)currentSource {
+    NSString *source = (NSString *)[self blockOptionForKey:TMLSourceOptionName];
+    if (source == nil) {
+        source = [[TMLSource defaultSource] sourceName];
+    }
+    return source;
 }
 
 #pragma mark - Languages and Locales
@@ -653,27 +875,6 @@ NSString * const TMLPreviousLocaleUserInfoKey = @"TMLPreviousLocaleUserInfoKey";
     }
 }
 
-- (NSObject *)translate:(NSString *)label
-        withDescription:(NSString *)description
-              andTokens:(NSDictionary *)tokens
-             andOptions:(NSDictionary *)options
-{
-    // if TML is used in a disconnected mode or has not been initialized, fallback onto English US
-    NSString *currentLocale = [self currentLocale];
-    TMLLanguage *currentLanguage = nil;
-    if (currentLocale != nil) {
-        currentLanguage = [self.application languageForLocale:currentLocale];
-    }
-    if (currentLanguage == nil) {
-        currentLanguage = [TMLLanguage defaultLanguage];
-    }
-    id result = [currentLanguage translate:label
-                           withDescription:description
-                                 andTokens:tokens
-                                andOptions:options];
-    return (result == nil) ? label : result;
-}
-
 - (BOOL) hasLocalTranslationsForLocale:(NSString *)locale {
     if (locale == nil) {
         return NO;
@@ -705,95 +906,6 @@ NSString * const TMLPreviousLocaleUserInfoKey = @"TMLPreviousLocaleUserInfoKey";
     }
     
     return tokens;
-}
-
-// {months_padded}/{days_padded}/{years} at {hours}:{minutes}
-- (NSString *) localizeDate:(NSDate *) date withTokenizedFormat:(NSString *) tokenizedFormat andDescription: (NSString *) description {
-    NSDictionary *tokens = [self tokenValuesForDate:date fromTokenizedFormat:tokenizedFormat];
-    
-//    TMLDebug(@"Tokenized date string: %@", tokenizedFormat);
-//    TMLDebug(@"Tokenized date string: %@", [tokens description]);
-    
-    return TMLLocalizedStringWithDescriptionAndTokens(tokenizedFormat, description, tokens);
-}
-
-// {days} {month_name::gen} at [bold: {hours}:{minutes}] {am_pm}
-- (NSAttributedString *) localizeAttributedDate:(NSDate *) date withTokenizedFormat:(NSString *) tokenizedFormat andDescription: (NSString *) description {
-    NSDictionary *tokens = [self tokenValuesForDate:date fromTokenizedFormat:tokenizedFormat];
-    
-//    TMLDebug(@"Tokenized date string: %@", tokenizedFormat);
-//    TMLDebug(@"Tokenized date string: %@", [tokens description]);
-    
-    return TMLLocalizedAttributedStringWithDescriptionAndTokens(tokenizedFormat, description, tokens);
-}
-
-// default_format
-- (NSString *) localizeDate:(NSDate *) date withFormatKey:(NSString *) formatKey andDescription: (NSString *) description {
-    NSString *format = [[self configuration] customDateFormatForKey: formatKey];
-    if (!format) return formatKey;
-    return [self localizeDate: date withFormat:format andDescription: description];
-}
-
-// MM/dd/yyyy at h:m
-- (NSString *) localizeDate:(NSDate *) date withFormat:(NSString *) format andDescription: (NSString *) description {
-    NSError *error = NULL;
-    NSRegularExpression *expression = [NSRegularExpression
-                                  regularExpressionWithPattern: @"[\\w]*"
-                                  options: NSRegularExpressionCaseInsensitive
-                                  error: &error];
-
-//    TMLDebug(@"Parsing date format: %@", format);
-    NSString *tokenizedFormat = format;
-    
-    NSArray *matches = [expression matchesInString: format options: 0 range: NSMakeRange(0, [format length])];
-    NSMutableArray *elements = [NSMutableArray array];
-    
-    int index = 0;
-    for (NSTextCheckingResult *match in matches) {
-        NSString *element = [format substringWithRange:[match range]];
-        [elements addObject:element];
-        NSString *placeholder = [NSString stringWithFormat: @"{%d}", index++];
-        tokenizedFormat = [tokenizedFormat stringByReplacingOccurrencesOfString:element withString: placeholder];
-    }
-
-//    TMLDebug(@"Tokenized date string: %@", tokenizedFormat);
-
-    NSMutableDictionary *tokens = [NSMutableDictionary dictionary];
-    
-    for (index=0; index<[elements count]; index++) {
-        NSString *element = [elements objectAtIndex:index];
-        NSString *tokenName = [[self configuration] dateTokenNameForKey: element];
-        NSString *placeholder = [NSString stringWithFormat: @"{%d}", index];
-        
-        if (tokenName) {
-            tokenizedFormat = [tokenizedFormat stringByReplacingOccurrencesOfString:placeholder withString:tokenName];
-            [tokens setObject:[[self configuration] dateValueForToken: tokenName inDate:date] forKey:[tokenName stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"{}"]]];
-        } else
-            tokenizedFormat = [tokenizedFormat stringByReplacingOccurrencesOfString:placeholder withString:element];
-    }
-    
-//    TMLDebug(@"Tokenized date string: %@", tokenizedFormat);
-//    TMLDebug(@"Tokenized date string: %@", [tokens description]);
-
-    return TMLLocalizedStringWithDescriptionAndTokens(tokenizedFormat, description, tokens);
-}
-
-- (void) registerMissingTranslationKey: (TMLTranslationKey *) translationKey {
-    [self registerMissingTranslationKey:translationKey forSourceKey:nil];
-}
-
-- (void) registerMissingTranslationKey:(TMLTranslationKey *)translationKey
-                          forSourceKey:(NSString *)sourceKey
-{
-    if (translationKey.label.length == 0) {
-        TMLWarn(@"Tried to register missing translation for translationKey with empty label");
-        return;
-    }
-    
-    TMLBundle *currentBundle = self.currentBundle;
-    if ([currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
-        [(TMLAPIBundle *)currentBundle addTranslationKey:translationKey forSource:sourceKey];
-    }
 }
 
 - (void) submitMissingTranslationKeys {

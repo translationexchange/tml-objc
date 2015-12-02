@@ -36,24 +36,9 @@
 
 @class TMLAPIClient, TMLPostOffice, TMLTranslationKey, TMLBundle;
 
-#pragma mark - Notifications
-extern NSString * const TMLLanguageChangedNotification;
-extern NSString * const TMLLocalizationDataChangedNotification;
-extern NSString * const TMLDidStartSyncNotification;
-extern NSString * const TMLDidFinishSyncNotification;
-extern NSString * const TMLLocalizationUpdatesInstalledNotification;
-
-#pragma mark - UserInfo Keys
-extern NSString * const TMLPreviousLocaleUserInfoKey;
-
 @protocol TMLDelegate;
 
 @interface TML : NSObject
-
-/**
- *  Holds the current source key
- */
-@property(nonatomic, strong) NSString *currentSource;
 
 /**
  *  Currently utilized localization bundle
@@ -145,6 +130,15 @@ extern NSString * const TMLPreviousLocaleUserInfoKey;
  */
 + (TMLConfiguration *) configuration;
 
+#pragma mark - Sources
+
+/**
+ *  Holds the current source key
+ */
+@property(nonatomic, strong) NSString *currentSource;
+
++ (NSString *) currentSource;
+
 #pragma mark - Languages and Locales
 
 + (NSString *) defaultLocale;
@@ -165,52 +159,125 @@ extern NSString * const TMLPreviousLocaleUserInfoKey;
 + (void) reloadTranslations;
 - (void) reloadTranslations;
 
-#pragma mark - Translating
+#pragma mark - Localizing
 
 /**
- *  HTML Translation
+ *  Localizes string with description and optional tokens
  *
- *  @param label       String to be translated
- *  @param description Optional description for the label
- *  @param tokens      Optional dictionary of translation tokens
- *  @param options     Optional dictionary of options
+ *  @param string      String to localize
+ *  @param description Optional description
+ *  @param tokens      Optional tokens
+ *  @param options     Optional options
  *
- *  @return Translated string
+ *  @return Localized strings
  */
-+ (NSString *) translate:(NSString *)label
-         withDescription:(NSString *)description
-               andTokens:(NSDictionary *)tokens
-              andOptions:(NSDictionary *)options;
++ (NSString *) localizeString:(NSString *)string
+                  description:(NSString *)description
+                       tokens:(NSDictionary *)tokens
+                      options:(NSDictionary *)options;
 
 /**
  *  Attributed String Translation Methods
  *
- *  @param label       String to be translated
- *  @param description Optional description for the label
- *  @param tokens      Optional dictionary of translation tokens
- *  @param options     Optional dictionary of options
+ *  @param attributedString Attributed string to localize
+ *  @param description      Optional description
+ *  @param tokens           Optional token
+ *  @param options          Optional options
  *
- *  @return Translated string
+ *  @return Localized attributed string
  */
-+ (NSAttributedString *) translateAttributedString:(NSString *)label
-                                   withDescription:(NSString *)description
-                                         andTokens:(NSDictionary *)tokens
-                                        andOptions:(NSDictionary *)options;
++ (NSAttributedString *) localizeAttributedString:(NSString *)attributedString
+                                      description:(NSString *)description
+                                           tokens:(NSDictionary *)tokens
+                                          options:(NSDictionary *)options;
 
 /**
- *  Date localization methods
+ *  Returns localized string representation of a date with given format and optional description.
+ *  Example of a format string is "MM/dd/yyyy at h:m"
  *
- *  @param date        Date to be translated
- *  @param format      Date format
+ *  @param date        Date to be localized
+ *  @param format      Date format (e.g. "MM/dd/yyyy at h:m")
  *  @param description Optional description
  *
  *  @return Localized string representing the date
  */
 + (NSString *) localizeDate:(NSDate *)date
                  withFormat:(NSString *)format
-             andDescription:(NSString *)description;
+                description:(NSString *)description;
 
-- (NSArray *) translationsForKey:(NSString *)translationKey locale:(NSString *)locale;
+/**
+ *  Returns localized string representation of a date with given format and optional description.
+ *  Example of a format string is "MM/dd/yyyy at h:m".
+ *  Adding attributes: "[bold: MM/dd/yyyy] at h:m"
+ *
+ *  @param date        Date to be localized
+ *  @param format      Date format (e.g. "MM/dd/yyyy at h:m")
+ *  @param description Optional description
+ *
+ *  @return Localized attributed string representing the date
+ */
++ (NSAttributedString *) localizeAttributedDate:(NSDate *)date
+                                     withFormat:(NSString *)format
+                                    description:(NSString *)description;
+
+/**
+ *  Returns localized string representation of a date with tokenized format, e.g.:
+ *  "{months_padded}/{days_padded}/{years} at {hours}:{minutes}"
+ *
+ *  @param date            Date to be localized
+ *  @param tokenizedFormat Tokenized format (e.g. "{months_padded}/{days_padded}/{years} at {hours}:{minutes}")
+ *  @param description     Optional description
+ *
+ *  @return Localized string representation of the date
+ */
++ (NSString *) localizeDate:(NSDate *)date
+        withTokenizedFormat:(NSString *)tokenizedFormat
+                description:(NSString *)description;
+
+/**
+ *  Returns localized attributed string of a date with tokenized format, e.g.
+ *  "{days} {month_name::gen} at [bold: {hours}:{minutes}] {am_pm}"
+ *
+ *  @param date            Date to be localized
+ *  @param tokenizedFormat Tokenized format (e.g. "{days} {month_name::gen} at [bold: {hours}:{minutes}] {am_pm}")
+ *  @param description     Optional description
+ *
+ *  @return Localized attributed string representation of the date
+ */
++ (NSAttributedString *) localizeAttributedDate:(NSDate *)date
+                            withTokenizedFormat:(NSString *)tokenizedFormat
+                                    description:(NSString *)description;
+
+/**
+ *  Returns localized string representation of a date using pre-configured format.
+ *  The format is obtained from configuration object, using provided format name.
+ *
+ *  @param date        Date to be localized
+ *  @param formatName  Format name as it is defined in the configuration
+ *  @param description Optional description
+ *
+ *  @return Localized string representation of the date
+ */
++ (NSString *) localizeDate:(NSDate *)date
+             withFormatName:(NSString *)formatName
+                description:(NSString *)description;
+
+/**
+ *  Returns localized attributed string representation of a date using pre-configured format.
+ *  The format is obtained from configuration object, using provided format name.
+ *
+ *  @param date        Date to be localized
+ *  @param formatName  Format name as it is defined in the configuration
+ *  @param description Optional description
+ *
+ *  @return Localized attributed string representation of the date
+ */
++ (NSAttributedString *) localizeAttributedDate:(NSDate *)date
+                                 withFormatName:(NSString *)formatName
+                                    description:(NSString *)description;
+
+- (NSArray *) translationsForKey:(NSString *)translationKey
+                          locale:(NSString *)locale;
 
 - (BOOL) isTranslationKeyRegistered:(NSString *)translationKey;
 
@@ -247,74 +314,74 @@ extern NSString * const TMLPreviousLocaleUserInfoKey;
 #pragma mark Default TML Macros
 
 
-#define TMLTranslationKey(label, description) \
-    [TMLTranslationKey generateKeyForLabel: label andDescription: description]
+#define TMLTranslationKeyMake(label, desc)\
+    [TMLTranslationKey generateKeyForLabel:label description:desc]
 
 #define TMLLocalizedString(label) \
-    [TML translate: label withDescription: nil andTokens: @{} andOptions: @{}]
+    [TML localizeString:label description:nil tokens:nil options:nil]
 
-#define TMLLocalizedStringWithDescription(label, description) \
-    [TML translate: label withDescription: description andTokens: @{} andOptions: @{}]
+#define TMLLocalizedStringWithDescription(label, desc) \
+    [TML localizeString:label description:desc tokens:nil options:nil]
 
-#define TMLLocalizedStringWithDescriptionAndTokens(label, description, tokens) \
-    [TML translate: label withDescription: description andTokens: tokens andOptions: @{}]
+#define TMLLocalizedStringWithDescriptionAndTokens(label, desc, tkns) \
+    [TML localizeString:label description:desc tokens:tkns options:nil]
 
-#define TMLLocalizedStringWithDescriptionAndTokensAndOptions(label, description, tokens, options) \
-    [TML translate: label withDescription: description andTokens: tokens andOptions: options]
+#define TMLLocalizedStringWithDescriptionAndTokensAndOptions(label, desc, tkns, opts) \
+    [TML localizeString:label description:desc tokens:tkns options:opts]
 
-#define TMLLocalizedStringWithTokens(label, tokens) \
-    [TML translate: label withDescription: nil andTokens: tokens andOptions: nil]
+#define TMLLocalizedStringWithTokens(label, tkns) \
+    [TML localizeString:label description:nil tokens:tkns options:nil]
 
-#define TMLLocalizedStringWithTokensAndOptions(label, tokens, options) \
-    [TML translate: label withDescription: nil andTokens: tokens andOptions: options]
+#define TMLLocalizedStringWithTokensAndOptions(label, tkns, opts) \
+    [TML localizeString:label description:nil tokens:tkns options:opts]
 
-#define TMLLocalizedStringWithOptions(label, options) \
-    [TML translate: label withDescription: nil andTokens: @{} andOptions: options]
+#define TMLLocalizedStringWithOptions(label, opts) \
+    [TML localizeString:label description:nil tokens:nil options:opts]
 
-#define TMLLocalizedStringWithDescriptionAndOptions(label, description, options) \
-    [TML translate: label withDescription: description andTokens: @{} andOptions: options]
+#define TMLLocalizedStringWithDescriptionAndOptions(label, desc, opts) \
+    [TML localizeString:label description:desc tokens:nil options:opts]
 
 #define TMLLocalizedAttributedString(label) \
-    [TML translateAttributedString: label withDescription: nil andTokens: @{} andOptions: @{}]
+    [TML localizeAttributedString: label description:nil tokens:nil options:nil]
 
-#define TMLLocalizedAttributedStringWithDescription(label, description) \
-    [TML translateAttributedString: label withDescription: description andTokens: @{} andOptions: @{}]
+#define TMLLocalizedAttributedStringWithDescription(label, desc) \
+    [TML localizeAttributedString: label description:desc tokens:nil options:nil]
 
-#define TMLLocalizedAttributedStringWithDescriptionAndTokens(label, description, tokens) \
-    [TML translateAttributedString: label withDescription: description andTokens: tokens andOptions: @{}]
+#define TMLLocalizedAttributedStringWithDescriptionAndTokens(label, desc, tkns) \
+    [TML localizeAttributedString: label description:desc tokens:tkns options:nil]
 
-#define TMLLocalizedAttributedStringWithDescriptionAndTokensAndOptions(label, description, tokens, options) \
-    [TML translateAttributedString: label withDescription: description andTokens: tokens andOptions: options]
+#define TMLLocalizedAttributedStringWithDescriptionAndTokensAndOptions(label, desc, tkns, opts) \
+    [TML localizeAttributedString: label description:desc tokens:tkns options:opts]
 
-#define TMLLocalizedAttributedStringWithTokens(label, tokens) \
-    [TML translateAttributedString: label withDescription: nil andTokens: tokens andOptions: nil]
+#define TMLLocalizedAttributedStringWithTokens(label, tkns) \
+    [TML localizeAttributedString: label description:nil tokens:tkns options:nil]
 
-#define TMLLocalizedAttributedStringWithTokensAndOptions(label, tokens, options) \
-    [TML translateAttributedString: label withDescription: nil andTokens: tokens andOptions: options]
+#define TMLLocalizedAttributedStringWithTokensAndOptions(label, tkns, opts) \
+    [TML localizeAttributedString: label description:nil tokens:tkns options:opts]
 
-#define TMLLocalizedAttributedStringWithOptions(label, options) \
-    [TML translateAttributedString: label withDescription: nil andTokens: @{} andOptions: options]
+#define TMLLocalizedAttributedStringWithOptions(label, opts) \
+    [TML localizeAttributedString: label description:nil tokens:nil options:opts]
 
 #define TMLBeginSource(name) \
-    [TML beginBlockWithOptions: @{@"source": name}];
+    [TML beginBlockWithOptions: @{TMLSourceOptionName: name}];
 
 #define TMLEndSource \
     [TML endBlockWithOptions];
 
-#define TMLBeginBlockWithOptions(options) \
-    [TML beginBlockWithOptions:options];
+#define TMLBeginBlockWithOptions(opts) \
+    [TML beginBlockWithOptions:opts];
 
-#define TMLEndBlockWithOptions \
-    [TML endBlockWithOptions];
+#define TMLEndBlockWithopts \
+    [TML endBlockWithopts];
 
 #define TMLLocalizedDateWithFormat(date, format) \
     [TML localizeDate: date withFormat: format andDescription: nil];
 
-#define TMLLocalizedDateWithFormatAndDescription(date, format, description) \
+#define TMLLocalizedDateWithFormatAndDescription(date, format, desc) \
 [TML localizeDate: date withFormat: format andDescription: description];
 
 #define TMLLocalizedDateWithFormatKey(date, formatKey) \
     [TML localizeDate: date withFormatKey: formatKey andDescription: nil];
 
-#define TMLLocalizedDateWithFormatKeyAndDescription(date, formatKey, description) \
+#define TMLLocalizedDateWithFormatKeyAndDescription(date, formatKey, desc) \
     [TML localizeDate: date withFormatKey: formatKey andDescription: description];

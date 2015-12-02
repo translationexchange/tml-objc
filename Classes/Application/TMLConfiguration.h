@@ -30,16 +30,6 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSInteger, TMLTokenType) {
-    TMLDataTokenType = 1,
-    TMLDecorationTokenType
-};
-
-typedef NS_ENUM(NSInteger, TMLTokenFormat) {
-    TMLHTMLTokenFormat = 1,
-    TMLAttributedTokenFormat
-};
-
 @interface TMLConfiguration : NSObject
 
 @property(nonatomic, strong) NSURL *apiURL;
@@ -58,7 +48,7 @@ typedef NS_ENUM(NSInteger, TMLTokenFormat) {
 
 @property(nonatomic, strong) NSMutableDictionary *defaultLocalization;
 
-@property(nonatomic, strong) NSObject *viewingUser;
+@property(nonatomic, strong) id viewingUser;
 
 @property(nonatomic, assign, getter=isTranslationEnabled) BOOL translationEnabled;
 

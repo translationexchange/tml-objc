@@ -76,7 +76,8 @@
     self.level = [aDecoder decodeIntegerForKey:@"level"];
     NSString *key = [aDecoder decodeObjectForKey:@"key"];
     if (key == nil || [[NSNull null] isEqual:key] == YES) {
-        key = [[self class] generateKeyForLabel:label andDescription:description];
+        key = [[self class] generateKeyForLabel:label
+                                    description:description];
     }
     self.key = key;
 }
@@ -179,29 +180,44 @@
     return nil;
 }
 
-- (NSObject *) translateToLanguage: (TMLLanguage *) language {
-    return [self translateToLanguage:language withTokens:@{}];
+- (NSObject *) translateToLanguage:(TMLLanguage *)language {
+    return [self translateToLanguage:language tokens:nil];
 }
 
-- (NSObject *) translateToLanguage: (TMLLanguage *) language withTokens: (NSDictionary *) tokens {
-    return [self translateToLanguage:language withTokens:tokens andOptions:@{}];
+- (NSObject *) translateToLanguage:(TMLLanguage *)language
+                            tokens:(NSDictionary *)tokens
+{
+    return [self translateToLanguage:language
+                              tokens:tokens
+                             options:nil];
 }
 
-- (NSObject *) translateToLanguage: (TMLLanguage *) language withTokens: (NSDictionary *) tokens andOptions: (NSDictionary *) options {
+- (NSObject *) translateToLanguage:(TMLLanguage *)language
+                            tokens:(NSDictionary *)tokens
+                           options:(NSDictionary *)options
+{
     if ([language.locale isEqualToString:self.locale]) {
-        return [self substituteTokensInLabel:self.label withTokens:tokens forLanguage:language andOptions:options];
+        return [self substituteTokensInLabel:self.label
+                                      tokens:tokens
+                                    language:language
+                                     options:options];
     }
     
     TMLTranslation *translation = [self findFirstAcceptableTranslationForTokens: tokens];
     
     if (translation) {
-        return [self substituteTokensInLabel:translation.label withTokens:tokens forLanguage:language andOptions:options];
+        return [self substituteTokensInLabel:translation.label
+                                      tokens:tokens
+                                    language:language
+                                     options:options];
     }
     
-    // TODO: This should be done by TMLApplication
     TMLApplication *application = [[TML sharedInstance] application];
     language = (TMLLanguage *)[application languageForLocale:self.locale];
-    return [self substituteTokensInLabel:self.label withTokens:tokens forLanguage:language andOptions:options];
+    return [self substituteTokensInLabel:self.label
+                                  tokens:tokens
+                                language:language
+                                 options:options];
 }
 
 - (NSArray *) dataTokenNames {
@@ -214,23 +230,28 @@
     return [tokenizer tokenNames];
 }
 
-- (NSObject *) substituteTokensInLabel: (NSString *) translatedLabel withTokens: (NSDictionary *) tokens forLanguage: (TMLLanguage *) language andOptions: (NSDictionary *) options {
+- (NSObject *) substituteTokensInLabel:(NSString *)translatedLabel
+                                tokens:(NSDictionary *)tokens
+                              language:(TMLLanguage *)language
+                               options:(NSDictionary *)options
+{
     if ([translatedLabel tmlContainsDecoratedTokens] == YES) {
         TMLDataTokenizer *tokenizer = [[TMLDataTokenizer alloc] initWithLabel:translatedLabel andAllowedTokenNames:[self dataTokenNames]];
-        translatedLabel = [tokenizer substituteTokensInLabelUsingData:tokens forLanguage:language withOptions:options];
+        translatedLabel = [tokenizer substituteTokensInLabelUsingData:tokens language:language];
     }
 
-    if ([[options objectForKey:@"tokenizer"] isEqual: @"attributed"]) {
+    NSString *tokenFormat = options[TMLTokenFormatOptionName];
+    if ([tokenFormat isEqualToString:TMLAttributedTokenFormatString]) {
         if ([translatedLabel tmlContainsAttributedTokens] == YES) {
-            TMLDecorationTokenizer *tokenizer = [[TMLAttributedDecorationTokenizer alloc] initWithLabel:translatedLabel andAllowedTokenNames:[self decorationTokenNames]];
-            return [tokenizer substituteTokensInLabelUsingData:tokens withOptions:options];
+            TMLAttributedDecorationTokenizer *tokenizer = [[TMLAttributedDecorationTokenizer alloc] initWithLabel:translatedLabel andAllowedTokenNames:[self decorationTokenNames]];
+            return [tokenizer substituteTokensInLabelUsingData:tokens];
         }
         return [[NSAttributedString alloc] initWithString:translatedLabel];
     }
     
     if ([translatedLabel tmlContainsAttributedTokens] == YES) {
-        TMLDecorationTokenizer *tokenizer = [[TMLHtmlDecorationTokenizer alloc] initWithLabel:translatedLabel andAllowedTokenNames:[self decorationTokenNames]];
-        return [tokenizer substituteTokensInLabelUsingData:tokens withOptions:options];
+        TMLHtmlDecorationTokenizer *tokenizer = [[TMLHtmlDecorationTokenizer alloc] initWithLabel:translatedLabel andAllowedTokenNames:[self decorationTokenNames]];
+        return [tokenizer substituteTokensInLabelUsingData:tokens];
     }
     
     return translatedLabel;

@@ -30,6 +30,7 @@
 
 #import <Foundation/Foundation.h>
 #import "TMLModel.h"
+#import "TMLConfiguration.h"
 
 @class TMLLanguage, TMLLanguageContext;
 
@@ -57,39 +58,39 @@
 + (NSRegularExpression *) expression;
 
 // Returns the token object from the token map
-+ (NSObject *) tokenObjectForName: (NSString *) name fromTokens: (NSDictionary *) tokens;
++ (NSObject *) tokenObjectForName:(NSString *)name fromTokens:(NSDictionary *)tokens;
 
-+ (NSString *) sanitizeValue: (NSString *) value;
++ (NSString *) sanitizeValue:(NSString *)value;
 
-+ (NSArray *) sanitizeValues: (NSArray *) values;
-
-// Initialized a new token
-- (id) initWithName: (NSString *) newFullName;
++ (NSArray *) sanitizeValues:(NSArray *)values;
 
 // Initialized a new token
-- (id) initWithName: (NSString *) newFullName inLabel: (NSString *) newLabel;
+- (id) initWithName:(NSString *)newFullName;
 
-- (BOOL)isEqualToDataToken:(TMLDataToken *)dataToken;
+// Initialized a new token
+- (id) initWithName:(NSString *)newFullName inLabel:(NSString *)newLabel;
+
+- (BOOL) isEqualToDataToken:(TMLDataToken *)dataToken;
 
 // Parsing token data
 - (void) parse;
 
 // Returns name based on various options
-- (NSString *) nameWithOptions: (NSDictionary *) options;
+- (NSString *) nameWithOptions:(NSDictionary *)options;
 
-- (TMLLanguageContext *) contextForLanguage: (TMLLanguage *) language;
+- (TMLLanguageContext *) contextForLanguage:(TMLLanguage *)language;
 
-- (NSString *) tokenValue: (NSDictionary *) tokens;
+- (NSString *) tokenValue:(NSDictionary *)tokens;
 
-- (NSString *) tokenValue: (NSDictionary *) tokens withOptions: (NSDictionary *) options;
+- (NSString *) tokenValue:(NSDictionary *)tokens
+              tokenFormat:(TMLTokenFormat)tokenFormat;
 
 - (NSString *) applyLanguageCasesToValue:(NSString *)tokenValue
                               fromObject:(NSObject *)tokenObject
                              forLanguage:(TMLLanguage *)language;
 
 - (NSString *) substituteInLabel:(NSString *)translatedLabel
-                     usingTokens:(NSDictionary *)tokens
-                     forLanguage:(TMLLanguage *)language
-                     withOptions:(NSDictionary *)options;
+                          tokens:(NSDictionary *)tokens
+                        language:(TMLLanguage *)language;
 
 @end

@@ -36,16 +36,20 @@
 #import "TMLLanguageContext.h"
 #import "TMLSource.h"
 #import "TMLTranslationKey.h"
+#import "TMLTokenizer.h"
 
 @implementation TMLLanguage
 
 + (TMLLanguage *) defaultLanguage {
-    NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"en" ofType:@"json"];
-    NSData *data = [NSData dataWithContentsOfFile:jsonPath];
-    TMLLanguage *lang = nil;
-    if (data != nil) {
-        lang = [TMLAPISerializer materializeData:data withClass:[TMLLanguage class]];
-    }
+    static TMLLanguage *lang = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"en" ofType:@"json"];
+        NSData *data = [NSData dataWithContentsOfFile:jsonPath];
+        if (data != nil) {
+            lang = [TMLAPISerializer materializeData:data withClass:[TMLLanguage class]];
+        }
+    });
     return lang;
 }
 
@@ -202,76 +206,86 @@
     return [NSString stringWithFormat:@"%@ - %@", self.englishName, self.nativeName];
 }
 
-- (NSObject *) valueFromOptions: (NSDictionary *) options forKey: (NSString *) key withDefault: (NSObject *) defaultValue {
-    
-    NSObject *value = [options objectForKey:key];
-    if (value) return value;
-    
-    value = [TML blockOptionForKey:key];
-    if (value) return value;
-    
-    return defaultValue;
-}
-
-- (NSObject *) translationKeyWithKey:(NSString *)key
-                               label:(NSString *)label
-                         description:(NSString *)description
-                             options:(NSDictionary *)options
+- (id) translate:(NSString *)label
+     description:(NSString *)description
+          tokens:(NSDictionary *)tokens
+         options:(NSDictionary *)options
 {
-    NSString *keyLocale = (NSString *) [self valueFromOptions:options forKey:@"locale" withDefault:[TML defaultLocale]];
-    NSNumber *keyLevel = (NSNumber *) [self valueFromOptions:options forKey:@"level" withDefault:[NSNumber numberWithInt:0]];
-
     TMLTranslationKey *translationKey = [[TMLTranslationKey alloc] init];
-    translationKey.key = key;
-    translationKey.locale = keyLocale;
     translationKey.label = label;
-    translationKey.level = [keyLevel integerValue];
-    if (description != nil) {
-        translationKey.keyDescription = description;
+    translationKey.keyDescription = description;
+    
+    NSString *keyLocale = options[TMLLocaleOptionName];
+    if (keyLocale == nil) {
+        keyLocale = [TML defaultLocale];
     }
-    return translationKey;
+    translationKey.locale = keyLocale;
+    
+    NSNumber *keyLevel = options[TMLLevelOptionName];
+    if (keyLevel != nil) {
+        translationKey.level = [keyLevel integerValue];
+    }
+    
+    TMLSource *source = nil;
+    NSString *sourceKey = options[TMLSourceOptionName];
+    if (sourceKey != nil) {
+        [[TML sharedInstance] currentSource];
+    }
+    if (sourceKey) {
+        source = (TMLSource *) [self.application sourceForKey:sourceKey];
+    }
+    
+    return [self translateKey:translationKey
+                       source:source
+                       tokens:tokens
+                      options:options];
 }
 
-- (NSObject *) translate:(NSString *)label
-         withDescription:(NSString *)description
-               andTokens:(NSDictionary *)tokens
-              andOptions:(NSDictionary *)options
+- (id) translateKey:(TMLTranslationKey *)translationKey
+             source:(TMLSource *)source
+             tokens:(NSDictionary *)tokens
+            options:(NSDictionary *)options
 {
-    NSString *keyHash = [TMLTranslationKey generateKeyForLabel:label andDescription:description];
-    TMLTranslationKey *translationKey = (TMLTranslationKey *) [self translationKeyWithKey:keyHash label:label description:description options:options];
+    NSMutableDictionary *ourTokens = [NSMutableDictionary dictionary];
+    if (tokens != nil) {
+        [ourTokens addEntriesFromDictionary:tokens];
+    }
     
-    if ([tokens objectForKey:@"viewing_user"] == nil && [TML configuration].viewingUser != nil) {
-        NSMutableDictionary *tokensWithViewingUser = [NSMutableDictionary dictionaryWithDictionary:tokens];
-        [tokensWithViewingUser setObject:[TML configuration].viewingUser forKey:@"viewing_user"];
-        tokens = tokensWithViewingUser;
+    id viewingUser = ourTokens[TMLViewingUserTokenName];
+    if (viewingUser == nil) {
+        viewingUser = [[TML configuration] viewingUser];
     }
-
-    NSString *sourceKey = (NSString *) [self valueFromOptions:options forKey:@"source" withDefault:[[TML sharedInstance] currentSource]];
-    if (sourceKey) {
-        TMLSource *source = (TMLSource *) [self.application sourceForKey:sourceKey];
-        if (source) {
-            NSArray *translations = [source translationsForKey:keyHash inLanguage:self.locale];
-            if (translations != nil) {
-                [translationKey setTranslations:translations];
-                return [translationKey translateToLanguage: self withTokens: tokens andOptions: options];
-            }
-            [[TML sharedInstance] registerMissingTranslationKey:translationKey forSourceKey:source.key];
-//            return [translationKey translateToLanguage: self withTokens: tokens andOptions: options];
+    if (viewingUser != nil) {
+        ourTokens[TMLViewingUserTokenName] = viewingUser;
+    }
+    
+    if (source != nil) {
+        NSArray *translations = [source translationsForKey:translationKey.key inLanguage:self.locale];
+        if (translations != nil) {
+            [translationKey setTranslations:translations];
+            return [translationKey translateToLanguage:self
+                                                tokens:ourTokens
+                                               options:options];
         }
+        [[TML sharedInstance] registerMissingTranslationKey:translationKey forSourceKey:source.key];
     }
-
+    
     TML *tml = [TML sharedInstance];
-    NSArray *matchedTranslations = [tml translationsForKey:keyHash locale:self.locale];
+    NSArray *matchedTranslations = [tml translationsForKey:translationKey.key locale:self.locale];
     if (matchedTranslations != nil) {
         [translationKey setTranslations:matchedTranslations];
-        return [translationKey translateToLanguage: self withTokens: tokens andOptions: options];
+        return [translationKey translateToLanguage:self
+                                            tokens:tokens
+                                           options:options];
     }
     
-    if (![tml isTranslationKeyRegistered:keyHash]) {
+    if (![tml isTranslationKeyRegistered:translationKey.key]) {
         [tml registerMissingTranslationKey:translationKey];
     }
     
-    return [translationKey translateToLanguage: self withTokens: tokens andOptions: options];
+    return [translationKey translateToLanguage:self
+                                        tokens:tokens
+                                       options:options];
 }
 
 - (NSString *) description {
