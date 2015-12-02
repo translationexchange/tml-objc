@@ -198,11 +198,13 @@ NSString * const TMLPreviousLocaleUserInfoKey = @"TMLPreviousLocaleUserInfoKey";
     if (bundle == nil) {
         TMLWarn(@"Setting current bundle not nil");
         self.application = nil;
+        self.configuration.defaultLocale = nil;
     }
     else {
         TMLApplication *newApplication = [bundle application];
         TMLInfo(@"Initializing from local bundle: %@", bundle.version);
         self.application = newApplication;
+        self.configuration.defaultLocale = newApplication.defaultLocale;
         NSString *ourLocale = [self currentLocale];
         if (ourLocale != nil && [bundle.availableLocales containsObject:ourLocale] == NO) {
             [bundle loadTranslationsForLocale:ourLocale completion:^(NSError *error) {
@@ -544,11 +546,7 @@ NSString * const TMLPreviousLocaleUserInfoKey = @"TMLPreviousLocaleUserInfoKey";
 }
 
 - (NSString *)defaultLocale {
-    NSString *locale = self.application.defaultLocale;
-    if (locale == nil) {
-        locale = self.configuration.defaultLocale;
-    }
-    return locale;
+    return self.configuration.defaultLocale;
 }
 
 + (TMLLanguage *) currentLanguage {
