@@ -52,7 +52,7 @@ NSString * const TMLDidFinishSyncNotification = @"TMLDidFinishSyncNotification";
 NSString * const TMLLocalizationUpdatesInstalledNotification = @"TMLLocalizationUpdatesInstalledNotification";
 
 #pragma mark - UserInfo Constants
-NSString * const TMLLanguagePreviousLocaleUserInfoKey = @"TMLLanguagePreviousLocaleUserInfoKey";
+NSString * const TMLPreviousLocaleUserInfoKey = @"TMLPreviousLocaleUserInfoKey";
 
 
 @interface TML() {
@@ -621,7 +621,7 @@ NSString * const TMLLanguagePreviousLocaleUserInfoKey = @"TMLLanguagePreviousLoc
 
 - (void)didChangeFromLocale:(NSString *)previousLocale {
     NSDictionary *info = @{
-                           TMLLanguagePreviousLocaleUserInfoKey: previousLocale
+                           TMLPreviousLocaleUserInfoKey: previousLocale
                            };
     [[NSNotificationCenter defaultCenter] postNotificationName:TMLLanguageChangedNotification
                                                         object:nil

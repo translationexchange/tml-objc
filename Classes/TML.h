@@ -44,7 +44,7 @@ extern NSString * const TMLDidFinishSyncNotification;
 extern NSString * const TMLLocalizationUpdatesInstalledNotification;
 
 #pragma mark - UserInfo Keys
-extern NSString * const TMLLanguagePreviousLocaleUserInfoKey;
+extern NSString * const TMLPreviousLocaleUserInfoKey;
 
 @protocol TMLDelegate;
 
