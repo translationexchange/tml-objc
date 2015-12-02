@@ -554,7 +554,11 @@ NSString * const TMLPreviousLocaleUserInfoKey = @"TMLPreviousLocaleUserInfoKey";
 }
 
 - (TMLLanguage *)currentLanguage {
-    return [[self application] languageForLocale:[self currentLocale]];
+    TMLLanguage *lang = [[self application] languageForLocale:[self currentLocale]];
+    if (lang == nil) {
+        lang = [TMLLanguage defaultLanguage];
+    }
+    return lang;
 }
 
 + (NSString *)currentLocale {
