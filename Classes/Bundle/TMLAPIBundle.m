@@ -11,7 +11,6 @@
 #import "TMLAPIBundle.h"
 #import "TMLAPIClient.h"
 #import "TMLBundleManager.h"
-#import "TMLSource.h"
 #import "TMLTranslationKey.h"
 
 @interface TMLAPIBundle() {

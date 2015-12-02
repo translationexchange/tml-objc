@@ -30,8 +30,10 @@
 
 #import "TMLApplication.h"
 #import "TMLConfiguration.h"
+#import "TMLBundle.h"
 #import "TMLLanguage.h"
 #import "TMLLogger.h"
+#import "TMLSource.h"
 #import <Foundation/Foundation.h>
 
 @class TMLAPIClient, TMLTranslationKey, TMLBundle;

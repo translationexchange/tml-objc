@@ -33,13 +33,10 @@
 #import "TML.h"
 #import "TMLAPIBundle.h"
 #import "TMLAPIClient.h"
-#import "TMLBundle.h"
 #import "TMLBundleManager.h"
-#import "TMLConfiguration.h"
 #import "TMLDataToken.h"
 #import "TMLLanguageCase.h"
 #import "TMLLogger.h"
-#import "TMLSource.h"
 #import "TMLTranslation.h"
 #import "TMLTranslationKey.h"
 #import <CommonCrypto/CommonDigest.h>

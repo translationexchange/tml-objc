@@ -33,7 +33,6 @@
 #import "TML.h"
 #import "TMLAPIClient.h"
 #import "TMLAPISerializer.h"
-#import "TMLSource.h"
 #import "TMLTranslationKey.h"
 
 NSString * const TMLAPIOptionsLocale = @"locale";
