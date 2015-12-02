@@ -29,10 +29,11 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "TMLTokenizer.h"
 
 @class TMLLanguage;
 
-@interface TMLDataTokenizer : NSObject
+@interface TMLDataTokenizer : TMLTokenizer
 
 // Label from which the tokens were extracted (original or translated)
 @property(nonatomic, strong) NSString *label;

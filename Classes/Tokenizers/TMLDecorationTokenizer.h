@@ -43,6 +43,7 @@
 */
 
 #import <Foundation/Foundation.h>
+#import "TMLTokenizer.h"
 
 #ifndef TML_RESERVED_TOKEN
     #define TML_RESERVED_TOKEN             @"tml"
@@ -57,7 +58,7 @@
     #define TML_PLACEHOLDER                @"{$0}"
 #endif
 
-@interface TMLDecorationTokenizer : NSObject
+@interface TMLDecorationTokenizer : TMLTokenizer
 
 @property(nonatomic, strong) NSMutableArray *tokenNames;
 
