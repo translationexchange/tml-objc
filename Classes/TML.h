@@ -357,13 +357,13 @@
     [TML endBlockWithopts];
 
 #define TMLLocalizedDateWithFormat(date, format) \
-    [TML localizeDate: date withFormat: format andDescription: nil];
+    [TML localizeDate:date withFormat:format description: nil];
 
 #define TMLLocalizedDateWithFormatAndDescription(date, format, desc) \
-[TML localizeDate: date withFormat: format andDescription: description];
+[TML localizeDate:date withFormat:format description:desc];
 
 #define TMLLocalizedDateWithFormatKey(date, formatKey) \
-    [TML localizeDate: date withFormatKey: formatKey andDescription: nil];
+    [TML localizeDate:date withFormatKey:formatKey description:nil];
 
 #define TMLLocalizedDateWithFormatKeyAndDescription(date, formatKey, desc) \
-    [TML localizeDate: date withFormatKey: formatKey andDescription: description];
+    [TML localizeDate:date withFormatKey:formatKey description:desc];
