@@ -28,8 +28,6 @@
  *  THE SOFTWARE.
  */
 
-#import <UIKit/UIKit.h>
-#import "TMLLanguageSelectorViewController.h"
 #import "ApplicationViewController.h"
 
 @interface TMLConsoleViewController : ApplicationViewController <UITableViewDataSource, UITableViewDelegate, UITextViewDelegate>

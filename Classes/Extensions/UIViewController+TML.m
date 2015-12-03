@@ -29,11 +29,10 @@
  */
 
 #import "TML.h"
+#import "TMLConfiguration.h"
 #import "TMLTranslationKey.h"
 #import "TMLTranslatorViewController.h"
 #import "UIViewController+TML.h"
-#import <QuartzCore/QuartzCore.h>
-#import <UIKit/UIKit.h>
 #import <objc/runtime.h>
 
 NSString const *TMLViewData = @"TMLViewData";

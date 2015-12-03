@@ -11,6 +11,7 @@
 #import "TML.h"
 #import "TMLAPIBundle.h"
 #import "TMLAPISerializer.h"
+#import "TMLApplication.h"
 #import "TMLBundle.h"
 #import "TMLBundleManager.h"
 #import <NVHTarGzip/NVHTarGzip.h>

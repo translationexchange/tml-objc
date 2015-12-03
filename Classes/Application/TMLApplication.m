@@ -32,9 +32,11 @@
 #import "TML.h"
 #import "TMLAPIClient.h"
 #import "TMLAPISerializer.h"
+#import "TMLApplication.h"
 #import "TMLAttributedDecorationTokenizer.h"
 #import "TMLDataTokenizer.h"
-#import "TMLPostOffice.h"
+#import "TMLLanguage.h"
+#import "TMLSource.h"
 #import "TMLTranslation.h"
 #import "TMLTranslationKey.h"
 
@@ -43,7 +45,6 @@ NSString * const TMLApplicationInlineTranslationFeatureKey = @"inline_translatio
 @interface TMLApplication() {
     TMLLanguage *_defaultLanguage;
 }
-@property(nonatomic, readwrite) TMLConfiguration *configuration;
 
 @end
 

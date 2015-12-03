@@ -33,14 +33,15 @@
 #import "TML.h"
 #import "TMLAPIBundle.h"
 #import "TMLAPIClient.h"
+#import "TMLApplication.h"
 #import "TMLBundleManager.h"
 #import "TMLDataToken.h"
+#import "TMLLanguage.h"
 #import "TMLLanguageCase.h"
 #import "TMLLogger.h"
+#import "TMLSource.h"
 #import "TMLTranslation.h"
 #import "TMLTranslationKey.h"
-#import <CommonCrypto/CommonDigest.h>
-
 
 @interface TML() {
     BOOL _observingNotifications;
@@ -89,6 +90,10 @@
 
 #pragma mark - Init
 
+- (instancetype)init {
+    return [self initWithConfiguration:nil];
+}
+
 - (instancetype) initWithConfiguration:(TMLConfiguration *)configuration {
     if (self == [super init]) {
         if (configuration == nil) {
@@ -104,25 +109,28 @@
             self.apiClient = apiClient;
         }
         
-        [self initTranslationBundle:^(TMLBundle *bundle) {
-            if (bundle == nil) {
-                TMLError(@"Failed to initialize translation bundle");
-            }
-            else {
-                if (self.translationEnabled == NO) {
-                    self.currentBundle = bundle;
-                }
-            }
-        }];
-        
-        self.translationEnabled = configuration.translationEnabled;
-        if (self.translationEnabled == YES) {
-            TMLAPIBundle *apiBundle = (TMLAPIBundle *)[TMLBundle apiBundle];
-            self.currentBundle = apiBundle;
-            [apiBundle sync];
-        }
-        
         [self setupNotificationObserving];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self initTranslationBundle:^(TMLBundle *bundle) {
+                if (bundle == nil) {
+                    TMLError(@"Failed to initialize translation bundle");
+                }
+                else {
+                    if (self.translationEnabled == NO) {
+                        self.currentBundle = bundle;
+                    }
+                }
+            }];
+            
+            self.translationEnabled = configuration.translationEnabled;
+            if (self.translationEnabled == YES) {
+                TMLAPIBundle *apiBundle = (TMLAPIBundle *)[TMLBundle apiBundle];
+                self.currentBundle = apiBundle;
+                [apiBundle sync];
+            }
+            
+        });
     }
     return self;
 }

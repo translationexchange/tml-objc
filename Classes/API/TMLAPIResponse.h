@@ -55,8 +55,8 @@ extern NSString * const TMLAPIResponseErrorCodeKey;
 #pragma mark - Results
 @property (readonly, nonatomic) NSDictionary *userInfo;
 @property (readonly, nonatomic) id results;
-- (NSDictionary<NSString *,TMLTranslation *>*) resultsAsTranslations;
-- (NSArray<TMLLanguage *>*) resultsAsLanguages;
+- (NSDictionary *) resultsAsTranslations;
+- (NSArray *) resultsAsLanguages;
 
 #pragma mark - Status
 @property (readonly, nonatomic) NSString *status;

@@ -68,7 +68,7 @@ NSString * const TMLAPIResponseErrorCodeKey = @"code";
     return self.userInfo[TMLAPIResponseResultsKey];
 }
 
-- (NSDictionary<NSString *,TMLTranslation *> *)resultsAsTranslations {
+- (NSDictionary *)resultsAsTranslations {
     id results = self.results;
     if (results == nil) {
         results = self.userInfo[TMLAPIResponseResultsTranslationsKey];
@@ -94,7 +94,7 @@ NSString * const TMLAPIResponseErrorCodeKey = @"code";
     return translations;
 }
 
-- (NSArray<TMLLanguage *> *)resultsAsLanguages {
+- (NSArray *)resultsAsLanguages {
     id results = self.results;
     if (results == nil) {
         results = self.userInfo[TMLAPIResponseResultsLanguagesKey];

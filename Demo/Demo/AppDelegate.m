@@ -9,8 +9,6 @@
 #import "AppDelegate.h"
 #import "IIViewDeckController.h"
 #import "MenuViewController.h"
-#import "TML.h"
-#import "TMLPostOffice.h"
 #import "TMLPrivateConfig.h"
 
 #ifndef TMLAccessToken
@@ -33,13 +31,11 @@
     
     UIApplication *app = [UIApplication sharedApplication];
     if ([app respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIRemoteNotificationTypeBadge
-                                                                                             |UIRemoteNotificationTypeSound
-                                                                                             |UIRemoteNotificationTypeAlert) categories:nil];
+        UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeBadge
+                                                                                             |UIUserNotificationTypeSound
+                                                                                             |UIUserNotificationTypeAlert)
+                                                                                 categories:nil];
         [app registerUserNotificationSettings:settings];
-    } else {
-        UIRemoteNotificationType myTypes = UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound;
-        [app registerForRemoteNotificationTypes:myTypes];
     }
 
     return YES;

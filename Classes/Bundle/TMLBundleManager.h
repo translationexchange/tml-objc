@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+@class TMLBundle;
+
 extern NSString * const TMLBundleManagerErrorDomain;
 
 typedef NS_ENUM(NSInteger, TMLBundleManagerErrorCode) {

@@ -30,7 +30,6 @@
 
 #import "TokensDemoViewController.h"
 #import "TMLSampleTableViewCell.h"
-#import "UIViewController+TML.h"
 
 @interface TokensDemoViewController ()
 

@@ -42,7 +42,9 @@
  # {count || message, messages}  - will include count:  "5 messages"
  #
  ***********************************************************************/
+
 #import "TML.h"
+#import "TMLLanguage.h"
 #import "TMLLanguageCase.h"
 #import "TMLLanguageContext.h"
 #import "TMLLanguageContextRule.h"

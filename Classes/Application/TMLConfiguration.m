@@ -28,8 +28,9 @@
  *  THE SOFTWARE.
  */
 
-#import "TMLConfiguration.h"
 #import "TML.h"
+#import "TMLConfiguration.h"
+#import "TMLLanguage.h"
 
 #define USE_STAGING 1
 

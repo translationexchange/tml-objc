@@ -29,10 +29,9 @@
  */
 
 #import "TML.h"
-#import "TMLAPIClient.h"
-#import "TMLAPISerializer.h"
+#import "TMLAPIResponse.h"
 #import "TMLSource.h"
-#import "TMLTranslation.h"
+#import "TMLAPIClient.h"
 
 NSString * const TMLSourceDefaultKey = @"TML";
 
@@ -131,7 +130,7 @@ NSString * const TMLSourceDefaultKey = @"TML";
 - (void) loadTranslationsForLocale:(NSString *)locale
                    completionBlock:(void(^)(BOOL success))completionBlock
 {
-    [[[TML sharedInstance] apiClient] getTranslationsForLocale:locale source:self options:@{TMLAPIOptionsIncludeAll: @YES} completionBlock:^(NSDictionary<NSString *,TMLTranslation *> *newTranslations, TMLAPIResponse *response, NSError *error) {
+    [[[TML sharedInstance] apiClient] getTranslationsForLocale:locale source:self options:@{TMLAPIOptionsIncludeAll: @YES} completionBlock:^(NSDictionary *newTranslations, TMLAPIResponse *response, NSError *error) {
         BOOL success = NO;
         if (newTranslations != nil) {
             success = YES;

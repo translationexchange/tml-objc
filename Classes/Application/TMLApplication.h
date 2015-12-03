@@ -30,11 +30,8 @@
 
 #import <Foundation/Foundation.h>
 #import "TMLModel.h"
-#import "TMLLanguage.h"
-#import "TMLConfiguration.h"
-#import "TMLSource.h"
 
-@class TMLPostOffice, TMLTranslation, TMLDecorationTokenizer;
+@class TMLLanguage, TMLSource;
 
 @interface TMLApplication : TMLModel
 
@@ -63,7 +60,7 @@
 @property(nonatomic, strong) NSDictionary *tools;
 
 // Languages
-@property(nonatomic, strong) NSArray <TMLLanguage *>*languages;
+@property(nonatomic, strong) NSArray *languages;
 
 /**
  *  Readonly accessor for the default language.
@@ -72,13 +69,10 @@
 @property(nonatomic, readonly) TMLLanguage *defaultLanguage;
 
 // Sources by keys
-@property(nonatomic, strong) NSArray <TMLSource *>*sources;
+@property(nonatomic, strong) NSArray *sources;
 
 #pragma mark - Features
 @property(nonatomic, readonly, getter=isInlineTranslationsEnabled) BOOL inlineTranslationsEnabled;
-
-#pragma mark - Internal Use
-@property(nonatomic, readonly) TMLConfiguration *configuration;
 
 - (BOOL) isEqualToApplication:(TMLApplication *)application;
 

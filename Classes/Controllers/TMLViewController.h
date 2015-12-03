@@ -28,10 +28,9 @@
  *  THE SOFTWARE.
  */
 
-
+#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "ApplicationViewController.h"
 
-@interface TMLViewController : ApplicationViewController
+@interface TMLViewController : UIViewController
 
 @end

@@ -30,7 +30,6 @@
 
 #import "TMLConsoleViewController.h"
 #import "TMLTableViewCell.h"
-#import "TML.h"
 #import "TranslationViewController.h"
 
 @interface TMLConsoleViewController ()

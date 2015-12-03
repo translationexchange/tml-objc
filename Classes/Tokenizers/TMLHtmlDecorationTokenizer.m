@@ -30,6 +30,7 @@
 
 #import "TML.h"
 #import "TMLHtmlDecorationTokenizer.h"
+#import "TMLConfiguration.h"
 
 @implementation TMLHtmlDecorationTokenizer
 

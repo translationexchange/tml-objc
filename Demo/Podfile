@@ -6,8 +6,6 @@ target "Demo" do
 	podspec :path => "../Tml.podspec"
     
     pod 'ViewDeck', '~> 2.2.11'
-    pod 'SSZipArchive'
-    pod 'NVHTarGzip'
 end
 
 target "DemoTests" do

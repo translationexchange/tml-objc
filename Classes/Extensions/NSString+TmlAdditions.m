@@ -7,7 +7,6 @@
 //
 
 #import "NSString+TMLAdditions.h"
-#import "TML.h"
 #import <CommonCrypto/CommonDigest.h>
 
 @implementation NSString (TMLAdditions)

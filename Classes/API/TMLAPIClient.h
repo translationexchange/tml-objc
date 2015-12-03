@@ -29,7 +29,8 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "TMLAPIResponse.h"
+
+@class TMLAPIResponse, TMLSource, TMLApplication;
 
 extern NSString * const TMLAPIOptionsLocale;
 extern NSString * const TMLAPIOptionsIncludeAll;
@@ -48,9 +49,6 @@ extern NSString * const TMLAPIOptionsIncludeDefinition;
  *  @param error       Error indicating either an error with response or an erroneous response.
  */
 typedef void (^TMLAPIResponseHandler)(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error);
-
-@class TMLSource, TMLTranslation, TMLTranslationKey, TMLApplication;
-
 
 @interface TMLAPIClient : NSObject
 @property (readonly, nonatomic) NSURL *url;
@@ -181,7 +179,7 @@ completionBlock:(TMLAPIResponseHandler)completionBlock;
  *  @param sourceKeys      Dictionary with keys indicating TMLSource keys, and values containing an NSSet of TMLTranslationKey's
  *  @param completionBlock Completion block, indicating successful submissions
  */
-- (void) registerTranslationKeysBySourceKey:(NSDictionary <NSString *, NSSet <TMLTranslationKey *>*>*)sourceKeys
+- (void) registerTranslationKeysBySourceKey:(NSDictionary *)sourceKeys
                             completionBlock:(void(^)(BOOL success, NSError *error))completionBlock;
 
 @end

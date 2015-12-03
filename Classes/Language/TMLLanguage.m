@@ -31,11 +31,14 @@
 #import "NSObject+TMLJSON.h"
 #import "TML.h"
 #import "TMLAPISerializer.h"
+#import "TMLApplication.h"
+#import "TMLConfiguration.h"
 #import "TMLLanguage.h"
 #import "TMLLanguageCase.h"
 #import "TMLLanguageContext.h"
-#import "TMLTranslationKey.h"
+#import "TMLSource.h"
 #import "TMLTokenizer.h"
+#import "TMLTranslationKey.h"
 
 @implementation TMLLanguage
 
@@ -43,7 +46,11 @@
     static TMLLanguage *lang = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSString *jsonPath = [[NSBundle mainBundle] pathForResource:@"en" ofType:@"json"];
+        NSBundle *ourBundle = [NSBundle bundleForClass:[TML class]];
+        if (ourBundle == nil) {
+            ourBundle = [NSBundle mainBundle];
+        }
+        NSString *jsonPath = [ourBundle pathForResource:@"en" ofType:@"json"];
         NSData *data = [NSData dataWithContentsOfFile:jsonPath];
         if (data != nil) {
             lang = [TMLAPISerializer materializeData:data withClass:[TMLLanguage class]];

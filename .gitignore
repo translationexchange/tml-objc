@@ -31,4 +31,7 @@ Project/Provisioning
 Project/.testflight
 Project/FLIGHTLOG
 
+Demo/Pods
+TMLKit/Pods
+
 Demo/Demo/TMLPrivateConfig.h

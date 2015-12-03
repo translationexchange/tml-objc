@@ -29,8 +29,6 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "TMLTranslatorViewController.h"
-#import "TMLLanguageSelectorViewController.h"
 
 @interface TranslationViewController : UIViewController <TMLLanguageSelectorViewControllerDelegate>
 

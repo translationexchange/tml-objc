@@ -28,15 +28,17 @@
  *  THE SOFTWARE.
  */
 
+#import "NSString+TmlAdditions.h"
 #import "TML.h"
+#import "TMLApplication.h"
 #import "TMLAttributedDecorationTokenizer.h"
 #import "TMLDataToken.h"
 #import "TMLDataTokenizer.h"
 #import "TMLDecorationTokenizer.h"
 #import "TMLHtmlDecorationTokenizer.h"
+#import "TMLLanguage.h"
 #import "TMLTranslation.h"
 #import "TMLTranslationKey.h"
-#import "NSString+TmlAdditions.h"
 
 @implementation TMLTranslationKey
 

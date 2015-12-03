@@ -1,0 +1,1349 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		74CAF4D7AE5F673571FAD626 /* libPods-TMLKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C4DCAD61B82C00F44444A8C /* libPods-TMLKit.a */; };
+		C4FCD25C1C0FC7A200D723BC /* TMLKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD25B1C0FC7A200D723BC /* TMLKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C4FCD2631C0FC7A200D723BC /* TMLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4FCD2581C0FC7A200D723BC /* TMLKit.framework */; };
+		C4FCD2E01C0FC7F200D723BC /* TMLAPIClient.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2741C0FC7F200D723BC /* TMLAPIClient.h */; };
+		C4FCD2E11C0FC7F200D723BC /* TMLAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2751C0FC7F200D723BC /* TMLAPIClient.m */; };
+		C4FCD2E21C0FC7F200D723BC /* TMLAPIResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2761C0FC7F200D723BC /* TMLAPIResponse.h */; };
+		C4FCD2E31C0FC7F200D723BC /* TMLAPIResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2771C0FC7F200D723BC /* TMLAPIResponse.m */; };
+		C4FCD2E41C0FC7F200D723BC /* TMLAPISerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2781C0FC7F200D723BC /* TMLAPISerializer.h */; };
+		C4FCD2E51C0FC7F200D723BC /* TMLAPISerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2791C0FC7F200D723BC /* TMLAPISerializer.m */; };
+		C4FCD2E61C0FC7F200D723BC /* TMLJSONValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD27A1C0FC7F200D723BC /* TMLJSONValueTransformer.h */; };
+		C4FCD2E71C0FC7F200D723BC /* TMLJSONValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD27B1C0FC7F200D723BC /* TMLJSONValueTransformer.m */; };
+		C4FCD2E81C0FC7F200D723BC /* TMLApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD27D1C0FC7F200D723BC /* TMLApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C4FCD2E91C0FC7F200D723BC /* TMLApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD27E1C0FC7F200D723BC /* TMLApplication.m */; };
+		C4FCD2EA1C0FC7F200D723BC /* TMLConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD27F1C0FC7F200D723BC /* TMLConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C4FCD2EB1C0FC7F200D723BC /* TMLConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2801C0FC7F200D723BC /* TMLConfiguration.m */; };
+		C4FCD2EE1C0FC7F200D723BC /* TMLSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2831C0FC7F200D723BC /* TMLSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C4FCD2EF1C0FC7F200D723BC /* TMLSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2841C0FC7F200D723BC /* TMLSource.m */; };
+		C4FCD2F01C0FC7F200D723BC /* TMLAPIBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2861C0FC7F200D723BC /* TMLAPIBundle.h */; };
+		C4FCD2F11C0FC7F200D723BC /* TMLAPIBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2871C0FC7F200D723BC /* TMLAPIBundle.m */; };
+		C4FCD2F21C0FC7F200D723BC /* TMLBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2881C0FC7F200D723BC /* TMLBundle.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C4FCD2F31C0FC7F200D723BC /* TMLBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2891C0FC7F200D723BC /* TMLBundle.m */; };
+		C4FCD2F41C0FC7F200D723BC /* TMLBundleManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD28A1C0FC7F200D723BC /* TMLBundleManager.h */; };
+		C4FCD2F51C0FC7F200D723BC /* TMLBundleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD28B1C0FC7F200D723BC /* TMLBundleManager.m */; };
+		C4FCD2F61C0FC7F200D723BC /* TMLLanguageSelectorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD28D1C0FC7F200D723BC /* TMLLanguageSelectorViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C4FCD2F71C0FC7F200D723BC /* TMLLanguageSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD28E1C0FC7F200D723BC /* TMLLanguageSelectorViewController.m */; };
+		C4FCD2F81C0FC7F200D723BC /* TMLTranslatorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD28F1C0FC7F200D723BC /* TMLTranslatorViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C4FCD2F91C0FC7F200D723BC /* TMLTranslatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2901C0FC7F200D723BC /* TMLTranslatorViewController.m */; };
+		C4FCD2FA1C0FC7F200D723BC /* TMLViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2911C0FC7F200D723BC /* TMLViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C4FCD2FB1C0FC7F200D723BC /* TMLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2921C0FC7F200D723BC /* TMLViewController.m */; };
+		C4FCD2FC1C0FC7F200D723BC /* NSObject+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2941C0FC7F200D723BC /* NSObject+TML.h */; };
+		C4FCD2FD1C0FC7F200D723BC /* NSObject+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2951C0FC7F200D723BC /* NSObject+TML.m */; };
+		C4FCD2FE1C0FC7F200D723BC /* NSObject+TMLJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2961C0FC7F200D723BC /* NSObject+TMLJSON.h */; };
+		C4FCD2FF1C0FC7F200D723BC /* NSObject+TMLJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2971C0FC7F200D723BC /* NSObject+TMLJSON.m */; };
+		C4FCD3001C0FC7F200D723BC /* NSString+TmlAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2981C0FC7F200D723BC /* NSString+TmlAdditions.h */; };
+		C4FCD3011C0FC7F200D723BC /* NSString+TmlAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2991C0FC7F200D723BC /* NSString+TmlAdditions.m */; };
+		C4FCD3021C0FC7F200D723BC /* UIBarButtonItem+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD29A1C0FC7F200D723BC /* UIBarButtonItem+TML.h */; };
+		C4FCD3031C0FC7F200D723BC /* UIBarButtonItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD29B1C0FC7F200D723BC /* UIBarButtonItem+TML.m */; };
+		C4FCD3041C0FC7F200D723BC /* UIButton+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD29C1C0FC7F200D723BC /* UIButton+TML.h */; };
+		C4FCD3051C0FC7F200D723BC /* UIButton+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD29D1C0FC7F200D723BC /* UIButton+TML.m */; };
+		C4FCD3061C0FC7F200D723BC /* UILabel+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD29E1C0FC7F200D723BC /* UILabel+TML.h */; };
+		C4FCD3071C0FC7F200D723BC /* UILabel+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD29F1C0FC7F200D723BC /* UILabel+TML.m */; };
+		C4FCD3081C0FC7F200D723BC /* UINavigationItem+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2A01C0FC7F200D723BC /* UINavigationItem+TML.h */; };
+		C4FCD3091C0FC7F200D723BC /* UINavigationItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2A11C0FC7F200D723BC /* UINavigationItem+TML.m */; };
+		C4FCD30A1C0FC7F200D723BC /* UISearchBar+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2A21C0FC7F200D723BC /* UISearchBar+TML.h */; };
+		C4FCD30B1C0FC7F200D723BC /* UISearchBar+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2A31C0FC7F200D723BC /* UISearchBar+TML.m */; };
+		C4FCD30C1C0FC7F200D723BC /* UISegmentedControl+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2A41C0FC7F200D723BC /* UISegmentedControl+TML.h */; };
+		C4FCD30D1C0FC7F200D723BC /* UISegmentedControl+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2A51C0FC7F200D723BC /* UISegmentedControl+TML.m */; };
+		C4FCD30E1C0FC7F200D723BC /* UITabBarItem+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2A61C0FC7F200D723BC /* UITabBarItem+TML.h */; };
+		C4FCD30F1C0FC7F200D723BC /* UITabBarItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2A71C0FC7F200D723BC /* UITabBarItem+TML.m */; };
+		C4FCD3101C0FC7F200D723BC /* UITextField+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2A81C0FC7F200D723BC /* UITextField+TML.h */; };
+		C4FCD3111C0FC7F200D723BC /* UITextField+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2A91C0FC7F200D723BC /* UITextField+TML.m */; };
+		C4FCD3121C0FC7F200D723BC /* UITextView+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2AA1C0FC7F200D723BC /* UITextView+TML.h */; };
+		C4FCD3131C0FC7F200D723BC /* UITextView+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2AB1C0FC7F200D723BC /* UITextView+TML.m */; };
+		C4FCD3141C0FC7F200D723BC /* UIViewController+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2AC1C0FC7F200D723BC /* UIViewController+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C4FCD3151C0FC7F200D723BC /* UIViewController+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2AD1C0FC7F200D723BC /* UIViewController+TML.m */; };
+		C4FCD3161C0FC7F200D723BC /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = C4FCD2AF1C0FC7F200D723BC /* .gitkeep */; };
+		C4FCD3171C0FC7F200D723BC /* TMLLanguage.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2B11C0FC7F200D723BC /* TMLLanguage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C4FCD3181C0FC7F200D723BC /* TMLLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2B21C0FC7F200D723BC /* TMLLanguage.m */; };
+		C4FCD3191C0FC7F200D723BC /* TMLLanguageCase.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2B31C0FC7F200D723BC /* TMLLanguageCase.h */; };
+		C4FCD31A1C0FC7F200D723BC /* TMLLanguageCase.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2B41C0FC7F200D723BC /* TMLLanguageCase.m */; };
+		C4FCD31B1C0FC7F200D723BC /* TMLLanguageCaseRule.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2B51C0FC7F200D723BC /* TMLLanguageCaseRule.h */; };
+		C4FCD31C1C0FC7F200D723BC /* TMLLanguageCaseRule.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2B61C0FC7F200D723BC /* TMLLanguageCaseRule.m */; };
+		C4FCD31D1C0FC7F200D723BC /* TMLLanguageContext.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2B71C0FC7F200D723BC /* TMLLanguageContext.h */; };
+		C4FCD31E1C0FC7F200D723BC /* TMLLanguageContext.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2B81C0FC7F200D723BC /* TMLLanguageContext.m */; };
+		C4FCD31F1C0FC7F200D723BC /* TMLLanguageContextRule.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2B91C0FC7F200D723BC /* TMLLanguageContextRule.h */; };
+		C4FCD3201C0FC7F200D723BC /* TMLLanguageContextRule.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2BA1C0FC7F200D723BC /* TMLLanguageContextRule.m */; };
+		C4FCD3211C0FC7F200D723BC /* TMLRulesEvaluator.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2BC1C0FC7F200D723BC /* TMLRulesEvaluator.h */; };
+		C4FCD3221C0FC7F200D723BC /* TMLRulesEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2BD1C0FC7F200D723BC /* TMLRulesEvaluator.m */; };
+		C4FCD3231C0FC7F200D723BC /* TMLRulesParser.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2BE1C0FC7F200D723BC /* TMLRulesParser.h */; };
+		C4FCD3241C0FC7F200D723BC /* TMLRulesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2BF1C0FC7F200D723BC /* TMLRulesParser.m */; };
+		C4FCD3251C0FC7F200D723BC /* TML+NSLocalizedString.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2C01C0FC7F200D723BC /* TML+NSLocalizedString.h */; };
+		C4FCD3261C0FC7F200D723BC /* TML+TMLLocalizedString.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2C11C0FC7F200D723BC /* TML+TMLLocalizedString.h */; };
+		C4FCD3271C0FC7F200D723BC /* TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2C21C0FC7F200D723BC /* TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C4FCD3281C0FC7F200D723BC /* TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2C31C0FC7F200D723BC /* TML.m */; };
+		C4FCD3291C0FC7F200D723BC /* TMLGlobals.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2C41C0FC7F200D723BC /* TMLGlobals.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C4FCD32A1C0FC7F200D723BC /* TMLGlobals.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2C51C0FC7F200D723BC /* TMLGlobals.m */; };
+		C4FCD32B1C0FC7F200D723BC /* TMLLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2C61C0FC7F200D723BC /* TMLLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C4FCD32C1C0FC7F200D723BC /* TMLModel.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2C71C0FC7F200D723BC /* TMLModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C4FCD32D1C0FC7F200D723BC /* TMLModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2C81C0FC7F200D723BC /* TMLModel.m */; };
+		C4FCD32E1C0FC7F200D723BC /* TMLAttributedDecorationTokenizer.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2CA1C0FC7F200D723BC /* TMLAttributedDecorationTokenizer.h */; };
+		C4FCD32F1C0FC7F200D723BC /* TMLAttributedDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2CB1C0FC7F200D723BC /* TMLAttributedDecorationTokenizer.m */; };
+		C4FCD3301C0FC7F200D723BC /* TMLDataTokenizer.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2CC1C0FC7F200D723BC /* TMLDataTokenizer.h */; };
+		C4FCD3311C0FC7F200D723BC /* TMLDataTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2CD1C0FC7F200D723BC /* TMLDataTokenizer.m */; };
+		C4FCD3321C0FC7F200D723BC /* TMLDecorationTokenizer.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2CE1C0FC7F200D723BC /* TMLDecorationTokenizer.h */; };
+		C4FCD3331C0FC7F200D723BC /* TMLDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2CF1C0FC7F200D723BC /* TMLDecorationTokenizer.m */; };
+		C4FCD3341C0FC7F200D723BC /* TMLHtmlDecorationTokenizer.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2D01C0FC7F200D723BC /* TMLHtmlDecorationTokenizer.h */; };
+		C4FCD3351C0FC7F200D723BC /* TMLHtmlDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2D11C0FC7F200D723BC /* TMLHtmlDecorationTokenizer.m */; };
+		C4FCD3361C0FC7F200D723BC /* TMLTokenizer.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2D21C0FC7F200D723BC /* TMLTokenizer.h */; };
+		C4FCD3371C0FC7F200D723BC /* TMLTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2D31C0FC7F200D723BC /* TMLTokenizer.m */; };
+		C4FCD3381C0FC7F200D723BC /* TMLDataToken.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2D51C0FC7F200D723BC /* TMLDataToken.h */; };
+		C4FCD3391C0FC7F200D723BC /* TMLDataToken.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2D61C0FC7F200D723BC /* TMLDataToken.m */; };
+		C4FCD33A1C0FC7F200D723BC /* TMLMethodToken.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2D71C0FC7F200D723BC /* TMLMethodToken.h */; };
+		C4FCD33B1C0FC7F200D723BC /* TMLMethodToken.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2D81C0FC7F200D723BC /* TMLMethodToken.m */; };
+		C4FCD33C1C0FC7F200D723BC /* TMLPipedToken.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2D91C0FC7F200D723BC /* TMLPipedToken.h */; };
+		C4FCD33D1C0FC7F200D723BC /* TMLPipedToken.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2DA1C0FC7F200D723BC /* TMLPipedToken.m */; };
+		C4FCD33E1C0FC7F200D723BC /* TMLTranslation.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2DC1C0FC7F200D723BC /* TMLTranslation.h */; };
+		C4FCD33F1C0FC7F200D723BC /* TMLTranslation.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2DD1C0FC7F200D723BC /* TMLTranslation.m */; };
+		C4FCD3401C0FC7F200D723BC /* TMLTranslationKey.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2DE1C0FC7F200D723BC /* TMLTranslationKey.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C4FCD3411C0FC7F200D723BC /* TMLTranslationKey.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2DF1C0FC7F200D723BC /* TMLTranslationKey.m */; };
+		C4FCD3731C0FCDD900D723BC /* TMLApplicationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD3461C0FCDD900D723BC /* TMLApplicationTest.m */; };
+		C4FCD3741C0FCDD900D723BC /* TMLConfigurationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD3471C0FCDD900D723BC /* TMLConfigurationTest.m */; };
+		C4FCD3771C0FCDD900D723BC /* app.json in Resources */ = {isa = PBXBuildFile; fileRef = C4FCD34C1C0FCDD900D723BC /* app.json */; };
+		C4FCD3781C0FCDD900D723BC /* cs_en-US_plural.json in Resources */ = {isa = PBXBuildFile; fileRef = C4FCD34F1C0FCDD900D723BC /* cs_en-US_plural.json */; };
+		C4FCD3791C0FCDD900D723BC /* ctx_en-US_gender.json in Resources */ = {isa = PBXBuildFile; fileRef = C4FCD3501C0FCDD900D723BC /* ctx_en-US_gender.json */; };
+		C4FCD37A1C0FCDD900D723BC /* ctx_en-US_number.json in Resources */ = {isa = PBXBuildFile; fileRef = C4FCD3511C0FCDD900D723BC /* ctx_en-US_number.json */; };
+		C4FCD37B1C0FCDD900D723BC /* en-US.json in Resources */ = {isa = PBXBuildFile; fileRef = C4FCD3521C0FCDD900D723BC /* en-US.json */; };
+		C4FCD37C1C0FCDD900D723BC /* es.json in Resources */ = {isa = PBXBuildFile; fileRef = C4FCD3541C0FCDD900D723BC /* es.json */; };
+		C4FCD37D1C0FCDD900D723BC /* cs_ru_gen.json in Resources */ = {isa = PBXBuildFile; fileRef = C4FCD3561C0FCDD900D723BC /* cs_ru_gen.json */; };
+		C4FCD37E1C0FCDD900D723BC /* ctx_ru_gender.json in Resources */ = {isa = PBXBuildFile; fileRef = C4FCD3571C0FCDD900D723BC /* ctx_ru_gender.json */; };
+		C4FCD37F1C0FCDD900D723BC /* ctx_ru_number.json in Resources */ = {isa = PBXBuildFile; fileRef = C4FCD3581C0FCDD900D723BC /* ctx_ru_number.json */; };
+		C4FCD3801C0FCDD900D723BC /* ru.json in Resources */ = {isa = PBXBuildFile; fileRef = C4FCD3591C0FCDD900D723BC /* ru.json */; };
+		C4FCD3811C0FCDD900D723BC /* TMLLanguageCaseRuleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD35B1C0FCDD900D723BC /* TMLLanguageCaseRuleTest.m */; };
+		C4FCD3821C0FCDD900D723BC /* TMLLanguageCaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD35C1C0FCDD900D723BC /* TMLLanguageCaseTest.m */; };
+		C4FCD3831C0FCDD900D723BC /* TMLLanguageContextRuleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD35D1C0FCDD900D723BC /* TMLLanguageContextRuleTest.m */; };
+		C4FCD3841C0FCDD900D723BC /* TMLLanguageContextTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD35E1C0FCDD900D723BC /* TMLLanguageContextTest.m */; };
+		C4FCD3851C0FCDD900D723BC /* TMLTestUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD3611C0FCDD900D723BC /* TMLTestUser.m */; };
+		C4FCD3861C0FCDD900D723BC /* TMLRulesEvaluatorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD3631C0FCDD900D723BC /* TMLRulesEvaluatorTest.m */; };
+		C4FCD3871C0FCDD900D723BC /* TMLRulesParserTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD3641C0FCDD900D723BC /* TMLRulesParserTest.m */; };
+		C4FCD3881C0FCDD900D723BC /* TMLAPISerializationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD3651C0FCDD900D723BC /* TMLAPISerializationTest.m */; };
+		C4FCD3891C0FCDD900D723BC /* TMLTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD3661C0FCDD900D723BC /* TMLTest.m */; };
+		C4FCD38A1C0FCDD900D723BC /* TMLTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD3681C0FCDD900D723BC /* TMLTestBase.m */; };
+		C4FCD38C1C0FCDD900D723BC /* TMLAttributedDecorationTokenizerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD36B1C0FCDD900D723BC /* TMLAttributedDecorationTokenizerTest.m */; };
+		C4FCD38D1C0FCDD900D723BC /* TMLDecorationTokenizerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD36C1C0FCDD900D723BC /* TMLDecorationTokenizerTest.m */; };
+		C4FCD38E1C0FCDD900D723BC /* TMLHtmlDecorationTokenizerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD36D1C0FCDD900D723BC /* TMLHtmlDecorationTokenizerTest.m */; };
+		C4FCD38F1C0FCDD900D723BC /* TMLDataTokenTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD36F1C0FCDD900D723BC /* TMLDataTokenTest.m */; };
+		C4FCD3901C0FCDD900D723BC /* TMLPipedTokenTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD3701C0FCDD900D723BC /* TMLPipedTokenTest.m */; };
+		C4FCD3911C0FCDD900D723BC /* TMLTranslationKeyTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD3721C0FCDD900D723BC /* TMLTranslationKeyTest.m */; };
+		C4FCD3951C0FFC4500D723BC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4FCD3941C0FFC4500D723BC /* UIKit.framework */; };
+		C4FCD3971C0FFC6E00D723BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4FCD3961C0FFC6E00D723BC /* Foundation.framework */; };
+		C4FCD39F1C10012500D723BC /* en.json in Resources */ = {isa = PBXBuildFile; fileRef = C4FCD39D1C10012500D723BC /* en.json */; };
+		F5B8BB7A6BF1EC6E8F0E797C /* libPods-TMLKitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B3F7AF805B2CC554A820C5C /* libPods-TMLKitTests.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C4CF54D51C100DDD00EC39CC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C4CF54CC1C100DDC00EC39CC /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = B4BA1061A08326E15EFE2E0DBD946A3B;
+			remoteInfo = MBProgressHUD;
+		};
+		C4CF54D71C100DDD00EC39CC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C4CF54CC1C100DDC00EC39CC /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CD34AC64EA897287B49ED08A7C1C8F91;
+			remoteInfo = MPColorTools;
+		};
+		C4CF54D91C100DDD00EC39CC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C4CF54CC1C100DDC00EC39CC /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 4A10B9BBEF2E900AE53BFC3A1C0B261D;
+			remoteInfo = NVHTarGzip;
+		};
+		C4CF54DB1C100DDD00EC39CC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C4CF54CC1C100DDC00EC39CC /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D46711A15D9A275228EFAB6CAEC815E0;
+			remoteInfo = "Pods-TMLKit";
+		};
+		C4CF54DD1C100DDD00EC39CC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C4CF54CC1C100DDC00EC39CC /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2F47251E16303F9A704E391413A1EEE1;
+			remoteInfo = "Pods-TMLKitTests";
+		};
+		C4CF54DF1C100DDD00EC39CC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C4CF54CC1C100DDC00EC39CC /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BE0B3663879E4A48B0B4BCCA256C0FC5;
+			remoteInfo = SSZipArchive;
+		};
+		C4FCD2641C0FC7A200D723BC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C4FCD24F1C0FC7A200D723BC /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C4FCD2571C0FC7A200D723BC;
+			remoteInfo = TMLKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		374CDB8BFEDC96F6AD475835 /* Pods-TMLKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMLKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TMLKitTests/Pods-TMLKitTests.release.xcconfig"; sourceTree = "<group>"; };
+		4A9CF50CDF0545E105174A56 /* Pods-TMLKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMLKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TMLKit/Pods-TMLKit.debug.xcconfig"; sourceTree = "<group>"; };
+		6B3F7AF805B2CC554A820C5C /* libPods-TMLKitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TMLKitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7DD4AA1189309754FD897BCC /* Pods-TMLKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMLKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-TMLKit/Pods-TMLKit.release.xcconfig"; sourceTree = "<group>"; };
+		9C4DCAD61B82C00F44444A8C /* libPods-TMLKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TMLKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BACE78FD18874EB6A192BC4E /* Pods-TMLKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMLKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TMLKitTests/Pods-TMLKitTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C4CF54CC1C100DDC00EC39CC /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
+		C4FCD2581C0FC7A200D723BC /* TMLKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TMLKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4FCD25B1C0FC7A200D723BC /* TMLKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TMLKit.h; sourceTree = "<group>"; };
+		C4FCD25D1C0FC7A200D723BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C4FCD2621C0FC7A200D723BC /* TMLKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TMLKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		C4FCD2691C0FC7A200D723BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C4FCD2741C0FC7F200D723BC /* TMLAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAPIClient.h; sourceTree = "<group>"; };
+		C4FCD2751C0FC7F200D723BC /* TMLAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPIClient.m; sourceTree = "<group>"; };
+		C4FCD2761C0FC7F200D723BC /* TMLAPIResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAPIResponse.h; sourceTree = "<group>"; };
+		C4FCD2771C0FC7F200D723BC /* TMLAPIResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPIResponse.m; sourceTree = "<group>"; };
+		C4FCD2781C0FC7F200D723BC /* TMLAPISerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAPISerializer.h; sourceTree = "<group>"; };
+		C4FCD2791C0FC7F200D723BC /* TMLAPISerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPISerializer.m; sourceTree = "<group>"; };
+		C4FCD27A1C0FC7F200D723BC /* TMLJSONValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLJSONValueTransformer.h; sourceTree = "<group>"; };
+		C4FCD27B1C0FC7F200D723BC /* TMLJSONValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLJSONValueTransformer.m; sourceTree = "<group>"; };
+		C4FCD27D1C0FC7F200D723BC /* TMLApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLApplication.h; sourceTree = "<group>"; };
+		C4FCD27E1C0FC7F200D723BC /* TMLApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLApplication.m; sourceTree = "<group>"; };
+		C4FCD27F1C0FC7F200D723BC /* TMLConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLConfiguration.h; sourceTree = "<group>"; };
+		C4FCD2801C0FC7F200D723BC /* TMLConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLConfiguration.m; sourceTree = "<group>"; };
+		C4FCD2831C0FC7F200D723BC /* TMLSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLSource.h; sourceTree = "<group>"; };
+		C4FCD2841C0FC7F200D723BC /* TMLSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLSource.m; sourceTree = "<group>"; };
+		C4FCD2861C0FC7F200D723BC /* TMLAPIBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAPIBundle.h; sourceTree = "<group>"; };
+		C4FCD2871C0FC7F200D723BC /* TMLAPIBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPIBundle.m; sourceTree = "<group>"; };
+		C4FCD2881C0FC7F200D723BC /* TMLBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLBundle.h; sourceTree = "<group>"; };
+		C4FCD2891C0FC7F200D723BC /* TMLBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLBundle.m; sourceTree = "<group>"; };
+		C4FCD28A1C0FC7F200D723BC /* TMLBundleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLBundleManager.h; sourceTree = "<group>"; };
+		C4FCD28B1C0FC7F200D723BC /* TMLBundleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLBundleManager.m; sourceTree = "<group>"; };
+		C4FCD28D1C0FC7F200D723BC /* TMLLanguageSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLLanguageSelectorViewController.h; sourceTree = "<group>"; };
+		C4FCD28E1C0FC7F200D723BC /* TMLLanguageSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguageSelectorViewController.m; sourceTree = "<group>"; };
+		C4FCD28F1C0FC7F200D723BC /* TMLTranslatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLTranslatorViewController.h; sourceTree = "<group>"; };
+		C4FCD2901C0FC7F200D723BC /* TMLTranslatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTranslatorViewController.m; sourceTree = "<group>"; };
+		C4FCD2911C0FC7F200D723BC /* TMLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLViewController.h; sourceTree = "<group>"; };
+		C4FCD2921C0FC7F200D723BC /* TMLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLViewController.m; sourceTree = "<group>"; };
+		C4FCD2941C0FC7F200D723BC /* NSObject+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TML.h"; sourceTree = "<group>"; };
+		C4FCD2951C0FC7F200D723BC /* NSObject+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TML.m"; sourceTree = "<group>"; };
+		C4FCD2961C0FC7F200D723BC /* NSObject+TMLJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TMLJSON.h"; sourceTree = "<group>"; };
+		C4FCD2971C0FC7F200D723BC /* NSObject+TMLJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TMLJSON.m"; sourceTree = "<group>"; };
+		C4FCD2981C0FC7F200D723BC /* NSString+TmlAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+TmlAdditions.h"; sourceTree = "<group>"; };
+		C4FCD2991C0FC7F200D723BC /* NSString+TmlAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+TmlAdditions.m"; sourceTree = "<group>"; };
+		C4FCD29A1C0FC7F200D723BC /* UIBarButtonItem+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+TML.h"; sourceTree = "<group>"; };
+		C4FCD29B1C0FC7F200D723BC /* UIBarButtonItem+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+TML.m"; sourceTree = "<group>"; };
+		C4FCD29C1C0FC7F200D723BC /* UIButton+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+TML.h"; sourceTree = "<group>"; };
+		C4FCD29D1C0FC7F200D723BC /* UIButton+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+TML.m"; sourceTree = "<group>"; };
+		C4FCD29E1C0FC7F200D723BC /* UILabel+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+TML.h"; sourceTree = "<group>"; };
+		C4FCD29F1C0FC7F200D723BC /* UILabel+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+TML.m"; sourceTree = "<group>"; };
+		C4FCD2A01C0FC7F200D723BC /* UINavigationItem+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationItem+TML.h"; sourceTree = "<group>"; };
+		C4FCD2A11C0FC7F200D723BC /* UINavigationItem+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationItem+TML.m"; sourceTree = "<group>"; };
+		C4FCD2A21C0FC7F200D723BC /* UISearchBar+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UISearchBar+TML.h"; sourceTree = "<group>"; };
+		C4FCD2A31C0FC7F200D723BC /* UISearchBar+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UISearchBar+TML.m"; sourceTree = "<group>"; };
+		C4FCD2A41C0FC7F200D723BC /* UISegmentedControl+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UISegmentedControl+TML.h"; sourceTree = "<group>"; };
+		C4FCD2A51C0FC7F200D723BC /* UISegmentedControl+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UISegmentedControl+TML.m"; sourceTree = "<group>"; };
+		C4FCD2A61C0FC7F200D723BC /* UITabBarItem+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarItem+TML.h"; sourceTree = "<group>"; };
+		C4FCD2A71C0FC7F200D723BC /* UITabBarItem+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarItem+TML.m"; sourceTree = "<group>"; };
+		C4FCD2A81C0FC7F200D723BC /* UITextField+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+TML.h"; sourceTree = "<group>"; };
+		C4FCD2A91C0FC7F200D723BC /* UITextField+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+TML.m"; sourceTree = "<group>"; };
+		C4FCD2AA1C0FC7F200D723BC /* UITextView+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+TML.h"; sourceTree = "<group>"; };
+		C4FCD2AB1C0FC7F200D723BC /* UITextView+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+TML.m"; sourceTree = "<group>"; };
+		C4FCD2AC1C0FC7F200D723BC /* UIViewController+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+TML.h"; sourceTree = "<group>"; };
+		C4FCD2AD1C0FC7F200D723BC /* UIViewController+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+TML.m"; sourceTree = "<group>"; };
+		C4FCD2AF1C0FC7F200D723BC /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
+		C4FCD2B11C0FC7F200D723BC /* TMLLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLLanguage.h; sourceTree = "<group>"; };
+		C4FCD2B21C0FC7F200D723BC /* TMLLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguage.m; sourceTree = "<group>"; };
+		C4FCD2B31C0FC7F200D723BC /* TMLLanguageCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLLanguageCase.h; sourceTree = "<group>"; };
+		C4FCD2B41C0FC7F200D723BC /* TMLLanguageCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguageCase.m; sourceTree = "<group>"; };
+		C4FCD2B51C0FC7F200D723BC /* TMLLanguageCaseRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLLanguageCaseRule.h; sourceTree = "<group>"; };
+		C4FCD2B61C0FC7F200D723BC /* TMLLanguageCaseRule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguageCaseRule.m; sourceTree = "<group>"; };
+		C4FCD2B71C0FC7F200D723BC /* TMLLanguageContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLLanguageContext.h; sourceTree = "<group>"; };
+		C4FCD2B81C0FC7F200D723BC /* TMLLanguageContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguageContext.m; sourceTree = "<group>"; };
+		C4FCD2B91C0FC7F200D723BC /* TMLLanguageContextRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLLanguageContextRule.h; sourceTree = "<group>"; };
+		C4FCD2BA1C0FC7F200D723BC /* TMLLanguageContextRule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguageContextRule.m; sourceTree = "<group>"; };
+		C4FCD2BC1C0FC7F200D723BC /* TMLRulesEvaluator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLRulesEvaluator.h; sourceTree = "<group>"; };
+		C4FCD2BD1C0FC7F200D723BC /* TMLRulesEvaluator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLRulesEvaluator.m; sourceTree = "<group>"; };
+		C4FCD2BE1C0FC7F200D723BC /* TMLRulesParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLRulesParser.h; sourceTree = "<group>"; };
+		C4FCD2BF1C0FC7F200D723BC /* TMLRulesParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLRulesParser.m; sourceTree = "<group>"; };
+		C4FCD2C01C0FC7F200D723BC /* TML+NSLocalizedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TML+NSLocalizedString.h"; sourceTree = "<group>"; };
+		C4FCD2C11C0FC7F200D723BC /* TML+TMLLocalizedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TML+TMLLocalizedString.h"; sourceTree = "<group>"; };
+		C4FCD2C21C0FC7F200D723BC /* TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TML.h; sourceTree = "<group>"; };
+		C4FCD2C31C0FC7F200D723BC /* TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TML.m; sourceTree = "<group>"; };
+		C4FCD2C41C0FC7F200D723BC /* TMLGlobals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLGlobals.h; sourceTree = "<group>"; };
+		C4FCD2C51C0FC7F200D723BC /* TMLGlobals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLGlobals.m; sourceTree = "<group>"; };
+		C4FCD2C61C0FC7F200D723BC /* TMLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLLogger.h; sourceTree = "<group>"; };
+		C4FCD2C71C0FC7F200D723BC /* TMLModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLModel.h; sourceTree = "<group>"; };
+		C4FCD2C81C0FC7F200D723BC /* TMLModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLModel.m; sourceTree = "<group>"; };
+		C4FCD2CA1C0FC7F200D723BC /* TMLAttributedDecorationTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAttributedDecorationTokenizer.h; sourceTree = "<group>"; };
+		C4FCD2CB1C0FC7F200D723BC /* TMLAttributedDecorationTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAttributedDecorationTokenizer.m; sourceTree = "<group>"; };
+		C4FCD2CC1C0FC7F200D723BC /* TMLDataTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLDataTokenizer.h; sourceTree = "<group>"; };
+		C4FCD2CD1C0FC7F200D723BC /* TMLDataTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLDataTokenizer.m; sourceTree = "<group>"; };
+		C4FCD2CE1C0FC7F200D723BC /* TMLDecorationTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLDecorationTokenizer.h; sourceTree = "<group>"; };
+		C4FCD2CF1C0FC7F200D723BC /* TMLDecorationTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLDecorationTokenizer.m; sourceTree = "<group>"; };
+		C4FCD2D01C0FC7F200D723BC /* TMLHtmlDecorationTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLHtmlDecorationTokenizer.h; sourceTree = "<group>"; };
+		C4FCD2D11C0FC7F200D723BC /* TMLHtmlDecorationTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLHtmlDecorationTokenizer.m; sourceTree = "<group>"; };
+		C4FCD2D21C0FC7F200D723BC /* TMLTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLTokenizer.h; sourceTree = "<group>"; };
+		C4FCD2D31C0FC7F200D723BC /* TMLTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTokenizer.m; sourceTree = "<group>"; };
+		C4FCD2D51C0FC7F200D723BC /* TMLDataToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLDataToken.h; sourceTree = "<group>"; };
+		C4FCD2D61C0FC7F200D723BC /* TMLDataToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLDataToken.m; sourceTree = "<group>"; };
+		C4FCD2D71C0FC7F200D723BC /* TMLMethodToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLMethodToken.h; sourceTree = "<group>"; };
+		C4FCD2D81C0FC7F200D723BC /* TMLMethodToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLMethodToken.m; sourceTree = "<group>"; };
+		C4FCD2D91C0FC7F200D723BC /* TMLPipedToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLPipedToken.h; sourceTree = "<group>"; };
+		C4FCD2DA1C0FC7F200D723BC /* TMLPipedToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLPipedToken.m; sourceTree = "<group>"; };
+		C4FCD2DC1C0FC7F200D723BC /* TMLTranslation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLTranslation.h; sourceTree = "<group>"; };
+		C4FCD2DD1C0FC7F200D723BC /* TMLTranslation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTranslation.m; sourceTree = "<group>"; };
+		C4FCD2DE1C0FC7F200D723BC /* TMLTranslationKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLTranslationKey.h; sourceTree = "<group>"; };
+		C4FCD2DF1C0FC7F200D723BC /* TMLTranslationKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTranslationKey.m; sourceTree = "<group>"; };
+		C4FCD3431C0FCB1B00D723BC /* TMLKit-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TMLKit-Prefix.pch"; sourceTree = "<group>"; };
+		C4FCD3461C0FCDD900D723BC /* TMLApplicationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLApplicationTest.m; sourceTree = "<group>"; };
+		C4FCD3471C0FCDD900D723BC /* TMLConfigurationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLConfigurationTest.m; sourceTree = "<group>"; };
+		C4FCD34C1C0FCDD900D723BC /* app.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = app.json; sourceTree = "<group>"; };
+		C4FCD34F1C0FCDD900D723BC /* cs_en-US_plural.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cs_en-US_plural.json"; sourceTree = "<group>"; };
+		C4FCD3501C0FCDD900D723BC /* ctx_en-US_gender.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "ctx_en-US_gender.json"; sourceTree = "<group>"; };
+		C4FCD3511C0FCDD900D723BC /* ctx_en-US_number.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "ctx_en-US_number.json"; sourceTree = "<group>"; };
+		C4FCD3521C0FCDD900D723BC /* en-US.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "en-US.json"; sourceTree = "<group>"; };
+		C4FCD3541C0FCDD900D723BC /* es.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = es.json; sourceTree = "<group>"; };
+		C4FCD3561C0FCDD900D723BC /* cs_ru_gen.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cs_ru_gen.json; sourceTree = "<group>"; };
+		C4FCD3571C0FCDD900D723BC /* ctx_ru_gender.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ctx_ru_gender.json; sourceTree = "<group>"; };
+		C4FCD3581C0FCDD900D723BC /* ctx_ru_number.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ctx_ru_number.json; sourceTree = "<group>"; };
+		C4FCD3591C0FCDD900D723BC /* ru.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ru.json; sourceTree = "<group>"; };
+		C4FCD35B1C0FCDD900D723BC /* TMLLanguageCaseRuleTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguageCaseRuleTest.m; sourceTree = "<group>"; };
+		C4FCD35C1C0FCDD900D723BC /* TMLLanguageCaseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguageCaseTest.m; sourceTree = "<group>"; };
+		C4FCD35D1C0FCDD900D723BC /* TMLLanguageContextRuleTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguageContextRuleTest.m; sourceTree = "<group>"; };
+		C4FCD35E1C0FCDD900D723BC /* TMLLanguageContextTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguageContextTest.m; sourceTree = "<group>"; };
+		C4FCD3601C0FCDD900D723BC /* TMLTestUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLTestUser.h; sourceTree = "<group>"; };
+		C4FCD3611C0FCDD900D723BC /* TMLTestUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTestUser.m; sourceTree = "<group>"; };
+		C4FCD3631C0FCDD900D723BC /* TMLRulesEvaluatorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLRulesEvaluatorTest.m; sourceTree = "<group>"; };
+		C4FCD3641C0FCDD900D723BC /* TMLRulesParserTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLRulesParserTest.m; sourceTree = "<group>"; };
+		C4FCD3651C0FCDD900D723BC /* TMLAPISerializationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPISerializationTest.m; sourceTree = "<group>"; };
+		C4FCD3661C0FCDD900D723BC /* TMLTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTest.m; sourceTree = "<group>"; };
+		C4FCD3671C0FCDD900D723BC /* TMLTestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLTestBase.h; sourceTree = "<group>"; };
+		C4FCD3681C0FCDD900D723BC /* TMLTestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTestBase.m; sourceTree = "<group>"; };
+		C4FCD36B1C0FCDD900D723BC /* TMLAttributedDecorationTokenizerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAttributedDecorationTokenizerTest.m; sourceTree = "<group>"; };
+		C4FCD36C1C0FCDD900D723BC /* TMLDecorationTokenizerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLDecorationTokenizerTest.m; sourceTree = "<group>"; };
+		C4FCD36D1C0FCDD900D723BC /* TMLHtmlDecorationTokenizerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLHtmlDecorationTokenizerTest.m; sourceTree = "<group>"; };
+		C4FCD36F1C0FCDD900D723BC /* TMLDataTokenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLDataTokenTest.m; sourceTree = "<group>"; };
+		C4FCD3701C0FCDD900D723BC /* TMLPipedTokenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLPipedTokenTest.m; sourceTree = "<group>"; };
+		C4FCD3721C0FCDD900D723BC /* TMLTranslationKeyTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTranslationKeyTest.m; sourceTree = "<group>"; };
+		C4FCD3941C0FFC4500D723BC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		C4FCD3961C0FFC6E00D723BC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		C4FCD39D1C10012500D723BC /* en.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = en.json; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C4FCD2541C0FC7A200D723BC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4FCD3971C0FFC6E00D723BC /* Foundation.framework in Frameworks */,
+				C4FCD3951C0FFC4500D723BC /* UIKit.framework in Frameworks */,
+				74CAF4D7AE5F673571FAD626 /* libPods-TMLKit.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C4FCD25F1C0FC7A200D723BC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4FCD2631C0FC7A200D723BC /* TMLKit.framework in Frameworks */,
+				F5B8BB7A6BF1EC6E8F0E797C /* libPods-TMLKitTests.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0F97C3070F8B9A82B0A1340C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				4A9CF50CDF0545E105174A56 /* Pods-TMLKit.debug.xcconfig */,
+				7DD4AA1189309754FD897BCC /* Pods-TMLKit.release.xcconfig */,
+				BACE78FD18874EB6A192BC4E /* Pods-TMLKitTests.debug.xcconfig */,
+				374CDB8BFEDC96F6AD475835 /* Pods-TMLKitTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		30219F88A751629951FD17B4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD3961C0FFC6E00D723BC /* Foundation.framework */,
+				C4FCD3941C0FFC4500D723BC /* UIKit.framework */,
+				9C4DCAD61B82C00F44444A8C /* libPods-TMLKit.a */,
+				6B3F7AF805B2CC554A820C5C /* libPods-TMLKitTests.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C4CF54CD1C100DDC00EC39CC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C4CF54D61C100DDD00EC39CC /* libMBProgressHUD.a */,
+				C4CF54D81C100DDD00EC39CC /* libMPColorTools.a */,
+				C4CF54DA1C100DDD00EC39CC /* libNVHTarGzip.a */,
+				C4CF54DC1C100DDD00EC39CC /* libPods-TMLKit.a */,
+				C4CF54DE1C100DDD00EC39CC /* libPods-TMLKitTests.a */,
+				C4CF54E01C100DDD00EC39CC /* libSSZipArchive.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C4FCD24E1C0FC7A200D723BC = {
+			isa = PBXGroup;
+			children = (
+				C4CF54CC1C100DDC00EC39CC /* Pods.xcodeproj */,
+				C4FCD39B1C10012500D723BC /* Assets */,
+				C4FCD25A1C0FC7A200D723BC /* TMLKit */,
+				C4FCD2661C0FC7A200D723BC /* TMLKitTests */,
+				C4FCD2591C0FC7A200D723BC /* Products */,
+				0F97C3070F8B9A82B0A1340C /* Pods */,
+				30219F88A751629951FD17B4 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		C4FCD2591C0FC7A200D723BC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD2581C0FC7A200D723BC /* TMLKit.framework */,
+				C4FCD2621C0FC7A200D723BC /* TMLKitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C4FCD25A1C0FC7A200D723BC /* TMLKit */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD2721C0FC7F200D723BC /* Classes */,
+				C4FCD25B1C0FC7A200D723BC /* TMLKit.h */,
+				C4FCD25D1C0FC7A200D723BC /* Info.plist */,
+				C4FCD3431C0FCB1B00D723BC /* TMLKit-Prefix.pch */,
+			);
+			path = TMLKit;
+			sourceTree = "<group>";
+		};
+		C4FCD2661C0FC7A200D723BC /* TMLKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD3441C0FCDD900D723BC /* Tests */,
+				C4FCD2691C0FC7A200D723BC /* Info.plist */,
+			);
+			path = TMLKitTests;
+			sourceTree = "<group>";
+		};
+		C4FCD2721C0FC7F200D723BC /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD2731C0FC7F200D723BC /* API */,
+				C4FCD27C1C0FC7F200D723BC /* Application */,
+				C4FCD2851C0FC7F200D723BC /* Bundle */,
+				C4FCD28C1C0FC7F200D723BC /* Controllers */,
+				C4FCD2931C0FC7F200D723BC /* Extensions */,
+				C4FCD2AE1C0FC7F200D723BC /* ios */,
+				C4FCD2B01C0FC7F200D723BC /* Language */,
+				C4FCD2BB1C0FC7F200D723BC /* Rules Engine */,
+				C4FCD2C01C0FC7F200D723BC /* TML+NSLocalizedString.h */,
+				C4FCD2C11C0FC7F200D723BC /* TML+TMLLocalizedString.h */,
+				C4FCD2C21C0FC7F200D723BC /* TML.h */,
+				C4FCD2C31C0FC7F200D723BC /* TML.m */,
+				C4FCD2C41C0FC7F200D723BC /* TMLGlobals.h */,
+				C4FCD2C51C0FC7F200D723BC /* TMLGlobals.m */,
+				C4FCD2C61C0FC7F200D723BC /* TMLLogger.h */,
+				C4FCD2C71C0FC7F200D723BC /* TMLModel.h */,
+				C4FCD2C81C0FC7F200D723BC /* TMLModel.m */,
+				C4FCD2C91C0FC7F200D723BC /* Tokenizers */,
+				C4FCD2D41C0FC7F200D723BC /* Tokens */,
+				C4FCD2DB1C0FC7F200D723BC /* Translations */,
+			);
+			name = Classes;
+			path = ../../Classes;
+			sourceTree = "<group>";
+		};
+		C4FCD2731C0FC7F200D723BC /* API */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD2741C0FC7F200D723BC /* TMLAPIClient.h */,
+				C4FCD2751C0FC7F200D723BC /* TMLAPIClient.m */,
+				C4FCD2761C0FC7F200D723BC /* TMLAPIResponse.h */,
+				C4FCD2771C0FC7F200D723BC /* TMLAPIResponse.m */,
+				C4FCD2781C0FC7F200D723BC /* TMLAPISerializer.h */,
+				C4FCD2791C0FC7F200D723BC /* TMLAPISerializer.m */,
+				C4FCD27A1C0FC7F200D723BC /* TMLJSONValueTransformer.h */,
+				C4FCD27B1C0FC7F200D723BC /* TMLJSONValueTransformer.m */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		C4FCD27C1C0FC7F200D723BC /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD27D1C0FC7F200D723BC /* TMLApplication.h */,
+				C4FCD27E1C0FC7F200D723BC /* TMLApplication.m */,
+				C4FCD27F1C0FC7F200D723BC /* TMLConfiguration.h */,
+				C4FCD2801C0FC7F200D723BC /* TMLConfiguration.m */,
+				C4FCD2831C0FC7F200D723BC /* TMLSource.h */,
+				C4FCD2841C0FC7F200D723BC /* TMLSource.m */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		C4FCD2851C0FC7F200D723BC /* Bundle */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD2861C0FC7F200D723BC /* TMLAPIBundle.h */,
+				C4FCD2871C0FC7F200D723BC /* TMLAPIBundle.m */,
+				C4FCD2881C0FC7F200D723BC /* TMLBundle.h */,
+				C4FCD2891C0FC7F200D723BC /* TMLBundle.m */,
+				C4FCD28A1C0FC7F200D723BC /* TMLBundleManager.h */,
+				C4FCD28B1C0FC7F200D723BC /* TMLBundleManager.m */,
+			);
+			path = Bundle;
+			sourceTree = "<group>";
+		};
+		C4FCD28C1C0FC7F200D723BC /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD28D1C0FC7F200D723BC /* TMLLanguageSelectorViewController.h */,
+				C4FCD28E1C0FC7F200D723BC /* TMLLanguageSelectorViewController.m */,
+				C4FCD28F1C0FC7F200D723BC /* TMLTranslatorViewController.h */,
+				C4FCD2901C0FC7F200D723BC /* TMLTranslatorViewController.m */,
+				C4FCD2911C0FC7F200D723BC /* TMLViewController.h */,
+				C4FCD2921C0FC7F200D723BC /* TMLViewController.m */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		C4FCD2931C0FC7F200D723BC /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD2941C0FC7F200D723BC /* NSObject+TML.h */,
+				C4FCD2951C0FC7F200D723BC /* NSObject+TML.m */,
+				C4FCD2961C0FC7F200D723BC /* NSObject+TMLJSON.h */,
+				C4FCD2971C0FC7F200D723BC /* NSObject+TMLJSON.m */,
+				C4FCD2981C0FC7F200D723BC /* NSString+TmlAdditions.h */,
+				C4FCD2991C0FC7F200D723BC /* NSString+TmlAdditions.m */,
+				C4FCD29A1C0FC7F200D723BC /* UIBarButtonItem+TML.h */,
+				C4FCD29B1C0FC7F200D723BC /* UIBarButtonItem+TML.m */,
+				C4FCD29C1C0FC7F200D723BC /* UIButton+TML.h */,
+				C4FCD29D1C0FC7F200D723BC /* UIButton+TML.m */,
+				C4FCD29E1C0FC7F200D723BC /* UILabel+TML.h */,
+				C4FCD29F1C0FC7F200D723BC /* UILabel+TML.m */,
+				C4FCD2A01C0FC7F200D723BC /* UINavigationItem+TML.h */,
+				C4FCD2A11C0FC7F200D723BC /* UINavigationItem+TML.m */,
+				C4FCD2A21C0FC7F200D723BC /* UISearchBar+TML.h */,
+				C4FCD2A31C0FC7F200D723BC /* UISearchBar+TML.m */,
+				C4FCD2A41C0FC7F200D723BC /* UISegmentedControl+TML.h */,
+				C4FCD2A51C0FC7F200D723BC /* UISegmentedControl+TML.m */,
+				C4FCD2A61C0FC7F200D723BC /* UITabBarItem+TML.h */,
+				C4FCD2A71C0FC7F200D723BC /* UITabBarItem+TML.m */,
+				C4FCD2A81C0FC7F200D723BC /* UITextField+TML.h */,
+				C4FCD2A91C0FC7F200D723BC /* UITextField+TML.m */,
+				C4FCD2AA1C0FC7F200D723BC /* UITextView+TML.h */,
+				C4FCD2AB1C0FC7F200D723BC /* UITextView+TML.m */,
+				C4FCD2AC1C0FC7F200D723BC /* UIViewController+TML.h */,
+				C4FCD2AD1C0FC7F200D723BC /* UIViewController+TML.m */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C4FCD2AE1C0FC7F200D723BC /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD2AF1C0FC7F200D723BC /* .gitkeep */,
+			);
+			path = ios;
+			sourceTree = "<group>";
+		};
+		C4FCD2B01C0FC7F200D723BC /* Language */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD2B11C0FC7F200D723BC /* TMLLanguage.h */,
+				C4FCD2B21C0FC7F200D723BC /* TMLLanguage.m */,
+				C4FCD2B31C0FC7F200D723BC /* TMLLanguageCase.h */,
+				C4FCD2B41C0FC7F200D723BC /* TMLLanguageCase.m */,
+				C4FCD2B51C0FC7F200D723BC /* TMLLanguageCaseRule.h */,
+				C4FCD2B61C0FC7F200D723BC /* TMLLanguageCaseRule.m */,
+				C4FCD2B71C0FC7F200D723BC /* TMLLanguageContext.h */,
+				C4FCD2B81C0FC7F200D723BC /* TMLLanguageContext.m */,
+				C4FCD2B91C0FC7F200D723BC /* TMLLanguageContextRule.h */,
+				C4FCD2BA1C0FC7F200D723BC /* TMLLanguageContextRule.m */,
+			);
+			path = Language;
+			sourceTree = "<group>";
+		};
+		C4FCD2BB1C0FC7F200D723BC /* Rules Engine */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD2BC1C0FC7F200D723BC /* TMLRulesEvaluator.h */,
+				C4FCD2BD1C0FC7F200D723BC /* TMLRulesEvaluator.m */,
+				C4FCD2BE1C0FC7F200D723BC /* TMLRulesParser.h */,
+				C4FCD2BF1C0FC7F200D723BC /* TMLRulesParser.m */,
+			);
+			path = "Rules Engine";
+			sourceTree = "<group>";
+		};
+		C4FCD2C91C0FC7F200D723BC /* Tokenizers */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD2CA1C0FC7F200D723BC /* TMLAttributedDecorationTokenizer.h */,
+				C4FCD2CB1C0FC7F200D723BC /* TMLAttributedDecorationTokenizer.m */,
+				C4FCD2CC1C0FC7F200D723BC /* TMLDataTokenizer.h */,
+				C4FCD2CD1C0FC7F200D723BC /* TMLDataTokenizer.m */,
+				C4FCD2CE1C0FC7F200D723BC /* TMLDecorationTokenizer.h */,
+				C4FCD2CF1C0FC7F200D723BC /* TMLDecorationTokenizer.m */,
+				C4FCD2D01C0FC7F200D723BC /* TMLHtmlDecorationTokenizer.h */,
+				C4FCD2D11C0FC7F200D723BC /* TMLHtmlDecorationTokenizer.m */,
+				C4FCD2D21C0FC7F200D723BC /* TMLTokenizer.h */,
+				C4FCD2D31C0FC7F200D723BC /* TMLTokenizer.m */,
+			);
+			path = Tokenizers;
+			sourceTree = "<group>";
+		};
+		C4FCD2D41C0FC7F200D723BC /* Tokens */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD2D51C0FC7F200D723BC /* TMLDataToken.h */,
+				C4FCD2D61C0FC7F200D723BC /* TMLDataToken.m */,
+				C4FCD2D71C0FC7F200D723BC /* TMLMethodToken.h */,
+				C4FCD2D81C0FC7F200D723BC /* TMLMethodToken.m */,
+				C4FCD2D91C0FC7F200D723BC /* TMLPipedToken.h */,
+				C4FCD2DA1C0FC7F200D723BC /* TMLPipedToken.m */,
+			);
+			path = Tokens;
+			sourceTree = "<group>";
+		};
+		C4FCD2DB1C0FC7F200D723BC /* Translations */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD2DC1C0FC7F200D723BC /* TMLTranslation.h */,
+				C4FCD2DD1C0FC7F200D723BC /* TMLTranslation.m */,
+				C4FCD2DE1C0FC7F200D723BC /* TMLTranslationKey.h */,
+				C4FCD2DF1C0FC7F200D723BC /* TMLTranslationKey.m */,
+			);
+			path = Translations;
+			sourceTree = "<group>";
+		};
+		C4FCD3441C0FCDD900D723BC /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD3451C0FCDD900D723BC /* Application */,
+				C4FCD34B1C0FCDD900D723BC /* Fixtures */,
+				C4FCD35A1C0FCDD900D723BC /* Language */,
+				C4FCD35F1C0FCDD900D723BC /* Models */,
+				C4FCD3621C0FCDD900D723BC /* Rules Engine */,
+				C4FCD3651C0FCDD900D723BC /* TMLAPISerializationTest.m */,
+				C4FCD3661C0FCDD900D723BC /* TMLTest.m */,
+				C4FCD3671C0FCDD900D723BC /* TMLTestBase.h */,
+				C4FCD3681C0FCDD900D723BC /* TMLTestBase.m */,
+				C4FCD36A1C0FCDD900D723BC /* Tokenizers */,
+				C4FCD36E1C0FCDD900D723BC /* Tokens */,
+				C4FCD3711C0FCDD900D723BC /* Translations */,
+			);
+			name = Tests;
+			path = ../../Tests;
+			sourceTree = "<group>";
+		};
+		C4FCD3451C0FCDD900D723BC /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD3461C0FCDD900D723BC /* TMLApplicationTest.m */,
+				C4FCD3471C0FCDD900D723BC /* TMLConfigurationTest.m */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		C4FCD34B1C0FCDD900D723BC /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD34C1C0FCDD900D723BC /* app.json */,
+				C4FCD34D1C0FCDD900D723BC /* languages */,
+			);
+			path = Fixtures;
+			sourceTree = "<group>";
+		};
+		C4FCD34D1C0FCDD900D723BC /* languages */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD34E1C0FCDD900D723BC /* en-US */,
+				C4FCD3531C0FCDD900D723BC /* es */,
+				C4FCD3551C0FCDD900D723BC /* ru */,
+			);
+			path = languages;
+			sourceTree = "<group>";
+		};
+		C4FCD34E1C0FCDD900D723BC /* en-US */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD34F1C0FCDD900D723BC /* cs_en-US_plural.json */,
+				C4FCD3501C0FCDD900D723BC /* ctx_en-US_gender.json */,
+				C4FCD3511C0FCDD900D723BC /* ctx_en-US_number.json */,
+				C4FCD3521C0FCDD900D723BC /* en-US.json */,
+			);
+			path = "en-US";
+			sourceTree = "<group>";
+		};
+		C4FCD3531C0FCDD900D723BC /* es */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD3541C0FCDD900D723BC /* es.json */,
+			);
+			path = es;
+			sourceTree = "<group>";
+		};
+		C4FCD3551C0FCDD900D723BC /* ru */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD3561C0FCDD900D723BC /* cs_ru_gen.json */,
+				C4FCD3571C0FCDD900D723BC /* ctx_ru_gender.json */,
+				C4FCD3581C0FCDD900D723BC /* ctx_ru_number.json */,
+				C4FCD3591C0FCDD900D723BC /* ru.json */,
+			);
+			path = ru;
+			sourceTree = "<group>";
+		};
+		C4FCD35A1C0FCDD900D723BC /* Language */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD35B1C0FCDD900D723BC /* TMLLanguageCaseRuleTest.m */,
+				C4FCD35C1C0FCDD900D723BC /* TMLLanguageCaseTest.m */,
+				C4FCD35D1C0FCDD900D723BC /* TMLLanguageContextRuleTest.m */,
+				C4FCD35E1C0FCDD900D723BC /* TMLLanguageContextTest.m */,
+			);
+			path = Language;
+			sourceTree = "<group>";
+		};
+		C4FCD35F1C0FCDD900D723BC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD3601C0FCDD900D723BC /* TMLTestUser.h */,
+				C4FCD3611C0FCDD900D723BC /* TMLTestUser.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		C4FCD3621C0FCDD900D723BC /* Rules Engine */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD3631C0FCDD900D723BC /* TMLRulesEvaluatorTest.m */,
+				C4FCD3641C0FCDD900D723BC /* TMLRulesParserTest.m */,
+			);
+			path = "Rules Engine";
+			sourceTree = "<group>";
+		};
+		C4FCD36A1C0FCDD900D723BC /* Tokenizers */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD36B1C0FCDD900D723BC /* TMLAttributedDecorationTokenizerTest.m */,
+				C4FCD36C1C0FCDD900D723BC /* TMLDecorationTokenizerTest.m */,
+				C4FCD36D1C0FCDD900D723BC /* TMLHtmlDecorationTokenizerTest.m */,
+			);
+			path = Tokenizers;
+			sourceTree = "<group>";
+		};
+		C4FCD36E1C0FCDD900D723BC /* Tokens */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD36F1C0FCDD900D723BC /* TMLDataTokenTest.m */,
+				C4FCD3701C0FCDD900D723BC /* TMLPipedTokenTest.m */,
+			);
+			path = Tokens;
+			sourceTree = "<group>";
+		};
+		C4FCD3711C0FCDD900D723BC /* Translations */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD3721C0FCDD900D723BC /* TMLTranslationKeyTest.m */,
+			);
+			path = Translations;
+			sourceTree = "<group>";
+		};
+		C4FCD39B1C10012500D723BC /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				C4FCD39D1C10012500D723BC /* en.json */,
+			);
+			name = Assets;
+			path = ../Assets;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		C4FCD2551C0FC7A200D723BC /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4FCD25C1C0FC7A200D723BC /* TMLKit.h in Headers */,
+				C4FCD3271C0FC7F200D723BC /* TML.h in Headers */,
+				C4FCD3291C0FC7F200D723BC /* TMLGlobals.h in Headers */,
+				C4FCD32B1C0FC7F200D723BC /* TMLLogger.h in Headers */,
+				C4FCD32C1C0FC7F200D723BC /* TMLModel.h in Headers */,
+				C4FCD2E81C0FC7F200D723BC /* TMLApplication.h in Headers */,
+				C4FCD2F21C0FC7F200D723BC /* TMLBundle.h in Headers */,
+				C4FCD2EA1C0FC7F200D723BC /* TMLConfiguration.h in Headers */,
+				C4FCD3171C0FC7F200D723BC /* TMLLanguage.h in Headers */,
+				C4FCD2EE1C0FC7F200D723BC /* TMLSource.h in Headers */,
+				C4FCD3401C0FC7F200D723BC /* TMLTranslationKey.h in Headers */,
+				C4FCD3141C0FC7F200D723BC /* UIViewController+TML.h in Headers */,
+				C4FCD2F81C0FC7F200D723BC /* TMLTranslatorViewController.h in Headers */,
+				C4FCD2F61C0FC7F200D723BC /* TMLLanguageSelectorViewController.h in Headers */,
+				C4FCD2FA1C0FC7F200D723BC /* TMLViewController.h in Headers */,
+				C4FCD31D1C0FC7F200D723BC /* TMLLanguageContext.h in Headers */,
+				C4FCD2E21C0FC7F200D723BC /* TMLAPIResponse.h in Headers */,
+				C4FCD2E41C0FC7F200D723BC /* TMLAPISerializer.h in Headers */,
+				C4FCD3361C0FC7F200D723BC /* TMLTokenizer.h in Headers */,
+				C4FCD2E61C0FC7F200D723BC /* TMLJSONValueTransformer.h in Headers */,
+				C4FCD33E1C0FC7F200D723BC /* TMLTranslation.h in Headers */,
+				C4FCD31B1C0FC7F200D723BC /* TMLLanguageCaseRule.h in Headers */,
+				C4FCD3231C0FC7F200D723BC /* TMLRulesParser.h in Headers */,
+				C4FCD33A1C0FC7F200D723BC /* TMLMethodToken.h in Headers */,
+				C4FCD2F41C0FC7F200D723BC /* TMLBundleManager.h in Headers */,
+				C4FCD3301C0FC7F200D723BC /* TMLDataTokenizer.h in Headers */,
+				C4FCD31F1C0FC7F200D723BC /* TMLLanguageContextRule.h in Headers */,
+				C4FCD3121C0FC7F200D723BC /* UITextView+TML.h in Headers */,
+				C4FCD2E01C0FC7F200D723BC /* TMLAPIClient.h in Headers */,
+				C4FCD3191C0FC7F200D723BC /* TMLLanguageCase.h in Headers */,
+				C4FCD2FE1C0FC7F200D723BC /* NSObject+TMLJSON.h in Headers */,
+				C4FCD32E1C0FC7F200D723BC /* TMLAttributedDecorationTokenizer.h in Headers */,
+				C4FCD3211C0FC7F200D723BC /* TMLRulesEvaluator.h in Headers */,
+				C4FCD3381C0FC7F200D723BC /* TMLDataToken.h in Headers */,
+				C4FCD3341C0FC7F200D723BC /* TMLHtmlDecorationTokenizer.h in Headers */,
+				C4FCD3321C0FC7F200D723BC /* TMLDecorationTokenizer.h in Headers */,
+				C4FCD2F01C0FC7F200D723BC /* TMLAPIBundle.h in Headers */,
+				C4FCD33C1C0FC7F200D723BC /* TMLPipedToken.h in Headers */,
+				C4FCD3021C0FC7F200D723BC /* UIBarButtonItem+TML.h in Headers */,
+				C4FCD3101C0FC7F200D723BC /* UITextField+TML.h in Headers */,
+				C4FCD30E1C0FC7F200D723BC /* UITabBarItem+TML.h in Headers */,
+				C4FCD3261C0FC7F200D723BC /* TML+TMLLocalizedString.h in Headers */,
+				C4FCD2FC1C0FC7F200D723BC /* NSObject+TML.h in Headers */,
+				C4FCD3251C0FC7F200D723BC /* TML+NSLocalizedString.h in Headers */,
+				C4FCD3001C0FC7F200D723BC /* NSString+TmlAdditions.h in Headers */,
+				C4FCD30A1C0FC7F200D723BC /* UISearchBar+TML.h in Headers */,
+				C4FCD3081C0FC7F200D723BC /* UINavigationItem+TML.h in Headers */,
+				C4FCD3041C0FC7F200D723BC /* UIButton+TML.h in Headers */,
+				C4FCD30C1C0FC7F200D723BC /* UISegmentedControl+TML.h in Headers */,
+				C4FCD3061C0FC7F200D723BC /* UILabel+TML.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		C4FCD2571C0FC7A200D723BC /* TMLKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C4FCD26C1C0FC7A200D723BC /* Build configuration list for PBXNativeTarget "TMLKit" */;
+			buildPhases = (
+				BE5C101823C9B54256E587D1 /* Check Pods Manifest.lock */,
+				C4FCD2531C0FC7A200D723BC /* Sources */,
+				C4FCD2541C0FC7A200D723BC /* Frameworks */,
+				C4FCD2551C0FC7A200D723BC /* Headers */,
+				C4FCD2561C0FC7A200D723BC /* Resources */,
+				0BFCEE17B52EF5CA125FB045 /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TMLKit;
+			productName = TMLKit;
+			productReference = C4FCD2581C0FC7A200D723BC /* TMLKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		C4FCD2611C0FC7A200D723BC /* TMLKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C4FCD26F1C0FC7A200D723BC /* Build configuration list for PBXNativeTarget "TMLKitTests" */;
+			buildPhases = (
+				120A9611E39814438BE4A5F9 /* Check Pods Manifest.lock */,
+				C4FCD25E1C0FC7A200D723BC /* Sources */,
+				C4FCD25F1C0FC7A200D723BC /* Frameworks */,
+				C4FCD2601C0FC7A200D723BC /* Resources */,
+				2C0454231AA105BF308F1AE3 /* Embed Pods Frameworks */,
+				B83F3BC5ED7231378FED575E /* Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C4FCD2651C0FC7A200D723BC /* PBXTargetDependency */,
+			);
+			name = TMLKitTests;
+			productName = TMLKitTests;
+			productReference = C4FCD2621C0FC7A200D723BC /* TMLKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C4FCD24F1C0FC7A200D723BC /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = "Translation Exchange";
+				TargetAttributes = {
+					C4FCD2571C0FC7A200D723BC = {
+						CreatedOnToolsVersion = 7.1.1;
+					};
+					C4FCD2611C0FC7A200D723BC = {
+						CreatedOnToolsVersion = 7.1.1;
+					};
+				};
+			};
+			buildConfigurationList = C4FCD2521C0FC7A200D723BC /* Build configuration list for PBXProject "TMLKit" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = C4FCD24E1C0FC7A200D723BC;
+			productRefGroup = C4FCD2591C0FC7A200D723BC /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = C4CF54CD1C100DDC00EC39CC /* Products */;
+					ProjectRef = C4CF54CC1C100DDC00EC39CC /* Pods.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				C4FCD2571C0FC7A200D723BC /* TMLKit */,
+				C4FCD2611C0FC7A200D723BC /* TMLKitTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		C4CF54D61C100DDD00EC39CC /* libMBProgressHUD.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMBProgressHUD.a;
+			remoteRef = C4CF54D51C100DDD00EC39CC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C4CF54D81C100DDD00EC39CC /* libMPColorTools.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMPColorTools.a;
+			remoteRef = C4CF54D71C100DDD00EC39CC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C4CF54DA1C100DDD00EC39CC /* libNVHTarGzip.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libNVHTarGzip.a;
+			remoteRef = C4CF54D91C100DDD00EC39CC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C4CF54DC1C100DDD00EC39CC /* libPods-TMLKit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libPods-TMLKit.a";
+			remoteRef = C4CF54DB1C100DDD00EC39CC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C4CF54DE1C100DDD00EC39CC /* libPods-TMLKitTests.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libPods-TMLKitTests.a";
+			remoteRef = C4CF54DD1C100DDD00EC39CC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C4CF54E01C100DDD00EC39CC /* libSSZipArchive.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSSZipArchive.a;
+			remoteRef = C4CF54DF1C100DDD00EC39CC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C4FCD2561C0FC7A200D723BC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4FCD39F1C10012500D723BC /* en.json in Resources */,
+				C4FCD3161C0FC7F200D723BC /* .gitkeep in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C4FCD2601C0FC7A200D723BC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4FCD3781C0FCDD900D723BC /* cs_en-US_plural.json in Resources */,
+				C4FCD37A1C0FCDD900D723BC /* ctx_en-US_number.json in Resources */,
+				C4FCD3791C0FCDD900D723BC /* ctx_en-US_gender.json in Resources */,
+				C4FCD3771C0FCDD900D723BC /* app.json in Resources */,
+				C4FCD3801C0FCDD900D723BC /* ru.json in Resources */,
+				C4FCD37B1C0FCDD900D723BC /* en-US.json in Resources */,
+				C4FCD37E1C0FCDD900D723BC /* ctx_ru_gender.json in Resources */,
+				C4FCD37C1C0FCDD900D723BC /* es.json in Resources */,
+				C4FCD37D1C0FCDD900D723BC /* cs_ru_gen.json in Resources */,
+				C4FCD37F1C0FCDD900D723BC /* ctx_ru_number.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0BFCEE17B52EF5CA125FB045 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TMLKit/Pods-TMLKit-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		120A9611E39814438BE4A5F9 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		2C0454231AA105BF308F1AE3 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TMLKitTests/Pods-TMLKitTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B83F3BC5ED7231378FED575E /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TMLKitTests/Pods-TMLKitTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BE5C101823C9B54256E587D1 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C4FCD2531C0FC7A200D723BC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4FCD3111C0FC7F200D723BC /* UITextField+TML.m in Sources */,
+				C4FCD3201C0FC7F200D723BC /* TMLLanguageContextRule.m in Sources */,
+				C4FCD33F1C0FC7F200D723BC /* TMLTranslation.m in Sources */,
+				C4FCD2E11C0FC7F200D723BC /* TMLAPIClient.m in Sources */,
+				C4FCD3311C0FC7F200D723BC /* TMLDataTokenizer.m in Sources */,
+				C4FCD3131C0FC7F200D723BC /* UITextView+TML.m in Sources */,
+				C4FCD2FD1C0FC7F200D723BC /* NSObject+TML.m in Sources */,
+				C4FCD31C1C0FC7F200D723BC /* TMLLanguageCaseRule.m in Sources */,
+				C4FCD3391C0FC7F200D723BC /* TMLDataToken.m in Sources */,
+				C4FCD31E1C0FC7F200D723BC /* TMLLanguageContext.m in Sources */,
+				C4FCD33B1C0FC7F200D723BC /* TMLMethodToken.m in Sources */,
+				C4FCD30B1C0FC7F200D723BC /* UISearchBar+TML.m in Sources */,
+				C4FCD2E31C0FC7F200D723BC /* TMLAPIResponse.m in Sources */,
+				C4FCD2F71C0FC7F200D723BC /* TMLLanguageSelectorViewController.m in Sources */,
+				C4FCD31A1C0FC7F200D723BC /* TMLLanguageCase.m in Sources */,
+				C4FCD3241C0FC7F200D723BC /* TMLRulesParser.m in Sources */,
+				C4FCD3011C0FC7F200D723BC /* NSString+TmlAdditions.m in Sources */,
+				C4FCD2F91C0FC7F200D723BC /* TMLTranslatorViewController.m in Sources */,
+				C4FCD2F11C0FC7F200D723BC /* TMLAPIBundle.m in Sources */,
+				C4FCD32A1C0FC7F200D723BC /* TMLGlobals.m in Sources */,
+				C4FCD32F1C0FC7F200D723BC /* TMLAttributedDecorationTokenizer.m in Sources */,
+				C4FCD3371C0FC7F200D723BC /* TMLTokenizer.m in Sources */,
+				C4FCD3351C0FC7F200D723BC /* TMLHtmlDecorationTokenizer.m in Sources */,
+				C4FCD3331C0FC7F200D723BC /* TMLDecorationTokenizer.m in Sources */,
+				C4FCD2FF1C0FC7F200D723BC /* NSObject+TMLJSON.m in Sources */,
+				C4FCD3051C0FC7F200D723BC /* UIButton+TML.m in Sources */,
+				C4FCD3181C0FC7F200D723BC /* TMLLanguage.m in Sources */,
+				C4FCD3151C0FC7F200D723BC /* UIViewController+TML.m in Sources */,
+				C4FCD2F51C0FC7F200D723BC /* TMLBundleManager.m in Sources */,
+				C4FCD3411C0FC7F200D723BC /* TMLTranslationKey.m in Sources */,
+				C4FCD3221C0FC7F200D723BC /* TMLRulesEvaluator.m in Sources */,
+				C4FCD3031C0FC7F200D723BC /* UIBarButtonItem+TML.m in Sources */,
+				C4FCD2E51C0FC7F200D723BC /* TMLAPISerializer.m in Sources */,
+				C4FCD30F1C0FC7F200D723BC /* UITabBarItem+TML.m in Sources */,
+				C4FCD3281C0FC7F200D723BC /* TML.m in Sources */,
+				C4FCD2F31C0FC7F200D723BC /* TMLBundle.m in Sources */,
+				C4FCD3071C0FC7F200D723BC /* UILabel+TML.m in Sources */,
+				C4FCD2EF1C0FC7F200D723BC /* TMLSource.m in Sources */,
+				C4FCD2FB1C0FC7F200D723BC /* TMLViewController.m in Sources */,
+				C4FCD2E71C0FC7F200D723BC /* TMLJSONValueTransformer.m in Sources */,
+				C4FCD30D1C0FC7F200D723BC /* UISegmentedControl+TML.m in Sources */,
+				C4FCD3091C0FC7F200D723BC /* UINavigationItem+TML.m in Sources */,
+				C4FCD2EB1C0FC7F200D723BC /* TMLConfiguration.m in Sources */,
+				C4FCD2E91C0FC7F200D723BC /* TMLApplication.m in Sources */,
+				C4FCD33D1C0FC7F200D723BC /* TMLPipedToken.m in Sources */,
+				C4FCD32D1C0FC7F200D723BC /* TMLModel.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C4FCD25E1C0FC7A200D723BC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C4FCD38E1C0FCDD900D723BC /* TMLHtmlDecorationTokenizerTest.m in Sources */,
+				C4FCD3821C0FCDD900D723BC /* TMLLanguageCaseTest.m in Sources */,
+				C4FCD3911C0FCDD900D723BC /* TMLTranslationKeyTest.m in Sources */,
+				C4FCD3891C0FCDD900D723BC /* TMLTest.m in Sources */,
+				C4FCD3731C0FCDD900D723BC /* TMLApplicationTest.m in Sources */,
+				C4FCD3811C0FCDD900D723BC /* TMLLanguageCaseRuleTest.m in Sources */,
+				C4FCD3841C0FCDD900D723BC /* TMLLanguageContextTest.m in Sources */,
+				C4FCD38F1C0FCDD900D723BC /* TMLDataTokenTest.m in Sources */,
+				C4FCD38A1C0FCDD900D723BC /* TMLTestBase.m in Sources */,
+				C4FCD3901C0FCDD900D723BC /* TMLPipedTokenTest.m in Sources */,
+				C4FCD3851C0FCDD900D723BC /* TMLTestUser.m in Sources */,
+				C4FCD3861C0FCDD900D723BC /* TMLRulesEvaluatorTest.m in Sources */,
+				C4FCD3871C0FCDD900D723BC /* TMLRulesParserTest.m in Sources */,
+				C4FCD3831C0FCDD900D723BC /* TMLLanguageContextRuleTest.m in Sources */,
+				C4FCD38D1C0FCDD900D723BC /* TMLDecorationTokenizerTest.m in Sources */,
+				C4FCD38C1C0FCDD900D723BC /* TMLAttributedDecorationTokenizerTest.m in Sources */,
+				C4FCD3881C0FCDD900D723BC /* TMLAPISerializationTest.m in Sources */,
+				C4FCD3741C0FCDD900D723BC /* TMLConfigurationTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C4FCD2651C0FC7A200D723BC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C4FCD2571C0FC7A200D723BC /* TMLKit */;
+			targetProxy = C4FCD2641C0FC7A200D723BC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		C4FCD26A1C0FC7A200D723BC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		C4FCD26B1C0FC7A200D723BC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		C4FCD26D1C0FC7A200D723BC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4A9CF50CDF0545E105174A56 /* Pods-TMLKit.debug.xcconfig */;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TMLKit/TMLKit-Prefix.pch";
+				INFOPLIST_FILE = TMLKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.translationexchange.TMLKit;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		C4FCD26E1C0FC7A200D723BC /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7DD4AA1189309754FD897BCC /* Pods-TMLKit.release.xcconfig */;
+			buildSettings = {
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TMLKit/TMLKit-Prefix.pch";
+				INFOPLIST_FILE = TMLKit/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.translationexchange.TMLKit;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		C4FCD2701C0FC7A200D723BC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BACE78FD18874EB6A192BC4E /* Pods-TMLKitTests.debug.xcconfig */;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TMLKit/TMLKit-Prefix.pch";
+				INFOPLIST_FILE = TMLKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.translationexchange.TMLKitTests;
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		C4FCD2711C0FC7A200D723BC /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 374CDB8BFEDC96F6AD475835 /* Pods-TMLKitTests.release.xcconfig */;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "TMLKit/TMLKit-Prefix.pch";
+				INFOPLIST_FILE = TMLKitTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.translationexchange.TMLKitTests;
+				PRODUCT_MODULE_NAME = "$(PRODUCT_NAME:c99extidentifier)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C4FCD2521C0FC7A200D723BC /* Build configuration list for PBXProject "TMLKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C4FCD26A1C0FC7A200D723BC /* Debug */,
+				C4FCD26B1C0FC7A200D723BC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C4FCD26C1C0FC7A200D723BC /* Build configuration list for PBXNativeTarget "TMLKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C4FCD26D1C0FC7A200D723BC /* Debug */,
+				C4FCD26E1C0FC7A200D723BC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C4FCD26F1C0FC7A200D723BC /* Build configuration list for PBXNativeTarget "TMLKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C4FCD2701C0FC7A200D723BC /* Debug */,
+				C4FCD2711C0FC7A200D723BC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C4FCD24F1C0FC7A200D723BC /* Project object */;
+}

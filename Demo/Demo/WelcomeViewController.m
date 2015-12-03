@@ -29,8 +29,6 @@
  */
 
 #import "WelcomeViewController.h"
-#import "TML.h"
-#import "UIViewController+TML.h"
 
 @interface WelcomeViewController ()
 

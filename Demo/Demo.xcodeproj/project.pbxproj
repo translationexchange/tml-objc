@@ -22,7 +22,6 @@
 		4C42340818B9B38700B76555 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C42340718B9B38700B76555 /* XCTest.framework */; };
 		4C42340918B9B38700B76555 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C4233E818B9B38700B76555 /* Foundation.framework */; };
 		4C42340A18B9B38700B76555 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C4233EC18B9B38700B76555 /* UIKit.framework */; };
-		4C42341218B9B38700B76555 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4C42341018B9B38700B76555 /* InfoPlist.strings */; };
 		4C7A863418BD1C0800C2375D /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4C7A863318BD1C0800C2375D /* Podfile */; };
 		4C7A870E18BD330000C2375D /* ApplicationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A870B18BD330000C2375D /* ApplicationViewController.m */; };
 		4C7A870F18BD330000C2375D /* ApplicationTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C7A870D18BD330000C2375D /* ApplicationTableViewController.m */; };
@@ -32,7 +31,6 @@
 		4CC2EAE418BA7AEB00F359F8 /* Icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC2EAE318BA7AEB00F359F8 /* Icon-60@2x.png */; };
 		4CC2EAE618BA7B0800F359F8 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CC2EAE518BA7B0800F359F8 /* Icon-Small@2x.png */; };
 		4CCA001E1922D12E00CE4D95 /* arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = 4CCA001D1922D12E00CE4D95 /* arrow_down.png */; };
-		4CCBA12218B9B5E900CFCB3A /* TmlTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4CCBA10518B9B5E900CFCB3A /* TmlTests-Info.plist */; };
 		4CCBA12F18B9B69A00CFCB3A /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA12618B9B69A00CFCB3A /* MenuViewController.m */; };
 		4CCBA13118B9B69A00CFCB3A /* TMLConsoleViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA12A18B9B69A00CFCB3A /* TMLConsoleViewController.m */; };
 		4CCBA13218B9B69A00CFCB3A /* TMLTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CCBA12C18B9B69A00CFCB3A /* TMLTableViewCell.m */; };
@@ -49,82 +47,10 @@
 		4CFA531519284666006E1B43 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4CFA531119284666006E1B43 /* README.md */; };
 		4CFA531619284666006E1B43 /* Tml.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 4CFA531219284666006E1B43 /* Tml.podspec */; };
 		7763CE239D6940AF971EA5E9 /* libPods-Demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2305CA3DC53F409AB1C35AE2 /* libPods-Demo.a */; };
-		C0F80C641BEA7E310048DF2D /* TMLApplicationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C3C1BEA7E310048DF2D /* TMLApplicationTest.m */; };
-		C0F80C651BEA7E310048DF2D /* TMLConfigurationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C3D1BEA7E310048DF2D /* TMLConfigurationTest.m */; };
-		C0F80C661BEA7E310048DF2D /* app.json in Resources */ = {isa = PBXBuildFile; fileRef = C0F80C3F1BEA7E310048DF2D /* app.json */; };
-		C0F80C671BEA7E310048DF2D /* cs_en-US_plural.json in Resources */ = {isa = PBXBuildFile; fileRef = C0F80C421BEA7E310048DF2D /* cs_en-US_plural.json */; };
-		C0F80C681BEA7E310048DF2D /* ctx_en-US_gender.json in Resources */ = {isa = PBXBuildFile; fileRef = C0F80C431BEA7E310048DF2D /* ctx_en-US_gender.json */; };
-		C0F80C691BEA7E310048DF2D /* ctx_en-US_number.json in Resources */ = {isa = PBXBuildFile; fileRef = C0F80C441BEA7E310048DF2D /* ctx_en-US_number.json */; };
-		C0F80C6A1BEA7E310048DF2D /* en-US.json in Resources */ = {isa = PBXBuildFile; fileRef = C0F80C451BEA7E310048DF2D /* en-US.json */; };
-		C0F80C6B1BEA7E310048DF2D /* es.json in Resources */ = {isa = PBXBuildFile; fileRef = C0F80C471BEA7E310048DF2D /* es.json */; };
-		C0F80C6C1BEA7E310048DF2D /* cs_ru_gen.json in Resources */ = {isa = PBXBuildFile; fileRef = C0F80C491BEA7E310048DF2D /* cs_ru_gen.json */; };
-		C0F80C6D1BEA7E310048DF2D /* ctx_ru_gender.json in Resources */ = {isa = PBXBuildFile; fileRef = C0F80C4A1BEA7E310048DF2D /* ctx_ru_gender.json */; };
-		C0F80C6E1BEA7E310048DF2D /* ctx_ru_number.json in Resources */ = {isa = PBXBuildFile; fileRef = C0F80C4B1BEA7E310048DF2D /* ctx_ru_number.json */; };
-		C0F80C6F1BEA7E310048DF2D /* ru.json in Resources */ = {isa = PBXBuildFile; fileRef = C0F80C4C1BEA7E310048DF2D /* ru.json */; };
-		C0F80C701BEA7E310048DF2D /* TMLLanguageCaseRuleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C4E1BEA7E310048DF2D /* TMLLanguageCaseRuleTest.m */; };
-		C0F80C711BEA7E310048DF2D /* TMLLanguageCaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C4F1BEA7E310048DF2D /* TMLLanguageCaseTest.m */; };
-		C0F80C721BEA7E310048DF2D /* TMLLanguageContextRuleTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C501BEA7E310048DF2D /* TMLLanguageContextRuleTest.m */; };
-		C0F80C731BEA7E310048DF2D /* TMLLanguageContextTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C511BEA7E310048DF2D /* TMLLanguageContextTest.m */; };
-		C0F80C741BEA7E310048DF2D /* TMLTestUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C541BEA7E310048DF2D /* TMLTestUser.m */; };
-		C0F80C751BEA7E310048DF2D /* TMLRulesEvaluatorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C561BEA7E310048DF2D /* TMLRulesEvaluatorTest.m */; };
-		C0F80C761BEA7E310048DF2D /* TMLRulesParserTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C571BEA7E310048DF2D /* TMLRulesParserTest.m */; };
-		C0F80C771BEA7E310048DF2D /* TMLTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C581BEA7E310048DF2D /* TMLTest.m */; };
-		C0F80C781BEA7E310048DF2D /* TMLTestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C5A1BEA7E310048DF2D /* TMLTestBase.m */; };
-		C0F80C791BEA7E310048DF2D /* TMLAttributedDecorationTokenizerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C5C1BEA7E310048DF2D /* TMLAttributedDecorationTokenizerTest.m */; };
-		C0F80C7A1BEA7E310048DF2D /* TMLDecorationTokenizerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C5D1BEA7E310048DF2D /* TMLDecorationTokenizerTest.m */; };
-		C0F80C7B1BEA7E310048DF2D /* TMLHtmlDecorationTokenizerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C5E1BEA7E310048DF2D /* TMLHtmlDecorationTokenizerTest.m */; };
-		C0F80C7C1BEA7E310048DF2D /* TMLDataTokenTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C601BEA7E310048DF2D /* TMLDataTokenTest.m */; };
-		C0F80C7D1BEA7E310048DF2D /* TMLPipedTokenTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C611BEA7E310048DF2D /* TMLPipedTokenTest.m */; };
-		C0F80C7E1BEA7E310048DF2D /* TMLTranslationKeyTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C631BEA7E310048DF2D /* TMLTranslationKeyTest.m */; };
-		C0F80CCC1BEA83DE0048DF2D /* TMLApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C831BEA83DE0048DF2D /* TMLApplication.m */; };
-		C0F80CD01BEA83DE0048DF2D /* TMLConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C871BEA83DE0048DF2D /* TMLConfiguration.m */; };
-		C0F80CD21BEA83DE0048DF2D /* TMLPostOffice.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C891BEA83DE0048DF2D /* TMLPostOffice.m */; };
-		C0F80CD41BEA83DE0048DF2D /* TMLSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C8B1BEA83DE0048DF2D /* TMLSource.m */; };
-		C0F80CD61BEA83DE0048DF2D /* TMLLanguageSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C8E1BEA83DE0048DF2D /* TMLLanguageSelectorViewController.m */; };
-		C0F80CD81BEA83DE0048DF2D /* TMLTranslatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C901BEA83DE0048DF2D /* TMLTranslatorViewController.m */; };
-		C0F80CDA1BEA83DE0048DF2D /* TMLViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C921BEA83DE0048DF2D /* TMLViewController.m */; };
-		C0F80CDC1BEA83DE0048DF2D /* NSObject+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C951BEA83DE0048DF2D /* NSObject+TML.m */; };
-		C0F80CDE1BEA83DE0048DF2D /* NSString+TmlAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C971BEA83DE0048DF2D /* NSString+TmlAdditions.m */; };
-		C0F80CE01BEA83DE0048DF2D /* UIButton+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C991BEA83DE0048DF2D /* UIButton+TML.m */; };
-		C0F80CE21BEA83DE0048DF2D /* UILabel+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C9B1BEA83DE0048DF2D /* UILabel+TML.m */; };
-		C0F80CE41BEA83DE0048DF2D /* UIViewController+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80C9D1BEA83DE0048DF2D /* UIViewController+TML.m */; };
-		C0F80CE81BEA83DE0048DF2D /* TMLLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CA21BEA83DE0048DF2D /* TMLLanguage.m */; };
-		C0F80CEA1BEA83DE0048DF2D /* TMLLanguageCase.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CA41BEA83DE0048DF2D /* TMLLanguageCase.m */; };
-		C0F80CEC1BEA83DE0048DF2D /* TMLLanguageCaseRule.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CA61BEA83DE0048DF2D /* TMLLanguageCaseRule.m */; };
-		C0F80CEE1BEA83DE0048DF2D /* TMLLanguageContext.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CA81BEA83DE0048DF2D /* TMLLanguageContext.m */; };
-		C0F80CF01BEA83DE0048DF2D /* TMLLanguageContextRule.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CAA1BEA83DE0048DF2D /* TMLLanguageContextRule.m */; };
-		C0F80CF21BEA83DE0048DF2D /* TMLRulesEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CAD1BEA83DE0048DF2D /* TMLRulesEvaluator.m */; };
-		C0F80CF41BEA83DE0048DF2D /* TMLRulesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CAF1BEA83DE0048DF2D /* TMLRulesParser.m */; };
-		C0F80CF61BEA83DE0048DF2D /* TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CB11BEA83DE0048DF2D /* TML.m */; };
-		C0F80CF81BEA83DE0048DF2D /* TMLModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CB31BEA83DE0048DF2D /* TMLModel.m */; };
-		C0F80CFA1BEA83DE0048DF2D /* TMLAttributedDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CB71BEA83DE0048DF2D /* TMLAttributedDecorationTokenizer.m */; };
-		C0F80CFC1BEA83DE0048DF2D /* TMLDataTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CB91BEA83DE0048DF2D /* TMLDataTokenizer.m */; };
-		C0F80CFE1BEA83DE0048DF2D /* TMLDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CBB1BEA83DE0048DF2D /* TMLDecorationTokenizer.m */; };
-		C0F80D001BEA83DE0048DF2D /* TMLHtmlDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CBD1BEA83DE0048DF2D /* TMLHtmlDecorationTokenizer.m */; };
-		C0F80D021BEA83DE0048DF2D /* TMLDataToken.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CC01BEA83DE0048DF2D /* TMLDataToken.m */; };
-		C0F80D041BEA83DE0048DF2D /* TMLMethodToken.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CC21BEA83DE0048DF2D /* TMLMethodToken.m */; };
-		C0F80D061BEA83DE0048DF2D /* TMLPipedToken.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CC41BEA83DE0048DF2D /* TMLPipedToken.m */; };
-		C0F80D081BEA83DE0048DF2D /* TMLTranslation.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CC71BEA83DE0048DF2D /* TMLTranslation.m */; };
-		C0F80D0A1BEA83DE0048DF2D /* TMLTranslationKey.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80CC91BEA83DE0048DF2D /* TMLTranslationKey.m */; };
-		C0F80D0E1BEA860F0048DF2D /* UIBarButtonItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D0D1BEA860F0048DF2D /* UIBarButtonItem+TML.m */; };
-		C0F80D121BEA86260048DF2D /* UINavigationItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D111BEA86260048DF2D /* UINavigationItem+TML.m */; };
-		C0F80D161BEA86370048DF2D /* UISearchBar+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D151BEA86370048DF2D /* UISearchBar+TML.m */; };
-		C0F80D1A1BEA86480048DF2D /* UISegmentedControl+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D191BEA86480048DF2D /* UISegmentedControl+TML.m */; };
-		C0F80D1E1BEA865F0048DF2D /* UITabBarItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D1D1BEA865F0048DF2D /* UITabBarItem+TML.m */; };
-		C0F80D221BEA866D0048DF2D /* UITextField+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D211BEA866D0048DF2D /* UITextField+TML.m */; };
-		C0F80D261BEA86800048DF2D /* UITextView+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C0F80D251BEA86800048DF2D /* UITextView+TML.m */; };
-		C41647AB1BEE97D2004B3FB3 /* TMLGlobals.m in Sources */ = {isa = PBXBuildFile; fileRef = C41647AA1BEE97D2004B3FB3 /* TMLGlobals.m */; };
-		C42C56311BF2695700207911 /* NSObject+TMLJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = C42C56301BF2695700207911 /* NSObject+TMLJSON.m */; };
-		C436C34B1C09360F009B736B /* en.json in Resources */ = {isa = PBXBuildFile; fileRef = C436C34A1C09360F009B736B /* en.json */; };
-		C436C3531C0943F1009B736B /* TMLAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C436C34E1C0943F1009B736B /* TMLAPIClient.m */; };
-		C436C3541C0943F1009B736B /* TMLAPIResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C436C3501C0943F1009B736B /* TMLAPIResponse.m */; };
-		C436C3551C0943F1009B736B /* TMLAPISerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = C436C3521C0943F1009B736B /* TMLAPISerializer.m */; };
-		C436C35E1C0943FF009B736B /* TMLBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = C436C35A1C0943FF009B736B /* TMLBundle.m */; };
-		C436C35F1C0943FF009B736B /* TMLBundleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C436C35C1C0943FF009B736B /* TMLBundleManager.m */; };
-		C436C3621C0945A8009B736B /* TMLAPIBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = C436C3611C0945A8009B736B /* TMLAPIBundle.m */; };
-		C436C3651C09461F009B736B /* TMLJSONValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = C436C3641C09461F009B736B /* TMLJSONValueTransformer.m */; };
-		C44281921BF5659200E68194 /* TMLAPISerializationTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C44281911BF5659200E68194 /* TMLAPISerializationTest.m */; };
-		C4FCD12D1C0C1E2F00D723BC /* TMLTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD12C1C0C1E2F00D723BC /* TMLTokenizer.m */; };
+		C4CF54E31C10171500EC39CC /* TMLKit.framework in Copy Bundle Frameworks */ = {isa = PBXBuildFile; fileRef = C4BC81121C100BD500B995ED /* TMLKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C4CF54E41C10D1B500EC39CC /* TMLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4BC81121C100BD500B995ED /* TMLKit.framework */; };
+		C4FCD3A51C10075C00D723BC /* TMLKit.xcworkspace in Resources */ = {isa = PBXBuildFile; fileRef = C4FCD3A41C10075C00D723BC /* TMLKit.xcworkspace */; };
+		C4FCD3AB1C1007FE00D723BC /* DemoTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4FCD3AA1C1007FE00D723BC /* DemoTests-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,7 +61,35 @@
 			remoteGlobalIDString = 4C4233E418B9B38700B76555;
 			remoteInfo = Demo;
 		};
+		C4BC81111C100BD500B995ED /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C4BC810C1C100BD500B995ED /* TMLKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C4FCD2581C0FC7A200D723BC;
+			remoteInfo = TMLKit;
+		};
+		C4BC81131C100BD500B995ED /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C4BC810C1C100BD500B995ED /* TMLKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C4FCD2621C0FC7A200D723BC;
+			remoteInfo = TMLKitTests;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C4CF54E21C10170200EC39CC /* Copy Bundle Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C4CF54E31C10171500EC39CC /* TMLKit.framework in Copy Bundle Frameworks */,
+			);
+			name = "Copy Bundle Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		2305CA3DC53F409AB1C35AE2 /* libPods-Demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Demo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -159,8 +113,6 @@
 		4C42340018B9B38700B76555 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4C42340618B9B38700B76555 /* DemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4C42340718B9B38700B76555 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		4C42340F18B9B38700B76555 /* DemoTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DemoTests-Info.plist"; sourceTree = "<group>"; };
-		4C42341118B9B38700B76555 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		4C7A863318BD1C0800C2375D /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		4C7A870A18BD330000C2375D /* ApplicationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationViewController.h; sourceTree = "<group>"; };
 		4C7A870B18BD330000C2375D /* ApplicationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationViewController.m; sourceTree = "<group>"; };
@@ -172,7 +124,6 @@
 		4CC2EAE318BA7AEB00F359F8 /* Icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@2x.png"; sourceTree = "<group>"; };
 		4CC2EAE518BA7B0800F359F8 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
 		4CCA001D1922D12E00CE4D95 /* arrow_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_down.png; sourceTree = "<group>"; };
-		4CCBA10518B9B5E900CFCB3A /* TmlTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TmlTests-Info.plist"; sourceTree = "<group>"; };
 		4CCBA12518B9B69A00CFCB3A /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
 		4CCBA12618B9B69A00CFCB3A /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
 		4CCBA12918B9B69A00CFCB3A /* TMLConsoleViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLConsoleViewController.h; sourceTree = "<group>"; };
@@ -203,135 +154,10 @@
 		84922E9709A1E82DE15D4D88 /* Pods-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		A6A3AC3DD938835FB92F9194 /* Pods-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		BD38CEACE6D239B51CE90063 /* Pods-DemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DemoTests/Pods-DemoTests.debug.xcconfig"; sourceTree = "<group>"; };
-		C0F80C3C1BEA7E310048DF2D /* TMLApplicationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLApplicationTest.m; sourceTree = "<group>"; };
-		C0F80C3D1BEA7E310048DF2D /* TMLConfigurationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLConfigurationTest.m; sourceTree = "<group>"; };
-		C0F80C3F1BEA7E310048DF2D /* app.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = app.json; sourceTree = "<group>"; };
-		C0F80C421BEA7E310048DF2D /* cs_en-US_plural.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "cs_en-US_plural.json"; sourceTree = "<group>"; };
-		C0F80C431BEA7E310048DF2D /* ctx_en-US_gender.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "ctx_en-US_gender.json"; sourceTree = "<group>"; };
-		C0F80C441BEA7E310048DF2D /* ctx_en-US_number.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "ctx_en-US_number.json"; sourceTree = "<group>"; };
-		C0F80C451BEA7E310048DF2D /* en-US.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "en-US.json"; sourceTree = "<group>"; };
-		C0F80C471BEA7E310048DF2D /* es.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = es.json; sourceTree = "<group>"; };
-		C0F80C491BEA7E310048DF2D /* cs_ru_gen.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cs_ru_gen.json; sourceTree = "<group>"; };
-		C0F80C4A1BEA7E310048DF2D /* ctx_ru_gender.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ctx_ru_gender.json; sourceTree = "<group>"; };
-		C0F80C4B1BEA7E310048DF2D /* ctx_ru_number.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ctx_ru_number.json; sourceTree = "<group>"; };
-		C0F80C4C1BEA7E310048DF2D /* ru.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ru.json; sourceTree = "<group>"; };
-		C0F80C4E1BEA7E310048DF2D /* TMLLanguageCaseRuleTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguageCaseRuleTest.m; sourceTree = "<group>"; };
-		C0F80C4F1BEA7E310048DF2D /* TMLLanguageCaseTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguageCaseTest.m; sourceTree = "<group>"; };
-		C0F80C501BEA7E310048DF2D /* TMLLanguageContextRuleTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguageContextRuleTest.m; sourceTree = "<group>"; };
-		C0F80C511BEA7E310048DF2D /* TMLLanguageContextTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguageContextTest.m; sourceTree = "<group>"; };
-		C0F80C531BEA7E310048DF2D /* TMLTestUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLTestUser.h; sourceTree = "<group>"; };
-		C0F80C541BEA7E310048DF2D /* TMLTestUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTestUser.m; sourceTree = "<group>"; };
-		C0F80C561BEA7E310048DF2D /* TMLRulesEvaluatorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLRulesEvaluatorTest.m; sourceTree = "<group>"; };
-		C0F80C571BEA7E310048DF2D /* TMLRulesParserTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLRulesParserTest.m; sourceTree = "<group>"; };
-		C0F80C581BEA7E310048DF2D /* TMLTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTest.m; sourceTree = "<group>"; };
-		C0F80C591BEA7E310048DF2D /* TMLTestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLTestBase.h; sourceTree = "<group>"; };
-		C0F80C5A1BEA7E310048DF2D /* TMLTestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTestBase.m; sourceTree = "<group>"; };
-		C0F80C5C1BEA7E310048DF2D /* TMLAttributedDecorationTokenizerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAttributedDecorationTokenizerTest.m; sourceTree = "<group>"; };
-		C0F80C5D1BEA7E310048DF2D /* TMLDecorationTokenizerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLDecorationTokenizerTest.m; sourceTree = "<group>"; };
-		C0F80C5E1BEA7E310048DF2D /* TMLHtmlDecorationTokenizerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLHtmlDecorationTokenizerTest.m; sourceTree = "<group>"; };
-		C0F80C601BEA7E310048DF2D /* TMLDataTokenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLDataTokenTest.m; sourceTree = "<group>"; };
-		C0F80C611BEA7E310048DF2D /* TMLPipedTokenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLPipedTokenTest.m; sourceTree = "<group>"; };
-		C0F80C631BEA7E310048DF2D /* TMLTranslationKeyTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTranslationKeyTest.m; sourceTree = "<group>"; };
-		C0F80C821BEA83DE0048DF2D /* TMLApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLApplication.h; sourceTree = "<group>"; };
-		C0F80C831BEA83DE0048DF2D /* TMLApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLApplication.m; sourceTree = "<group>"; };
-		C0F80C861BEA83DE0048DF2D /* TMLConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLConfiguration.h; sourceTree = "<group>"; };
-		C0F80C871BEA83DE0048DF2D /* TMLConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLConfiguration.m; sourceTree = "<group>"; };
-		C0F80C881BEA83DE0048DF2D /* TMLPostOffice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLPostOffice.h; sourceTree = "<group>"; };
-		C0F80C891BEA83DE0048DF2D /* TMLPostOffice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLPostOffice.m; sourceTree = "<group>"; };
-		C0F80C8A1BEA83DE0048DF2D /* TMLSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLSource.h; sourceTree = "<group>"; };
-		C0F80C8B1BEA83DE0048DF2D /* TMLSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLSource.m; sourceTree = "<group>"; };
-		C0F80C8D1BEA83DE0048DF2D /* TMLLanguageSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLLanguageSelectorViewController.h; sourceTree = "<group>"; };
-		C0F80C8E1BEA83DE0048DF2D /* TMLLanguageSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguageSelectorViewController.m; sourceTree = "<group>"; };
-		C0F80C8F1BEA83DE0048DF2D /* TMLTranslatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLTranslatorViewController.h; sourceTree = "<group>"; };
-		C0F80C901BEA83DE0048DF2D /* TMLTranslatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTranslatorViewController.m; sourceTree = "<group>"; };
-		C0F80C911BEA83DE0048DF2D /* TMLViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLViewController.h; sourceTree = "<group>"; };
-		C0F80C921BEA83DE0048DF2D /* TMLViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLViewController.m; sourceTree = "<group>"; };
-		C0F80C941BEA83DE0048DF2D /* NSObject+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TML.h"; sourceTree = "<group>"; };
-		C0F80C951BEA83DE0048DF2D /* NSObject+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TML.m"; sourceTree = "<group>"; };
-		C0F80C961BEA83DE0048DF2D /* NSString+TmlAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+TmlAdditions.h"; sourceTree = "<group>"; };
-		C0F80C971BEA83DE0048DF2D /* NSString+TmlAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+TmlAdditions.m"; sourceTree = "<group>"; };
-		C0F80C981BEA83DE0048DF2D /* UIButton+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+TML.h"; sourceTree = "<group>"; };
-		C0F80C991BEA83DE0048DF2D /* UIButton+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+TML.m"; sourceTree = "<group>"; };
-		C0F80C9A1BEA83DE0048DF2D /* UILabel+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+TML.h"; sourceTree = "<group>"; };
-		C0F80C9B1BEA83DE0048DF2D /* UILabel+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+TML.m"; sourceTree = "<group>"; };
-		C0F80C9C1BEA83DE0048DF2D /* UIViewController+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+TML.h"; sourceTree = "<group>"; };
-		C0F80C9D1BEA83DE0048DF2D /* UIViewController+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+TML.m"; sourceTree = "<group>"; };
-		C0F80CA11BEA83DE0048DF2D /* TMLLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLLanguage.h; sourceTree = "<group>"; };
-		C0F80CA21BEA83DE0048DF2D /* TMLLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguage.m; sourceTree = "<group>"; };
-		C0F80CA31BEA83DE0048DF2D /* TMLLanguageCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLLanguageCase.h; sourceTree = "<group>"; };
-		C0F80CA41BEA83DE0048DF2D /* TMLLanguageCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguageCase.m; sourceTree = "<group>"; };
-		C0F80CA51BEA83DE0048DF2D /* TMLLanguageCaseRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLLanguageCaseRule.h; sourceTree = "<group>"; };
-		C0F80CA61BEA83DE0048DF2D /* TMLLanguageCaseRule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguageCaseRule.m; sourceTree = "<group>"; };
-		C0F80CA71BEA83DE0048DF2D /* TMLLanguageContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLLanguageContext.h; sourceTree = "<group>"; };
-		C0F80CA81BEA83DE0048DF2D /* TMLLanguageContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguageContext.m; sourceTree = "<group>"; };
-		C0F80CA91BEA83DE0048DF2D /* TMLLanguageContextRule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLLanguageContextRule.h; sourceTree = "<group>"; };
-		C0F80CAA1BEA83DE0048DF2D /* TMLLanguageContextRule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguageContextRule.m; sourceTree = "<group>"; };
-		C0F80CAC1BEA83DE0048DF2D /* TMLRulesEvaluator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLRulesEvaluator.h; sourceTree = "<group>"; };
-		C0F80CAD1BEA83DE0048DF2D /* TMLRulesEvaluator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLRulesEvaluator.m; sourceTree = "<group>"; };
-		C0F80CAE1BEA83DE0048DF2D /* TMLRulesParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLRulesParser.h; sourceTree = "<group>"; };
-		C0F80CAF1BEA83DE0048DF2D /* TMLRulesParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLRulesParser.m; sourceTree = "<group>"; };
-		C0F80CB01BEA83DE0048DF2D /* TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TML.h; sourceTree = "<group>"; };
-		C0F80CB11BEA83DE0048DF2D /* TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TML.m; sourceTree = "<group>"; };
-		C0F80CB21BEA83DE0048DF2D /* TMLModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLModel.h; sourceTree = "<group>"; };
-		C0F80CB31BEA83DE0048DF2D /* TMLModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLModel.m; sourceTree = "<group>"; };
-		C0F80CB41BEA83DE0048DF2D /* TMLLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLLogger.h; sourceTree = "<group>"; };
-		C0F80CB61BEA83DE0048DF2D /* TMLAttributedDecorationTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAttributedDecorationTokenizer.h; sourceTree = "<group>"; };
-		C0F80CB71BEA83DE0048DF2D /* TMLAttributedDecorationTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAttributedDecorationTokenizer.m; sourceTree = "<group>"; };
-		C0F80CB81BEA83DE0048DF2D /* TMLDataTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLDataTokenizer.h; sourceTree = "<group>"; };
-		C0F80CB91BEA83DE0048DF2D /* TMLDataTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLDataTokenizer.m; sourceTree = "<group>"; };
-		C0F80CBA1BEA83DE0048DF2D /* TMLDecorationTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLDecorationTokenizer.h; sourceTree = "<group>"; };
-		C0F80CBB1BEA83DE0048DF2D /* TMLDecorationTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLDecorationTokenizer.m; sourceTree = "<group>"; };
-		C0F80CBC1BEA83DE0048DF2D /* TMLHtmlDecorationTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLHtmlDecorationTokenizer.h; sourceTree = "<group>"; };
-		C0F80CBD1BEA83DE0048DF2D /* TMLHtmlDecorationTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLHtmlDecorationTokenizer.m; sourceTree = "<group>"; };
-		C0F80CBF1BEA83DE0048DF2D /* TMLDataToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLDataToken.h; sourceTree = "<group>"; };
-		C0F80CC01BEA83DE0048DF2D /* TMLDataToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLDataToken.m; sourceTree = "<group>"; };
-		C0F80CC11BEA83DE0048DF2D /* TMLMethodToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLMethodToken.h; sourceTree = "<group>"; };
-		C0F80CC21BEA83DE0048DF2D /* TMLMethodToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLMethodToken.m; sourceTree = "<group>"; };
-		C0F80CC31BEA83DE0048DF2D /* TMLPipedToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLPipedToken.h; sourceTree = "<group>"; };
-		C0F80CC41BEA83DE0048DF2D /* TMLPipedToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLPipedToken.m; sourceTree = "<group>"; };
-		C0F80CC61BEA83DE0048DF2D /* TMLTranslation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLTranslation.h; sourceTree = "<group>"; };
-		C0F80CC71BEA83DE0048DF2D /* TMLTranslation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTranslation.m; sourceTree = "<group>"; };
-		C0F80CC81BEA83DE0048DF2D /* TMLTranslationKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLTranslationKey.h; sourceTree = "<group>"; };
-		C0F80CC91BEA83DE0048DF2D /* TMLTranslationKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTranslationKey.m; sourceTree = "<group>"; };
-		C0F80D0C1BEA860F0048DF2D /* UIBarButtonItem+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+TML.h"; sourceTree = "<group>"; };
-		C0F80D0D1BEA860F0048DF2D /* UIBarButtonItem+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+TML.m"; sourceTree = "<group>"; };
-		C0F80D101BEA86260048DF2D /* UINavigationItem+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UINavigationItem+TML.h"; sourceTree = "<group>"; };
-		C0F80D111BEA86260048DF2D /* UINavigationItem+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UINavigationItem+TML.m"; sourceTree = "<group>"; };
-		C0F80D141BEA86370048DF2D /* UISearchBar+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UISearchBar+TML.h"; sourceTree = "<group>"; };
-		C0F80D151BEA86370048DF2D /* UISearchBar+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UISearchBar+TML.m"; sourceTree = "<group>"; };
-		C0F80D181BEA86480048DF2D /* UISegmentedControl+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UISegmentedControl+TML.h"; sourceTree = "<group>"; };
-		C0F80D191BEA86480048DF2D /* UISegmentedControl+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UISegmentedControl+TML.m"; sourceTree = "<group>"; };
-		C0F80D1C1BEA865F0048DF2D /* UITabBarItem+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITabBarItem+TML.h"; sourceTree = "<group>"; };
-		C0F80D1D1BEA865F0048DF2D /* UITabBarItem+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITabBarItem+TML.m"; sourceTree = "<group>"; };
-		C0F80D201BEA866D0048DF2D /* UITextField+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextField+TML.h"; sourceTree = "<group>"; };
-		C0F80D211BEA866D0048DF2D /* UITextField+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextField+TML.m"; sourceTree = "<group>"; };
-		C0F80D241BEA86800048DF2D /* UITextView+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+TML.h"; sourceTree = "<group>"; };
-		C0F80D251BEA86800048DF2D /* UITextView+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+TML.m"; sourceTree = "<group>"; };
-		C41647A91BEE97D2004B3FB3 /* TMLGlobals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLGlobals.h; sourceTree = "<group>"; };
-		C41647AA1BEE97D2004B3FB3 /* TMLGlobals.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLGlobals.m; sourceTree = "<group>"; };
-		C426179B1C0BF3AD005EE2FA /* TML+NSLocalizedString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TML+NSLocalizedString.h"; sourceTree = "<group>"; };
-		C42C562F1BF2695700207911 /* NSObject+TMLJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+TMLJSON.h"; sourceTree = "<group>"; };
-		C42C56301BF2695700207911 /* NSObject+TMLJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TMLJSON.m"; sourceTree = "<group>"; };
 		C42C56331BF31A6600207911 /* TMLPrivateConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLPrivateConfig.h; sourceTree = "<group>"; };
-		C436C34A1C09360F009B736B /* en.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = en.json; sourceTree = "<group>"; };
-		C436C34D1C0943F1009B736B /* TMLAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAPIClient.h; sourceTree = "<group>"; };
-		C436C34E1C0943F1009B736B /* TMLAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPIClient.m; sourceTree = "<group>"; };
-		C436C34F1C0943F1009B736B /* TMLAPIResponse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAPIResponse.h; sourceTree = "<group>"; };
-		C436C3501C0943F1009B736B /* TMLAPIResponse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPIResponse.m; sourceTree = "<group>"; };
-		C436C3511C0943F1009B736B /* TMLAPISerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAPISerializer.h; sourceTree = "<group>"; };
-		C436C3521C0943F1009B736B /* TMLAPISerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPISerializer.m; sourceTree = "<group>"; };
-		C436C3591C0943FF009B736B /* TMLBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLBundle.h; sourceTree = "<group>"; };
-		C436C35A1C0943FF009B736B /* TMLBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLBundle.m; sourceTree = "<group>"; };
-		C436C35B1C0943FF009B736B /* TMLBundleManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLBundleManager.h; sourceTree = "<group>"; };
-		C436C35C1C0943FF009B736B /* TMLBundleManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLBundleManager.m; sourceTree = "<group>"; };
-		C436C3601C0945A8009B736B /* TMLAPIBundle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAPIBundle.h; sourceTree = "<group>"; };
-		C436C3611C0945A8009B736B /* TMLAPIBundle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPIBundle.m; sourceTree = "<group>"; };
-		C436C3631C09461F009B736B /* TMLJSONValueTransformer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLJSONValueTransformer.h; sourceTree = "<group>"; };
-		C436C3641C09461F009B736B /* TMLJSONValueTransformer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLJSONValueTransformer.m; sourceTree = "<group>"; };
-		C44281911BF5659200E68194 /* TMLAPISerializationTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPISerializationTest.m; sourceTree = "<group>"; };
-		C4FCD12B1C0C1E2F00D723BC /* TMLTokenizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLTokenizer.h; sourceTree = "<group>"; };
-		C4FCD12C1C0C1E2F00D723BC /* TMLTokenizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTokenizer.m; sourceTree = "<group>"; };
-		C4FCD12E1C0CEB5900D723BC /* TML+TMLLocalizedString.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TML+TMLLocalizedString.h"; sourceTree = "<group>"; };
+		C4BC810C1C100BD500B995ED /* TMLKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TMLKit.xcodeproj; path = ../TMLKit/TMLKit.xcodeproj; sourceTree = "<group>"; };
+		C4FCD3A41C10075C00D723BC /* TMLKit.xcworkspace */ = {isa = PBXFileReference; lastKnownFileType = wrapper.workspace; name = TMLKit.xcworkspace; path = "/Users/pasha/Source/TranslationExchange/tml-objc/TMLKit/TMLKit.xcworkspace"; sourceTree = "<absolute>"; };
+		C4FCD3AA1C1007FE00D723BC /* DemoTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DemoTests-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -339,6 +165,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4CF54E41C10D1B500EC39CC /* TMLKit.framework in Frameworks */,
 				4C81FD011A265B8F0014DC1D /* SystemConfiguration.framework in Frameworks */,
 				4C4233EB18B9B38700B76555 /* CoreGraphics.framework in Frameworks */,
 				4C4233ED18B9B38700B76555 /* UIKit.framework in Frameworks */,
@@ -375,10 +202,9 @@
 		4C4233DC18B9B38600B76555 = {
 			isa = PBXGroup;
 			children = (
-				4CCA00221924508300CE4D95 /* Assets */,
-				4C7A869018BD1F9500C2375D /* Classes */,
+				C4BC810C1C100BD500B995ED /* TMLKit.xcodeproj */,
 				4C4233EE18B9B38700B76555 /* Demo */,
-				4C42340D18B9B38700B76555 /* DemoTests */,
+				C4FCD3A91C1007FE00D723BC /* DemoTests */,
 				4C4233E718B9B38700B76555 /* Frameworks */,
 				4C4233E618B9B38700B76555 /* Products */,
 				4CFA53171928466D006E1B43 /* Configuration */,
@@ -438,63 +264,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		4C42340D18B9B38700B76555 /* DemoTests */ = {
-			isa = PBXGroup;
-			children = (
-				4C42340E18B9B38700B76555 /* Supporting Files */,
-				C0F80C3B1BEA7E310048DF2D /* Application */,
-				C0F80C3E1BEA7E310048DF2D /* Fixtures */,
-				C0F80C4D1BEA7E310048DF2D /* Language */,
-				C0F80C521BEA7E310048DF2D /* Models */,
-				C0F80C551BEA7E310048DF2D /* Rules Engine */,
-				C0F80C5B1BEA7E310048DF2D /* Tokenizers */,
-				C0F80C5F1BEA7E310048DF2D /* Tokens */,
-				C0F80C621BEA7E310048DF2D /* Translations */,
-				4CCBA10518B9B5E900CFCB3A /* TmlTests-Info.plist */,
-				C0F80C581BEA7E310048DF2D /* TMLTest.m */,
-				C0F80C591BEA7E310048DF2D /* TMLTestBase.h */,
-				C0F80C5A1BEA7E310048DF2D /* TMLTestBase.m */,
-				C44281911BF5659200E68194 /* TMLAPISerializationTest.m */,
-			);
-			path = DemoTests;
-			sourceTree = "<group>";
-		};
-		4C42340E18B9B38700B76555 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				4C42340F18B9B38700B76555 /* DemoTests-Info.plist */,
-				4C42341018B9B38700B76555 /* InfoPlist.strings */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		4C7A869018BD1F9500C2375D /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				C436C34C1C0943F1009B736B /* API */,
-				C0F80C7F1BEA83DE0048DF2D /* Application */,
-				C436C3561C0943FF009B736B /* Bundle */,
-				C0F80C8C1BEA83DE0048DF2D /* Controllers */,
-				C0F80C931BEA83DE0048DF2D /* Extensions */,
-				C0F80CA01BEA83DE0048DF2D /* Language */,
-				C0F80CAB1BEA83DE0048DF2D /* Rules Engine */,
-				C0F80CB01BEA83DE0048DF2D /* TML.h */,
-				C0F80CB11BEA83DE0048DF2D /* TML.m */,
-				C426179B1C0BF3AD005EE2FA /* TML+NSLocalizedString.h */,
-				C4FCD12E1C0CEB5900D723BC /* TML+TMLLocalizedString.h */,
-				C41647A91BEE97D2004B3FB3 /* TMLGlobals.h */,
-				C41647AA1BEE97D2004B3FB3 /* TMLGlobals.m */,
-				C0F80CB41BEA83DE0048DF2D /* TMLLogger.h */,
-				C0F80CB21BEA83DE0048DF2D /* TMLModel.h */,
-				C0F80CB31BEA83DE0048DF2D /* TMLModel.m */,
-				C0F80CB51BEA83DE0048DF2D /* Tokenizers */,
-				C0F80CBE1BEA83DE0048DF2D /* Tokens */,
-				C0F80CC51BEA83DE0048DF2D /* Translations */,
-			);
-			name = Classes;
-			path = ../Classes;
-			sourceTree = "<group>";
-		};
 		4C7A871218BD354100C2375D /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -544,15 +313,6 @@
 			name = "Table Cells";
 			sourceTree = "<group>";
 		};
-		4CCA00221924508300CE4D95 /* Assets */ = {
-			isa = PBXGroup;
-			children = (
-				C436C34A1C09360F009B736B /* en.json */,
-			);
-			name = Assets;
-			path = ../Assets;
-			sourceTree = "<group>";
-		};
 		4CE06A1A18BD826F0088AB3E /* Base */ = {
 			isa = PBXGroup;
 			children = (
@@ -595,276 +355,21 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		C0F80C3B1BEA7E310048DF2D /* Application */ = {
+		C4BC810D1C100BD500B995ED /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C0F80C3C1BEA7E310048DF2D /* TMLApplicationTest.m */,
-				C0F80C3D1BEA7E310048DF2D /* TMLConfigurationTest.m */,
+				C4BC81121C100BD500B995ED /* TMLKit.framework */,
+				C4BC81141C100BD500B995ED /* TMLKitTests.xctest */,
 			);
-			path = Application;
+			name = Products;
 			sourceTree = "<group>";
 		};
-		C0F80C3E1BEA7E310048DF2D /* Fixtures */ = {
+		C4FCD3A91C1007FE00D723BC /* DemoTests */ = {
 			isa = PBXGroup;
 			children = (
-				C0F80C3F1BEA7E310048DF2D /* app.json */,
-				C0F80C401BEA7E310048DF2D /* languages */,
+				C4FCD3AA1C1007FE00D723BC /* DemoTests-Info.plist */,
 			);
-			path = Fixtures;
-			sourceTree = "<group>";
-		};
-		C0F80C401BEA7E310048DF2D /* languages */ = {
-			isa = PBXGroup;
-			children = (
-				C0F80C411BEA7E310048DF2D /* en-US */,
-				C0F80C461BEA7E310048DF2D /* es */,
-				C0F80C481BEA7E310048DF2D /* ru */,
-			);
-			path = languages;
-			sourceTree = "<group>";
-		};
-		C0F80C411BEA7E310048DF2D /* en-US */ = {
-			isa = PBXGroup;
-			children = (
-				C0F80C421BEA7E310048DF2D /* cs_en-US_plural.json */,
-				C0F80C431BEA7E310048DF2D /* ctx_en-US_gender.json */,
-				C0F80C441BEA7E310048DF2D /* ctx_en-US_number.json */,
-				C0F80C451BEA7E310048DF2D /* en-US.json */,
-			);
-			path = "en-US";
-			sourceTree = "<group>";
-		};
-		C0F80C461BEA7E310048DF2D /* es */ = {
-			isa = PBXGroup;
-			children = (
-				C0F80C471BEA7E310048DF2D /* es.json */,
-			);
-			path = es;
-			sourceTree = "<group>";
-		};
-		C0F80C481BEA7E310048DF2D /* ru */ = {
-			isa = PBXGroup;
-			children = (
-				C0F80C491BEA7E310048DF2D /* cs_ru_gen.json */,
-				C0F80C4A1BEA7E310048DF2D /* ctx_ru_gender.json */,
-				C0F80C4B1BEA7E310048DF2D /* ctx_ru_number.json */,
-				C0F80C4C1BEA7E310048DF2D /* ru.json */,
-			);
-			path = ru;
-			sourceTree = "<group>";
-		};
-		C0F80C4D1BEA7E310048DF2D /* Language */ = {
-			isa = PBXGroup;
-			children = (
-				C0F80C4E1BEA7E310048DF2D /* TMLLanguageCaseRuleTest.m */,
-				C0F80C4F1BEA7E310048DF2D /* TMLLanguageCaseTest.m */,
-				C0F80C501BEA7E310048DF2D /* TMLLanguageContextRuleTest.m */,
-				C0F80C511BEA7E310048DF2D /* TMLLanguageContextTest.m */,
-			);
-			path = Language;
-			sourceTree = "<group>";
-		};
-		C0F80C521BEA7E310048DF2D /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				C0F80C531BEA7E310048DF2D /* TMLTestUser.h */,
-				C0F80C541BEA7E310048DF2D /* TMLTestUser.m */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
-		C0F80C551BEA7E310048DF2D /* Rules Engine */ = {
-			isa = PBXGroup;
-			children = (
-				C0F80C561BEA7E310048DF2D /* TMLRulesEvaluatorTest.m */,
-				C0F80C571BEA7E310048DF2D /* TMLRulesParserTest.m */,
-			);
-			path = "Rules Engine";
-			sourceTree = "<group>";
-		};
-		C0F80C5B1BEA7E310048DF2D /* Tokenizers */ = {
-			isa = PBXGroup;
-			children = (
-				C0F80C5C1BEA7E310048DF2D /* TMLAttributedDecorationTokenizerTest.m */,
-				C0F80C5D1BEA7E310048DF2D /* TMLDecorationTokenizerTest.m */,
-				C0F80C5E1BEA7E310048DF2D /* TMLHtmlDecorationTokenizerTest.m */,
-			);
-			path = Tokenizers;
-			sourceTree = "<group>";
-		};
-		C0F80C5F1BEA7E310048DF2D /* Tokens */ = {
-			isa = PBXGroup;
-			children = (
-				C0F80C601BEA7E310048DF2D /* TMLDataTokenTest.m */,
-				C0F80C611BEA7E310048DF2D /* TMLPipedTokenTest.m */,
-			);
-			path = Tokens;
-			sourceTree = "<group>";
-		};
-		C0F80C621BEA7E310048DF2D /* Translations */ = {
-			isa = PBXGroup;
-			children = (
-				C0F80C631BEA7E310048DF2D /* TMLTranslationKeyTest.m */,
-			);
-			path = Translations;
-			sourceTree = "<group>";
-		};
-		C0F80C7F1BEA83DE0048DF2D /* Application */ = {
-			isa = PBXGroup;
-			children = (
-				C0F80C821BEA83DE0048DF2D /* TMLApplication.h */,
-				C0F80C831BEA83DE0048DF2D /* TMLApplication.m */,
-				C0F80C861BEA83DE0048DF2D /* TMLConfiguration.h */,
-				C0F80C871BEA83DE0048DF2D /* TMLConfiguration.m */,
-				C0F80C881BEA83DE0048DF2D /* TMLPostOffice.h */,
-				C0F80C891BEA83DE0048DF2D /* TMLPostOffice.m */,
-				C0F80C8A1BEA83DE0048DF2D /* TMLSource.h */,
-				C0F80C8B1BEA83DE0048DF2D /* TMLSource.m */,
-			);
-			path = Application;
-			sourceTree = "<group>";
-		};
-		C0F80C8C1BEA83DE0048DF2D /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				C0F80C8D1BEA83DE0048DF2D /* TMLLanguageSelectorViewController.h */,
-				C0F80C8E1BEA83DE0048DF2D /* TMLLanguageSelectorViewController.m */,
-				C0F80C8F1BEA83DE0048DF2D /* TMLTranslatorViewController.h */,
-				C0F80C901BEA83DE0048DF2D /* TMLTranslatorViewController.m */,
-				C0F80C911BEA83DE0048DF2D /* TMLViewController.h */,
-				C0F80C921BEA83DE0048DF2D /* TMLViewController.m */,
-			);
-			path = Controllers;
-			sourceTree = "<group>";
-		};
-		C0F80C931BEA83DE0048DF2D /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				C0F80C961BEA83DE0048DF2D /* NSString+TmlAdditions.h */,
-				C0F80C971BEA83DE0048DF2D /* NSString+TmlAdditions.m */,
-				C0F80C9C1BEA83DE0048DF2D /* UIViewController+TML.h */,
-				C0F80C9D1BEA83DE0048DF2D /* UIViewController+TML.m */,
-				C0F80C941BEA83DE0048DF2D /* NSObject+TML.h */,
-				C0F80C951BEA83DE0048DF2D /* NSObject+TML.m */,
-				C0F80C981BEA83DE0048DF2D /* UIButton+TML.h */,
-				C0F80C991BEA83DE0048DF2D /* UIButton+TML.m */,
-				C0F80C9A1BEA83DE0048DF2D /* UILabel+TML.h */,
-				C0F80C9B1BEA83DE0048DF2D /* UILabel+TML.m */,
-				C0F80D0C1BEA860F0048DF2D /* UIBarButtonItem+TML.h */,
-				C0F80D0D1BEA860F0048DF2D /* UIBarButtonItem+TML.m */,
-				C0F80D101BEA86260048DF2D /* UINavigationItem+TML.h */,
-				C0F80D111BEA86260048DF2D /* UINavigationItem+TML.m */,
-				C0F80D141BEA86370048DF2D /* UISearchBar+TML.h */,
-				C0F80D151BEA86370048DF2D /* UISearchBar+TML.m */,
-				C0F80D181BEA86480048DF2D /* UISegmentedControl+TML.h */,
-				C0F80D191BEA86480048DF2D /* UISegmentedControl+TML.m */,
-				C0F80D1C1BEA865F0048DF2D /* UITabBarItem+TML.h */,
-				C0F80D1D1BEA865F0048DF2D /* UITabBarItem+TML.m */,
-				C0F80D201BEA866D0048DF2D /* UITextField+TML.h */,
-				C0F80D211BEA866D0048DF2D /* UITextField+TML.m */,
-				C0F80D241BEA86800048DF2D /* UITextView+TML.h */,
-				C0F80D251BEA86800048DF2D /* UITextView+TML.m */,
-				C42C562F1BF2695700207911 /* NSObject+TMLJSON.h */,
-				C42C56301BF2695700207911 /* NSObject+TMLJSON.m */,
-			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		C0F80CA01BEA83DE0048DF2D /* Language */ = {
-			isa = PBXGroup;
-			children = (
-				C0F80CA11BEA83DE0048DF2D /* TMLLanguage.h */,
-				C0F80CA21BEA83DE0048DF2D /* TMLLanguage.m */,
-				C0F80CA31BEA83DE0048DF2D /* TMLLanguageCase.h */,
-				C0F80CA41BEA83DE0048DF2D /* TMLLanguageCase.m */,
-				C0F80CA51BEA83DE0048DF2D /* TMLLanguageCaseRule.h */,
-				C0F80CA61BEA83DE0048DF2D /* TMLLanguageCaseRule.m */,
-				C0F80CA71BEA83DE0048DF2D /* TMLLanguageContext.h */,
-				C0F80CA81BEA83DE0048DF2D /* TMLLanguageContext.m */,
-				C0F80CA91BEA83DE0048DF2D /* TMLLanguageContextRule.h */,
-				C0F80CAA1BEA83DE0048DF2D /* TMLLanguageContextRule.m */,
-			);
-			path = Language;
-			sourceTree = "<group>";
-		};
-		C0F80CAB1BEA83DE0048DF2D /* Rules Engine */ = {
-			isa = PBXGroup;
-			children = (
-				C0F80CAC1BEA83DE0048DF2D /* TMLRulesEvaluator.h */,
-				C0F80CAD1BEA83DE0048DF2D /* TMLRulesEvaluator.m */,
-				C0F80CAE1BEA83DE0048DF2D /* TMLRulesParser.h */,
-				C0F80CAF1BEA83DE0048DF2D /* TMLRulesParser.m */,
-			);
-			path = "Rules Engine";
-			sourceTree = "<group>";
-		};
-		C0F80CB51BEA83DE0048DF2D /* Tokenizers */ = {
-			isa = PBXGroup;
-			children = (
-				C0F80CB61BEA83DE0048DF2D /* TMLAttributedDecorationTokenizer.h */,
-				C0F80CB71BEA83DE0048DF2D /* TMLAttributedDecorationTokenizer.m */,
-				C0F80CB81BEA83DE0048DF2D /* TMLDataTokenizer.h */,
-				C0F80CB91BEA83DE0048DF2D /* TMLDataTokenizer.m */,
-				C0F80CBA1BEA83DE0048DF2D /* TMLDecorationTokenizer.h */,
-				C0F80CBB1BEA83DE0048DF2D /* TMLDecorationTokenizer.m */,
-				C0F80CBC1BEA83DE0048DF2D /* TMLHtmlDecorationTokenizer.h */,
-				C0F80CBD1BEA83DE0048DF2D /* TMLHtmlDecorationTokenizer.m */,
-				C4FCD12B1C0C1E2F00D723BC /* TMLTokenizer.h */,
-				C4FCD12C1C0C1E2F00D723BC /* TMLTokenizer.m */,
-			);
-			path = Tokenizers;
-			sourceTree = "<group>";
-		};
-		C0F80CBE1BEA83DE0048DF2D /* Tokens */ = {
-			isa = PBXGroup;
-			children = (
-				C0F80CBF1BEA83DE0048DF2D /* TMLDataToken.h */,
-				C0F80CC01BEA83DE0048DF2D /* TMLDataToken.m */,
-				C0F80CC11BEA83DE0048DF2D /* TMLMethodToken.h */,
-				C0F80CC21BEA83DE0048DF2D /* TMLMethodToken.m */,
-				C0F80CC31BEA83DE0048DF2D /* TMLPipedToken.h */,
-				C0F80CC41BEA83DE0048DF2D /* TMLPipedToken.m */,
-			);
-			path = Tokens;
-			sourceTree = "<group>";
-		};
-		C0F80CC51BEA83DE0048DF2D /* Translations */ = {
-			isa = PBXGroup;
-			children = (
-				C0F80CC61BEA83DE0048DF2D /* TMLTranslation.h */,
-				C0F80CC71BEA83DE0048DF2D /* TMLTranslation.m */,
-				C0F80CC81BEA83DE0048DF2D /* TMLTranslationKey.h */,
-				C0F80CC91BEA83DE0048DF2D /* TMLTranslationKey.m */,
-			);
-			path = Translations;
-			sourceTree = "<group>";
-		};
-		C436C34C1C0943F1009B736B /* API */ = {
-			isa = PBXGroup;
-			children = (
-				C436C34D1C0943F1009B736B /* TMLAPIClient.h */,
-				C436C34E1C0943F1009B736B /* TMLAPIClient.m */,
-				C436C34F1C0943F1009B736B /* TMLAPIResponse.h */,
-				C436C3501C0943F1009B736B /* TMLAPIResponse.m */,
-				C436C3511C0943F1009B736B /* TMLAPISerializer.h */,
-				C436C3521C0943F1009B736B /* TMLAPISerializer.m */,
-				C436C3631C09461F009B736B /* TMLJSONValueTransformer.h */,
-				C436C3641C09461F009B736B /* TMLJSONValueTransformer.m */,
-			);
-			path = API;
-			sourceTree = "<group>";
-		};
-		C436C3561C0943FF009B736B /* Bundle */ = {
-			isa = PBXGroup;
-			children = (
-				C436C3601C0945A8009B736B /* TMLAPIBundle.h */,
-				C436C3611C0945A8009B736B /* TMLAPIBundle.m */,
-				C436C3591C0943FF009B736B /* TMLBundle.h */,
-				C436C35A1C0943FF009B736B /* TMLBundle.m */,
-				C436C35B1C0943FF009B736B /* TMLBundleManager.h */,
-				C436C35C1C0943FF009B736B /* TMLBundleManager.m */,
-			);
-			path = Bundle;
+			path = DemoTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -880,6 +385,7 @@
 				4C4233E318B9B38700B76555 /* Resources */,
 				CA1F5B96806F43B1859E3F09 /* Copy Pods Resources */,
 				055B85563A055BBB304638CF /* Embed Pods Frameworks */,
+				C4CF54E21C10170200EC39CC /* Copy Bundle Frameworks */,
 			);
 			buildRules = (
 			);
@@ -939,6 +445,12 @@
 			mainGroup = 4C4233DC18B9B38600B76555;
 			productRefGroup = 4C4233E618B9B38700B76555 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = C4BC810D1C100BD500B995ED /* Products */;
+					ProjectRef = C4BC810C1C100BD500B995ED /* TMLKit.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				4C4233E418B9B38700B76555 /* Demo */,
@@ -947,12 +459,28 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		C4BC81121C100BD500B995ED /* TMLKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = TMLKit.framework;
+			remoteRef = C4BC81111C100BD500B995ED /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C4BC81141C100BD500B995ED /* TMLKitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = TMLKitTests.xctest;
+			remoteRef = C4BC81131C100BD500B995ED /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		4C4233E318B9B38700B76555 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C436C34B1C09360F009B736B /* en.json in Resources */,
 				4C42340118B9B38700B76555 /* Images.xcassets in Resources */,
 				4CFA531319284666006E1B43 /* LICENSE in Resources */,
 				4CC2EAE418BA7AEB00F359F8 /* Icon-60@2x.png in Resources */,
@@ -967,6 +495,8 @@
 				4CFA531519284666006E1B43 /* README.md in Resources */,
 				4C4233FC18B9B38700B76555 /* Main.storyboard in Resources */,
 				4CFA531419284666006E1B43 /* Rakefile in Resources */,
+				C4FCD3A51C10075C00D723BC /* TMLKit.xcworkspace in Resources */,
+				C4FCD3AB1C1007FE00D723BC /* DemoTests-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -974,18 +504,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C0F80C691BEA7E310048DF2D /* ctx_en-US_number.json in Resources */,
-				C0F80C6F1BEA7E310048DF2D /* ru.json in Resources */,
-				4C42341218B9B38700B76555 /* InfoPlist.strings in Resources */,
-				C0F80C6A1BEA7E310048DF2D /* en-US.json in Resources */,
-				C0F80C6B1BEA7E310048DF2D /* es.json in Resources */,
-				C0F80C661BEA7E310048DF2D /* app.json in Resources */,
-				C0F80C6C1BEA7E310048DF2D /* cs_ru_gen.json in Resources */,
-				C0F80C6D1BEA7E310048DF2D /* ctx_ru_gender.json in Resources */,
-				C0F80C6E1BEA7E310048DF2D /* ctx_ru_number.json in Resources */,
-				4CCBA12218B9B5E900CFCB3A /* TmlTests-Info.plist in Resources */,
-				C0F80C671BEA7E310048DF2D /* cs_en-US_plural.json in Resources */,
-				C0F80C681BEA7E310048DF2D /* ctx_en-US_gender.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1089,70 +607,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C0F80D221BEA866D0048DF2D /* UITextField+TML.m in Sources */,
-				C0F80CDA1BEA83DE0048DF2D /* TMLViewController.m in Sources */,
 				4C4233F918B9B38700B76555 /* AppDelegate.m in Sources */,
-				C0F80CD41BEA83DE0048DF2D /* TMLSource.m in Sources */,
-				C0F80CE41BEA83DE0048DF2D /* UIViewController+TML.m in Sources */,
 				4CE06A1D18BD85830088AB3E /* TokensDemoViewController.m in Sources */,
-				C0F80CEA1BEA83DE0048DF2D /* TMLLanguageCase.m in Sources */,
-				C0F80CE21BEA83DE0048DF2D /* UILabel+TML.m in Sources */,
-				C0F80CDE1BEA83DE0048DF2D /* NSString+TmlAdditions.m in Sources */,
-				C0F80D121BEA86260048DF2D /* UINavigationItem+TML.m in Sources */,
-				C0F80CD21BEA83DE0048DF2D /* TMLPostOffice.m in Sources */,
-				C0F80CFE1BEA83DE0048DF2D /* TMLDecorationTokenizer.m in Sources */,
 				4CE06A2018BD882F0088AB3E /* User.m in Sources */,
-				C0F80CD01BEA83DE0048DF2D /* TMLConfiguration.m in Sources */,
-				C0F80CE01BEA83DE0048DF2D /* UIButton+TML.m in Sources */,
 				4CCBA12F18B9B69A00CFCB3A /* MenuViewController.m in Sources */,
 				4CE06A1618BD823B0088AB3E /* DataTokensDemoViewController.m in Sources */,
-				C4FCD12D1C0C1E2F00D723BC /* TMLTokenizer.m in Sources */,
 				4C36258419EF4E5700356B51 /* StaticTableViewController.m in Sources */,
-				C0F80D021BEA83DE0048DF2D /* TMLDataToken.m in Sources */,
 				4CE06A0818BD3D2E0088AB3E /* DecorationTokensDemoViewController.m in Sources */,
-				C436C3621C0945A8009B736B /* TMLAPIBundle.m in Sources */,
-				C0F80CD81BEA83DE0048DF2D /* TMLTranslatorViewController.m in Sources */,
-				C0F80CF61BEA83DE0048DF2D /* TML.m in Sources */,
 				4CCBA13218B9B69A00CFCB3A /* TMLTableViewCell.m in Sources */,
 				4C36258719EF590400356B51 /* StaticViewController.m in Sources */,
-				C0F80D081BEA83DE0048DF2D /* TMLTranslation.m in Sources */,
-				C436C3551C0943F1009B736B /* TMLAPISerializer.m in Sources */,
-				C436C35E1C0943FF009B736B /* TMLBundle.m in Sources */,
-				C436C35F1C0943FF009B736B /* TMLBundleManager.m in Sources */,
 				4C7A870E18BD330000C2375D /* ApplicationViewController.m in Sources */,
-				C0F80D041BEA83DE0048DF2D /* TMLMethodToken.m in Sources */,
-				C0F80CF01BEA83DE0048DF2D /* TMLLanguageContextRule.m in Sources */,
 				4CE06A1918BD82660088AB3E /* CombinedTokensDemoViewController.m in Sources */,
-				C0F80CD61BEA83DE0048DF2D /* TMLLanguageSelectorViewController.m in Sources */,
 				4CE06A0518BD37A40088AB3E /* WelcomeViewController.m in Sources */,
-				C436C3651C09461F009B736B /* TMLJSONValueTransformer.m in Sources */,
-				C0F80CEE1BEA83DE0048DF2D /* TMLLanguageContext.m in Sources */,
-				C0F80D261BEA86800048DF2D /* UITextView+TML.m in Sources */,
-				C0F80D001BEA83DE0048DF2D /* TMLHtmlDecorationTokenizer.m in Sources */,
-				C41647AB1BEE97D2004B3FB3 /* TMLGlobals.m in Sources */,
-				C0F80D061BEA83DE0048DF2D /* TMLPipedToken.m in Sources */,
-				C0F80D1A1BEA86480048DF2D /* UISegmentedControl+TML.m in Sources */,
 				4CCBA13118B9B69A00CFCB3A /* TMLConsoleViewController.m in Sources */,
-				C436C3541C0943F1009B736B /* TMLAPIResponse.m in Sources */,
-				C0F80CF81BEA83DE0048DF2D /* TMLModel.m in Sources */,
-				C0F80CDC1BEA83DE0048DF2D /* NSObject+TML.m in Sources */,
-				C0F80D161BEA86370048DF2D /* UISearchBar+TML.m in Sources */,
-				C0F80CE81BEA83DE0048DF2D /* TMLLanguage.m in Sources */,
-				C0F80CFA1BEA83DE0048DF2D /* TMLAttributedDecorationTokenizer.m in Sources */,
-				C0F80CEC1BEA83DE0048DF2D /* TMLLanguageCaseRule.m in Sources */,
-				C436C3531C0943F1009B736B /* TMLAPIClient.m in Sources */,
 				4C7A870F18BD330000C2375D /* ApplicationTableViewController.m in Sources */,
-				C0F80D0E1BEA860F0048DF2D /* UIBarButtonItem+TML.m in Sources */,
-				C0F80D1E1BEA865F0048DF2D /* UITabBarItem+TML.m in Sources */,
 				4C4233F518B9B38700B76555 /* main.m in Sources */,
-				C0F80CF21BEA83DE0048DF2D /* TMLRulesEvaluator.m in Sources */,
-				C0F80CFC1BEA83DE0048DF2D /* TMLDataTokenizer.m in Sources */,
-				C0F80D0A1BEA83DE0048DF2D /* TMLTranslationKey.m in Sources */,
-				C0F80CCC1BEA83DE0048DF2D /* TMLApplication.m in Sources */,
 				4CE06A1318BD42D30088AB3E /* TMLSampleTableViewCell.m in Sources */,
-				C0F80CF41BEA83DE0048DF2D /* TMLRulesParser.m in Sources */,
 				4CCBA13318B9B69A00CFCB3A /* TranslationViewController.m in Sources */,
-				C42C56311BF2695700207911 /* NSObject+TMLJSON.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1160,24 +631,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C0F80C771BEA7E310048DF2D /* TMLTest.m in Sources */,
-				C0F80C781BEA7E310048DF2D /* TMLTestBase.m in Sources */,
-				C0F80C701BEA7E310048DF2D /* TMLLanguageCaseRuleTest.m in Sources */,
-				C0F80C7C1BEA7E310048DF2D /* TMLDataTokenTest.m in Sources */,
-				C0F80C731BEA7E310048DF2D /* TMLLanguageContextTest.m in Sources */,
-				C0F80C721BEA7E310048DF2D /* TMLLanguageContextRuleTest.m in Sources */,
-				C0F80C7D1BEA7E310048DF2D /* TMLPipedTokenTest.m in Sources */,
-				C0F80C751BEA7E310048DF2D /* TMLRulesEvaluatorTest.m in Sources */,
-				C0F80C7B1BEA7E310048DF2D /* TMLHtmlDecorationTokenizerTest.m in Sources */,
-				C0F80C711BEA7E310048DF2D /* TMLLanguageCaseTest.m in Sources */,
-				C0F80C791BEA7E310048DF2D /* TMLAttributedDecorationTokenizerTest.m in Sources */,
-				C0F80C741BEA7E310048DF2D /* TMLTestUser.m in Sources */,
-				C0F80C651BEA7E310048DF2D /* TMLConfigurationTest.m in Sources */,
-				C0F80C7E1BEA7E310048DF2D /* TMLTranslationKeyTest.m in Sources */,
-				C0F80C761BEA7E310048DF2D /* TMLRulesParserTest.m in Sources */,
-				C0F80C641BEA7E310048DF2D /* TMLApplicationTest.m in Sources */,
-				C44281921BF5659200E68194 /* TMLAPISerializationTest.m in Sources */,
-				C0F80C7A1BEA7E310048DF2D /* TMLDecorationTokenizerTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1206,14 +659,6 @@
 				4C4233FB18B9B38700B76555 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		4C42341018B9B38700B76555 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4C42341118B9B38700B76555 /* en */,
-			);
-			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -1252,7 +697,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "26c92308-096b-4eac-bfab-9c9d51c9f2c5";
 				SDKROOT = iphoneos;
@@ -1285,7 +730,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PROVISIONING_PROFILE = "e65daa92-821a-4663-a570-11ca32af0bb2";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -1308,7 +753,7 @@
 					"TML_DEBUG=3",
 				);
 				INFOPLIST_FILE = "Demo/Demo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.translationexchange.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -1327,7 +772,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Demo/Demo-Prefix.pch";
 				INFOPLIST_FILE = "Demo/Demo-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.translationexchange.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

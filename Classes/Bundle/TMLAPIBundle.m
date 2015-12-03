@@ -8,10 +8,15 @@
 
 #import "NSObject+TMLJSON.h"
 #import "TML.h"
+#import "TMLConfiguration.h"
 #import "TMLAPIBundle.h"
 #import "TMLAPIClient.h"
 #import "TMLBundleManager.h"
 #import "TMLTranslationKey.h"
+#import "TMLLanguage.h"
+#import "TMLSource.h"
+#import "TMLApplication.h"
+#import "TMLAPIResponse.h"
 
 @interface TMLAPIBundle() {
     BOOL _needsSync;

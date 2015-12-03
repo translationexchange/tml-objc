@@ -1,0 +1,22 @@
+//
+//  TMLKit-Prefix.pch
+//  TMLKit
+//
+//  Created by Pasha on 12/2/15.
+//  Copyright © 2015 Translation Exchange. All rights reserved.
+//
+
+#ifndef TMLKit_Prefix_pch
+#define TMLKit_Prefix_pch
+
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "TMLGlobals.h"
+#import "TMLLogger.h"
+#endif
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#endif /* TMLKit_Prefix_pch */

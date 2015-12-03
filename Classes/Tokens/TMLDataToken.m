@@ -50,6 +50,7 @@
 
 #import "TML.h"
 #import "TMLDataToken.h"
+#import "TMLLanguage.h"
 #import "TMLLanguageCase.h"
 
 @interface TMLDataToken ()

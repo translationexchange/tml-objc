@@ -29,10 +29,6 @@
  */
 
 #import "StaticTableViewController.h"
-#import "TML.h"
-#import "TMLTranslatorViewController.h"
-#import "TMLLanguageSelectorViewController.h"
-#import "UIViewController+TML.h"
 
 @interface StaticTableViewController ()
 

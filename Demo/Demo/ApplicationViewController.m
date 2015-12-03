@@ -30,9 +30,6 @@
 
 #import "ApplicationViewController.h"
 #import "IIViewDeckController.h"
-#import "TML.h"
-#import "TMLBundleManager.h"
-#import "UIViewController+TML.h"
 
 @interface ApplicationViewController () {
     BOOL _observingTMLNotifications;

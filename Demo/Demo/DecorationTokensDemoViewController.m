@@ -29,7 +29,6 @@
  */
 
 #import "DecorationTokensDemoViewController.h"
-#import "TML.h"
 #import "TMLSampleTableViewCell.h"
 
 @interface DecorationTokensDemoViewController ()

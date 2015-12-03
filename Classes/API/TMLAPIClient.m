@@ -32,7 +32,11 @@
 #import "NSString+TmlAdditions.h"
 #import "TML.h"
 #import "TMLAPIClient.h"
+#import "TMLAPIResponse.h"
 #import "TMLAPISerializer.h"
+#import "TMLApplication.h"
+#import "TMLLanguage.h"
+#import "TMLSource.h"
 #import "TMLTranslationKey.h"
 
 NSString * const TMLAPIOptionsLocale = @"locale";
@@ -70,7 +74,7 @@ NSString * const TMLAPIOptionsSourceKeys = @"source_keys";
         if ([valueClass rangeOfString:@"Boolean"].location != NSNotFound) {
             value = ([value boolValue] == YES) ? @"true" : @"false";
         }
-        [pathString appendFormat:@"%@%@=%@", @"&", [self urlEncode:key], [self urlEncode:value]];
+        [pathString appendFormat:@"&%@=%@", [self urlEncode:key], [self urlEncode:value]];
     }
     return [NSURL URLWithString:pathString];
 }
@@ -84,7 +88,7 @@ NSString * const TMLAPIOptionsSourceKeys = @"source_keys";
 
 - (NSString *) urlEncode: (id) object {
     NSString *string = [NSString stringWithFormat: @"%@", object];
-    return [string stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding];
+    return [string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
 }
 
 - (NSString*) urlEncodedStringFromParameters:(NSDictionary *)parameters {

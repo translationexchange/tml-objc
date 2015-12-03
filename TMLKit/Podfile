@@ -1,0 +1,12 @@
+source 'https://github.com/CocoaPods/Specs.git'
+
+platform :ios, '7.0'
+
+target "TMLKit" do
+	podspec :path => "../Tml.podspec"
+end
+
+
+target "TMLKitTests" do
+	podspec :path => "../Tml.podspec"
+end
