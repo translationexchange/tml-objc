@@ -40,7 +40,7 @@
 #define kTMLServiceHost @"https://api.translationexchange.com"
 #endif
 
-NSString * const TMLApplicationTokenDefaultsKey = @"applicationToken";
+NSString * const TMLApplicationKeyDefaultsKey = @"applicationKey";
 NSString * const TMLDefaultLocaleDefaultsKey = @"defaultLocale";
 NSString * const TMLCurrentLocaleDefaultsKey = @"currentLocale";
 NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
