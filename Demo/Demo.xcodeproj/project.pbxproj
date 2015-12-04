@@ -156,7 +156,6 @@
 		BD38CEACE6D239B51CE90063 /* Pods-DemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DemoTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DemoTests/Pods-DemoTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C42C56331BF31A6600207911 /* TMLPrivateConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLPrivateConfig.h; sourceTree = "<group>"; };
 		C4BC810C1C100BD500B995ED /* TMLKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TMLKit.xcodeproj; path = ../TMLKit/TMLKit.xcodeproj; sourceTree = "<group>"; };
-		C4FCD3A41C10075C00D723BC /* TMLKit.xcworkspace */ = {isa = PBXFileReference; lastKnownFileType = wrapper.workspace; name = TMLKit.xcworkspace; path = "/Users/pasha/Source/TranslationExchange/tml-objc/TMLKit/TMLKit.xcworkspace"; sourceTree = "<absolute>"; };
 		C4FCD3AA1C1007FE00D723BC /* DemoTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DemoTests-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 

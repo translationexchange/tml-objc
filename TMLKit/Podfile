@@ -4,9 +4,13 @@ platform :ios, '7.0'
 
 target "TMLKit" do
 	podspec :path => "../Tml.podspec"
+  pod 'SSZipArchive'
+  pod 'NVHTarGzip'
 end
 
 
 target "TMLKitTests" do
 	podspec :path => "../Tml.podspec"
+  pod 'SSZipArchive'
+  pod 'NVHTarGzip'
 end
