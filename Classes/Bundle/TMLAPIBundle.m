@@ -216,9 +216,16 @@
     [NSObject cancelPreviousPerformRequestsWithTarget:self
                                              selector:@selector(sync)
                                                object:nil];
+    
+    NSTimeInterval delay = 0.;
+    NSArray *availableLocales = [self availableLocales];
+    if (availableLocales.count > 0
+        && [availableLocales containsObject:[TML currentLocale]] == YES) {
+        delay = 3.;
+    }
     [self performSelector:@selector(sync)
                withObject:nil
-               afterDelay:3.0];
+               afterDelay:delay];
 }
 
 - (NSOperationQueue *)syncQueue {
