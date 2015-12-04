@@ -21,17 +21,16 @@ DerivedData
 
 .idea
 
-Project/.hg
+Demo/.hg
 
 .testflight
-Project/build
-Project/Pods
-Project/Distributions
-Project/Provisioning
-Project/.testflight
-Project/FLIGHTLOG
-
+Demo/build
 Demo/Pods
+Demo/Distributions
+Demo/Provisioning
+Demo/.testflight
+Demo/FLIGHTLOG
+
 TMLKit/Pods
 
 Demo/Demo/TMLPrivateConfig.h
