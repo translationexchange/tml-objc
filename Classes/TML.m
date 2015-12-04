@@ -97,11 +97,9 @@
 - (instancetype) initWithConfiguration:(TMLConfiguration *)configuration {
     if (self == [super init]) {
         if (configuration == nil) {
-            self.configuration = [[TMLConfiguration alloc] init];
+            configuration = [[TMLConfiguration alloc] init];
         }
-        else {
-            self.configuration = configuration;
-        }
+        self.configuration = configuration;
         
         if (configuration.accessToken != nil) {
             TMLAPIClient *apiClient = [[TMLAPIClient alloc] initWithURL:configuration.apiURL
