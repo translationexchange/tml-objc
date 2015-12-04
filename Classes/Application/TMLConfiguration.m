@@ -62,11 +62,6 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
 
 - (instancetype)initWithApplicationKey:(NSString *)applicationKey accessToken:(NSString *)accessToken {
     if (self = [super init]) {
-        NSString *persistedConfigApplicationKey = self.applicationKey;
-        if (persistedConfigApplicationKey != nil
-            && [persistedConfigApplicationKey isEqualToString:applicationKey] == NO) {
-            [self invalidate];
-        }
         self.applicationKey = applicationKey;
         self.accessToken = accessToken;
         [self setupDefaultContextRules];
@@ -112,16 +107,6 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
 }
 
 #pragma mark - Accessors
-
-- (NSString *)applicationKey {
-    return [self persistentValueForKey:TMLApplicationTokenDefaultsKey];
-}
-
-- (void)setApplicationKey:(NSString *)applicationKey {
-    [self willChangeValueForKey:@"applicationKey"];
-    [self setPersistentValue:applicationKey forKey:TMLApplicationTokenDefaultsKey];
-    [self didChangeValueForKey:@"applicationKey"];
-}
 
 - (BOOL)isTranslationEnabled {
     return [[self persistentValueForKey:TMLTranslationEnabledDefaultsKey] boolValue];
