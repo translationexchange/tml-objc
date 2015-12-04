@@ -389,13 +389,14 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     }
     
     NSArray *installedBundles = [self installedBundles];
-    if (installedBundles.count > keep) {
-        installedBundles = [installedBundles sortedArrayUsingComparator:^NSComparisonResult(TMLBundle *a, TMLBundle *b) {
-            NSString *aVersion = a.version;
-            NSString *bVersion = b.version;
-            return [aVersion compareToTMLTranslationBundleVersion:bVersion];
-        }];
+    if (installedBundles.count <= keep) {
+        return;
     }
+    installedBundles = [installedBundles sortedArrayUsingComparator:^NSComparisonResult(TMLBundle *a, TMLBundle *b) {
+        NSString *aVersion = a.version;
+        NSString *bVersion = b.version;
+        return [aVersion compareToTMLTranslationBundleVersion:bVersion];
+    }];
     
     NSArray *toRemove = [installedBundles subarrayWithRange:NSMakeRange(0, installedBundles.count - keep)];
     for (TMLBundle *bundle in toRemove) {
