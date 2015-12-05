@@ -81,6 +81,13 @@
     expectation = @[@"tml", @[@"link", @" you have ",@[@"italic", @"", @[@"bold", @"{count}"], @" messages"], @" ", @[@"light", @"in your mailbox"], @" "]];
 //    TMLDebug(@"%@", result);
     XCTAssert([tdt.expression isEqual:expectation]);
+    
+    // HTML
+    tdt = [[TMLDecorationTokenizer alloc] initWithLabel: @"<bold>Hello World</bold>"];
+    expectation = @[@"[tml]", @"<bold>", @"Hello World", @"</bold>", @"[/tml]"];
+    XCTAssert([tdt.fragments isEqual:expectation]);
+    expectation = @[@"tml", @[@"bold", @"Hello World"]];
+    XCTAssert([tdt.expression isEqual:expectation]);
 }
 
 - (void) testEvaluating {
