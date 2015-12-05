@@ -6,11 +6,12 @@
 //  Copyright (c) 2014 TMLHub. All rights reserved.
 //
 
+#import "TMLAPISerializer.h"
+#import "TMLConfiguration.h"
 #import "TMLLanguageContext.h"
 #import "TMLLanguageContextRule.h"
 #import "TMLTestBase.h"
 #import "TMLTestUser.h"
-#import "TMLAPISerializer.h"
 
 @interface TMLLanguageContextTest : TMLTestBase
 

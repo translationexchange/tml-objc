@@ -21,8 +21,10 @@
  */
 
 #import "NSObject+TMLJSON.h"
-#import "TMLTestBase.h"
 #import "TMLAPISerializer.h"
+#import "TMLApplication.h"
+#import "TMLLanguage.h"
+#import "TMLTestBase.h"
 
 @implementation TMLTestBase
 

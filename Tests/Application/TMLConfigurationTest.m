@@ -20,6 +20,7 @@
  *  THE SOFTWARE.
  */
 
+#import "TMLConfiguration.h"
 #import "TMLTestBase.h"
 
 @interface TMLConfigurationTest : TMLTestBase
