@@ -466,15 +466,10 @@
                       tokens:(NSDictionary *)tokens
                      options:(NSDictionary *)options
 {
-    NSMutableDictionary *opts = [NSMutableDictionary dictionary];
-    if (opts != nil) {
-        [opts addEntriesFromDictionary:options];
-    }
-    opts[TMLTokenFormatOptionName] = TMLHTMLTokenFormatString;
     id result = [[self currentLanguage] translate:string
                                       description:description
                                            tokens:tokens
-                                          options:opts];
+                                          options:options];
     if ([result isKindOfClass:[NSString class]] == YES) {
         return (NSString *)result;
     }
