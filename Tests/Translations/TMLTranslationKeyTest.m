@@ -28,7 +28,10 @@
     tk = [[TMLTranslationKey alloc] init];
     tk.locale = @"en-US";
     tk.label = @"[bold: Hello World]";
-    XCTAssertEqualObjects([tk translateToLanguage:en tokens:@{@"bold": @"<b>{$0}</b>"}], @"<b>Hello World</b>");
+    XCTAssertEqualObjects([tk translateToLanguage:en
+                                           tokens:@{@"bold": @"<b>{$0}</b>"}
+                                          options:@{TMLTokenFormatOptionName: TMLHTMLTokenFormatString}],
+                          @"<b>Hello World</b>");
 }
 
 
@@ -43,12 +46,18 @@
     TMLTranslationKey *tk = [[TMLTranslationKey alloc] init];
     tk.locale = @"en-US";
     tk.label = @"[indent: Hello World]";
-    XCTAssertEqualObjects([tk translateToLanguage:en], @"<strong>Hello World</strong>");
+    XCTAssertEqualObjects([tk translateToLanguage:en
+                                           tokens:nil
+                                          options:@{TMLTokenFormatOptionName: TMLHTMLTokenFormatString}],
+                          @"<strong>Hello World</strong>");
     
     tk = [[TMLTranslationKey alloc] init];
     tk.locale = @"en-US";
     tk.label = @"[indent: Hello {world}]";
-    XCTAssertEqualObjects([tk translateToLanguage:en], @"<strong>Hello World</strong>");
+    XCTAssertEqualObjects([tk translateToLanguage:en
+                                           tokens:nil
+                                          options:@{TMLTokenFormatOptionName: TMLHTMLTokenFormatString}],
+                          @"<strong>Hello World</strong>");
 }
 
 
