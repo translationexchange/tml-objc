@@ -49,12 +49,18 @@
     #define TML_RESERVED_TOKEN             @"tml"
     #define TML_RE_SHORT_TOKEN_START       @"\\[[\\w]*:"
     #define TML_RE_SHORT_TOKEN_END         @"\\]"
+
     #define TML_RE_LONG_TOKEN_START        @"\\[[\\w]*\\]"
     #define TML_RE_LONG_TOKEN_END          @"\\[\\/[\\w]*\\]"
-    #define TML_RE_TEXT                    @"[^\\[\\]]+"
+
+    #define TML_RE_HTML_TOKEN_START        @"<[^\\>]*>"
+    #define TML_RE_HTML_TOKEN_END          @"<\\/[^\\>]*>"
+
+    #define TML_RE_TEXT                    @"[^\\[\\]<>]+"
 
     #define TML_TOKEN_TYPE_SHORT           @"short"
     #define TML_TOKEN_TYPE_LONG            @"long"
+    #define TML_TOKEN_TYPE_HTML            @"html"
     #define TML_PLACEHOLDER                @"{$0}"
 #endif
 

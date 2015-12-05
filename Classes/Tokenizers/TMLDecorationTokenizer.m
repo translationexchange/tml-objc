@@ -37,6 +37,27 @@
 
 @implementation TMLDecorationTokenizer
 
++ (NSRegularExpression *)tokenMatchingRegExp {
+    static NSRegularExpression *regexp;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSArray *start = @[TML_RE_SHORT_TOKEN_START, TML_RE_LONG_TOKEN_START, TML_RE_HTML_TOKEN_START];
+        NSArray *end = @[TML_RE_SHORT_TOKEN_END, TML_RE_LONG_TOKEN_END, TML_RE_HTML_TOKEN_END];
+        NSString *pattern = [NSString stringWithFormat:@"%@%@%@"
+                             ,[start componentsJoinedByString:@"|"]
+                             ,TML_RE_TEXT
+                             ,[end componentsJoinedByString:@"|"]];
+        NSError *error = nil;
+        regexp = [NSRegularExpression regularExpressionWithPattern:pattern
+                                                           options:NSRegularExpressionCaseInsensitive
+                                                             error:&error];
+        if (regexp == nil) {
+            TMLError(@"Error creating regexp: %@", error);
+        }
+    });
+    return regexp;
+}
+
 - (id) initWithLabel: (NSString *) newLabel {
     return [self initWithLabel:newLabel andAllowedTokenNames:nil];
 }
@@ -58,6 +79,8 @@
                           TML_RE_SHORT_TOKEN_END,
                           TML_RE_LONG_TOKEN_START,
                           TML_RE_LONG_TOKEN_END,
+                          TML_RE_HTML_TOKEN_START,
+                          TML_RE_HTML_TOKEN_END,
                           TML_RE_TEXT];
     NSString *pattern = [elements componentsJoinedByString:@"|"];
 
@@ -147,6 +170,11 @@
         return [self parseTree: token type: TML_TOKEN_TYPE_LONG];
     }
     
+    if ([self token:token matchesExpression:TML_RE_HTML_TOKEN_START]) {
+        token = [token stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"</>"]];
+        return [self parseTree: token type: TML_TOKEN_TYPE_HTML];
+    }
+    
     return token;
 }
 
@@ -171,6 +199,11 @@
         }
     } else if ([type isEqualToString:TML_TOKEN_TYPE_LONG]) {
         while ([self peek] != nil && ![self token:[self peek] matchesExpression:TML_RE_LONG_TOKEN_END]) {
+            [tree addObject:[self parse]];
+        }
+    }
+    else if ([type isEqualToString:TML_TOKEN_TYPE_HTML] == YES) {
+        while ([self peek] != nil && ![self token:[self peek] matchesExpression:TML_RE_HTML_TOKEN_END]) {
             [tree addObject:[self parse]];
         }
     }
