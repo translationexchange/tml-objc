@@ -90,11 +90,11 @@
     return result;
 }
 
-- (BOOL)tmlContainsDecoratedTokens {
+- (BOOL)tmlContainsDataTokens {
     return [self rangeOfString:@"{"].location != NSNotFound;
 }
 
-- (BOOL)tmlContainsAttributedTokens {
+- (BOOL)tmlContainsDecoratedTokens {
     return [self rangeOfString:@"["].location != NSNotFound;
 }
 

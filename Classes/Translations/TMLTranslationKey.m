@@ -237,24 +237,27 @@
                               language:(TMLLanguage *)language
                                options:(NSDictionary *)options
 {
-    if ([translatedLabel tmlContainsDecoratedTokens] == YES) {
+    if ([translatedLabel tmlContainsDataTokens] == YES) {
         TMLDataTokenizer *tokenizer = [[TMLDataTokenizer alloc] initWithLabel:translatedLabel andAllowedTokenNames:[self dataTokenNames]];
         translatedLabel = [tokenizer substituteTokensInLabelUsingData:tokens language:language];
     }
-
-    NSString *tokenFormat = options[TMLTokenFormatOptionName];
-    if ([tokenFormat isEqualToString:TMLAttributedTokenFormatString]) {
-        if ([translatedLabel tmlContainsAttributedTokens] == YES) {
-            TMLAttributedDecorationTokenizer *tokenizer = [[TMLAttributedDecorationTokenizer alloc] initWithLabel:translatedLabel andAllowedTokenNames:[self decorationTokenNames]];
+    
+    if ([translatedLabel tmlContainsDecoratedTokens] == YES) {
+        NSString *tokenFormat = options[TMLTokenFormatOptionName];
+        TMLDecorationTokenizer *tokenizer = nil;
+        if ([tokenFormat isEqualToString:TMLAttributedTokenFormatString]) {
+            tokenizer = [[TMLAttributedDecorationTokenizer alloc] initWithLabel:translatedLabel
+                                                           andAllowedTokenNames:[self decorationTokenNames]];
+        }
+        else if ([tokenFormat isEqualToString:TMLHTMLTokenFormatString] == YES) {
+            tokenizer = [[TMLHtmlDecorationTokenizer alloc] initWithLabel:translatedLabel
+                                                     andAllowedTokenNames:[self decorationTokenNames]];
+        }
+        if (tokenizer != nil) {
             return [tokenizer substituteTokensInLabelUsingData:tokens];
         }
-        return [[NSAttributedString alloc] initWithString:translatedLabel];
     }
-    
-    if ([translatedLabel tmlContainsAttributedTokens] == YES) {
-        TMLHtmlDecorationTokenizer *tokenizer = [[TMLHtmlDecorationTokenizer alloc] initWithLabel:translatedLabel andAllowedTokenNames:[self decorationTokenNames]];
-        return [tokenizer substituteTokensInLabelUsingData:tokens];
-    }
+
     
     return translatedLabel;
 }
