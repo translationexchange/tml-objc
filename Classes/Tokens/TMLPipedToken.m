@@ -76,7 +76,7 @@
     
     NSMutableArray *pipedParams = [NSMutableArray array];
     NSArray *pipedParts = [nameWithoutParens componentsSeparatedByString:self.separator];
-    if ([pipedParts count] > 0) {
+    if ([pipedParts count] > 1) {
         pipedParts = [[pipedParts objectAtIndex:1] componentsSeparatedByString:@","];
         for (NSString *part in pipedParts) {
             [pipedParams addObject: [self.class sanitizeValue:part]];

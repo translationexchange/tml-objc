@@ -40,8 +40,12 @@
     [super parse];
     
     NSArray *parts = [self.shortName componentsSeparatedByString:@"."];
-    self.objectName = [parts objectAtIndex:0];
-    self.objectMethod = [parts objectAtIndex:1];
+    if (parts.count > 0) {
+        self.objectName = [parts objectAtIndex:0];
+    }
+    if (parts.count > 1) {
+        self.objectMethod = [parts objectAtIndex:1];
+    }
 }
 
 - (NSString *) valueForObject: (NSObject *) object andMethod: (NSString *) method {
