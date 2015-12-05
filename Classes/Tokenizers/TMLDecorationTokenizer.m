@@ -75,19 +75,23 @@
 }
 
 - (void) fragmentize {
-    NSArray *elements = @[TML_RE_SHORT_TOKEN_START,
-                          TML_RE_SHORT_TOKEN_END,
-                          TML_RE_LONG_TOKEN_START,
-                          TML_RE_LONG_TOKEN_END,
-                          TML_RE_HTML_TOKEN_START,
-                          TML_RE_HTML_TOKEN_END,
-                          TML_RE_TEXT];
-    NSString *pattern = [elements componentsJoinedByString:@"|"];
-
-    NSError *error = NULL;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern
-                                                                           options:NSRegularExpressionCaseInsensitive
-                                                                             error:&error];
+    static NSRegularExpression *regex;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSArray *elements = @[TML_RE_SHORT_TOKEN_START,
+                              TML_RE_SHORT_TOKEN_END,
+                              TML_RE_LONG_TOKEN_START,
+                              TML_RE_LONG_TOKEN_END,
+                              TML_RE_HTML_TOKEN_START,
+                              TML_RE_HTML_TOKEN_END,
+                              TML_RE_TEXT];
+        NSString *pattern = [elements componentsJoinedByString:@"|"];
+        
+        NSError *error = NULL;
+        regex = [NSRegularExpression regularExpressionWithPattern:pattern
+                                                          options:NSRegularExpressionCaseInsensitive
+                                                            error:&error];
+    });
     // TODO: check for errors
     NSArray *matches = [regex matchesInString: self.label options: 0 range: NSMakeRange(0, [self.label length])];
     self.elements = [NSMutableArray array];
