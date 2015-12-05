@@ -33,10 +33,12 @@
 }
 
 - (void) testLocalization {
-    
-    NSString *result = TMLLocalizedDateWithFormat([NSDate date], @"MM/dd/yyyy at h:m");
-    NSLog(@"Translated string: %@", result);
-    
+    NSDate *date = [NSDate date];
+    NSString *result = TMLLocalizedDateWithFormat(date, @"MM/dd/yyyy at h:m");
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    formatter.dateFormat = @"MM/dd/yyyy 'at' h:m";
+    NSString *nsResult = [formatter stringFromDate:date];
+    XCTAssert([result isEqualToString:nsResult]);
 }
 
 @end
