@@ -7,6 +7,8 @@
 //
 
 #import "NSString+TMLAdditions.h"
+#import "TMLDecorationTokenizer.h"
+#import "TMLDataTokenizer.h"
 #import <CommonCrypto/CommonDigest.h>
 
 @implementation NSString (TMLAdditions)
@@ -91,11 +93,11 @@
 }
 
 - (BOOL)tmlContainsDataTokens {
-    return [self rangeOfString:@"{"].location != NSNotFound;
+    return [TMLDataTokenizer stringContainsApplicableTokens:self];
 }
 
 - (BOOL)tmlContainsDecoratedTokens {
-    return [self rangeOfString:@"["].location != NSNotFound;
+    return [TMLDecorationTokenizer stringContainsApplicableTokens:self];
 }
 
 #pragma mark - Utils

@@ -37,13 +37,13 @@
 
 @implementation TMLDecorationTokenizer
 
-+ (NSRegularExpression *)tokenMatchingRegExp {
++ (BOOL)stringContainsApplicableTokens:(NSString *)string {
     static NSRegularExpression *regexp;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSArray *start = @[TML_RE_SHORT_TOKEN_START, TML_RE_LONG_TOKEN_START, TML_RE_HTML_TOKEN_START];
         NSArray *end = @[TML_RE_SHORT_TOKEN_END, TML_RE_LONG_TOKEN_END, TML_RE_HTML_TOKEN_END];
-        NSString *pattern = [NSString stringWithFormat:@"%@%@%@"
+        NSString *pattern = [NSString stringWithFormat:@"(%@)%@(%@)"
                              ,[start componentsJoinedByString:@"|"]
                              ,TML_RE_TEXT
                              ,[end componentsJoinedByString:@"|"]];
@@ -55,7 +55,11 @@
             TMLError(@"Error creating regexp: %@", error);
         }
     });
-    return regexp;
+    NSTextCheckingResult *result = [regexp firstMatchInString:string
+                                                      options:NSMatchingReportProgress
+                                                        range:NSMakeRange(0, string.length)];
+    NSRange foundRange = result.range;
+    return foundRange.location != NSNotFound && foundRange.length > 0;
 }
 
 - (id) initWithLabel: (NSString *) newLabel {

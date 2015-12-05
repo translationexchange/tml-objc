@@ -44,7 +44,6 @@
 // Token objects generated from the label
 @property(nonatomic, strong) NSMutableArray *tokens;
 
-
 - (id) initWithLabel:(NSString *)newLabel;
 
 - (id) initWithLabel:(NSString *)newLabel andAllowedTokenNames:(NSArray *)newAllowedTokenNames;

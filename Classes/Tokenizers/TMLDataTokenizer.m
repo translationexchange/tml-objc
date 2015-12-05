@@ -36,6 +36,39 @@
 
 @implementation TMLDataTokenizer
 
++ (BOOL)stringContainsApplicableTokens:(NSString *)string {
+    static NSRegularExpression *regexp;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSMutableSet *patterns = [NSMutableSet set];
+        NSString *dataPattern = [TMLDataToken pattern];
+        if (dataPattern.length > 0) {
+            [patterns addObject:dataPattern];
+        }
+        NSString *pipedPattern = [TMLPipedToken pattern];
+        if (pipedPattern.length > 0) {
+            [patterns addObject:pipedPattern];
+        }
+        NSString *methodPattern = [TMLMethodToken pattern];
+        if (methodPattern.length > 0) {
+            [patterns addObject:methodPattern];
+        }
+        NSString *pattern = [NSString stringWithFormat:@"(%@)", [[patterns allObjects] componentsJoinedByString:@")|("]];
+        NSError *error;
+        regexp = [NSRegularExpression regularExpressionWithPattern:pattern
+                                                                                options:0
+                                                                                  error:&error];
+        if (regexp == nil) {
+            TMLError(@"Error constructing data tokenizer regexp: %@", error);
+        }
+    });
+    NSTextCheckingResult *result = [regexp firstMatchInString:string
+                                                      options:NSMatchingReportProgress
+                                                        range:NSMakeRange(0, string.length)];
+    NSRange foundRange = result.range;
+    return foundRange.location != NSNotFound && foundRange.length > 0;
+}
+
 - (id) initWithLabel: (NSString *) newLabel {
     return [self initWithLabel:newLabel andAllowedTokenNames:nil];
 }
@@ -51,6 +84,7 @@
 
 - (void) tokenize {
     self.tokens = [NSMutableArray array];
+    
     // TODO: optimize this code to do it in one pass
     NSArray *matches = [[TMLDataToken expression] matchesInString: self.label options: 0 range: NSMakeRange(0, [self.label length])];
     for (NSTextCheckingResult *match in matches) {

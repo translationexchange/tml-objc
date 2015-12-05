@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface TMLTokenizer : NSObject
-
++ (BOOL)stringContainsApplicableTokens:(NSString *)string;
 @end

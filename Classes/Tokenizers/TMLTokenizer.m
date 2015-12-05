@@ -10,4 +10,9 @@
 
 @implementation TMLTokenizer
 
++ (BOOL)stringContainsApplicableTokens:(NSString *)string {
+    TMLRaiseAbstractInvocation();
+    return NO;
+}
+
 @end
