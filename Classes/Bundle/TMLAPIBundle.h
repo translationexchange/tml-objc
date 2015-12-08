@@ -13,6 +13,7 @@
 - (void) addTranslationKey:(TMLTranslationKey *)translationKey
                  forSource:(NSString *)sourceKey;
 
+@property(nonatomic, assign) BOOL syncEnabled;
 - (void)setNeedsSync;
 - (void)sync;
 

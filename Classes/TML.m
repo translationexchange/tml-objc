@@ -216,7 +216,9 @@
     _currentBundle = currentBundle;
     [self updateWithBundle:currentBundle];
     if ([currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
-        [(TMLAPIBundle *)currentBundle setNeedsSync];
+        TMLAPIBundle *apiBundle = (TMLAPIBundle *)currentBundle;
+        apiBundle.syncEnabled = YES;
+        [apiBundle setNeedsSync];
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:TMLLocalizationDataChangedNotification object:nil];
 }

@@ -213,6 +213,9 @@
 
 -(void)setNeedsSync {
     _needsSync = YES;
+    if (self.syncEnabled == NO) {
+        return;
+    }
     [NSObject cancelPreviousPerformRequestsWithTarget:self
                                              selector:@selector(sync)
                                                object:nil];
@@ -256,6 +259,10 @@
 }
 
 - (void)sync {
+    if (self.syncEnabled == NO) {
+        [self setNeedsSync];
+        return;
+    }
     if (_syncOperationCount > 0) {
         return;
     }
