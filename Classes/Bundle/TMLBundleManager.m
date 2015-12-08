@@ -8,6 +8,7 @@
 
 #import "NSObject+TMLJSON.h"
 #import "NSString+TmlAdditions.h"
+#import "NSURL+TML.h"
 #import "TML.h"
 #import "TMLAPIBundle.h"
 #import "TMLAPISerializer.h"
@@ -29,6 +30,8 @@ NSString * const TMLBundleManagerAPIBundleDirectoryName = @"api";
 
 NSString * const TMLBundleChangeInfoBundleKey = @"bundle";
 NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
+
+#define DEFAULT_URL_TASK_TIMEOUT 60.
 
 @interface TMLBundleManager() {
     NSURLSession *_downloadSession;
@@ -418,30 +421,57 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
                           NSURLResponse * _Nullable response,
                           NSError * _Nullable error))completionBlock
 {
+    NSURLRequest *request = [NSURLRequest requestWithURL:url
+                                             cachePolicy:NSURLRequestUseProtocolCachePolicy
+                                         timeoutInterval:DEFAULT_URL_TASK_TIMEOUT];
+    [self fetchRequest:request completionBlock:completionBlock];
+}
+
+- (void)fetchURL:(NSURL *)url
+     cachePolicy:(NSURLRequestCachePolicy)cachePolicy
+ completionBlock:(void(^)(NSData * _Nullable data,
+                          NSURLResponse * _Nullable response,
+                          NSError * _Nullable error))completionBlock
+{
+    NSURL *newURL = url;
+    if (cachePolicy == NSURLRequestReloadIgnoringLocalAndRemoteCacheData) {
+        newURL = [url URLByAppendingQueryParameters:@{@"_": [NSString stringWithFormat:@"%f", [[NSDate date] timeIntervalSince1970]]}];
+    }
+    NSURLRequest *request = [NSURLRequest requestWithURL:newURL
+                                             cachePolicy:cachePolicy
+                                         timeoutInterval:DEFAULT_URL_TASK_TIMEOUT];
+    [self fetchRequest:request completionBlock:completionBlock];
+}
+
+- (void)fetchRequest:(NSURLRequest *)urlRequest
+        completionBlock:(void(^)(NSData * _Nullable data,
+                                 NSURLResponse * _Nullable response,
+                                 NSError * _Nullable error))completionBlock
+{
     NSURLSession *downloadSession = [self downloadSession];
-    [[downloadSession dataTaskWithURL:url
-                   completionHandler:^(NSData * _Nullable data,
-                                       NSURLResponse * _Nullable response,
-                                       NSError * _Nullable error) {
-                       NSError *ourError = error;
-                       NSInteger responseCode = 0;
-                       if ([response isKindOfClass:[NSHTTPURLResponse class]] == YES) {
-                           responseCode = [(NSHTTPURLResponse *)response statusCode];
-                       }
-                       if (responseCode != 200 && ourError == nil) {
-                           data = nil;
-                           TMLError(@"Error fetching resource '%@'. HTTP: %i", url, responseCode);
-                           ourError = [NSError errorWithDomain:TMLBundleManagerErrorDomain
-                                                          code:TMLBundleManagerHTTPError
-                                                      userInfo:@{
-                                                                 TMLBundleManagerErrorCodeKey: @(responseCode),
-                                                                 TMLBundleManagerURLKey: url
-                                                                 }];
-                       }
-                       if (completionBlock != nil) {
-                           completionBlock(data, response, error);
-                       }
-                   }] resume];
+    [[downloadSession dataTaskWithRequest:urlRequest
+                        completionHandler:^(NSData * _Nullable data,
+                                            NSURLResponse * _Nullable response,
+                                            NSError * _Nullable error) {
+                            NSError *ourError = error;
+                            NSInteger responseCode = 0;
+                            if ([response isKindOfClass:[NSHTTPURLResponse class]] == YES) {
+                                responseCode = [(NSHTTPURLResponse *)response statusCode];
+                            }
+                            if (responseCode != 200 && ourError == nil) {
+                                data = nil;
+                                TMLError(@"Error fetching resource '%@'. HTTP: %i", urlRequest.URL, responseCode);
+                                ourError = [NSError errorWithDomain:TMLBundleManagerErrorDomain
+                                                               code:TMLBundleManagerHTTPError
+                                                           userInfo:@{
+                                                                      TMLBundleManagerErrorCodeKey: @(responseCode),
+                                                                      TMLBundleManagerURLKey: urlRequest.URL
+                                                                      }];
+                            }
+                            if (completionBlock != nil) {
+                                completionBlock(data, response, error);
+                            }
+                        }] resume];
 }
 
 - (void) fetchPublishedResources:(NSArray *)resourcePaths
@@ -555,6 +585,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     if (error == nil) {
         NSURL *publishedVersionURL = [self.archiveURL URLByAppendingPathComponent:[NSString stringWithFormat:@"%@/version.json", applicationKey]];
         [self fetchURL:publishedVersionURL
+           cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
        completionBlock:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
            NSDictionary *versionInfo;
            if (data != nil) {
