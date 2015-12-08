@@ -409,6 +409,17 @@
         return;
     }
     NSMutableDictionary *missingTranslations = self.addedTranslations;
+    BOOL hasKeys = NO;
+    for (NSString *source in missingTranslations) {
+        NSArray *value = missingTranslations[source];
+        if (value.count > 0) {
+            hasKeys = YES;
+            break;
+        }
+    }
+    if (hasKeys == NO) {
+        return;
+    }
     [self addSyncOperation:[NSBlockOperation blockOperationWithBlock:^{
         [[[TML sharedInstance] apiClient] registerTranslationKeysBySourceKey:missingTranslations
                                                              completionBlock:^(BOOL success, NSError *error) {
