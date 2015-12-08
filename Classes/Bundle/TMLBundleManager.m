@@ -103,6 +103,12 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     BOOL isDirectory;
     if ([fileManager fileExistsAtPath:aPath isDirectory:&isDirectory] == NO) {
         TMLError(@"Tried to install TML bundle but none could be found at path: %@", aPath);
+        if (completionBlock != nil) {
+            NSError *installError = [NSError errorWithDomain:TMLBundleManagerErrorDomain
+                                                        code:TMLBundleInvalidResourcePath
+                                                    userInfo:@{TMLBundleErrorResourcePathKey: aPath}];
+            completionBlock(nil, installError);
+        }
         return;
     }
     
