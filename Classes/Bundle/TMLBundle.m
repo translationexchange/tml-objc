@@ -61,6 +61,20 @@ NSString * const TMLBundleErrorsKey = @"errors";
     return self;
 }
 
+- (BOOL)isEqual:(id)object {
+    if (self == object) {
+        return YES;
+    }
+    else if ([object isKindOfClass:[TMLBundle class]] == NO) {
+        return NO;
+    }
+    return [self isEqualToBundle:object];
+}
+
+- (BOOL)isEqualToBundle:(TMLBundle *)bundle {
+    return [self.version isEqualToString:bundle.version] && [self.path isEqualToString:bundle.path];
+}
+
 - (BOOL)isMutable {
     return NO;
 }

@@ -44,6 +44,8 @@ typedef NS_ENUM(NSInteger, TMLBundleErrorCode) {
 
 - (instancetype)initWithContentsOfDirectory:(NSString *)path;
 
+- (BOOL)isEqualToBundle:(TMLBundle *)bundle;
+
 /**
  *  Bundle version
  */
