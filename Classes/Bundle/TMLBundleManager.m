@@ -166,25 +166,26 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
             }
         }
         
-        if (success == YES) {
-            TMLBundle *installedBundle = [[TMLBundle alloc] initWithContentsOfDirectory:destinationPath];
-            self.latestBundle = installedBundle;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self notifyBundleMutation:TMLLocalizationUpdatesInstalledNotification
-                                    bundle:installedBundle
-                                    errors:nil];
-            });
-        }
-        
-        if (completionBlock != nil) {
+        dispatch_async(dispatch_get_main_queue(), ^{
             if (success == YES) {
-                [self cleanup];
-                completionBlock(destinationPath, installError);
+                TMLBundle *installedBundle = [[TMLBundle alloc] initWithContentsOfDirectory:destinationPath];
+                self.latestBundle = installedBundle;
             }
-            else {
-                completionBlock(nil, installError);
+            if (completionBlock != nil) {
+                if (success == YES) {
+                    [self cleanup];
+                    completionBlock(destinationPath, installError);
+                }
+                else {
+                    completionBlock(nil, installError);
+                }
             }
-        }
+            if (success == YES) {
+                [self notifyBundleMutation:TMLLocalizationUpdatesInstalledNotification
+                                    bundle:self.latestBundle
+                                    errors:nil];
+            }
+        });
     }
     else if ([@"zip" isEqualToString:extension] == YES) {
         [self installBundleFromZipArchive:aPath
