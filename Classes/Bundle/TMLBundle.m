@@ -250,35 +250,39 @@ NSString * const TMLBundleErrorsKey = @"errors";
 {
     NSString *locale = [aLocale lowercaseString];
     NSDictionary *loadedTranslations = [self translationsForLocale:locale];
-    if (loadedTranslations == nil) {
-        
-        NSString *version = self.version;
-        NSMutableArray *paths = [NSMutableArray array];
-        NSArray *sources = [self sources];
-        [paths addObject:[locale stringByAppendingPathComponent:TMLBundleLanguageFilename]];
-        [paths addObject:[locale stringByAppendingPathComponent:TMLBundleTranslationsFilename]];
-        for (NSString *source in sources) {
-            [paths addObject:[[locale stringByAppendingPathComponent:TMLBundleSourcesRelativePath] stringByAppendingPathComponent:[source stringByAppendingPathExtension:@"json"]]];
+    if (loadedTranslations != nil) {
+        if (completion != nil) {
+            completion(nil);
         }
-        
-        [[TMLBundleManager defaultManager] fetchPublishedResources:paths
-                                                     bundleVersion:version
-                                                     baseDirectory:nil
-                                                   completionBlock:^(BOOL success, NSArray *paths, NSArray *errors) {
-                                                       if (success == YES && paths.count > 0) {
-                                                           [self installResources:paths completion:completion];
-                                                       }
-                                                       else if (completion != nil) {
-                                                           NSDictionary *errorInfo = @{
-                                                                                       TMLBundleErrorsKey: errors
-                                                                                       };
-                                                           NSError *ourError = [NSError errorWithDomain:TMLBundleErrorDomain
-                                                                                                   code:TMLBundleMissingResources
-                                                                                               userInfo:errorInfo];
-                                                           completion(ourError);
-                                                       }
-                                                   }];
+        return;
     }
+    
+    NSString *version = self.version;
+    NSMutableArray *paths = [NSMutableArray array];
+    NSArray *sources = [self sources];
+    [paths addObject:[locale stringByAppendingPathComponent:TMLBundleLanguageFilename]];
+    [paths addObject:[locale stringByAppendingPathComponent:TMLBundleTranslationsFilename]];
+    for (NSString *source in sources) {
+        [paths addObject:[[locale stringByAppendingPathComponent:TMLBundleSourcesRelativePath] stringByAppendingPathComponent:[source stringByAppendingPathExtension:@"json"]]];
+    }
+    
+    [[TMLBundleManager defaultManager] fetchPublishedResources:paths
+                                                 bundleVersion:version
+                                                 baseDirectory:nil
+                                               completionBlock:^(BOOL success, NSArray *paths, NSArray *errors) {
+                                                   if (success == YES && paths.count > 0) {
+                                                       [self installResources:paths completion:completion];
+                                                   }
+                                                   else if (completion != nil) {
+                                                       NSDictionary *errorInfo = @{
+                                                                                   TMLBundleErrorsKey: errors
+                                                                                   };
+                                                       NSError *ourError = [NSError errorWithDomain:TMLBundleErrorDomain
+                                                                                               code:TMLBundleMissingResources
+                                                                                           userInfo:errorInfo];
+                                                       completion(ourError);
+                                                   }
+                                               }];
 }
 
 #pragma mark - Synchronization
