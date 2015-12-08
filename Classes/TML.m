@@ -873,14 +873,6 @@
 
 #pragma mark - Utility Methods
 
-- (NSString *) callerClass {
-    NSArray *stack = [NSThread callStackSymbols];
-    NSString *caller = [[[stack objectAtIndex:2] componentsSeparatedByString:@"["] objectAtIndex:1];
-    caller = [[caller componentsSeparatedByString:@" "] objectAtIndex:0];
-    TMLDebug(@"caller: %@", stack);
-    return caller;
-}
-
 - (NSDictionary *) tokenValuesForDate: (NSDate *) date fromTokenizedFormat:(NSString *) tokenizedFormat {
     NSMutableDictionary *tokens = [NSMutableDictionary dictionary];
     
