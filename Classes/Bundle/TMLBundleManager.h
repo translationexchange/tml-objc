@@ -51,9 +51,16 @@ typedef void (^TMLBundleInstallBlock)(NSString *path, NSError *error);
 
 - (void) cleanup;
 
+#pragma mark - Registration
+
+- (void)registerBundle:(TMLBundle *)bundle;
+- (TMLBundle *)registeredBundleWithVersion:(NSString *)version;
+
 #pragma mark - Query
 
 - (NSArray *) installedBundles;
+- (TMLBundle *) installedBundleWithVersion:(NSString *)version;
+- (BOOL) isVersionInstalled:(NSString *)version;
 
 #pragma mark - Fetching
 
@@ -65,7 +72,7 @@ typedef void (^TMLBundleInstallBlock)(NSString *path, NSError *error);
 
 #pragma mark - Selection
 
-@property (nonatomic, readonly) TMLBundle *latestBundle;
+@property (nonatomic, strong) TMLBundle *latestBundle;
 @property (nonatomic, readonly) TMLBundle *apiBundle;
 
 #pragma mark - Notifications

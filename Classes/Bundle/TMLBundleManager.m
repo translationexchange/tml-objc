@@ -36,10 +36,10 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 @interface TMLBundleManager() {
     NSURLSession *_downloadSession;
     TMLBundle *_latestBundle;
+    NSMutableDictionary *_registry;
 }
 @property(strong, nonatomic) NSURL *archiveURL;
 @property(strong, nonatomic) TMLBundle *apiBundle;
-@property(strong, nonatomic) TMLBundle *latestBundle;
 @end
 
 @implementation TMLBundleManager
@@ -174,15 +174,8 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
                 TMLBundle *installedBundle = [[TMLBundle alloc] initWithContentsOfDirectory:destinationPath];
                 self.latestBundle = installedBundle;
             }
-            if (completionBlock != nil) {
-                if (success == YES) {
-                    [self cleanup];
-                    completionBlock(destinationPath, installError);
-                }
-                else {
-                    completionBlock(nil, installError);
-                }
-            }
+            [self cleanup];
+            completionBlock((success == YES) ? destinationPath : nil, installError);
             if (success == YES) {
                 [self notifyBundleMutation:TMLLocalizationUpdatesInstalledNotification
                                     bundle:self.latestBundle
@@ -394,14 +387,21 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 
 - (void)cleanup {
     NSUInteger keep = self.maximumBundlesToKeep;
-    if (keep == 0) {
+    if (keep <= 1) {
         return;
     }
     
     NSArray *installedBundles = [self installedBundles];
+    TMLBundle *latestBundle = [self latestBundle];
+    NSMutableArray *targetBundles = [installedBundles mutableCopy];
+    [targetBundles removeObject:latestBundle];
+    keep -= installedBundles.count - targetBundles.count;
+    installedBundles = targetBundles;
+    
     if (installedBundles.count <= keep) {
         return;
     }
+    
     installedBundles = [installedBundles sortedArrayUsingComparator:^NSComparisonResult(TMLBundle *a, TMLBundle *b) {
         NSString *aVersion = a.version;
         NSString *bVersion = b.version;
@@ -630,6 +630,23 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     }
 }
 
+#pragma mark - Registration
+
+- (void)registerBundle:(TMLBundle *)bundle {
+    NSString *version = bundle.version;
+    if (version == nil) {
+        return;
+    }
+    if (_registry == nil) {
+        _registry = [NSMutableDictionary dictionary];
+    }
+    _registry[version] = bundle;
+}
+
+- (TMLBundle *)registeredBundleWithVersion:(NSString *)version {
+    return _registry[version];
+}
+
 #pragma mark - Query
 
 - (NSArray *) installedBundles {
@@ -662,29 +679,42 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     return bundles;
 }
 
-#pragma mark - Active Bundle
+- (TMLBundle *)installedBundleWithVersion:(NSString *)version {
+    NSString *installPath = [self installPathForBundleVersion:version];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:installPath] == NO) {
+        return nil;
+    }
+    TMLBundle *bundle = [[TMLBundle alloc] initWithContentsOfDirectory:installPath];
+    return bundle;
+}
+
+- (BOOL)isVersionInstalled:(NSString *)version {
+    NSString *installPath = [self installPathForBundleVersion:version];
+    return ([[NSFileManager defaultManager] fileExistsAtPath:installPath] == YES);
+}
+
+#pragma mark - Latest Bundle
 
 - (void)setLatestBundle:(TMLBundle *)bundle {
     if (_latestBundle == bundle) {
         return;
     }
     
-    if (_latestBundle == nil) {
-        NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSString *link = [NSString stringWithFormat:@"%@/%@", [self defaultBundleInstallationDirectory], TMLBundleManagerLatestBundleLinkName];
-        NSError *error = nil;
-        NSDictionary *attrs = [fileManager attributesOfItemAtPath:link error:&error];
-        if (attrs != nil
-            && [fileManager removeItemAtPath:link error:&error] == NO) {
-            TMLError(@"Error removing symlink to active bundle: %@", error);
-        }
-        
-        NSString *path = bundle.path;
-        if ([fileManager createSymbolicLinkAtPath:link withDestinationPath:path error:&error] == NO) {
-            TMLError(@"Error linking bundle as active: %@", error);
-        }
-        _latestBundle = bundle;
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *link = [NSString stringWithFormat:@"%@/%@", [self defaultBundleInstallationDirectory], TMLBundleManagerLatestBundleLinkName];
+    NSError *error = nil;
+    NSDictionary *attrs = [fileManager attributesOfItemAtPath:link error:&error];
+    if (attrs != nil
+        && [fileManager removeItemAtPath:link error:&error] == NO) {
+        TMLError(@"Error removing symlink to active bundle: %@", error);
     }
+    
+    NSString *path = bundle.path;
+    if ([fileManager createSymbolicLinkAtPath:link withDestinationPath:path error:&error] == NO) {
+        TMLError(@"Error linking bundle as active: %@", error);
+    }
+    _latestBundle = bundle;
 }
 
 - (TMLBundle *)latestBundle {
@@ -692,7 +722,11 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
         NSFileManager *fileManager = [NSFileManager defaultManager];
         NSString *activeBundlePath = [NSString stringWithFormat:@"%@/%@", [self defaultBundleInstallationDirectory], TMLBundleManagerLatestBundleLinkName];
         if ([fileManager fileExistsAtPath:activeBundlePath] == YES) {
-            _latestBundle = [[TMLBundle alloc] initWithContentsOfDirectory:activeBundlePath];
+            NSString *version = [[activeBundlePath lastPathComponent] stringByDeletingPathExtension];
+            _latestBundle = (version != nil) ? [self registeredBundleWithVersion:version] : nil;
+            if (_latestBundle == nil) {
+                _latestBundle = [[TMLBundle alloc] initWithContentsOfDirectory:activeBundlePath];
+            }
         }
         else {
             NSArray *bundles = [self installedBundles];

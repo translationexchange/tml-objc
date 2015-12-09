@@ -169,8 +169,8 @@
     }
     else {
         [self checkForBundleUpdate:YES completion:^(NSString *version, NSString *path, NSError *error) {
-            if (path != nil && self.translationEnabled == NO) {
-                TMLBundle *newBundle = [[TMLBundle alloc] initWithContentsOfDirectory:path];
+            if (version != nil && self.translationEnabled == NO) {
+                TMLBundle *newBundle = [TMLBundle bundleWithVersion:version];
                 if ([newBundle isEqualToBundle:self.currentBundle] == NO) {
                     self.currentBundle = newBundle;
                 }
@@ -194,7 +194,7 @@
         TMLInfo(@"Initializing from local bundle: %@", bundle.version);
         self.application = newApplication;
         NSString *ourLocale = [self currentLocale];
-        if (ourLocale != nil && [bundle.availableLocales containsObject:ourLocale] == NO) {
+        if (ourLocale != nil) {
             [bundle loadTranslationsForLocale:ourLocale completion:^(NSError *error) {
                 if (error != nil) {
                     TMLError(@"Could not preload current locale '%@' into newly selected bundle: %@", ourLocale, error);
@@ -314,6 +314,22 @@
     return latest;
 }
 
+/**
+ *  Checks CDN for the current version info, and calls completion block when finishes.
+ *
+ *  The arguments passed to the completion block indicates several possible outcomes:
+ *
+ *     - The version argument indicates version found on CDN
+ *
+ *     - The path argument would indicate that a bundle was installed to that path.
+ *       If path is nil - that means no installation took place - that could mean - bundle with given version is already installed.
+ *
+ *     - Error will indicate there was an error anywhere in the process - either fetching the version info, 
+ *       or installing the new bundle.
+ *
+ *  @param install    Whether to install a bundle from CDN, if we don't have that version installed locally, that is...
+ *  @param completion Completion block
+ */
 - (void) checkForBundleUpdate:(BOOL)install
                    completion:(void(^)(NSString *version, NSString *path, NSError *error))completion
 {
@@ -333,8 +349,18 @@
             return;
         }
         
-        TMLBundle *mainBundle = [TMLBundle mainBundle];
-        if (install == YES && [version isEqualToString:mainBundle.version] == NO) {
+        TMLBundle *existingBundle = [TMLBundle bundleWithVersion:version];
+        
+        if (install == YES) {
+            if (existingBundle != nil) {
+                bundleManager.latestBundle = existingBundle;
+                if (completion != nil) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        completion(version, nil, nil);
+                    });
+                }
+            }
+            else {
                 NSString *defaultLocale = [self defaultLocale];
                 NSString *currentLocale = [self currentLocale];
                 NSMutableArray *localesToFetch = [NSMutableArray array];
@@ -353,11 +379,12 @@
                                                          });
                                                      }
                                                  }];
+            }
         }
         else {
             if (completion != nil) {
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    completion(version, [mainBundle path], nil);
+                    completion(version, nil, nil);
                 });
             }
         }

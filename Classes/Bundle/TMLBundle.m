@@ -53,10 +53,21 @@ NSString * const TMLBundleErrorsKey = @"errors";
     return [[TMLBundleManager defaultManager] apiBundle];
 }
 
++ (instancetype)bundleWithVersion:(NSString *)version {
+    TMLBundleManager *manager = [TMLBundleManager defaultManager];
+    TMLBundle *bundle = [manager registeredBundleWithVersion:version];
+    if (bundle != nil) {
+        return bundle;
+    }
+    return [manager installedBundleWithVersion:version];
+}
+
 - (instancetype)initWithContentsOfDirectory:(NSString *)path {
     if (self = [super init]) {
         self.path = path;
         _translations = [NSMutableDictionary dictionary];
+        TMLBundleManager *manager = [TMLBundleManager defaultManager];
+        [manager registerBundle:self];
     }
     return self;
 }
@@ -73,6 +84,10 @@ NSString * const TMLBundleErrorsKey = @"errors";
 
 - (BOOL)isEqualToBundle:(TMLBundle *)bundle {
     return [self.version isEqualToString:bundle.version] && [self.path isEqualToString:bundle.path];
+}
+
+- (NSUInteger)hash {
+    return [[NSString stringWithFormat:@"%@%@", self.version, self.path] hash];
 }
 
 - (BOOL)isMutable {
