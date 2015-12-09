@@ -151,10 +151,6 @@
     [notificationCenter addObserver:self selector:@selector(bundleSyncDidFinish:)
                                name:TMLDidFinishSyncNotification
                              object:nil];
-    [notificationCenter addObserver:self
-                           selector:@selector(bundleDidInstall:)
-                               name:TMLLocalizationUpdatesInstalledNotification
-                             object:nil];
     _observingNotifications = YES;
 }
 
@@ -173,9 +169,11 @@
     }
     else {
         [self checkForBundleUpdate:YES completion:^(NSString *version, NSString *path, NSError *error) {
-            if (error == nil
-                && self.translationEnabled == NO) {
-                self.currentBundle = [TMLBundle mainBundle];
+            if (path != nil && self.translationEnabled == NO) {
+                TMLBundle *newBundle = [[TMLBundle alloc] initWithContentsOfDirectory:path];
+                if ([newBundle isEqualToBundle:self.currentBundle] == NO) {
+                    self.currentBundle = newBundle;
+                }
             }
         }];
     }
@@ -321,14 +319,22 @@
 {
     TMLBundleManager *bundleManager = [TMLBundleManager defaultManager];
     [bundleManager fetchPublishedBundleInfo:^(NSDictionary *info, NSError *error) {
+        
         NSString *version = info[TMLBundleVersionKey];
-        TMLBundle *mainBundle = [TMLBundle mainBundle];
         if (version == nil) {
+            if (completion != nil) {
+                NSError *error = [NSError errorWithDomain:TMLBundleManagerErrorDomain
+                                                     code:TMLBundleManagerInvalidData
+                                                 userInfo:nil];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completion(version, nil, error);
+                });
+            }
             return;
         }
-        if (mainBundle == nil
-            || [mainBundle.version compareToTMLTranslationBundleVersion:version] == NSOrderedAscending) {
-            if (install == YES) {
+        
+        TMLBundle *mainBundle = [TMLBundle mainBundle];
+        if (install == YES && [version isEqualToString:mainBundle.version] == NO) {
                 NSString *defaultLocale = [self defaultLocale];
                 NSString *currentLocale = [self currentLocale];
                 NSMutableArray *localesToFetch = [NSMutableArray array];
@@ -342,14 +348,17 @@
                                                          locales:localesToFetch
                                                  completionBlock:^(NSString *path, NSError *error) {
                                                      if (completion != nil) {
-                                                         completion(version, path, error);
+                                                         dispatch_async(dispatch_get_main_queue(), ^{
+                                                             completion(version, path, error);
+                                                         });
                                                      }
                                                  }];
-            }
-            else {
-                if (completion != nil) {
-                    completion(version, nil, nil);
-                }
+        }
+        else {
+            if (completion != nil) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completion(version, [mainBundle path], nil);
+                });
             }
         }
     }];
@@ -363,15 +372,6 @@
     TMLBundle *bundle = userInfo[TMLBundleChangeInfoBundleKey];
     if (bundle != nil) {
         [self updateWithBundle:bundle];
-    }
-}
-
-- (void) bundleDidInstall:(NSNotification *)aNotification {
-    if (self.translationEnabled == NO) {
-        TMLBundle *newBundle = aNotification.userInfo[TMLBundleChangeInfoBundleKey];
-        if (newBundle != nil) {
-            self.currentBundle = newBundle;
-        }
     }
 }
 
