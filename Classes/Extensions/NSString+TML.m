@@ -1,17 +1,17 @@
 //
-//  NSString+TMLAdditions.m
+//  NSString+TML.m
 //  Demo
 //
 //  Created by Pasha on 10/29/15.
 //  Copyright © 2015 TMLHub Inc. All rights reserved.
 //
 
-#import "NSString+TMLAdditions.h"
+#import "NSString+TML.h"
 #import "TMLDecorationTokenizer.h"
 #import "TMLDataTokenizer.h"
 #import <CommonCrypto/CommonDigest.h>
 
-@implementation NSString (TMLAdditions)
+@implementation NSString (TML)
 
 - (NSString *)tmlTranslationBundleVersionFromPath {
     NSError *error = nil;

@@ -7,7 +7,7 @@
 //
 
 #import "NSObject+TMLJSON.h"
-#import "NSString+TmlAdditions.h"
+#import "NSString+TML.h"
 #import "NSURL+TML.h"
 #import "TML.h"
 #import "TMLAPIBundle.h"

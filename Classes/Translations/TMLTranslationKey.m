@@ -28,7 +28,7 @@
  *  THE SOFTWARE.
  */
 
-#import "NSString+TmlAdditions.h"
+#import "NSString+TML.h"
 #import "TML.h"
 #import "TMLApplication.h"
 #import "TMLAttributedDecorationTokenizer.h"

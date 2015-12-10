@@ -30,7 +30,7 @@
 
 #import "NSAttributedString+TML.h"
 #import "NSObject+TML.h"
-#import "NSString+TmlAdditions.h"
+#import "NSString+TML.h"
 #import "TML.h"
 #import "UIButton+TML.h"
 #import <objc/runtime.h>

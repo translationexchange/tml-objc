@@ -132,7 +132,6 @@
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, tableView.frame.size.width, 40)];
     NSDictionary *sec = (NSDictionary *) [self.items objectAtIndex:section];
     label.text = TMLLocalizedString(sec[@"title"]);
-//    TMLLocalizeViewWithLabel(label, [sec objectForKey:@"title"]);
     [sectionHeader addSubview:label];
     return sectionHeader;
 }
@@ -159,7 +158,6 @@
         }
     }
     cell.textLabel.text = TMLLocalizedString(title);
-//    TMLLocalizeViewWithLabel(cell.textLabel, title);
     return cell;
 }
 

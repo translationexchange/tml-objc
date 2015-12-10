@@ -30,7 +30,7 @@
 
 
 #import "NSObject+TML.h"
-#import "NSString+TMLAdditions.h"
+#import "NSString+TML.h"
 #import "TML.h"
 #import "TMLAPIBundle.h"
 #import "TMLAPIClient.h"
