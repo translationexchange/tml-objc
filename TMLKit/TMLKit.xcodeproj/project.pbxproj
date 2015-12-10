@@ -103,7 +103,6 @@
 		C4FCD3231C0FC7F200D723BC /* TMLRulesParser.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2BE1C0FC7F200D723BC /* TMLRulesParser.h */; };
 		C4FCD3241C0FC7F200D723BC /* TMLRulesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2BF1C0FC7F200D723BC /* TMLRulesParser.m */; };
 		C4FCD3251C0FC7F200D723BC /* TML+NSLocalizedString.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2C01C0FC7F200D723BC /* TML+NSLocalizedString.h */; };
-		C4FCD3261C0FC7F200D723BC /* TML+TMLLocalizedString.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2C11C0FC7F200D723BC /* TML+TMLLocalizedString.h */; };
 		C4FCD3271C0FC7F200D723BC /* TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2C21C0FC7F200D723BC /* TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD3281C0FC7F200D723BC /* TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2C31C0FC7F200D723BC /* TML.m */; };
 		C4FCD3291C0FC7F200D723BC /* TMLGlobals.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2C41C0FC7F200D723BC /* TMLGlobals.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -306,7 +305,6 @@
 		C4FCD2BE1C0FC7F200D723BC /* TMLRulesParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLRulesParser.h; sourceTree = "<group>"; };
 		C4FCD2BF1C0FC7F200D723BC /* TMLRulesParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLRulesParser.m; sourceTree = "<group>"; };
 		C4FCD2C01C0FC7F200D723BC /* TML+NSLocalizedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TML+NSLocalizedString.h"; sourceTree = "<group>"; };
-		C4FCD2C11C0FC7F200D723BC /* TML+TMLLocalizedString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TML+TMLLocalizedString.h"; sourceTree = "<group>"; };
 		C4FCD2C21C0FC7F200D723BC /* TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TML.h; sourceTree = "<group>"; };
 		C4FCD2C31C0FC7F200D723BC /* TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TML.m; sourceTree = "<group>"; };
 		C4FCD2C41C0FC7F200D723BC /* TMLGlobals.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLGlobals.h; sourceTree = "<group>"; };
@@ -484,7 +482,6 @@
 				C4FCD2C21C0FC7F200D723BC /* TML.h */,
 				C4FCD2C31C0FC7F200D723BC /* TML.m */,
 				C4FCD2C01C0FC7F200D723BC /* TML+NSLocalizedString.h */,
-				C4FCD2C11C0FC7F200D723BC /* TML+TMLLocalizedString.h */,
 				C4FCD2C41C0FC7F200D723BC /* TMLGlobals.h */,
 				C4FCD2C51C0FC7F200D723BC /* TMLGlobals.m */,
 				C4FCD2C61C0FC7F200D723BC /* TMLLogger.h */,
@@ -889,7 +886,6 @@
 				C4FCD3321C0FC7F200D723BC /* TMLDecorationTokenizer.h in Headers */,
 				C4FCD2F01C0FC7F200D723BC /* TMLAPIBundle.h in Headers */,
 				C4FCD33C1C0FC7F200D723BC /* TMLPipedToken.h in Headers */,
-				C4FCD3261C0FC7F200D723BC /* TML+TMLLocalizedString.h in Headers */,
 				C4FCD3251C0FC7F200D723BC /* TML+NSLocalizedString.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
