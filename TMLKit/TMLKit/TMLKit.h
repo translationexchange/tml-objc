@@ -26,6 +26,25 @@
 #import "TMLLanguageSelectorViewController.h"
 #import "TMLViewController.h"
 
+#import "NSAttributedString+TML.h"
+#import "NSObject+TML.h"
+#import "NSObject+TMLJSON.h"
+#import "NSString+TML.h"
+#import "NSURL+TML.h"
+#import "UIBarButtonItem+TML.h"
+#import "UIBarItem+TML.h"
+#import "UIButton+TML.h"
+#import "UILabel+TML.h"
+#import "UINavigationItem+TML.h"
+#import "UISearchBar+TML.h"
+#import "UISegmentedControl+TML.h"
+#import "UITableView+TML.h"
+#import "UITextField+TML.h"
+#import "UITextView+TML.h"
+#import "UIView+TML.h"
+#import "UIViewController+TML.h"
+
+
 //! Project version number for TMLKit.
 FOUNDATION_EXPORT double TMLKitVersionNumber;
 
