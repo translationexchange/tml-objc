@@ -193,6 +193,8 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 
 @interface TML() {
     BOOL _observingNotifications;
+    BOOL _checkingForBundleUpdate;
+    NSDate *_lastBundleUpdateDate;
 }
 @property(strong, nonatomic) TMLConfiguration *configuration;
 @property(strong, nonatomic) TMLAPIClient *apiClient;
@@ -316,14 +318,16 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
         [(TMLAPIBundle *)currentBundle setNeedsSync];
     }
     else {
-        [self checkForBundleUpdate:YES completion:^(NSString *version, NSString *path, NSError *error) {
-            if (version != nil && self.translationEnabled == NO) {
-                TMLBundle *newBundle = [TMLBundle bundleWithVersion:version];
-                if ([newBundle isEqualToBundle:self.currentBundle] == NO) {
-                    self.currentBundle = newBundle;
+        if ([self shouldCheckForBundleUpdate] == YES) {
+            [self checkForBundleUpdate:YES completion:^(NSString *version, NSString *path, NSError *error) {
+                if (version != nil && self.translationEnabled == NO) {
+                    TMLBundle *newBundle = [TMLBundle bundleWithVersion:version];
+                    if ([newBundle isEqualToBundle:self.currentBundle] == NO) {
+                        self.currentBundle = newBundle;
+                    }
                 }
-            }
-        }];
+            }];
+        }
     }
 }
 
@@ -400,35 +404,6 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
         }];
         return;
     }
-    // Otherwise, if we got nothing at all, look up on CDN
-    else if (bundle == nil) {
-        [bundleManager fetchPublishedBundleInfo:^(NSDictionary *info, NSError *error) {
-            NSString *publishedVersion = info[TMLBundleManagerVersionKey];
-            if (publishedVersion != nil) {
-                NSMutableArray *locales = [NSMutableArray array];
-                NSString *defaultLocale = [self defaultLocale];
-                NSString *currentLocale = [self currentLocale];
-                if (defaultLocale != nil) {
-                    [locales addObject:defaultLocale];
-                }
-                if (currentLocale != nil && [locales containsObject:currentLocale] == NO) {
-                    [locales addObject:currentLocale];
-                }
-                [bundleManager installPublishedBundleWithVersion:publishedVersion
-                                                         locales:locales
-                                                 completionBlock:^(NSString *path, NSError *error) {
-                                                     TMLBundle *newBundle = nil;
-                                                     if (path != nil && error == nil) {
-                                                         newBundle = [[TMLBundle alloc] initWithContentsOfDirectory:path];
-                                                     }
-                                                     if (completion != nil) {
-                                                         completion(newBundle);
-                                                     }
-                                                 }];
-            }
-        }];
-        return;
-    }
     if (completion != nil) {
         completion(bundle);
     }
@@ -465,6 +440,17 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     return latest;
 }
 
+- (BOOL)shouldCheckForBundleUpdate {
+    if (_checkingForBundleUpdate == YES) {
+        return NO;
+    }
+    if (_lastBundleUpdateDate != nil) {
+        NSTimeInterval sinceLastUpdate = [[NSDate date] timeIntervalSinceDate:_lastBundleUpdateDate];
+        return (sinceLastUpdate > 60);
+    }
+    return YES;
+}
+
 /**
  *  Checks CDN for the current version info, and calls completion block when finishes.
  *
@@ -484,32 +470,35 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 - (void) checkForBundleUpdate:(BOOL)install
                    completion:(void(^)(NSString *version, NSString *path, NSError *error))completion
 {
+    _checkingForBundleUpdate = YES;
+    
     TMLBundleManager *bundleManager = [TMLBundleManager defaultManager];
+    void(^finalize)(NSString *, NSString *, NSError *) = ^(NSString *aVersion, NSString *aPath, NSError *anError){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            _checkingForBundleUpdate = NO;
+            _lastBundleUpdateDate = [NSDate date];
+            if (completion != nil) {
+                completion(aVersion, aPath, anError);
+            }
+        });
+    };
+    
     [bundleManager fetchPublishedBundleInfo:^(NSDictionary *info, NSError *error) {
-        
         NSString *version = info[TMLBundleVersionKey];
         if (version == nil) {
-            if (completion != nil) {
-                NSError *error = [NSError errorWithDomain:TMLBundleManagerErrorDomain
-                                                     code:TMLBundleManagerInvalidData
-                                                 userInfo:nil];
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    completion(version, nil, error);
-                });
-            }
+            NSError *error = [NSError errorWithDomain:TMLBundleManagerErrorDomain
+                                                 code:TMLBundleManagerInvalidData
+                                             userInfo:nil];
+            finalize(version, nil, error);
             return;
         }
         
         TMLBundle *existingBundle = [TMLBundle bundleWithVersion:version];
         
         if (install == YES) {
-            if (existingBundle != nil) {
+            if (existingBundle != nil && [existingBundle isValid] == YES) {
                 bundleManager.latestBundle = existingBundle;
-                if (completion != nil) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        completion(version, nil, nil);
-                    });
-                }
+                finalize(version, nil, nil);
             }
             else {
                 NSString *defaultLocale = [self defaultLocale];
@@ -524,20 +513,12 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
                 [bundleManager installPublishedBundleWithVersion:version
                                                          locales:localesToFetch
                                                  completionBlock:^(NSString *path, NSError *error) {
-                                                     if (completion != nil) {
-                                                         dispatch_async(dispatch_get_main_queue(), ^{
-                                                             completion(version, path, error);
-                                                         });
-                                                     }
+                                                     finalize(version, path, error);
                                                  }];
             }
         }
         else {
-            if (completion != nil) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    completion(version, nil, nil);
-                });
-            }
+            finalize(version, nil, nil);
         }
     }];
 }

@@ -90,6 +90,9 @@ typedef NS_ENUM(NSInteger, TMLBundleErrorCode) {
 
 @property (readonly, nonatomic) BOOL isMutable;
 
+#pragma mark -
+@property (readonly, nonatomic, getter=isValid) BOOL valid;
+
 #pragma mark - Translations
 
 - (NSDictionary *)translationsForLocale:(NSString *)locale;

@@ -285,18 +285,18 @@ NSString * const TMLBundleErrorsKey = @"errors";
                                                  bundleVersion:version
                                                  baseDirectory:nil
                                                completionBlock:^(BOOL success, NSArray *paths, NSArray *errors) {
-                                                   if (success == YES && paths.count > 0) {
-                                                       [self installResources:paths completion:completion];
-                                                   }
-                                                   else if (completion != nil) {
-                                                       NSDictionary *errorInfo = @{
-                                                                                   TMLBundleErrorsKey: errors
-                                                                                   };
-                                                       NSError *ourError = [NSError errorWithDomain:TMLBundleErrorDomain
-                                                                                               code:TMLBundleMissingResources
-                                                                                           userInfo:errorInfo];
-                                                       completion(ourError);
-                                                   }
+                                                       if (success == YES && paths.count > 0) {
+                                                           [self installResources:paths completion:completion];
+                                                       }
+                                                       else if (completion != nil) {
+                                                           NSDictionary *errorInfo = @{
+                                                                                       TMLBundleErrorsKey: errors
+                                                                                       };
+                                                           NSError *ourError = [NSError errorWithDomain:TMLBundleErrorDomain
+                                                                                                   code:TMLBundleMissingResources
+                                                                                               userInfo:errorInfo];
+                                                           completion(ourError);
+                                                       }
                                                }];
 }
 
@@ -380,18 +380,34 @@ NSString * const TMLBundleErrorsKey = @"errors";
                                        [allErrors addObject:error];
                                    }
                                    if (count == resourcePaths.count) {
-                                       [self resetData];
-                                       if ([[TML sharedInstance] currentBundle] == self) {
-                                           [[TMLBundleManager defaultManager] notifyBundleMutation:TMLLocalizationDataChangedNotification
-                                                                                            bundle:self
-                                                                                            errors:allErrors];
-                                       }
-                                       if (completion != nil) {
-                                           completion((allErrors.count > 0) ? [allErrors firstObject] : nil);
-                                       }
+                                       dispatch_async(dispatch_get_main_queue(), ^{
+                                           [self resetData];
+                                           if ([[TML sharedInstance] currentBundle] == self) {
+                                               [[TMLBundleManager defaultManager] notifyBundleMutation:TMLLocalizationDataChangedNotification
+                                                                                                bundle:self
+                                                                                                errors:allErrors];
+                                           }
+                                           if (completion != nil) {
+                                               completion((allErrors.count > 0) ? [allErrors firstObject] : nil);
+                                           }
+                                       });
                                    }
                                }];
     }
+}
+
+#pragma mark -
+- (BOOL)isValid {
+    NSString *ourPath = [self path];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSArray *fileNames = @[TMLBundleApplicationFilename, TMLBundleSourcesFilename];
+    for (NSString *fileName in fileNames) {
+        NSString *path = [ourPath stringByAppendingPathComponent:fileName];
+        if ([fileManager fileExistsAtPath:path] == NO) {
+            return NO;
+        }
+    }
+    return YES;
 }
 
 #pragma mark -

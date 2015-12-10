@@ -152,14 +152,19 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
             destinationPath = [self installPathForBundleVersion:bundleName applicationKey:application.key];
             
             NSString *destinationDir = [destinationPath stringByDeletingLastPathComponent];
-            if ([fileManager fileExistsAtPath:destinationDir] == NO) {
-                if ([fileManager createDirectoryAtPath:destinationDir
-                           withIntermediateDirectories:YES
-                                            attributes:nil
-                                                 error:&installError] == NO) {
-                    TMLError(@"Error creating bundle installation directory: %@", installError);
+            if ([fileManager fileExistsAtPath:destinationDir] == YES) {
+                if([fileManager removeItemAtPath:destinationDir error:&installError] == NO) {
+                    TMLError(@"Error removing existing bundle installation path: %@", installError);
                     success = NO;
                 }
+            }
+            if (success == YES
+                && [fileManager createDirectoryAtPath:destinationDir
+                          withIntermediateDirectories:YES
+                                           attributes:nil
+                                                error:&installError] == NO) {
+                TMLError(@"Error creating bundle installation directory: %@", installError);
+                success = NO;
             }
             if (success == YES
                 && [aPath isEqualToString:destinationPath] == NO
@@ -169,19 +174,17 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
             }
         }
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            if (success == YES) {
-                TMLBundle *installedBundle = [[TMLBundle alloc] initWithContentsOfDirectory:destinationPath];
-                self.latestBundle = installedBundle;
-            }
-            [self cleanup];
-            completionBlock((success == YES) ? destinationPath : nil, installError);
-            if (success == YES) {
-                [self notifyBundleMutation:TMLLocalizationUpdatesInstalledNotification
-                                    bundle:self.latestBundle
-                                    errors:nil];
-            }
-        });
+        if (success == YES) {
+            TMLBundle *installedBundle = [[TMLBundle alloc] initWithContentsOfDirectory:destinationPath];
+            self.latestBundle = installedBundle;
+        }
+        [self cleanup];
+        completionBlock((success == YES) ? destinationPath : nil, installError);
+        if (success == YES) {
+            [self notifyBundleMutation:TMLLocalizationUpdatesInstalledNotification
+                                bundle:self.latestBundle
+                                errors:nil];
+        }
     }
     else if ([@"zip" isEqualToString:extension] == YES) {
         [self installBundleFromZipArchive:aPath
@@ -333,7 +336,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
         return;
     }
     
-    __block NSMutableArray *resources = [NSMutableArray arrayWithArray:@[@"application.json", @"snapshot.json"]];
+    __block NSMutableSet *resources = [NSMutableSet setWithArray:@[@"application.json", @"snapshot.json"]];
     if (locales.count > 0) {
         for (NSString *locale in locales) {
             [resources addObject:[locale stringByAppendingPathComponent:TMLBundleLanguageFilename]];
@@ -354,7 +357,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
                              }
                          }
                      }
-                     [self fetchPublishedResources:resources
+                     [self fetchPublishedResources:[resources copy]
                                      bundleVersion:version
                                      baseDirectory:bundleDestinationPath
                                    completionBlock:^(BOOL success, NSArray *paths, NSArray *errors) {
@@ -474,7 +477,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
                         }] resume];
 }
 
-- (void) fetchPublishedResources:(NSArray *)resourcePaths
+- (void) fetchPublishedResources:(NSSet *)resourcePaths
                    bundleVersion:(NSString *)bundleVersion
                    baseDirectory:(NSString *)baseDirectory
                  completionBlock:(void(^)(BOOL success, NSArray *paths, NSArray *errors))completionBlock
@@ -495,6 +498,9 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
                          }
                          else if (paths != nil) {
                              [paths addObject:path];
+                         }
+                         if (count > resourcePaths.count) {
+                             TMLError(@"Overflown handler for URL task");
                          }
                          if (count == resourcePaths.count
                              && completionBlock != nil) {
@@ -580,25 +586,27 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
                                     code:TMLBundleManagerInvalidApplicationKeyError
                                 userInfo:nil];
         TMLError(@"Tried to fetch published bundle info w/o valid application key");
+        if (completionBlock != nil) {
+            completionBlock(nil, error);
+        }
+        return;
     }
     
-    if (error == nil) {
-        NSURL *publishedVersionURL = [self.archiveURL URLByAppendingPathComponent:[NSString stringWithFormat:@"%@/version.json", applicationKey]];
-        [self fetchURL:publishedVersionURL
-           cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-       completionBlock:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-           NSDictionary *versionInfo;
-           if (data != nil) {
-               versionInfo = [data tmlJSONObject];
-           }
-           else {
-               TMLError(@"Error fetching published bundle info: %@", error);
-           }
-           if (completionBlock != nil) {
-               completionBlock(versionInfo, error);
-           }
-       }];
-    }
+    NSURL *publishedVersionURL = [self.archiveURL URLByAppendingPathComponent:[NSString stringWithFormat:@"%@/version.json", applicationKey]];
+    [self fetchURL:publishedVersionURL
+       cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
+   completionBlock:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+       NSDictionary *versionInfo;
+       if (data != nil) {
+           versionInfo = [data tmlJSONObject];
+       }
+       else {
+           TMLError(@"Error fetching published bundle info: %@", error);
+       }
+       if (completionBlock != nil) {
+           completionBlock(versionInfo, error);
+       }
+   }];
 }
 
 - (void) installResourceFromPath:(NSString *)resourcePath
