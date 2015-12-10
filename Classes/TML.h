@@ -316,58 +316,6 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...);
 #define TMLLocalizedAttributedDate(date, format, ...) \
 (NSString *)TMLLocalizeDate(@{TMLSenderOptionName: self, TMLTokenFormatOptionName: TMLAttributedTokenFormatString}, date, format, ##__VA_ARGS__, NULL)
 
-
-//#define TMLLocalizedString(label) \
-//    [TML localizeString:label description:nil tokens:nil options:nil sender:self]
-//
-//#define TMLLocalizedKeyPath(string, keyPath) \
-//    [TML localizeString:string description:nil tokens:nil options:@{TMLRestorationKeyOptionName:keyPath} sender:self]
-//
-//#define TMLLocalizedStringWithDescription(label, desc) \
-//    [TML localizeString:label description:desc tokens:nil options:nil sender:self]
-//
-//#define TMLLocalizedStringWithDescriptionAndTokens(label, desc, tkns) \
-//    [TML localizeString:label description:desc tokens:tkns options:nil sender:self]
-//
-//#define TMLLocalizedStringWithDescriptionAndTokensAndOptions(label, desc, tkns, opts) \
-//    [TML localizeString:label description:desc tokens:tkns options:opts sender:self]
-//
-//#define TMLLocalizedStringWithTokens(label, tkns) \
-//    [TML localizeString:label description:nil tokens:tkns options:nil sender:self]
-//
-//#define TMLLocalizedStringWithTokensAndOptions(label, tkns, opts) \
-//    [TML localizeString:label description:nil tokens:tkns options:opts sender:self]
-//
-//#define TMLLocalizedStringWithOptions(label, opts) \
-//    [TML localizeString:label description:nil tokens:nil options:opts sender:self]
-//
-//#define TMLLocalizedStringWithDescriptionAndOptions(label, desc, opts) \
-//    [TML localizeString:label description:desc tokens:nil options:opts sender:self]
-//
-//#define TMLLocalizedAttributedString(label) \
-//    [TML localizeAttributedString: label description:nil tokens:nil options:nil sender:self]
-//
-//#define TMLLocalizedAttributedKeyPath(string, keyPath) \
-//    [TML localizeString:string description:nil tokens:nil options:@{TMLRestorationKeyOptionName:keyPath} sender:self]
-//
-//#define TMLLocalizedAttributedStringWithDescription(label, desc) \
-//    [TML localizeAttributedString: label description:desc tokens:nil options:nil sender:self]
-//
-//#define TMLLocalizedAttributedStringWithDescriptionAndTokens(label, desc, tkns) \
-//    [TML localizeAttributedString: label description:desc tokens:tkns options:nil sender:self]
-//
-//#define TMLLocalizedAttributedStringWithDescriptionAndTokensAndOptions(label, desc, tkns, opts) \
-//    [TML localizeAttributedString: label description:desc tokens:tkns options:opts sender:self]
-//
-//#define TMLLocalizedAttributedStringWithTokens(label, tkns) \
-//    [TML localizeAttributedString: label description:nil tokens:tkns options:nil sender:self]
-//
-//#define TMLLocalizedAttributedStringWithTokensAndOptions(label, tkns, opts) \
-//    [TML localizeAttributedString: label description:nil tokens:tkns options:opts sender:self]
-//
-//#define TMLLocalizedAttributedStringWithOptions(label, opts) \
-//    [TML localizeAttributedString: label description:nil tokens:nil options:opts sender:self]
-
 #define TMLBeginSource(name) \
     [TML beginBlockWithOptions: @{TMLSourceOptionName: name}];
 
@@ -379,15 +327,3 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...);
 
 #define TMLEndBlockWithopts \
     [TML endBlockWithopts];
-
-//#define TMLLocalizedDateWithFormat(date, format) \
-//    [TML localizeDate:date withFormat:format description:nil sender:self];
-//
-//#define TMLLocalizedDateWithFormatAndDescription(date, format, desc) \
-//[TML localizeDate:date withFormat:format description:desc sender:self];
-//
-//#define TMLLocalizedDateWithFormatKey(date, formatKey) \
-//    [TML localizeDate:date withFormatKey:formatKey description:nil sender:self];
-//
-//#define TMLLocalizedDateWithFormatKeyAndDescription(date, formatKey, desc) \
-//    [TML localizeDate:date withFormatKey:formatKey description:desc sender:self];
