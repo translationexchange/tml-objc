@@ -260,7 +260,7 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self initTranslationBundle:^(TMLBundle *bundle) {
                 if (bundle == nil) {
-                    TMLError(@"Failed to initialize translation bundle");
+                    TMLWarn(@"No local translation bundle found...");
                 }
                 else {
                     if (self.translationEnabled == NO) {
