@@ -68,6 +68,7 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
         [self setupDefaultTokens];
         [self setupLocalization];
         self.apiURL = [NSURL URLWithString:kTMLServiceHost];
+        self.localizeNIBStrings = YES;
     }
     return self;
 }

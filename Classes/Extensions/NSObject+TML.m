@@ -57,11 +57,13 @@
 
 - (void)tmlAwakeFromNib {
     [self tmlAwakeFromNib];
-    NSString *accessibilityLabel = self.accessibilityLabel;
-    if (accessibilityLabel != nil) {
-        self.accessibilityLabel = TMLLocalizedString(accessibilityLabel, @"accessibilityLabel");
+    if ([[TML sharedInstance] configuration].localizeNIBStrings == YES) {
+        NSString *accessibilityLabel = self.accessibilityLabel;
+        if (accessibilityLabel != nil) {
+            self.accessibilityLabel = TMLLocalizedString(accessibilityLabel, @"accessibilityLabel");
+        }
+        [self localizeWithTML];
     }
-    [self localizeWithTML];
 }
 
 - (id)tmlValueForKeyPath:(NSString *)keyPath {
