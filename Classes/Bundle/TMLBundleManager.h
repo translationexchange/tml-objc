@@ -75,6 +75,10 @@ typedef void (^TMLBundleInstallBlock)(NSString *path, NSError *error);
 @property (nonatomic, strong) TMLBundle *latestBundle;
 @property (nonatomic, readonly) TMLBundle *apiBundle;
 
+#pragma mark - Removing
+
+- (void)removeAllBundles;
+
 #pragma mark - Notifications
 
 - (void) notifyBundleMutation:(NSString *)mutationType

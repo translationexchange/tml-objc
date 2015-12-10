@@ -281,11 +281,11 @@
 
 - (void) registerMissingTranslationKey:(TMLTranslationKey *)translationKey forSourceKey:(NSString *)sourceKey;
 
-- (void) submitMissingTranslationKeys;
-
 - (BOOL) hasLocalTranslationsForLocale:(NSString *)locale;
 
 - (BOOL) isInlineTranslationsEnabled;
+
+- (void) removeLocalizationData;
 
 #pragma mark - Block options
 

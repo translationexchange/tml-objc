@@ -114,7 +114,7 @@
                                    @"title": @"In-App Translations",
                                    },
                                @{
-                                   @"title": @"Submit missing strings",
+                                   @"title": @"Remove Cache",
                                    },
                                @{
                                    @"title": @"Translator Tools",
@@ -177,7 +177,7 @@
             tml.translationEnabled = !tml.translationEnabled;
             [tableView reloadData];
         } else if (indexPath.row == 2) {
-            [[TML sharedInstance] submitMissingTranslationKeys];
+            [[TML sharedInstance] removeLocalizationData];
         } else if (indexPath.row == 3) {
             TMLTranslatorViewController *translator = [[TMLTranslatorViewController alloc] init];
             [self presentViewController:translator animated:YES completion:nil];

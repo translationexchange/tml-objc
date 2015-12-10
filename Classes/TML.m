@@ -1111,11 +1111,9 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     return tokens;
 }
 
-- (void) submitMissingTranslationKeys {
-    if ([self.currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
-        TMLAPIBundle *bundle = (TMLAPIBundle *)self.currentBundle;
-        [bundle sync];
-    }
+- (void)removeLocalizationData {
+    [[TMLBundleManager defaultManager] removeAllBundles];
+    [self setCurrentBundle:nil];
 }
 
 @end

@@ -764,6 +764,34 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     return _apiBundle;
 }
 
+#pragma mark - Removing
+
+- (void)removeAllBundles {
+    NSMutableArray *allBundles = [[self installedBundles] mutableCopy];
+    [allBundles addObject:[self apiBundle]];
+    if (allBundles.count == 0) {
+        return;
+    }
+    TMLInfo(@"Removing %i local translation bundles.", allBundles.count);
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSError *error;
+    for (TMLBundle *bundle in allBundles) {
+        NSString *bundlePath = bundle.path;
+        if (bundlePath == nil) {
+            continue;
+        }
+        if([fileManager removeItemAtPath:bundlePath error:&error] == NO) {
+            TMLError(@"Error removing installed bundle: %@", error);
+        }
+    }
+    
+    NSString *link = [NSString stringWithFormat:@"%@/%@", [self defaultBundleInstallationDirectory], TMLBundleManagerLatestBundleLinkName];
+    if ([fileManager removeItemAtPath:link error:&error] == NO) {
+        TMLError(@"Error removing latest bundle symlink: %@", error);
+    }
+    self.latestBundle = nil;
+}
+
 #pragma mark - Notifications
 
 - (void) notifyBundleMutation:(NSString *)mutationType
