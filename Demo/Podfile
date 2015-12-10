@@ -3,12 +3,8 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '7.0'
 
 target "Demo" do
-	podspec :path => "../Tml.podspec"
-    
     pod 'ViewDeck', '~> 2.2.11'
 end
 
 target "DemoTests" do
-	podspec :path => "../Tml.podspec"
-
 end
