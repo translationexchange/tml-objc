@@ -7,230 +7,127 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0CDA851908C6DA4EE74A10DB9A10737F /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = F5F6608EEF615B5B258FB08CC041967F /* unzip.c */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		0F75F77D6064092168D3788363AE6D89 /* IIViewDeckController.h in Headers */ = {isa = PBXBuildFile; fileRef = FB331356FCAD438669B0C52D52681F18 /* IIViewDeckController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1404C0CB5C9DB0CCAC963FA418B51B0C /* MPColorTools-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 061198656F20C69FFBFB6BF5881D9642 /* MPColorTools-dummy.m */; };
-		18FE4913B27470F70A781382D6C60104 /* NVHFile.m in Sources */ = {isa = PBXBuildFile; fileRef = B6E27C95355BC91C20E09BF5D11F006A /* NVHFile.m */; };
-		19DC46E8B5E6D70E14AC58EF08CEE3FF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37ECA5F82C19F792E4F5146A01C56514 /* Foundation.framework */; };
-		1B4E8325B9B416E05692DF6E08090033 /* SSZipArchive.h in Headers */ = {isa = PBXBuildFile; fileRef = FE79BABB247BD11EB7B18ED0B56C8AD6 /* SSZipArchive.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		25A1CD0D872DF9E040CE7A7782964B6E /* NVHTarGzip-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0420FAFE2074EF42634648DB195ADD76 /* NVHTarGzip-dummy.m */; };
-		2628A1A98AE7A7FED1AC8C1238FAE669 /* NVHTarFile.h in Headers */ = {isa = PBXBuildFile; fileRef = F57C5928F04829EFE71510E6A7318041 /* NVHTarFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		27CBD22F568032B0BC6553F3AFBECE9A /* NVHProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = DE602B0F462C9F0ECA0D572F4ACA106D /* NVHProgress.m */; };
+		1404C0CB5C9DB0CCAC963FA418B51B0C /* MPColorTools-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 30C997551B02FAADB2B00E7FED708A80 /* MPColorTools-dummy.m */; };
+		2123334D753D8F28C72CAF1BE659F735 /* IIViewDeckController.h in Headers */ = {isa = PBXBuildFile; fileRef = A7E33B9D798C4D406FC4160AE5F8E3D6 /* IIViewDeckController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2989492A1A182744E36FD61DF1746D94 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37ECA5F82C19F792E4F5146A01C56514 /* Foundation.framework */; };
-		2A47B9FC60E71C52DD4AC6FFA8FD611E /* ioapi.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FDED92C5960E5F5F7205CA62A7423E7 /* ioapi.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		29E4A7B2BC0C9D495D28BFE5FA288460 /* IIWrapController.h in Headers */ = {isa = PBXBuildFile; fileRef = FCBCD6B4487BB510AA738DD4364D9F2E /* IIWrapController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2A527629B49394DCCF201941728967A8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37ECA5F82C19F792E4F5146A01C56514 /* Foundation.framework */; };
-		31B21E56AB8B259EC0A91524583714FE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64AB8C0A1E815C07C6F968F76F7E559 /* QuartzCore.framework */; };
-		3280832753ED26D93C5358005F6DDDF9 /* unzip.h in Headers */ = {isa = PBXBuildFile; fileRef = A8111F559B56D3B7026D2C37801F6218 /* unzip.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3359BBEE912DAF0ABAC3D7386C8EAC6C /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BB322E80ED28A8BECE9ADEDAB22AC26 /* IIViewDeckController.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		34F45AFAB93207CA1154C8F2B46B6624 /* IIWrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 64BA7D56FFDE9E9862343D490B28E2EE /* IIWrapController.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		368BBCA58A4EF71FCA4117A9FDFCEDF8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37ECA5F82C19F792E4F5146A01C56514 /* Foundation.framework */; };
-		3D75AD59EF0407650378DD6688744D2F /* NSFileManager+NVHFileSize.m in Sources */ = {isa = PBXBuildFile; fileRef = 886614A8F4EB469E36DE5F0DC2E7653E /* NSFileManager+NVHFileSize.m */; };
-		3E0A45BD13978717A6832D4532A792AB /* NVHGzipFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C50307D90A40D83EFA2C5E9BF876986 /* NVHGzipFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4570C95161BD90314A07D43518BB049C /* IIWrapController.h in Headers */ = {isa = PBXBuildFile; fileRef = B96B68E609BD572A6C8ACF8EFC8EA1DC /* IIWrapController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		484CBCA9BB692D802239420726034DEE /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 84AFC4A7BE683BDB4A0CDCDCBEC08028 /* zip.c */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		5A625CB2F55770EC6C705838411E6EC9 /* MPColorTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 768BB2D565365B82751863B6B1A0CD1F /* MPColorTools.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5EB4F27B76513AE918BA5AE0868E87C8 /* MBProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = FEFF01FFCEF64D45F01EFBE94DB01F94 /* MBProgressHUD.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7016E2D39C258832C21124AB6C782EF0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37ECA5F82C19F792E4F5146A01C56514 /* Foundation.framework */; };
+		37664B429E2199B9C08767868F721E43 /* ViewDeck-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B49DE5F7E225281EDAE0A0135BD8461D /* ViewDeck-dummy.m */; };
+		3A4BD05D6BAC4D25D013ED32CD1E88E4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37ECA5F82C19F792E4F5146A01C56514 /* Foundation.framework */; };
+		3CD34131687013531CE907E0B8A57924 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37ECA5F82C19F792E4F5146A01C56514 /* Foundation.framework */; };
+		3F9461B4C05FC9A6A67EDB40105BDD17 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64AB8C0A1E815C07C6F968F76F7E559 /* QuartzCore.framework */; };
+		5A625CB2F55770EC6C705838411E6EC9 /* MPColorTools.h in Headers */ = {isa = PBXBuildFile; fileRef = 21CE2F306317E87E404FC168CB1B14E2 /* MPColorTools.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5B56CFF519754A74A79FFE0F7133AE4D /* IISideController.h in Headers */ = {isa = PBXBuildFile; fileRef = BC1BFC516E5D5BB61DB82C7C90B88403 /* IISideController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5EB4F27B76513AE918BA5AE0868E87C8 /* MBProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 19A3492B051964301866F92CC16C4C6C /* MBProgressHUD.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6BE725ACFEE5BD547E4DD4103B3707C6 /* Pods-DemoTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = EEAF707ECE17997BD3F97DC35BE48C78 /* Pods-DemoTests-dummy.m */; };
 		70D801E0B95C23BCC270E4EC8659D463 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AB254A0FF9C0E1ECCCC3CA36E6AC016 /* CoreGraphics.framework */; };
-		7B3582EF307823EF75CDDC27B14E35D8 /* crypt.h in Headers */ = {isa = PBXBuildFile; fileRef = 8DB92390493D25F367285C9D69A9EC75 /* crypt.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7ECBFDA8628F8193DEFD369CA3C79200 /* NVHTarFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B9B24ED76235399FF50EC7B2DB56299 /* NVHTarFile.m */; };
-		805E8202F34D86D46031C6A0AEF3E63D /* zip.h in Headers */ = {isa = PBXBuildFile; fileRef = 6EB427CDA3AE40B91352956403E3D697 /* zip.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		82FC12F67E83874B93592218E9FB4CA0 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 139030B997D298EBD61C719A97123ED4 /* MBProgressHUD.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		9B7EC23EDE9E8B9A3BE9785C0FFB4E38 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37ECA5F82C19F792E4F5146A01C56514 /* Foundation.framework */; };
-		9D2E94948780326DA3E478FCDBFC0DF4 /* MPColorTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 1027D6435CA5D7BD2CBD28AF8BA2DF35 /* MPColorTools.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		9DDDB7D6DBF6DBF3D72ED6B1CFB46B12 /* NVHGzipFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 8568027009E271EEF6D2E4E784334A86 /* NVHGzipFile.m */; };
-		A4E53D45AE9A5FA9BD28B52FD307477E /* NVHTarGzip.m in Sources */ = {isa = PBXBuildFile; fileRef = 76A2C6A2789D832C029EDBB47B46C7E4 /* NVHTarGzip.m */; };
-		A9A70F287878071640AE4431F0E7788F /* NVHFile.h in Headers */ = {isa = PBXBuildFile; fileRef = C72D6FAD6B7C84438CDEF210F5C59EDC /* NVHFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BDB46E1A667A098875E0A865C3DBAA39 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37ECA5F82C19F792E4F5146A01C56514 /* Foundation.framework */; };
-		C27EAE2D223FB80D1237625E0068936B /* IISideController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2FC7F610398853CADFC43C342B9365CA /* IISideController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CF8CF39A1CBE68ECC5228127B6B6ED5D /* Pods-DemoTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = EEAF707ECE17997BD3F97DC35BE48C78 /* Pods-DemoTests-dummy.m */; };
-		D55DD7D3CE638CAD828C60CEB9A811BF /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = E15704B3389EA662EC033B9C2D266BA1 /* mztools.c */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		D86B65099F48FBBA5BFF162C92930C17 /* NVHTarGzip.h in Headers */ = {isa = PBXBuildFile; fileRef = AAC8C598D976971A77CA9A5CACCFB71B /* NVHTarGzip.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E29885EE1E8740549E4B8170E3BDF511 /* SSZipArchive-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 852B168F0691F03A9295E47B104C0AD9 /* SSZipArchive-dummy.m */; };
-		E4A6C0B8801B87BCB76FF8757E948695 /* NSFileManager+NVHFileSize.h in Headers */ = {isa = PBXBuildFile; fileRef = E7487DA4EC453BB2BBA8E71D8F8FC50B /* NSFileManager+NVHFileSize.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E5A617A3DE04BDA5ADFAD7DD6DF57FBD /* SSZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 496E88363682DA55F911A16CE4B9CDA3 /* SSZipArchive.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		EAF87D9C6486055F525688ABDD18C16F /* ViewDeck-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CAA9A8D6DF433F556159693D9C47465 /* ViewDeck-dummy.m */; };
-		ECD6563CB9856BAF52DAE36082D51BCB /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 73110FCB8965E554BAA23F9FE8BFF23A /* ioapi.c */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		F017D4A2876D795CF52F62B78EEE2BF6 /* NVHProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = 01B648D9119B3FE7F49000188E17342B /* NVHProgress.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F24BD03E34397C646472C28947EEF773 /* mztools.h in Headers */ = {isa = PBXBuildFile; fileRef = F38FC2CC84C8D7A0BFE85292CE4182C8 /* mztools.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F66145EEA8ECD711A3B8B6F3DCBFA154 /* IISideController.m in Sources */ = {isa = PBXBuildFile; fileRef = 375586C89CDAEB4EED7136B191F9ED8A /* IISideController.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		F9CCBD93231C64E981051C8E59C731CB /* Pods-Demo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E586D8FF4DDC81BA20A6C394E3AC7514 /* Pods-Demo-dummy.m */; };
-		FC214077677D4F02E03C6C85F774E028 /* MBProgressHUD-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CDF5A0178449E648F8ED721B622208 /* MBProgressHUD-dummy.m */; };
+		82FC12F67E83874B93592218E9FB4CA0 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5840E1B5ECCB42DB38F9CDFBA9964163 /* MBProgressHUD.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		9D2E94948780326DA3E478FCDBFC0DF4 /* MPColorTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B1093D236B9393A42C279656BA8A447 /* MPColorTools.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		CA6CC786B050C24CD788D492ECB4EA34 /* Pods-Demo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = E586D8FF4DDC81BA20A6C394E3AC7514 /* Pods-Demo-dummy.m */; };
+		DC3EBBA6495C911230AE183BA89B3F54 /* IISideController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0D3D5E057DFD07DE4E19A4E10742486F /* IISideController.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		EB89F919EFA5A8EDE737B964CA33510F /* IIViewDeckController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC5CDE39CA2CED3B53A8C3691B31C96F /* IIViewDeckController.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		FC214077677D4F02E03C6C85F774E028 /* MBProgressHUD-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7FD80800E0B7C9849DD104A3127CC39D /* MBProgressHUD-dummy.m */; };
+		FF7F8E66B64F12C38C0C5A9891B3A641 /* IIWrapController.m in Sources */ = {isa = PBXBuildFile; fileRef = 97F40B1AF77BB23BF8A257519863835A /* IIWrapController.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		FF89881D80977137881E98843B3DA562 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37ECA5F82C19F792E4F5146A01C56514 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		07788EE41E019F318DB4F458DF6F0F36 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7C29B6B8E94EB409BD4B85A7B6D6B3E7;
-			remoteInfo = SSZipArchive;
-		};
-		34C99E992BE3AD824E1C477BA6EFE060 /* PBXContainerItemProxy */ = {
+		0F69263ACDC9AEC6F4658B732F3D3823 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = E57A88AC01BFFE57B3EDBEAA1ADBF1FD;
 			remoteInfo = MPColorTools;
 		};
-		3D73DCB9620B352853C6A3E7F1436EC9 /* PBXContainerItemProxy */ = {
+		38CD85138CC69FAE1ACA7782602FC23E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = FE2F1D7B9D9FCEA148517E4657B243F4;
 			remoteInfo = MBProgressHUD;
 		};
-		52A02FADB3192503648172C7FB8B2131 /* PBXContainerItemProxy */ = {
+		38E61713A1212E4B7A1F43CBBDACCB9F /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = FE2F1D7B9D9FCEA148517E4657B243F4;
-			remoteInfo = MBProgressHUD;
-		};
-		719301CF6DFDF62D051E19EFD3652AA0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E57A88AC01BFFE57B3EDBEAA1ADBF1FD;
-			remoteInfo = MPColorTools;
-		};
-		72AA874D863513352F15AA920F0600E5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E9596885FC70054B696373542036A617;
+			remoteGlobalIDString = B2B5568B1A331453B10A92AD1E975725;
 			remoteInfo = ViewDeck;
 		};
-		8C33ADBEB1478A66627C091C51EC4126 /* PBXContainerItemProxy */ = {
+		5D5A43E1F1AE12E6C8BBFE6F759E6028 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 7C29B6B8E94EB409BD4B85A7B6D6B3E7;
-			remoteInfo = SSZipArchive;
+			remoteGlobalIDString = FE2F1D7B9D9FCEA148517E4657B243F4;
+			remoteInfo = MBProgressHUD;
 		};
-		90D622A09007DD4101E7FDFAD6D73635 /* PBXContainerItemProxy */ = {
+		D658CDE4D9215D9773B283836987E083 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 189873E1BD4B9F68298DC0F43ED1E45C;
-			remoteInfo = NVHTarGzip;
-		};
-		F185EC0EEC97A2E050B2A5062C0437D6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 189873E1BD4B9F68298DC0F43ED1E45C;
-			remoteInfo = NVHTarGzip;
+			remoteGlobalIDString = E57A88AC01BFFE57B3EDBEAA1ADBF1FD;
+			remoteInfo = MPColorTools;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		01B648D9119B3FE7F49000188E17342B /* NVHProgress.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NVHProgress.h; path = Classes/NVHProgress.h; sourceTree = "<group>"; };
-		0420FAFE2074EF42634648DB195ADD76 /* NVHTarGzip-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NVHTarGzip-dummy.m"; sourceTree = "<group>"; };
-		061198656F20C69FFBFB6BF5881D9642 /* MPColorTools-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MPColorTools-dummy.m"; sourceTree = "<group>"; };
-		0B9B24ED76235399FF50EC7B2DB56299 /* NVHTarFile.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = NVHTarFile.m; path = Classes/NVHTarFile.m; sourceTree = "<group>"; };
-		0CAA9A8D6DF433F556159693D9C47465 /* ViewDeck-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ViewDeck-dummy.m"; sourceTree = "<group>"; };
-		0EE471174E474EC06660DCE9FD9FFC79 /* ViewDeck-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ViewDeck-prefix.pch"; sourceTree = "<group>"; };
-		0FDED92C5960E5F5F7205CA62A7423E7 /* ioapi.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ioapi.h; path = SSZipArchive/minizip/ioapi.h; sourceTree = "<group>"; };
-		1027D6435CA5D7BD2CBD28AF8BA2DF35 /* MPColorTools.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MPColorTools.m; path = MPColorTools/MPColorTools.m; sourceTree = "<group>"; };
-		139030B997D298EBD61C719A97123ED4 /* MBProgressHUD.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		13A4A0421783C9EEC7D771A3986828DA /* NVHTarGzip-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NVHTarGzip-prefix.pch"; sourceTree = "<group>"; };
-		1BB322E80ED28A8BECE9ADEDAB22AC26 /* IIViewDeckController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IIViewDeckController.m; path = ViewDeck/IIViewDeckController.m; sourceTree = "<group>"; };
-		22BD845D6D7E195383174BEE40D41F49 /* MBProgressHUD-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD-prefix.pch"; sourceTree = "<group>"; };
+		0D3D5E057DFD07DE4E19A4E10742486F /* IISideController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IISideController.m; path = ViewDeck/IISideController.m; sourceTree = "<group>"; };
+		141079BAE55DBE2E58DB9BEED4F7FCF1 /* ViewDeck-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ViewDeck-prefix.pch"; sourceTree = "<group>"; };
+		19A3492B051964301866F92CC16C4C6C /* MBProgressHUD.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		21CE2F306317E87E404FC168CB1B14E2 /* MPColorTools.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MPColorTools.h; path = MPColorTools/MPColorTools.h; sourceTree = "<group>"; };
 		29F6D287AF7EECC6CA67CECD2CCEEC72 /* Pods-Demo-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Demo-resources.sh"; sourceTree = "<group>"; };
-		2D78415899E326E39AD38D350004F6B3 /* libPods-Demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Demo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2FC7F610398853CADFC43C342B9365CA /* IISideController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IISideController.h; path = ViewDeck/IISideController.h; sourceTree = "<group>"; };
-		375586C89CDAEB4EED7136B191F9ED8A /* IISideController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IISideController.m; path = ViewDeck/IISideController.m; sourceTree = "<group>"; };
+		30C997551B02FAADB2B00E7FED708A80 /* MPColorTools-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MPColorTools-dummy.m"; sourceTree = "<group>"; };
 		37ECA5F82C19F792E4F5146A01C56514 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		3B9088532473007DACF3FD0F43B000EF /* Pods-DemoTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DemoTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		3C279016B47E565AA48EA34C0474CEAF /* Pods-Demo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Demo-frameworks.sh"; sourceTree = "<group>"; };
-		3F894BABA542ABA9F6C0490A716769FF /* NVHTarGzip.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NVHTarGzip.xcconfig; sourceTree = "<group>"; };
-		4628EDB9C2DB980D8A8CDE054DA28092 /* ViewDeck.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ViewDeck.xcconfig; sourceTree = "<group>"; };
-		496E88363682DA55F911A16CE4B9CDA3 /* SSZipArchive.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SSZipArchive.m; path = SSZipArchive/SSZipArchive.m; sourceTree = "<group>"; };
-		4C50307D90A40D83EFA2C5E9BF876986 /* NVHGzipFile.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NVHGzipFile.h; path = Classes/NVHGzipFile.h; sourceTree = "<group>"; };
+		476D5367075BC0F3154BD9883F35C610 /* ViewDeck.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ViewDeck.xcconfig; sourceTree = "<group>"; };
+		4B1093D236B9393A42C279656BA8A447 /* MPColorTools.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = MPColorTools.m; path = MPColorTools/MPColorTools.m; sourceTree = "<group>"; };
 		4F4E6E3F08279C0471AF37FFB04DA07A /* Pods-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Demo.debug.xcconfig"; sourceTree = "<group>"; };
-		5692ED6D2240C704F2E289EC6252DEFE /* MPColorTools-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MPColorTools-prefix.pch"; sourceTree = "<group>"; };
+		54A22AFEDBE3AA28DE4CB05CCF447BDC /* libPods-DemoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DemoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5840E1B5ECCB42DB38F9CDFBA9964163 /* MBProgressHUD.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		585B279BFE3CB69264D60B006E4B1AB0 /* libViewDeck.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libViewDeck.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		58807B500379F737E3707AA22CA6AAEE /* Pods-DemoTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DemoTests-resources.sh"; sourceTree = "<group>"; };
-		60864555054E7CD4BB7C456710205472 /* MPColorTools.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MPColorTools.xcconfig; sourceTree = "<group>"; };
-		6360124557BCCBC59196D86F00CFAE22 /* MBProgressHUD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MBProgressHUD.xcconfig; sourceTree = "<group>"; };
-		64BA7D56FFDE9E9862343D490B28E2EE /* IIWrapController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IIWrapController.m; path = ViewDeck/IIWrapController.m; sourceTree = "<group>"; };
-		6B3D768A650C2ACA438645A1DF1C8A33 /* SSZipArchive-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SSZipArchive-prefix.pch"; sourceTree = "<group>"; };
-		6EB427CDA3AE40B91352956403E3D697 /* zip.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = zip.h; path = SSZipArchive/minizip/zip.h; sourceTree = "<group>"; };
-		73110FCB8965E554BAA23F9FE8BFF23A /* ioapi.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = ioapi.c; path = SSZipArchive/minizip/ioapi.c; sourceTree = "<group>"; };
-		76034C1049C1D3C9750987104778BBE7 /* libNVHTarGzip.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libNVHTarGzip.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		768BB2D565365B82751863B6B1A0CD1F /* MPColorTools.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = MPColorTools.h; path = MPColorTools/MPColorTools.h; sourceTree = "<group>"; };
-		76A2C6A2789D832C029EDBB47B46C7E4 /* NVHTarGzip.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = NVHTarGzip.m; path = Classes/NVHTarGzip.m; sourceTree = "<group>"; };
+		65D70EF3CC2EA5D621C4DB369B511932 /* libMBProgressHUD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMBProgressHUD.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		727B56CCA32610493AFB2E8944D1E0F4 /* MPColorTools-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MPColorTools-prefix.pch"; sourceTree = "<group>"; };
+		75EE8DEFA7494A10DAE76F8CF752B0EA /* MPColorTools.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MPColorTools.xcconfig; sourceTree = "<group>"; };
 		7A2639E5B4E19ED3B527B65C7A55D8A7 /* Pods-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Demo.release.xcconfig"; sourceTree = "<group>"; };
-		84AFC4A7BE683BDB4A0CDCDCBEC08028 /* zip.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = zip.c; path = SSZipArchive/minizip/zip.c; sourceTree = "<group>"; };
-		852B168F0691F03A9295E47B104C0AD9 /* SSZipArchive-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SSZipArchive-dummy.m"; sourceTree = "<group>"; };
-		8568027009E271EEF6D2E4E784334A86 /* NVHGzipFile.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = NVHGzipFile.m; path = Classes/NVHGzipFile.m; sourceTree = "<group>"; };
-		886614A8F4EB469E36DE5F0DC2E7653E /* NSFileManager+NVHFileSize.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSFileManager+NVHFileSize.m"; path = "Classes/NSFileManager+NVHFileSize.m"; sourceTree = "<group>"; };
-		8DB92390493D25F367285C9D69A9EC75 /* crypt.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = crypt.h; path = SSZipArchive/minizip/crypt.h; sourceTree = "<group>"; };
+		7EC76D720545A371F8C0EE54890BD969 /* MBProgressHUD-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD-prefix.pch"; sourceTree = "<group>"; };
+		7FD80800E0B7C9849DD104A3127CC39D /* MBProgressHUD-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD-dummy.m"; sourceTree = "<group>"; };
+		8718255FD388EBB67A5F1666D28940BF /* libMPColorTools.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMPColorTools.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		97F40B1AF77BB23BF8A257519863835A /* IIWrapController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IIWrapController.m; path = ViewDeck/IIWrapController.m; sourceTree = "<group>"; };
 		9AB254A0FF9C0E1ECCCC3CA36E6AC016 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
-		A0362DF8774A1D3CCEE1E4A1B78A0C73 /* libSSZipArchive.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSSZipArchive.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		A0CDF5A0178449E648F8ED721B622208 /* MBProgressHUD-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "MBProgressHUD-dummy.m"; sourceTree = "<group>"; };
 		A107FA33BB565AEBF6481931E4A566C0 /* Pods-DemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DemoTests.release.xcconfig"; sourceTree = "<group>"; };
 		A7A36DCBCD1CF8641BBEFFB4D80A4E60 /* Pods-DemoTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DemoTests-frameworks.sh"; sourceTree = "<group>"; };
-		A8111F559B56D3B7026D2C37801F6218 /* unzip.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = unzip.h; path = SSZipArchive/minizip/unzip.h; sourceTree = "<group>"; };
-		AAC8C598D976971A77CA9A5CACCFB71B /* NVHTarGzip.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NVHTarGzip.h; path = Classes/NVHTarGzip.h; sourceTree = "<group>"; };
-		ABDCCC82E4F1823E90C4230FE3D23008 /* libViewDeck.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libViewDeck.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		ADF15F2CA805DFA613B355D4F0747B8E /* SSZipArchive.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SSZipArchive.xcconfig; sourceTree = "<group>"; };
-		B5847C5A73201A94B5B302652C182F8F /* libPods-DemoTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DemoTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		B5A8DA8B142FA2E357CD3824D4D217DF /* libMPColorTools.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMPColorTools.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6E27C95355BC91C20E09BF5D11F006A /* NVHFile.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = NVHFile.m; path = Classes/NVHFile.m; sourceTree = "<group>"; };
-		B96B68E609BD572A6C8ACF8EFC8EA1DC /* IIWrapController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IIWrapController.h; path = ViewDeck/IIWrapController.h; sourceTree = "<group>"; };
+		A7E33B9D798C4D406FC4160AE5F8E3D6 /* IIViewDeckController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IIViewDeckController.h; path = ViewDeck/IIViewDeckController.h; sourceTree = "<group>"; };
+		AD83D750271C844355169A4B350E8082 /* MBProgressHUD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = MBProgressHUD.xcconfig; sourceTree = "<group>"; };
+		B49DE5F7E225281EDAE0A0135BD8461D /* ViewDeck-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ViewDeck-dummy.m"; sourceTree = "<group>"; };
 		BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		BC1BFC516E5D5BB61DB82C7C90B88403 /* IISideController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IISideController.h; path = ViewDeck/IISideController.h; sourceTree = "<group>"; };
+		BC5CDE39CA2CED3B53A8C3691B31C96F /* IIViewDeckController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = IIViewDeckController.m; path = ViewDeck/IIViewDeckController.m; sourceTree = "<group>"; };
 		C040EA9DAB83913B7F4867A803F65C87 /* Pods-DemoTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-DemoTests-acknowledgements.markdown"; sourceTree = "<group>"; };
-		C72D6FAD6B7C84438CDEF210F5C59EDC /* NVHFile.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NVHFile.h; path = Classes/NVHFile.h; sourceTree = "<group>"; };
 		C8CCF51F6C17727864F94EC906799013 /* Pods-DemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DemoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		CCBEC73C669B26110CCFFC90C5354F47 /* libPods-Demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Demo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D64AB8C0A1E815C07C6F968F76F7E559 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
-		DA46FD3E1935E3EFF55ED1313B174B38 /* libMBProgressHUD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMBProgressHUD.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		DE602B0F462C9F0ECA0D572F4ACA106D /* NVHProgress.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = NVHProgress.m; path = Classes/NVHProgress.m; sourceTree = "<group>"; };
-		E15704B3389EA662EC033B9C2D266BA1 /* mztools.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = mztools.c; path = SSZipArchive/minizip/mztools.c; sourceTree = "<group>"; };
 		E586D8FF4DDC81BA20A6C394E3AC7514 /* Pods-Demo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Demo-dummy.m"; sourceTree = "<group>"; };
-		E7487DA4EC453BB2BBA8E71D8F8FC50B /* NSFileManager+NVHFileSize.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSFileManager+NVHFileSize.h"; path = "Classes/NSFileManager+NVHFileSize.h"; sourceTree = "<group>"; };
 		ED7DF2627FA6D3324CC926901F9FE323 /* Pods-Demo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Demo-acknowledgements.plist"; sourceTree = "<group>"; };
 		EEAF707ECE17997BD3F97DC35BE48C78 /* Pods-DemoTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-DemoTests-dummy.m"; sourceTree = "<group>"; };
-		F38FC2CC84C8D7A0BFE85292CE4182C8 /* mztools.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = mztools.h; path = SSZipArchive/minizip/mztools.h; sourceTree = "<group>"; };
-		F57C5928F04829EFE71510E6A7318041 /* NVHTarFile.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NVHTarFile.h; path = Classes/NVHTarFile.h; sourceTree = "<group>"; };
-		F5F6608EEF615B5B258FB08CC041967F /* unzip.c */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.c; name = unzip.c; path = SSZipArchive/minizip/unzip.c; sourceTree = "<group>"; };
-		FB331356FCAD438669B0C52D52681F18 /* IIViewDeckController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IIViewDeckController.h; path = ViewDeck/IIViewDeckController.h; sourceTree = "<group>"; };
+		FCBCD6B4487BB510AA738DD4364D9F2E /* IIWrapController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = IIWrapController.h; path = ViewDeck/IIWrapController.h; sourceTree = "<group>"; };
 		FD0B3BB3346F9D74032BA69E0D8B8264 /* Pods-Demo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Demo-acknowledgements.markdown"; sourceTree = "<group>"; };
-		FE79BABB247BD11EB7B18ED0B56C8AD6 /* SSZipArchive.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SSZipArchive.h; path = SSZipArchive/SSZipArchive.h; sourceTree = "<group>"; };
-		FEFF01FFCEF64D45F01EFBE94DB01F94 /* MBProgressHUD.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		17CF466D169108098C7EDBF36F3FAE37 /* Frameworks */ = {
+		0E82A2F79E4B0089DD189823A8273F78 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9B7EC23EDE9E8B9A3BE9785C0FFB4E38 /* Foundation.framework in Frameworks */,
-				31B21E56AB8B259EC0A91524583714FE /* QuartzCore.framework in Frameworks */,
+				3CD34131687013531CE907E0B8A57924 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		41FE7597FB974D9BCA4D72B6BC7720C2 /* Frameworks */ = {
+		15EFC99BEE03F9D2D3C7AEFD1B376409 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7016E2D39C258832C21124AB6C782EF0 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		440D3AADB194083F038E0534A76E8122 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				BDB46E1A667A098875E0A865C3DBAA39 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		633609956E2A09C64B53DA805D90224F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				19DC46E8B5E6D70E14AC58EF08CEE3FF /* Foundation.framework in Frameworks */,
+				FF89881D80977137881E98843B3DA562 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +136,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				2A527629B49394DCCF201941728967A8 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ABC2367DC56F54223823EE82510CA8C7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A4BD05D6BAC4D25D013ED32CD1E88E4 /* Foundation.framework in Frameworks */,
+				3F9461B4C05FC9A6A67EDB40105BDD17 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -251,37 +157,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E96A62C2B2C3A4A51D8255CFF8913747 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				368BBCA58A4EF71FCA4117A9FDFCEDF8 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		01453539822FEE727B86D35B477348D3 /* Support Files */ = {
+		07CE44C9D50F3C0925AD97CBCF4CEA2F /* MPColorTools */ = {
 			isa = PBXGroup;
 			children = (
-				4628EDB9C2DB980D8A8CDE054DA28092 /* ViewDeck.xcconfig */,
-				0CAA9A8D6DF433F556159693D9C47465 /* ViewDeck-dummy.m */,
-				0EE471174E474EC06660DCE9FD9FFC79 /* ViewDeck-prefix.pch */,
+				21CE2F306317E87E404FC168CB1B14E2 /* MPColorTools.h */,
+				4B1093D236B9393A42C279656BA8A447 /* MPColorTools.m */,
+				FF8E5BCB8D861C74F46F79F16488A951 /* Support Files */,
 			);
-			name = "Support Files";
-			path = "../Target Support Files/ViewDeck";
+			path = MPColorTools;
 			sourceTree = "<group>";
 		};
-		01D02769AC6D33196B519D2AC0F38F8B /* Support Files */ = {
+		0B3A3250D330727C21AB0C3401DDA1BF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				60864555054E7CD4BB7C456710205472 /* MPColorTools.xcconfig */,
-				061198656F20C69FFBFB6BF5881D9642 /* MPColorTools-dummy.m */,
-				5692ED6D2240C704F2E289EC6252DEFE /* MPColorTools-prefix.pch */,
+				213B90F6E594D45F848EDCD108CA43A8 /* MBProgressHUD */,
+				07CE44C9D50F3C0925AD97CBCF4CEA2F /* MPColorTools */,
+				1BE2267A9A91CFDB75062CB9269A70BC /* ViewDeck */,
 			);
-			name = "Support Files";
-			path = "../Target Support Files/MPColorTools";
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		122DA2E5084A4393C29BE363C764795C /* Frameworks */ = {
@@ -307,25 +203,40 @@
 			path = "Target Support Files/Pods-DemoTests";
 			sourceTree = "<group>";
 		};
-		1DE2E904CDBAEB9AB3B7E5A1E042A070 /* MBProgressHUD */ = {
+		1BE2267A9A91CFDB75062CB9269A70BC /* ViewDeck */ = {
 			isa = PBXGroup;
 			children = (
-				FEFF01FFCEF64D45F01EFBE94DB01F94 /* MBProgressHUD.h */,
-				139030B997D298EBD61C719A97123ED4 /* MBProgressHUD.m */,
-				6651BEBD30E8C3F568B6D42706AF63E8 /* Support Files */,
+				BC1BFC516E5D5BB61DB82C7C90B88403 /* IISideController.h */,
+				0D3D5E057DFD07DE4E19A4E10742486F /* IISideController.m */,
+				A7E33B9D798C4D406FC4160AE5F8E3D6 /* IIViewDeckController.h */,
+				BC5CDE39CA2CED3B53A8C3691B31C96F /* IIViewDeckController.m */,
+				FCBCD6B4487BB510AA738DD4364D9F2E /* IIWrapController.h */,
+				97F40B1AF77BB23BF8A257519863835A /* IIWrapController.m */,
+				5F3AA09F82F43CB22B27BCCDB8A513DF /* Support Files */,
+			);
+			path = ViewDeck;
+			sourceTree = "<group>";
+		};
+		213B90F6E594D45F848EDCD108CA43A8 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				19A3492B051964301866F92CC16C4C6C /* MBProgressHUD.h */,
+				5840E1B5ECCB42DB38F9CDFBA9964163 /* MBProgressHUD.m */,
+				535ED66EBA30C12F9850EB1DED6B58DE /* Support Files */,
 			);
 			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
-		380F1BCEF2BDD3BABD74C6ABAAD1ED11 /* Support Files */ = {
+		4E7A75680BF272AEB367714C71042B6D /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3F894BABA542ABA9F6C0490A716769FF /* NVHTarGzip.xcconfig */,
-				0420FAFE2074EF42634648DB195ADD76 /* NVHTarGzip-dummy.m */,
-				13A4A0421783C9EEC7D771A3986828DA /* NVHTarGzip-prefix.pch */,
+				65D70EF3CC2EA5D621C4DB369B511932 /* libMBProgressHUD.a */,
+				8718255FD388EBB67A5F1666D28940BF /* libMPColorTools.a */,
+				CCBEC73C669B26110CCFFC90C5354F47 /* libPods-Demo.a */,
+				54A22AFEDBE3AA28DE4CB05CCF447BDC /* libPods-DemoTests.a */,
+				585B279BFE3CB69264D60B006E4B1AB0 /* libViewDeck.a */,
 			);
-			name = "Support Files";
-			path = "../Target Support Files/NVHTarGzip";
+			name = Products;
 			sourceTree = "<group>";
 		};
 		4FF06180366D6FBF2F90BDE30AE60D67 /* Pods-Demo */ = {
@@ -343,27 +254,26 @@
 			path = "Target Support Files/Pods-Demo";
 			sourceTree = "<group>";
 		};
-		6651BEBD30E8C3F568B6D42706AF63E8 /* Support Files */ = {
+		535ED66EBA30C12F9850EB1DED6B58DE /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				6360124557BCCBC59196D86F00CFAE22 /* MBProgressHUD.xcconfig */,
-				A0CDF5A0178449E648F8ED721B622208 /* MBProgressHUD-dummy.m */,
-				22BD845D6D7E195383174BEE40D41F49 /* MBProgressHUD-prefix.pch */,
+				AD83D750271C844355169A4B350E8082 /* MBProgressHUD.xcconfig */,
+				7FD80800E0B7C9849DD104A3127CC39D /* MBProgressHUD-dummy.m */,
+				7EC76D720545A371F8C0EE54890BD969 /* MBProgressHUD-prefix.pch */,
 			);
 			name = "Support Files";
 			path = "../Target Support Files/MBProgressHUD";
 			sourceTree = "<group>";
 		};
-		6722EB6CB6F9F71748BE10D669D7D869 /* Pods */ = {
+		5F3AA09F82F43CB22B27BCCDB8A513DF /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				1DE2E904CDBAEB9AB3B7E5A1E042A070 /* MBProgressHUD */,
-				D4B6C01595BC8C5F3270F647B3AE2F51 /* MPColorTools */,
-				B027CCE0DBD8F630981568BDA905E2B4 /* NVHTarGzip */,
-				ECBF3EFDAF0AE9696180D0B8266789EF /* SSZipArchive */,
-				E139DF17575C925E6F82A8493F286E66 /* ViewDeck */,
+				476D5367075BC0F3154BD9883F35C610 /* ViewDeck.xcconfig */,
+				B49DE5F7E225281EDAE0A0135BD8461D /* ViewDeck-dummy.m */,
+				141079BAE55DBE2E58DB9BEED4F7FCF1 /* ViewDeck-prefix.pch */,
 			);
-			name = Pods;
+			name = "Support Files";
+			path = "../Target Support Files/ViewDeck";
 			sourceTree = "<group>";
 		};
 		7DB346D0F39D3F0E887471402A8071AB = {
@@ -371,51 +281,10 @@
 			children = (
 				BA6428E9F66FD5A23C0A2E06ED26CD2F /* Podfile */,
 				122DA2E5084A4393C29BE363C764795C /* Frameworks */,
-				6722EB6CB6F9F71748BE10D669D7D869 /* Pods */,
-				F6BED0DA36D23F6349D0B679A60F01B3 /* Products */,
+				0B3A3250D330727C21AB0C3401DDA1BF /* Pods */,
+				4E7A75680BF272AEB367714C71042B6D /* Products */,
 				DF1AF0B724DE9E5E561E34D2E367B861 /* Targets Support Files */,
 			);
-			sourceTree = "<group>";
-		};
-		B027CCE0DBD8F630981568BDA905E2B4 /* NVHTarGzip */ = {
-			isa = PBXGroup;
-			children = (
-				E7487DA4EC453BB2BBA8E71D8F8FC50B /* NSFileManager+NVHFileSize.h */,
-				886614A8F4EB469E36DE5F0DC2E7653E /* NSFileManager+NVHFileSize.m */,
-				C72D6FAD6B7C84438CDEF210F5C59EDC /* NVHFile.h */,
-				B6E27C95355BC91C20E09BF5D11F006A /* NVHFile.m */,
-				4C50307D90A40D83EFA2C5E9BF876986 /* NVHGzipFile.h */,
-				8568027009E271EEF6D2E4E784334A86 /* NVHGzipFile.m */,
-				01B648D9119B3FE7F49000188E17342B /* NVHProgress.h */,
-				DE602B0F462C9F0ECA0D572F4ACA106D /* NVHProgress.m */,
-				F57C5928F04829EFE71510E6A7318041 /* NVHTarFile.h */,
-				0B9B24ED76235399FF50EC7B2DB56299 /* NVHTarFile.m */,
-				AAC8C598D976971A77CA9A5CACCFB71B /* NVHTarGzip.h */,
-				76A2C6A2789D832C029EDBB47B46C7E4 /* NVHTarGzip.m */,
-				380F1BCEF2BDD3BABD74C6ABAAD1ED11 /* Support Files */,
-			);
-			path = NVHTarGzip;
-			sourceTree = "<group>";
-		};
-		D4B6C01595BC8C5F3270F647B3AE2F51 /* MPColorTools */ = {
-			isa = PBXGroup;
-			children = (
-				768BB2D565365B82751863B6B1A0CD1F /* MPColorTools.h */,
-				1027D6435CA5D7BD2CBD28AF8BA2DF35 /* MPColorTools.m */,
-				01D02769AC6D33196B519D2AC0F38F8B /* Support Files */,
-			);
-			path = MPColorTools;
-			sourceTree = "<group>";
-		};
-		D875AF0F431F24FF95A1D616B04A9879 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				ADF15F2CA805DFA613B355D4F0747B8E /* SSZipArchive.xcconfig */,
-				852B168F0691F03A9295E47B104C0AD9 /* SSZipArchive-dummy.m */,
-				6B3D768A650C2ACA438645A1DF1C8A33 /* SSZipArchive-prefix.pch */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/SSZipArchive";
 			sourceTree = "<group>";
 		};
 		D89D42E51D160380C262AB055B889685 /* iOS */ = {
@@ -437,51 +306,15 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
-		E139DF17575C925E6F82A8493F286E66 /* ViewDeck */ = {
+		FF8E5BCB8D861C74F46F79F16488A951 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				2FC7F610398853CADFC43C342B9365CA /* IISideController.h */,
-				375586C89CDAEB4EED7136B191F9ED8A /* IISideController.m */,
-				FB331356FCAD438669B0C52D52681F18 /* IIViewDeckController.h */,
-				1BB322E80ED28A8BECE9ADEDAB22AC26 /* IIViewDeckController.m */,
-				B96B68E609BD572A6C8ACF8EFC8EA1DC /* IIWrapController.h */,
-				64BA7D56FFDE9E9862343D490B28E2EE /* IIWrapController.m */,
-				01453539822FEE727B86D35B477348D3 /* Support Files */,
+				75EE8DEFA7494A10DAE76F8CF752B0EA /* MPColorTools.xcconfig */,
+				30C997551B02FAADB2B00E7FED708A80 /* MPColorTools-dummy.m */,
+				727B56CCA32610493AFB2E8944D1E0F4 /* MPColorTools-prefix.pch */,
 			);
-			path = ViewDeck;
-			sourceTree = "<group>";
-		};
-		ECBF3EFDAF0AE9696180D0B8266789EF /* SSZipArchive */ = {
-			isa = PBXGroup;
-			children = (
-				8DB92390493D25F367285C9D69A9EC75 /* crypt.h */,
-				73110FCB8965E554BAA23F9FE8BFF23A /* ioapi.c */,
-				0FDED92C5960E5F5F7205CA62A7423E7 /* ioapi.h */,
-				E15704B3389EA662EC033B9C2D266BA1 /* mztools.c */,
-				F38FC2CC84C8D7A0BFE85292CE4182C8 /* mztools.h */,
-				FE79BABB247BD11EB7B18ED0B56C8AD6 /* SSZipArchive.h */,
-				496E88363682DA55F911A16CE4B9CDA3 /* SSZipArchive.m */,
-				F5F6608EEF615B5B258FB08CC041967F /* unzip.c */,
-				A8111F559B56D3B7026D2C37801F6218 /* unzip.h */,
-				84AFC4A7BE683BDB4A0CDCDCBEC08028 /* zip.c */,
-				6EB427CDA3AE40B91352956403E3D697 /* zip.h */,
-				D875AF0F431F24FF95A1D616B04A9879 /* Support Files */,
-			);
-			path = SSZipArchive;
-			sourceTree = "<group>";
-		};
-		F6BED0DA36D23F6349D0B679A60F01B3 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				DA46FD3E1935E3EFF55ED1313B174B38 /* libMBProgressHUD.a */,
-				B5A8DA8B142FA2E357CD3824D4D217DF /* libMPColorTools.a */,
-				76034C1049C1D3C9750987104778BBE7 /* libNVHTarGzip.a */,
-				2D78415899E326E39AD38D350004F6B3 /* libPods-Demo.a */,
-				B5847C5A73201A94B5B302652C182F8F /* libPods-DemoTests.a */,
-				A0362DF8774A1D3CCEE1E4A1B78A0C73 /* libSSZipArchive.a */,
-				ABDCCC82E4F1823E90C4230FE3D23008 /* libViewDeck.a */,
-			);
-			name = Products;
+			name = "Support Files";
+			path = "../Target Support Files/MPColorTools";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -495,26 +328,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6C09BCC4A1B391296BECCD9DCB2547B4 /* Headers */ = {
+		BD99867F1F958E5D6C7BC9F393E0CBB6 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7B3582EF307823EF75CDDC27B14E35D8 /* crypt.h in Headers */,
-				2A47B9FC60E71C52DD4AC6FFA8FD611E /* ioapi.h in Headers */,
-				F24BD03E34397C646472C28947EEF773 /* mztools.h in Headers */,
-				1B4E8325B9B416E05692DF6E08090033 /* SSZipArchive.h in Headers */,
-				3280832753ED26D93C5358005F6DDDF9 /* unzip.h in Headers */,
-				805E8202F34D86D46031C6A0AEF3E63D /* zip.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E091BAB3BC32BE9F2385A386FB84A467 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				C27EAE2D223FB80D1237625E0068936B /* IISideController.h in Headers */,
-				0F75F77D6064092168D3788363AE6D89 /* IIViewDeckController.h in Headers */,
-				4570C95161BD90314A07D43518BB049C /* IIWrapController.h in Headers */,
+				5B56CFF519754A74A79FFE0F7133AE4D /* IISideController.h in Headers */,
+				2123334D753D8F28C72CAF1BE659F735 /* IIViewDeckController.h in Headers */,
+				29E4A7B2BC0C9D495D28BFE5FA288460 /* IIWrapController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,95 +346,61 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F9F489ED06EC1E4EB2096957BBBC5A0C /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E4A6C0B8801B87BCB76FF8757E948695 /* NSFileManager+NVHFileSize.h in Headers */,
-				A9A70F287878071640AE4431F0E7788F /* NVHFile.h in Headers */,
-				3E0A45BD13978717A6832D4532A792AB /* NVHGzipFile.h in Headers */,
-				F017D4A2876D795CF52F62B78EEE2BF6 /* NVHProgress.h in Headers */,
-				2628A1A98AE7A7FED1AC8C1238FAE669 /* NVHTarFile.h in Headers */,
-				D86B65099F48FBBA5BFF162C92930C17 /* NVHTarGzip.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		14C4989767657451D503F56A7F5D79E6 /* Pods-DemoTests */ = {
+		3CECADF5C5617CB215C4425BCD64351D /* Pods-Demo */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CA847ED2D2886CF509A5BEDD18A09F98 /* Build configuration list for PBXNativeTarget "Pods-DemoTests" */;
+			buildConfigurationList = 3A6CD11CB398477B57BCC4CD49244AAA /* Build configuration list for PBXNativeTarget "Pods-Demo" */;
 			buildPhases = (
-				35152EA404AF085B01E4641A822CEE5A /* Sources */,
-				E96A62C2B2C3A4A51D8255CFF8913747 /* Frameworks */,
+				D890132FDCE0B647316A490B51DB17D6 /* Sources */,
+				0E82A2F79E4B0089DD189823A8273F78 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				AE88F943BB3D9BDDCE33F0EB049F140F /* PBXTargetDependency */,
-				D688586D655EE1CD74E785A0E0891CE4 /* PBXTargetDependency */,
-				91DA02A56296F7E20C90352FCE273221 /* PBXTargetDependency */,
-				B6C84519D0D3BA87485F17266F61D7F9 /* PBXTargetDependency */,
-			);
-			name = "Pods-DemoTests";
-			productName = "Pods-DemoTests";
-			productReference = B5847C5A73201A94B5B302652C182F8F /* libPods-DemoTests.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		189873E1BD4B9F68298DC0F43ED1E45C /* NVHTarGzip */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = F0E1D443C56A9F7BADCC89873AC146BA /* Build configuration list for PBXNativeTarget "NVHTarGzip" */;
-			buildPhases = (
-				C3D68AF0DC84163C54B8EAA6CF0DC57F /* Sources */,
-				633609956E2A09C64B53DA805D90224F /* Frameworks */,
-				F9F489ED06EC1E4EB2096957BBBC5A0C /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = NVHTarGzip;
-			productName = NVHTarGzip;
-			productReference = 76034C1049C1D3C9750987104778BBE7 /* libNVHTarGzip.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		7C29B6B8E94EB409BD4B85A7B6D6B3E7 /* SSZipArchive */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6F8C4CF36D2578BFF720BF80397EABB4 /* Build configuration list for PBXNativeTarget "SSZipArchive" */;
-			buildPhases = (
-				ABFDB88917B624C8A595151EBCF13ACF /* Sources */,
-				41FE7597FB974D9BCA4D72B6BC7720C2 /* Frameworks */,
-				6C09BCC4A1B391296BECCD9DCB2547B4 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = SSZipArchive;
-			productName = SSZipArchive;
-			productReference = A0362DF8774A1D3CCEE1E4A1B78A0C73 /* libSSZipArchive.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		D79BC34A62E448A0E04BF72B65B761CF /* Pods-Demo */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 40E42D3884960772C30D23C775B2E62B /* Build configuration list for PBXNativeTarget "Pods-Demo" */;
-			buildPhases = (
-				564571C12F94DA1B36CEC8123FDDC29B /* Sources */,
-				440D3AADB194083F038E0534A76E8122 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				F23FD5069BC871BCB64660705409339C /* PBXTargetDependency */,
-				AF403DF661BBF5C2F0AF728F6655E0FF /* PBXTargetDependency */,
-				78D34AA8013CF8E0955DB60FF4FA6ACC /* PBXTargetDependency */,
-				7B77F5CF22CFE28C9B8036AC09260E67 /* PBXTargetDependency */,
-				C31FFF1BADE2E3CD772BCD3072AD845E /* PBXTargetDependency */,
+				6395A65986CCEC0DAD88558EDD042702 /* PBXTargetDependency */,
+				37AD2CDD584F69A216036A18994907BA /* PBXTargetDependency */,
+				9D88503E3E16A0DC65483EA8FAA972FE /* PBXTargetDependency */,
 			);
 			name = "Pods-Demo";
 			productName = "Pods-Demo";
-			productReference = 2D78415899E326E39AD38D350004F6B3 /* libPods-Demo.a */;
+			productReference = CCBEC73C669B26110CCFFC90C5354F47 /* libPods-Demo.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		B2B5568B1A331453B10A92AD1E975725 /* ViewDeck */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CDF84A16A355922F9625C6427B355F31 /* Build configuration list for PBXNativeTarget "ViewDeck" */;
+			buildPhases = (
+				024A32A2129B3F3844F33E3EDE7B64FE /* Sources */,
+				ABC2367DC56F54223823EE82510CA8C7 /* Frameworks */,
+				BD99867F1F958E5D6C7BC9F393E0CBB6 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ViewDeck;
+			productName = ViewDeck;
+			productReference = 585B279BFE3CB69264D60B006E4B1AB0 /* libViewDeck.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		B72E9F0CAAAB80B2A16397CAAF9F6D8D /* Pods-DemoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ADC8EC38D519E66E3C8E5953778B3498 /* Build configuration list for PBXNativeTarget "Pods-DemoTests" */;
+			buildPhases = (
+				BECBBE9D1B87A00FCA3522F753694D6D /* Sources */,
+				15EFC99BEE03F9D2D3C7AEFD1B376409 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F06BFCC1442CAA4C870EB6FBDE1018BC /* PBXTargetDependency */,
+				1E441D95D67AB237B43318ABA70F6582 /* PBXTargetDependency */,
+			);
+			name = "Pods-DemoTests";
+			productName = "Pods-DemoTests";
+			productReference = 54A22AFEDBE3AA28DE4CB05CCF447BDC /* libPods-DemoTests.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		E57A88AC01BFFE57B3EDBEAA1ADBF1FD /* MPColorTools */ = {
@@ -631,24 +417,7 @@
 			);
 			name = MPColorTools;
 			productName = MPColorTools;
-			productReference = B5A8DA8B142FA2E357CD3824D4D217DF /* libMPColorTools.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		E9596885FC70054B696373542036A617 /* ViewDeck */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0EAB0C596736BA526F6E9662330E83FA /* Build configuration list for PBXNativeTarget "ViewDeck" */;
-			buildPhases = (
-				8C9F4757F0D1457A738A8F23DAAB062C /* Sources */,
-				17CF466D169108098C7EDBF36F3FAE37 /* Frameworks */,
-				E091BAB3BC32BE9F2385A386FB84A467 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = ViewDeck;
-			productName = ViewDeck;
-			productReference = ABDCCC82E4F1823E90C4230FE3D23008 /* libViewDeck.a */;
+			productReference = 8718255FD388EBB67A5F1666D28940BF /* libMPColorTools.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		FE2F1D7B9D9FCEA148517E4657B243F4 /* MBProgressHUD */ = {
@@ -665,7 +434,7 @@
 			);
 			name = MBProgressHUD;
 			productName = MBProgressHUD;
-			productReference = DA46FD3E1935E3EFF55ED1313B174B38 /* libMBProgressHUD.a */;
+			productReference = 65D70EF3CC2EA5D621C4DB369B511932 /* libMBProgressHUD.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -685,22 +454,31 @@
 				en,
 			);
 			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
-			productRefGroup = F6BED0DA36D23F6349D0B679A60F01B3 /* Products */;
+			productRefGroup = 4E7A75680BF272AEB367714C71042B6D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				FE2F1D7B9D9FCEA148517E4657B243F4 /* MBProgressHUD */,
 				E57A88AC01BFFE57B3EDBEAA1ADBF1FD /* MPColorTools */,
-				189873E1BD4B9F68298DC0F43ED1E45C /* NVHTarGzip */,
-				D79BC34A62E448A0E04BF72B65B761CF /* Pods-Demo */,
-				14C4989767657451D503F56A7F5D79E6 /* Pods-DemoTests */,
-				7C29B6B8E94EB409BD4B85A7B6D6B3E7 /* SSZipArchive */,
-				E9596885FC70054B696373542036A617 /* ViewDeck */,
+				3CECADF5C5617CB215C4425BCD64351D /* Pods-Demo */,
+				B72E9F0CAAAB80B2A16397CAAF9F6D8D /* Pods-DemoTests */,
+				B2B5568B1A331453B10A92AD1E975725 /* ViewDeck */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		024A32A2129B3F3844F33E3EDE7B64FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DC3EBBA6495C911230AE183BA89B3F54 /* IISideController.m in Sources */,
+				EB89F919EFA5A8EDE737B964CA33510F /* IIViewDeckController.m in Sources */,
+				FF7F8E66B64F12C38C0C5A9891B3A641 /* IIWrapController.m in Sources */,
+				37664B429E2199B9C08767868F721E43 /* ViewDeck-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		098439AB598DDF1AF51146A2E3E2E562 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -719,116 +497,54 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		35152EA404AF085B01E4641A822CEE5A /* Sources */ = {
+		BECBBE9D1B87A00FCA3522F753694D6D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CF8CF39A1CBE68ECC5228127B6B6ED5D /* Pods-DemoTests-dummy.m in Sources */,
+				6BE725ACFEE5BD547E4DD4103B3707C6 /* Pods-DemoTests-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		564571C12F94DA1B36CEC8123FDDC29B /* Sources */ = {
+		D890132FDCE0B647316A490B51DB17D6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F9CCBD93231C64E981051C8E59C731CB /* Pods-Demo-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8C9F4757F0D1457A738A8F23DAAB062C /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				F66145EEA8ECD711A3B8B6F3DCBFA154 /* IISideController.m in Sources */,
-				3359BBEE912DAF0ABAC3D7386C8EAC6C /* IIViewDeckController.m in Sources */,
-				34F45AFAB93207CA1154C8F2B46B6624 /* IIWrapController.m in Sources */,
-				EAF87D9C6486055F525688ABDD18C16F /* ViewDeck-dummy.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		ABFDB88917B624C8A595151EBCF13ACF /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				ECD6563CB9856BAF52DAE36082D51BCB /* ioapi.c in Sources */,
-				D55DD7D3CE638CAD828C60CEB9A811BF /* mztools.c in Sources */,
-				E29885EE1E8740549E4B8170E3BDF511 /* SSZipArchive-dummy.m in Sources */,
-				E5A617A3DE04BDA5ADFAD7DD6DF57FBD /* SSZipArchive.m in Sources */,
-				0CDA851908C6DA4EE74A10DB9A10737F /* unzip.c in Sources */,
-				484CBCA9BB692D802239420726034DEE /* zip.c in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		C3D68AF0DC84163C54B8EAA6CF0DC57F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3D75AD59EF0407650378DD6688744D2F /* NSFileManager+NVHFileSize.m in Sources */,
-				18FE4913B27470F70A781382D6C60104 /* NVHFile.m in Sources */,
-				9DDDB7D6DBF6DBF3D72ED6B1CFB46B12 /* NVHGzipFile.m in Sources */,
-				27CBD22F568032B0BC6553F3AFBECE9A /* NVHProgress.m in Sources */,
-				7ECBFDA8628F8193DEFD369CA3C79200 /* NVHTarFile.m in Sources */,
-				25A1CD0D872DF9E040CE7A7782964B6E /* NVHTarGzip-dummy.m in Sources */,
-				A4E53D45AE9A5FA9BD28B52FD307477E /* NVHTarGzip.m in Sources */,
+				CA6CC786B050C24CD788D492ECB4EA34 /* Pods-Demo-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		78D34AA8013CF8E0955DB60FF4FA6ACC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = NVHTarGzip;
-			target = 189873E1BD4B9F68298DC0F43ED1E45C /* NVHTarGzip */;
-			targetProxy = 90D622A09007DD4101E7FDFAD6D73635 /* PBXContainerItemProxy */;
-		};
-		7B77F5CF22CFE28C9B8036AC09260E67 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SSZipArchive;
-			target = 7C29B6B8E94EB409BD4B85A7B6D6B3E7 /* SSZipArchive */;
-			targetProxy = 07788EE41E019F318DB4F458DF6F0F36 /* PBXContainerItemProxy */;
-		};
-		91DA02A56296F7E20C90352FCE273221 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = NVHTarGzip;
-			target = 189873E1BD4B9F68298DC0F43ED1E45C /* NVHTarGzip */;
-			targetProxy = F185EC0EEC97A2E050B2A5062C0437D6 /* PBXContainerItemProxy */;
-		};
-		AE88F943BB3D9BDDCE33F0EB049F140F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MBProgressHUD;
-			target = FE2F1D7B9D9FCEA148517E4657B243F4 /* MBProgressHUD */;
-			targetProxy = 52A02FADB3192503648172C7FB8B2131 /* PBXContainerItemProxy */;
-		};
-		AF403DF661BBF5C2F0AF728F6655E0FF /* PBXTargetDependency */ = {
+		1E441D95D67AB237B43318ABA70F6582 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = MPColorTools;
 			target = E57A88AC01BFFE57B3EDBEAA1ADBF1FD /* MPColorTools */;
-			targetProxy = 34C99E992BE3AD824E1C477BA6EFE060 /* PBXContainerItemProxy */;
+			targetProxy = 0F69263ACDC9AEC6F4658B732F3D3823 /* PBXContainerItemProxy */;
 		};
-		B6C84519D0D3BA87485F17266F61D7F9 /* PBXTargetDependency */ = {
+		37AD2CDD584F69A216036A18994907BA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			name = SSZipArchive;
-			target = 7C29B6B8E94EB409BD4B85A7B6D6B3E7 /* SSZipArchive */;
-			targetProxy = 8C33ADBEB1478A66627C091C51EC4126 /* PBXContainerItemProxy */;
+			name = MPColorTools;
+			target = E57A88AC01BFFE57B3EDBEAA1ADBF1FD /* MPColorTools */;
+			targetProxy = D658CDE4D9215D9773B283836987E083 /* PBXContainerItemProxy */;
 		};
-		C31FFF1BADE2E3CD772BCD3072AD845E /* PBXTargetDependency */ = {
+		6395A65986CCEC0DAD88558EDD042702 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MBProgressHUD;
+			target = FE2F1D7B9D9FCEA148517E4657B243F4 /* MBProgressHUD */;
+			targetProxy = 38CD85138CC69FAE1ACA7782602FC23E /* PBXContainerItemProxy */;
+		};
+		9D88503E3E16A0DC65483EA8FAA972FE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ViewDeck;
-			target = E9596885FC70054B696373542036A617 /* ViewDeck */;
-			targetProxy = 72AA874D863513352F15AA920F0600E5 /* PBXContainerItemProxy */;
+			target = B2B5568B1A331453B10A92AD1E975725 /* ViewDeck */;
+			targetProxy = 38E61713A1212E4B7A1F43CBBDACCB9F /* PBXContainerItemProxy */;
 		};
-		D688586D655EE1CD74E785A0E0891CE4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = MPColorTools;
-			target = E57A88AC01BFFE57B3EDBEAA1ADBF1FD /* MPColorTools */;
-			targetProxy = 719301CF6DFDF62D051E19EFD3652AA0 /* PBXContainerItemProxy */;
-		};
-		F23FD5069BC871BCB64660705409339C /* PBXTargetDependency */ = {
+		F06BFCC1442CAA4C870EB6FBDE1018BC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = MBProgressHUD;
 			target = FE2F1D7B9D9FCEA148517E4657B243F4 /* MBProgressHUD */;
-			targetProxy = 3D73DCB9620B352853C6A3E7F1436EC9 /* PBXContainerItemProxy */;
+			targetProxy = 5D5A43E1F1AE12E6C8BBFE6F759E6028 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -867,37 +583,18 @@
 			};
 			name = Release;
 		};
-		21CB5E3316475CFDBDF04AD78D68E992 /* Release */ = {
+		310BE93A4FDC7668717E4BCCA396A28E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3F894BABA542ABA9F6C0490A716769FF /* NVHTarGzip.xcconfig */;
+			baseConfigurationReference = 7A2639E5B4E19ED3B527B65C7A55D8A7 /* Pods-Demo.release.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/NVHTarGzip/NVHTarGzip-prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MACH_O_TYPE = staticlib;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PODS_ROOT = "$(SRCROOT)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		271FC858B99883DC9B0447CD25AD7680 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = ADF15F2CA805DFA613B355D4F0747B8E /* SSZipArchive.xcconfig */;
-			buildSettings = {
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/SSZipArchive/SSZipArchive-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
@@ -905,7 +602,7 @@
 		};
 		31BD97B5330E343B37217C4A2C52FF79 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 60864555054E7CD4BB7C456710205472 /* MPColorTools.xcconfig */;
+			baseConfigurationReference = 75EE8DEFA7494A10DAE76F8CF752B0EA /* MPColorTools.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/MPColorTools/MPColorTools-prefix.pch";
@@ -921,9 +618,9 @@
 			};
 			name = Release;
 		};
-		554B2EB9445E624D12F5507C2D1160F4 /* Release */ = {
+		36E4C4F127C996DADB6601AED72B86F3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4628EDB9C2DB980D8A8CDE054DA28092 /* ViewDeck.xcconfig */;
+			baseConfigurationReference = 476D5367075BC0F3154BD9883F35C610 /* ViewDeck.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/ViewDeck/ViewDeck-prefix.pch";
@@ -939,25 +636,24 @@
 			};
 			name = Release;
 		};
-		7049B362F02998471C8BDA48D879C0D0 /* Debug */ = {
+		47A6847F3EF15C1345DCCCEFE45C04ED /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ADF15F2CA805DFA613B355D4F0747B8E /* SSZipArchive.xcconfig */;
+			baseConfigurationReference = 4F4E6E3F08279C0471AF37FFB04DA07A /* Pods-Demo.debug.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/SSZipArchive/SSZipArchive-prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MACH_O_TYPE = staticlib;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PODS_ROOT = "$(SRCROOT)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
-		7218107041FD6D7918033BEE66CD8250 /* Release */ = {
+		56AF8349A67114FABF8E68AA5B0749D2 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A107FA33BB565AEBF6481931E4A566C0 /* Pods-DemoTests.release.xcconfig */;
 			buildSettings = {
@@ -974,25 +670,7 @@
 			};
 			name = Release;
 		};
-		7DCFC244D9CE324AEF9DA70804EFA3AA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4628EDB9C2DB980D8A8CDE054DA28092 /* ViewDeck.xcconfig */;
-			buildSettings = {
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/ViewDeck/ViewDeck-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		91DB63F13E74FAD0CFBA5FA365DFBFF4 /* Debug */ = {
+		5C6AB04B0B39D722756A41EDED3FED9E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C8CCF51F6C17727864F94EC906799013 /* Pods-DemoTests.debug.xcconfig */;
 			buildSettings = {
@@ -1008,23 +686,6 @@
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
-		};
-		AEA55E186CC82FF774D04AA420E028D7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7A2639E5B4E19ED3B527B65C7A55D8A7 /* Pods-Demo.release.xcconfig */;
-			buildSettings = {
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				MACH_O_TYPE = staticlib;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
 		};
 		B37F0F91F85060E28F1DAAB522DC7EC1 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1067,7 +728,7 @@
 		};
 		C5AFFFCB54FD9036E7BC9BA54ADAAF30 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6360124557BCCBC59196D86F00CFAE22 /* MBProgressHUD.xcconfig */;
+			baseConfigurationReference = AD83D750271C844355169A4B350E8082 /* MBProgressHUD.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/MBProgressHUD/MBProgressHUD-prefix.pch";
@@ -1083,29 +744,12 @@
 			};
 			name = Release;
 		};
-		D7EC1C100398555DC6F9AA4D0FDA6C68 /* Debug */ = {
+		C6141AA46AF8BE33971826B2EDACC93C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 4F4E6E3F08279C0471AF37FFB04DA07A /* Pods-Demo.debug.xcconfig */;
+			baseConfigurationReference = 476D5367075BC0F3154BD9883F35C610 /* ViewDeck.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				MACH_O_TYPE = staticlib;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		DDB10F3EBD7B181E3499642DB6FB92A5 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3F894BABA542ABA9F6C0490A716769FF /* NVHTarGzip.xcconfig */;
-			buildSettings = {
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/NVHTarGzip/NVHTarGzip-prefix.pch";
+				GCC_PREFIX_HEADER = "Target Support Files/ViewDeck/ViewDeck-prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
@@ -1120,7 +764,7 @@
 		};
 		E7B8141DB24F5AA0D1F847AFEC0DB018 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6360124557BCCBC59196D86F00CFAE22 /* MBProgressHUD.xcconfig */;
+			baseConfigurationReference = AD83D750271C844355169A4B350E8082 /* MBProgressHUD.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/MBProgressHUD/MBProgressHUD-prefix.pch";
@@ -1138,7 +782,7 @@
 		};
 		FBC8900B3D14C2C06FE4BC1B2F0CE44E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 60864555054E7CD4BB7C456710205472 /* MPColorTools.xcconfig */;
+			baseConfigurationReference = 75EE8DEFA7494A10DAE76F8CF752B0EA /* MPColorTools.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/MPColorTools/MPColorTools-prefix.pch";
@@ -1157,15 +801,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0EAB0C596736BA526F6E9662330E83FA /* Build configuration list for PBXNativeTarget "ViewDeck" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				7DCFC244D9CE324AEF9DA70804EFA3AA /* Debug */,
-				554B2EB9445E624D12F5507C2D1160F4 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		21A0787FEDCC6163AA8E2B56BAF7A0A6 /* Build configuration list for PBXNativeTarget "MPColorTools" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1184,38 +819,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		40E42D3884960772C30D23C775B2E62B /* Build configuration list for PBXNativeTarget "Pods-Demo" */ = {
+		3A6CD11CB398477B57BCC4CD49244AAA /* Build configuration list for PBXNativeTarget "Pods-Demo" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D7EC1C100398555DC6F9AA4D0FDA6C68 /* Debug */,
-				AEA55E186CC82FF774D04AA420E028D7 /* Release */,
+				47A6847F3EF15C1345DCCCEFE45C04ED /* Debug */,
+				310BE93A4FDC7668717E4BCCA396A28E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		6F8C4CF36D2578BFF720BF80397EABB4 /* Build configuration list for PBXNativeTarget "SSZipArchive" */ = {
+		ADC8EC38D519E66E3C8E5953778B3498 /* Build configuration list for PBXNativeTarget "Pods-DemoTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				7049B362F02998471C8BDA48D879C0D0 /* Debug */,
-				271FC858B99883DC9B0447CD25AD7680 /* Release */,
+				5C6AB04B0B39D722756A41EDED3FED9E /* Debug */,
+				56AF8349A67114FABF8E68AA5B0749D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CA847ED2D2886CF509A5BEDD18A09F98 /* Build configuration list for PBXNativeTarget "Pods-DemoTests" */ = {
+		CDF84A16A355922F9625C6427B355F31 /* Build configuration list for PBXNativeTarget "ViewDeck" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				91DB63F13E74FAD0CFBA5FA365DFBFF4 /* Debug */,
-				7218107041FD6D7918033BEE66CD8250 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		F0E1D443C56A9F7BADCC89873AC146BA /* Build configuration list for PBXNativeTarget "NVHTarGzip" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				DDB10F3EBD7B181E3499642DB6FB92A5 /* Debug */,
-				21CB5E3316475CFDBDF04AD78D68E992 /* Release */,
+				C6141AA46AF8BE33971826B2EDACC93C /* Debug */,
+				36E4C4F127C996DADB6601AED72B86F3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
