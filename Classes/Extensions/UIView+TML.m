@@ -16,6 +16,7 @@
     for (UIView *subview in self.subviews) {
         [subview restoreTMLLocalizations];
     }
+    [self setNeedsLayout];
 }
 
 - (id)tmlFindFirstResponder {
