@@ -28,12 +28,18 @@
  *  THE SOFTWARE.
  */
 
+#import "NSObject+TML.h"
+#import "TML.h"
 #import "UINavigationItem+TML.h"
 
 @implementation UINavigationItem (TML)
 
 - (void)localizeWithTML {
-    // Check if TML automatic localization mode is enabled, then localize the view
+    [super localizeWithTML];
+    NSString *title = self.title;
+    if (title != nil) {
+        self.title = TMLLocalizedString(title, @"title");
+    }
 }
 
 @end

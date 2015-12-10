@@ -62,9 +62,9 @@
     NSDictionary *section = (NSDictionary *) [self.items objectAtIndex:indexPath.section];
     NSDictionary *item = (NSDictionary *) [[section objectForKey:@"items"] objectAtIndex:indexPath.row];
     
-    TMLLocalizeViewWithLabel(cell.translationLabel, @"Translation");
-    TMLLocalizeViewWithLabel(cell.tokensLabel, @"Tokens");
-    TMLLocalizeViewWithLabel(cell.tmlLabel, @"Label");
+    cell.translationLabel.text = TMLLocalizedString(@"Translation");
+    cell.tokensLabel.text = TMLLocalizedString(@"Tokens");
+    cell.tmlLabel.text = TMLLocalizedString(@"Label");
     
     cell.tml.text = [item objectForKey:@"tml"];
     if ([item objectForKey:@"tokens_desc"])
@@ -83,9 +83,9 @@
     }
     
     if ([item objectForKey:@"tokens"]) {
-        TMLLocalizeViewWithLabelAndTokens(cell.translation, [item objectForKey:@"tml"], [item objectForKey:@"tokens"]);
+        cell.translation.text = TMLLocalizedString(item[@"tml"], item[@"tokens"]);
     } else {
-        TMLLocalizeViewWithLabel(cell.translation, [item objectForKey:@"tml"]);
+        cell.translation.text = TMLLocalizedString(item[@"tml"]);
     }
     
     cell.translation.frame = CGRectMake(2, 2, 302, 52);

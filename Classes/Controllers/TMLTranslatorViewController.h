@@ -34,10 +34,6 @@
 
 @interface TMLTranslatorViewController : TMLViewController <UIWebViewDelegate>
 
-+ (void) toggleInAppTranslationsFromController:(UIViewController *) controller;
-
-+ (void) translateFromController:(UIViewController *) controller;
-
-+ (void) translateFromController:(UIViewController *) controller withOptions: (NSDictionary *) options;
+@property(nonatomic, strong) NSString *translationKey;
 
 @end

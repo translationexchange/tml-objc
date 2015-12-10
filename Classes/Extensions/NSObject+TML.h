@@ -30,8 +30,20 @@
 
 #import <Foundation/Foundation.h>
 
+@class TMLTranslationKey;
+
 @interface NSObject (TML)
 
 - (void) localizeWithTML;
+
+- (void)registerTMLTranslationKey:(TMLTranslationKey *)translationKey
+                           tokens:(NSDictionary *)tokens
+                          options:(NSDictionary *)options
+                   restorationKey:(NSString *)restorationKey;
+
+- (void)restoreTMLLocalizations;
+
+- (id)tmlValueForKeyPath:(NSString *)keyPath;
+- (void)tmlSetValue:(id)value forKeyPath:(NSString *)keyPath;
 
 @end

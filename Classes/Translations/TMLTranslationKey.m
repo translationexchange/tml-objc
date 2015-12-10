@@ -42,6 +42,10 @@
 
 @implementation TMLTranslationKey
 
+- (NSUInteger)hash {
+    return [[NSString stringWithFormat:@"%@%@%i", self.key, self.locale, (int)self.level] hash];
+}
+
 # pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone {

@@ -28,13 +28,26 @@
  *  THE SOFTWARE.
  */
 
+#import "NSAttributedString+TML.h"
+#import "NSObject+TML.h"
+#import "NSString+TmlAdditions.h"
+#import "TML.h"
 #import "UILabel+TML.h"
+
+@interface UILabel()
+@end
 
 @implementation UILabel (TML)
 
 - (void)localizeWithTML {
-    if (self.text.length > 0) {
-        // Check if TML automatic localization mode is enabled, then localize the view
+    [super localizeWithTML];
+    NSDictionary *tokens = nil;
+    NSString *tmlAttributedString = [self.attributedText tmlAttributedString:&tokens];
+    if ([tmlAttributedString tmlContainsDecoratedTokens] == YES) {
+        self.attributedText = TMLLocalizedAttributedString(tmlAttributedString, tokens, @"attributedText");
+    }
+    else {
+        self.text = TMLLocalizedString(self.text, @"text");
     }
 }
 

@@ -344,7 +344,10 @@
     [attributedString addAttribute: NSBackgroundColorAttributeName value:[self colorFromData:data] range:range];
 }
 
-- (void) applyStyles: (NSDictionary *) styles toRanges: (NSArray *) ranges inAttributedString: (NSMutableAttributedString *) attributedString {
+- (void) applyStyles:(NSDictionary *)styles
+            toRanges:(NSArray *)ranges
+  inAttributedString:(NSMutableAttributedString *)attributedString
+{
     for (NSString *styleName in [styles allKeys]) {
         NSObject *styleValue = [styles objectForKey:styleName];
         

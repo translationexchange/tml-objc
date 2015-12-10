@@ -32,6 +32,8 @@ NSString * const TMLSourceOptionName = @"source";
 NSString * const TMLLocaleOptionName = @"locale";
 NSString * const TMLLevelOptionName = @"level";
 NSString * const TMLTokenFormatOptionName = @"tokenFormat";
+NSString * const TMLRestorationKeyOptionName = @"localizedKeyPath";
+NSString * const TMLSenderOptionName = @"sender";
 
 #pragma mark - Tokens
 NSString * const TMLViewingUserTokenName = @"viewing_user";

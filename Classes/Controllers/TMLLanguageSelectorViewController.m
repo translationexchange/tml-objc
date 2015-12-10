@@ -40,28 +40,12 @@
 @interface TMLLanguageSelectorViewController () <MBProgressHUDDelegate>
 
 @property(nonatomic, strong) IBOutlet UITableView *tableView;
-
-@property(nonatomic, strong) NSArray *languages;
-
+@property(nonatomic, readonly) NSArray *languages;
 - (IBAction) dismiss: (id)sender;
 
 @end
 
 @implementation TMLLanguageSelectorViewController
-
-+ (void) changeLanguageFromController:(UIViewController *) controller {
-    TMLLanguageSelectorViewController *selector = [[TMLLanguageSelectorViewController alloc] init];
-    selector.delegate = (id<TMLLanguageSelectorViewControllerDelegate>) controller;
-    [controller presentViewController:selector animated: YES completion: nil];
-}
-
-- (id)init {
-    self = [super init];
-    if (self) {
-        self.languages = [NSMutableArray array];
-    }
-    return self;
-}
 
 - (void) loadView {
     [super loadView];
@@ -86,23 +70,18 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.languages = [[[TML sharedInstance] application] languages];
 }
 
 -(IBAction)dismiss:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)setLanguages:(NSArray *)languages {
-    if (_languages == languages || [_languages isEqualToArray:languages] == YES) {
-        return;
-    }
-    _languages = languages;
-    [self.tableView reloadData];
+- (NSArray *)languages {
+    return [[[TML sharedInstance] application] languages];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [_languages count];
+    return [self.languages count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -111,7 +90,9 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"UITableViewCell"];
     }
     
-    TMLLanguage *language = (TMLLanguage *)[self.languages objectAtIndex:indexPath.row];
+    NSArray *languages = [self languages];
+    
+    TMLLanguage *language = (TMLLanguage *)[languages objectAtIndex:indexPath.row];
     cell.detailTextLabel.text = language.nativeName;
     cell.textLabel.text = language.englishName;
     if ([[[TML sharedInstance] currentLanguage].locale isEqualToString:language.locale]) {

@@ -363,25 +363,25 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
     if ([token isEqualToString:@"{month_name}"]) {
         NSDateComponents *comps = [calendar components:NSCalendarUnitMonth fromDate:date];
         NSString *monthName = [[self.defaultLocalization objectForKey:@"default_month_names"] objectAtIndex:comps.month-1];
-        return TMLLocalizedStringWithDescriptionAndOptions(monthName, @"Month name", (@{@"locale": @"en"}));
+        return TMLLocalizedString(monthName, @"Month name", @{}, @{@"locale": @"en"});
     }
 
     if ([token isEqualToString:@"{short_month_name}"]) {
         NSDateComponents *comps = [calendar components:NSCalendarUnitMonth fromDate:date];
         NSString *monthName = [[self.defaultLocalization objectForKey:@"default_abbr_month_names"] objectAtIndex:comps.month-1];
-        return TMLLocalizedStringWithDescriptionAndOptions(monthName, @"Abbreviated month name", (@{@"locale": @"en"}));
+        return TMLLocalizedString(monthName, @"Abbreviated month name", @{}, @{@"locale": @"en"});
     }
 
     if ([token isEqualToString:@"{weekday_name}"]) {
         NSDateComponents *comps = [calendar components:NSCalendarUnitWeekday fromDate:date];
         NSString *weekdayName = [[self.defaultLocalization objectForKey:@"default_day_names"] objectAtIndex:comps.weekday];
-        return TMLLocalizedStringWithDescriptionAndOptions(weekdayName, @"Weekday name", (@{@"locale": @"en"}));
+        return TMLLocalizedString(weekdayName, @"Weekday name", @{}, @{@"locale": @"en"});
     }
 
     if ([token isEqualToString:@"{short_weekday_name}"]) {
         NSDateComponents *comps = [calendar components:NSCalendarUnitWeekday fromDate:date];
         NSString *weekdayName = [[self.defaultLocalization objectForKey:@"default_abbr_day_names"] objectAtIndex:comps.weekday];
-        return TMLLocalizedStringWithDescriptionAndOptions(weekdayName, @"Abbreviated weekday name", (@{@"locale": @"en"}));
+        return TMLLocalizedString(weekdayName, @"Abbreviated weekday name", @{}, @{@"locale": @"en"});
     }
     
     if (dateFormatter == nil)

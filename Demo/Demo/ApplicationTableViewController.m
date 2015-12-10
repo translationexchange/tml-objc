@@ -71,7 +71,8 @@
     }
     
     NSDictionary *section = (NSDictionary *) [self.items objectAtIndex:indexPath.section];
-    [self setTextValue:[[[section objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"title"] toField:cell.textLabel];
+    NSString *title = [[[section objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"title"];
+    cell.textLabel.text = TMLLocalizedString(title);
     return cell;
 }
 

@@ -51,24 +51,23 @@
 }
 
 - (void) localize {
-    TMLLocalizeView(self.tableView);
-    
     UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    TMLLocalizeViewWithLabelAndTokens(cell.detailTextLabel, @"Logged in as {user}", @{@"user": @"Michael"});
+    cell.detailTextLabel.text = TMLLocalizedString(@"Logged in as {user}", @{@"user": @"Michael"});
 
     cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
-    TMLLocalizeViewWithLabel(cell.detailTextLabel, [[TML currentLanguage] name]);
+    cell.detailTextLabel.text = TMLLocalizedString([[TML currentLanguage] name]);
     
-    TMLLocalizeView(self.footerView);
-    TMLLocalizeViewWithLabelAndTokens(self.versionLabel, @"Version {version}", @{@"version": @"1.0"});
+    self.versionLabel.text = TMLLocalizedString(@"Version {version}", @{@"version": @"1.0"});
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 2) {
         if (indexPath.row == 0) {
-            [TMLLanguageSelectorViewController changeLanguageFromController:self];
+            TMLLanguageSelectorViewController *vc = [[TMLLanguageSelectorViewController alloc] init];
+            [self presentViewController:vc animated:YES completion:nil];
         } else if (indexPath.row == 1) {
-            [TMLTranslatorViewController translateFromController:self];
+            TMLTranslatorViewController *vc = [[TMLTranslatorViewController alloc] init];
+            [self presentViewController:vc animated:YES completion:nil];
         }
         return;
     }

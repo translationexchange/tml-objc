@@ -28,11 +28,51 @@
  *  THE SOFTWARE.
  */
 
+#import "NSAttributedString+TML.h"
+#import "NSObject+TML.h"
+#import "NSString+TmlAdditions.h"
+#import "TML.h"
 #import "UIButton+TML.h"
+#import <objc/runtime.h>
 
 @implementation UIButton (TML)
 
+- (id)tmlValueForKeyPath:(NSString *)keyPath {
+    if ([keyPath hasPrefix:@"attributedTitleForState"] == YES
+        || [keyPath hasPrefix:@"titleForState"] == YES) {
+        NSArray *parts = [keyPath componentsSeparatedByString:@"ForState"];
+        NSString *prop = [parts firstObject];
+        UIControlState state = [[parts lastObject] integerValue];
+        if ([@"title" isEqualToString:prop] == YES) {
+            return [self titleColorForState:state];
+        }
+        else if ([@"attributedTitle" isEqualToString:prop] == YES) {
+            return [self attributedTitleForState:state];
+        }
+    }
+    return [super tmlValueForKeyPath:keyPath];
+}
+
+- (void)tmlSetValue:(id)value forKeyPath:(NSString *)keyPath {
+    if ([keyPath hasPrefix:@"attributedTitleForState"] == YES
+        || [keyPath hasPrefix:@"titleForState"] == YES) {
+        NSArray *parts = [keyPath componentsSeparatedByString:@"ForState"];
+        NSString *prop = [parts firstObject];
+        UIControlState state = [[parts lastObject] integerValue];
+        if ([@"title" isEqualToString:prop] == YES) {
+            [self setTitle:value forState:state];
+            return;
+        }
+        else if ([@"attributedTitle" isEqualToString:prop] == YES) {
+            [self setAttributedTitle:value forState:state];
+            return;
+        }
+    }
+    [super tmlSetValue:value forKeyPath:keyPath];
+}
+
 - (void)localizeWithTML {
+    [super localizeWithTML];
     NSArray *states = @[
         @(UIControlStateNormal),
         @(UIControlStateHighlighted),
@@ -42,10 +82,15 @@
     ];
     
     for (NSNumber *state in states) {
-        NSString *title = [self titleForState:state.integerValue];
-        if (title.length > 0) {
-            // Check if TML automatic localization mode is enabled, then localize the view
-//            [self setTitle:[[NSBundle mainBundle] localizedStringForKey:title value:@"" table:nil] forState:state.integerValue];
+        NSDictionary *tokens = nil;
+        NSString *tmlAttributedString = [[self attributedTitleForState:[state integerValue]] tmlAttributedString:&tokens];
+        if ([tmlAttributedString tmlContainsDecoratedTokens] == YES) {
+            NSString *key = [NSString stringWithFormat:@"attributedTitle.%@", state];
+            [self setAttributedTitle:TMLLocalizedAttributedString(tmlAttributedString, tokens, key) forState:[state integerValue]];
+        }
+        else {
+            NSString *key = [NSString stringWithFormat:@"title.%@", state];
+            [self setTitle:TMLLocalizedString(tmlAttributedString, key) forState:[state integerValue]];
         }
     }
 }

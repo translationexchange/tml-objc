@@ -28,12 +28,40 @@
  *  THE SOFTWARE.
  */
 
+#import "NSObject+TML.h"
+#import "TML.h"
 #import "UISegmentedControl+TML.h"
+
+NSString * const TMLTitleForSegmentIndexKeyPrefix = @"titleForSegmentIndex";
 
 @implementation UISegmentedControl (TML)
 
+- (void)tmlSetValue:(id)value forKeyPath:(NSString *)keyPath {
+    if ([keyPath hasPrefix:TMLTitleForSegmentIndexKeyPrefix] == YES) {
+        NSInteger index = [[keyPath stringByReplacingOccurrencesOfString:TMLTitleForSegmentIndexKeyPrefix withString:@""] integerValue];
+        [self setTitle:value forSegmentAtIndex:index];
+    }
+    return [super tmlSetValue:value forKeyPath:keyPath];
+}
+
+- (id)tmlValueForKeyPath:(NSString *)keyPath {
+    if ([keyPath hasPrefix:TMLTitleForSegmentIndexKeyPrefix] == YES) {
+        NSInteger index = [[keyPath stringByReplacingOccurrencesOfString:TMLTitleForSegmentIndexKeyPrefix withString:@""] integerValue];
+        return [self titleForSegmentAtIndex:index];
+    }
+    return [super tmlValueForKeyPath:keyPath];
+}
+
 - (void)localizeWithTML {
-    // Check if TML automatic localization mode is enabled, then localize the view
+    [super localizeWithTML];
+    NSUInteger length = [self numberOfSegments];
+    for (NSUInteger i=0; i<length; i++) {
+        NSString *title = [self titleForSegmentAtIndex:i];
+        if (title != nil) {
+            NSString *key = [NSString stringWithFormat:@"%@%lu", TMLTitleForSegmentIndexKeyPrefix, (unsigned long)i];
+            [self setTitle:TMLLocalizedString(title, key) forSegmentAtIndex:i];
+        }
+    }
 }
 
 @end

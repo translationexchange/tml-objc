@@ -99,18 +99,20 @@
 
     TMLBeginSource(@"samples");
     
-    NSObject *translation = TMLLocalizedAttributedStringWithDescriptionAndTokensAndOptions(self.label, self.description, [self parsedTokens], [self parsedOptions]);
-    [self setTextValue:translation toField:self.translationTextView];
+    NSAttributedString *translation = TMLLocalizedAttributedString(self.label, [self parsedTokens], self.description, [self parsedOptions]);
+    self.translationTextView.attributedText = translation;
     
     TMLEndSource
 }
 
 - (IBAction)changeLanguage:(id)sender {
-    [TMLLanguageSelectorViewController changeLanguageFromController:self];
+    TMLLanguageSelectorViewController *vc = [[TMLLanguageSelectorViewController alloc] init];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (IBAction)openTranslator:(id)sender {
-    [TMLTranslatorViewController translateFromController:self];
+    TMLTranslatorViewController *vc = [[TMLTranslatorViewController alloc] init];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 - (void) tmlLanguageSelectorViewController:(TMLLanguageSelectorViewController *) tmlLanguageSelectorViewController didSelectLanguage: (TMLLanguage *) language {
@@ -127,9 +129,10 @@
     TMLBeginSource(@"Translations");
 
     NSString *languageName = [[[TML sharedInstance] currentLanguage] englishName];
-    [self setTextValue:TMLLocalizedStringWithTokens(@"{language} Translation", @{@"language": TMLLocalizedString(languageName)}) toField:self.navigationItem];
-    [self setTextValue:TMLLocalizedString(@"Original Label") toField:self.originalLabel];
-    [self setTextValue:TMLLocalizedString(@"Translation") toField:self.translationLabel];
+    NSString *lang = TMLLocalizedString(languageName);
+    self.navigationItem.title = TMLLocalizedString(@"{language} Translation", @{@"language": lang});
+    self.originalLabel.text = TMLLocalizedString(@"Original Label");
+    self.translationLabel.text = TMLLocalizedString(@"Translation");
 
     TMLEndSource
 }

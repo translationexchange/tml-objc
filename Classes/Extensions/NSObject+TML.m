@@ -29,24 +29,102 @@
  */
 
 #import "NSObject+TML.h"
+#import "TML.h"
+#import "TMLConfiguration.h"
+#import "TMLLanguage.h"
+#import "TMLTranslationKey.h"
 #import <objc/runtime.h>
 
 @implementation NSObject (TML)
 
-- (void) localizeWithTML {
-    // do nothing by default
-}
-
 + (void)load {
-    Method awakeFromNibOriginal = class_getInstanceMethod(self, @selector(awakeFromNib));
-    Method awakeFromNibCustom = class_getInstanceMethod(self, @selector(awakeFromNibCustom));
+    Method original = class_getInstanceMethod(self, @selector(awakeFromNib));
+    Method ours = class_getInstanceMethod(self, @selector(tmlAwakeFromNib));
+    method_exchangeImplementations(original, ours);
     
-    method_exchangeImplementations(awakeFromNibOriginal, awakeFromNibCustom);
+    original = class_getInstanceMethod(self, @selector(valueForKeyPath:));
+    ours = class_getInstanceMethod(self, @selector(tmlValueForKeyPath:));
+    method_exchangeImplementations(original, ours);
+    
+    original = class_getInstanceMethod(self, @selector(setValue:forKeyPath:));
+    ours = class_getInstanceMethod(self, @selector(tmlSetValue:forKeyPath:));
+    method_exchangeImplementations(original, ours);
 }
 
-- (void)awakeFromNibCustom {
-    [self awakeFromNibCustom];
+- (void) localizeWithTML {
+    // Subclasses should handle this
+}
+
+- (void)tmlAwakeFromNib {
+    [self tmlAwakeFromNib];
+    NSString *accessibilityLabel = self.accessibilityLabel;
+    if (accessibilityLabel != nil) {
+        self.accessibilityLabel = TMLLocalizedString(accessibilityLabel, @"accessibilityLabel");
+    }
     [self localizeWithTML];
+}
+
+- (id)tmlValueForKeyPath:(NSString *)keyPath {
+    return [self tmlValueForKeyPath:keyPath];
+}
+
+- (void)tmlSetValue:(id)value forKeyPath:(NSString *)keyPath {
+    [self tmlSetValue:value forKeyPath:keyPath];
+}
+
+
+- (NSMutableDictionary *)tmlRegistry {
+    NSMutableDictionary *registry = objc_getAssociatedObject(self, @"_tmlRegistry");
+    if (registry == nil) {
+        registry = [NSMutableDictionary dictionary];
+        objc_setAssociatedObject(self, @"_tmlRegistry", registry, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return registry;
+}
+
+- (void)registerTMLTranslationKey:(TMLTranslationKey *)translationKey
+                           tokens:(NSDictionary *)tokens
+                          options:(NSDictionary *)options
+                   restorationKey:(NSString *)restorationKey
+{
+    NSMutableDictionary *registry = [self tmlRegistry];
+    
+    NSMutableDictionary *payload = [NSMutableDictionary dictionary];
+    payload[@"translationKey"] = translationKey;
+    if (tokens != nil) {
+        payload[@"tokens"] = tokens;
+    }
+    if (options != nil) {
+        payload[@"options"] = options;
+    }
+    
+    registry[restorationKey] = payload;
+}
+
+- (void)restoreTMLLocalizations {
+    NSMutableDictionary *registry = [self tmlRegistry];
+    for (NSString *restorationKey in registry) {
+        NSDictionary *payload = registry[restorationKey];
+        if (payload == nil) {
+            continue;
+        }
+        TMLTranslationKey *translationKey = payload[@"translationKey"];
+        if (translationKey == nil) {
+            continue;
+        }
+        NSDictionary *tokens = payload[@"tokens"];
+        NSDictionary *options = payload[@"options"];
+        id result = [[[TML sharedInstance] currentLanguage] translate:translationKey.label
+                                                          description:translationKey.keyDescription
+                                                               tokens:tokens
+                                                              options:options];
+        @try {
+            [self setValue:result forKeyPath:restorationKey];
+        }
+        @catch (NSException *exception) {
+            TMLError(@"Error restoring translation key: '%@' with restorationKey: '%@': %@", translationKey.key, restorationKey, exception);
+        }
+    }
 }
 
 @end

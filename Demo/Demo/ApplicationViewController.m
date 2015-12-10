@@ -87,7 +87,7 @@
 }
 
 - (void)localize {
-    TMLLocalizeView(self.view);
+//    TMLLocalizeView(self.view);
 }
 
 - (void)tmlTranslationsLoaded:(NSNotification *)aNotification {

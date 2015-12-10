@@ -39,6 +39,7 @@
 #import "TMLSource.h"
 #import "TMLTokenizer.h"
 #import "TMLTranslationKey.h"
+#import "NSObject+TML.h"
 
 @implementation TMLLanguage
 
@@ -252,6 +253,17 @@
              tokens:(NSDictionary *)tokens
             options:(NSDictionary *)options
 {
+    id sender = options[TMLSenderOptionName];
+    NSString *restorationKey = options[TMLRestorationKeyOptionName];
+    if (sender != nil && restorationKey.length > 0) {
+        NSMutableDictionary *restorationOptions = [options mutableCopy];
+        [restorationOptions removeObjectForKey:TMLSenderOptionName];
+        [sender registerTMLTranslationKey:translationKey
+                                   tokens:tokens
+                                  options:[restorationOptions copy]
+                           restorationKey:restorationKey];
+    }
+    
     NSMutableDictionary *ourTokens = [NSMutableDictionary dictionary];
     if (tokens != nil) {
         [ourTokens addEntriesFromDictionary:tokens];

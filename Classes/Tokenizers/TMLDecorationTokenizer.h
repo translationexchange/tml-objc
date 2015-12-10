@@ -81,6 +81,8 @@
 // List of allowed token names from the original label
 @property(nonatomic, strong) NSArray *allowedTokenNames;
 
++ (NSString *)formatString:(NSString *)string withToken:(NSString *)token;
+
 - (id) initWithLabel: (NSString *) newLabel;
 
 - (id) initWithLabel: (NSString *) newLabel andAllowedTokenNames: (NSArray *) newAllowedTokenNames;

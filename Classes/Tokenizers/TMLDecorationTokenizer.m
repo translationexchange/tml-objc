@@ -62,6 +62,11 @@
     return foundRange.location != NSNotFound && foundRange.length > 0;
 }
 
++ (NSString *)formatString:(NSString *)string withToken:(NSString *)token {
+    NSString *result = [NSString stringWithFormat:@"[%@:%@]", token, string];
+    return result;
+}
+
 - (id) initWithLabel: (NSString *) newLabel {
     return [self initWithLabel:newLabel andAllowedTokenNames:nil];
 }

@@ -29,7 +29,6 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "NSObject+TML.h"
 
 @interface UIBarButtonItem (TML)
 

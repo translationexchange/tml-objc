@@ -28,12 +28,57 @@
  *  THE SOFTWARE.
  */
 
+#import "NSObject+TML.h"
+#import "TML.h"
 #import "UIBarButtonItem+TML.h"
+
+NSString * const TMLPossibleTitleKeyPrefix = @"possibleTitleAtIndex";
 
 @implementation UIBarButtonItem (TML)
 
+- (id)tmlValueForKeyPath:(NSString *)keyPath {
+    if ([keyPath hasPrefix:TMLPossibleTitleKeyPrefix] == YES) {
+        NSUInteger index = [[keyPath stringByReplacingOccurrencesOfString:TMLPossibleTitleKeyPrefix withString:@""] integerValue];
+        NSUInteger count = 0;
+        for (NSString *title in self.possibleTitles) {
+            if (count == index) {
+                return title;
+            }
+            count++;
+        }
+    }
+    return [super tmlValueForKeyPath:keyPath];
+}
+
+- (void)tmlSetValue:(id)value forKeyPath:(NSString *)keyPath {
+    if ([keyPath hasPrefix:TMLPossibleTitleKeyPrefix] == YES) {
+        NSMutableSet *newSet = [NSMutableSet set];
+        NSUInteger index = [[keyPath stringByReplacingOccurrencesOfString:TMLPossibleTitleKeyPrefix withString:@""] integerValue];
+        NSUInteger count = 0;
+        for (NSString *title in self.possibleTitles) {
+            if (count == index) {
+                [newSet addObject:value];
+            }
+            else {
+                [newSet addObject:title];
+            }
+            count++;
+        }
+        [self setPossibleTitles:newSet];
+    }
+    return [super tmlSetValue:value forKeyPath:keyPath];
+}
+
 - (void)localizeWithTML {
-    // Check if TML automatic localization mode is enabled, then localize the view
+    [super localizeWithTML];
+    NSSet *possibleTitles = self.possibleTitles;
+    NSUInteger count = 0;
+    NSMutableSet *newSet = [NSMutableSet set];
+    for (NSString *possibleTitle in possibleTitles) {
+        NSString *key = [NSString stringWithFormat:@"%@%lu", TMLPossibleTitleKeyPrefix, count];
+        [newSet addObject:TMLLocalizedString(possibleTitle, key)];
+        count++;
+    }
 }
 
 @end

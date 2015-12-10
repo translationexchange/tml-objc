@@ -40,8 +40,6 @@
 
 @property(nonatomic, strong) UIWebView *webView;
 
-@property(nonatomic, strong) NSString *translationKey;
-
 
 - (IBAction) reloadButtonPressed: (id) sender;
 - (IBAction) backButtonPressed: (id) sender;
@@ -51,39 +49,6 @@
 @end
 
 @implementation TMLTranslatorViewController
-
-
-
-+ (void) toggleInAppTranslationsFromController:(UIViewController *) controller {
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:controller.view animated:YES];
-
-    [TML configuration].inContextTranslatorEnabled = ![TML configuration].inContextTranslatorEnabled;
-    
-    if ([TML configuration].inContextTranslatorEnabled)
-        hud.labelText = @"In-app translator enabled";
-    else
-        hud.labelText = @"In-app translator disabled";
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-        [hud hide:YES];
-        if ([TML configuration].inContextTranslatorEnabled) {
-            [[[UIAlertView alloc] initWithTitle: nil
-                                        message: @"Tap and hold on any label in the UI to bring up the translation tools." delegate:nil
-                              cancelButtonTitle: @"Ok" otherButtonTitles:nil] show];
-        }
-    });
-}
-
-+ (void) translateFromController:(UIViewController *) controller withOptions: (NSDictionary *) options {
-    TMLTranslatorViewController *translator = [[TMLTranslatorViewController alloc] init];
-    translator.translationKey = [options objectForKey:@"translation_key"];
-    [controller presentViewController:translator animated: YES completion: nil];
-}
-
-+ (void) translateFromController:(UIViewController *) controller {
-    TMLTranslatorViewController *translator = [[TMLTranslatorViewController alloc] init];
-    [controller presentViewController:translator animated: YES completion: nil];
-}
 
 - (void) loadView {
     [super loadView];

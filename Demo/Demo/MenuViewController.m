@@ -131,7 +131,8 @@
     sectionHeader.backgroundColor = [UIColor colorWithRed:0.95 green:0.95 blue:0.95 alpha:1];
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(15, 10, tableView.frame.size.width, 40)];
     NSDictionary *sec = (NSDictionary *) [self.items objectAtIndex:section];
-    TMLLocalizeViewWithLabel(label, [sec objectForKey:@"title"]);
+    label.text = TMLLocalizedString(sec[@"title"]);
+//    TMLLocalizeViewWithLabel(label, [sec objectForKey:@"title"]);
     [sectionHeader addSubview:label];
     return sectionHeader;
 }
@@ -157,7 +158,8 @@
             cell.accessoryType = (tml.translationEnabled == YES) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
         }
     }
-    TMLLocalizeViewWithLabel(cell.textLabel, title);
+    cell.textLabel.text = TMLLocalizedString(title);
+//    TMLLocalizeViewWithLabel(cell.textLabel, title);
     return cell;
 }
 
@@ -170,7 +172,8 @@
     [super tableView:tableView didSelectRowAtIndexPath:indexPath];
     if (indexPath.section == 2) {
         if (indexPath.row == 0) {
-            TMLChangeLanguage(self);
+            TMLLanguageSelectorViewController *vc = [[TMLLanguageSelectorViewController alloc] init];
+            [self presentViewController:vc animated:YES completion:nil];
         } else if (indexPath.row == 1) {
             TML *tml = [TML sharedInstance];
             tml.translationEnabled = !tml.translationEnabled;
@@ -178,7 +181,8 @@
         } else if (indexPath.row == 2) {
             [[TML sharedInstance] submitMissingTranslationKeys];
         } else if (indexPath.row == 3) {
-            TMLOpenTranslatorTools(self);
+            TMLTranslatorViewController *translator = [[TMLTranslatorViewController alloc] init];
+            [self presentViewController:translator animated:YES completion:nil];
         }
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }

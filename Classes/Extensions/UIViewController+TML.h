@@ -33,47 +33,47 @@
 
 @interface UIViewController (TML)
 
-- (void) setTextValue: (NSObject *) value toField: (id) field;
-
-- (void) localizeView: (UIView *) view;
-
-- (void) localizeView: (UIView *) view withTokens: (NSDictionary *) tokens;
-
-- (void) localizeView: (UIView *) view withLabel: (NSString *) label description: (NSString *) description tokens: (NSDictionary *) tokens options: (NSDictionary *) options;
+//- (void) setTextValue: (NSObject *) value toField: (id) field;
+//
+//- (void) localizeView: (UIView *) view;
+//
+//- (void) localizeView: (UIView *) view withTokens: (NSDictionary *) tokens;
+//
+//- (void) localizeView: (UIView *) view withLabel: (NSString *) label description: (NSString *) description tokens: (NSDictionary *) tokens options: (NSDictionary *) options;
 
 @end
 
-#define TMLLocalizeView(view) \
-    [self localizeView: view]
-
-#define TMLLocalizeViewWithTokens(view, tokens) \
-    [self localizeView: view withTokens: tokens]
-
-#define TMLLocalizeViewWithLabel(view, label) \
-    [self localizeView: view withLabel: label description: nil tokens: @{} options: @{}]
-
-#define TMLLocalizeViewWithLabelAndTokens(view, label, the_tokens) \
-    [self localizeView: view withLabel: label description: nil tokens: the_tokens options: @{}]
-
-#define TMLLocalizeViewWithLabelAndDescription(view, label, desc) \
-    [self localizeView: view withLabel: label description: desc tokens: @{} options: @{}]
-
-#define TMLLocalizeViewWithLabelAndDescriptionAndTokens(view, label, description, tokens) \
-    [self localizeView: view withLabel: label description: description tokens: tokens options: @{}]
-
-#define TMLLocalizeViewWithLabelAndDescriptionAndTokensAndOptions(view, label, description, tokens, options) \
-    [self localizeView: view withLabel: label description: description tokens: tokens options: options]
-
-/************************************************************************************
- UX macros
- ************************************************************************************/
-
-#define TMLChangeLanguage(controller) \
-    [TMLLanguageSelectorViewController changeLanguageFromController:controller]
-
-#define TMLToggleInAppTranslations(controller) \
-    [TMLTranslatorViewController toggleInAppTranslationsFromController:self];
-
-#define TMLOpenTranslatorTools(controller) \
-    [TMLTranslatorViewController translateFromController:controller];
-
+//#define TMLLocalizeView(view) \
+//    [self localizeView: view]
+//
+//#define TMLLocalizeViewWithTokens(view, tokens) \
+//    [self localizeView: view withTokens: tokens]
+//
+//#define TMLLocalizeViewWithLabel(view, label) \
+//    [self localizeView: view withLabel: label description: nil tokens: @{} options: @{}]
+//
+//#define TMLLocalizeViewWithLabelAndTokens(view, label, the_tokens) \
+//    [self localizeView: view withLabel: label description: nil tokens: the_tokens options: @{}]
+//
+//#define TMLLocalizeViewWithLabelAndDescription(view, label, desc) \
+//    [self localizeView: view withLabel: label description: desc tokens: @{} options: @{}]
+//
+//#define TMLLocalizeViewWithLabelAndDescriptionAndTokens(view, label, description, tokens) \
+//    [self localizeView: view withLabel: label description: description tokens: tokens options: @{}]
+//
+//#define TMLLocalizeViewWithLabelAndDescriptionAndTokensAndOptions(view, label, description, tokens, options) \
+//    [self localizeView: view withLabel: label description: description tokens: tokens options: options]
+//
+///************************************************************************************
+// UX macros
+// ************************************************************************************/
+//
+//#define TMLChangeLanguage(controller) \
+//    [TMLLanguageSelectorViewController changeLanguageFromController:controller]
+//
+//#define TMLToggleInAppTranslations(controller) \
+//    [TMLTranslatorViewController toggleInAppTranslationsFromController:self];
+//
+//#define TMLOpenTranslatorTools(controller) \
+//    [TMLTranslatorViewController translateFromController:controller];
+//

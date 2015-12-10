@@ -29,6 +29,7 @@
  */
 
 
+#import "NSObject+TML.h"
 #import "NSString+TMLAdditions.h"
 #import "TML.h"
 #import "TMLAPIBundle.h"
@@ -42,6 +43,153 @@
 #import "TMLSource.h"
 #import "TMLTranslation.h"
 #import "TMLTranslationKey.h"
+#import "UIView+TML.h"
+
+
+/**
+ *  Returns localized version of the string argument.
+ *  The first argument is a dictionary of options, normally passed in by macros.
+ *  The second argument is expected to have TML string that needs to be localized,
+ *  and the rest of the arguments can be: tokens, restoration key, user options, or description.
+ *
+ *  The order is only relevant with respect to data types - that is, tokens (NSDictionary)
+ *  will be processed before user options (NSDictionary), and restoration key (NSString) before description (NSString).
+ *
+ *  In the event only a single secondary NSString argument is provided - a check is made to see if options contain
+ *  sender object and if that sender responds to the keyPath indicated in that string. If so - it's used as a restoration
+ *  key path, otherwise - as a description.
+ *  
+ *  In the event user options are given among varargs, options and user options will be merged, with user options
+ *  overriding values in options, but only after this method has parsed out key information from options.
+ *
+ *  @param options NSDictionary of options
+ *  @param string  TML string
+ *  @param ...     NSDictionary *tokens, NSString *restorationKeyPath, NSString *description, NDictionary *userOptions
+ *
+ *  @return Localized NSString or NSAttributedString, depending on token format given in options. 
+ *  If options do not specify token format - NSString is returned.
+ */
+id TMLLocalize(NSDictionary *options, NSString *string, ...) {
+    NSDictionary *tokens;
+    NSString *keyPath;
+    NSString *description;
+    NSDictionary *userOpts;
+    
+    va_list args;
+    va_start(args, string);
+    id arg;
+    while ((arg = va_arg(args, id))) {
+        if ([arg isKindOfClass:[NSDictionary class]] == YES) {
+            if (!tokens) {
+                tokens = arg;
+            }
+            else if (!userOpts) {
+                userOpts = arg;
+            }
+        }
+        else if ([arg isKindOfClass:[NSString class]] == YES) {
+            if (!keyPath) {
+                keyPath = arg;
+            }
+            else if (!description) {
+                description = arg;
+            }
+        }
+    }
+    va_end(args);
+    
+    NSMutableDictionary *ourOpts = [options mutableCopy];
+    if (ourOpts == nil) {
+        ourOpts = [NSMutableDictionary dictionary];
+    }
+    
+    NSString *decorationFormat = options[TMLTokenFormatOptionName];
+    if (keyPath && !description) {
+        id sender = ourOpts[TMLSenderOptionName];
+        id test;
+        @try {
+            test = [sender valueForKeyPath:keyPath];
+        }
+        @catch (NSException *exception) {
+            description = keyPath;
+            keyPath = description;
+        }
+    }
+    
+    if (keyPath != nil) {
+        ourOpts[TMLRestorationKeyOptionName] = keyPath;
+    }
+    
+    if (userOpts != nil) {
+        [ourOpts addEntriesFromDictionary:userOpts];
+    }
+    
+    if ([decorationFormat isEqualToString:TMLAttributedTokenFormatString] == YES) {
+        return [TML localizeAttributedString:string
+                                 description:description
+                                      tokens:tokens
+                                     options:[ourOpts copy]];
+    }
+    else {
+        return [TML localizeString:string
+                       description:description
+                            tokens:tokens
+                           options:[ourOpts copy]];
+    }
+}
+
+id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
+    NSString *keyPath;
+    NSString *description;
+    
+    va_list args;
+    va_start(args, format);
+    id arg;
+    while ((arg = va_arg(args, id))) {
+        if (!description && [arg isKindOfClass:[NSString class]] == YES) {
+            description = arg;
+        }
+        else if (description && !keyPath && [arg isKindOfClass:[NSString class]] == YES) {
+            keyPath = description;
+            description = arg;
+        }
+    }
+    va_end(args);
+    
+    if (description && !keyPath) {
+        keyPath = description;
+    }
+    
+    NSMutableDictionary *ourOpts = [options mutableCopy];
+    if (ourOpts == nil) {
+        ourOpts = [NSMutableDictionary dictionary];
+    }
+    
+    if (keyPath != nil) {
+        ourOpts[TMLRestorationKeyOptionName] = keyPath;
+    }
+    
+    NSString *dateFormat = format;
+    NSString *configFormat = [[[TML sharedInstance] configuration] customDateFormatForKey:format];
+    if (configFormat != nil) {
+        dateFormat = configFormat;
+    }
+    
+    NSString *decorationFormat = options[TMLTokenFormatOptionName];
+    if ([decorationFormat isEqualToString:TMLAttributedTokenFormatString] == YES) {
+        return [TML localizeAttributedDate:date
+                                withFormat:dateFormat
+                               description:description
+                                   options:[ourOpts copy]];
+    }
+    else {
+        return [TML localizeDate:date
+                      withFormat:dateFormat
+                     description:description
+                         options:[ourOpts copy]];
+    }
+}
+
 
 @interface TML() {
     BOOL _observingNotifications;
@@ -199,12 +347,16 @@
                 if (error != nil) {
                     TMLError(@"Could not preload current locale '%@' into newly selected bundle: %@", ourLocale, error);
                 }
+                else {
+                    [self restoreTMLLocalizations];
+                }
             }];
         }
     }
     if ([self.application isInlineTranslationsEnabled] == NO) {
         self.configuration.translationEnabled = NO;
     }
+    [[NSNotificationCenter defaultCenter] postNotificationName:TMLLocalizationDataChangedNotification object:nil];
 }
 
 - (void)setCurrentBundle:(TMLBundle *)currentBundle {
@@ -218,7 +370,6 @@
         apiBundle.syncEnabled = YES;
         [apiBundle setNeedsSync];
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:TMLLocalizationDataChangedNotification object:nil];
 }
 
 - (void) initTranslationBundle:(void(^)(TMLBundle *bundle))completion {
@@ -439,55 +590,67 @@
 + (NSString *) localizeDate:(NSDate *)date
                  withFormat:(NSString *)format
                 description:(NSString *)description
+                    options:(NSDictionary *)options
 {
     return [[self sharedInstance] localizeDate:date
                                     withFormat:format
-                                   description:description];
+                                   description:description
+                                       options:options];
 }
 
 + (NSAttributedString *)localizeAttributedDate:(NSDate *)date
                                     withFormat:(NSString *)format
                                    description:(NSString *)description
+                                       options:(NSDictionary *)options
 {
     return [[self sharedInstance] localizeAttributedDate:date
                                               withFormat:format
-                                             description:description];
+                                             description:description
+                                                 options:options];
 }
 
 + (NSString *) localizeDate:(NSDate *)date
              withFormatName:(NSString *)formatName
                 description:(NSString *)description
+                    options:(NSDictionary *)options
 {
     return [[self sharedInstance] localizeDate:date
                                 withFormatName:formatName
-                                   description:description];
+                                   description:description
+                                       options:options];
 }
 
 + (NSAttributedString *) localizeAttributedDate:(NSDate *)date
                                  withFormatName:(NSString *)formatName
                                     description:(NSString *)description
+                                        options:(NSDictionary *)options
 {
     return [[self sharedInstance] localizeAttributedDate:date
                                           withFormatName:formatName
-                                             description:description];
+                                             description:description
+                                                 options:options];
 }
 
 + (NSString *) localizeDate:(NSDate *)date
         withTokenizedFormat:(NSString *)tokenizedFormat
              description:(NSString *)description
+                    options:(NSDictionary *)options
 {
     return [[self sharedInstance] localizeDate:date
                            withTokenizedFormat:tokenizedFormat
-                                   description:description];
+                                   description:description
+                                       options:options];
 }
 
 + (NSAttributedString *) localizeAttributedDate:(NSDate *)date
                             withTokenizedFormat:(NSString *)tokenizedFormat
                                  description:(NSString *)description
+                                        options:(NSDictionary *)options
 {
     return [[self sharedInstance] localizeAttributedDate:date
                                      withTokenizedFormat:tokenizedFormat
-                                          description:description];
+                                             description:description
+                                                 options:options];
 }
 
 - (NSString *)localizeString:(NSString *)string
@@ -499,6 +662,7 @@
                                       description:description
                                            tokens:tokens
                                           options:options];
+    
     if ([result isKindOfClass:[NSString class]] == YES) {
         return (NSString *)result;
     }
@@ -523,7 +687,7 @@
     id result = [[self currentLanguage] translate:string
                                       description:description
                                            tokens:tokens
-                                          options:options];
+                                          options:opts];
     if ([result isKindOfClass:[NSAttributedString class]] == YES) {
         return (NSAttributedString *)result;
     }
@@ -538,45 +702,51 @@
 - (NSString *) localizeDate:(NSDate *)date
         withTokenizedFormat:(NSString *)tokenizedFormat
                 description:(NSString *)description
+                    options:(NSDictionary *)options
 {
     NSDictionary *tokens = [self tokenValuesForDate:date fromTokenizedFormat:tokenizedFormat];
     return [self localizeString:tokenizedFormat
                     description:description
                          tokens:tokens
-                        options:nil];
+                        options:options];
 }
 
 - (NSAttributedString *) localizeAttributedDate:(NSDate *)date
                             withTokenizedFormat:(NSString *)tokenizedFormat
-                                    description: (NSString *)description
+                                    description:(NSString *)description
+                                        options:(NSDictionary *)options
 {
     NSDictionary *tokens = [self tokenValuesForDate:date fromTokenizedFormat:tokenizedFormat];
     return [self localizeAttributedString:tokenizedFormat
                               description:description
                                    tokens:tokens
-                                  options:nil];
+                                  options:options];
 }
 
 - (NSString *) localizeDate:(NSDate *)date
               withFormatName:(NSString *)formatName
                 description:(NSString *)description
+                    options:(NSDictionary *)options
 {
     NSString *format = [[self configuration] customDateFormatForKey: formatName];
     if (!format) return formatName;
     return [self localizeDate:date
                    withFormat:format
-                  description:description];
+                  description:description
+                      options:options];
 }
 
 - (NSAttributedString *) localizeAttributedDate:(NSDate *)date
                                  withFormatName:(NSString *)formatName
                                     description:(NSString *)description
+                                        options:(NSDictionary *)options
 {
     NSString *format = [[self configuration] customDateFormatForKey: formatName];
     if (!format) return [[NSAttributedString alloc] initWithString:formatName attributes:nil];
     return [self localizeAttributedDate:date
                              withFormat:format
-                            description:description];
+                            description:description
+                                options:options];
 }
 
 - (NSString *)tokenizedDateFormatFromString:(NSString *)string
@@ -630,6 +800,7 @@
 - (NSString *) localizeDate:(NSDate *)date
                  withFormat:(NSString *)format
                 description:(NSString *)description
+                    options:(NSDictionary *)options
 {
     NSDictionary *tokens = nil;
     NSString *tokenizedFormat = [self tokenizedDateFormatFromString:format
@@ -638,12 +809,13 @@
     return [self localizeString:tokenizedFormat
                     description:description
                          tokens:tokens
-                        options:nil];
+                        options:options];
 }
 
 - (NSAttributedString *) localizeAttributedDate:(NSDate *)date
                                      withFormat:(NSString *)format
                                     description:(NSString *)description
+                                        options:(NSDictionary *)options
 {
     NSDictionary *tokens = nil;
     NSString *tokenizedFormat = [self tokenizedDateFormatFromString:format
@@ -652,7 +824,7 @@
     return [self localizeAttributedString:tokenizedFormat
                               description:description
                                    tokens:tokens
-                                  options:nil];
+                                  options:options];
 }
 
 #pragma mark - Registering new translation keys
@@ -669,10 +841,8 @@
         return;
     }
     
-    TMLBundle *currentBundle = self.currentBundle;
-    if ([currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
-        [(TMLAPIBundle *)currentBundle addTranslationKey:translationKey forSource:sourceKey];
-    }
+    TMLAPIBundle *apiBundle = (TMLAPIBundle *)[TMLBundle apiBundle];
+    [(TMLAPIBundle *)apiBundle addTranslationKey:translationKey forSource:sourceKey];
 }
 
 #pragma mark - Configuration
@@ -859,6 +1029,7 @@
 }
 
 - (void)didChangeFromLocale:(NSString *)previousLocale {
+    [self restoreTMLLocalizations];
     NSDictionary *info = @{
                            TMLPreviousLocaleUserInfoKey: previousLocale
                            };
@@ -887,6 +1058,31 @@
     TMLBundle *ourBundle = self.currentBundle;
     if ([ourBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
         [(TMLAPIBundle *)ourBundle setNeedsSync];
+    }
+}
+
+- (void)restoreTMLLocalizations {
+    NSMutableSet *toRestore = [NSMutableSet set];
+    UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+    if (keyWindow != nil) {
+        [toRestore addObject:keyWindow];
+    }
+    
+    UIViewController *rootViewController = [keyWindow rootViewController];
+    if (rootViewController != nil) {
+        [toRestore addObject:rootViewController];
+    }
+    
+    id firstResponder = [keyWindow tmlFindFirstResponder];
+    if (firstResponder != nil) {
+        [toRestore addObject:firstResponder];
+    }
+    
+    for (id obj in toRestore) {
+        if (obj == self) {
+            continue;
+        }
+        [obj restoreTMLLocalizations];
     }
 }
 

@@ -28,12 +28,23 @@
  *  THE SOFTWARE.
  */
 
+#import "NSAttributedString+TML.h"
+#import "NSObject+TML.h"
+#import "NSString+TmlAdditions.h"
+#import "TML.h"
 #import "UITextView+TML.h"
 
 @implementation UITextView (TML)
 
 - (void)localizeWithTML {
-    // Check if TML automatic localization mode is enabled, then localize the view
+    NSDictionary *tokens;
+    NSString *text = [self.attributedText tmlAttributedString:&tokens];
+    if ([text tmlContainsDecoratedTokens] == YES) {
+        self.attributedText = TMLLocalizedAttributedString(text, tokens, @"attributedText");
+    }
+    else {
+        self.text = TMLLocalizedString(self.text, @"text");
+    }
 }
 
 @end

@@ -40,8 +40,6 @@
 
 @property(nonatomic, assign) id<TMLLanguageSelectorViewControllerDelegate> delegate;
 
-+ (void) changeLanguageFromController:(UIViewController *) controller;
-
 - (IBAction) dismiss: (id)sender;
 
 @end

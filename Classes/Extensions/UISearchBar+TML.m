@@ -28,12 +28,26 @@
  *  THE SOFTWARE.
  */
 
+#import "NSObject+TML.h"
+#import "TML.h"
 #import "UISearchBar+TML.h"
 
 @implementation UISearchBar (TML)
 
 - (void)localizeWithTML {
-    // Check if TML automatic localization mode is enabled, then localize the view
+    [super localizeWithTML];
+    NSString *text = self.text;
+    if (text != nil) {
+        self.text = TMLLocalizedString(text, @"text");
+    }
+    NSString *prompt = self.prompt;
+    if (prompt != nil) {
+        self.prompt = TMLLocalizedString(prompt, @"prompt");
+    }
+    NSString *placeholder = self.placeholder;
+    if (placeholder != nil) {
+        self.placeholder = TMLLocalizedString(placeholder, @"placeholder");
+    }
 }
 
 @end

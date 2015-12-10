@@ -28,12 +28,32 @@
  *  THE SOFTWARE.
  */
 
+#import "NSAttributedString+TML.h"
+#import "NSObject+TML.h"
+#import "NSString+TmlAdditions.h"
+#import "TML.h"
 #import "UITextField+TML.h"
 
 @implementation UITextField (TML)
 
 - (void)localizeWithTML {
-    // Check if TML automatic localization mode is enabled, then localize the view
+    NSDictionary *textTokens;
+    NSString *text = [self.attributedText tmlAttributedString:&textTokens];
+    if ([text tmlContainsDecoratedTokens] == YES) {
+        self.attributedText = TMLLocalizedAttributedString(text, textTokens, @"attributedText");
+    }
+    else {
+        self.text = TMLLocalizedString(self.text, @"text");
+    }
+    
+    NSDictionary *placeholderTokens;
+    NSString *placeholder = [self.attributedPlaceholder tmlAttributedString:&placeholderTokens];
+    if ([placeholder tmlContainsDecoratedTokens] == YES) {
+        self.attributedPlaceholder = TMLLocalizedAttributedString(placeholder, placeholderTokens, @"attributedPlaceholder");
+    }
+    else {
+        self.placeholder = TMLLocalizedString(self.placeholder, @"placeholder");
+    }
 }
 
 @end

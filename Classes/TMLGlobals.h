@@ -25,6 +25,8 @@ extern NSString * const TMLSourceOptionName;
 extern NSString * const TMLLocaleOptionName;
 extern NSString * const TMLLevelOptionName;
 extern NSString * const TMLTokenFormatOptionName;
+extern NSString * const TMLRestorationKeyOptionName;
+extern NSString * const TMLSenderOptionName;
 
 #pragma mark - Tokens
 extern NSString * const TMLViewingUserTokenName;
