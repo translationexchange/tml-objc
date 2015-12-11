@@ -42,10 +42,11 @@
 #import "TMLLogger.h"
 #import "TMLSource.h"
 #import "TMLTranslation.h"
+#import "TMLTranslationActivationView.h"
 #import "TMLTranslationKey.h"
-#import "UIView+TML.h"
 #import "TMLTranslatorViewController.h"
 #import "UIResponder+TML.h"
+#import "UIView+TML.h"
 
 
 /**
@@ -199,6 +200,7 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     NSDate *_lastBundleUpdateDate;
     UIGestureRecognizer *_translationActivationGestureRecognizer;
     UIGestureRecognizer *_inlineTranslationGestureRecognizer;
+    TMLTranslationActivationView *_translationActivationView;
 }
 @property(strong, nonatomic) TMLConfiguration *configuration;
 @property(strong, nonatomic) TMLAPIClient *apiClient;
@@ -951,10 +953,36 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 }
 
 - (void)translationActivationGestureRecognized:(UIGestureRecognizer *)gestureRecognizer {
-    if (gestureRecognizer.state != UIGestureRecognizerStateBegan) {
-        return;
+    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+    BOOL translationEnabled = self.translationEnabled;
+    UIColor *backgroundColor = nil;
+    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
+        if (_translationActivationView == nil) {
+            _translationActivationView = [[TMLTranslationActivationView alloc] initWithFrame:window.bounds];
+        }
+        
+        if (translationEnabled) {
+            backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.77];
+        }
+        else {
+            backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.77];
+        }
+        _translationActivationView.backgroundColor = [UIColor clearColor];
+        [UIView animateWithDuration:0.13 animations:^{
+            _translationActivationView.backgroundColor = backgroundColor;
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.13 animations:^{
+                _translationActivationView.backgroundColor = [UIColor clearColor];
+            } completion:^(BOOL finished) {
+                [_translationActivationView removeFromSuperview];
+            }];
+        }];
+        
+        if (_translationActivationView.superview == nil) {
+            [window addSubview:_translationActivationView];
+        }
+        self.translationEnabled = !self.translationEnabled;
     }
-    self.translationEnabled = !self.translationEnabled;
 }
 
 - (void)inlineTranslationGestureRecognized:(UIGestureRecognizer *)gestureRecognizer {
