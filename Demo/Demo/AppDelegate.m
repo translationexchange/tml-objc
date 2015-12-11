@@ -73,9 +73,12 @@
 }
 
 #pragma mark - TMLDelegate
-- (UIGestureRecognizer *)gestureRecognizerForInlineTranslation {
-    return nil;
+#if (TARGET_IPHONE_SIMULATOR)
+- (UIGestureRecognizer *)gestureRecognizerForTranslationActivation {
+    UILongPressGestureRecognizer *gestureRecognizer = [[UILongPressGestureRecognizer alloc] init];
+    gestureRecognizer.numberOfTouchesRequired = 2;
+    return gestureRecognizer;
 }
-
+#endif
 @end
 

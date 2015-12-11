@@ -197,6 +197,7 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     BOOL _observingNotifications;
     BOOL _checkingForBundleUpdate;
     NSDate *_lastBundleUpdateDate;
+    UIGestureRecognizer *_translationActivationGestureRecognizer;
     UIGestureRecognizer *_inlineTranslationGestureRecognizer;
 }
 @property(strong, nonatomic) TMLConfiguration *configuration;
@@ -332,6 +333,7 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
             }];
         }
     }
+    [self setupTranslationActivationGestureRecognizer];
 }
 
 #pragma mark - Bundles
@@ -856,10 +858,10 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     self.currentBundle = newBundle;
     self.configuration.translationEnabled = translationEnabled;
     if (translationEnabled == YES) {
-        [self setupTranslationGestureRecognizer];
+        [self setupInlineTranslationGestureRecognizer];
     }
     else {
-        [self teardownTranslationGestureRecognizer];
+        [self teardownInlineTranslationGestureRecognizer];
     }
 }
 
@@ -872,7 +874,35 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     return [self.application isInlineTranslationsEnabled];
 }
 
-- (void) setupTranslationGestureRecognizer {
+#pragma mark - Gesture Recognizer
+
+- (void) setupTranslationActivationGestureRecognizer {
+    if (_translationActivationGestureRecognizer.view != nil) {
+        return;
+    }
+    UIGestureRecognizer *gestureRecognizer = nil;
+    id<TMLDelegate>delegate = self.delegate;
+    if ([delegate respondsToSelector:@selector(gestureRecognizerForTranslationActivation)] == YES) {
+        gestureRecognizer = [delegate gestureRecognizerForTranslationActivation];
+    }
+    if (gestureRecognizer == nil) {
+        gestureRecognizer = [self defaultGestureRecognizerForTranslationActivation];
+    }
+    [gestureRecognizer addTarget:self action:@selector(translationActivationGestureRecognized:)];
+    _translationActivationGestureRecognizer = gestureRecognizer;
+    UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
+    [keyWindow addGestureRecognizer:gestureRecognizer];
+}
+
+- (void) teardownTranslationActivationGestureRecognizer {
+    if (_translationActivationGestureRecognizer.view == nil) {
+        return;
+    }
+    [_translationActivationGestureRecognizer.view removeGestureRecognizer:_translationActivationGestureRecognizer];
+    _translationActivationGestureRecognizer = nil;
+}
+
+- (void) setupInlineTranslationGestureRecognizer {
     if (_inlineTranslationGestureRecognizer.view != nil) {
         return;
     }
@@ -885,13 +915,14 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     if (recognizer == nil) {
         recognizer = [self defaultGestureRecognizerForInlineTranslation];
     }
+    [recognizer addTarget:self action:@selector(inlineTranslationGestureRecognized:)];
     recognizer.delegate = self;
     _inlineTranslationGestureRecognizer = recognizer;
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
     [window addGestureRecognizer:recognizer];
 }
 
-- (void)teardownTranslationGestureRecognizer {
+- (void)teardownInlineTranslationGestureRecognizer {
     if (_inlineTranslationGestureRecognizer.view == nil) {
         return;
     }
@@ -899,51 +930,66 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     _inlineTranslationGestureRecognizer = nil;
 }
 
+- (UIGestureRecognizer *)defaultGestureRecognizerForTranslationActivation {
+    UILongPressGestureRecognizer *recognizer = [[UILongPressGestureRecognizer alloc] init];
+    [recognizer addTarget:self action:@selector(inlineTranslationGestureRecognized:)];
+    recognizer.numberOfTouchesRequired = 4;
+    return recognizer;
+}
+
 - (UIGestureRecognizer *)defaultGestureRecognizerForInlineTranslation {
     UILongPressGestureRecognizer *recognizer = [[UILongPressGestureRecognizer alloc] init];
-    [recognizer addTarget:self action:@selector(translationGestureRecognized:)];
-//    recognizer.numberOfTapsRequired = 1;
     recognizer.numberOfTouchesRequired = 1;
     return recognizer;
 }
 
-#pragma mark - Gesture Recognizer
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-    return self.translationEnabled == YES;
+    if (gestureRecognizer == _inlineTranslationGestureRecognizer) {
+        return self.translationEnabled == YES;
+    }
+    return NO;
 }
 
-- (void)translationGestureRecognized:(UIGestureRecognizer *)gestureRecognizer {
-    if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        UIView *view = gestureRecognizer.view;
-        CGPoint location = [gestureRecognizer locationInView:view];
-        __block UIView *hitView = [view hitTest:location withEvent:nil];
-        __block NSArray *translationKeys = [hitView tmlTranslationKeys];
-        if (translationKeys.count == 0) {
-            [hitView tmlIterateSubviewsWithBlock:^(UIView *view, BOOL *skip, BOOL *stop) {
-                CGPoint location = [gestureRecognizer locationInView:view];
-                if (CGRectContainsPoint(view.bounds, location) == NO) {
-                    *skip = YES;
+- (void)translationActivationGestureRecognized:(UIGestureRecognizer *)gestureRecognizer {
+    if (gestureRecognizer.state != UIGestureRecognizerStateBegan) {
+        return;
+    }
+    self.translationEnabled = !self.translationEnabled;
+}
+
+- (void)inlineTranslationGestureRecognized:(UIGestureRecognizer *)gestureRecognizer {
+    if (gestureRecognizer.state != UIGestureRecognizerStateBegan) {
+        return;
+    }
+    UIView *view = gestureRecognizer.view;
+    CGPoint location = [gestureRecognizer locationInView:view];
+    __block UIView *hitView = [view hitTest:location withEvent:nil];
+    __block NSArray *translationKeys = [hitView tmlTranslationKeys];
+    if (translationKeys.count == 0) {
+        [hitView tmlIterateSubviewsWithBlock:^(UIView *view, BOOL *skip, BOOL *stop) {
+            CGPoint location = [gestureRecognizer locationInView:view];
+            if (CGRectContainsPoint(view.bounds, location) == NO) {
+                *skip = YES;
+            }
+            else {
+                translationKeys = [view tmlTranslationKeys];
+                if (translationKeys.count > 0) {
+                    hitView = view;
+                    *stop = YES;
                 }
-                else {
-                    translationKeys = [view tmlTranslationKeys];
-                    if (translationKeys.count > 0) {
-                        hitView = view;
-                        *stop = YES;
-                    }
-                }
-            }];
-        }
-        
-        if (translationKeys.count > 0) {
-            TMLTranslationKey *translationKey = [translationKeys firstObject];
-            TMLTranslatorViewController *translator = [[TMLTranslatorViewController alloc] initWithTranslationKey:translationKey.key];
-            UINavigationController *wrapper = [[UINavigationController alloc] initWithRootViewController:translator];
-            UIViewController *presenter = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-            [presenter presentViewController:wrapper animated:YES completion:nil];
-        }
-        else {
-            TMLWarn(@"Could not find a string to localize");
-        }
+            }
+        }];
+    }
+    
+    if (translationKeys.count > 0) {
+        TMLTranslationKey *translationKey = [translationKeys firstObject];
+        TMLTranslatorViewController *translator = [[TMLTranslatorViewController alloc] initWithTranslationKey:translationKey.key];
+        UINavigationController *wrapper = [[UINavigationController alloc] initWithRootViewController:translator];
+        UIViewController *presenter = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+        [presenter presentViewController:wrapper animated:YES completion:nil];
+    }
+    else {
+        TMLWarn(@"Could not find a string to localize");
     }
 }
 

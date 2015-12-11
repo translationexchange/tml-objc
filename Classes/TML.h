@@ -33,6 +33,7 @@
 @protocol TMLDelegate <NSObject>
 @optional
 - (UIGestureRecognizer *)gestureRecognizerForInlineTranslation;
+- (UIGestureRecognizer *)gestureRecognizerForTranslationActivation;
 @end
 
 @class TMLApplication, TMLBundle, TMLConfiguration, TMLLanguage, TMLSource, TMLAPIClient, TMLTranslationKey;
