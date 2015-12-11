@@ -18,11 +18,17 @@
 #define TMLApplicationKey @"8641229aae46c7d39e78657e9da0c86c80f432c21e4e4fb5bf0934673499be7a"
 #endif
 
+@interface AppDelegate()<TMLDelegate>
+
+@end
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
-    [TML sharedInstanceWithApplicationKey:TMLApplicationKey accessToken:TMLAccessToken];
+    TML *tml = [TML sharedInstanceWithApplicationKey:TMLApplicationKey accessToken:TMLAccessToken];
+    tml.delegate = self;
+    
 
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
     self.window.rootViewController = [[IIViewDeckController alloc] initWithCenterViewController:[mainStoryboard instantiateViewControllerWithIdentifier: @"WelcomeViewController"]
@@ -64,6 +70,11 @@
                                            cancelButtonTitle:@"Cancel"
                                            otherButtonTitles: nil];
     [alert show];
+}
+
+#pragma mark - TMLDelegate
+- (UIGestureRecognizer *)gestureRecognizerForInlineTranslation {
+    return nil;
 }
 
 @end
