@@ -35,6 +35,7 @@
 #import "TMLConfiguration.h"
 #import "TMLLanguage.h"
 #import "TMLTranslatorViewController.h"
+#import "NSURL+TML.h"
 
 @interface TMLTranslatorViewController ()
 
@@ -65,27 +66,32 @@
 - (void) loadView {
     [super loadView];
     
-    self.view.backgroundColor = [UIColor colorWithWhite:0.97f alpha:1.0f];
+    UIView *ourView = self.view;
+    ourView.backgroundColor = [UIColor colorWithWhite:0.97f alpha:1.0f];
     
-    UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 25, self.view.frame.size.width, 44.0)];
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:TMLLocalizedString(@"Cancel") style:UIBarButtonItemStyleDone target:self action:@selector(dismiss:)];
+    self.title = TMLLocalizedString(@"Translate");
     
-    UINavigationItem *titleItem = [[UINavigationItem alloc] initWithTitle:TMLLocalizedString(@"Translate")];
-    titleItem.leftBarButtonItem=doneButton;
-    navBar.items = @[titleItem];
-    [self.view addSubview:navBar];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:TMLLocalizedString(@"Done", @"title") style:UIBarButtonItemStylePlain target:self action:@selector(dismiss:)];
+    self.navigationItem.leftBarButtonItem = doneButton;
 
-    self.webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 70, self.view.frame.size.width, self.view.frame.size.height - 70)];
-    [self.webView  setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-    self.webView.delegate = self;
-    [self.view addSubview:self.webView];
+    UIWebView *webView = [[UIWebView alloc] initWithFrame:ourView.bounds];
+    [webView  setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+    webView.delegate = self;
+    self.webView = webView;
+    [self.view addSubview:webView];
 }
 
-- (NSString *) host {
+- (NSURL *) translationCenterURL {
+    NSURL *url = nil;
     TMLApplication *app = [TML sharedInstance].application;
     NSString *host = [app.tools objectForKey: @"host"];
-    if(!host) host = @"https://translation-center.translationexchange.com";
-    return host;
+    if (host != nil) {
+        url = [NSURL URLWithString:host];
+    }
+    else {
+        url = [[[TML sharedInstance] configuration] translationCenterURL];
+    }
+    return [url URLByAppendingPathComponent:@"mobile"];
 }
 
 - (void) viewDidLoad {
@@ -94,17 +100,16 @@
     TMLApplication *app = [TML application];
     TMLLanguage *lang = [TML currentLanguage];
     
-    NSString *url = nil;
+    NSURL *url = [self translationCenterURL];
+    
+    NSMutableDictionary *query = [NSMutableDictionary dictionaryWithDictionary:@{@"locale": lang.locale,
+                                                                                 @"key": app.key}];
 
     if (self.translationKey) {
-        url = [NSString stringWithFormat:@"%@/mobile?locale=%@&key=%@&translation_key=%@", [self host], lang.locale, app.key, self.translationKey];
-    } else {
-        url = [NSString stringWithFormat:@"%@/mobile?locale=%@&key=%@", [self host], lang.locale, app.key];
+        query[@"translation_key"] = self.translationKey;
     }
     
-    TMLDebug(@"url %@", url);
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:url]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[url URLByAppendingQueryParameters:query]];
     
     if (request != nil) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];

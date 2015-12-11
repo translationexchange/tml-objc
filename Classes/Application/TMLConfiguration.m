@@ -36,8 +36,10 @@
 
 #if USE_STAGING
 #define kTMLServiceHost @"https://staging-api.translationexchange.com"
+#define kTMLTranslationCenterHost @"https://translation-center.translationexchange.com"
 #else
 #define kTMLServiceHost @"https://api.translationexchange.com"
+#define kTMLTranslationCenterHost @"https://staging-translation-center.translationexchange.com"
 #endif
 
 NSString * const TMLApplicationKeyDefaultsKey = @"applicationKey";
@@ -68,6 +70,7 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
         [self setupDefaultTokens];
         [self setupLocalization];
         self.apiURL = [NSURL URLWithString:kTMLServiceHost];
+        self.translationCenterURL = [NSURL URLWithString:kTMLTranslationCenterHost];
         self.localizeNIBStrings = YES;
     }
     return self;

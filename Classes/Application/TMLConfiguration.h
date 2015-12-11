@@ -34,6 +34,8 @@
 
 @property(nonatomic, strong) NSURL *apiURL;
 
+@property(nonatomic, strong) NSURL *translationCenterURL;
+
 @property(nonatomic, readwrite) NSString *accessToken;
 
 @property(nonatomic, readwrite) NSString *applicationKey;

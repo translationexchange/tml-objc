@@ -35,6 +35,8 @@
 		C435BD321C1933F9009A4091 /* UITextView+TML.m in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2AB1C0FC7F200D723BC /* UITextView+TML.m */; settings = {ATTRIBUTES = (Public, ); }; };
 		C435BD331C1933F9009A4091 /* UIView+TML.m in Headers */ = {isa = PBXBuildFile; fileRef = C435BCFB1C1680B7009A4091 /* UIView+TML.m */; settings = {ATTRIBUTES = (Public, ); }; };
 		C435BD341C1933F9009A4091 /* UIViewController+TML.m in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2AD1C0FC7F200D723BC /* UIViewController+TML.m */; settings = {ATTRIBUTES = (Public, ); }; };
+		C4FA63801C1A429600E3ECB8 /* UIResponder+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FA637E1C1A429600E3ECB8 /* UIResponder+TML.h */; };
+		C4FA63811C1A429600E3ECB8 /* UIResponder+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FA637F1C1A429600E3ECB8 /* UIResponder+TML.m */; };
 		C4FCD25C1C0FC7A200D723BC /* TMLKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD25B1C0FC7A200D723BC /* TMLKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD2631C0FC7A200D723BC /* TMLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4FCD2581C0FC7A200D723BC /* TMLKit.framework */; };
 		C4FCD2E01C0FC7F200D723BC /* TMLAPIClient.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2741C0FC7F200D723BC /* TMLAPIClient.h */; };
@@ -234,6 +236,8 @@
 		C435BD201C1933BF009A4091 /* NSAttributedString+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+TML.h"; sourceTree = "<group>"; };
 		C435BD211C1933BF009A4091 /* NSAttributedString+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+TML.m"; sourceTree = "<group>"; };
 		C4CF54CC1C100DDC00EC39CC /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
+		C4FA637E1C1A429600E3ECB8 /* UIResponder+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+TML.h"; sourceTree = "<group>"; };
+		C4FA637F1C1A429600E3ECB8 /* UIResponder+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+TML.m"; sourceTree = "<group>"; };
 		C4FCD2581C0FC7A200D723BC /* TMLKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TMLKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C4FCD25B1C0FC7A200D723BC /* TMLKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TMLKit.h; sourceTree = "<group>"; };
 		C4FCD25D1C0FC7A200D723BC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -586,6 +590,8 @@
 				C435BCFB1C1680B7009A4091 /* UIView+TML.m */,
 				C4FCD2AC1C0FC7F200D723BC /* UIViewController+TML.h */,
 				C4FCD2AD1C0FC7F200D723BC /* UIViewController+TML.m */,
+				C4FA637E1C1A429600E3ECB8 /* UIResponder+TML.h */,
+				C4FA637F1C1A429600E3ECB8 /* UIResponder+TML.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -851,6 +857,7 @@
 				C4FCD3081C0FC7F200D723BC /* UINavigationItem+TML.h in Headers */,
 				C435BD2D1C1933F9009A4091 /* UINavigationItem+TML.m in Headers */,
 				C4FCD30A1C0FC7F200D723BC /* UISearchBar+TML.h in Headers */,
+				C4FA63801C1A429600E3ECB8 /* UIResponder+TML.h in Headers */,
 				C435BD2E1C1933F9009A4091 /* UISearchBar+TML.m in Headers */,
 				C4FCD30C1C0FC7F200D723BC /* UISegmentedControl+TML.h in Headers */,
 				C435BD2F1C1933F9009A4091 /* UISegmentedControl+TML.m in Headers */,
@@ -1160,6 +1167,7 @@
 				C4FCD3351C0FC7F200D723BC /* TMLHtmlDecorationTokenizer.m in Sources */,
 				C4FCD3331C0FC7F200D723BC /* TMLDecorationTokenizer.m in Sources */,
 				C4FCD2FF1C0FC7F200D723BC /* NSObject+TMLJSON.m in Sources */,
+				C4FA63811C1A429600E3ECB8 /* UIResponder+TML.m in Sources */,
 				C4FCD3051C0FC7F200D723BC /* UIButton+TML.m in Sources */,
 				C4FCD3181C0FC7F200D723BC /* TMLLanguage.m in Sources */,
 				C4FCD3151C0FC7F200D723BC /* UIViewController+TML.m in Sources */,

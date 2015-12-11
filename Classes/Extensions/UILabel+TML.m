@@ -33,11 +33,39 @@
 #import "NSString+TML.h"
 #import "TML.h"
 #import "UILabel+TML.h"
+#import "UIResponder+TML.h"
+#import "TMLTranslationKey.h"
 
 @interface UILabel()
 @end
 
 @implementation UILabel (TML)
+
+- (NSArray *)tmlTranslationKeys {
+    TMLTranslationKey *translationKey = nil;
+    NSString *key = nil;
+    if (self.attributedText.length > 0) {
+        key = @"attributedText";
+    }
+    else if (self.text.length > 0) {
+        key = @"text";
+    }
+    if (key != nil) {
+        translationKey = [self tmlRegistry][key][TMLRegistryTranslationKeyName];
+        if (translationKey == nil) {
+            id label = [self valueForKey:key];
+            if ([label isKindOfClass:[NSAttributedString class]] == YES) {
+                label = [(NSAttributedString *)label string];
+            }
+            if ([label isKindOfClass:[NSString class]] == YES) {
+                translationKey = [[TMLTranslationKey alloc] init];
+                translationKey.label = label;
+                translationKey.locale = [[TML sharedInstance] defaultLocale];
+            }
+        }
+    }
+    return (translationKey != nil) ? @[translationKey] : nil;
+}
 
 - (void)localizeWithTML {
     [super localizeWithTML];

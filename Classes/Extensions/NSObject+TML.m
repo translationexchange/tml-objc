@@ -35,6 +35,10 @@
 #import "TMLTranslationKey.h"
 #import <objc/runtime.h>
 
+NSString * const TMLRegistryTranslationKeyName = @"translationKey";
+NSString * const TMLRegistryTokensKeyName = @"tokens";
+NSString * const TMLRegistryOptionsKeyName = @"options";
+
 @implementation NSObject (TML)
 
 + (void)load {
@@ -92,12 +96,12 @@
     NSMutableDictionary *registry = [self tmlRegistry];
     
     NSMutableDictionary *payload = [NSMutableDictionary dictionary];
-    payload[@"translationKey"] = translationKey;
+    payload[TMLRegistryTranslationKeyName] = translationKey;
     if (tokens != nil) {
-        payload[@"tokens"] = tokens;
+        payload[TMLRegistryTokensKeyName] = tokens;
     }
     if (options != nil) {
-        payload[@"options"] = options;
+        payload[TMLRegistryOptionsKeyName] = options;
     }
     
     registry[restorationKey] = payload;
@@ -110,12 +114,12 @@
         if (payload == nil) {
             continue;
         }
-        TMLTranslationKey *translationKey = payload[@"translationKey"];
+        TMLTranslationKey *translationKey = payload[TMLRegistryTranslationKeyName];
         if (translationKey == nil) {
             continue;
         }
-        NSDictionary *tokens = payload[@"tokens"];
-        NSDictionary *options = payload[@"options"];
+        NSDictionary *tokens = payload[TMLRegistryTokensKeyName];
+        NSDictionary *options = payload[TMLRegistryOptionsKeyName];
         id result = [[[TML sharedInstance] currentLanguage] translate:translationKey.label
                                                           description:translationKey.keyDescription
                                                                tokens:tokens

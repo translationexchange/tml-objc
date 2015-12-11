@@ -12,4 +12,6 @@
 
 - (id)tmlFindFirstResponder;
 
+- (void)tmlIterateSubviewsWithBlock:(void(^)(UIView *view, BOOL *skip, BOOL *stop))block;
+
 @end

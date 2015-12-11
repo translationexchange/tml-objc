@@ -30,6 +30,10 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const TMLRegistryTranslationKeyName;
+extern NSString * const TMLRegistryTokensKeyName;
+extern NSString * const TMLRegistryOptionsKeyName;
+
 @class TMLTranslationKey;
 
 @interface NSObject (TML)
@@ -43,6 +47,7 @@
 
 - (void)restoreTMLLocalizations;
 
+- (NSMutableDictionary *)tmlRegistry;
 - (id)tmlValueForKeyPath:(NSString *)keyPath;
 - (void)tmlSetValue:(id)value forKeyPath:(NSString *)keyPath;
 

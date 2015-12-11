@@ -30,6 +30,11 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol TMLDelegate <NSObject>
+@optional
+- (UIGestureRecognizer *)gestureRecognizerForInlineTranslation;
+@end
+
 @class TMLApplication, TMLBundle, TMLConfiguration, TMLLanguage, TMLSource, TMLAPIClient, TMLTranslationKey;
 
 @interface TML : NSObject
@@ -62,6 +67,8 @@
  *  Instance of an API Client configured for current project
  */
 @property(nonatomic, readonly) TMLAPIClient *apiClient;
+
+@property(nonatomic, weak) id<TMLDelegate>delegate;
 
 #pragma mark - Instance creation
 
@@ -283,7 +290,7 @@
 
 - (BOOL) hasLocalTranslationsForLocale:(NSString *)locale;
 
-- (BOOL) isInlineTranslationsEnabled;
+@property(nonatomic, readonly, getter=isInlineTranslationsEnabled) BOOL inlineTranslationsEnabled;
 
 - (void) removeLocalizationData;
 

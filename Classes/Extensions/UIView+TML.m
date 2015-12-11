@@ -32,4 +32,24 @@
     return nil;
 }
 
+- (void)tmlIterateSubviewsWithBlock:(void (^)(UIView *view, BOOL *skip, BOOL *stop))block {
+    __block BOOL shouldStop = NO;
+    __block BOOL shouldSkip = NO;
+    for (UIView *subview in self.subviews) {
+        block(subview, &shouldSkip, &shouldStop);
+        if (shouldStop == YES) {
+            break;
+        }
+        if (shouldSkip == YES) {
+            continue;
+        }
+        [subview tmlIterateSubviewsWithBlock:^(UIView *view, BOOL *skip, BOOL *stop) {
+            block(view, &shouldSkip, &shouldStop);
+        }];
+        if (shouldStop == YES) {
+            break;
+        }
+    }
+}
+
 @end
