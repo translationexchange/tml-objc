@@ -16,6 +16,13 @@ void TMLAbstractInvocation(SEL selector,id object) {
      ];
 }
 
+void TMLUseAlternativeInstantiationMethod(SEL selector, id object) {
+    [NSException raise:NSInvalidArgumentException format:@"Use -[%@ %@] instantiation method",
+     [object class],
+     NSStringFromSelector(selector)
+     ];
+}
+
 
 #pragma mark - Notification Constants
 NSString * const TMLLanguageChangedNotification = @"TMLLanguageChangedNotification";

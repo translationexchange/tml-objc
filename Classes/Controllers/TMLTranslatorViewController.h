@@ -34,6 +34,6 @@
 
 @interface TMLTranslatorViewController : TMLViewController <UIWebViewDelegate>
 
-@property(nonatomic, strong) NSString *translationKey;
+-(instancetype)initWithTranslationKey:(NSString *)translationKey;
 
 @end

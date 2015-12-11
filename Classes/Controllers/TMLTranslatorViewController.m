@@ -38,8 +38,8 @@
 
 @interface TMLTranslatorViewController ()
 
-@property(nonatomic, strong) UIWebView *webView;
-
+@property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, strong) NSString *translationKey;
 
 - (IBAction) reloadButtonPressed: (id) sender;
 - (IBAction) backButtonPressed: (id) sender;
@@ -49,6 +49,18 @@
 @end
 
 @implementation TMLTranslatorViewController
+
+- (instancetype)init {
+    TMLRaiseAlternativeInstantiationMethod(@selector(initWithTranslationKey:));
+    return nil;
+}
+
+- (instancetype)initWithTranslationKey:(NSString *)translationKey {
+    if (self = [super init]) {
+        self.translationKey = translationKey;
+    }
+    return self;
+}
 
 - (void) loadView {
     [super loadView];
