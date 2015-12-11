@@ -1011,14 +1011,35 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     
     if (translationKeys.count > 0) {
         TMLTranslationKey *translationKey = [translationKeys firstObject];
-        TMLTranslatorViewController *translator = [[TMLTranslatorViewController alloc] initWithTranslationKey:translationKey.key];
-        UINavigationController *wrapper = [[UINavigationController alloc] initWithRootViewController:translator];
-        UIViewController *presenter = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-        [presenter presentViewController:wrapper animated:YES completion:nil];
+        if ([self isTranslationKeyRegistered:translationKey.key] == NO) {
+            NSMutableDictionary *payload = [NSMutableDictionary dictionary];
+            TMLSource *source = nil;
+            NSString *blockSource = (NSString *)[self blockOptionForKey:TMLSourceOptionName];
+            if (blockSource != nil) {
+                source = [self.application sourceForKey:blockSource];
+            }
+            if (source == nil) {
+                source = [TMLSource defaultSource];
+            }
+            payload[source.key] = [NSSet setWithObject:translationKey];
+            [self.apiClient registerTranslationKeysBySourceKey:payload completionBlock:^(BOOL success, NSError *error) {
+                [self presentTranslatorViewControllerWithTranslationKey:translationKey];
+            }];
+        }
+        else {
+            [self presentTranslatorViewControllerWithTranslationKey:translationKey];
+        }
     }
     else {
         TMLWarn(@"Could not find a string to localize");
     }
+}
+
+- (void)presentTranslatorViewControllerWithTranslationKey:(TMLTranslationKey *)translationKey {
+    TMLTranslatorViewController *translator = [[TMLTranslatorViewController alloc] initWithTranslationKey:translationKey.key];
+    UINavigationController *wrapper = [[UINavigationController alloc] initWithRootViewController:translator];
+    UIViewController *presenter = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+    [presenter presentViewController:wrapper animated:YES completion:nil];
 }
 
 #pragma mark - Block Options
