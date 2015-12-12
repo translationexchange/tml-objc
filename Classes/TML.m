@@ -1299,6 +1299,7 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 - (void)removeLocalizationData {
     [[TMLBundleManager defaultManager] removeAllBundles];
     [self setCurrentBundle:nil];
+    _lastBundleUpdateDate = nil;
 }
 
 @end
