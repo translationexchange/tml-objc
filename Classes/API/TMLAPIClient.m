@@ -366,6 +366,25 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
 }];
 }
 
+- (void)getTranslationKeysWithOptions:(NSDictionary *)options
+                      completionBlock:(void (^)(NSArray *, TMLAPIResponse *, NSError *))completionBlock
+{
+    [self get:@"projects/current/translation_keys"
+   parameters:options
+completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+    NSArray *translationKeys = nil;
+    if ([apiResponse isSuccessfulResponse] == YES) {
+        translationKeys = [apiResponse resultsAsTranslationKeys];
+    }
+    else {
+        TMLError(@"Error fetching translation keys for current project: %@", error);
+    }
+    if (completionBlock != nil) {
+        completionBlock(translationKeys, apiResponse, error);
+    }
+}];
+}
+
 - (void)registerTranslationKeysBySourceKey:(NSDictionary<NSString *, NSSet <TMLTranslationKey *>*> *)keysInfo
                            completionBlock:(void (^)(BOOL, NSError *))completionBlock
 {

@@ -10,6 +10,7 @@
 #import "TMLAPIResponse.h"
 #import "TMLLanguage.h"
 #import "TMLTranslation.h"
+#import "TMLAPISerializer.h"
 
 NSString * const TMLAPIResponseErrorDomain = @"TMLAPIResponseErrorDomain";
 
@@ -27,6 +28,7 @@ NSString * const TMLAPIResponseCurrentPageLinkKey = @"self";
 NSString * const TMLAPIResponseResultsKey = @"results";
 NSString * const TMLAPIResponseResultsTranslationsKey = @"translations";
 NSString * const TMLAPIResponseResultsLanguagesKey = @"languages";
+NSString * const TMLAPIResponseResultsTranslationKeysKey = @"languages";
 
 NSString * const TMLAPIResponseTranslationLabelKey = @"label";
 NSString * const TMLAPIResponseTranslationLocaleKey = @"locale";
@@ -117,6 +119,20 @@ NSString * const TMLAPIResponseErrorCodeKey = @"code";
         [languages addObject:language];
     }
     return languages;
+}
+
+- (NSArray *)resultsAsTranslationKeys {
+    id results = self.results;
+    if (results == nil) {
+        results = self.userInfo[TMLAPIResponseResultsTranslationKeysKey];
+    }
+    else {
+        results = [TMLAPISerializer serializeObject:results];
+    }
+    if ([results isKindOfClass:[NSArray class]] == NO) {
+        return nil;
+    }
+    return results;
 }
 
 #pragma mark - Status

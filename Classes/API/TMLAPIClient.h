@@ -173,6 +173,15 @@ completionBlock:(TMLAPIResponseHandler)completionBlock;
                         completionBlock:(void(^)(NSArray <TMLLanguage *>* languages, TMLAPIResponse *response, NSError *error))completionBlock;
 
 /**
+ *  Fetches list of translation keys for current project
+ *
+ *  @param options         Optional dictionary of options with TMLAPIOptions for keys.
+ *  @param completionBlock Completion block;
+ */
+- (void) getTranslationKeysWithOptions:(NSDictionary *)options
+                       completionBlock:(void(^)(NSArray *translationKeys, TMLAPIResponse *response, NSError *error))completionBlock;
+
+/**
  *  Register source and translation key associations.
  *  Data passed in sourceKeys parameter will be copied...
  *
