@@ -24,6 +24,7 @@ extern NSString * const TMLAPIResponseCurrentPageLinkKey;
 extern NSString * const TMLAPIResponseResultsKey;
 extern NSString * const TMLAPIResponseResultsTranslationsKey;
 extern NSString * const TMLAPIResponseResultsLanguagesKey;
+extern NSString * const TMLAPIResponseResultsTranslationKeysKey;
 
 extern NSString * const TMLAPIResponseTranslationLabelKey;
 extern NSString * const TMLAPIResponseTranslationLocaleKey;
@@ -57,6 +58,7 @@ extern NSString * const TMLAPIResponseErrorCodeKey;
 @property (readonly, nonatomic) id results;
 - (NSDictionary *) resultsAsTranslations;
 - (NSArray *) resultsAsLanguages;
+- (NSArray *)resultsAsTranslationKeys;
 
 #pragma mark - Status
 @property (readonly, nonatomic) NSString *status;
