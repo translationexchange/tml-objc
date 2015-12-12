@@ -34,7 +34,7 @@
 
 - (void) testLocalization {
     NSDate *date = [NSDate date];
-    NSString *result = TMLLocalizedDateWithFormat(date, @"MM/dd/yyyy at h:m");
+    NSString *result = TMLLocalizedDate(date, @"MM/dd/yyyy at h:m");
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     formatter.dateFormat = @"MM/dd/yyyy 'at' h:m";
     NSString *nsResult = [formatter stringFromDate:date];
