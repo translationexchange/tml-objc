@@ -41,63 +41,14 @@
 
 @implementation UILabel (TML)
 
-- (NSArray *)tmlTranslationKeys {
-    NSString *property = nil;
+- (NSArray *)tmlLocalizedKeyPaths {
     if (self.attributedText.length > 0) {
-        property = @"attributedText";
+        return @[@"attributedText"];
     }
     else if (self.text.length > 0) {
-        property = @"text";
+        return @[@"text"];
     }
-    
-    NSMutableArray *translationKeys = [NSMutableArray array];
-    if (property != nil) {
-        // first lookup the key in the registry
-        NSDictionary *registry = [self tmlRegistry];
-        NSDictionary *payload = registry[property];
-        TMLTranslationKey *translationKey = payload[TMLRegistryTranslationKeyName];
-        if (translationKey != nil) {
-            [translationKeys addObject:translationKey.key];
-        }
-        // if nothing in the registry, lookup translation key by localized string
-        else {
-            NSMutableArray *labelsToMatch = [NSMutableArray array];
-            id label = [self valueForKey:property];
-            if ([label isKindOfClass:[NSAttributedString class]] == YES) {
-                [labelsToMatch addObject:[label tmlAttributedString:nil]];
-                [labelsToMatch addObject:[(NSAttributedString *)label string]];
-            }
-            else if ([label isKindOfClass:[NSString class]] == YES) {
-                [labelsToMatch addObject:label];
-            }
-            
-            NSMutableArray *localesToCheck = [NSMutableArray array];
-            NSString *currentLocale = [TML currentLocale];
-            if (currentLocale != nil) {
-                [localesToCheck addObject:currentLocale];
-            }
-            NSString *defaultLocale = [TML defaultLocale];
-            if (defaultLocale != nil && [defaultLocale isEqualToString:currentLocale] == NO) {
-                [localesToCheck addObject:defaultLocale];
-            }
-            
-            NSArray *matchingKeys = nil;
-            for (NSString *searchLabel in labelsToMatch) {
-                for (NSString *locale in localesToCheck) {
-                    matchingKeys = [[TML sharedInstance] translationKeysForString:searchLabel
-                                                                           locale:locale];
-                    if (matchingKeys.count > 0) {
-                        break;
-                    }
-                }
-            }
-            
-            if (matchingKeys.count > 0) {
-                [translationKeys addObjectsFromArray:matchingKeys];
-            }
-        }
-    }
-    return [translationKeys copy];
+    return [super tmlLocalizedKeyPaths];
 }
 
 - (void)localizeWithTML {
