@@ -33,9 +33,8 @@
 #import "TMLLanguage.h"
 #import "TMLLanguageContext.h"
 #import "TMLLanguageContextRule.h"
-#import "TMLTranslation.h"
-#import "TMLTranslationKey.h"
 #import "TMLModel.h"
+#import "TMLTranslation.h"
 
 @implementation TMLTranslation
 
@@ -44,7 +43,6 @@
     aCopy.label = [self.label copyWithZone:zone];
     aCopy.locked = self.locked;
     aCopy.context = [self.context copyWithZone:zone];
-    aCopy.language = [self.language copyWithZone:zone];
     aCopy.translationKey = [self.translationKey copyWithZone:zone];
     return aCopy;
 }
@@ -66,7 +64,7 @@
             && (self.context == translation.context
                 || [self.context isEqualToDictionary:translation.context] == YES)
             && (self.translationKey == translation.translationKey
-                || [self.translationKey isEqualToTranslationKey:translation.translationKey] == YES));
+                || [self.translationKey isEqualToString:translation.translationKey] == YES));
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
@@ -80,14 +78,7 @@
     self.label = [aDecoder decodeObjectForKey:@"label"];
     self.locked = [aDecoder decodeBoolForKey:@"locked"];
     self.context = [aDecoder decodeObjectForKey:@"context"];
-    id translationKey = [aDecoder decodeObjectForKey:@"translation_key"];
-    if (translationKey != nil && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
-        translationKey = [TMLAPISerializer materializeObject:translationKey
-                                                    withClass:[TMLTranslationKey class]];
-    }
-    if (translationKey != nil) {
-        self.translationKey = translationKey;
-    }
+    self.translationKey = [aDecoder decodeObjectForKey:@"translation_key"];
 }
 
 - (BOOL) hasContextRules {
@@ -96,7 +87,9 @@
     return YES;
 }
 
-- (BOOL) isValidTranslationForTokens: (NSDictionary *) tokens {
+- (BOOL) isValidTranslationForTokens:(NSDictionary *)tokens
+                          inLanguage:(TMLLanguage *)language
+{
     if (![self hasContextRules])
         return YES;
     
@@ -114,7 +107,7 @@
             if ([TMLLanguageContextRule isFallback: ruleKey])
                 continue;
             
-            TMLLanguageContext *languageContext = (TMLLanguageContext *) [self.language contextByKeyword:contextKey];
+            TMLLanguageContext *languageContext = (TMLLanguageContext *) [language contextByKeyword:contextKey];
             if (languageContext == nil)
                 return NO;
                 

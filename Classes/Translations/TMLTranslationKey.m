@@ -166,7 +166,9 @@
     return [self.translations count] > 0;
 }
 
-- (TMLTranslation *) findFirstAcceptableTranslationForTokens: (NSDictionary *) tokens {
+- (TMLTranslation *) findFirstAcceptableTranslationForTokens:(NSDictionary *)tokens
+                                                  inLanguage:(TMLLanguage *)language
+{
     // Get out right away
     if ([self.translations count] == 0)
         return nil;
@@ -178,8 +180,9 @@
     }
     
     for (TMLTranslation *t in self.translations) {
-        if ([t isValidTranslationForTokens:tokens])
+        if ([t isValidTranslationForTokens:tokens inLanguage:language] == YES) {
             return t;
+        }
     }
     
     TMLWarn(@"No acceptable ranslations found for key: %@", self.label);
@@ -209,7 +212,8 @@
                                      options:options];
     }
     
-    TMLTranslation *translation = [self findFirstAcceptableTranslationForTokens: tokens];
+    TMLTranslation *translation = [self findFirstAcceptableTranslationForTokens:tokens
+                                                                     inLanguage:language];
     
     if (translation) {
         return [self substituteTokensInLabel:translation.label

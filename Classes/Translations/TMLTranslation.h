@@ -36,10 +36,7 @@
 @interface TMLTranslation : TMLModel
 
 // Reference to the translation key it belongs to
-@property(nonatomic, strong) TMLTranslationKey *translationKey;
-
-// Reference to the language it belongs to
-@property(nonatomic, strong) TMLLanguage *language;
+@property(nonatomic, strong) NSString *translationKey;
 
 // Locale of the language it belongs to
 @property(nonatomic, strong) NSString *locale;
@@ -61,6 +58,7 @@
 - (BOOL) hasContextRules;
 
 // Checks if the translation is valid for the given tokens
-- (BOOL) isValidTranslationForTokens: (NSDictionary *) tokens;
+- (BOOL) isValidTranslationForTokens:(NSDictionary *)tokens
+                          inLanguage:(TMLLanguage *)language;
 
 @end

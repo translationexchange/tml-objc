@@ -233,14 +233,13 @@
     lang.nativeName = @"Russish";
     
     TMLTranslation *translation = [[TMLTranslation alloc] init];
-    translation.language = lang;
     translation.label = @"A Label";
-    translation.translationKey = key;
+    translation.translationKey = key.key;
     
     NSDictionary *translationDict = @{
                                @"label": @"A Label",
                                @"locked": @0,
-                               @"translation_key": dict
+                               @"translation_key": key.key
                                };
     result = [TMLAPISerializer materializeObject:translationDict withClass:[TMLTranslation class]];
     XCTAssertEqualObjects(result, translation);
