@@ -1043,7 +1043,14 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     TMLTranslatorViewController *translator = [[TMLTranslatorViewController alloc] initWithTranslationKey:translationKey];
     UINavigationController *wrapper = [[UINavigationController alloc] initWithRootViewController:translator];
     UIViewController *presenter = [[[UIApplication sharedApplication] keyWindow] rootViewController];
-    [presenter presentViewController:wrapper animated:YES completion:nil];
+    if (presenter.presentedViewController != nil) {
+        [presenter dismissViewControllerAnimated:YES completion:^{
+            [presenter presentViewController:wrapper animated:YES completion:nil];
+        }];
+    }
+    else {
+        [presenter presentViewController:wrapper animated:YES completion:nil];
+    }
 }
 
 #pragma mark - Block Options
