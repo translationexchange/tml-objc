@@ -157,9 +157,7 @@
 }
 
 -(IBAction)dismiss:(id)sender {
-    if (sender == self.webView) {
-        [TML reloadTranslations];
-    }
+    [TML reloadTranslations];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
