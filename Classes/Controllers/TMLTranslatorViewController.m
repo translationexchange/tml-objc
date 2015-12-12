@@ -121,7 +121,7 @@
     
     NSString *path = request.URL.path;
     if (path && [path rangeOfString:@"dismiss"].location != NSNotFound) {
-        [self dismiss:self];
+        [self dismiss:webView];
         return NO;
     }
     
@@ -157,7 +157,9 @@
 }
 
 -(IBAction)dismiss:(id)sender {
-    [TML reloadTranslations];
+    if (sender == self.webView) {
+        [TML reloadTranslations];
+    }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
