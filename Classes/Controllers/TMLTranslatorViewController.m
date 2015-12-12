@@ -73,6 +73,9 @@
     
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:TMLLocalizedString(@"Done", @"title") style:UIBarButtonItemStylePlain target:self action:@selector(dismiss:)];
     self.navigationItem.leftBarButtonItem = doneButton;
+    
+    UIBarButtonItem *reloadButton = [[UIBarButtonItem alloc] initWithTitle:TMLLocalizedString(@"Reload", @"reload") style:UIBarButtonItemStylePlain target:self action:@selector(reload:)];
+    self.navigationItem.rightBarButtonItem = reloadButton;
 
     UIWebView *webView = [[UIWebView alloc] initWithFrame:ourView.bounds];
     [webView  setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
@@ -161,5 +164,8 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (IBAction)reload:(id)sender {
+    [self.webView reload];
+}
 
 @end
