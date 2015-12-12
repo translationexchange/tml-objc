@@ -550,11 +550,13 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     }
     
     // Fetch resource data
-    NSURL *resourceURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/%@/%@/%@",
-                                               [self archiveURL],
-                                               [TML applicationKey],
-                                               bundleVersion,
-                                               resourcePath]];
+    NSString *urlString = [NSString stringWithFormat:@"%@/%@/%@/%@",
+                     [self archiveURL],
+                     [TML applicationKey],
+                     bundleVersion,
+                     [resourcePath stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]]];
+    NSURL *resourceURL = [NSURL URLWithString:urlString];
+    
     [self fetchURL:resourceURL
    completionBlock:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
        NSError *ourError = error;
