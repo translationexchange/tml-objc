@@ -65,8 +65,21 @@
             if ([label isKindOfClass:[NSAttributedString class]] == YES) {
                 label = [(NSAttributedString *)label string];
             }
+            
+            // Check using current locale first, as it's more likely we'll find something there
+            NSString *currentLocale = [TML currentLocale];
             NSArray *matchingKeys = [[TML sharedInstance] translationKeysForString:label
-                                                                               locale:[TML currentLocale]];
+                                                                            locale:currentLocale];
+            
+            // Failing to locate current string among translations for the current locale, try default locale
+            if (matchingKeys.count == 0) {
+                NSString *defaultLocale = [TML defaultLocale];
+                if ([defaultLocale isEqualToString:currentLocale] == NO) {
+                    matchingKeys = [[TML sharedInstance] translationKeysForString:label
+                                                                           locale:defaultLocale];
+                }
+            }
+            
             if (matchingKeys.count > 0) {
                 [translationKeys addObjectsFromArray:matchingKeys];
             }
