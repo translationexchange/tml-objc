@@ -851,6 +851,7 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     }
     _translationEnabled = translationEnabled;
     TMLBundle *newBundle = nil;
+    NSString *currentLocale = [self currentLocale];
     if (translationEnabled == YES) {
         newBundle = [TMLBundle apiBundle];
     }
@@ -858,6 +859,9 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
         newBundle = [TMLBundle mainBundle];
     }
     self.currentBundle = newBundle;
+    if ([[newBundle locales] containsObject:currentLocale] == NO) {
+        [self changeLocale:[TML defaultLocale] completionBlock:nil];
+    }
     self.configuration.translationEnabled = translationEnabled;
     if (translationEnabled == YES) {
         [self setupInlineTranslationGestureRecognizer];
