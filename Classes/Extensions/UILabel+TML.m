@@ -42,29 +42,37 @@
 @implementation UILabel (TML)
 
 - (NSArray *)tmlTranslationKeys {
-    TMLTranslationKey *translationKey = nil;
-    NSString *key = nil;
+    NSString *property = nil;
     if (self.attributedText.length > 0) {
-        key = @"attributedText";
+        property = @"attributedText";
     }
     else if (self.text.length > 0) {
-        key = @"text";
+        property = @"text";
     }
-    if (key != nil) {
-        translationKey = [self tmlRegistry][key][TMLRegistryTranslationKeyName];
-        if (translationKey == nil) {
-            id label = [self valueForKey:key];
+    
+    NSMutableArray *translationKeys = [NSMutableArray array];
+    if (property != nil) {
+        // first lookup the key in the registry
+        NSDictionary *registry = [self tmlRegistry];
+        NSDictionary *payload = registry[property];
+        TMLTranslationKey *translationKey = payload[TMLRegistryTranslationKeyName];
+        if (translationKey != nil) {
+            [translationKeys addObject:translationKey.key];
+        }
+        // if nothing in the registry, lookup translation key by localized string
+        else {
+            id label = [self valueForKey:property];
             if ([label isKindOfClass:[NSAttributedString class]] == YES) {
                 label = [(NSAttributedString *)label string];
             }
-            if ([label isKindOfClass:[NSString class]] == YES) {
-                translationKey = [[TMLTranslationKey alloc] init];
-                translationKey.label = label;
-                translationKey.locale = [[TML sharedInstance] defaultLocale];
+            NSArray *matchingKeys = [[TML sharedInstance] translationKeysForString:label
+                                                                               locale:[TML currentLocale]];
+            if (matchingKeys.count > 0) {
+                [translationKeys addObjectsFromArray:matchingKeys];
             }
         }
     }
-    return (translationKey != nil) ? @[translationKey] : nil;
+    return [translationKeys copy];
 }
 
 - (void)localizeWithTML {

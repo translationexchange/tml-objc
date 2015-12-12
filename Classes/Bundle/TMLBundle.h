@@ -95,8 +95,39 @@ typedef NS_ENUM(NSInteger, TMLBundleErrorCode) {
 
 #pragma mark - Translations
 
+/**
+ *  Returns dictionary of TMLTranslation objects, keyed by translation key, for the given locale
+ *
+ *  @param locale Locale used to search translations
+ *
+ *  @return Dictionary of TMLTranslation objects, keyed by translation key.
+ */
 - (NSDictionary *)translationsForLocale:(NSString *)locale;
+
+/**
+ *  Loads translations for given locale. This will first check for translation data stored locally.
+ *  If that fails, translation data will be loaded from a remote host (CDN or via API).
+ *
+ *  Upon loading translation data, completion block is called. Error argument passed to that completion block
+ *  woudl indicate whether operation was successful or not. If successul, you'll find translations
+ *  accessible via @selector(translationsForLocale:) method.
+ *
+ *  @param aLocale    Locale for translations
+ *  @param completion Completion block
+ */
 - (void)loadTranslationsForLocale:(NSString *)aLocale
                        completion:(void(^)(NSError *error))completion;
+
+#pragma mark - Translation Keys
+/**
+ *  Returns list of translation keys for translations whose label matches given string in the given locale.
+ *
+ *  @param string String to match
+ *  @param locale Locale for translations
+ *
+ *  @return List of translation keys
+ */
+- (NSArray *)translationKeysForString:(NSString *)string
+                               locale:(NSString *)locale;
 
 @end

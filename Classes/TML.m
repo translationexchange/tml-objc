@@ -1009,34 +1009,38 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
         }];
     }
     
+    NSString *translationKey = nil;
     if (translationKeys.count > 0) {
-        TMLTranslationKey *translationKey = [translationKeys firstObject];
-        if ([self isTranslationKeyRegistered:translationKey.key] == NO) {
-            NSMutableDictionary *payload = [NSMutableDictionary dictionary];
-            TMLSource *source = nil;
-            NSString *blockSource = (NSString *)[self blockOptionForKey:TMLSourceOptionName];
-            if (blockSource != nil) {
-                source = [self.application sourceForKey:blockSource];
-            }
-            if (source == nil) {
-                source = [TMLSource defaultSource];
-            }
-            payload[source.key] = [NSSet setWithObject:translationKey];
-            [self.apiClient registerTranslationKeysBySourceKey:payload completionBlock:^(BOOL success, NSError *error) {
-                [self presentTranslatorViewControllerWithTranslationKey:translationKey];
-            }];
-        }
-        else {
-            [self presentTranslatorViewControllerWithTranslationKey:translationKey];
-        }
+        translationKey = [translationKeys firstObject];
+    }
+    
+    if (translationKey != nil && [self isTranslationKeyRegistered:translationKey] == YES) {
+        [self presentTranslatorViewControllerWithTranslationKey:translationKey];
     }
     else {
+        // TODO: In the event we couldn't find a translation key for a string - we should offer user to add it to the project
+        // as we can only make guesses about the string (label might be known, but the locale in which it is - isn't clear;
+        // it could be text presented by system widget, in the phone's native locale; it could be a string that was localized
+        // but we failed to match it to translation key for whateve reason
+//        NSMutableDictionary *payload = [NSMutableDictionary dictionary];
+//        TMLSource *source = nil;
+//        NSString *blockSource = (NSString *)[self blockOptionForKey:TMLSourceOptionName];
+//        if (blockSource != nil) {
+//            source = [self.application sourceForKey:blockSource];
+//        }
+//        if (source == nil) {
+//            source = [TMLSource defaultSource];
+//        }
+//        payload[source.key] = [NSSet setWithObject:translationKey];
+//        [self.apiClient registerTranslationKeysBySourceKey:payload completionBlock:^(BOOL success, NSError *error) {
+//            [self presentTranslatorViewControllerWithTranslationKey:translationKey];
+//        }];
         TMLWarn(@"Could not find a string to localize");
     }
 }
 
-- (void)presentTranslatorViewControllerWithTranslationKey:(TMLTranslationKey *)translationKey {
-    TMLTranslatorViewController *translator = [[TMLTranslatorViewController alloc] initWithTranslationKey:translationKey.key];
+- (void)presentTranslatorViewControllerWithTranslationKey:(NSString *)translationKey {
+    TMLTranslatorViewController *translator = [[TMLTranslatorViewController alloc] initWithTranslationKey:translationKey];
     UINavigationController *wrapper = [[UINavigationController alloc] initWithRootViewController:translator];
     UIViewController *presenter = [[[UIApplication sharedApplication] keyWindow] rootViewController];
     [presenter presentViewController:wrapper animated:YES completion:nil];
@@ -1205,6 +1209,14 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 - (NSArray *) translationsForKey:(NSString *)translationKey locale:(NSString *)locale {
     NSDictionary *translations = [self.currentBundle translationsForLocale:locale];
     return translations[translationKey];
+}
+
+- (NSArray *)translationKeysForString:(NSString *)string
+                               locale:(NSString *)locale
+{
+    NSArray *results = [self.currentBundle translationKeysForString:string
+                                                             locale:locale];
+    return results;
 }
 
 - (BOOL)isTranslationKeyRegistered:(NSString *)translationKey {

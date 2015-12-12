@@ -241,6 +241,7 @@ NSString * const TMLBundleErrorsKey = @"errors";
         if (info[TMLAPIResponseResultsKey] != nil) {
             info = info[TMLAPIResponseResultsKey];
         }
+        
         for (NSString *key in info) {
             NSArray *translationsList = nil;
             if ([info[key] isKindOfClass:[NSArray class]] == YES) {
@@ -253,6 +254,11 @@ NSString * const TMLBundleErrorsKey = @"errors";
                 NSArray *newTranslations = [TMLAPISerializer materializeObject:translationsList
                                                                      withClass:[TMLTranslation class]];
                 translations[key] = newTranslations;
+            }
+            // associate translations with translation key and locale
+            for (TMLTranslation *translation in translations[key]) {
+                translation.locale = aLocale;
+                translation.translationKey = key;
             }
         }
         
@@ -298,6 +304,27 @@ NSString * const TMLBundleErrorsKey = @"errors";
                                                            completion(ourError);
                                                        }
                                                }];
+}
+
+#pragma mark - Translation Keys
+
+- (NSArray *)translationKeysForString:(NSString *)string
+                               locale:(NSString *)locale
+{
+    if (string == nil) {
+        return nil;
+    }
+    NSDictionary *translations = [self translationsForLocale:locale];
+    NSMutableArray *translationKeys = [NSMutableArray array];
+    for (NSString *key in translations) {
+        for (TMLTranslation *translation in translations[key]) {
+            if ([translation.label isEqualToString:string] == NO) {
+                continue;
+            }
+            [translationKeys addObject:key];
+        }
+    }
+    return (translationKeys.count > 0) ? [translationKeys copy] : nil;
 }
 
 #pragma mark - Synchronization
