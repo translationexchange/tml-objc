@@ -8,9 +8,10 @@
 
 #import "NSObject+tmlJSON.h"
 #import "TMLAPIResponse.h"
+#import "TMLAPISerializer.h"
 #import "TMLLanguage.h"
 #import "TMLTranslation.h"
-#import "TMLAPISerializer.h"
+#import "TMLTranslationKey.h"
 
 NSString * const TMLAPIResponseErrorDomain = @"TMLAPIResponseErrorDomain";
 
@@ -127,7 +128,7 @@ NSString * const TMLAPIResponseErrorCodeKey = @"code";
         results = self.userInfo[TMLAPIResponseResultsTranslationKeysKey];
     }
     else {
-        results = [TMLAPISerializer serializeObject:results];
+        results = [TMLAPISerializer materializeObject:results withClass:[TMLTranslationKey class]];
     }
     if ([results isKindOfClass:[NSArray class]] == NO) {
         return nil;

@@ -27,13 +27,14 @@
 @property (readwrite, nonatomic) NSArray *languages;
 @property (readwrite, nonatomic) TMLApplication *application;
 @property (readwrite, nonatomic) NSDictionary *translations;
+@property (readwrite, nonatomic) NSDictionary *translationKeys;
 @property (readwrite, nonatomic) NSMutableDictionary *addedTranslations;
 @property (strong, nonatomic) NSOperationQueue *syncQueue;
 @end
 
 @implementation TMLAPIBundle
 
-@dynamic sources, languages, application, translations;
+@dynamic sources, languages, application, translations, translationKeys;
 
 - (NSURL *)sourceURL {
     return [[[TML sharedInstance] configuration] apiURL];
@@ -343,6 +344,32 @@
                
                [self didFinishSyncOperationWithErrors:errors];
            }];
+    }]];
+    
+    [self addSyncOperation:[NSBlockOperation blockOperationWithBlock:^{
+        [client getTranslationKeysWithOptions:nil
+                              completionBlock:^(NSArray *translationKeys, TMLAPIResponse *response, NSError *error) {
+                                  NSError *fileError;
+                                  if (translationKeys != nil) {
+                                      NSMutableDictionary *newKeys = [NSMutableDictionary dictionary];
+                                      for (TMLTranslationKey *translationKey in translationKeys) {
+                                          newKeys[translationKey.key] = translationKey;
+                                      }
+                                      self.translationKeys = newKeys;
+                                      NSDictionary *jsonObj = @{TMLAPIResponseResultsKey: response.results};
+                                      [self writeResourceData:[[jsonObj tmlJSONString] dataUsingEncoding:NSUTF8StringEncoding]
+                                               toRelativePath:TMLBundleTranslationKeysFilename
+                                                        error:&fileError];
+                                  }
+                                  NSMutableArray *errors = [NSMutableArray array];
+                                  if (error != nil) {
+                                      [errors addObject:error];
+                                  }
+                                  if (fileError != nil) {
+                                      [errors addObject:fileError];
+                                  }
+                                  [self didFinishSyncOperationWithErrors:errors];
+                              }];
     }]];
 }
 

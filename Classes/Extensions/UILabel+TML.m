@@ -32,9 +32,7 @@
 #import "NSObject+TML.h"
 #import "NSString+TML.h"
 #import "TML.h"
-#import "UILabel+TML.h"
 #import "UIResponder+TML.h"
-#import "TMLTranslationKey.h"
 
 @interface UILabel()
 @end

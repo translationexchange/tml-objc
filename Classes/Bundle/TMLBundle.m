@@ -15,12 +15,15 @@
 #import "TMLApplication.h"
 #import "TMLBundle.h"
 #import "TMLBundleManager.h"
+#import "TMLLanguage.h"
 #import "TMLTranslation.h"
+#import "TMLTranslationKey.h"
 
 NSString * const TMLBundleVersionFilename = @"snapshot.json";
 NSString * const TMLBundleApplicationFilename = @"application.json";
 NSString * const TMLBundleSourcesFilename = @"sources.json";
 NSString * const TMLBundleTranslationsFilename = @"translations.json";
+NSString * const TMLBundleTranslationKeysFilename = @"translation_keys.json";
 NSString * const TMLBundleLanguageFilename = @"language.json";
 NSString * const TMLBundleSourcesRelativePath = @"sources";
 
@@ -40,6 +43,7 @@ NSString * const TMLBundleErrorsKey = @"errors";
 @property (readwrite, nonatomic) NSArray *locales;
 @property (readwrite, nonatomic) TMLApplication *application;
 @property (readwrite, nonatomic) NSArray *sources;
+@property (readwrite, nonatomic) NSDictionary *translationKeys;
 @property (readwrite, nonatomic) NSURL *sourceURL;
 @end
 
@@ -101,6 +105,7 @@ NSString * const TMLBundleErrorsKey = @"errors";
     self.version = nil;
     self.sourceURL = nil;
     self.availableLocales = nil;
+    self.translationKeys = nil;
 }
 
 - (void)reloadVersionInfo {
@@ -139,6 +144,21 @@ NSString * const TMLBundleErrorsKey = @"errors";
     else {
         self.sources = sources;
     }
+}
+
+- (void)reloadTranslationKeysData {
+    NSString *path = [self.path stringByAppendingPathComponent:TMLBundleTranslationKeysFilename];
+    NSData *data = [NSData dataWithContentsOfFile:path];
+    NSArray *keysArray = [data tmlJSONObject];
+    if (keysArray == nil) {
+        TMLError(@"Could not determine list of translation keys at path: %@", path);
+        return;
+    }
+    NSMutableDictionary *keys = [NSMutableDictionary dictionary];
+    for (TMLTranslationKey *translationKey in keysArray) {
+        keys[translationKey.key] = translationKey;
+    }
+    self.translationKeys = keys;
 }
 
 - (void)reloadAvailableLocales {
@@ -189,6 +209,13 @@ NSString * const TMLBundleErrorsKey = @"errors";
         [self reloadSourcesData];
     }
     return _sources;
+}
+
+- (NSDictionary *)translationKeys {
+    if (_translationKeys == nil) {
+        [self reloadTranslationKeysData];
+    }
+    return _translationKeys;
 }
 
 - (NSArray *)availableLocales {
@@ -314,17 +341,29 @@ NSString * const TMLBundleErrorsKey = @"errors";
     if (string == nil) {
         return nil;
     }
-    NSDictionary *translations = [self translationsForLocale:locale];
-    NSMutableArray *translationKeys = [NSMutableArray array];
-    for (NSString *key in translations) {
-        for (TMLTranslation *translation in translations[key]) {
-            if ([translation.label isEqualToString:string] == NO) {
-                continue;
-            }
-            [translationKeys addObject:key];
+    
+    NSMutableArray *foundKeys = [NSMutableArray array];
+    NSDictionary *translationKeys = self.translationKeys;
+    for (NSString *key in translationKeys) {
+        TMLTranslationKey *translationKey = translationKeys[key];
+        if ([string isEqualToString:translationKey.label] == YES
+            && [locale isEqualToString:translationKey.locale] == YES) {
+            [foundKeys addObject:translationKey.key];
         }
     }
-    return (translationKeys.count > 0) ? [translationKeys copy] : nil;
+    
+    if (foundKeys.count == 0) {
+        NSDictionary *translations = [self translationsForLocale:locale];
+        for (NSString *key in translations) {
+            for (TMLTranslation *translation in translations[key]) {
+                if ([translation.label isEqualToString:string] == NO) {
+                    continue;
+                }
+                [foundKeys addObject:key];
+            }
+        }
+    }
+    return (foundKeys.count > 0) ? [foundKeys copy] : nil;
 }
 
 #pragma mark - Synchronization

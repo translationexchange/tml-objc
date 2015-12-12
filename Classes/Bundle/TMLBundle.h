@@ -12,6 +12,7 @@ extern NSString * const TMLBundleVersionFilename;
 extern NSString * const TMLBundleApplicationFilename;
 extern NSString * const TMLBundleSourcesFilename;
 extern NSString * const TMLBundleTranslationsFilename;
+extern NSString * const TMLBundleTranslationKeysFilename;
 extern NSString * const TMLBundleLanguageFilename;
 extern NSString * const TMLBundleSourcesRelativePath;
 
@@ -77,6 +78,11 @@ typedef NS_ENUM(NSInteger, TMLBundleErrorCode) {
  *  List of TMLSource names used in the bundle
  */
 @property (readonly, nonatomic) NSArray *sources;
+
+/**
+ *  Dictionary of translation keys. These may not be available, as archived bundles do not include them
+ */
+@property (readonly, nonatomic) NSDictionary *translationKeys;
 
 /**
  *  Application info included in the bundle
