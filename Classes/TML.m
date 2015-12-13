@@ -938,8 +938,11 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 
 - (UIGestureRecognizer *)defaultGestureRecognizerForTranslationActivation {
     UILongPressGestureRecognizer *recognizer = [[UILongPressGestureRecognizer alloc] init];
-    [recognizer addTarget:self action:@selector(inlineTranslationGestureRecognized:)];
+#if TARGET_IPHONE_SIMULATOR
+    recognizer.numberOfTouchesRequired = 2;
+#else
     recognizer.numberOfTouchesRequired = 4;
+#endif
     return recognizer;
 }
 
@@ -947,13 +950,6 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     UILongPressGestureRecognizer *recognizer = [[UILongPressGestureRecognizer alloc] init];
     recognizer.numberOfTouchesRequired = 1;
     return recognizer;
-}
-
-- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
-    if (gestureRecognizer == _inlineTranslationGestureRecognizer) {
-        return self.translationEnabled == YES;
-    }
-    return NO;
 }
 
 - (void)translationActivationGestureRecognized:(UIGestureRecognizer *)gestureRecognizer {
