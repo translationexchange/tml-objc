@@ -47,9 +47,9 @@
 		4CFA531519284666006E1B43 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4CFA531119284666006E1B43 /* README.md */; };
 		4CFA531619284666006E1B43 /* Tml.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 4CFA531219284666006E1B43 /* Tml.podspec */; };
 		7763CE239D6940AF971EA5E9 /* libPods-Demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2305CA3DC53F409AB1C35AE2 /* libPods-Demo.a */; };
-		C4CF54E31C10171500EC39CC /* TMLKit.framework in Copy Bundle Frameworks */ = {isa = PBXBuildFile; fileRef = C4BC81121C100BD500B995ED /* TMLKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C42BB2761C1E2895005C0128 /* TMLKit.framework in Copy Bundle Frameworks */ = {isa = PBXBuildFile; fileRef = C4BC81121C100BD500B995ED /* TMLKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C4CF54E41C10D1B500EC39CC /* TMLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4BC81121C100BD500B995ED /* TMLKit.framework */; };
-		C4FCD3A51C10075C00D723BC /* TMLKit.xcworkspace in Resources */ = {isa = PBXBuildFile; fileRef = C4FCD3A41C10075C00D723BC /* TMLKit.xcworkspace */; };
+		C4FCD3A51C10075C00D723BC /* (null) in Resources */ = {isa = PBXBuildFile; };
 		C4FCD3AB1C1007FE00D723BC /* DemoTests-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C4FCD3AA1C1007FE00D723BC /* DemoTests-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -84,7 +84,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C4CF54E31C10171500EC39CC /* TMLKit.framework in Copy Bundle Frameworks */,
+				C42BB2761C1E2895005C0128 /* TMLKit.framework in Copy Bundle Frameworks */,
 			);
 			name = "Copy Bundle Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -494,7 +494,7 @@
 				4CFA531519284666006E1B43 /* README.md in Resources */,
 				4C4233FC18B9B38700B76555 /* Main.storyboard in Resources */,
 				4CFA531419284666006E1B43 /* Rakefile in Resources */,
-				C4FCD3A51C10075C00D723BC /* TMLKit.xcworkspace in Resources */,
+				C4FCD3A51C10075C00D723BC /* (null) in Resources */,
 				C4FCD3AB1C1007FE00D723BC /* DemoTests-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -754,6 +754,7 @@
 				INFOPLIST_FILE = "Demo/Demo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.translationexchange.$(PRODUCT_NAME:rfc1034identifier)";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
@@ -773,6 +774,7 @@
 				INFOPLIST_FILE = "Demo/Demo-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.translationexchange.$(PRODUCT_NAME:rfc1034identifier)";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
