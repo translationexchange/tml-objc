@@ -49,18 +49,13 @@
 
 - (void) loadView {
     [super loadView];
-
-    self.view.backgroundColor = [UIColor colorWithWhite:0.97f alpha:1.0f];
     
-    UINavigationBar *navBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 25, self.view.frame.size.width, 44.0)];
     UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:TMLLocalizedString(@"Cancel") style:UIBarButtonItemStyleDone target:self action:@selector(dismiss:)];
     
-    UINavigationItem *titleItem = [[UINavigationItem alloc] initWithTitle:TMLLocalizedString(@"Select Language")];
-    titleItem.leftBarButtonItem=doneButton;
-    navBar.items = @[titleItem];
-    [self.view addSubview:navBar];
+    self.title = TMLLocalizedString(@"Select Language");
+    self.navigationItem.leftBarButtonItem = doneButton;
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 70, self.view.frame.size.width, self.view.frame.size.height - 70)];
+    self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;

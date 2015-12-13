@@ -39,6 +39,7 @@
 #import "TMLDataToken.h"
 #import "TMLLanguage.h"
 #import "TMLLanguageCase.h"
+#import "TMLLanguageSelectorViewController.h"
 #import "TMLLogger.h"
 #import "TMLSource.h"
 #import "TMLTranslation.h"
@@ -953,36 +954,68 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 }
 
 - (void)translationActivationGestureRecognized:(UIGestureRecognizer *)gestureRecognizer {
-    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
-    BOOL translationEnabled = self.translationEnabled;
-    UIColor *backgroundColor = nil;
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        if (_translationActivationView == nil) {
-            _translationActivationView = [[TMLTranslationActivationView alloc] initWithFrame:window.bounds];
-        }
-        
-        if (translationEnabled) {
-            backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.77];
+        if (self.translationEnabled == NO) {
+            [self toggleActiveTranslation:gestureRecognizer];
         }
         else {
-            backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.77];
+            [self presentActiveTranslationOptions];
         }
-        _translationActivationView.backgroundColor = [UIColor clearColor];
-        [UIView animateWithDuration:0.13 animations:^{
-            _translationActivationView.backgroundColor = backgroundColor;
-        } completion:^(BOOL finished) {
-            [UIView animateWithDuration:0.13 animations:^{
-                _translationActivationView.backgroundColor = [UIColor clearColor];
-            } completion:^(BOOL finished) {
-                [_translationActivationView removeFromSuperview];
-            }];
-        }];
-        
-        if (_translationActivationView.superview == nil) {
-            [window addSubview:_translationActivationView];
-        }
-        self.translationEnabled = !self.translationEnabled;
     }
+}
+
+- (void)presentActiveTranslationOptions {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:TMLLocalizedString(@"Choose")
+                                                                             message:TMLLocalizedString(@"What would you like to do?")
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *changeLocaleAction = [UIAlertAction actionWithTitle:TMLLocalizedString(@"Change Language") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self presentLanguageSelectorController];
+    }];
+    [alertController addAction:changeLocaleAction];
+    
+    UIAlertAction *disableAction = [UIAlertAction actionWithTitle:TMLLocalizedString(@"Deactivate Translation") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        [self toggleActiveTranslation:disableAction];
+    }];
+    [alertController addAction:disableAction];
+    
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:TMLLocalizedString(@"Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+        [self dismissPresentedViewController];
+    }];
+    [alertController addAction:cancel];
+    
+    [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:alertController animated:YES completion:nil];
+}
+
+- (void)toggleActiveTranslation:(id)sender {
+    BOOL translationEnabled = self.translationEnabled;
+    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+    UIColor *backgroundColor = nil;
+    
+    if (_translationActivationView == nil) {
+        _translationActivationView = [[TMLTranslationActivationView alloc] initWithFrame:window.bounds];
+    }
+    
+    if (translationEnabled) {
+        backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.77];
+    }
+    else {
+        backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.77];
+    }
+    _translationActivationView.backgroundColor = [UIColor clearColor];
+    [UIView animateWithDuration:0.13 animations:^{
+        _translationActivationView.backgroundColor = backgroundColor;
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:0.13 animations:^{
+            _translationActivationView.backgroundColor = [UIColor clearColor];
+        } completion:^(BOOL finished) {
+            [_translationActivationView removeFromSuperview];
+        }];
+    }];
+    
+    if (_translationActivationView.superview == nil) {
+        [window addSubview:_translationActivationView];
+    }
+    self.translationEnabled = !self.translationEnabled;
 }
 
 - (void)inlineTranslationGestureRecognized:(UIGestureRecognizer *)gestureRecognizer {
@@ -1041,7 +1074,17 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 
 - (void)presentTranslatorViewControllerWithTranslationKey:(NSString *)translationKey {
     TMLTranslatorViewController *translator = [[TMLTranslatorViewController alloc] initWithTranslationKey:translationKey];
-    UINavigationController *wrapper = [[UINavigationController alloc] initWithRootViewController:translator];
+    [self presentViewController:translator];
+}
+
+- (void)presentLanguageSelectorController {
+    TMLLanguageSelectorViewController *languageSelector = [[TMLLanguageSelectorViewController alloc] init];
+    languageSelector.automaticallyAdjustsScrollViewInsets = YES;
+    [self presentViewController:languageSelector];
+}
+
+- (void)presentViewController:(UIViewController *)viewController {
+    UINavigationController *wrapper = [[UINavigationController alloc] initWithRootViewController:viewController];
     UIViewController *presenter = [[[UIApplication sharedApplication] keyWindow] rootViewController];
     if (presenter.presentedViewController != nil) {
         [presenter dismissViewControllerAnimated:YES completion:^{
@@ -1050,6 +1093,13 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     }
     else {
         [presenter presentViewController:wrapper animated:YES completion:nil];
+    }
+}
+
+- (void)dismissPresentedViewController {
+    UIViewController *presenter = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+    if (presenter.presentedViewController != nil) {
+        [presenter dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
