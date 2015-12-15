@@ -31,7 +31,6 @@
 #import "NSObject+TMLJSON.h"
 #import "NSString+TML.h"
 #import "NSURL+TML.h"
-#import "UIBarButtonItem+TML.h"
 #import "UIBarItem+TML.h"
 #import "UIButton+TML.h"
 #import "UILabel+TML.h"
