@@ -171,7 +171,8 @@
     if (indexPath.section == 2) {
         if (indexPath.row == 0) {
             TMLLanguageSelectorViewController *vc = [[TMLLanguageSelectorViewController alloc] init];
-            [self presentViewController:vc animated:YES completion:nil];
+            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
+            [self presentViewController:navController animated:YES completion:nil];
         } else if (indexPath.row == 1) {
             TML *tml = [TML sharedInstance];
             tml.translationEnabled = !tml.translationEnabled;
@@ -180,7 +181,8 @@
             [[TML sharedInstance] removeLocalizationData];
         } else if (indexPath.row == 3) {
             TMLTranslatorViewController *translator = [[TMLTranslatorViewController alloc] init];
-            [self presentViewController:translator animated:YES completion:nil];
+            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:translator];
+            [self presentViewController:navController animated:YES completion:nil];
         }
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }

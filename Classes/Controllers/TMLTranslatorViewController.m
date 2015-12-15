@@ -52,8 +52,7 @@
 @implementation TMLTranslatorViewController
 
 - (instancetype)init {
-    TMLRaiseAlternativeInstantiationMethod(@selector(initWithTranslationKey:));
-    return nil;
+    return [self initWithTranslationKey:nil];
 }
 
 - (instancetype)initWithTranslationKey:(NSString *)translationKey {
