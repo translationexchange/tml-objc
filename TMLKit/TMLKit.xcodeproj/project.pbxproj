@@ -23,7 +23,6 @@
 		C435BD261C1933F9009A4091 /* NSObject+TMLJSON.m in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2971C0FC7F200D723BC /* NSObject+TMLJSON.m */; settings = {ATTRIBUTES = (Public, ); }; };
 		C435BD271C1933F9009A4091 /* NSString+TML.m in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2991C0FC7F200D723BC /* NSString+TML.m */; settings = {ATTRIBUTES = (Public, ); }; };
 		C435BD281C1933F9009A4091 /* NSURL+TML.m in Headers */ = {isa = PBXBuildFile; fileRef = C435BD091C16B5EA009A4091 /* NSURL+TML.m */; settings = {ATTRIBUTES = (Public, ); }; };
-		C435BD291C1933F9009A4091 /* UIBarButtonItem+TML.m in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD29B1C0FC7F200D723BC /* UIBarButtonItem+TML.m */; settings = {ATTRIBUTES = (Public, ); }; };
 		C435BD2A1C1933F9009A4091 /* UIBarItem+TML.m in Headers */ = {isa = PBXBuildFile; fileRef = C435BD111C190083009A4091 /* UIBarItem+TML.m */; settings = {ATTRIBUTES = (Public, ); }; };
 		C435BD2B1C1933F9009A4091 /* UIButton+TML.m in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD29D1C0FC7F200D723BC /* UIButton+TML.m */; settings = {ATTRIBUTES = (Public, ); }; };
 		C435BD2C1C1933F9009A4091 /* UILabel+TML.m in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD29F1C0FC7F200D723BC /* UILabel+TML.m */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -73,8 +72,6 @@
 		C4FCD2FF1C0FC7F200D723BC /* NSObject+TMLJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2971C0FC7F200D723BC /* NSObject+TMLJSON.m */; };
 		C4FCD3001C0FC7F200D723BC /* NSString+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2981C0FC7F200D723BC /* NSString+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD3011C0FC7F200D723BC /* NSString+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2991C0FC7F200D723BC /* NSString+TML.m */; };
-		C4FCD3021C0FC7F200D723BC /* UIBarButtonItem+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD29A1C0FC7F200D723BC /* UIBarButtonItem+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C4FCD3031C0FC7F200D723BC /* UIBarButtonItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD29B1C0FC7F200D723BC /* UIBarButtonItem+TML.m */; };
 		C4FCD3041C0FC7F200D723BC /* UIButton+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD29C1C0FC7F200D723BC /* UIButton+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD3051C0FC7F200D723BC /* UIButton+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD29D1C0FC7F200D723BC /* UIButton+TML.m */; };
 		C4FCD3061C0FC7F200D723BC /* UILabel+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD29E1C0FC7F200D723BC /* UILabel+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -279,8 +276,6 @@
 		C4FCD2971C0FC7F200D723BC /* NSObject+TMLJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+TMLJSON.m"; sourceTree = "<group>"; };
 		C4FCD2981C0FC7F200D723BC /* NSString+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+TML.h"; sourceTree = "<group>"; };
 		C4FCD2991C0FC7F200D723BC /* NSString+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+TML.m"; sourceTree = "<group>"; };
-		C4FCD29A1C0FC7F200D723BC /* UIBarButtonItem+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+TML.h"; sourceTree = "<group>"; };
-		C4FCD29B1C0FC7F200D723BC /* UIBarButtonItem+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+TML.m"; sourceTree = "<group>"; };
 		C4FCD29C1C0FC7F200D723BC /* UIButton+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIButton+TML.h"; sourceTree = "<group>"; };
 		C4FCD29D1C0FC7F200D723BC /* UIButton+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIButton+TML.m"; sourceTree = "<group>"; };
 		C4FCD29E1C0FC7F200D723BC /* UILabel+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+TML.h"; sourceTree = "<group>"; };
@@ -572,8 +567,6 @@
 				C4FCD2991C0FC7F200D723BC /* NSString+TML.m */,
 				C435BD081C16B5EA009A4091 /* NSURL+TML.h */,
 				C435BD091C16B5EA009A4091 /* NSURL+TML.m */,
-				C4FCD29A1C0FC7F200D723BC /* UIBarButtonItem+TML.h */,
-				C4FCD29B1C0FC7F200D723BC /* UIBarButtonItem+TML.m */,
 				C435BD101C190083009A4091 /* UIBarItem+TML.h */,
 				C435BD111C190083009A4091 /* UIBarItem+TML.m */,
 				C4FCD29C1C0FC7F200D723BC /* UIButton+TML.h */,
@@ -852,8 +845,6 @@
 				C435BD271C1933F9009A4091 /* NSString+TML.m in Headers */,
 				C435BD0A1C16B5EA009A4091 /* NSURL+TML.h in Headers */,
 				C435BD281C1933F9009A4091 /* NSURL+TML.m in Headers */,
-				C4FCD3021C0FC7F200D723BC /* UIBarButtonItem+TML.h in Headers */,
-				C435BD291C1933F9009A4091 /* UIBarButtonItem+TML.m in Headers */,
 				C435BD121C190083009A4091 /* UIBarItem+TML.h in Headers */,
 				C435BD2A1C1933F9009A4091 /* UIBarItem+TML.m in Headers */,
 				C4FCD3041C0FC7F200D723BC /* UIButton+TML.h in Headers */,
@@ -1182,7 +1173,6 @@
 				C4FCD2F51C0FC7F200D723BC /* TMLBundleManager.m in Sources */,
 				C4FCD3411C0FC7F200D723BC /* TMLTranslationKey.m in Sources */,
 				C4FCD3221C0FC7F200D723BC /* TMLRulesEvaluator.m in Sources */,
-				C4FCD3031C0FC7F200D723BC /* UIBarButtonItem+TML.m in Sources */,
 				C435BD231C1933BF009A4091 /* NSAttributedString+TML.m in Sources */,
 				C4FCD2E51C0FC7F200D723BC /* TMLAPISerializer.m in Sources */,
 				C4FCD3281C0FC7F200D723BC /* TML.m in Sources */,
