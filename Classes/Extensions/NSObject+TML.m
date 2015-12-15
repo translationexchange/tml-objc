@@ -39,6 +39,15 @@ NSString * const TMLRegistryTranslationKeyName = @"translationKey";
 NSString * const TMLRegistryTokensKeyName = @"tokens";
 NSString * const TMLRegistryOptionsKeyName = @"options";
 
+void ensureArrayIndex(NSMutableArray *array, NSInteger index) {
+    if (array.count > index) {
+        return;
+    }
+    for (NSInteger i=array.count; i<=index; i++) {
+        [array setObject:[NSNull null] atIndexedSubscript:i];
+    }
+}
+
 @implementation NSObject (TML)
 
 + (void)load {
@@ -71,11 +80,108 @@ NSString * const TMLRegistryOptionsKeyName = @"options";
 }
 
 - (id)tmlValueForKeyPath:(NSString *)keyPath {
-    return [self tmlValueForKeyPath:keyPath];
+    if ([TML sharedInstance].configuration.allowCollectionKeyPaths == NO) {
+        return [self tmlValueForKeyPath:keyPath];
+    }
+    
+    NSRange indexRange = [keyPath rangeOfString:@"["];
+    if (indexRange.location == NSNotFound) {
+        return [self tmlValueForKeyPath:keyPath];
+    }
+    NSArray *parts = [keyPath componentsSeparatedByString:@"."];
+    id currentObject = self;
+    NSInteger length = 0;
+    for (NSString *part in parts) {
+        length += part.length + (int)!!length;
+        if (length > indexRange.location) {
+            NSArray *indexParts = [part componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"[]"]];
+            NSString *key = indexParts[0];
+            currentObject = [self valueForKey:key];
+            if ([currentObject isKindOfClass:[NSArray class]] == YES) {
+                for (NSInteger i=1; i<indexParts.count; i+=2) {
+                    id val = [indexParts objectAtIndex:i];
+                    if ([val isKindOfClass:[NSString class]] == YES
+                        && [(NSString *)val length] > 0) {
+                        NSInteger index = [indexParts[i] integerValue];
+                        currentObject = [currentObject objectAtIndex:index];
+                    }
+                }
+            }
+        }
+        else {
+            currentObject = [self valueForKey:part];
+        }
+    }
+    return currentObject;
 }
 
 - (void)tmlSetValue:(id)value forKeyPath:(NSString *)keyPath {
-    [self tmlSetValue:value forKeyPath:keyPath];
+    if ([TML sharedInstance].configuration.allowCollectionKeyPaths == NO) {
+        [self tmlSetValue:value forKeyPath:keyPath];
+    }
+    
+    NSRange indexRange = [keyPath rangeOfString:@"["];
+    if (indexRange.location == NSNotFound) {
+        [self tmlSetValue:value forKeyPath:keyPath];
+        return;
+    }
+    NSArray *parts = [keyPath componentsSeparatedByString:@"."];
+    id currentObject = self;
+    id previousObject = self;
+    id previousKey = nil;
+    NSInteger length = 0;
+    for (NSString *part in parts) {
+        length += part.length + (int)!!length;
+        if (length > indexRange.location) {
+            NSArray *indexParts = [part componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"[]"]];
+            NSString *key = indexParts[0];
+            previousObject = currentObject;
+            previousKey = key;
+            currentObject = [[currentObject valueForKey:key] mutableCopy];
+            if (currentObject == nil) {
+                currentObject = [NSMutableArray array];
+            }
+            [previousObject setValue:currentObject forKey:previousKey];
+            if ([currentObject isKindOfClass:[NSArray class]] == NO) {
+                return;
+            }
+            for (NSInteger i=1; i<indexParts.count; i+=2) {
+                BOOL isLast = (i+2) >= indexParts.count;
+                NSInteger index = [indexParts[i] integerValue];
+                if (isLast == NO) {
+                    previousObject = currentObject;
+                    previousKey = [NSNumber numberWithInteger:index];
+                    if ([(NSArray *)currentObject count] > index) {
+                        currentObject = [[currentObject objectAtIndex:index] mutableCopy];
+                    }
+                    else {
+                        currentObject = nil;
+                    }
+                    if (currentObject == nil) {
+                        currentObject = [NSMutableArray array];
+                    }
+                    if ([currentObject isKindOfClass:[NSArray class]] == NO) {
+                        return;
+                    }
+                    ensureArrayIndex(previousObject, index);
+                    [(NSMutableArray *)previousObject setObject:currentObject atIndexedSubscript:index];
+                }
+                else {
+                    ensureArrayIndex(currentObject, index);
+                    [currentObject setObject:value atIndexedSubscript:index];
+                    if (previousObject != nil && [previousKey isKindOfClass:[NSNumber class]] == YES) {
+                        [previousObject setObject:currentObject atIndex:[previousKey integerValue]];
+                    }
+                    else if (previousKey != nil && previousKey != nil) {
+                        [previousObject setValue:currentObject forKey:previousKey];
+                    }
+                }
+            }
+        }
+        else {
+            currentObject = [self valueForKey:part];
+        }
+    }
 }
 
 

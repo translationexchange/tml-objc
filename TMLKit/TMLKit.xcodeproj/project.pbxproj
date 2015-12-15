@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		74CAF4D7AE5F673571FAD626 /* libPods-TMLKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C4DCAD61B82C00F44444A8C /* libPods-TMLKit.a */; };
+		C42BB3741C1FADF6005C0128 /* NSObjectTMLTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C42BB3731C1FADF6005C0128 /* NSObjectTMLTest.m */; };
 		C435BCFC1C1680B7009A4091 /* UIView+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C435BCFA1C1680B7009A4091 /* UIView+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C435BCFD1C1680B7009A4091 /* UIView+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C435BCFB1C1680B7009A4091 /* UIView+TML.m */; };
 		C435BD061C1696A5009A4091 /* UITableView+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C435BD041C1696A5009A4091 /* UITableView+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -224,6 +225,7 @@
 		7DD4AA1189309754FD897BCC /* Pods-TMLKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMLKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-TMLKit/Pods-TMLKit.release.xcconfig"; sourceTree = "<group>"; };
 		9C4DCAD61B82C00F44444A8C /* libPods-TMLKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TMLKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BACE78FD18874EB6A192BC4E /* Pods-TMLKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMLKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TMLKitTests/Pods-TMLKitTests.debug.xcconfig"; sourceTree = "<group>"; };
+		C42BB3731C1FADF6005C0128 /* NSObjectTMLTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObjectTMLTest.m; sourceTree = "<group>"; };
 		C435BCFA1C1680B7009A4091 /* UIView+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+TML.h"; sourceTree = "<group>"; };
 		C435BCFB1C1680B7009A4091 /* UIView+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+TML.m"; sourceTree = "<group>"; };
 		C435BD041C1696A5009A4091 /* UITableView+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+TML.h"; sourceTree = "<group>"; };
@@ -687,6 +689,7 @@
 				C4FCD36A1C0FCDD900D723BC /* Tokenizers */,
 				C4FCD36E1C0FCDD900D723BC /* Tokens */,
 				C4FCD3711C0FCDD900D723BC /* Translations */,
+				C42BB3731C1FADF6005C0128 /* NSObjectTMLTest.m */,
 			);
 			name = Tests;
 			path = ../../Tests;
@@ -1202,6 +1205,7 @@
 				C4FCD3731C0FCDD900D723BC /* TMLApplicationTest.m in Sources */,
 				C4FCD3811C0FCDD900D723BC /* TMLLanguageCaseRuleTest.m in Sources */,
 				C4FCD3841C0FCDD900D723BC /* TMLLanguageContextTest.m in Sources */,
+				C42BB3741C1FADF6005C0128 /* NSObjectTMLTest.m in Sources */,
 				C4FCD38F1C0FCDD900D723BC /* TMLDataTokenTest.m in Sources */,
 				C4FCD38A1C0FCDD900D723BC /* TMLTestBase.m in Sources */,
 				C4FCD3901C0FCDD900D723BC /* TMLPipedTokenTest.m in Sources */,

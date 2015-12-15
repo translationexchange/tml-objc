@@ -58,6 +58,9 @@
 
 @property(nonatomic) BOOL inContextTranslatorEnabled;
 
+#pragma mark - Quirks
+@property(nonatomic, assign) BOOL allowCollectionKeyPaths;
+
 - (instancetype)initWithApplicationKey:(NSString *)applicationKey
                            accessToken:(NSString *)accessToken;
 @property(readonly, nonatomic, getter=isValidConfiguration) BOOL validConfiguration;
