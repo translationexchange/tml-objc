@@ -32,7 +32,6 @@
 #import "NSObject+TML.h"
 #import "NSString+TML.h"
 #import "TML.h"
-#import "UIResponder+TML.h"
 
 @interface UILabel()
 @end
@@ -40,25 +39,19 @@
 @implementation UILabel (TML)
 
 - (NSArray *)tmlLocalizedKeyPaths {
-    if (self.attributedText.length > 0) {
-        return @[@"attributedText"];
+    NSMutableArray *paths = [[super tmlLocalizedKeyPaths] mutableCopy];
+    if (paths == nil) {
+        paths = [NSMutableArray array];
     }
-    else if (self.text.length > 0) {
-        return @[@"text"];
-    }
-    return [super tmlLocalizedKeyPaths];
-}
-
-- (void)localizeWithTML {
-    [super localizeWithTML];
-    NSDictionary *tokens = nil;
-    NSString *tmlAttributedString = [self.attributedText tmlAttributedString:&tokens];
-    if ([tmlAttributedString tmlContainsDecoratedTokens] == YES) {
-        self.attributedText = TMLLocalizedAttributedString(tmlAttributedString, tokens, @"attributedText");
+    NSDictionary *textTokens;
+    NSString *text = [self.attributedText tmlAttributedString:&textTokens];
+    if ([text tmlContainsDecoratedTokens] == YES) {
+        [paths addObject:@"attributedText"];
     }
     else {
-        self.text = TMLLocalizedString(self.text, @"text");
+        [paths addObject:@"text"];
     }
+    return [paths copy];
 }
 
 @end

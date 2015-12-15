@@ -14,10 +14,6 @@
 
 @implementation UIResponder (TML)
 
-- (NSArray *)tmlLocalizedKeyPaths {
-    return nil;
-}
-
 - (NSArray *)tmlTranslationKeys {
     NSMutableArray *translationKeys = [NSMutableArray array];
     NSArray *keyPaths = [self tmlLocalizedKeyPaths];

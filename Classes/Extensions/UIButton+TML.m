@@ -44,7 +44,7 @@
         NSString *prop = [parts firstObject];
         UIControlState state = [[parts lastObject] integerValue];
         if ([@"title" isEqualToString:prop] == YES) {
-            return [self titleColorForState:state];
+            return [self titleForState:state];
         }
         else if ([@"attributedTitle" isEqualToString:prop] == YES) {
             return [self attributedTitleForState:state];

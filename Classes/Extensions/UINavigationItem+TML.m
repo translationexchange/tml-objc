@@ -34,12 +34,13 @@
 
 @implementation UINavigationItem (TML)
 
-- (void)localizeWithTML {
-    [super localizeWithTML];
-    NSString *title = self.title;
-    if (title != nil) {
-        self.title = TMLLocalizedString(title, @"title");
+- (NSArray *)tmlLocalizedKeyPaths {
+    NSMutableArray *paths = [[super tmlLocalizedKeyPaths] mutableCopy];
+    if (paths == nil) {
+        paths = [NSMutableArray array];
     }
+    [paths addObject:@"title"];
+    return [paths copy];
 }
 
 @end

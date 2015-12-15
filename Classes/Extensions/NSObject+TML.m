@@ -28,6 +28,7 @@
  *  THE SOFTWARE.
  */
 
+#import "NSAttributedString+TML.h"
 #import "NSObject+TML.h"
 #import "TML.h"
 #import "TMLConfiguration.h"
@@ -64,17 +65,35 @@ void ensureArrayIndex(NSMutableArray *array, NSInteger index) {
     method_exchangeImplementations(original, ours);
 }
 
+- (NSArray *)tmlLocalizedKeyPaths {
+    return nil;
+}
+
 - (void) localizeWithTML {
-    // Subclasses should handle this
+    if ([self respondsToSelector:@selector(accessibilityLabel)] == YES) {
+        NSString *accessibilityLabel = self.accessibilityLabel;
+        if (accessibilityLabel != nil) {
+            self.accessibilityLabel = TMLLocalizedString(accessibilityLabel, @"accessibilityLabel");
+        }
+    }
+    
+    NSArray *keyPaths = [self tmlLocalizedKeyPaths];
+    for (id keyPath in keyPaths) {
+        id localizableString = [self valueForKey:keyPath];
+        if ([localizableString isKindOfClass:[NSAttributedString class]] == YES) {
+            NSDictionary *tokens = nil;
+            NSString *tmlAttributedString = [localizableString tmlAttributedString:&tokens];
+            [self setValue:TMLLocalizedAttributedString(tmlAttributedString, tokens, keyPath) forKey:keyPath];
+        }
+        else if ([localizableString isKindOfClass:[NSString class]] == YES) {
+            [self setValue:TMLLocalizedString(localizableString, keyPath) forKey:keyPath];
+        }
+    }
 }
 
 - (void)tmlAwakeFromNib {
     [self tmlAwakeFromNib];
     if ([[TML sharedInstance] configuration].localizeNIBStrings == YES) {
-        NSString *accessibilityLabel = self.accessibilityLabel;
-        if (accessibilityLabel != nil) {
-            self.accessibilityLabel = TMLLocalizedString(accessibilityLabel, @"accessibilityLabel");
-        }
         [self localizeWithTML];
     }
 }
@@ -118,6 +137,7 @@ void ensureArrayIndex(NSMutableArray *array, NSInteger index) {
 - (void)tmlSetValue:(id)value forKeyPath:(NSString *)keyPath {
     if ([TML sharedInstance].configuration.allowCollectionKeyPaths == NO) {
         [self tmlSetValue:value forKeyPath:keyPath];
+        return;
     }
     
     NSRange indexRange = [keyPath rangeOfString:@"["];

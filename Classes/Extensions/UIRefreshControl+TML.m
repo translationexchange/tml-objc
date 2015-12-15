@@ -1,23 +1,23 @@
 //
-//  UIBarItem+TML.m
+//  UIRefreshControl+TML.m
 //  TMLKit
 //
-//  Created by Pasha on 12/9/15.
+//  Created by Pasha on 12/14/15.
 //  Copyright © 2015 Translation Exchange. All rights reserved.
 //
 
 #import "NSObject+TML.h"
 #import "TML.h"
-#import "UIBarItem+TML.h"
+#import "UIRefreshControl+TML.h"
 
-@implementation UIBarItem (TML)
+@implementation UIRefreshControl (TML)
 
 - (NSArray *)tmlLocalizedKeyPaths {
     NSMutableArray *paths = [[super tmlLocalizedKeyPaths] mutableCopy];
     if (paths == nil) {
         paths = [NSMutableArray array];
     }
-    [paths addObject:@"title"];
+    [paths addObject:@"attributedTitle"];
     return [paths copy];
 }
 

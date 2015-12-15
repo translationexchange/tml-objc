@@ -34,20 +34,13 @@
 
 @implementation UISearchBar (TML)
 
-- (void)localizeWithTML {
-    [super localizeWithTML];
-    NSString *text = self.text;
-    if (text != nil) {
-        self.text = TMLLocalizedString(text, @"text");
+- (NSArray *)tmlLocalizedKeyPaths {
+    NSMutableArray *paths = [[super tmlLocalizedKeyPaths] mutableCopy];
+    if (paths == nil) {
+        paths = [NSMutableArray array];
     }
-    NSString *prompt = self.prompt;
-    if (prompt != nil) {
-        self.prompt = TMLLocalizedString(prompt, @"prompt");
-    }
-    NSString *placeholder = self.placeholder;
-    if (placeholder != nil) {
-        self.placeholder = TMLLocalizedString(placeholder, @"placeholder");
-    }
+    [paths addObjectsFromArray:@[@"text", @"prompt", @"placeholder"]];
+    return [paths copy];
 }
 
 @end

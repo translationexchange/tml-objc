@@ -1,16 +1,16 @@
 //
-//  UIBarItem+TML.m
+//  UIActionSheet+TML.m
 //  TMLKit
 //
-//  Created by Pasha on 12/9/15.
+//  Created by Pasha on 12/14/15.
 //  Copyright © 2015 Translation Exchange. All rights reserved.
 //
 
 #import "NSObject+TML.h"
 #import "TML.h"
-#import "UIBarItem+TML.h"
+#import "UIActionSheet+TML.h"
 
-@implementation UIBarItem (TML)
+@implementation UIActionSheet (TML)
 
 - (NSArray *)tmlLocalizedKeyPaths {
     NSMutableArray *paths = [[super tmlLocalizedKeyPaths] mutableCopy];

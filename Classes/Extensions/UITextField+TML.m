@@ -36,24 +36,29 @@
 
 @implementation UITextField (TML)
 
-- (void)localizeWithTML {
+- (NSArray *)tmlLocalizedKeyPaths {
+    NSMutableArray *paths = [[super tmlLocalizedKeyPaths] mutableCopy];
+    if (paths == nil) {
+        paths = [NSMutableArray array];
+    }
     NSDictionary *textTokens;
     NSString *text = [self.attributedText tmlAttributedString:&textTokens];
     if ([text tmlContainsDecoratedTokens] == YES) {
-        self.attributedText = TMLLocalizedAttributedString(text, textTokens, @"attributedText");
+        [paths addObject:@"attributedText"];
     }
     else {
-        self.text = TMLLocalizedString(self.text, @"text");
+        [paths addObject:@"text"];
     }
     
     NSDictionary *placeholderTokens;
     NSString *placeholder = [self.attributedPlaceholder tmlAttributedString:&placeholderTokens];
     if ([placeholder tmlContainsDecoratedTokens] == YES) {
-        self.attributedPlaceholder = TMLLocalizedAttributedString(placeholder, placeholderTokens, @"attributedPlaceholder");
+        [paths addObject:@"attributedPlaceholder"];
     }
     else {
-        self.placeholder = TMLLocalizedString(self.placeholder, @"placeholder");
+        [paths addObject:@"placeholder"];
     }
+    return [paths copy];
 }
 
 @end

@@ -36,15 +36,21 @@
 
 @implementation UITextView (TML)
 
-- (void)localizeWithTML {
+
+- (NSArray *)tmlLocalizedKeyPaths {
+    NSMutableArray *paths = [[super tmlLocalizedKeyPaths] mutableCopy];
+    if (paths == nil) {
+        paths = [NSMutableArray array];
+    }
     NSDictionary *tokens;
     NSString *text = [self.attributedText tmlAttributedString:&tokens];
     if ([text tmlContainsDecoratedTokens] == YES) {
-        self.attributedText = TMLLocalizedAttributedString(text, tokens, @"attributedText");
+        [paths addObject:@"attributedText"];
     }
     else {
-        self.text = TMLLocalizedString(self.text, @"text");
+        [paths addObject:@"text"];
     }
+    return paths;
 }
 
 @end
