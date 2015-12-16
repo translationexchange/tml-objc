@@ -11,18 +11,18 @@
 
 #undef NSLocalizedString
 #define NSLocalizedString(key, comment) \
-[TML translate:key withDescription:comment]
+TMLLocalizedString(key, comment)
 
 #undef NSLocalizedStringFromTable
 #define NSLocalizedStringFromTable(key, tbl, comment) \
-[TML translate:key withDescription:comment]
+TMLLocalizedString(key, comment, @{@"source": tbl})
 
 #undef NSLocalizedStringFromTableInBundle
 #define NSLocalizedStringFromTableInBundle(key, tbl, bundle, comment) \
-[TML translate:key withDescription:comment]
+TMLLocalizedString(key, comment, @{@"source": tbl})
 
 #undef NSLocalizedStringWithDefaultValue
 #define NSLocalizedStringWithDefaultValue(key, tbl, bundle, val, comment) \
-[TML translate:key withDescription:comment]
+TMLLocalizedString(key, comment, @{@"source": tbl, @"defaultValue": val})
 
 #endif /* TML_NSLocalizedString_h */
