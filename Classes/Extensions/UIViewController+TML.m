@@ -33,6 +33,15 @@
 
 @implementation UIViewController (TML)
 
+- (NSArray *)tmlLocalizedKeyPaths {
+    NSMutableArray *keys = [[super tmlLocalizedKeyPaths] mutableCopy];
+    if (keys == nil) {
+        keys = [NSMutableArray array];
+    }
+    [keys addObject:@"title"];
+    return keys;
+}
+
 - (void)restoreTMLLocalizations {
     [super restoreTMLLocalizations];
     if ([self isViewLoaded] == YES) {
