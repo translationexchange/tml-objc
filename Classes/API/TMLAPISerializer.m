@@ -177,7 +177,7 @@
 }
 
 - (void)encodeInt64:(int64_t)intv forKey:(NSString *)key {
-    _info[key] = [NSNumber numberWithInteger:intv];
+    _info[key] = [NSNumber numberWithInteger:(NSInteger)intv];
 }
 
 - (void)encodeInt32:(int32_t)intv forKey:(NSString *)key {
