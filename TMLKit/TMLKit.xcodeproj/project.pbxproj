@@ -12,6 +12,14 @@
 		C42581E91C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C42581E71C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.m */; };
 		C42581F21C20FE4300BAE9A9 /* UIBarButtonItem+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C42581F01C20FE4300BAE9A9 /* UIBarButtonItem+TML.h */; };
 		C42581F31C20FE4300BAE9A9 /* UIBarButtonItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C42581F11C20FE4300BAE9A9 /* UIBarButtonItem+TML.m */; };
+		C42581F81C21086000BAE9A9 /* UILocalNotification+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C42581F61C21086000BAE9A9 /* UILocalNotification+TML.h */; };
+		C42581F91C21086000BAE9A9 /* UILocalNotification+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C42581F71C21086000BAE9A9 /* UILocalNotification+TML.m */; };
+		C42582001C211EC000BAE9A9 /* UIAlertController+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C42581FE1C211EC000BAE9A9 /* UIAlertController+TML.h */; };
+		C42582011C211EC000BAE9A9 /* UIAlertController+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C42581FF1C211EC000BAE9A9 /* UIAlertController+TML.m */; };
+		C42582041C21214800BAE9A9 /* UITableViewRowAction+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C42582021C21214800BAE9A9 /* UITableViewRowAction+TML.h */; };
+		C42582051C21214800BAE9A9 /* UITableViewRowAction+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C42582031C21214800BAE9A9 /* UITableViewRowAction+TML.m */; };
+		C42582081C2121D400BAE9A9 /* UIMutableUserNotificationAction+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C42582061C2121D400BAE9A9 /* UIMutableUserNotificationAction+TML.h */; };
+		C42582091C2121D400BAE9A9 /* UIMutableUserNotificationAction+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C42582071C2121D400BAE9A9 /* UIMutableUserNotificationAction+TML.m */; };
 		C42BB3741C1FADF6005C0128 /* NSObjectTMLTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C42BB3731C1FADF6005C0128 /* NSObjectTMLTest.m */; };
 		C42BB37D1C1FD1EC005C0128 /* UIActionSheet+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C42BB37B1C1FD1EC005C0128 /* UIActionSheet+TML.h */; };
 		C42BB37E1C1FD1EC005C0128 /* UIActionSheet+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C42BB37C1C1FD1EC005C0128 /* UIActionSheet+TML.m */; };
@@ -239,6 +247,14 @@
 		C42581E71C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplicationShortcutItem+TML.m"; sourceTree = "<group>"; };
 		C42581F01C20FE4300BAE9A9 /* UIBarButtonItem+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+TML.h"; sourceTree = "<group>"; };
 		C42581F11C20FE4300BAE9A9 /* UIBarButtonItem+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarButtonItem+TML.m"; sourceTree = "<group>"; };
+		C42581F61C21086000BAE9A9 /* UILocalNotification+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILocalNotification+TML.h"; sourceTree = "<group>"; };
+		C42581F71C21086000BAE9A9 /* UILocalNotification+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILocalNotification+TML.m"; sourceTree = "<group>"; };
+		C42581FE1C211EC000BAE9A9 /* UIAlertController+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertController+TML.h"; sourceTree = "<group>"; };
+		C42581FF1C211EC000BAE9A9 /* UIAlertController+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIAlertController+TML.m"; sourceTree = "<group>"; };
+		C42582021C21214800BAE9A9 /* UITableViewRowAction+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableViewRowAction+TML.h"; sourceTree = "<group>"; };
+		C42582031C21214800BAE9A9 /* UITableViewRowAction+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewRowAction+TML.m"; sourceTree = "<group>"; };
+		C42582061C2121D400BAE9A9 /* UIMutableUserNotificationAction+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIMutableUserNotificationAction+TML.h"; sourceTree = "<group>"; };
+		C42582071C2121D400BAE9A9 /* UIMutableUserNotificationAction+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIMutableUserNotificationAction+TML.m"; sourceTree = "<group>"; };
 		C42BB3731C1FADF6005C0128 /* NSObjectTMLTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObjectTMLTest.m; sourceTree = "<group>"; };
 		C42BB37B1C1FD1EC005C0128 /* UIActionSheet+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+TML.h"; sourceTree = "<group>"; };
 		C42BB37C1C1FD1EC005C0128 /* UIActionSheet+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+TML.m"; sourceTree = "<group>"; };
@@ -589,14 +605,28 @@
 				C4FCD2991C0FC7F200D723BC /* NSString+TML.m */,
 				C435BD081C16B5EA009A4091 /* NSURL+TML.h */,
 				C435BD091C16B5EA009A4091 /* NSURL+TML.m */,
+				C42BB37B1C1FD1EC005C0128 /* UIActionSheet+TML.h */,
+				C42BB37C1C1FD1EC005C0128 /* UIActionSheet+TML.m */,
+				C42BB37F1C1FD29B005C0128 /* UIAlertView+TML.h */,
+				C42BB3801C1FD29B005C0128 /* UIAlertView+TML.m */,
+				C42581E61C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.h */,
+				C42581E71C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.m */,
+				C42581F01C20FE4300BAE9A9 /* UIBarButtonItem+TML.h */,
+				C42581F11C20FE4300BAE9A9 /* UIBarButtonItem+TML.m */,
 				C435BD101C190083009A4091 /* UIBarItem+TML.h */,
 				C435BD111C190083009A4091 /* UIBarItem+TML.m */,
 				C4FCD29C1C0FC7F200D723BC /* UIButton+TML.h */,
 				C4FCD29D1C0FC7F200D723BC /* UIButton+TML.m */,
 				C4FCD29E1C0FC7F200D723BC /* UILabel+TML.h */,
 				C4FCD29F1C0FC7F200D723BC /* UILabel+TML.m */,
+				C42581F61C21086000BAE9A9 /* UILocalNotification+TML.h */,
+				C42581F71C21086000BAE9A9 /* UILocalNotification+TML.m */,
 				C4FCD2A01C0FC7F200D723BC /* UINavigationItem+TML.h */,
 				C4FCD2A11C0FC7F200D723BC /* UINavigationItem+TML.m */,
+				C42BB3831C1FDB33005C0128 /* UIRefreshControl+TML.h */,
+				C42BB3841C1FDB33005C0128 /* UIRefreshControl+TML.m */,
+				C4FA637E1C1A429600E3ECB8 /* UIResponder+TML.h */,
+				C4FA637F1C1A429600E3ECB8 /* UIResponder+TML.m */,
 				C4FCD2A21C0FC7F200D723BC /* UISearchBar+TML.h */,
 				C4FCD2A31C0FC7F200D723BC /* UISearchBar+TML.m */,
 				C4FCD2A41C0FC7F200D723BC /* UISegmentedControl+TML.h */,
@@ -611,18 +641,12 @@
 				C435BCFB1C1680B7009A4091 /* UIView+TML.m */,
 				C4FCD2AC1C0FC7F200D723BC /* UIViewController+TML.h */,
 				C4FCD2AD1C0FC7F200D723BC /* UIViewController+TML.m */,
-				C4FA637E1C1A429600E3ECB8 /* UIResponder+TML.h */,
-				C4FA637F1C1A429600E3ECB8 /* UIResponder+TML.m */,
-				C42BB37B1C1FD1EC005C0128 /* UIActionSheet+TML.h */,
-				C42BB37C1C1FD1EC005C0128 /* UIActionSheet+TML.m */,
-				C42BB37F1C1FD29B005C0128 /* UIAlertView+TML.h */,
-				C42BB3801C1FD29B005C0128 /* UIAlertView+TML.m */,
-				C42BB3831C1FDB33005C0128 /* UIRefreshControl+TML.h */,
-				C42BB3841C1FDB33005C0128 /* UIRefreshControl+TML.m */,
-				C42581E61C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.h */,
-				C42581E71C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.m */,
-				C42581F01C20FE4300BAE9A9 /* UIBarButtonItem+TML.h */,
-				C42581F11C20FE4300BAE9A9 /* UIBarButtonItem+TML.m */,
+				C42581FE1C211EC000BAE9A9 /* UIAlertController+TML.h */,
+				C42581FF1C211EC000BAE9A9 /* UIAlertController+TML.m */,
+				C42582021C21214800BAE9A9 /* UITableViewRowAction+TML.h */,
+				C42582031C21214800BAE9A9 /* UITableViewRowAction+TML.m */,
+				C42582061C2121D400BAE9A9 /* UIMutableUserNotificationAction+TML.h */,
+				C42582071C2121D400BAE9A9 /* UIMutableUserNotificationAction+TML.m */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -889,12 +913,15 @@
 				C435BD2D1C1933F9009A4091 /* UINavigationItem+TML.m in Headers */,
 				C4FCD30A1C0FC7F200D723BC /* UISearchBar+TML.h in Headers */,
 				C42BB3811C1FD29B005C0128 /* UIAlertView+TML.h in Headers */,
+				C42582081C2121D400BAE9A9 /* UIMutableUserNotificationAction+TML.h in Headers */,
 				C4FA63801C1A429600E3ECB8 /* UIResponder+TML.h in Headers */,
 				C435BD2E1C1933F9009A4091 /* UISearchBar+TML.m in Headers */,
 				C4FCD30C1C0FC7F200D723BC /* UISegmentedControl+TML.h in Headers */,
 				C435BD2F1C1933F9009A4091 /* UISegmentedControl+TML.m in Headers */,
 				C435BD061C1696A5009A4091 /* UITableView+TML.h in Headers */,
+				C42581F81C21086000BAE9A9 /* UILocalNotification+TML.h in Headers */,
 				C42581E81C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.h in Headers */,
+				C42582001C211EC000BAE9A9 /* UIAlertController+TML.h in Headers */,
 				C435BD301C1933F9009A4091 /* UITableView+TML.m in Headers */,
 				C4FCD3101C0FC7F200D723BC /* UITextField+TML.h in Headers */,
 				C435BD311C1933F9009A4091 /* UITextField+TML.m in Headers */,
@@ -918,6 +945,7 @@
 				C4FCD3231C0FC7F200D723BC /* TMLRulesParser.h in Headers */,
 				C4FCD33A1C0FC7F200D723BC /* TMLMethodToken.h in Headers */,
 				C4FCD2F41C0FC7F200D723BC /* TMLBundleManager.h in Headers */,
+				C42582041C21214800BAE9A9 /* UITableViewRowAction+TML.h in Headers */,
 				C4FCD3301C0FC7F200D723BC /* TMLDataTokenizer.h in Headers */,
 				C4FCD31F1C0FC7F200D723BC /* TMLLanguageContextRule.h in Headers */,
 				C4FCD2E01C0FC7F200D723BC /* TMLAPIClient.h in Headers */,
@@ -1179,9 +1207,11 @@
 				C4FCD3201C0FC7F200D723BC /* TMLLanguageContextRule.m in Sources */,
 				C4FCD33F1C0FC7F200D723BC /* TMLTranslation.m in Sources */,
 				C435BD0B1C16B5EA009A4091 /* NSURL+TML.m in Sources */,
+				C42582011C211EC000BAE9A9 /* UIAlertController+TML.m in Sources */,
 				C4FCD2E11C0FC7F200D723BC /* TMLAPIClient.m in Sources */,
 				C4FCD3311C0FC7F200D723BC /* TMLDataTokenizer.m in Sources */,
 				C42581E91C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.m in Sources */,
+				C42582091C2121D400BAE9A9 /* UIMutableUserNotificationAction+TML.m in Sources */,
 				C4FCD3131C0FC7F200D723BC /* UITextView+TML.m in Sources */,
 				C4FCD2FD1C0FC7F200D723BC /* NSObject+TML.m in Sources */,
 				C4FCD31C1C0FC7F200D723BC /* TMLLanguageCaseRule.m in Sources */,
@@ -1191,6 +1221,7 @@
 				C435BD071C1696A5009A4091 /* UITableView+TML.m in Sources */,
 				C4FCD30B1C0FC7F200D723BC /* UISearchBar+TML.m in Sources */,
 				C4FCD2E31C0FC7F200D723BC /* TMLAPIResponse.m in Sources */,
+				C42582051C21214800BAE9A9 /* UITableViewRowAction+TML.m in Sources */,
 				C4FCD2F71C0FC7F200D723BC /* TMLLanguageSelectorViewController.m in Sources */,
 				C435BD131C190083009A4091 /* UIBarItem+TML.m in Sources */,
 				C4FCD31A1C0FC7F200D723BC /* TMLLanguageCase.m in Sources */,
@@ -1213,6 +1244,7 @@
 				C4FCD3151C0FC7F200D723BC /* UIViewController+TML.m in Sources */,
 				C4FCD2F51C0FC7F200D723BC /* TMLBundleManager.m in Sources */,
 				C4FCD3411C0FC7F200D723BC /* TMLTranslationKey.m in Sources */,
+				C42581F91C21086000BAE9A9 /* UILocalNotification+TML.m in Sources */,
 				C42BB37E1C1FD1EC005C0128 /* UIActionSheet+TML.m in Sources */,
 				C4FCD3221C0FC7F200D723BC /* TMLRulesEvaluator.m in Sources */,
 				C435BD231C1933BF009A4091 /* NSAttributedString+TML.m in Sources */,
