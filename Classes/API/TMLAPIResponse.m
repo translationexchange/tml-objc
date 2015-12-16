@@ -114,7 +114,7 @@ NSString * const TMLAPIResponseErrorCodeKey = @"code";
         language.locale = info[TMLAPIResponseLanguageLocaleKey];
         language.englishName = info[TMLAPIResponseLanguageEnglishNameKey];
         language.nativeName = info[TMLAPIResponseLanguageNativeNameKey];
-        language.rightToLeft = info[TMLAPIResponseLanguageRTLKey];
+        language.rightToLeft = [info[TMLAPIResponseLanguageRTLKey] boolValue];
         language.flagUrl = [NSURL URLWithString:info[TMLAPIResponseLanguageFlagURLKey]];
         language.status = info[TMLAPIResponseLanguageStatusKey];
         [languages addObject:language];
