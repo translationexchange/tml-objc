@@ -38,7 +38,7 @@ extern NSString * const TMLRegistryOptionsKeyName;
 
 @interface NSObject (TML)
 
-- (NSArray *)tmlLocalizedKeyPaths;
+- (NSSet *)tmlLocalizedKeyPaths;
 - (void)localizeWithTML;
 
 - (void)registerTMLTranslationKey:(TMLTranslationKey *)translationKey

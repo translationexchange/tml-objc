@@ -11,7 +11,7 @@
 
 @implementation UIApplicationShortcutItem (TML)
 
-- (NSArray *)tmlLocalizedKeyPaths {
+- (NSSet *)tmlLocalizedKeyPaths {
     NSMutableArray *keys = [[super tmlLocalizedKeyPaths] mutableCopy];
     if (keys == nil) {
         keys = [NSMutableArray array];

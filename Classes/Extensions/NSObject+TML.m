@@ -65,12 +65,12 @@ void ensureArrayIndex(NSMutableArray *array, NSInteger index) {
     method_exchangeImplementations(original, ours);
 }
 
-- (NSArray *)tmlLocalizedKeyPaths {
-    return @[@"accessibilityLabel", @"accessibilityHint", @"accessibilityValue"];
+- (NSSet *)tmlLocalizedKeyPaths {
+    return [NSSet setWithArray:@[@"accessibilityLabel", @"accessibilityHint", @"accessibilityValue"]];
 }
 
 - (void) localizeWithTML {
-    NSArray *keyPaths = [self tmlLocalizedKeyPaths];
+    NSSet *keyPaths = [self tmlLocalizedKeyPaths];
     for (id keyPath in keyPaths) {
         id localizableString = nil;
         @try {

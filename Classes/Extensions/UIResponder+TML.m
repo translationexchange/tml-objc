@@ -16,7 +16,7 @@
 
 - (NSArray *)tmlTranslationKeys {
     NSMutableArray *translationKeys = [NSMutableArray array];
-    NSArray *keyPaths = [self tmlLocalizedKeyPaths];
+    NSSet *keyPaths = [self tmlLocalizedKeyPaths];
     for (NSString *keyPath in keyPaths) {
         // first lookup the key in the registry
         NSDictionary *registry = [self tmlRegistry];

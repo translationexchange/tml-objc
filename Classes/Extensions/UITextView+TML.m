@@ -37,10 +37,10 @@
 @implementation UITextView (TML)
 
 
-- (NSArray *)tmlLocalizedKeyPaths {
-    NSMutableArray *paths = [[super tmlLocalizedKeyPaths] mutableCopy];
+- (NSSet *)tmlLocalizedKeyPaths {
+    NSMutableSet *paths = [[super tmlLocalizedKeyPaths] mutableCopy];
     if (paths == nil) {
-        paths = [NSMutableArray array];
+        paths = [NSMutableSet set];
     }
     NSDictionary *tokens;
     NSString *text = [self.attributedText tmlAttributedString:&tokens];
@@ -50,7 +50,7 @@
     else {
         [paths addObject:@"text"];
     }
-    return paths;
+    return [paths copy];
 }
 
 @end

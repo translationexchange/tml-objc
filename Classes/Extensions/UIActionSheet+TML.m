@@ -12,7 +12,7 @@
 
 @implementation UIActionSheet (TML)
 
-- (NSArray *)tmlLocalizedKeyPaths {
+- (NSSet *)tmlLocalizedKeyPaths {
     NSMutableArray *paths = [[super tmlLocalizedKeyPaths] mutableCopy];
     if (paths == nil) {
         paths = [NSMutableArray array];
