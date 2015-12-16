@@ -66,20 +66,20 @@ void ensureArrayIndex(NSMutableArray *array, NSInteger index) {
 }
 
 - (NSArray *)tmlLocalizedKeyPaths {
-    return nil;
+    return @[@"accessibilityLabel", @"accessibilityHint", @"accessibilityValue"];
 }
 
 - (void) localizeWithTML {
-    if ([self respondsToSelector:@selector(accessibilityLabel)] == YES) {
-        NSString *accessibilityLabel = self.accessibilityLabel;
-        if (accessibilityLabel != nil) {
-            self.accessibilityLabel = TMLLocalizedString(accessibilityLabel, @"accessibilityLabel");
-        }
-    }
-    
     NSArray *keyPaths = [self tmlLocalizedKeyPaths];
     for (id keyPath in keyPaths) {
-        id localizableString = [self valueForKey:keyPath];
+        id localizableString = nil;
+        @try {
+            localizableString = [self valueForKey:keyPath];
+        }
+        @catch (NSException *e) {
+            TMLDebug(@"Could not get value for keyPath '%@': %@", keyPath, e);
+        }
+        
         if ([localizableString isKindOfClass:[NSAttributedString class]] == YES) {
             NSDictionary *tokens = nil;
             NSString *tmlAttributedString = [localizableString tmlAttributedString:&tokens];
@@ -204,7 +204,6 @@ void ensureArrayIndex(NSMutableArray *array, NSInteger index) {
     }
 }
 
-
 - (NSMutableDictionary *)tmlRegistry {
     NSMutableDictionary *registry = objc_getAssociatedObject(self, @"_tmlRegistry");
     if (registry == nil) {
@@ -234,6 +233,8 @@ void ensureArrayIndex(NSMutableArray *array, NSInteger index) {
 }
 
 - (void)restoreTMLLocalizations {
+    self.accessibilityLanguage = [TML currentLocale];
+    
     NSMutableDictionary *registry = [self tmlRegistry];
     for (NSString *restorationKey in registry) {
         NSDictionary *payload = registry[restorationKey];
