@@ -106,7 +106,7 @@
 		C4FCD3221C0FC7F200D723BC /* TMLRulesEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2BD1C0FC7F200D723BC /* TMLRulesEvaluator.m */; };
 		C4FCD3231C0FC7F200D723BC /* TMLRulesParser.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2BE1C0FC7F200D723BC /* TMLRulesParser.h */; };
 		C4FCD3241C0FC7F200D723BC /* TMLRulesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2BF1C0FC7F200D723BC /* TMLRulesParser.m */; };
-		C4FCD3251C0FC7F200D723BC /* TML+NSLocalizedString.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2C01C0FC7F200D723BC /* TML+NSLocalizedString.h */; };
+		C4FCD3251C0FC7F200D723BC /* TML+NSLocalizedString.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2C01C0FC7F200D723BC /* TML+NSLocalizedString.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD3271C0FC7F200D723BC /* TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2C21C0FC7F200D723BC /* TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD3281C0FC7F200D723BC /* TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2C31C0FC7F200D723BC /* TML.m */; };
 		C4FCD3291C0FC7F200D723BC /* TMLGlobals.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2C41C0FC7F200D723BC /* TMLGlobals.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -904,6 +904,7 @@
 				C42582081C2121D400BAE9A9 /* UIMutableUserNotificationAction+TML.h in Headers */,
 				C4FA63841C1A5AF600E3ECB8 /* TMLTranslationActivationView.h in Headers */,
 				C4FCD2FA1C0FC7F200D723BC /* TMLViewController.h in Headers */,
+				C4FCD3251C0FC7F200D723BC /* TML+NSLocalizedString.h in Headers */,
 				C4FCD31D1C0FC7F200D723BC /* TMLLanguageContext.h in Headers */,
 				C4FCD2E21C0FC7F200D723BC /* TMLAPIResponse.h in Headers */,
 				C4FCD2E41C0FC7F200D723BC /* TMLAPISerializer.h in Headers */,
@@ -925,7 +926,6 @@
 				C4FCD3321C0FC7F200D723BC /* TMLDecorationTokenizer.h in Headers */,
 				C4FCD2F01C0FC7F200D723BC /* TMLAPIBundle.h in Headers */,
 				C4FCD33C1C0FC7F200D723BC /* TMLPipedToken.h in Headers */,
-				C4FCD3251C0FC7F200D723BC /* TML+NSLocalizedString.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
