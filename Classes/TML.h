@@ -305,6 +305,12 @@
 
 + (void) endBlockWithOptions;
 
+#pragma mark - Presenting View Controllers
+
++ (void)presentLanguageSelectorController;
+
++ (void)presentTranslatorViewControllerWithTranslationKey:(NSString *)translationKey;
+
 @end
 
 

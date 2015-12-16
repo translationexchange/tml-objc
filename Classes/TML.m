@@ -1072,9 +1072,19 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     }
 }
 
+#pragma mark - Presenting View Controllers
+
++ (void)presentTranslatorViewControllerWithTranslationKey:(NSString *)translationKey {
+    [[TML sharedInstance] presentTranslatorViewControllerWithTranslationKey:translationKey];
+}
+
 - (void)presentTranslatorViewControllerWithTranslationKey:(NSString *)translationKey {
     TMLTranslatorViewController *translator = [[TMLTranslatorViewController alloc] initWithTranslationKey:translationKey];
     [self presentViewController:translator];
+}
+
++ (void)presentLanguageSelectorController {
+    [[TML sharedInstance] presentLanguageSelectorController];
 }
 
 - (void)presentLanguageSelectorController {

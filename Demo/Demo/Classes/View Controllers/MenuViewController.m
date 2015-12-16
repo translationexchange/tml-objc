@@ -170,9 +170,14 @@
     [super tableView:tableView didSelectRowAtIndexPath:indexPath];
     if (indexPath.section == 2) {
         if (indexPath.row == 0) {
-            TMLLanguageSelectorViewController *vc = [[TMLLanguageSelectorViewController alloc] init];
-            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:vc];
-            [self presentViewController:navController animated:YES completion:nil];
+            if (self.presentedViewController != nil) {
+                [self dismissViewControllerAnimated:YES completion:^{
+                    [TML presentLanguageSelectorController];
+                }];
+            }
+            else {
+                [TML presentLanguageSelectorController];
+            }
         } else if (indexPath.row == 1) {
             TML *tml = [TML sharedInstance];
             tml.translationEnabled = !tml.translationEnabled;
@@ -180,9 +185,14 @@
         } else if (indexPath.row == 2) {
             [[TML sharedInstance] removeLocalizationData];
         } else if (indexPath.row == 3) {
-            TMLTranslatorViewController *translator = [[TMLTranslatorViewController alloc] init];
-            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:translator];
-            [self presentViewController:navController animated:YES completion:nil];
+            if (self.presentedViewController != nil) {
+                [self dismissViewControllerAnimated:YES completion:^{
+                    [TML presentTranslatorViewControllerWithTranslationKey:nil];
+                }];
+            }
+            else {
+                [TML presentTranslatorViewControllerWithTranslationKey:nil];
+            }
         }
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
