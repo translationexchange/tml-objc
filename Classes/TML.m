@@ -1093,21 +1093,38 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     [self presentViewController:languageSelector];
 }
 
+- (UIViewController *)defaultPresentingViewController {
+    UIViewController *presenter = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+    return presenter;
+}
+
+- (void)presentAlertController:(UIAlertController *)alertController {
+    [self _presentViewController:alertController];
+}
+
 - (void)presentViewController:(UIViewController *)viewController {
     UINavigationController *wrapper = [[UINavigationController alloc] initWithRootViewController:viewController];
-    UIViewController *presenter = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+    [self _presentViewController:wrapper];
+}
+
+- (void)_presentViewController:(UIViewController *)viewController {
+    UIViewController *presenter = [self defaultPresentingViewController];
     if (presenter.presentedViewController != nil) {
         [presenter dismissViewControllerAnimated:YES completion:^{
-            [presenter presentViewController:wrapper animated:YES completion:nil];
+            [presenter presentViewController:viewController animated:YES completion:nil];
         }];
     }
     else {
-        [presenter presentViewController:wrapper animated:YES completion:nil];
+        [presenter presentViewController:viewController animated:YES completion:nil];
     }
 }
 
 - (void)dismissPresentedViewController {
-    UIViewController *presenter = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+    [self dismissPresentedViewController:nil];
+}
+
+- (void)dismissPresentedViewController:(void (^)(void))completion {
+    UIViewController *presenter = [self defaultPresentingViewController];
     if (presenter.presentedViewController != nil) {
         [presenter dismissViewControllerAnimated:YES completion:nil];
     }
