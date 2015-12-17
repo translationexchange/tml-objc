@@ -106,6 +106,7 @@ NSString * const TMLBundleErrorsKey = @"errors";
     self.sourceURL = nil;
     self.availableLocales = nil;
     self.translationKeys = nil;
+    self.translations = nil;
 }
 
 - (void)reloadVersionInfo {

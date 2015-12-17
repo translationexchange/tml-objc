@@ -18,6 +18,10 @@
 #import "TMLApplication.h"
 #import "TMLAPIResponse.h"
 
+@interface TMLBundle()
+- (void)resetData;
+@end
+
 @interface TMLAPIBundle() {
     BOOL _needsSync;
     NSMutableArray *_syncErrors;
@@ -485,6 +489,7 @@
                                  errors:errors];
     
     if (_syncOperationCount == 0) {
+        [self resetData];
         if (_needsSync == YES) {
             [self performSelector:@selector(sync) withObject:nil afterDelay:3.0];
         }
