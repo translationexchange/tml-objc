@@ -26,7 +26,15 @@ NSString * const TMLAttributedStringStylePrefix = @"style";
                               if (attrs.count == 0) {
                                   return;
                               }
-                              NSString *token = [NSString stringWithFormat:@"%@%zd", TMLAttributedStringStylePrefix, ++count];
+                              NSString *token = nil;
+                              if (count == 0) {
+                                  token = TMLAttributedStringStylePrefix;
+                              }
+                              else {
+                                  token = [NSString stringWithFormat:@"%@%zd", TMLAttributedStringStylePrefix, count];
+                              }
+                              count++;
+                              
                               NSString *substring = [ourString substringWithRange:range];
                               NSString *trimmedString = [substring stringByTrimmingCharactersInSet:whiteSpaceCharSet];
                               NSRange subRange = [substring rangeOfString:trimmedString];

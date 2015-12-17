@@ -133,7 +133,7 @@ typedef NS_ENUM(NSInteger, TMLBundleErrorCode) {
  *
  *  @return List of translation keys
  */
-- (NSArray *)translationKeysForString:(NSString *)string
-                               locale:(NSString *)locale;
+- (NSArray *)translationKeysMatchingString:(NSString *)string
+                                    locale:(NSString *)locale;
 
 @end

@@ -11,8 +11,8 @@
 
 @implementation UIMutableUserNotificationAction (TML)
 
-- (NSSet *)tmlLocalizedKeyPaths {
-    NSMutableSet *keys = [[super tmlLocalizedKeyPaths] mutableCopy];
+- (NSSet *)tmlLocalizableKeyPaths {
+    NSMutableSet *keys = [[super tmlLocalizableKeyPaths] mutableCopy];
     if (keys == nil) {
         keys = [NSMutableSet set];
     }

@@ -337,8 +337,8 @@ NSString * const TMLBundleErrorsKey = @"errors";
 
 #pragma mark - Translation Keys
 
-- (NSArray *)translationKeysForString:(NSString *)string
-                               locale:(NSString *)locale
+- (NSArray *)translationKeysMatchingString:(NSString *)string
+                                    locale:(NSString *)locale
 {
     if (string == nil) {
         return nil;

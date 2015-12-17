@@ -283,7 +283,8 @@
 - (NSArray *) translationsForKey:(NSString *)translationKey
                           locale:(NSString *)locale;
 
-- (NSArray *)translationKeysForString:(NSString *)string locale:(NSString *)locale;
+- (NSArray *)translationKeysMatchingString:(NSString *)string
+                                    locale:(NSString *)locale;
 
 - (BOOL) isTranslationKeyRegistered:(NSString *)translationKey;
 

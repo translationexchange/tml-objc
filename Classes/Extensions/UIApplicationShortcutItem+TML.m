@@ -11,10 +11,10 @@
 
 @implementation UIApplicationShortcutItem (TML)
 
-- (NSSet *)tmlLocalizedKeyPaths {
-    NSMutableArray *keys = [[super tmlLocalizedKeyPaths] mutableCopy];
+- (NSSet *)tmlLocalizableKeyPaths {
+    NSMutableSet *keys = [[super tmlLocalizableKeyPaths] mutableCopy];
     if (keys == nil) {
-        keys = [NSMutableArray array];
+        keys = [NSMutableSet set];
     }
     [keys addObjectsFromArray:@[@"localizedTitle", @"localizedSubtitle"]];
     return [keys copy];

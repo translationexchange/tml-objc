@@ -12,10 +12,10 @@
 
 @implementation UIRefreshControl (TML)
 
-- (NSSet *)tmlLocalizedKeyPaths {
-    NSMutableArray *paths = [[super tmlLocalizedKeyPaths] mutableCopy];
+- (NSSet *)tmlLocalizableKeyPaths {
+    NSMutableSet *paths = [[super tmlLocalizableKeyPaths] mutableCopy];
     if (paths == nil) {
-        paths = [NSMutableArray array];
+        paths = [NSMutableSet set];
     }
     [paths addObject:@"attributedTitle"];
     return [paths copy];

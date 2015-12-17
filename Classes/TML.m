@@ -29,6 +29,7 @@
  */
 
 
+#import "NSAttributedString+TML.h"
 #import "NSObject+TML.h"
 #import "NSString+TML.h"
 #import "TML.h"
@@ -49,6 +50,7 @@
 #import "UIResponder+TML.h"
 #import "UIView+TML.h"
 
+#import "TML+NSLocalizedString.h"
 
 /**
  *  Returns localized version of the string argument.
@@ -116,7 +118,7 @@ id TMLLocalize(NSDictionary *options, NSString *string, ...) {
         }
         @catch (NSException *exception) {
             description = keyPath;
-            keyPath = description;
+            keyPath = nil;
         }
     }
     
@@ -965,20 +967,20 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 }
 
 - (void)presentActiveTranslationOptions {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:TMLLocalizedString(@"Choose")
-                                                                             message:TMLLocalizedString(@"What would you like to do?")
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Choose", @"Choose")
+                                                                             message:NSLocalizedString(@"What would you like to do?", @"What would you like to do?")
                                                                       preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *changeLocaleAction = [UIAlertAction actionWithTitle:TMLLocalizedString(@"Change Language") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *changeLocaleAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Change Language", @"Change Language") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self presentLanguageSelectorController];
     }];
     [alertController addAction:changeLocaleAction];
     
-    UIAlertAction *disableAction = [UIAlertAction actionWithTitle:TMLLocalizedString(@"Deactivate Translation") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *disableAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Deactivate Translation", @"Deactivate Translation") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self toggleActiveTranslation:disableAction];
     }];
     [alertController addAction:disableAction];
     
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:TMLLocalizedString(@"Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         [self dismissPresentedViewController];
     }];
     [alertController addAction:cancel];
@@ -1025,16 +1027,16 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     UIView *view = gestureRecognizer.view;
     CGPoint location = [gestureRecognizer locationInView:view];
     __block UIView *hitView = [view hitTest:location withEvent:nil];
-    __block NSArray *translationKeys = [hitView tmlTranslationKeys];
-    if (translationKeys.count == 0) {
+    __block NSSet *localizablePaths = [hitView tmlLocalizableKeyPaths];
+    if (localizablePaths.count == 0) {
         [hitView tmlIterateSubviewsWithBlock:^(UIView *view, BOOL *skip, BOOL *stop) {
             CGPoint location = [gestureRecognizer locationInView:view];
             if (CGRectContainsPoint(view.bounds, location) == NO) {
                 *skip = YES;
             }
             else {
-                translationKeys = [view tmlTranslationKeys];
-                if (translationKeys.count > 0) {
+                localizablePaths = [view tmlLocalizableKeyPaths];
+                if (localizablePaths.count > 0) {
                     hitView = view;
                     *stop = YES;
                 }
@@ -1042,35 +1044,129 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
         }];
     }
     
-    NSString *translationKey = nil;
-    if (translationKeys.count > 0) {
-        translationKey = [translationKeys firstObject];
+    [self translateLocalizablePropertiesOfView:hitView];
+}
+
+- (void)translateLocalizablePropertiesOfView:(UIView *)view {
+    if (view == nil) {
+        return;
     }
     
-    if (translationKey != nil && [self isTranslationKeyRegistered:translationKey] == YES) {
-        [self presentTranslatorViewControllerWithTranslationKey:translationKey];
+    NSDictionary *translationKeys = [view tmlTranslationKeysAndPaths];
+    if (translationKeys.count == 0) {
+        TMLDebug(@"Asked to translate view that has no localizable key paths");
+        return;
+    }
+    
+    NSArray *allKeyPaths = [translationKeys allKeys];
+    if (translationKeys.count == 1) {
+        [self translateView:view valueKeyPath:[allKeyPaths firstObject]];
     }
     else {
-        // TODO: In the event we couldn't find a translation key for a string - we should offer user to add it to the project
-        // as we can only make guesses about the string (label might be known, but the locale in which it is - isn't clear;
-        // it could be text presented by system widget, in the phone's native locale; it could be a string that was localized
-        // but we failed to match it to translation key for whateve reason
-//        NSMutableDictionary *payload = [NSMutableDictionary dictionary];
-//        TMLSource *source = nil;
-//        NSString *blockSource = (NSString *)[self blockOptionForKey:TMLSourceOptionName];
-//        if (blockSource != nil) {
-//            source = [self.application sourceForKey:blockSource];
-//        }
-//        if (source == nil) {
-//            source = [TMLSource defaultSource];
-//        }
-//        payload[source.key] = [NSSet setWithObject:translationKey];
-//        [self.apiClient registerTranslationKeysBySourceKey:payload completionBlock:^(BOOL success, NSError *error) {
-//            [self presentTranslatorViewControllerWithTranslationKey:translationKey];
-//        }];
-        TMLWarn(@"Could not find a string to localize");
+        // TODO: present chooser
     }
 }
+
+- (void)translateView:(UIView *)view valueKeyPath:(NSString *)keyPath {
+    NSString *key = [view tmlTranslationKeyForKeyPath:keyPath];
+    
+    if (key == nil || [self isTranslationKeyRegistered:key] == NO) {
+        id value = [view valueForKeyPath:keyPath];
+        NSString *valueString = nil;
+        if ([value isKindOfClass:[NSString class]] == YES) {
+            valueString = value;
+        }
+        else if ([value isKindOfClass:[NSAttributedString class]] == YES) {
+            valueString = [(NSAttributedString *)value tmlAttributedString:nil];
+        }
+        NSString *shortString = (valueString.length > 16) ? [[valueString substringToIndex:16] stringByAppendingString:@"..."] : valueString;
+        NSString *message = TMLLocalizedString(@"Could not find translation key for string {valueString}", @{@"valueString": shortString});
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:TMLLocalizedString(@"Add new string?")
+                                                                       message:message
+                                                                preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *acceptAction = [UIAlertAction actionWithTitle:TMLLocalizedString(@"Yes") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            NSMutableDictionary *payload = [NSMutableDictionary dictionary];
+            NSString *source = [self currentSource];
+            TMLTranslationKey *translationKey = [[TMLTranslationKey alloc] init];
+            translationKey.locale = [TML defaultLocale];
+            translationKey.label = valueString;
+            payload[source] = [NSSet setWithObject:translationKey];
+            TMLInfo(@"Registering new translation key '%@' for user translation", translationKey.key);
+            [self.apiClient registerTranslationKeysBySourceKey:payload completionBlock:^(BOOL success, NSError *error) {
+                [self presentTranslatorViewControllerWithTranslationKey:key];
+            }];
+        }];
+        [alert addAction:acceptAction];
+        
+        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:TMLLocalizedString(@"Cancel") style:UIAlertActionStyleCancel handler:nil];
+        [alert addAction:cancelAction];
+        [self presentAlertController:alert];
+    }
+    else {
+        [self presentTranslatorViewControllerWithTranslationKey:key];
+    }
+}
+
+//- (void)translateView:(UIView *)view valueKeyPath:(NSString *)keyPath translationKey:(NSString *)key {
+//    if ([self isTranslationKeyRegistered:key] == YES) {
+//        [self presentTranslatorViewControllerWithTranslationKey:key];
+//    }
+//    else {
+//        TMLInfo(@"Could not find translation key");
+//        UIAlertController *alert = [UIAlertController alertControllerWithTitle:TMLLocalizedString(@"Add new string?")
+//                                                                       message:TMLLocalizedString(@"Could not find this string in your project. Would you like to add a new string before translating it?")
+//                                                                preferredStyle:UIAlertControllerStyleAlert];
+//        [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+//            textField.placeholder = TMLLocalizedString(@"Original Locale");
+//        }];
+//        [alert addAction:[UIAlertAction actionWithTitle:TMLLocalizedString(@"Add") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+//            NSString *locale = [[alert.textFields firstObject].text lowercaseString];
+//            NSString *errorMessage = nil;
+//            BOOL found = NO;
+//            if (locale.length > 0) {
+//                NSArray *langs = [[self application] languages];
+//                for (TMLLanguage *lang in langs) {
+//                    if ([lang.locale.lowercaseString isEqualToString:locale] == YES) {
+//                        found = YES;
+//                        break;
+//                    }
+//                }
+//            }
+//            if (found == NO) {
+//                errorMessage = TMLLocalizedString(@"Please specify valid original locale of the string");
+//            }
+//            if (errorMessage != nil) {
+//                UIAlertController *errorAlert = [UIAlertController alertControllerWithTitle:TMLLocalizedString(@"Invalid Locale") message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
+//                [errorAlert addAction:[UIAlertAction actionWithTitle:TMLLocalizedString(@"OK") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+//                    [self presentAlertController:alert];
+//                }]];
+//                [self presentAlertController:errorAlert];
+//            }
+//            else {
+//                NSMutableDictionary *payload = [NSMutableDictionary dictionary];
+//                TMLSource *source = nil;
+//                NSString *blockSource = (NSString *)[self blockOptionForKey:TMLSourceOptionName];
+//                if (blockSource != nil) {
+//                    source = [self.application sourceForKey:blockSource];
+//                }
+//                if (source == nil) {
+//                    source = [TMLSource defaultSource];
+//                }
+//                TMLTranslationKey *newTranslationKey = [[TMLTranslationKey alloc] init];
+//                newTranslationKey.label = ...; // TODO: how do we find the string?!
+//                newTranslationKey.locale = locale;
+//                payload[source.key] = [NSSet setWithObject:newTranslationKey];
+//                [self.apiClient registerTranslationKeysBySourceKey:payload completionBlock:^(BOOL success, NSError *error) {
+//                    [self presentTranslatorViewControllerWithTranslationKey:translationKey];
+//                }];
+//            }
+//        }]];
+//        [alert addAction:[UIAlertAction actionWithTitle:TMLLocalizedString(@"Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+//            [self dismissPresentedViewController];
+//        }]];
+//        [self presentAlertController:alert];
+//    }
+//}
 
 #pragma mark - Presenting View Controllers
 
@@ -1295,11 +1391,11 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     return translations[translationKey];
 }
 
-- (NSArray *)translationKeysForString:(NSString *)string
-                               locale:(NSString *)locale
+- (NSArray *)translationKeysMatchingString:(NSString *)string
+                                    locale:(NSString *)locale
 {
-    NSArray *results = [self.currentBundle translationKeysForString:string
-                                                             locale:locale];
+    NSArray *results = [self.currentBundle translationKeysMatchingString:string
+                                                                  locale:locale];
     return results;
 }
 

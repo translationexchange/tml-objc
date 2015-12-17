@@ -10,6 +10,7 @@
 
 @interface UIResponder (TML)
 
-- (NSArray *)tmlTranslationKeys;
+- (NSDictionary *)tmlTranslationKeysAndPaths;
+- (NSString *)tmlTranslationKeyForKeyPath:(NSString *)keyPath;
 
 @end

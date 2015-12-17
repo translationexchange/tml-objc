@@ -11,6 +11,8 @@
 
 @implementation UIView (TML)
 
+#pragma mark - Localization
+
 - (void)restoreTMLLocalizations {
     [super restoreTMLLocalizations];
     for (UIView *subview in self.subviews) {
@@ -19,6 +21,7 @@
     [self setNeedsLayout];
 }
 
+#pragma mark - Supporting Methods
 - (id)tmlFindFirstResponder {
     if ([self isFirstResponder] == YES) {
         return self;

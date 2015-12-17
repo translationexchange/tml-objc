@@ -36,10 +36,10 @@
 
 @implementation UITextField (TML)
 
-- (NSSet *)tmlLocalizedKeyPaths {
-    NSMutableArray *paths = [[super tmlLocalizedKeyPaths] mutableCopy];
+- (NSSet *)tmlLocalizableKeyPaths {
+    NSMutableSet *paths = [[super tmlLocalizableKeyPaths] mutableCopy];
     if (paths == nil) {
-        paths = [NSMutableArray array];
+        paths = [NSMutableSet set];
     }
     NSDictionary *textTokens;
     NSString *text = [self.attributedText tmlAttributedString:&textTokens];

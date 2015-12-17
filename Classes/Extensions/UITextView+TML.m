@@ -37,8 +37,8 @@
 @implementation UITextView (TML)
 
 
-- (NSSet *)tmlLocalizedKeyPaths {
-    NSMutableSet *paths = [[super tmlLocalizedKeyPaths] mutableCopy];
+- (NSSet *)tmlLocalizableKeyPaths {
+    NSMutableSet *paths = [[super tmlLocalizableKeyPaths] mutableCopy];
     if (paths == nil) {
         paths = [NSMutableSet set];
     }
