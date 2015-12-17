@@ -149,11 +149,12 @@ NSString * const TMLBundleErrorsKey = @"errors";
 - (void)reloadTranslationKeysData {
     NSString *path = [self.path stringByAppendingPathComponent:TMLBundleTranslationKeysFilename];
     NSData *data = [NSData dataWithContentsOfFile:path];
-    NSArray *keysArray = [data tmlJSONObject];
+    NSArray *keysArray = [data tmlJSONObject][TMLAPIResponseResultsKey];
     if (keysArray == nil) {
         TMLError(@"Could not determine list of translation keys at path: %@", path);
         return;
     }
+    keysArray = [TMLAPISerializer materializeObject:keysArray withClass:[TMLTranslationKey class]];
     NSMutableDictionary *keys = [NSMutableDictionary dictionary];
     for (TMLTranslationKey *translationKey in keysArray) {
         keys[translationKey.key] = translationKey;
