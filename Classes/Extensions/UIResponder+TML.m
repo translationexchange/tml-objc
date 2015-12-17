@@ -11,6 +11,7 @@
 #import "TML.h"
 #import "TMLTranslationKey.h"
 #import "UIResponder+TML.h"
+#import "TMLTranslation.h"
 
 @implementation UIResponder (TML)
 
@@ -48,10 +49,35 @@
             }
             
             NSArray *matchingKeys = nil;
+            TML *tml = [TML sharedInstance];
             for (NSString *searchLabel in labelsToMatch) {
                 for (NSString *locale in localesToCheck) {
-                    matchingKeys = [[TML sharedInstance] translationKeysForString:searchLabel
-                                                                           locale:locale];
+                    matchingKeys = [tml translationKeysForString:searchLabel
+                                                          locale:locale];
+                    
+                    if (matchingKeys.count > 1) {
+                        NSString *currentLocale = [TML currentLocale];
+                        NSString *guessedKey = nil;
+                        for (NSString *key in matchingKeys) {
+                            NSArray *translations = [tml translationsForKey:key locale:currentLocale];
+                            if (translations.count > 0) {
+                                for (TMLTranslation *translation in translations) {
+                                    NSString *label = translation.label;
+                                    if ([labelsToMatch containsObject:label] == YES) {
+                                        guessedKey = key;
+                                        break;
+                                    }
+                                }
+                            }
+                            else if (translationKey == nil) {
+                                guessedKey = key;
+                            }
+                        }
+                        if (guessedKey != nil) {
+                            matchingKeys = @[guessedKey];
+                        }
+                    }
+                    
                     if (matchingKeys.count > 0) {
                         break;
                     }
