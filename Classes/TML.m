@@ -1083,7 +1083,7 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
             valueString = [attributedValue tmlAttributedString:nil];
             shortString = [attributedValue string];
         }
-        shortString = (shortString.length > 16) ? [[shortString substringToIndex:32] stringByAppendingString:@"..."] : valueString;
+        shortString = (shortString.length > 16) ? [[shortString substringToIndex:32] stringByAppendingString:@"..."] : shortString;
         NSString *message = TMLLocalizedString(@"Could not find translation key for string \"{valueString}\"", @{@"valueString": shortString});
         UIAlertController *alert = [UIAlertController alertControllerWithTitle:TMLLocalizedString(@"Add new string?")
                                                                        message:message
