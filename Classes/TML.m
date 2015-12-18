@@ -1093,7 +1093,12 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
             payload[source] = [NSSet setWithObject:translationKey];
             TMLInfo(@"Registering new translation key '%@' for user translation", translationKey.key);
             [self.apiClient registerTranslationKeysBySourceKey:payload completionBlock:^(BOOL success, NSError *error) {
-                [self presentTranslatorViewControllerWithTranslationKey:key];
+                if (success == YES) {
+                    [self presentTranslatorViewControllerWithTranslationKey:key];
+                }
+                else {
+                    [self showError:error];
+                }
             }];
         }];
         [alert addAction:acceptAction];
@@ -1167,6 +1172,17 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 //        [self presentAlertController:alert];
 //    }
 //}
+
+#pragma mark - Showing Errors
+
+- (void)showError:(NSError *)error {
+    UIAlertController *alert = [UIAlertController alertControllerWithTitle:TMLLocalizedString(@"Error")
+                                                                   message:[error localizedDescription]
+                                                            preferredStyle:UIAlertControllerStyleAlert];
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:TMLLocalizedString(@"OK") style:UIAlertActionStyleCancel handler:nil];
+    [alert addAction:okAction];
+    [self presentAlertController:alert];
+}
 
 #pragma mark - Presenting View Controllers
 
@@ -1286,7 +1302,7 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 - (NSString *)currentSource {
     NSString *source = (NSString *)[self blockOptionForKey:TMLSourceOptionName];
     if (source == nil) {
-        source = [[TMLSource defaultSource] sourceName];
+        source = [[TMLSource defaultSource] key];
     }
     return source;
 }
