@@ -1053,13 +1053,12 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     }
     
     NSDictionary *translationKeys = [view tmlTranslationKeysAndPaths];
-    if (translationKeys.count == 0) {
-        TMLDebug(@"Asked to translate view that has no localizable key paths");
-        return;
+    NSArray *allKeyPaths = [translationKeys allKeys];
+    if (allKeyPaths.count == 0) {
+        allKeyPaths = [[view tmlLocalizableKeyPaths] allObjects];
     }
     
-    NSArray *allKeyPaths = [translationKeys allKeys];
-    if (translationKeys.count == 1) {
+    if (allKeyPaths.count == 1) {
         [self translateView:view valueKeyPath:[allKeyPaths firstObject]];
     }
     else {
