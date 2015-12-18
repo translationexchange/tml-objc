@@ -85,11 +85,11 @@
         NSDictionary *tokens = nil;
         NSString *tmlAttributedString = [[self attributedTitleForState:[state integerValue]] tmlAttributedString:&tokens];
         if ([tmlAttributedString tmlContainsDecoratedTokens] == YES) {
-            NSString *key = [NSString stringWithFormat:@"attributedTitle.%@", state];
+            NSString *key = [NSString stringWithFormat:@"attributedTitleForState%@", state];
             [self setAttributedTitle:TMLLocalizedAttributedString(tmlAttributedString, tokens, key) forState:[state integerValue]];
         }
         else {
-            NSString *key = [NSString stringWithFormat:@"title.%@", state];
+            NSString *key = [NSString stringWithFormat:@"titleForState%@", state];
             [self setTitle:TMLLocalizedString(tmlAttributedString, key) forState:[state integerValue]];
         }
     }
