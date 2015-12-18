@@ -243,20 +243,45 @@ void ensureArrayIndex(NSMutableArray *array, NSInteger index) {
             continue;
         }
         TMLTranslationKey *translationKey = payload[TMLRegistryTranslationKeyName];
-        if (translationKey == nil) {
+        if (translationKey == nil
+            || translationKey.label == nil) {
             continue;
         }
         NSDictionary *tokens = payload[TMLRegistryTokensKeyName];
         NSDictionary *options = payload[TMLRegistryOptionsKeyName];
-        id result = [[[TML sharedInstance] currentLanguage] translate:translationKey.label
-                                                          description:translationKey.keyDescription
-                                                               tokens:tokens
-                                                              options:options];
-        @try {
-            [self setValue:result forKeyPath:restorationKey];
+        TML *tml = [TML sharedInstance];
+        id result = [[tml currentLanguage] translate:translationKey.label
+                                         description:translationKey.keyDescription
+                                              tokens:tokens
+                                             options:options];
+        BOOL success = NO;
+        if (result != nil) {
+            @try {
+                id currentValue = [self valueForKey:restorationKey];
+                if ([currentValue isKindOfClass:[NSAttributedString class]] == YES
+                    && [result isKindOfClass:[NSString class]] == YES) {
+                    TMLWarn(@"Expected attributed string, but got regular string");
+                    result = [[NSAttributedString alloc] initWithString:result attributes:nil];
+                }
+                [self setValue:result forKeyPath:restorationKey];
+                success = YES;
+            }
+            @catch (NSException *exception) {
+                TMLError(@"Error restoring translation key '%@' with restorationKey '%@': %@", translationKey.key, restorationKey, exception);
+            }
         }
-        @catch (NSException *exception) {
-            TMLError(@"Error restoring translation key: '%@' with restorationKey: '%@': %@", translationKey.key, restorationKey, exception);
+        
+        if (success == NO) {
+            result = [[tml defaultLanguage] translate:translationKey.label
+                                          description:translationKey.keyDescription
+                                               tokens:tokens
+                                              options:options];
+            @try {
+                [self setValue:result forKeyPath:restorationKey];
+            }
+            @catch (NSException *exception) {
+                TMLError(@"Error restoring defaulting translation key '%@' with restorationKey '%@': %@", translationKey.key, restorationKey, exception);
+            }
         }
     }
 }
