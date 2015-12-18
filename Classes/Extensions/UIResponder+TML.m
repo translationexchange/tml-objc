@@ -89,13 +89,10 @@
                 }
                 
                 if (matchingKeys.count > 0) {
+                    [translationKeys addObjectsFromArray:matchingKeys];
                     break;
                 }
             }
-        }
-        
-        if (matchingKeys.count > 0) {
-            [translationKeys addObjectsFromArray:matchingKeys];
         }
     }
     return [translationKeys firstObject];
