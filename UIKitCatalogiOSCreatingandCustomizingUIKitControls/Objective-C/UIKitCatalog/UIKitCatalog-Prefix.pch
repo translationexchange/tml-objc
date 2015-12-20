@@ -8,4 +8,6 @@
     @import UIKit;
     @import Foundation;
     #import "UIColor+AAPLApplicationSpecific.h"
+    #import <TMLKit/TMLKit.h>
+    #import <TMLKit/TML+NSLocalizedString.h>
 #endif

@@ -7,16 +7,6 @@
 */
 
 #import "AAPLAppDelegate.h"
-#import <TMLKit/TMLKit.h>
-
-#import "TMLPrivateConfig.h"
-
-#ifndef TMLAccessToken
-#define TMLAccessToken @""
-#endif
-#ifndef TMLApplicationKey
-#define TMLApplicationKey @""
-#endif
 
 @interface AAPLAppDelegate() <UISplitViewControllerDelegate>
 @end
@@ -26,8 +16,6 @@
 #pragma mark - UIApplicationDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    [TML sharedInstanceWithApplicationKey:TMLApplicationKey
-                              accessToken:TMLAccessToken];
     UISplitViewController *splitViewController = (UISplitViewController *)self.window.rootViewController;
     
     splitViewController.delegate = self;

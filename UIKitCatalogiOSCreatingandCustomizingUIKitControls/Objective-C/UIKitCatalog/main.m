@@ -10,7 +10,18 @@
 
 #import "AAPLAppDelegate.h"
 
+#import "TMLPrivateConfig.h"
+
+#ifndef TMLAccessToken
+#define TMLAccessToken @""
+#endif
+#ifndef TMLApplicationKey
+#define TMLApplicationKey @""
+#endif
+
 int main(int argc, char *argv[]) {
+    [TML sharedInstanceWithApplicationKey:TMLApplicationKey
+                              accessToken:TMLAccessToken];
     @autoreleasepool {
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AAPLAppDelegate class]));
     }
