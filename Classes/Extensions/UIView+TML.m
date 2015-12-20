@@ -37,8 +37,8 @@
 
 - (void)tmlIterateSubviewsWithBlock:(void (^)(UIView *view, BOOL *skip, BOOL *stop))block {
     __block BOOL shouldStop = NO;
-    __block BOOL shouldSkip = NO;
     for (UIView *subview in self.subviews) {
+        __block BOOL shouldSkip = NO;
         block(subview, &shouldSkip, &shouldStop);
         if (shouldStop == YES) {
             break;
