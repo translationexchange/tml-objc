@@ -1038,7 +1038,7 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
                 localizablePaths = [view tmlLocalizableKeyPaths];
                 if (localizablePaths.count > 0) {
                     hitView = view;
-                    *stop = YES;
+//                    *stop = YES;
                 }
             }
         }];
