@@ -236,7 +236,11 @@
 }
 
 - (NSArray *) decorationTokenNames {
-    TMLDecorationTokenizer *tokenizer = [[TMLDecorationTokenizer alloc] initWithLabel:self.label];
+    return [self decorationTokenNamesInLabel:self.label];
+}
+
+- (NSArray *) decorationTokenNamesInLabel:(NSString *)label {
+    TMLDecorationTokenizer *tokenizer = [[TMLDecorationTokenizer alloc] initWithLabel:label];
     return [tokenizer tokenNames];
 }
 
@@ -255,11 +259,11 @@
         TMLDecorationTokenizer *tokenizer = nil;
         if ([tokenFormat isEqualToString:TMLAttributedTokenFormatString]) {
             tokenizer = [[TMLAttributedDecorationTokenizer alloc] initWithLabel:translatedLabel
-                                                           andAllowedTokenNames:[self decorationTokenNames]];
+                                                           andAllowedTokenNames:[self decorationTokenNamesInLabel:translatedLabel]];
         }
         else if ([tokenFormat isEqualToString:TMLHTMLTokenFormatString] == YES) {
             tokenizer = [[TMLHtmlDecorationTokenizer alloc] initWithLabel:translatedLabel
-                                                     andAllowedTokenNames:[self decorationTokenNames]];
+                                                     andAllowedTokenNames:[self decorationTokenNamesInLabel:translatedLabel]];
         }
         if (tokenizer != nil) {
             return [tokenizer substituteTokensInLabelUsingData:tokens];
