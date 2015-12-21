@@ -891,6 +891,16 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 
 #pragma mark - Gesture Recognizer
 
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    if (gestureRecognizer == _inlineTranslationGestureRecognizer
+        || gestureRecognizer == _translationActivationGestureRecognizer) {
+        return YES;
+    }
+    return NO;
+}
+
 - (void) setupTranslationActivationGestureRecognizer {
     if (_translationActivationGestureRecognizer.view != nil) {
         return;
