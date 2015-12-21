@@ -1053,6 +1053,8 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     [self translateLocalizablePropertiesOfView:hitView];
 }
 
+#pragma mark - Translating view properties
+
 - (void)translateLocalizablePropertiesOfView:(UIView *)view {
     if (view == nil) {
         return;
@@ -1088,99 +1090,59 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
             valueString = [attributedValue tmlAttributedString:nil];
             shortString = [attributedValue string];
         }
-        shortString = (shortString.length > 16) ? [[shortString substringToIndex:32] stringByAppendingString:@"..."] : shortString;
-        NSString *message = TMLLocalizedString(@"Could not find translation key for string \"{valueString}\"", @{@"valueString": shortString});
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:TMLLocalizedString(@"Add new string?")
-                                                                       message:message
-                                                                preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *acceptAction = [UIAlertAction actionWithTitle:TMLLocalizedString(@"Yes") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            NSMutableDictionary *payload = [NSMutableDictionary dictionary];
-            NSString *source = [self currentSource];
-            TMLTranslationKey *translationKey = [[TMLTranslationKey alloc] init];
-            translationKey.locale = [TML defaultLocale];
-            translationKey.label = valueString;
-            payload[source] = [NSSet setWithObject:translationKey];
-            TMLInfo(@"Registering new translation key '%@' for user translation", translationKey.key);
-            [self.apiClient registerTranslationKeysBySourceKey:payload completionBlock:^(BOOL success, NSError *error) {
-                if (success == YES) {
-                    [self presentTranslatorViewControllerWithTranslationKey:key];
-                }
-                else {
-                    [self showError:error];
-                }
-            }];
-        }];
-        [alert addAction:acceptAction];
         
-        UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:TMLLocalizedString(@"Cancel") style:UIAlertActionStyleCancel handler:nil];
-        [alert addAction:cancelAction];
-        [self presentAlertController:alert];
+        TMLTranslationKey *translationKey = [[TMLTranslationKey alloc] init];
+        translationKey.locale = [TML defaultLocale];
+        translationKey.label = valueString;
+        
+        NSDictionary *tokens = nil;
+        if ([value isKindOfClass:[NSAttributedString class]] == YES) {
+            [(NSAttributedString *)value tmlAttributedString:&tokens];
+        }
+        
+        if ([[TML sharedInstance] isTranslationKeyRegistered:translationKey.key] == YES) {
+            if ([view isTMLTranslationKeyRegisteredForKeyPath:keyPath] == NO) {
+                [view registerTMLTranslationKey:translationKey tokens:tokens options:nil restorationKey:keyPath];
+            }
+            [self presentTranslatorViewControllerWithTranslationKey:key];
+        }
+        else {
+            shortString = (shortString.length > 16) ? [[shortString substringToIndex:32] stringByAppendingString:@"..."] : shortString;
+            NSString *message = TMLLocalizedString(@"Could not find translation key for string \"{value}\"", @{@"value": shortString});
+            UIAlertController *alert = [UIAlertController alertControllerWithTitle:TMLLocalizedString(@"Add new string?")
+                                                                           message:message
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+            UIAlertAction *acceptAction = [UIAlertAction actionWithTitle:TMLLocalizedString(@"Yes") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+                NSMutableDictionary *payload = [NSMutableDictionary dictionary];
+                NSString *source = [self currentSource];
+                payload[source] = [NSSet setWithObject:translationKey];
+                TMLInfo(@"Registering new translation key '%@' for user translation", translationKey.key);
+                [self.apiClient registerTranslationKeysBySourceKey:payload completionBlock:^(BOOL success, NSError *error) {
+                    if (success == YES) {
+                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.33 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                            [view registerTMLTranslationKey:translationKey tokens:tokens options:nil restorationKey:keyPath];
+                            [self presentTranslatorViewControllerWithTranslationKey:key];
+                        });
+                    }
+                    else {
+                        [self showError:error];
+                    }
+                }];
+            }];
+            [alert addAction:acceptAction];
+            
+            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:TMLLocalizedString(@"Cancel") style:UIAlertActionStyleCancel handler:nil];
+            [alert addAction:cancelAction];
+            [self presentAlertController:alert];
+        }
     }
     else {
+        if (view.tmlRegistry.count == 0) {
+            [view localizeWithTML];
+        }
         [self presentTranslatorViewControllerWithTranslationKey:key];
     }
 }
-
-//- (void)translateView:(UIView *)view valueKeyPath:(NSString *)keyPath translationKey:(NSString *)key {
-//    if ([self isTranslationKeyRegistered:key] == YES) {
-//        [self presentTranslatorViewControllerWithTranslationKey:key];
-//    }
-//    else {
-//        TMLInfo(@"Could not find translation key");
-//        UIAlertController *alert = [UIAlertController alertControllerWithTitle:TMLLocalizedString(@"Add new string?")
-//                                                                       message:TMLLocalizedString(@"Could not find this string in your project. Would you like to add a new string before translating it?")
-//                                                                preferredStyle:UIAlertControllerStyleAlert];
-//        [alert addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
-//            textField.placeholder = TMLLocalizedString(@"Original Locale");
-//        }];
-//        [alert addAction:[UIAlertAction actionWithTitle:TMLLocalizedString(@"Add") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-//            NSString *locale = [[alert.textFields firstObject].text lowercaseString];
-//            NSString *errorMessage = nil;
-//            BOOL found = NO;
-//            if (locale.length > 0) {
-//                NSArray *langs = [[self application] languages];
-//                for (TMLLanguage *lang in langs) {
-//                    if ([lang.locale.lowercaseString isEqualToString:locale] == YES) {
-//                        found = YES;
-//                        break;
-//                    }
-//                }
-//            }
-//            if (found == NO) {
-//                errorMessage = TMLLocalizedString(@"Please specify valid original locale of the string");
-//            }
-//            if (errorMessage != nil) {
-//                UIAlertController *errorAlert = [UIAlertController alertControllerWithTitle:TMLLocalizedString(@"Invalid Locale") message:errorMessage preferredStyle:UIAlertControllerStyleAlert];
-//                [errorAlert addAction:[UIAlertAction actionWithTitle:TMLLocalizedString(@"OK") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-//                    [self presentAlertController:alert];
-//                }]];
-//                [self presentAlertController:errorAlert];
-//            }
-//            else {
-//                NSMutableDictionary *payload = [NSMutableDictionary dictionary];
-//                TMLSource *source = nil;
-//                NSString *blockSource = (NSString *)[self blockOptionForKey:TMLSourceOptionName];
-//                if (blockSource != nil) {
-//                    source = [self.application sourceForKey:blockSource];
-//                }
-//                if (source == nil) {
-//                    source = [TMLSource defaultSource];
-//                }
-//                TMLTranslationKey *newTranslationKey = [[TMLTranslationKey alloc] init];
-//                newTranslationKey.label = ...; // TODO: how do we find the string?!
-//                newTranslationKey.locale = locale;
-//                payload[source.key] = [NSSet setWithObject:newTranslationKey];
-//                [self.apiClient registerTranslationKeysBySourceKey:payload completionBlock:^(BOOL success, NSError *error) {
-//                    [self presentTranslatorViewControllerWithTranslationKey:translationKey];
-//                }];
-//            }
-//        }]];
-//        [alert addAction:[UIAlertAction actionWithTitle:TMLLocalizedString(@"Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-//            [self dismissPresentedViewController];
-//        }]];
-//        [self presentAlertController:alert];
-//    }
-//}
 
 #pragma mark - Showing Errors
 
