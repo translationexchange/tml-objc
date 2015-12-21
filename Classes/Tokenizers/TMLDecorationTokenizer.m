@@ -67,6 +67,23 @@
     return result;
 }
 
++ (NSString *)applyToken:(NSString *)token
+                toString:(NSString *)string
+               withRange:(NSRange)range
+{
+    NSMutableString *newString = [NSMutableString string];
+    if (range.location > 0) {
+        [newString appendString:[string substringToIndex:range.location]];
+    }
+    [newString appendFormat:@"[%@:", token];
+    [newString appendString:[string substringWithRange:range]];
+    [newString appendString:@"]"];
+    if (range.location + range.length < string.length) {
+        [newString appendString:[string substringFromIndex:range.location + range.length]];
+    }
+    return [newString copy];
+}
+
 - (id) initWithLabel: (NSString *) newLabel {
     return [self initWithLabel:newLabel andAllowedTokenNames:nil];
 }

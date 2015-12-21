@@ -83,6 +83,8 @@
 
 + (NSString *)formatString:(NSString *)string withToken:(NSString *)token;
 
++ (NSString *)applyToken:(NSString *)token toString:(NSString *)string withRange:(NSRange)range;
+
 - (id) initWithLabel: (NSString *) newLabel;
 
 - (id) initWithLabel: (NSString *) newLabel andAllowedTokenNames: (NSArray *) newAllowedTokenNames;

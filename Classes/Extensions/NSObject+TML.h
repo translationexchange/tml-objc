@@ -46,6 +46,8 @@ extern NSString * const TMLRegistryOptionsKeyName;
                           options:(NSDictionary *)options
                    restorationKey:(NSString *)restorationKey;
 
+- (BOOL)isTMLTranslationKeyRegisteredForKeyPath:(NSString *)keyPath;
+
 - (void)restoreTMLLocalizations;
 
 - (NSMutableDictionary *)tmlRegistry;

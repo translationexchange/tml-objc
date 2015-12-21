@@ -41,18 +41,14 @@
     if (paths == nil) {
         paths = [NSMutableSet set];
     }
-    NSDictionary *textTokens;
-    NSString *text = [self.attributedText tmlAttributedString:&textTokens];
-    if ([text tmlContainsDecoratedTokens] == YES) {
+    if (self.attributedText.length > 0) {
         [paths addObject:@"attributedText"];
     }
     else {
         [paths addObject:@"text"];
     }
     
-    NSDictionary *placeholderTokens;
-    NSString *placeholder = [self.attributedPlaceholder tmlAttributedString:&placeholderTokens];
-    if ([placeholder tmlContainsDecoratedTokens] == YES) {
+    if (self.attributedPlaceholder.length > 0) {
         [paths addObject:@"attributedPlaceholder"];
     }
     else {

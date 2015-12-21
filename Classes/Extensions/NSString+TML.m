@@ -100,6 +100,16 @@
     return [TMLDecorationTokenizer stringContainsApplicableTokens:self];
 }
 
+- (NSArray *)tmlDataTokens {
+    TMLDataTokenizer *tokenizer = [[TMLDataTokenizer alloc] initWithLabel:self];
+    return tokenizer.tokenNames;
+}
+
+- (NSArray *)tmlDecoratedTokens {
+    TMLDecorationTokenizer *tokenizer = [[TMLDecorationTokenizer alloc] initWithLabel:self];
+    return tokenizer.tokenNames;
+}
+
 #pragma mark - Utils
 
 - (NSString *)tmlMD5 {

@@ -12,8 +12,11 @@
 NSString * const TMLAttributedStringStylePrefix = @"style";
 
 @implementation NSAttributedString (TML)
-
 - (NSString *)tmlAttributedString:(NSDictionary **)tokens {
+    return [self tmlAttributedString:tokens implicit:YES];
+}
+
+- (NSString *)tmlAttributedString:(NSDictionary **)tokens implicit:(BOOL)implicit {
     NSString *ourString = [self string];
     NSMutableDictionary *parts = [NSMutableDictionary dictionary];
     NSCharacterSet *whiteSpaceCharSet = [NSCharacterSet whitespaceCharacterSet];
@@ -40,8 +43,12 @@ NSString * const TMLAttributedStringStylePrefix = @"style";
                               NSRange subRange = [substring rangeOfString:trimmedString];
                               subRange.location += range.location;
                               
-                              NSString *tokenizedString = [TMLDecorationTokenizer formatString:[ourString substringWithRange:subRange]
-                                                                                     withToken:token];
+                              NSString *tokenizedString = [ourString substringWithRange:subRange];
+                              if (implicit == NO
+                                  || !(range.location == 0 && range.length == self.length)) {
+                                  tokenizedString = [TMLDecorationTokenizer formatString:tokenizedString
+                                                                               withToken:token];
+                              }
                               NSValue *rangeValue = [NSValue valueWithRange:subRange];
                               parts[rangeValue] = tokenizedString;
                               styleTokens[token] = @{@"attributes": attrs};

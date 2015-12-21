@@ -42,9 +42,7 @@
     if (paths == nil) {
         paths = [NSMutableSet set];
     }
-    NSDictionary *tokens;
-    NSString *text = [self.attributedText tmlAttributedString:&tokens];
-    if ([text tmlContainsDecoratedTokens] == YES) {
+    if (self.attributedText.length > 0) {
         [paths addObject:@"attributedText"];
     }
     else {

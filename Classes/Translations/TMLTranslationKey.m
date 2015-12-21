@@ -157,7 +157,12 @@
 }
 
 - (NSString *) description {
-    return [NSString stringWithFormat:@"<%@:%@: %p>", [self class], self.label, self];
+    NSString *shortLabel = self.label;
+    NSInteger max = 24;
+    if (shortLabel.length > max) {
+        shortLabel = [[shortLabel substringToIndex:max-3] stringByAppendingString:@"..."];
+    }
+    return [NSString stringWithFormat:@"<%@:%@:%@: %p>", [self class], self.locale, shortLabel, self];
 }
 
 #pragma mark - Translations
@@ -205,26 +210,55 @@
                             tokens:(NSDictionary *)tokens
                            options:(NSDictionary *)options
 {
-    if ([language.locale isEqualToString:self.locale]) {
-        return [self substituteTokensInLabel:self.label
-                                      tokens:tokens
-                                    language:language
-                                     options:options];
+    NSString *ourLocale = self.locale;
+    NSString *targetLocale = language.locale;
+    NSString *label = self.label;
+    
+    if ([targetLocale isEqualToString:ourLocale] == NO) {
+        TMLTranslation *translation = [self findFirstAcceptableTranslationForTokens:tokens
+                                                                         inLanguage:language];
+        
+        if (translation) {
+            label = translation.label;
+        }
+        else {
+            TMLApplication *application = [[TML sharedInstance] application];
+            language = (TMLLanguage *)[application languageForLocale:self.locale];
+        }
     }
     
-    TMLTranslation *translation = [self findFirstAcceptableTranslationForTokens:tokens
-                                                                     inLanguage:language];
-    
-    if (translation) {
-        return [self substituteTokensInLabel:translation.label
-                                      tokens:tokens
-                                    language:language
-                                     options:options];
+    // We may have a label with an implied decorated token,
+    // that is, a list of tokens contains an extra decorated token that is not mentioned
+    // in the string and that is to be applied to the entire string...
+    // In that case we need to make that token explicit prior to making any substitutions
+    NSMutableArray *givenTokens = [[tokens allKeys] mutableCopy];
+    NSArray *decoratedTokens = [label tmlDecoratedTokens];
+    NSArray *dataTokens = [label tmlDataTokens];
+    NSMutableArray *tokensInLabel = [NSMutableArray array];
+    if (dataTokens.count > 0) {
+        [tokensInLabel addObjectsFromArray:dataTokens];
+    }
+    if (decoratedTokens.count > 0) {
+        [tokensInLabel addObjectsFromArray:decoratedTokens];
+    }
+    for (NSString *token in tokensInLabel) {
+        [givenTokens removeObject:token];
     }
     
-    TMLApplication *application = [[TML sharedInstance] application];
-    language = (TMLLanguage *)[application languageForLocale:self.locale];
-    return [self substituteTokensInLabel:self.label
+    if (givenTokens.count > 0) {
+        for (NSString *remainingToken in givenTokens) {
+            id tokenValue = tokens[remainingToken];
+            if ([tokenValue isKindOfClass:[NSDictionary class]] == YES
+                && tokenValue[@"attributes"] != nil) {
+                label = [TMLDecorationTokenizer applyToken:remainingToken
+                                                  toString:label
+                                                 withRange:NSMakeRange(0, label.length)];
+                break;
+            }
+        }
+    }
+
+    return [self substituteTokensInLabel:label
                                   tokens:tokens
                                 language:language
                                  options:options];

@@ -11,5 +11,6 @@
 @interface NSAttributedString (TML)
 
 - (NSString *)tmlAttributedString:(NSDictionary **)tokens;
+- (NSString *)tmlAttributedString:(NSDictionary **)tokens implicit:(BOOL)implicit;
 
 @end
