@@ -394,7 +394,7 @@
                                  NSError *fileError;
                                  if (translations != nil) {
                                      [self setTranslations:translations forLocale:locale];
-                                     NSDictionary *jsonObj = @{TMLAPIResponseResultsKey: response.userInfo};
+                                     NSDictionary *jsonObj = @{TMLAPIResponseResultsKey: response.results};
                                      NSData *writeData = [[jsonObj tmlJSONString] dataUsingEncoding:NSUTF8StringEncoding];
                                      NSString *relativePath = [locale stringByAppendingPathComponent:TMLBundleTranslationsFilename];
                                      
