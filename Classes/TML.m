@@ -345,6 +345,9 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
         }
     }
     [self setupTranslationActivationGestureRecognizer];
+    if (self.translationEnabled == YES) {
+        [self setupInlineTranslationGestureRecognizer];
+    }
 }
 
 #pragma mark - Bundles
@@ -872,7 +875,7 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
         [self changeLocale:[TML defaultLocale] completionBlock:nil];
     }
     self.configuration.translationEnabled = translationEnabled;
-    if (translationEnabled == YES) {
+    if (translationEnabled == YES && [[UIApplication sharedApplication] keyWindow] != nil) {
         [self setupInlineTranslationGestureRecognizer];
     }
     else {
@@ -931,15 +934,8 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     if (_inlineTranslationGestureRecognizer.view != nil) {
         return;
     }
-    id<TMLDelegate>delegate = self.delegate;
-    UIGestureRecognizer *recognizer = nil;
-    if ([delegate respondsToSelector:@selector(gestureRecognizerForInlineTranslation)] == YES) {
-        recognizer = [[delegate gestureRecognizerForInlineTranslation] copy];
-    }
-    // default recognizer
-    if (recognizer == nil) {
-        recognizer = [self defaultGestureRecognizerForInlineTranslation];
-    }
+    
+    UIGestureRecognizer *recognizer = [self createGestureRecognizerForInlineTranslation];
     [recognizer addTarget:self action:@selector(inlineTranslationGestureRecognized:)];
     recognizer.delegate = self;
     _inlineTranslationGestureRecognizer = recognizer;
@@ -953,6 +949,19 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     }
     [_inlineTranslationGestureRecognizer.view removeGestureRecognizer:_inlineTranslationGestureRecognizer];
     _inlineTranslationGestureRecognizer = nil;
+}
+
+- (UIGestureRecognizer *)createGestureRecognizerForInlineTranslation {
+    id<TMLDelegate>delegate = self.delegate;
+    UIGestureRecognizer *recognizer = nil;
+    if ([delegate respondsToSelector:@selector(gestureRecognizerForInlineTranslation)] == YES) {
+        recognizer = [[delegate gestureRecognizerForInlineTranslation] copy];
+    }
+    // default recognizer
+    if (recognizer == nil) {
+        recognizer = [self defaultGestureRecognizerForInlineTranslation];
+    }
+    return recognizer;
 }
 
 - (UIGestureRecognizer *)defaultGestureRecognizerForTranslationActivation {
