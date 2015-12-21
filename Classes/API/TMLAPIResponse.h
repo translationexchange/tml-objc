@@ -47,7 +47,7 @@ extern NSString * const TMLAPIResponseErrorCodeKey;
 
 @class TMLTranslation, TMLLanguage;
 
-@interface TMLAPIResponse : NSObject
+@interface TMLAPIResponse : NSObject <NSCopying>
 
 #pragma mark - Init
 
@@ -60,9 +60,19 @@ extern NSString * const TMLAPIResponseErrorCodeKey;
 - (NSArray *) resultsAsLanguages;
 - (NSArray *)resultsAsTranslationKeys;
 
+#pragma mark - Pagination
+@property (readonly, nonatomic, getter=isPaginated) BOOL paginated;
+@property (readonly, nonatomic) NSInteger currentPage;
+@property (readonly, nonatomic) NSInteger totalPages;
+@property (readonly, nonatomic) NSInteger resultsPerPage;
+@property (readonly, nonatomic) NSInteger totalResults;
+
 #pragma mark - Status
 @property (readonly, nonatomic) NSString *status;
 @property (readonly, nonatomic, getter=isSuccessfulResponse) BOOL successfulResponse;
+
+#pragma mark - Merging
+- (TMLAPIResponse *)responseByMergingWithResponse:(TMLAPIResponse *)response;
 
 #pragma mark - Errors
 @property (readonly, nonatomic) NSError *error;

@@ -36,6 +36,7 @@ extern NSString * const TMLAPIOptionsLocale;
 extern NSString * const TMLAPIOptionsIncludeAll;
 extern NSString * const TMLAPIOptionsClientName;
 extern NSString * const TMLAPIOptionsIncludeDefinition;
+extern NSString * const TMLAPIOptionsPage;
 
 /**
  *  Handler for TML's API responses. A successful response would normally 

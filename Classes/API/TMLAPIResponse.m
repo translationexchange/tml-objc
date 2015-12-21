@@ -66,6 +66,14 @@ NSString * const TMLAPIResponseErrorCodeKey = @"code";
     return self;
 }
 
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone {
+    TMLAPIResponse *copy = [[TMLAPIResponse alloc] init];
+    copy.userInfo = self.userInfo;
+    return copy;
+}
+
 #pragma mark - Results
 - (id)results {
     return self.userInfo[TMLAPIResponseResultsKey];
@@ -136,6 +144,40 @@ NSString * const TMLAPIResponseErrorCodeKey = @"code";
     return results;
 }
 
+#pragma mark - Pagination
+
+- (NSDictionary *)paginationInfo {
+    return self.userInfo[TMLAPIResponsePaginationKey];
+}
+
+- (BOOL)isPaginated {
+    NSDictionary *paginationInfo = [self paginationInfo];
+    if (paginationInfo != nil && [paginationInfo[TMLAPIResponseTotalPagesKey] integerValue] > 1) {
+        return YES;
+    }
+    return NO;
+}
+
+- (NSInteger)currentPage {
+    NSDictionary *paginationInfo = [self paginationInfo];
+    return [paginationInfo[TMLAPIResponseCurrentPageKey] integerValue];
+}
+
+- (NSInteger)totalPages {
+    NSDictionary *paginationInfo = [self paginationInfo];
+    return [paginationInfo[TMLAPIResponseTotalPagesKey] integerValue];
+}
+
+- (NSInteger)resultsPerPage {
+    NSDictionary *paginationInfo = [self paginationInfo];
+    return [paginationInfo[TMLAPIResponseResultsPerPageKey] integerValue];
+}
+
+- (NSInteger)totalResults {
+    NSDictionary *paginationInfo = [self paginationInfo];
+    return [paginationInfo[TMLAPIResponseTotalResultsKey] integerValue];
+}
+
 #pragma mark - Status
 
 - (NSString *)status {
@@ -156,6 +198,41 @@ NSString * const TMLAPIResponseErrorCodeKey = @"code";
     }
     
     return self.userInfo != nil;
+}
+
+#pragma mark - Merging
+
+- (TMLAPIResponse *)responseByMergingWithResponse:(TMLAPIResponse *)response {
+    if (response == nil) {
+        return self;
+    }
+    id results = self.results;
+    id responseResults = response.results;
+    id newResults = nil;
+    if ([results isKindOfClass:[NSArray class]] == YES
+        && [responseResults isKindOfClass:[NSArray class]] == YES) {
+        NSMutableArray *newArray = [(NSArray *)results mutableCopy];
+        [newArray addObjectsFromArray:responseResults];
+        newResults = [newArray copy];
+    }
+    else if ([results isKindOfClass:[NSDictionary class]] == YES
+             && [responseResults isKindOfClass:[NSDictionary class]] == YES) {
+        NSMutableDictionary *newDict = [(NSDictionary *)results mutableCopy];
+        for (id key in responseResults) {
+            newDict[key] = responseResults[key];
+        }
+        newResults = [newDict copy];
+    }
+    else if (results == nil && responseResults != nil) {
+        newResults = responseResults;
+    }
+    else if (responseResults == nil && results != nil) {
+        newResults = results;
+    }
+    
+    TMLAPIResponse *copy = [self copy];
+    copy.userInfo = @{TMLAPIResponseResultsKey: newResults};
+    return copy;
 }
 
 #pragma mark - Errors

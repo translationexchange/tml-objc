@@ -44,6 +44,7 @@ NSString * const TMLAPIOptionsIncludeAll = @"all";
 NSString * const TMLAPIOptionsClientName = @"client";
 NSString * const TMLAPIOptionsIncludeDefinition = @"definition";
 NSString * const TMLAPIOptionsSourceKeys = @"source_keys";
+NSString * const TMLAPIOptionsPage = @"page";
 
 @interface TMLAPIClient()
 @property (readwrite, nonatomic) NSURL *url;
@@ -177,13 +178,33 @@ completionBlock:completionBlock];
  cachePolicy:(NSURLRequestCachePolicy)cachePolicy
 completionBlock:(TMLAPIResponseHandler)completionBlock
 {
+    BOOL includeAllResults = [parameters[TMLAPIOptionsIncludeAll] boolValue];
     NSURL *url = [self URLForAPIPath:path parameters:parameters];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
     TMLDebug(@"GET %@", url);
     [self request:request
       cachePolicy:cachePolicy
-  completionBlock:completionBlock];
+  completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+      if (includeAllResults == YES
+          && error == nil
+          && apiResponse.paginated == YES
+          && apiResponse.currentPage < apiResponse.totalPages) {
+          NSMutableDictionary *newParams = [parameters mutableCopy];
+          newParams[TMLAPIOptionsPage] = @(apiResponse.currentPage + 1);
+          newParams[TMLAPIOptionsIncludeAll] = @(YES);
+          __block TMLAPIResponse *runningResponse = apiResponse;
+          [self get:path parameters:[newParams copy] cachePolicy:cachePolicy completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+              runningResponse = [runningResponse responseByMergingWithResponse:apiResponse];
+              if (completionBlock != nil) {
+                  completionBlock(runningResponse, response, error);
+              }
+          }];
+      }
+      else if (completionBlock != nil) {
+          completionBlock(apiResponse, response, error);
+      }
+  }];
 }
 
 - (void) post:(NSString *)path
@@ -369,8 +390,14 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
 - (void)getTranslationKeysWithOptions:(NSDictionary *)options
                       completionBlock:(void (^)(NSArray *, TMLAPIResponse *, NSError *))completionBlock
 {
+    NSMutableDictionary *params = [options mutableCopy];
+    if (params == nil) {
+        params = [NSMutableDictionary dictionary];
+    }
+    params[TMLAPIOptionsIncludeAll] = @YES;
+    
     [self get:@"projects/current/translation_keys"
-   parameters:options
+   parameters:params
 completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
     NSArray *translationKeys = nil;
     if ([apiResponse isSuccessfulResponse] == YES) {
@@ -399,6 +426,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
         }
         [sourceKeysList addObject:@{@"source": sourceKey, @"keys": keysPayload}];
     }
+    
     [self post:@"sources/register_keys"
     parameters:@{TMLAPIOptionsSourceKeys: sourceKeysList}
 completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
