@@ -11,9 +11,9 @@
 
 @implementation UITableView (TML)
 
-- (void)restoreTMLLocalizations {
-    [super restoreTMLLocalizations];
-    [self reloadData];
-}
+//- (void)restoreTMLLocalizations {
+//    [super restoreTMLLocalizations];
+//    [self reloadData];
+//}
 
 @end
