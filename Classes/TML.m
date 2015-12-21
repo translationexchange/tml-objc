@@ -232,7 +232,10 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 
 + (TML *) sharedInstanceWithConfiguration:(TMLConfiguration *)configuration {
     TML *tml = [self sharedInstance];
-    tml = [tml initWithConfiguration:configuration];
+    if (tml.configuration != nil) {
+        TMLRaiseUnconfiguredIncovation();
+    }
+    tml.configuration = configuration;
     return tml;
 }
 
@@ -255,41 +258,44 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 
 - (instancetype) initWithConfiguration:(TMLConfiguration *)configuration {
     if (self == [super init]) {
-        if (configuration == nil) {
-            configuration = [[TMLConfiguration alloc] init];
-        }
         self.configuration = configuration;
-        
-        if (configuration.accessToken != nil) {
-            TMLAPIClient *apiClient = [[TMLAPIClient alloc] initWithURL:configuration.apiURL
-                                                            accessToken:configuration.accessToken];
-            self.apiClient = apiClient;
-        }
-        
-        [self setupNotificationObserving];
-        
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self initTranslationBundle:^(TMLBundle *bundle) {
-                if (bundle == nil) {
-                    TMLWarn(@"No local translation bundle found...");
-                }
-                else {
-                    if (self.translationEnabled == NO) {
-                        self.currentBundle = bundle;
-                    }
-                }
-            }];
-            
-            self.translationEnabled = configuration.translationEnabled;
-            if (self.translationEnabled == YES) {
-                TMLAPIBundle *apiBundle = (TMLAPIBundle *)[TMLBundle apiBundle];
-                self.currentBundle = apiBundle;
-                [apiBundle sync];
-            }
-            
-        });
     }
     return self;
+}
+
+- (void)setConfiguration:(TMLConfiguration *)configuration {
+    if (_configuration == configuration) {
+        return;
+    }
+    _configuration = configuration;
+    if (configuration == nil) {
+        self.apiClient = nil;
+        [self teardownNotificationObserving];
+        self.currentBundle = nil;
+    }
+    else {
+        TMLAPIClient *apiClient = [[TMLAPIClient alloc] initWithURL:configuration.apiURL
+                                                        accessToken:configuration.accessToken];
+        self.apiClient = apiClient;
+        [self setupNotificationObserving];
+        [self initTranslationBundle:^(TMLBundle *bundle) {
+            if (bundle == nil) {
+                TMLWarn(@"No local translation bundle found...");
+            }
+            else {
+                if (self.translationEnabled == NO) {
+                    self.currentBundle = bundle;
+                }
+            }
+        }];
+        
+        self.translationEnabled = configuration.translationEnabled;
+        if (self.translationEnabled == YES) {
+            TMLAPIBundle *apiBundle = (TMLAPIBundle *)[TMLBundle apiBundle];
+            self.currentBundle = apiBundle;
+            [apiBundle setNeedsSync];
+        }
+    }
 }
 
 - (void)dealloc {

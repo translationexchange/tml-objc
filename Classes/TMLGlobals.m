@@ -8,6 +8,8 @@
 
 #import "TMLGlobals.h"
 
+NSString * const TMLUnconfiguredException = @"TMLUnconfiguredException";
+
 void TMLAbstractInvocation(SEL selector,id object) {
     [NSException raise:NSInvalidArgumentException
                 format:@"[%@ %@] forwards to an abstract invocation",
@@ -19,6 +21,22 @@ void TMLAbstractInvocation(SEL selector,id object) {
 void TMLUseAlternativeInstantiationMethod(SEL selector, id object) {
     [NSException raise:NSInvalidArgumentException format:@"Use -[%@ %@] instantiation method",
      [object class],
+     NSStringFromSelector(selector)
+     ];
+}
+
+void TMLUnconfiguredIncovation(SEL selector, id object) {
+    [NSException raise:TMLUnconfiguredException
+                format:@"[%@ %@] requires TML sharedInstance to be configured",
+     NSStringFromClass([object class]),
+     NSStringFromSelector(selector)
+     ];
+}
+
+void TMLAlreadyConfigured(SEL selector, id object) {
+    [NSException raise:TMLUnconfiguredException
+                format:@"[%@ %@] attempted to reconfigured shared TML instance",
+     NSStringFromClass([object class]),
      NSStringFromSelector(selector)
      ];
 }

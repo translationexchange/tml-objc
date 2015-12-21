@@ -8,9 +8,13 @@
 
 #define TMLRaiseAbstractInvocation() TMLAbstractInvocation(_cmd, self)
 #define TMLRaiseAlternativeInstantiationMethod(selector) TMLUseAlternativeInstantiationMethod(selector, self);
+#define TMLRaiseUnconfiguredIncovation() TMLUnconfiguredIncovation(_cmd, self)
+#define TMLRaiseAlreadyConfigured() TMLAlreadyConfigured(_cmd, self)
 
 void TMLAbstractInvocation(SEL selector,id object);
 void TMLUseAlternativeInstantiationMethod(SEL selector, id object);
+void TMLUnconfiguredIncovation(SEL selector, id object);
+void TMLAlreadyConfigured(SEL selector, id object);
 
 #pragma mark - Notifications
 extern NSString * const TMLLanguageChangedNotification;

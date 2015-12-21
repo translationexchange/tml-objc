@@ -40,25 +40,51 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 }
 @property(strong, nonatomic) NSURL *archiveURL;
 @property(strong, nonatomic) TMLBundle *apiBundle;
+@property(strong, nonatomic) NSString *rootDirectory;
+@property(strong, nonatomic) NSString *applicationKey;
 @end
 
 @implementation TMLBundleManager
 
 + (instancetype) defaultManager {
+    NSString *applicationKey = [TML applicationKey];
+    if (applicationKey == nil) {
+        TMLRaiseUnconfiguredIncovation();
+        return nil;
+    }
+    
     static TMLBundleManager *instance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        instance = [[TMLBundleManager alloc] init];
+        instance = [[TMLBundleManager alloc] initWithApplicationKey:applicationKey];
     });
     return instance;
+}
+
++ (NSString *) bundleDirectoryForApplicationKey:(NSString *)applicationKey {
+    static dispatch_once_t onceToken;
+    static NSString *parentPath;
+    dispatch_once(&onceToken, ^{
+        parentPath = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    });
+    NSString *identifier = @"com.translationexchange";
+    NSString *path = [NSString stringWithFormat:@"%@/%@/%@/Bundles", parentPath, identifier, applicationKey];
+    return path;
 }
 
 #pragma mark - Init
 
 - (instancetype)init {
+    TMLRaiseAlternativeInstantiationMethod(@selector(initWithApplicationKey:));
+    return nil;
+}
+
+- (instancetype)initWithApplicationKey:(NSString * _Nonnull)applicationKey {
     if (self = [super init]) {
         self.archiveURL = [NSURL URLWithString:@"https://cdn.translationexchange.com"];
         self.maximumBundlesToKeep = 2;
+        self.applicationKey = applicationKey;
+        self.rootDirectory = [[self class] bundleDirectoryForApplicationKey:applicationKey];
     }
     return self;
 }
@@ -74,29 +100,8 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     return downloadsPath;
 }
 
-- (NSString *)bundleInstallationDirectoryForApplicationKey:(NSString *)applicationKey {
-    static dispatch_once_t onceToken;
-    static NSString *parentPath;
-    dispatch_once(&onceToken, ^{
-        parentPath = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    });
-    NSString *identifier = @"com.translationexchange";
-    NSString *path = [NSString stringWithFormat:@"%@/%@/%@/Bundles", parentPath, identifier, applicationKey];
-    return path;
-}
-
-- (NSString *)defaultBundleInstallationDirectory {
-    return [self bundleInstallationDirectoryForApplicationKey:[TML applicationKey]];
-}
-
 - (NSString *)installPathForBundleVersion:(NSString *)version {
-    return [self installPathForBundleVersion:version applicationKey:[TML applicationKey]];
-}
-
-- (NSString *)installPathForBundleVersion:(NSString *)version applicationKey:(NSString *)applicationKey {
-    return [NSString stringWithFormat:@"%@/%@.bundle",
-            [self bundleInstallationDirectoryForApplicationKey:applicationKey],
-            version];
+    return [NSString stringWithFormat:@"%@/%@.bundle", self.rootDirectory, version];
 }
 
 #pragma mark - Installation
@@ -140,7 +145,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
         }
         
         if (application.key == nil
-            || [[TML applicationKey] isEqualToString:application.key] == NO) {
+            || [self.applicationKey isEqualToString:application.key] == NO) {
             installError = [NSError errorWithDomain:TMLBundleManagerErrorDomain
                                                code:TMLBundleManagerInvalidApplicationKeyError
                                            userInfo:nil];
@@ -149,7 +154,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
         
         NSString *destinationPath;
         if (success == YES) {
-            destinationPath = [self installPathForBundleVersion:bundleName applicationKey:application.key];
+            destinationPath = [self installPathForBundleVersion:bundleName];
             
             NSString *destinationDir = [destinationPath stringByDeletingLastPathComponent];
             if ([fileManager fileExistsAtPath:destinationDir] == YES) {
@@ -660,7 +665,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 #pragma mark - Query
 
 - (NSArray *) installedBundles {
-    NSString *installPath = [self defaultBundleInstallationDirectory];
+    NSString *installPath = self.rootDirectory;
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if ([fileManager fileExistsAtPath:installPath isDirectory:nil] == NO) {
         return nil;
@@ -712,7 +717,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     }
     
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    NSString *link = [NSString stringWithFormat:@"%@/%@", [self defaultBundleInstallationDirectory], TMLBundleManagerLatestBundleLinkName];
+    NSString *link = [NSString stringWithFormat:@"%@/%@", self.rootDirectory, TMLBundleManagerLatestBundleLinkName];
     NSError *error = nil;
     NSDictionary *attrs = [fileManager attributesOfItemAtPath:link error:&error];
     if (attrs != nil
@@ -730,7 +735,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 - (TMLBundle *)latestBundle {
     if (_latestBundle == nil) {
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSString *activeBundlePath = [NSString stringWithFormat:@"%@/%@", [self defaultBundleInstallationDirectory], TMLBundleManagerLatestBundleLinkName];
+        NSString *activeBundlePath = [NSString stringWithFormat:@"%@/%@", self.rootDirectory, TMLBundleManagerLatestBundleLinkName];
         if ([fileManager fileExistsAtPath:activeBundlePath] == YES) {
             NSString *version = [[activeBundlePath lastPathComponent] stringByDeletingPathExtension];
             _latestBundle = (version != nil) ? [self registeredBundleWithVersion:version] : nil;
@@ -758,7 +763,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 - (TMLBundle *)apiBundle {
     if (_apiBundle == nil) {
         NSFileManager *fileManager = [NSFileManager defaultManager];
-        NSString *apiBundleDir = [[self defaultBundleInstallationDirectory] stringByAppendingPathComponent:TMLBundleManagerAPIBundleDirectoryName];
+        NSString *apiBundleDir = [self.rootDirectory stringByAppendingPathComponent:TMLBundleManagerAPIBundleDirectoryName];
         NSError *error;
         if ([fileManager fileExistsAtPath:apiBundleDir] == NO) {
             if ([fileManager createDirectoryAtPath:apiBundleDir
@@ -795,7 +800,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
         }
     }
     
-    NSString *link = [NSString stringWithFormat:@"%@/%@", [self defaultBundleInstallationDirectory], TMLBundleManagerLatestBundleLinkName];
+    NSString *link = [NSString stringWithFormat:@"%@/%@", self.rootDirectory, TMLBundleManagerLatestBundleLinkName];
     if ([fileManager removeItemAtPath:link error:&error] == NO) {
         TMLError(@"Error removing latest bundle symlink: %@", error);
     }
