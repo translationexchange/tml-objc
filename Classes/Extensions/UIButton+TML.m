@@ -33,42 +33,23 @@
 #import "NSString+TML.h"
 #import "TML.h"
 #import "UIButton+TML.h"
-#import <objc/runtime.h>
 
 @implementation UIButton (TML)
 
-- (id)tmlValueForKeyPath:(NSString *)keyPath {
-    if ([keyPath hasPrefix:@"attributedTitleForState"] == YES
-        || [keyPath hasPrefix:@"titleForState"] == YES) {
-        NSArray *parts = [keyPath componentsSeparatedByString:@"ForState"];
-        NSString *prop = [parts firstObject];
-        UIControlState state = [[parts lastObject] integerValue];
-        if ([@"title" isEqualToString:prop] == YES) {
-            return [self titleForState:state];
-        }
-        else if ([@"attributedTitle" isEqualToString:prop] == YES) {
-            return [self attributedTitleForState:state];
-        }
-    }
-    return [super tmlValueForKeyPath:keyPath];
-}
-
-- (void)tmlSetValue:(id)value forKeyPath:(NSString *)keyPath {
-    if ([keyPath hasPrefix:@"attributedTitleForState"] == YES
-        || [keyPath hasPrefix:@"titleForState"] == YES) {
-        NSArray *parts = [keyPath componentsSeparatedByString:@"ForState"];
-        NSString *prop = [parts firstObject];
-        UIControlState state = [[parts lastObject] integerValue];
-        if ([@"title" isEqualToString:prop] == YES) {
-            [self setTitle:value forState:state];
-            return;
-        }
-        else if ([@"attributedTitle" isEqualToString:prop] == YES) {
-            [self setAttributedTitle:value forState:state];
-            return;
+- (void)restoreTMLLocalizations {
+    [super restoreTMLLocalizations];
+    if (self.titleLabel != nil) {
+        UILabel *titleLabel = self.titleLabel;
+        NSDictionary *registry = [titleLabel tmlRegistry];
+        for (NSString *keyPath in registry) {
+            if ([keyPath isEqualToString:@"attributedText"] == YES) {
+                [self setAttributedTitle:[titleLabel attributedText] forState:[self state]];
+            }
+            else if ([keyPath isEqualToString:@"text"] == YES) {
+                [self setTitle:[titleLabel text] forState:[self state]];
+            }
         }
     }
-    [super tmlSetValue:value forKeyPath:keyPath];
 }
 
 - (void)localizeWithTML {
@@ -82,15 +63,25 @@
     ];
     
     for (NSNumber *state in states) {
-        NSDictionary *tokens = nil;
-        NSString *tmlAttributedString = [[self attributedTitleForState:[state integerValue]] tmlAttributedString:&tokens];
-        if ([tmlAttributedString tmlContainsDecoratedTokens] == YES) {
-            NSString *key = [NSString stringWithFormat:@"attributedTitleForState%@", state];
-            [self setAttributedTitle:TMLLocalizedAttributedString(tmlAttributedString, tokens, key) forState:[state integerValue]];
+        UIControlState controlState = [state integerValue];
+        NSAttributedString *attributedTitle = [self attributedTitleForState:controlState];
+        NSString *tmlString = nil;
+        if (attributedTitle.length > 0) {
+            if (controlState == UIControlStateNormal
+                || [attributedTitle isEqualToAttributedString:[self attributedTitleForState:UIControlStateNormal]] == NO) {
+                NSDictionary *tokens = nil;
+                tmlString = [attributedTitle tmlAttributedString:&tokens];
+                NSAttributedString *localizedString = TMLLocalizedAttributedString(tmlString, tokens);
+                [self setAttributedTitle:localizedString forState:[state integerValue]];
+            }
         }
         else {
-            NSString *key = [NSString stringWithFormat:@"titleForState%@", state];
-            [self setTitle:TMLLocalizedString(tmlAttributedString, key) forState:[state integerValue]];
+            tmlString = [self titleForState:controlState];
+            if (controlState == UIControlStateNormal
+                || [tmlString isEqualToString:[self titleForState:UIControlStateNormal]] == NO) {
+                NSString *localizedString = TMLLocalizedString(tmlString);
+                [self setTitle:localizedString forState:[state integerValue]];
+            }
         }
     }
 }
