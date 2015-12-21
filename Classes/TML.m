@@ -1397,6 +1397,11 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 }
 
 - (BOOL)isTranslationKeyRegistered:(NSString *)translationKey {
+    if ([self.currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
+        TMLAPIBundle *apiBundle = (TMLAPIBundle *)self.currentBundle;
+        TMLTranslationKey *registeredKey = [[apiBundle translationKeys] valueForKey:translationKey];
+        return registeredKey != nil;
+    }
     NSArray *results = [self translationsForKey:translationKey locale:[self currentLocale]];
     return results != nil;
 }
