@@ -1157,6 +1157,38 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     }
     else {
         if (view.tmlRegistry.count == 0) {
+            NSSet *localizableKeyPaths = [view tmlLocalizableKeyPaths];
+            for (NSString *keyPath in localizableKeyPaths) {
+                id value = [view valueForKeyPath:keyPath];
+                NSString *tmlString = nil;
+                NSDictionary *tokens = nil;
+                if ([value isKindOfClass:[NSAttributedString class]] == YES) {
+                    tmlString = [(NSAttributedString *)value tmlAttributedString:&tokens];
+                }
+                else if ([value isKindOfClass:[NSString class]] == YES) {
+                    tmlString = value;
+                }
+                TMLTranslationKey *translationKey = nil;
+                if (tmlString != nil) {
+                    NSArray *matchingKeys = [self translationKeysMatchingString:tmlString locale:[self currentLocale]];
+                    NSDictionary *allTranslationKeys = [self.currentBundle translationKeys];
+                    for (NSString *key in matchingKeys) {
+                        TMLTranslationKey *candidateKey = allTranslationKeys[key];
+                        if (candidateKey != nil) {
+                            translationKey = candidateKey;
+                            break;
+                        }
+                    }
+                }
+                if (translationKey != nil) {
+                    [view registerTMLTranslationKey:translationKey
+                                             tokens:tokens
+                                            options:nil
+                                     restorationKey:keyPath];
+                }
+            }
+        }
+        if (view.tmlRegistry.count == 0) {
             [view localizeWithTML];
         }
         [self presentTranslatorViewControllerWithTranslationKey:key];
