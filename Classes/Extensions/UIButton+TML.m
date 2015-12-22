@@ -33,6 +33,8 @@
 #import "NSString+TML.h"
 #import "TML.h"
 #import "UIButton+TML.h"
+#import "TMLTranslationKey.h"
+#import "TMLBundle.h"
 
 @implementation UIButton (TML)
 
@@ -66,22 +68,36 @@
         UIControlState controlState = [state integerValue];
         NSAttributedString *attributedTitle = [self attributedTitleForState:controlState];
         NSString *tmlString = nil;
+        NSDictionary *tokens = nil;
         if (attributedTitle.length > 0) {
             if (controlState == UIControlStateNormal
                 || [attributedTitle isEqualToAttributedString:[self attributedTitleForState:UIControlStateNormal]] == NO) {
-                NSDictionary *tokens = nil;
                 tmlString = [attributedTitle tmlAttributedString:&tokens];
                 NSAttributedString *localizedString = TMLLocalizedAttributedString(tmlString, tokens);
                 [self setAttributedTitle:localizedString forState:[state integerValue]];
             }
         }
         else {
-            tmlString = [self titleForState:controlState];
+            NSString *title = [self titleForState:controlState];
             if (controlState == UIControlStateNormal
-                || [tmlString isEqualToString:[self titleForState:UIControlStateNormal]] == NO) {
+                || [title isEqualToString:[self titleForState:UIControlStateNormal]] == NO) {
+                tmlString = title;
                 NSString *localizedString = TMLLocalizedString(tmlString);
                 [self setTitle:localizedString forState:[state integerValue]];
             }
+        }
+        
+        TMLTranslationKey *translationKey = nil;
+        UILabel *titleLabel = self.titleLabel;
+        if (titleLabel != nil && tmlString != nil) {
+            translationKey = [[TMLTranslationKey alloc] init];
+            translationKey.label = tmlString;
+            translationKey.locale = [TML defaultLocale];
+            NSString *keyPath = (attributedTitle.length > 0) ? @"attributedText" : @"text";
+            [titleLabel registerTMLTranslationKey:translationKey
+                                           tokens:tokens
+                                          options:nil
+                                   restorationKey:keyPath];
         }
     }
 }
