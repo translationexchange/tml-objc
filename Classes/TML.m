@@ -50,8 +50,6 @@
 #import "UIResponder+TML.h"
 #import "UIView+TML.h"
 
-#import "TML+NSLocalizedString.h"
-
 /**
  *  Returns localized version of the string argument.
  *  The first argument is a dictionary of options, normally passed in by macros.
@@ -992,20 +990,20 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 }
 
 - (void)presentActiveTranslationOptions {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Choose", @"Choose")
-                                                                             message:NSLocalizedString(@"What would you like to do?", @"What would you like to do?")
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:TMLLocalizedString(@"Choose")
+                                                                             message:TMLLocalizedString(@"What would you like to do?")
                                                                       preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *changeLocaleAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Change Language", @"Change Language") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *changeLocaleAction = [UIAlertAction actionWithTitle:TMLLocalizedString(@"Change Language") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self presentLanguageSelectorController];
     }];
     [alertController addAction:changeLocaleAction];
     
-    UIAlertAction *disableAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Deactivate Translation", @"Deactivate Translation") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *disableAction = [UIAlertAction actionWithTitle:TMLLocalizedString(@"Deactivate Translation") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [self toggleActiveTranslation:disableAction];
     }];
     [alertController addAction:disableAction];
     
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+    UIAlertAction *cancel = [UIAlertAction actionWithTitle:TMLLocalizedString(@"Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         [self dismissPresentedViewController];
     }];
     [alertController addAction:cancel];
