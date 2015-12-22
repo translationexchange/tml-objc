@@ -339,7 +339,13 @@ void ensureArrayIndex(NSMutableArray *array, NSInteger index) {
 - (void)generateTMLLocalizationRegistry {
     NSSet *localizableKeyPaths = [self tmlLocalizableKeyPaths];
     for (NSString *keyPath in localizableKeyPaths) {
-        id value = [self valueForKeyPath:keyPath];
+        id value = nil;
+        @try {
+            value = [self valueForKeyPath:keyPath];
+        }
+        @catch(NSException *e) {
+            TMLError(@"Exception getting value for keyPath '%@': %@", keyPath, e);
+        }
         NSString *tmlString = nil;
         NSDictionary *tokens = nil;
         if ([value isKindOfClass:[NSAttributedString class]] == YES) {
