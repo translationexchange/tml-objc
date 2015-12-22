@@ -32,6 +32,7 @@
 #import "NSObject+TML.h"
 #import "TML.h"
 #import "TMLAttributedDecorationTokenizer.h"
+#import "TMLBundle.h"
 #import "TMLConfiguration.h"
 #import "TMLLanguage.h"
 #import "TMLTranslationKey.h"
@@ -273,6 +274,11 @@ void ensureArrayIndex(NSMutableArray *array, NSInteger index) {
     self.accessibilityLanguage = [TML currentLocale];
     
     NSMutableDictionary *registry = [self tmlRegistry];
+    
+    if (registry.count == 0) {
+        [self generateTMLLocalizationRegistry];
+    }
+    
     for (NSString *restorationKey in registry) {
         NSDictionary *payload = registry[restorationKey];
         if (payload == nil) {
@@ -326,6 +332,40 @@ void ensureArrayIndex(NSMutableArray *array, NSInteger index) {
             @catch (NSException *exception) {
                 TMLError(@"Error restoring defaulting translation key '%@' with restorationKey '%@': %@", translationKey.key, restorationKey, exception);
             }
+        }
+    }
+}
+
+- (void)generateTMLLocalizationRegistry {
+    NSSet *localizableKeyPaths = [self tmlLocalizableKeyPaths];
+    for (NSString *keyPath in localizableKeyPaths) {
+        id value = [self valueForKeyPath:keyPath];
+        NSString *tmlString = nil;
+        NSDictionary *tokens = nil;
+        if ([value isKindOfClass:[NSAttributedString class]] == YES) {
+            tmlString = [(NSAttributedString *)value tmlAttributedString:&tokens];
+        }
+        else if ([value isKindOfClass:[NSString class]] == YES) {
+            tmlString = value;
+        }
+        TMLTranslationKey *translationKey = nil;
+        TML *tml = [TML sharedInstance];
+        if (tmlString != nil) {
+            NSArray *matchingKeys = [tml translationKeysMatchingString:tmlString locale:[tml currentLocale]];
+            NSDictionary *allTranslationKeys = [tml.currentBundle translationKeys];
+            for (NSString *key in matchingKeys) {
+                TMLTranslationKey *candidateKey = allTranslationKeys[key];
+                if (candidateKey != nil) {
+                    translationKey = candidateKey;
+                    break;
+                }
+            }
+        }
+        if (translationKey != nil) {
+            [self registerTMLTranslationKey:translationKey
+                                     tokens:tokens
+                                    options:nil
+                             restorationKey:keyPath];
         }
     }
 }
