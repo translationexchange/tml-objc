@@ -114,12 +114,11 @@ NSString * const TMLBundleErrorsKey = @"errors";
     NSData *versionData = [NSData dataWithContentsOfFile:path];
     NSDictionary *versionInfo = [versionData tmlJSONObject];
     if (versionInfo == nil) {
-        TMLError(@"Could not determine version of bundle at path: %@", path);
+        TMLWarn(@"Cannot find bundle version at path: %@", path);
+        return;
     }
-    else {
-        self.version = versionInfo[TMLBundleVersionKey];
-        self.sourceURL = [NSURL URLWithString:versionInfo[TMLBundleURLKey]];
-    }
+    self.version = versionInfo[TMLBundleVersionKey];
+    self.sourceURL = [NSURL URLWithString:versionInfo[TMLBundleURLKey]];
 }
 
 - (void)reloadApplicationData {
@@ -127,12 +126,11 @@ NSString * const TMLBundleErrorsKey = @"errors";
     NSData *applicationData = [NSData dataWithContentsOfFile:path];
     NSDictionary *applicationInfo = [applicationData tmlJSONObject];
     if (applicationInfo == nil) {
-        TMLError(@"Could not determine application info of bundle at path: %@", path);
+        TMLWarn(@"Cannot find application info at path: %@", path);
+        return;
     }
-    else {
-        self.application = [TMLAPISerializer materializeObject:applicationInfo
-                                                     withClass:[TMLApplication class]];
-    }
+    self.application = [TMLAPISerializer materializeObject:applicationInfo
+                                                 withClass:[TMLApplication class]];
 }
 
 - (void)reloadSourcesData {
@@ -140,7 +138,8 @@ NSString * const TMLBundleErrorsKey = @"errors";
     NSData *data = [NSData dataWithContentsOfFile:path];
     NSArray *sources = [data tmlJSONObject];
     if (sources == nil) {
-        TMLError(@"Could not determine list of sources at path: %@", path);
+        TMLWarn(@"Cannot find sources defintion at path: %@", path);
+        self.sources = @[];
     }
     else {
         self.sources = sources;
@@ -152,7 +151,8 @@ NSString * const TMLBundleErrorsKey = @"errors";
     NSData *data = [NSData dataWithContentsOfFile:path];
     NSArray *keysArray = [data tmlJSONObject][TMLAPIResponseResultsKey];
     if (keysArray == nil) {
-        TMLError(@"Could not determine list of translation keys at path: %@", path);
+        TMLWarn(@"Cannot find translation keys definition at path: %@", path);
+        self.translationKeys = @{};
         return;
     }
     keysArray = [TMLAPISerializer materializeObject:keysArray withClass:[TMLTranslationKey class]];
