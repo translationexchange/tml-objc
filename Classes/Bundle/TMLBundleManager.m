@@ -636,6 +636,11 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     }
     if (error == nil
         && [resourcePath isEqualToString:destinationPath] == NO) {
+        if ([fileManager fileExistsAtPath:destinationPath] == YES) {
+            if([fileManager removeItemAtPath:destinationPath error:&error] == NO) {
+                TMLError(@"Error removing existing resource at path '%@': %@", error);
+            }
+        }
         if ([fileManager moveItemAtPath:resourcePath toPath:destinationPath error:&error] == NO) {
             TMLError(@"Error installing resource '%@' for bundle '%@': %@", relativeBundlePath, bundleVersion, error);
         }
