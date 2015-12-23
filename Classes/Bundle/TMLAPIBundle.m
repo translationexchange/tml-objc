@@ -130,7 +130,6 @@
                 forSource:(NSString *)sourceKey
 {
     if (translationKey.label.length == 0) {
-        TMLWarn(@"Tried to register missing translation for translationKey with empty label");
         return;
     }
     
