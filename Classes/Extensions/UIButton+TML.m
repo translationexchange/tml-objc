@@ -42,6 +42,9 @@
     [super restoreTMLLocalizations];
     if (self.titleLabel != nil) {
         UILabel *titleLabel = self.titleLabel;
+        if (titleLabel.hidden == YES) {
+            return;
+        }
         NSDictionary *registry = [titleLabel tmlRegistry];
         for (NSString *keyPath in registry) {
             if ([keyPath isEqualToString:@"attributedText"] == YES) {
