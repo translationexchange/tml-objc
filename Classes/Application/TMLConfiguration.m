@@ -32,7 +32,7 @@
 #import "TMLConfiguration.h"
 #import "TMLLanguage.h"
 
-#define USE_STAGING 0
+#define USE_STAGING 1
 
 #if USE_STAGING
 #define kTMLServiceHost @"https://staging-api.translationexchange.com"
