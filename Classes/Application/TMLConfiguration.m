@@ -45,6 +45,7 @@
 NSString * const TMLApplicationKeyDefaultsKey = @"applicationKey";
 NSString * const TMLDefaultLocaleDefaultsKey = @"defaultLocale";
 NSString * const TMLCurrentLocaleDefaultsKey = @"currentLocale";
+NSString * const TMLPreviousLocaleDefaultsKey = @"previousLocale";
 NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
 
 
@@ -144,6 +145,20 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
     [self willChangeValueForKey:@"currentLocale"];
     [self setPersistentValue:newLocale forKey:TMLCurrentLocaleDefaultsKey];
     [self didChangeValueForKey:@"defaultLocale"];
+}
+
+- (NSString *)previousLocale {
+    NSString *locale = [self persistentValueForKey:TMLPreviousLocaleDefaultsKey];
+    if (locale == nil) {
+        return self.defaultLocale;
+    }
+    return locale;
+}
+
+- (void)setPreviousLocale:(NSString *)previousLocale {
+    [self willChangeValueForKey:@"previousLocale"];
+    [self setPersistentValue:previousLocale forKey:TMLPreviousLocaleDefaultsKey];
+    [self didChangeValueForKey:@"previousLocale"];
 }
 
 - (NSString *)defaultLocale {

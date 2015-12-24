@@ -44,6 +44,8 @@
 
 @property(nonatomic, strong) NSString *currentLocale;
 
+@property(nonatomic, strong) NSString *previousLocale;
+
 @property(nonatomic, strong) NSMutableDictionary *contextRules;
 
 @property(nonatomic, strong) NSMutableDictionary *defaultTokens;

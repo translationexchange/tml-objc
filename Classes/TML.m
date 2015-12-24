@@ -1335,6 +1335,14 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     return self.configuration.currentLocale;
 }
 
++ (NSString *)previousLocale {
+    return [[TML sharedInstance] previousLocale];
+}
+
+- (NSString *)previousLocale {
+    return self.configuration.previousLocale;
+}
+
 + (void) changeLocale:(NSString *)locale
       completionBlock:(void(^)(BOOL success))completionBlock
 {
@@ -1376,7 +1384,9 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     }
     // TODO: do we really need toi change both ourselves and config?
     NSString *oldLocale = self.configuration.currentLocale;
-    self.configuration.currentLocale = newLanguage.locale;
+    TMLConfiguration *config = self.configuration;
+    config.previousLocale = oldLocale;
+    config.currentLocale = newLanguage.locale;
     [self didChangeFromLocale:oldLocale];
 }
 
