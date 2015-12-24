@@ -356,9 +356,16 @@ void ensureArrayIndex(NSMutableArray *array, NSInteger index) {
         }
         TMLTranslationKey *translationKey = nil;
         TML *tml = [TML sharedInstance];
-        if (tmlString != nil) {
-            NSArray *matchingKeys = [tml translationKeysMatchingString:tmlString locale:[tml currentLocale]];
-            NSDictionary *allTranslationKeys = [tml.currentBundle translationKeys];
+        NSDictionary *allTranslationKeys = [tml.currentBundle translationKeys];
+        NSSet *allLocales = [NSSet setWithArray:@[[tml currentLocale], [tml previousLocale], [tml defaultLocale]]];
+        if (tmlString != nil && allTranslationKeys.count > 0) {
+            NSArray *matchingKeys = nil;
+            for (NSString *locale in allLocales) {
+                matchingKeys = [tml translationKeysMatchingString:tmlString locale:locale];
+                if (matchingKeys.count > 0) {
+                    break;
+                }
+            }
             for (NSString *key in matchingKeys) {
                 TMLTranslationKey *candidateKey = allTranslationKeys[key];
                 if (candidateKey != nil) {
