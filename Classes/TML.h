@@ -142,6 +142,9 @@
 + (NSString *) currentLocale;
 - (NSString *) currentLocale;
 
++ (NSString *) previousLocale;
+- (NSString *) previousLocale;
+
 + (TMLLanguage *) currentLanguage;
 - (TMLLanguage *) currentLanguage;
 
