@@ -46,6 +46,14 @@
     return [[NSString stringWithFormat:@"%@%@%i", self.key, self.locale, (int)self.level] hash];
 }
 
+- (instancetype)initWithLabel:(NSString *)label description:(NSString *)description {
+    if (self = [super init]) {
+        self.label = label;
+        self.keyDescription = description;
+    }
+    return self;
+}
+
 # pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone {
