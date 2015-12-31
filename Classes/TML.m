@@ -1129,7 +1129,8 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
             [self presentTranslatorViewControllerWithTranslationKey:key];
         }
         else {
-            shortString = (shortString.length > 16) ? [[shortString substringToIndex:32] stringByAppendingString:@"..."] : shortString;
+            NSInteger maxChars = 32;
+            shortString = (shortString.length > maxChars) ? [[shortString substringToIndex:maxChars] stringByAppendingString:@"..."] : shortString;
             NSString *message = TMLLocalizedString(@"Could not find translation key for string \"{value}\"", @{@"value": shortString});
             UIAlertController *alert = [UIAlertController alertControllerWithTitle:TMLLocalizedString(@"Add new string?")
                                                                            message:message
