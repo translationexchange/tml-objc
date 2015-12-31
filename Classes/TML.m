@@ -128,18 +128,20 @@ id TMLLocalize(NSDictionary *options, NSString *string, ...) {
         [ourOpts addEntriesFromDictionary:userOpts];
     }
     
+    id result = nil;
     if ([decorationFormat isEqualToString:TMLAttributedTokenFormatString] == YES) {
-        return [TML localizeAttributedString:string
-                                 description:description
-                                      tokens:tokens
-                                     options:[ourOpts copy]];
+        result = [TML localizeAttributedString:string
+                                   description:description
+                                        tokens:tokens
+                                       options:[ourOpts copy]];
     }
     else {
-        return [TML localizeString:string
-                       description:description
-                            tokens:tokens
-                           options:[ourOpts copy]];
+        result = [TML localizeString:string
+                         description:description
+                              tokens:tokens
+                             options:[ourOpts copy]];
     }
+    return result;
 }
 
 id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
@@ -180,18 +182,21 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     }
     
     NSString *decorationFormat = options[TMLTokenFormatOptionName];
+    id result = nil;
     if ([decorationFormat isEqualToString:TMLAttributedTokenFormatString] == YES) {
-        return [TML localizeAttributedDate:date
-                                withFormat:dateFormat
-                               description:description
-                                   options:[ourOpts copy]];
+        result = [TML localizeAttributedDate:date
+                                  withFormat:dateFormat
+                                 description:description
+                                     options:[ourOpts copy]];
     }
     else {
-        return [TML localizeDate:date
-                      withFormat:dateFormat
-                     description:description
-                         options:[ourOpts copy]];
+        result = [TML localizeDate:date
+                        withFormat:dateFormat
+                       description:description
+                           options:[ourOpts copy]];
     }
+    
+    return result;
 }
 
 
@@ -661,15 +666,15 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
                                            tokens:tokens
                                           options:options];
     
-    if ([result isKindOfClass:[NSString class]] == YES) {
-        return (NSString *)result;
+    NSString *stringResult = nil;
+    if ([result isKindOfClass:[NSAttributedString class]] == YES) {
+        stringResult = [(NSAttributedString *)result string];
     }
-    else if ([result isKindOfClass:[NSAttributedString class]] == YES) {
-        return [(NSAttributedString *)result string];
+    else if ([result isKindOfClass:[NSString class]] == YES) {
+        stringResult = [NSString stringWithString:result];
     }
-    else {
-        return string;
-    }
+    
+    return stringResult;
 }
 
 - (NSAttributedString *)localizeAttributedString:(NSString *)string
@@ -686,15 +691,16 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
                                       description:description
                                            tokens:tokens
                                           options:opts];
+    
+    NSAttributedString *attributedString = nil;
     if ([result isKindOfClass:[NSAttributedString class]] == YES) {
-        return (NSAttributedString *)result;
+        attributedString = [[NSAttributedString alloc] initWithAttributedString:result];
     }
     else if ([result isKindOfClass:[NSString class]] == YES) {
-        return [[NSAttributedString alloc] initWithString:(NSString *)result attributes:nil];
+        attributedString = [[NSAttributedString alloc] initWithString:result attributes:nil];
     }
-    else {
-        return [[NSAttributedString alloc] initWithString:string attributes:nil];
-    }
+
+    return attributedString;
 }
 
 - (NSString *) localizeDate:(NSDate *)date
