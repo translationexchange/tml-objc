@@ -72,26 +72,22 @@
             }
         }
         
-        TMLTranslationKey *translationKey = nil;
-        UILabel *titleLabel = self.titleLabel;
-        if (titleLabel != nil && tmlString != nil) {
-            translationKey = [[TMLTranslationKey alloc] init];
-            translationKey.label = tmlString;
-            translationKey.locale = [TML defaultLocale];
-            
-            NSMutableDictionary *info = [NSMutableDictionary dictionary];
-            info[TMLTranslationKeyInfoKey] = translationKey;
-            if (tokens != nil) {
-                info[TMLTokensInfoKey] = tokens;
-            }
-            if (localizedString != nil) {
-                info[TMLLocalizedStringInfoKey] = localizedString;
-            }
-            
-            NSString *reuseIdentifier = (attributedTitle.length > 0) ? @"attributedText" : @"text";
-            reuseIdentifier = [NSString stringWithFormat:@"%@-%@", reuseIdentifier, state];
-            [titleLabel registerTMLInfo:info forReuseIdentifier:reuseIdentifier];
+        TMLTranslationKey *translationKey = [[TMLTranslationKey alloc] init];
+        translationKey.label = tmlString;
+        translationKey.locale = [TML defaultLocale];
+        
+        NSMutableDictionary *info = [NSMutableDictionary dictionary];
+        info[TMLTranslationKeyInfoKey] = translationKey;
+        if (tokens != nil) {
+            info[TMLTokensInfoKey] = tokens;
         }
+        if (localizedString != nil) {
+            info[TMLLocalizedStringInfoKey] = localizedString;
+        }
+        
+        NSString *reuseIdentifier = (attributedTitle.length > 0) ? @"attributedText" : @"text";
+        reuseIdentifier = [NSString stringWithFormat:@"%@-%@", reuseIdentifier, state];
+        [self registerTMLInfo:info forReuseIdentifier:reuseIdentifier];
     }
 }
 
