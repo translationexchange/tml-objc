@@ -244,16 +244,6 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
                                                         accessToken:configuration.accessToken];
         self.apiClient = apiClient;
         [self setupNotificationObserving];
-        [self initTranslationBundle:^(TMLBundle *bundle) {
-            if (bundle == nil) {
-                TMLWarn(@"No local translation bundle found...");
-            }
-            else {
-                if (self.translationEnabled == NO) {
-                    self.currentBundle = bundle;
-                }
-            }
-        }];
         
         self.translationEnabled = configuration.translationEnabled;
         if (self.translationEnabled == YES) {
@@ -261,6 +251,16 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
             self.currentBundle = apiBundle;
             [apiBundle setNeedsSync];
         }
+        
+        [self initTranslationBundle:^(TMLBundle *bundle) {
+            if (bundle == nil) {
+                TMLWarn(@"No local translation bundle found...");
+            }
+            else if (self.currentBundle == nil) {
+                self.currentBundle = bundle;
+            }
+        }];
+        
     }
 }
 
@@ -328,7 +328,7 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     }
     else {
         TMLApplication *newApplication = [bundle application];
-        TMLInfo(@"Initializing from local bundle: %@", bundle.version);
+        TMLInfo(@"Initializing from bundle: %@", bundle.version);
         self.application = newApplication;
         NSString *ourLocale = [self currentLocale];
         if (ourLocale != nil) {
