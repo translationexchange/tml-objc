@@ -6,7 +6,9 @@
     The view controller that demonstrates how to use UIAlertController.
 */
 
+#import "TMLTableViewController.h"
+
 @import UIKit;
 
-@interface AAPLAlertControllerViewController : UITableViewController
+@interface AAPLAlertControllerViewController : TMLTableViewController
 @end

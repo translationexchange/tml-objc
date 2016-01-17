@@ -6,9 +6,11 @@
     A table view controller that displays filtered strings (used by other view controllers for simple displaying and filtering of data).
 */
 
+#import "TMLTableViewController.h"
+
 @import UIKit;
 
-@interface AAPLSearchControllerBaseViewController : UITableViewController
+@interface AAPLSearchControllerBaseViewController : TMLTableViewController
 
 /// A nil / empty filter string means show all results. Otherwise, show
 /// only results containing the filter.

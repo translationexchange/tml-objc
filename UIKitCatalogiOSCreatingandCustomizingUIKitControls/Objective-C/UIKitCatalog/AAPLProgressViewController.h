@@ -6,7 +6,9 @@
     A view controller that demonstrates how to use UIProgressView.
 */
 
+#import "TMLTableViewController.h"
+
 @import UIKit;
 
-@interface AAPLProgressViewController : UITableViewController
+@interface AAPLProgressViewController : TMLTableViewController
 @end

@@ -6,7 +6,9 @@
     A view controller that demonstrates how to use UIButton. The buttons are created using storyboards, but each of the system buttons can be created in code by using the +[UIButton buttonWithType:] initializer. See UIButton.h for a comprehensive list of the various UIButtonType values.
 */
 
+#import "TMLTableViewController.h"
+
 @import UIKit;
 
-@interface AAPLButtonViewController : UITableViewController
+@interface AAPLButtonViewController : TMLTableViewController
 @end

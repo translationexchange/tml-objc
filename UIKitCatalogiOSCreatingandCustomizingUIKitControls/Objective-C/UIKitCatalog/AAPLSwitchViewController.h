@@ -6,7 +6,9 @@
     A view controller that demonstrates how to use UISwitch.
 */
 
+#import "TMLTableViewController.h"
+
 @import UIKit;
 
-@interface AAPLSwitchViewController : UITableViewController
+@interface AAPLSwitchViewController : TMLTableViewController
 @end

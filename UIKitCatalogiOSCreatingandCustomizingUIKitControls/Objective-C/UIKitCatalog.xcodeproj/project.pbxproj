@@ -46,6 +46,7 @@
 		B5E280FA1B1D03F800920B27 /* AAPLStackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B5E280F91B1D03F800920B27 /* AAPLStackViewController.m */; };
 		C42BB3991C1FDFAD005C0128 /* TMLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C42BB3921C1FDF67005C0128 /* TMLKit.framework */; };
 		C42BB39A1C1FDFC5005C0128 /* TMLKit.framework in Copy Embedded Frameworks */ = {isa = PBXBuildFile; fileRef = C42BB3921C1FDF67005C0128 /* TMLKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C4FA31DF1C4BFD9E001902EB /* TMLTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FA31DE1C4BFD9E001902EB /* TMLTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,6 +152,8 @@
 		B5E280F91B1D03F800920B27 /* AAPLStackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAPLStackViewController.m; sourceTree = "<group>"; };
 		C421CBBE1C1D2075008A998E /* TMLKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TMLKit.xcodeproj; path = ../../TMLKit/TMLKit.xcodeproj; sourceTree = "<group>"; };
 		C42BB39C1C1FE0B7005C0128 /* TMLPrivateConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TMLPrivateConfig.h; sourceTree = "<group>"; };
+		C4FA31DD1C4BFD9D001902EB /* TMLTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLTableViewController.h; sourceTree = "<group>"; };
+		C4FA31DE1C4BFD9E001902EB /* TMLTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -313,6 +316,8 @@
 				535682A418F3670300BAAD62 /* AAPLWebViewController.m */,
 				3E1D56EB194F5FBA00D8298E /* Search */,
 				3EF3286C1931DF2000B1C20C /* Toolbar View Controllers */,
+				C4FA31DD1C4BFD9D001902EB /* TMLTableViewController.h */,
+				C4FA31DE1C4BFD9E001902EB /* TMLTableViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -435,6 +440,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E8CF104196DBE6800420B6B /* AAPLSearchShowResultsInSourceViewController.m in Sources */,
+				C4FA31DF1C4BFD9E001902EB /* TMLTableViewController.m in Sources */,
 				535682AE18F3670300BAAD62 /* AAPLDatePickerController.m in Sources */,
 				3EE0A033196DDDF70059F740 /* AAPLSearchPresentOverNavigationBarViewController.m in Sources */,
 				535682AB18F3670300BAAD62 /* AAPLButtonViewController.m in Sources */,

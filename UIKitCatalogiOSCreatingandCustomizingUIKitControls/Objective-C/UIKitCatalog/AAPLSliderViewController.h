@@ -6,7 +6,9 @@
     A view controller that demonstrates how to use UISlider.
 */
 
+#import "TMLTableViewController.h"
+
 @import UIKit;
 
-@interface AAPLSliderViewController : UITableViewController
+@interface AAPLSliderViewController : TMLTableViewController
 @end

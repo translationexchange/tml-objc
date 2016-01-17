@@ -6,7 +6,9 @@
     A view controller that demonstrates how to use UIActivityIndicatorView.
 */
 
+#import "TMLTableViewController.h"
+
 @import UIKit;
 
-@interface AAPLActivityIndicatorViewController : UITableViewController
+@interface AAPLActivityIndicatorViewController : TMLTableViewController
 @end

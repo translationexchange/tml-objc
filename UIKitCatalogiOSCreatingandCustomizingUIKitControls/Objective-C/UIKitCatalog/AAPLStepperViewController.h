@@ -6,7 +6,9 @@
     A view controller that demonstrates how to use UIStepper.
 */
 
+#import "TMLTableViewController.h"
+
 @import UIKit;
 
-@interface AAPLStepperViewController : UITableViewController
+@interface AAPLStepperViewController : TMLTableViewController
 @end
