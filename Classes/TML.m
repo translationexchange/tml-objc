@@ -261,6 +261,10 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
             }
         }];
         
+        if (configuration.applicationKey.length == 0
+            || configuration.accessToken.length == 0) {
+            TMLWarn(@"Application is misconfigured!!!");
+        }
     }
 }
 
