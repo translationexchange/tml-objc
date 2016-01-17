@@ -30,29 +30,31 @@
 
 #import <Foundation/Foundation.h>
 
-extern NSString * const TMLRegistryTranslationKeyName;
-extern NSString * const TMLRegistryTokensKeyName;
-extern NSString * const TMLRegistryOptionsKeyName;
-
 @class TMLTranslationKey;
+
+@protocol TMLReusableLocalization <NSObject>
+@optional
+- (void)updateTMLLocalizedStringWithInfo:(NSDictionary *)info forReuseIdentifier:(NSString *)reuseIdentifier;
+@end
 
 @interface NSObject (TML)
 
+#pragma mark - Automatic Localization Support
+
 - (NSSet *)tmlLocalizableKeyPaths;
 - (void)localizeWithTML;
-
-- (void)registerTMLTranslationKey:(TMLTranslationKey *)translationKey
-                           tokens:(NSDictionary *)tokens
-                          options:(NSDictionary *)options
-                   restorationKey:(NSString *)restorationKey;
-
-- (BOOL)isTMLTranslationKeyRegisteredForKeyPath:(NSString *)keyPath;
-
-- (void)restoreTMLLocalizations;
 - (void)generateTMLLocalizationRegistry;
 
-- (NSMutableDictionary *)tmlRegistry;
-- (id)tmlValueForKeyPath:(NSString *)keyPath;
-- (void)tmlSetValue:(id)value forKeyPath:(NSString *)keyPath;
+- (void)registerTMLTranslationKey:(TMLTranslationKey *)translationKey forLocalizedString:(id)string;
+- (TMLTranslationKey *)registeredTranslationKeyForLocalizedString:(id)string;
+
+#pragma mark - Localization Reuse
+
+- (void)registerTMLInfo:(NSDictionary *)info forReuseIdentifier:(NSString *)reuseIdentifier;
+- (BOOL)hasTMLInfoForReuseIdentifier:(NSString *)reuseIdentifier;
+- (NSDictionary *)tmlInfoForReuseIdentifier:(NSString *)reuseIdentifier;
+- (void)updateReusableTMLStrings;
+- (void)updateTMLLocalizedStringWithInfo:(NSDictionary *)info
+                   forReuseIdentifier:(NSString *)reuseIdentifier;
 
 @end

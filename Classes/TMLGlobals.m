@@ -51,13 +51,18 @@ NSString * const TMLLocalizationUpdatesInstalledNotification = @"TMLLocalization
 
 #pragma mark - UserInfo Constants
 NSString * const TMLPreviousLocaleUserInfoKey = @"TMLPreviousLocaleUserInfoKey";
+NSString * const TMLTokensInfoKey = @"tokens";
+NSString * const TMLOptionsInfoKey = @"options";
+NSString * const TMLTranslationKeyInfoKey = @"translationKey";
+NSString * const TMLSourceInfoKey = @"source";
+NSString * const TMLLocalizedStringInfoKey = @"localizedString";
 
 #pragma mark - Options
 NSString * const TMLSourceOptionName = @"source";
 NSString * const TMLLocaleOptionName = @"locale";
 NSString * const TMLLevelOptionName = @"level";
 NSString * const TMLTokenFormatOptionName = @"tokenFormat";
-NSString * const TMLRestorationKeyOptionName = @"localizedKeyPath";
+NSString * const TMLReuseIdentifierOptionName = @"reuseIdentifier";
 NSString * const TMLSenderOptionName = @"sender";
 
 #pragma mark - Tokens

@@ -38,25 +38,6 @@
 
 @implementation UIButton (TML)
 
-- (void)restoreTMLLocalizations {
-    [super restoreTMLLocalizations];
-    if (self.titleLabel != nil) {
-        UILabel *titleLabel = self.titleLabel;
-        if (titleLabel.hidden == YES) {
-            return;
-        }
-        NSDictionary *registry = [titleLabel tmlRegistry];
-        for (NSString *keyPath in registry) {
-            if ([keyPath isEqualToString:@"attributedText"] == YES) {
-                [self setAttributedTitle:[titleLabel attributedText] forState:[self state]];
-            }
-            else if ([keyPath isEqualToString:@"text"] == YES) {
-                [self setTitle:[titleLabel text] forState:[self state]];
-            }
-        }
-    }
-}
-
 - (void)localizeWithTML {
     [super localizeWithTML];
     NSArray *states = @[
@@ -72,12 +53,13 @@
         NSAttributedString *attributedTitle = [self attributedTitleForState:controlState];
         NSString *tmlString = nil;
         NSDictionary *tokens = nil;
+        id localizedString = nil;
         if (attributedTitle.length > 0) {
             if (controlState == UIControlStateNormal
                 || [attributedTitle isEqualToAttributedString:[self attributedTitleForState:UIControlStateNormal]] == NO) {
                 tmlString = [attributedTitle tmlAttributedString:&tokens];
-                NSAttributedString *localizedString = TMLLocalizedAttributedString(tmlString, tokens);
-                [self setAttributedTitle:localizedString forState:[state integerValue]];
+                localizedString = TMLLocalizedAttributedString(tmlString, tokens);
+                [self setAttributedTitle:(NSAttributedString *)localizedString forState:[state integerValue]];
             }
         }
         else {
@@ -85,8 +67,8 @@
             if (controlState == UIControlStateNormal
                 || [title isEqualToString:[self titleForState:UIControlStateNormal]] == NO) {
                 tmlString = title;
-                NSString *localizedString = TMLLocalizedString(tmlString);
-                [self setTitle:localizedString forState:[state integerValue]];
+                localizedString = TMLLocalizedString(tmlString);
+                [self setTitle:(NSString *)localizedString forState:[state integerValue]];
             }
         }
         
@@ -96,14 +78,51 @@
             translationKey = [[TMLTranslationKey alloc] init];
             translationKey.label = tmlString;
             translationKey.locale = [TML defaultLocale];
-            NSString *keyPath = (attributedTitle.length > 0) ? @"attributedText" : @"text";
-            [titleLabel registerTMLTranslationKey:translationKey
-                                           tokens:tokens
-                                          options:nil
-                                   restorationKey:keyPath];
+            
+            NSMutableDictionary *info = [NSMutableDictionary dictionary];
+            info[TMLTranslationKeyInfoKey] = translationKey;
+            if (tokens != nil) {
+                info[TMLTokensInfoKey] = tokens;
+            }
+            if (localizedString != nil) {
+                info[TMLLocalizedStringInfoKey] = localizedString;
+            }
+            
+            NSString *reuseIdentifier = (attributedTitle.length > 0) ? @"attributedText" : @"text";
+            reuseIdentifier = [NSString stringWithFormat:@"%@-%@", reuseIdentifier, state];
+            [titleLabel registerTMLInfo:info forReuseIdentifier:reuseIdentifier];
         }
     }
 }
 
+#pragma mark - TMLReusableLocalization
+
+- (void)updateTMLLocalizedStringWithInfo:(NSDictionary *)info
+                   forReuseIdentifier:(NSString *)reuseIdentifier
+{
+    NSString *keyPath = nil;
+    id newString = nil;
+    NSInteger state = 0;
+    if ([reuseIdentifier hasPrefix:@"attributedText-"] == YES
+        || [reuseIdentifier hasPrefix:@"text-"] == YES) {
+        NSArray *parts = [reuseIdentifier componentsSeparatedByString:@"-"];
+        keyPath = [parts objectAtIndex:0];
+        state = [[parts objectAtIndex:1] integerValue];
+        newString = info[TMLLocalizedStringInfoKey];
+    }
+    if (keyPath != nil
+        && newString != nil) {
+        if ([keyPath isEqualToString:@"attributedText"] == YES) {
+            [self setAttributedTitle:newString forState:state];
+        }
+        else {
+            [self setTitle:newString forState:state];
+        }
+    }
+    else {
+        [super updateTMLLocalizedStringWithInfo:info
+                             forReuseIdentifier:reuseIdentifier];
+    }
+}
 
 @end

@@ -254,14 +254,23 @@
             options:(NSDictionary *)options
 {
     id sender = options[TMLSenderOptionName];
-    NSString *restorationKey = options[TMLRestorationKeyOptionName];
-    if (sender != nil && restorationKey.length > 0) {
-        NSMutableDictionary *restorationOptions = [options mutableCopy];
-        [restorationOptions removeObjectForKey:TMLSenderOptionName];
-        [sender registerTMLTranslationKey:translationKey
-                                   tokens:tokens
-                                  options:[restorationOptions copy]
-                           restorationKey:restorationKey];
+    NSString *reuseIdentifier = options[TMLReuseIdentifierOptionName];
+    NSMutableDictionary *reuseInfo = nil;
+    if (sender != nil && reuseIdentifier != nil) {
+        reuseInfo = [NSMutableDictionary dictionary];
+        if (translationKey != nil) {
+            reuseInfo[TMLTranslationKeyInfoKey] = translationKey;
+        }
+        if (source != nil) {
+            reuseInfo[TMLSourceInfoKey] = source;
+        }
+        if (tokens != nil) {
+            reuseInfo[TMLTokensInfoKey] = tokens;
+        }
+        if (options != nil) {
+            reuseInfo[TMLOptionsInfoKey] = options;
+        }
+        [sender registerTMLInfo:reuseInfo forReuseIdentifier:reuseIdentifier];
     }
     
     NSMutableDictionary *ourTokens = [NSMutableDictionary dictionary];
@@ -277,13 +286,23 @@
         ourTokens[TMLViewingUserTokenName] = viewingUser;
     }
     
+    
+    void(^registerResultBlock)(id result) = ^(id result){
+        if (sender != nil && result != nil) {
+            [sender registerTMLTranslationKey:translationKey forLocalizedString:result];
+        }
+    };
+    
+    id result = nil;
     if (source != nil) {
         NSArray *translations = [source translationsForKey:translationKey.key inLanguage:self.locale];
         if (translations != nil) {
             [translationKey setTranslations:translations];
-            return [translationKey translateToLanguage:self
+            result = [translationKey translateToLanguage:self
                                                 tokens:ourTokens
                                                options:options];
+            registerResultBlock(result);
+            return result;
         }
         [[TML sharedInstance] registerMissingTranslationKey:translationKey forSourceKey:source.key];
     }
@@ -292,18 +311,24 @@
     NSArray *matchedTranslations = [tml translationsForKey:translationKey.key locale:self.locale];
     if (matchedTranslations != nil) {
         [translationKey setTranslations:matchedTranslations];
-        return [translationKey translateToLanguage:self
-                                            tokens:tokens
-                                           options:options];
+        result = [translationKey translateToLanguage:self
+                                              tokens:tokens
+                                             options:options];
+        registerResultBlock(result);
+        return result;
     }
     
     if (![tml isTranslationKeyRegistered:translationKey.key]) {
         [tml registerMissingTranslationKey:translationKey];
     }
     
-    return [translationKey translateToLanguage:self
-                                        tokens:tokens
-                                       options:options];
+    result = [translationKey translateToLanguage:self
+                                          tokens:tokens
+                                         options:options];
+    
+    registerResultBlock(result);
+    
+    return result;
 }
 
 - (NSString *) description {

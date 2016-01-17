@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString * const TMLAttributedStringStylePrefix;
+
 @interface NSAttributedString (TML)
 
 - (NSString *)tmlAttributedString:(NSDictionary **)tokens;

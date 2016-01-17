@@ -38,9 +38,8 @@
 #import "TMLTranslationKey.h"
 #import <objc/runtime.h>
 
-NSString * const TMLRegistryTranslationKeyName = @"translationKey";
-NSString * const TMLRegistryTokensKeyName = @"tokens";
-NSString * const TMLRegistryOptionsKeyName = @"options";
+const NSString * TMLLocalizedStringsRegistryKey = @"TMLLocalizedStringsRegistryKey";
+const NSString * TMLReusableLocalizedStringsRegistryKey = @"TMLReusableLocalizedStringsRegistryKey";
 
 void ensureArrayIndex(NSMutableArray *array, NSInteger index) {
     if (array.count > index) {
@@ -51,19 +50,14 @@ void ensureArrayIndex(NSMutableArray *array, NSInteger index) {
     }
 }
 
+@interface NSObject() <TMLReusableLocalization>
+@end
+
 @implementation NSObject (TML)
 
 + (void)load {
     Method original = class_getInstanceMethod(self, @selector(awakeFromNib));
     Method ours = class_getInstanceMethod(self, @selector(tmlAwakeFromNib));
-    method_exchangeImplementations(original, ours);
-    
-    original = class_getInstanceMethod(self, @selector(valueForKeyPath:));
-    ours = class_getInstanceMethod(self, @selector(tmlValueForKeyPath:));
-    method_exchangeImplementations(original, ours);
-    
-    original = class_getInstanceMethod(self, @selector(setValue:forKeyPath:));
-    ours = class_getInstanceMethod(self, @selector(tmlSetValue:forKeyPath:));
     method_exchangeImplementations(original, ours);
 }
 
@@ -74,118 +68,7 @@ void ensureArrayIndex(NSMutableArray *array, NSInteger index) {
     }
 }
 
-#pragma mark - KVO
-
-- (id)tmlValueForKeyPath:(NSString *)keyPath {
-    id result = nil;
-    if ([TML sharedInstance].configuration.allowCollectionKeyPaths == NO) {
-        result = [self tmlValueForKeyPath:keyPath];
-    }
-    else {
-        NSRange indexRange = [keyPath rangeOfString:@"["];
-        if (indexRange.location == NSNotFound) {
-            return [self tmlValueForKeyPath:keyPath];
-        }
-        NSArray *parts = [keyPath componentsSeparatedByString:@"."];
-        id currentObject = self;
-        NSInteger length = 0;
-        for (NSString *part in parts) {
-            length += part.length + (int)!!length;
-            if (length > indexRange.location) {
-                NSArray *indexParts = [part componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"[]"]];
-                NSString *key = indexParts[0];
-                currentObject = [self valueForKey:key];
-                if ([currentObject isKindOfClass:[NSArray class]] == YES) {
-                    for (NSInteger i=1; i<indexParts.count; i+=2) {
-                        id val = [indexParts objectAtIndex:i];
-                        if ([val isKindOfClass:[NSString class]] == YES
-                            && [(NSString *)val length] > 0) {
-                            NSInteger index = [indexParts[i] integerValue];
-                            currentObject = [currentObject objectAtIndex:index];
-                        }
-                    }
-                }
-            }
-            else {
-                currentObject = [self valueForKey:part];
-            }
-        }
-        result = currentObject;
-    }
-    return result;
-}
-
-- (void)tmlSetValue:(id)value forKeyPath:(NSString *)keyPath {
-    if ([TML sharedInstance].configuration.allowCollectionKeyPaths == NO) {
-        [self tmlSetValue:value forKeyPath:keyPath];
-        return;
-    }
-    
-    NSRange indexRange = [keyPath rangeOfString:@"["];
-    if (indexRange.location == NSNotFound) {
-        [self tmlSetValue:value forKeyPath:keyPath];
-        return;
-    }
-    NSArray *parts = [keyPath componentsSeparatedByString:@"."];
-    id currentObject = self;
-    id previousObject = self;
-    id previousKey = nil;
-    NSInteger length = 0;
-    for (NSString *part in parts) {
-        length += part.length + (int)!!length;
-        if (length > indexRange.location) {
-            NSArray *indexParts = [part componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"[]"]];
-            NSString *key = indexParts[0];
-            previousObject = currentObject;
-            previousKey = key;
-            currentObject = [[currentObject valueForKey:key] mutableCopy];
-            if (currentObject == nil) {
-                currentObject = [NSMutableArray array];
-            }
-            [previousObject setValue:currentObject forKey:previousKey];
-            if ([currentObject isKindOfClass:[NSArray class]] == NO) {
-                return;
-            }
-            for (NSInteger i=1; i<indexParts.count; i+=2) {
-                BOOL isLast = (i+2) >= indexParts.count;
-                NSInteger index = [indexParts[i] integerValue];
-                if (isLast == NO) {
-                    previousObject = currentObject;
-                    previousKey = [NSNumber numberWithInteger:index];
-                    if ([(NSArray *)currentObject count] > index) {
-                        currentObject = [[currentObject objectAtIndex:index] mutableCopy];
-                    }
-                    else {
-                        currentObject = nil;
-                    }
-                    if (currentObject == nil) {
-                        currentObject = [NSMutableArray array];
-                    }
-                    if ([currentObject isKindOfClass:[NSArray class]] == NO) {
-                        return;
-                    }
-                    ensureArrayIndex(previousObject, index);
-                    [(NSMutableArray *)previousObject setObject:currentObject atIndexedSubscript:index];
-                }
-                else {
-                    ensureArrayIndex(currentObject, index);
-                    [currentObject setObject:value atIndexedSubscript:index];
-                    if (previousObject != nil && [previousKey isKindOfClass:[NSNumber class]] == YES) {
-                        [previousObject setObject:currentObject atIndex:[previousKey integerValue]];
-                    }
-                    else if (previousKey != nil && previousKey != nil) {
-                        [previousObject setValue:currentObject forKey:previousKey];
-                    }
-                }
-            }
-        }
-        else {
-            currentObject = [self valueForKey:part];
-        }
-    }
-}
-
-#pragma mark - Localization
+#pragma mark - Automatic Localization Support
 
 - (NSSet *)tmlLocalizableKeyPaths {
     return nil;
@@ -223,115 +106,37 @@ void ensureArrayIndex(NSMutableArray *array, NSInteger index) {
             TMLDebug(@"Could not get value for keyPath '%@': %@", keyPath, e);
         }
         
+        NSMutableDictionary *reuseInfo = nil;
         if ([localizableString isKindOfClass:[NSAttributedString class]] == YES) {
             NSDictionary *tokens = nil;
             NSAttributedString *attributedString = (NSAttributedString *)localizableString;
             localizableString = [attributedString tmlAttributedString:&tokens];
-            [self setValue:TMLLocalizedAttributedString(localizableString, tokens, keyPath) forKey:keyPath];
+            NSAttributedString *localizedString = TMLLocalizedAttributedString(localizableString, tokens);
+            [self setValue:localizedString forKey:keyPath];
+            
+            reuseInfo = [NSMutableDictionary dictionary];
+            reuseInfo[TMLLocalizedStringInfoKey] = localizedString;
+            TMLTranslationKey *translationKey = [[TMLTranslationKey alloc] initWithLabel:localizableString description:nil];
+            translationKey.locale = [TML defaultLocale];
+            reuseInfo[TMLTranslationKeyInfoKey] = translationKey;
+            if (tokens != nil) {
+                reuseInfo[TMLTokensInfoKey] = tokens;
+            }
+            NSDictionary *options = @{TMLTokenFormatOptionName: TMLAttributedTokenFormatString};
+            reuseInfo[TMLOptionsInfoKey] = options;
         }
         else if ([localizableString isKindOfClass:[NSString class]] == YES) {
-            [self setValue:TMLLocalizedString(localizableString, keyPath) forKey:keyPath];
-        }
-    }
-}
-
-#pragma mark - Restoration
-
-- (NSMutableDictionary *)tmlRegistry {
-    NSMutableDictionary *registry = objc_getAssociatedObject(self, @"_tmlRegistry");
-    if (registry == nil) {
-        registry = [NSMutableDictionary dictionary];
-        objc_setAssociatedObject(self, @"_tmlRegistry", registry, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-    return registry;
-}
-
-- (void)registerTMLTranslationKey:(TMLTranslationKey *)translationKey
-                           tokens:(NSDictionary *)tokens
-                          options:(NSDictionary *)options
-                   restorationKey:(NSString *)restorationKey
-{
-    NSMutableDictionary *registry = [self tmlRegistry];
-    
-    NSMutableDictionary *payload = [NSMutableDictionary dictionary];
-    payload[TMLRegistryTranslationKeyName] = translationKey;
-    if (tokens != nil) {
-        payload[TMLRegistryTokensKeyName] = tokens;
-    }
-    if (options != nil) {
-        payload[TMLRegistryOptionsKeyName] = options;
-    }
-    
-    registry[restorationKey] = payload;
-}
-
-- (BOOL)isTMLTranslationKeyRegisteredForKeyPath:(NSString *)keyPath {
-    NSMutableDictionary *registry = [self tmlRegistry];
-    return registry[keyPath] != nil;
-}
-
-- (void)restoreTMLLocalizations {
-    self.accessibilityLanguage = [TML currentLocale];
-    
-    NSMutableDictionary *registry = [self tmlRegistry];
-    
-    if (registry.count == 0) {
-        [self generateTMLLocalizationRegistry];
-    }
-    
-    for (NSString *restorationKey in registry) {
-        NSDictionary *payload = registry[restorationKey];
-        if (payload == nil) {
-            continue;
-        }
-        TMLTranslationKey *translationKey = payload[TMLRegistryTranslationKeyName];
-        if (translationKey == nil
-            || translationKey.label == nil) {
-            continue;
-        }
-        NSDictionary *tokens = payload[TMLRegistryTokensKeyName];
-        NSDictionary *options = payload[TMLRegistryOptionsKeyName];
-        TML *tml = [TML sharedInstance];
-        id result = [[tml currentLanguage] translate:translationKey.label
-                                         description:translationKey.keyDescription
-                                              tokens:tokens
-                                             options:options];
-        BOOL success = NO;
-        if (result != nil) {
-            @try {
-                id currentValue = [self valueForKey:restorationKey];
-                if ([currentValue isKindOfClass:[NSAttributedString class]] == YES
-                    && [result isKindOfClass:[NSString class]] == YES) {
-                    TMLWarn(@"Expected attributed string, but got regular string");
-                    if (tokens != nil) {
-                        TMLAttributedDecorationTokenizer *tokenizer = [[TMLAttributedDecorationTokenizer alloc] initWithLabel:result andAllowedTokenNames:[tokens allKeys]];
-                        result = [tokenizer substituteTokensInLabelUsingData:tokens];
-                    }
-                    if ([result isKindOfClass:[NSString class]] == YES) {
-                        NSRange currentValueRange;
-                        NSDictionary *attrs = [currentValue attributesAtIndex:0 effectiveRange:&currentValueRange];
-                        result = [[NSAttributedString alloc] initWithString:result attributes:attrs];
-                    }
-                }
-                [self setValue:result forKeyPath:restorationKey];
-                success = YES;
-            }
-            @catch (NSException *exception) {
-                TMLError(@"Error restoring translation key '%@' with restorationKey '%@': %@", translationKey.key, restorationKey, exception);
-            }
+            NSString *localizedString = TMLLocalizedString(localizableString);
+            [self setValue:localizedString forKey:keyPath];
+            reuseInfo = [NSMutableDictionary dictionary];
+            reuseInfo[TMLLocalizedStringInfoKey] = localizedString;
+            TMLTranslationKey *translationKey = [[TMLTranslationKey alloc] initWithLabel:localizableString description:nil];
+            translationKey.locale = [TML defaultLocale];
+            reuseInfo[TMLTranslationKeyInfoKey] = translationKey;
         }
         
-        if (success == NO) {
-            result = [[tml defaultLanguage] translate:translationKey.label
-                                          description:translationKey.keyDescription
-                                               tokens:tokens
-                                              options:options];
-            @try {
-                [self setValue:result forKeyPath:restorationKey];
-            }
-            @catch (NSException *exception) {
-                TMLError(@"Error restoring defaulting translation key '%@' with restorationKey '%@': %@", translationKey.key, restorationKey, exception);
-            }
+        if (reuseInfo != nil) {
+            [self registerTMLInfo:reuseInfo forReuseIdentifier:keyPath];
         }
     }
 }
@@ -375,10 +180,132 @@ void ensureArrayIndex(NSMutableArray *array, NSInteger index) {
             }
         }
         if (translationKey != nil) {
-            [self registerTMLTranslationKey:translationKey
-                                     tokens:tokens
-                                    options:nil
-                             restorationKey:keyPath];
+            NSMutableDictionary *info = [NSMutableDictionary dictionary];
+            info[TMLTranslationKeyInfoKey] = translationKey;
+            if (tokens != nil) {
+                info[TMLTokensInfoKey] = tokens;
+            }
+            [self registerTMLInfo:info forReuseIdentifier:keyPath];
+        }
+    }
+}
+
+#pragma mark - Localization Reuse
+
+- (NSMutableDictionary *)tmlRegistry {
+    NSMutableDictionary *registry = objc_getAssociatedObject(self, @"_tmlRegistry");
+    if (registry == nil) {
+        registry = [NSMutableDictionary dictionary];
+        registry[TMLLocalizedStringsRegistryKey] = [NSMutableDictionary dictionary];
+        registry[TMLReusableLocalizedStringsRegistryKey] = [NSMutableDictionary dictionary];
+        objc_setAssociatedObject(self, @"_tmlRegistry", registry, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    return registry;
+}
+
+- (void)registerTMLTranslationKey:(TMLTranslationKey *)translationKey forLocalizedString:(id)string {
+    NSMutableDictionary *registry = [self tmlRegistry][TMLLocalizedStringsRegistryKey];
+    if (string == nil) {
+        [registry removeObjectForKey:string];
+    }
+    else {
+        registry[string] = translationKey;
+    }
+    [[TML sharedInstance] registerObjectWithLocalizedStrings:self];
+}
+
+- (TMLTranslationKey *)registeredTranslationKeyForLocalizedString:(id)string {
+    NSMutableDictionary *registry = [self tmlRegistry][TMLLocalizedStringsRegistryKey];
+    return registry[string];
+}
+
+- (void)registerTMLInfo:(NSDictionary *)info forReuseIdentifier:(NSString *)reuseIdentifier {
+    NSMutableDictionary *registry = [self tmlRegistry][TMLReusableLocalizedStringsRegistryKey];
+    if (info == nil) {
+        [registry removeObjectForKey:reuseIdentifier];
+    }
+    else {
+        registry[reuseIdentifier] = info;
+    }
+    [[TML sharedInstance] registerObjectWithReusableLocalizedStrings:self];
+}
+
+- (BOOL)hasTMLInfoForReuseIdentifier:(NSString *)reuseIdentifier {
+    return [self tmlInfoForReuseIdentifier:reuseIdentifier] != nil;
+}
+
+- (NSDictionary *)tmlInfoForReuseIdentifier:(NSString *)reuseIdentifier {
+    NSMutableDictionary *registry = [self tmlRegistry][TMLReusableLocalizedStringsRegistryKey];
+    return registry[reuseIdentifier];
+}
+
+- (void)updateReusableTMLStrings {
+    // TODO: this should probably be getting set elsewhere
+    self.accessibilityLanguage = [TML currentLocale];
+    
+    NSMutableDictionary *registry = [self tmlRegistry][TMLReusableLocalizedStringsRegistryKey];
+    for (NSString *reuseIdentifier in registry) {
+        NSMutableDictionary *info = [registry[reuseIdentifier] mutableCopy];
+        if (info == nil) {
+            continue;
+        }
+        
+        TMLTranslationKey *translationKey = info[TMLTranslationKeyInfoKey];
+        if (translationKey == nil
+            || translationKey.label == nil) {
+            continue;
+        }
+        
+        TMLSource *source = info[TMLSourceInfoKey];
+        NSDictionary *tokens = info[TMLTokensInfoKey];
+        NSDictionary *options = info[TMLOptionsInfoKey];
+        id result = [[[TML sharedInstance] currentLanguage] translateKey:translationKey
+                                                                  source:source
+                                                                  tokens:tokens
+                                                                 options:options];
+        
+        if (!result) {
+            continue;
+        }
+        
+        // sanity check for return type
+        NSString *tokenFormat = options[TMLTokenFormatOptionName];
+        if ([tokenFormat isEqualToString:TMLAttributedTokenFormatString] == YES
+            && [result isKindOfClass:[NSString class]] == YES) {
+            TMLWarn(@"Expected attributed string, but got regular string");
+            if (tokens != nil) {
+                TMLAttributedDecorationTokenizer *tokenizer = [[TMLAttributedDecorationTokenizer alloc] initWithLabel:result andAllowedTokenNames:[tokens allKeys]];
+                result = [tokenizer substituteTokensInLabelUsingData:tokens];
+            }
+        }
+        else if (tokenFormat == nil && [result isKindOfClass:[NSAttributedString class]] == YES) {
+            result = [(NSAttributedString *)result string];
+        }
+        
+        info[TMLLocalizedStringInfoKey] = result;
+        [self updateTMLLocalizedStringWithInfo:info forReuseIdentifier:reuseIdentifier];
+    }
+}
+
+- (void)updateTMLLocalizedStringWithInfo:(NSDictionary *)info
+                   forReuseIdentifier:(NSString *)reuseIdentifier
+{
+    id currentValue = nil;
+    @try {
+        currentValue = [self valueForKeyPath:reuseIdentifier];
+    }
+    @catch (NSException *e){
+        TMLDebug(@"Cannot automatically update property %@.%@. Cannot retrieve current value: %@", NSStringFromClass([self class]), reuseIdentifier, e);
+        return;
+    }
+    
+    id newValue = info[TMLLocalizedStringInfoKey];
+    if (newValue != nil) {
+        @try {
+            [self setValue:newValue forKeyPath:reuseIdentifier];
+        }
+        @catch (NSException *e) {
+            TMLDebug(@"Cannot automatically update property %@.%@. Cannot set new value: %@", NSStringFromClass([self class]), reuseIdentifier, e);
         }
     }
 }

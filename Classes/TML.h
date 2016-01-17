@@ -297,6 +297,10 @@
 
 - (BOOL) hasLocalTranslationsForLocale:(NSString *)locale;
 
+- (void)registerObjectWithLocalizedStrings:(id)object;
+
+- (void)registerObjectWithReusableLocalizedStrings:(id)object;
+
 @property(nonatomic, readonly, getter=isInlineTranslationsEnabled) BOOL inlineTranslationsEnabled;
 
 - (void) removeLocalizationData;
@@ -327,14 +331,26 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...);
 #define TMLLocalizedString(string,...)\
 (NSString *)TMLLocalize(@{TMLSenderOptionName: self}, string, ##__VA_ARGS__, NULL)
 
+#define TMLLocalizedStringWithReuseIdenitifer(string, reuseIdentifier, ...)\
+(NSString *)TMLLocalize(@{TMLSenderOptionName: self, TMLReuseIdentifierOptionName: reuseIdentifier}, string, ##__VA_ARGS__, NULL)
+
 #define TMLLocalizedAttributedString(string,...)\
 (NSAttributedString *)TMLLocalize(@{TMLSenderOptionName: self, TMLTokenFormatOptionName: TMLAttributedTokenFormatString}, string, ##__VA_ARGS__, NULL)
+
+#define TMLLocalizedAttributedStringWithReuseIdenitifer(string, reuseIdentifier, ...)\
+(NSAttributedString *)TMLLocalize(@{TMLSenderOptionName: self, TMLReuseIdentifierOptionName: reuseIdentifier, TMLTokenFormatOptionName: TMLAttributedTokenFormatString}, string, ##__VA_ARGS__, NULL)
 
 #define TMLLocalizedDate(date, format, ...) \
 (NSString *)TMLLocalizeDate(@{TMLSenderOptionName: self}, date, format, ##__VA_ARGS__, NULL)
 
+#define TMLLocalizedDateWithReuseIdenitifer(date, format, reuseIdentifier, ...) \
+(NSString *)TMLLocalizeDate(@{TMLSenderOptionName: self, TMLReuseIdentifierOptionName: reuseIdentifier}, date, format, ##__VA_ARGS__, NULL)
+
 #define TMLLocalizedAttributedDate(date, format, ...) \
 (NSString *)TMLLocalizeDate(@{TMLSenderOptionName: self, TMLTokenFormatOptionName: TMLAttributedTokenFormatString}, date, format, ##__VA_ARGS__, NULL)
+
+#define TMLLocalizedAttributedDateWithReuseIdenitifer(date, format, reuseIdentifier, ...) \
+(NSString *)TMLLocalizeDate(@{TMLSenderOptionName: self, TMLReuseIdentifierOptionName: reuseIdentifier, TMLTokenFormatOptionName: TMLAttributedTokenFormatString}, date, format, ##__VA_ARGS__, NULL)
 
 #define TMLBeginSource(name) \
     [TML beginBlockWithOptions: @{TMLSourceOptionName: name}];

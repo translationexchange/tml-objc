@@ -42,16 +42,16 @@
     return [keys copy];
 }
 
-- (void)restoreTMLLocalizations {
-    [super restoreTMLLocalizations];
-    if ([self isViewLoaded] == YES) {
-        [self.view restoreTMLLocalizations];
+- (void)updateTMLLocalizedStringWithInfo:(NSDictionary *)info
+                   forReuseIdentifier:(NSString *)reuseIdentifier
+{
+    if ([reuseIdentifier isEqualToString:@"title"] == YES) {
+        NSString *newTitle = info[TMLLocalizedStringInfoKey];
+        self.title = newTitle;
     }
-    for (UIViewController *subController in self.childViewControllers) {
-        [subController restoreTMLLocalizations];
-    }
-    if ([self isFirstResponder] == YES) {
-        [self reloadInputViews];
+    else {
+        [super updateTMLLocalizedStringWithInfo:info
+                             forReuseIdentifier:reuseIdentifier];
     }
 }
 

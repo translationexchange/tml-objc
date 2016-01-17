@@ -70,7 +70,7 @@
     
     self.title = TMLLocalizedString(@"Translate");
     
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:TMLLocalizedString(@"Done", @"title") style:UIBarButtonItemStylePlain target:self action:@selector(dismiss:)];
+    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:TMLLocalizedString(@"Done") style:UIBarButtonItemStylePlain target:self action:@selector(dismiss:)];
     self.navigationItem.leftBarButtonItem = doneButton;
     
     UIBarButtonItem *reloadButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload:)];

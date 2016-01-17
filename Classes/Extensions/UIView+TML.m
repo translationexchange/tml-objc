@@ -13,27 +13,12 @@
 
 #pragma mark - Localization
 
-- (void)restoreTMLLocalizations {
-    [super restoreTMLLocalizations];
-    for (UIView *subview in self.subviews) {
-        [subview restoreTMLLocalizations];
-    }
+- (void)updateReusableTMLStrings {
+    [super updateReusableTMLStrings];
     [self setNeedsLayout];
 }
 
 #pragma mark - Supporting Methods
-- (id)tmlFindFirstResponder {
-    if ([self isFirstResponder] == YES) {
-        return self;
-    }
-    for (UIView *subview in self.subviews) {
-        id responder = [subview tmlFindFirstResponder];
-        if (responder != nil) {
-            return responder;
-        }
-    }
-    return nil;
-}
 
 - (void)tmlIterateSubviewsWithBlock:(void (^)(UIView *view, BOOL *skip, BOOL *stop))block {
     __block BOOL shouldStop = NO;

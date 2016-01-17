@@ -31,76 +31,12 @@
 #import "ApplicationViewController.h"
 #import "IIViewDeckController.h"
 
-@interface ApplicationViewController () {
-    BOOL _observingTMLNotifications;
-}
-
-@end
-
 @implementation ApplicationViewController
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [self localize];
-    [self setupTMLNotificationObserving];
-}
-
-- (void)willMoveToParentViewController:(UIViewController *)parent {
-    if (parent == nil) {
-        [self teardownTMLNotificationObserving];
-    }
-    else {
-        [self setupTMLNotificationObserving];
-    }
-}
-
-#pragma mark - Notifications
-- (void)setupTMLNotificationObserving {
-    if (_observingTMLNotifications == YES) {
-        return;
-    }
-    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
-    [notificationCenter addObserver:self
-                           selector:@selector(tmlTranslationsLoaded:)
-                               name:TMLLanguageChangedNotification
-                             object:nil];
-    [notificationCenter addObserver:self selector:@selector(tmlBundleDidChange:)
-                               name:TMLLocalizationDataChangedNotification
-                             object:nil];
-    [notificationCenter addObserver:self
-                           selector:@selector(tmlDidFinishSync:)
-                               name:TMLDidFinishSyncNotification
-                             object:nil];
-    _observingTMLNotifications = YES;
-}
-
-- (void)teardownTMLNotificationObserving {
-    if (_observingTMLNotifications == NO) {
-        return;
-    }
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-    _observingTMLNotifications = NO;
-}
 
 - (IBAction)toggleMenu:(id)sender {
     [self.viewDeckController toggleLeftViewAnimated:YES];
 }
 
-- (void)localize {
-//    TMLLocalizeView(self.view);
-}
-
-- (void)tmlTranslationsLoaded:(NSNotification *)aNotification {
-    [self localize];
-}
-
-- (void)tmlBundleDidChange:(NSNotification *)aNotification {
-    [self localize];
-}
-
-- (void)tmlDidFinishSync:(NSNotification *)aNotification {
-    [self localize];
-}
 
 @end
 

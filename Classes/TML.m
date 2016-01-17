@@ -52,30 +52,20 @@
 
 /**
  *  Returns localized version of the string argument.
- *  The first argument is a dictionary of options, normally passed in by macros.
- *  The second argument is expected to have TML string that needs to be localized,
- *  and the rest of the arguments can be: tokens, restoration key, user options, or description.
  *
- *  The order is only relevant with respect to data types - that is, tokens (NSDictionary)
- *  will be processed before user options (NSDictionary), and restoration key (NSString) before description (NSString).
+ *  The first argument is a dictionary of default options, normally passed in by macros.
+ *  The second argument is expected to have TML string that is to be localized, 
+ *  followed by dictionary of tokens (optional), followed by dictionary of options (optional).
  *
- *  In the event only a single secondary NSString argument is provided - a check is made to see if options contain
- *  sender object and if that sender responds to the keyPath indicated in that string. If so - it's used as a restoration
- *  key path, otherwise - as a description.
- *  
- *  In the event user options are given among varargs, options and user options will be merged, with user options
- *  overriding values in options, but only after this method has parsed out key information from options.
- *
- *  @param options NSDictionary of options
+ *  @param options NSDictionary Default options
  *  @param string  TML string
- *  @param ...     NSDictionary *tokens, NSString *restorationKeyPath, NSString *description, NDictionary *userOptions
+ *  @param ...     NSString *description, NSDictionary *tokens, NSDictionary *userOptions
  *
  *  @return Localized NSString or NSAttributedString, depending on token format given in options. 
  *  If options do not specify token format - NSString is returned.
  */
 id TMLLocalize(NSDictionary *options, NSString *string, ...) {
     NSDictionary *tokens;
-    NSString *keyPath;
     NSString *description;
     NSDictionary *userOpts;
     
@@ -92,10 +82,7 @@ id TMLLocalize(NSDictionary *options, NSString *string, ...) {
             }
         }
         else if ([arg isKindOfClass:[NSString class]] == YES) {
-            if (!keyPath) {
-                keyPath = arg;
-            }
-            else if (!description) {
+            if (!description) {
                 description = arg;
             }
         }
@@ -108,21 +95,6 @@ id TMLLocalize(NSDictionary *options, NSString *string, ...) {
     }
     
     NSString *decorationFormat = options[TMLTokenFormatOptionName];
-    if (keyPath && !description) {
-        id sender = ourOpts[TMLSenderOptionName];
-        id test;
-        @try {
-            test = [sender valueForKeyPath:keyPath];
-        }
-        @catch (NSException *exception) {
-            description = keyPath;
-            keyPath = nil;
-        }
-    }
-    
-    if (keyPath != nil) {
-        ourOpts[TMLRestorationKeyOptionName] = keyPath;
-    }
     
     if (userOpts != nil) {
         [ourOpts addEntriesFromDictionary:userOpts];
@@ -145,7 +117,6 @@ id TMLLocalize(NSDictionary *options, NSString *string, ...) {
 }
 
 id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
-    NSString *keyPath;
     NSString *description;
     
     va_list args;
@@ -155,24 +126,12 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
         if (!description && [arg isKindOfClass:[NSString class]] == YES) {
             description = arg;
         }
-        else if (description && !keyPath && [arg isKindOfClass:[NSString class]] == YES) {
-            keyPath = description;
-            description = arg;
-        }
     }
     va_end(args);
-    
-    if (description && !keyPath) {
-        keyPath = description;
-    }
     
     NSMutableDictionary *ourOpts = [options mutableCopy];
     if (ourOpts == nil) {
         ourOpts = [NSMutableDictionary dictionary];
-    }
-    
-    if (keyPath != nil) {
-        ourOpts[TMLRestorationKeyOptionName] = keyPath;
     }
     
     NSString *dateFormat = format;
@@ -207,6 +166,8 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     UIGestureRecognizer *_translationActivationGestureRecognizer;
     UIGestureRecognizer *_inlineTranslationGestureRecognizer;
     TMLTranslationActivationView *_translationActivationView;
+    NSHashTable *_objectsWithLocalizedStrings;
+    NSHashTable *_objectsWithReusableLocalizedStrings;
 }
 @property(strong, nonatomic) TMLConfiguration *configuration;
 @property(strong, nonatomic) TMLAPIClient *apiClient;
@@ -261,6 +222,8 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 
 - (instancetype) initWithConfiguration:(TMLConfiguration *)configuration {
     if (self == [super init]) {
+        _objectsWithLocalizedStrings = [NSHashTable weakObjectsHashTable];
+        _objectsWithReusableLocalizedStrings = [NSHashTable weakObjectsHashTable];
         self.configuration = configuration;
     }
     return self;
@@ -374,14 +337,18 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
                     TMLError(@"Could not preload current locale '%@' into newly selected bundle: %@", ourLocale, error);
                 }
                 else {
-                    [self restoreTMLLocalizations];
+                    [self updateReusableTMLStringsOfAllRegisteredObjects];
                 }
             }];
         }
     }
+    
+    // TODO: this should probably be getting handled elsewhere
     if ([self.application isInlineTranslationsEnabled] == NO) {
         self.configuration.translationEnabled = NO;
     }
+    
+    // TODO: this should get posted ONLY if we're chaning the bundle
     [[NSNotificationCenter defaultCenter] postNotificationName:TMLLocalizationDataChangedNotification object:nil];
 }
 
@@ -1072,102 +1039,74 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
         }];
     }
     
-    [self translateLocalizablePropertiesOfView:hitView];
-}
-
-#pragma mark - Translating view properties
-
-- (void)translateLocalizablePropertiesOfView:(UIView *)view {
-    if (view == nil) {
-        return;
-    }
-    
-    NSDictionary *translationKeys = [view tmlTranslationKeysAndPaths];
-    NSArray *allKeyPaths = [translationKeys allKeys];
-    if (allKeyPaths.count == 0) {
-        allKeyPaths = [[view tmlLocalizableKeyPaths] allObjects];
-    }
-    
-    if (allKeyPaths.count == 1) {
-        [self translateView:view valueKeyPath:[allKeyPaths firstObject]];
-    }
-    else {
-        // TODO: present chooser
-    }
-}
-
-- (void)translateView:(UIView *)view valueKeyPath:(NSString *)keyPath {
-    NSString *key = [view tmlTranslationKeyForKeyPath:keyPath];
-    
-    if (key == nil || [self isTranslationKeyRegistered:key] == NO) {
-        id value = [view valueForKeyPath:keyPath];
-        NSString *valueString = nil;
-        NSString *shortString = nil;
-        if ([value isKindOfClass:[NSString class]] == YES) {
-            valueString = value;
-            shortString = value;
-        }
-        else if ([value isKindOfClass:[NSAttributedString class]] == YES) {
-            NSAttributedString *attributedValue = (NSAttributedString *)value;
-            valueString = [attributedValue tmlAttributedString:nil];
-            shortString = [attributedValue string];
+    TMLTranslationKey *translationKey = nil;
+    id localizedString = nil;
+    NSString *tmlAttributedString = nil;
+    for (NSString *path in localizablePaths) {
+        // try reuse info first
+        NSDictionary *reuseInfo = [hitView tmlInfoForReuseIdentifier:path];
+        translationKey = reuseInfo[TMLTranslationKeyInfoKey];
+        if (translationKey != nil) {
+            break;
         }
         
-        TMLTranslationKey *translationKey = [[TMLTranslationKey alloc] init];
-        translationKey.locale = [TML defaultLocale];
-        translationKey.label = valueString;
-        
-        NSDictionary *tokens = nil;
-        if ([value isKindOfClass:[NSAttributedString class]] == YES) {
-            [(NSAttributedString *)value tmlAttributedString:&tokens];
+        @try {
+            localizedString = [hitView valueForKeyPath:path];
+        }
+        @catch(NSException *e) {
         }
         
-        if ([[TML sharedInstance] isTranslationKeyRegistered:translationKey.key] == YES) {
-            if ([view isTMLTranslationKeyRegisteredForKeyPath:keyPath] == NO) {
-                [view registerTMLTranslationKey:translationKey tokens:tokens options:nil restorationKey:keyPath];
+        if (localizedString != nil) {
+            translationKey = [hitView registeredTranslationKeyForLocalizedString:localizedString];
+            if (translationKey == nil && [localizedString isKindOfClass:[NSAttributedString class]] == YES) {
+                tmlAttributedString = [(NSAttributedString *)localizedString tmlAttributedString:nil];
+                translationKey = [hitView registeredTranslationKeyForLocalizedString:tmlAttributedString];
             }
-            [self presentTranslatorViewControllerWithTranslationKey:key];
-        }
-        else {
-            NSInteger maxChars = 32;
-            shortString = (shortString.length > maxChars) ? [[shortString substringToIndex:maxChars] stringByAppendingString:@"..."] : shortString;
-            NSString *message = TMLLocalizedString(@"Could not find translation key for string \"{value}\"", @{@"value": shortString});
-            UIAlertController *alert = [UIAlertController alertControllerWithTitle:TMLLocalizedString(@"Add new string?")
-                                                                           message:message
-                                                                    preferredStyle:UIAlertControllerStyleAlert];
-            UIAlertAction *acceptAction = [UIAlertAction actionWithTitle:TMLLocalizedString(@"Yes") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                NSMutableDictionary *payload = [NSMutableDictionary dictionary];
-                NSString *source = [self currentSource];
-                payload[source] = [NSSet setWithObject:translationKey];
-                TMLInfo(@"Registering new translation key '%@' for user translation", translationKey.key);
-                [self.apiClient registerTranslationKeysBySourceKey:payload completionBlock:^(BOOL success, NSError *error) {
-                    if (success == YES) {
-                        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.33 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                            [view registerTMLTranslationKey:translationKey tokens:tokens options:nil restorationKey:keyPath];
-                            [self presentTranslatorViewControllerWithTranslationKey:key];
-                        });
-                    }
-                    else {
-                        [self showError:error];
-                    }
-                }];
-            }];
-            [alert addAction:acceptAction];
             
-            UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:TMLLocalizedString(@"Cancel") style:UIAlertActionStyleCancel handler:nil];
-            [alert addAction:cancelAction];
-            [self presentAlertController:alert];
+            if (translationKey == nil) {
+                translationKey = [self findRegisteredTranslationKeyForLocalizedString:localizedString];
+            }
+            if (translationKey == nil && [localizedString isKindOfClass:[NSAttributedString class]] == YES) {
+                translationKey = [self findRegisteredTranslationKeyForLocalizedString:tmlAttributedString];
+            }
         }
+        if (translationKey != nil) {
+            break;
+        }
+    }
+    
+// TODO: create new translation key, register it via API and then pull up translator
+//    if (translationKey == nil && localizedString != nil) {
+//        NSString *guessString = nil;
+//        if ([localizedString isKindOfClass:[NSAttributedString class]] == YES) {
+//            guessString = [localizedString tmlAttributedString:nil];
+//        }
+//        else if ([localizedString isKindOfClass:[NSString class]] == YES) {
+//            guessString = localizedString;
+//        }
+//        if (guessString != nil) {
+//            translationKey = [[TMLTranslationKey alloc] initWithLabel:guessString description:nil];
+//        }
+//    }
+    
+    if (translationKey != nil) {
+        [self presentTranslatorViewControllerWithTranslationKey:translationKey.key];
     }
     else {
-        if (view.tmlRegistry.count == 0) {
-            [view generateTMLLocalizationRegistry];
-        }
-        if (view.tmlRegistry.count == 0) {
-            [view localizeWithTML];
-        }
-        [self presentTranslatorViewControllerWithTranslationKey:key];
+        TMLDebug(@"Could not determine translation key for translating a target string");
     }
+}
+
+- (TMLTranslationKey *)findRegisteredTranslationKeyForLocalizedString:(id)string {
+    NSArray *registeredObjects = [_objectsWithLocalizedStrings allObjects];
+    TMLTranslationKey *result = nil;
+    for (id object in registeredObjects) {
+        result = [object registeredTranslationKeyForLocalizedString:string];
+        if (result != nil) {
+            break;
+        }
+    }
+    return result;
 }
 
 #pragma mark - Showing Errors
@@ -1398,7 +1337,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 }
 
 - (void)didChangeFromLocale:(NSString *)previousLocale {
-    [self restoreTMLLocalizations];
+    [self updateReusableTMLStringsOfAllRegisteredObjects];
     NSDictionary *info = @{
                            TMLPreviousLocaleUserInfoKey: previousLocale
                            };
@@ -1443,37 +1382,32 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     }
 }
 
-- (void)restoreTMLLocalizations {
-    NSMutableSet *toRestore = [NSMutableSet set];
-    UIWindow *keyWindow = [[UIApplication sharedApplication] keyWindow];
-    if (keyWindow != nil) {
-        [toRestore addObject:keyWindow];
-    }
-    
-    UIViewController *rootViewController = [keyWindow rootViewController];
-    if (rootViewController != nil) {
-        [toRestore addObject:rootViewController];
-    }
-    
-    id firstResponder = [keyWindow tmlFindFirstResponder];
-    if (firstResponder != nil) {
-        [toRestore addObject:firstResponder];
-    }
-    
-    for (id obj in toRestore) {
-        if (obj == self) {
-            continue;
-        }
-        [obj restoreTMLLocalizations];
-    }
-}
-
-- (BOOL) hasLocalTranslationsForLocale:(NSString *)locale {
+- (BOOL)hasLocalTranslationsForLocale:(NSString *)locale {
     if (locale == nil) {
         return NO;
     }
     TMLBundle *bundle = self.currentBundle;
     return [bundle translationsForLocale:locale] != nil;
+}
+
+- (void)registerObjectWithLocalizedStrings:(id)object {
+    [_objectsWithLocalizedStrings addObject:object];
+}
+
+#pragma mark - Reusable Localized Strings
+
+- (void)updateReusableTMLStringsOfAllRegisteredObjects {
+    NSArray *toRestore = [_objectsWithReusableLocalizedStrings allObjects];
+    for (id object in toRestore) {
+        if (object == self) {
+            continue;
+        }
+        [object updateReusableTMLStrings];
+    }
+}
+
+- (void)registerObjectWithReusableLocalizedStrings:(id)object {
+    [_objectsWithReusableLocalizedStrings addObject:object];
 }
 
 #pragma mark - Utility Methods

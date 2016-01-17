@@ -31,15 +31,19 @@
 #import "ApplicationTableViewController.h"
 #import "IIViewDeckController.h"
 
-@interface ApplicationTableViewController ()
-
-@end
-
 @implementation ApplicationTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[TML sharedInstance] registerObjectWithReusableLocalizedStrings:self];
 }
+
+- (void)updateReusableTMLStrings {
+    [self.itemsTableView reloadData];
+    [super updateReusableTMLStrings];
+}
+
+#pragma mark -
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return [self.items count];
@@ -89,11 +93,6 @@
             controller.centerController = [mainStoryboard instantiateViewControllerWithIdentifier: selectedController];
         }];
     }
-}
-
-- (void) translationsLoaded {
-    [self localize];
-    [self.itemsTableView reloadData];
 }
 
 @end

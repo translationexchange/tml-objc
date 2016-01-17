@@ -25,13 +25,18 @@ extern NSString * const TMLLocalizationUpdatesInstalledNotification;
 
 #pragma mark - UserInfo Keys
 extern NSString * const TMLPreviousLocaleUserInfoKey;
+extern NSString * const TMLTokensInfoKey;
+extern NSString * const TMLOptionsInfoKey;
+extern NSString * const TMLTranslationKeyInfoKey;
+extern NSString * const TMLSourceInfoKey;
+extern NSString * const TMLLocalizedStringInfoKey;
 
 #pragma mark - Options
 extern NSString * const TMLSourceOptionName;
 extern NSString * const TMLLocaleOptionName;
 extern NSString * const TMLLevelOptionName;
 extern NSString * const TMLTokenFormatOptionName;
-extern NSString * const TMLRestorationKeyOptionName;
+extern NSString * const TMLReuseIdentifierOptionName;
 extern NSString * const TMLSenderOptionName;
 
 #pragma mark - Tokens
