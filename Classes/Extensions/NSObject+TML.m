@@ -85,7 +85,14 @@ void ensureArrayIndex(NSMutableArray *array, NSInteger index) {
         if (newValue == nil) {
             continue;
         }
-        [self setValue:TMLLocalizedString(newValue) forKeyPath:keyPath];
+        NSString *localizedString = TMLLocalizedString(newValue);
+        [self setValue:localizedString forKeyPath:keyPath];
+        NSMutableDictionary *reuseInfo = [NSMutableDictionary dictionary];
+        reuseInfo[TMLLocalizedStringInfoKey] = localizedString;
+        TMLTranslationKey *translationKey = [[TMLTranslationKey alloc] initWithLabel:newValue description:nil];
+        translationKey.locale = [TML defaultLocale];
+        reuseInfo[TMLTranslationKeyInfoKey] = translationKey;
+        [self registerTMLInfo:reuseInfo forReuseIdentifier:keyPath];
     }
 }
 
