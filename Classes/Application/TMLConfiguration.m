@@ -36,10 +36,10 @@
 
 #if USE_STAGING
 #define kTMLServiceHost @"https://staging-api.translationexchange.com"
-#define kTMLTranslationCenterHost @"https://translation-center.translationexchange.com"
+#define kTMLTranslationCenterHost @"https://staging-translation-center.translationexchange.com"
 #else
 #define kTMLServiceHost @"https://api.translationexchange.com"
-#define kTMLTranslationCenterHost @"https://staging-translation-center.translationexchange.com"
+#define kTMLTranslationCenterHost @"https://translation-center.translationexchange.com"
 #endif
 
 NSString * const TMLApplicationKeyDefaultsKey = @"applicationKey";
