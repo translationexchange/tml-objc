@@ -73,7 +73,7 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
         self.apiURL = [NSURL URLWithString:kTMLServiceHost];
         self.translationCenterURL = [NSURL URLWithString:kTMLTranslationCenterHost];
         self.localizeNIBStrings = YES;
-        self.allowCollectionKeyPaths = YES;
+        self.automaticallyReloadTableViewsWithReusableLocalizedStrings = YES;
     }
     return self;
 }

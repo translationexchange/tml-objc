@@ -6,14 +6,18 @@
 //  Copyright © 2015 Translation Exchange. All rights reserved.
 //
 
-#import "UITableView+TML.h"
 #import "NSObject+TML.h"
+#import "TML.h"
+#import "TMLConfiguration.h"
+#import "UITableView+TML.h"
 
 @implementation UITableView (TML)
 
-//- (void)restoreTMLLocalizations {
-//    [super restoreTMLLocalizations];
-//    [self reloadData];
-//}
+- (void)updateReusableTMLStrings {
+    [super updateReusableTMLStrings];
+    if ([[[TML sharedInstance] configuration] automaticallyReloadTableViewsWithReusableLocalizedStrings] == YES) {
+        [self reloadData];
+    }
+}
 
 @end

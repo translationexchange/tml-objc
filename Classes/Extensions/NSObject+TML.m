@@ -102,6 +102,9 @@ void ensureArrayIndex(NSMutableArray *array, NSInteger index) {
         [self localizeTableSectionsWithTML];
         return;
     }
+    else if ([classString hasSuffix:@"UITableView"] == YES) {
+        [[TML sharedInstance] registerObjectWithReusableLocalizedStrings:self];
+    }
     
     NSSet *keyPaths = [self tmlLocalizableKeyPaths];
     for (NSString *keyPath in keyPaths) {

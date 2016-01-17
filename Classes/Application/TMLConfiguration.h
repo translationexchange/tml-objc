@@ -60,8 +60,8 @@
 
 @property(nonatomic) BOOL inContextTranslatorEnabled;
 
-#pragma mark - Quirks
-@property(nonatomic, assign) BOOL allowCollectionKeyPaths;
+#pragma mark - User Control
+@property (nonatomic, assign) BOOL automaticallyReloadTableViewsWithReusableLocalizedStrings;
 
 - (instancetype)initWithApplicationKey:(NSString *)applicationKey
                            accessToken:(NSString *)accessToken;
