@@ -70,7 +70,7 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
         [self setupDefaultContextRules];
         [self setupDefaultTokens];
         [self setupLocalization];
-        self.apiURL = [NSURL URLWithString:kTMLServiceHost];
+        self.apiURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/v1", kTMLServiceHost]];
         self.translationCenterURL = [NSURL URLWithString:kTMLTranslationCenterHost];
         self.localizeNIBStrings = YES;
         self.automaticallyReloadTableViewsWithReusableLocalizedStrings = YES;

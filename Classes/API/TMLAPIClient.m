@@ -32,7 +32,6 @@
 #import "NSString+TML.h"
 #import "TML.h"
 #import "TMLAPIClient.h"
-#import "TMLAPIResponse.h"
 #import "TMLAPISerializer.h"
 #import "TMLApplication.h"
 #import "TMLLanguage.h"
@@ -47,7 +46,6 @@ NSString * const TMLAPIOptionsSourceKeys = @"source_keys";
 NSString * const TMLAPIOptionsPage = @"page";
 
 @interface TMLAPIClient()
-@property (readwrite, nonatomic) NSURL *url;
 @property (readwrite, nonatomic) NSString *accessToken;
 @end
 
@@ -55,30 +53,14 @@ NSString * const TMLAPIOptionsPage = @"page";
 
 #pragma mark - Init
 
-- (id) initWithURL:(NSURL *)url accessToken:(NSString *)accessToken {
-    if (self == [super init]) {
-        self.url = url;
+- (id) initWithBaseURL:(NSURL *)baseURL accessToken:(NSString *)accessToken {
+    if (self == [super initWithBaseURL:baseURL]) {
         self.accessToken = accessToken;
     }
     return self;
 }
 
 #pragma mark - URL Construction
-
-- (NSURL *) URLForAPIPath: (NSString *)path parameters:(NSDictionary *)parameters {
-    NSMutableString *pathString = [NSMutableString stringWithFormat:@"%@/v1/%@", self.url, path];
-    [pathString appendString:@"?"];
-    NSDictionary *requestParameters = [self prepareAPIParameters:parameters];
-    for (NSString *key in requestParameters) {
-        id value = [requestParameters objectForKey:key];
-        NSString *valueClass = NSStringFromClass([value class]);
-        if ([valueClass rangeOfString:@"Boolean"].location != NSNotFound) {
-            value = ([value boolValue] == YES) ? @"true" : @"false";
-        }
-        [pathString appendFormat:@"&%@=%@", [self urlEncode:key], [self urlEncode:value]];
-    }
-    return [NSURL URLWithString:pathString];
-}
 
 - (NSDictionary *) prepareAPIParameters:(NSDictionary *)params {
     // TODO - should really use an HTTP header for this
@@ -87,124 +69,37 @@ NSString * const TMLAPIOptionsPage = @"page";
     return parameters;
 }
 
-- (NSString *) urlEncode: (id) object {
-    NSString *string = [NSString stringWithFormat: @"%@", object];
-    return [string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
-}
-
-- (NSString*) urlEncodedStringFromParameters:(NSDictionary *)parameters {
-    NSMutableArray *parts = [NSMutableArray array];
-    for (id paramKey in parameters) {
-        id paramValue = [parameters objectForKey: paramKey];
-        NSString *paramString = ([paramValue isKindOfClass:[NSString class]] == YES) ? (NSString *)paramValue : [paramValue tmlJSONString];
-        NSString *part = [NSString stringWithFormat: @"%@=%@", [self urlEncode: paramKey], [self urlEncode: paramString]];
-        [parts addObject: part];
-    }
-    return [parts componentsJoinedByString: @"&"];
-}
-
-#pragma mark - Response Handling
-
-- (void) processResponse:(NSURLResponse *)response
-                    data:(NSData *)data
-                   error:(NSError *)error
-         completionBlock:(TMLAPIResponseHandler)completionBlock
-{
-    if (error != nil) {
-        TMLError(@"Request Error: %@", error);
-    }
-    
-    if (completionBlock == nil) {
-        return;
-    }
-    
-    TMLAPIResponse *apiResponse = [[TMLAPIResponse alloc] initWithData:data];
-    NSError *relevantError = nil;
-    if (error != nil) {
-        relevantError = error;
-    }
-    if (apiResponse != nil && relevantError == nil) {
-        relevantError = apiResponse.error;
-    }
-    if (apiResponse == nil && relevantError == nil) {
-        TMLWarn(@"Unrecognized response object");
-        relevantError = [NSError errorWithDomain:@"Unrecognized response"
-                                            code:0
-                                        userInfo:nil];
-    }
-    
-    completionBlock(apiResponse, response, relevantError);
-}
-
-#pragma mark - Requests
-
-- (void) request: (NSURLRequest *) request
-     cachePolicy:(NSURLRequestCachePolicy)cachePolicy
- completionBlock:(TMLAPIResponseHandler)completionBlock
-{
-    [[[NSURLSession sharedSession] dataTaskWithRequest: request
-                                     completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
-                                         dispatch_async(dispatch_get_main_queue(), ^(void){
-                                             [self processResponse:response
-                                                              data:data
-                                                             error:error
-                                                   completionBlock:completionBlock];
-                                         });
-                                     }] resume];
-}
-
-- (void) get:(NSString *)path
-  parameters:(NSDictionary *)parameters
-completionBlock:(TMLAPIResponseHandler)completionBlock
-{
-    [self get:path
-   parameters:parameters
-  cachePolicy:NSURLRequestUseProtocolCachePolicy
-completionBlock:completionBlock];
-}
-
-- (void) post:(NSString *)path
-   parameters:(NSDictionary *)parameters
-completionBlock:(TMLAPIResponseHandler)completionBlock
-{
-    [self post:path
-    parameters:parameters
-   cachePolicy:NSURLRequestUseProtocolCachePolicy
-completionBlock:completionBlock];
-}
-
+#pragma mark - Making Requests
 - (void) get:(NSString *)path
   parameters:(NSDictionary *)parameters
  cachePolicy:(NSURLRequestCachePolicy)cachePolicy
 completionBlock:(TMLAPIResponseHandler)completionBlock
 {
     BOOL includeAllResults = [parameters[TMLAPIOptionsIncludeAll] boolValue];
-    NSURL *url = [self URLForAPIPath:path parameters:parameters];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
-    
-    TMLDebug(@"GET %@", url);
-    [self request:request
-      cachePolicy:cachePolicy
-  completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-      if (includeAllResults == YES
-          && error == nil
-          && apiResponse.paginated == YES
-          && apiResponse.currentPage < apiResponse.totalPages) {
-          NSMutableDictionary *newParams = [parameters mutableCopy];
-          newParams[TMLAPIOptionsPage] = @(apiResponse.currentPage + 1);
-          newParams[TMLAPIOptionsIncludeAll] = @(YES);
-          __block TMLAPIResponse *runningResponse = apiResponse;
-          [self get:path parameters:[newParams copy] cachePolicy:cachePolicy completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-              runningResponse = [runningResponse responseByMergingWithResponse:apiResponse];
-              if (completionBlock != nil) {
-                  completionBlock(runningResponse, response, error);
-              }
-          }];
-      }
-      else if (completionBlock != nil) {
-          completionBlock(apiResponse, response, error);
-      }
-  }];
+    NSDictionary *requestParameters = [self prepareAPIParameters:parameters];
+    [super get:path
+    parameters:requestParameters
+   cachePolicy:cachePolicy
+completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+    if (includeAllResults == YES
+        && error == nil
+        && apiResponse.paginated == YES
+        && apiResponse.currentPage < apiResponse.totalPages) {
+        NSMutableDictionary *newParams = [parameters mutableCopy];
+        newParams[TMLAPIOptionsPage] = @(apiResponse.currentPage + 1);
+        newParams[TMLAPIOptionsIncludeAll] = @(YES);
+        __block TMLAPIResponse *runningResponse = apiResponse;
+        [self get:path parameters:[newParams copy] cachePolicy:cachePolicy completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+            runningResponse = [runningResponse responseByMergingWithResponse:apiResponse];
+            if (completionBlock != nil) {
+                completionBlock(runningResponse, response, error);
+            }
+        }];
+    }
+    else if (completionBlock != nil) {
+        completionBlock(apiResponse, response, error);
+    }
+}];
 }
 
 - (void) post:(NSString *)path
@@ -212,15 +107,11 @@ completionBlock:(TMLAPIResponseHandler)completionBlock
   cachePolicy:(NSURLRequestCachePolicy)cachePolicy
 completionBlock:(TMLAPIResponseHandler)completionBlock
 {
-    NSURL *url = [self URLForAPIPath:path parameters:nil];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"POST"];
-    [request setHTTPBody:[[self urlEncodedStringFromParameters: [self prepareAPIParameters: parameters]] dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    TMLDebug(@"POST %@", url);
-    [self request:request
-      cachePolicy:cachePolicy
-  completionBlock:completionBlock];
+    NSDictionary *requestParameters = [self prepareAPIParameters:parameters];
+    [super post:path
+     parameters:requestParameters
+    cachePolicy:cachePolicy
+completionBlock:completionBlock];
 }
 
 #pragma mark - Methods

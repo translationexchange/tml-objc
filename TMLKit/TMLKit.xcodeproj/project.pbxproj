@@ -48,6 +48,8 @@
 		C435BD0B1C16B5EA009A4091 /* NSURL+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C435BD091C16B5EA009A4091 /* NSURL+TML.m */; };
 		C435BD131C190083009A4091 /* UIBarItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C435BD111C190083009A4091 /* UIBarItem+TML.m */; };
 		C435BD231C1933BF009A4091 /* NSAttributedString+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C435BD211C1933BF009A4091 /* NSAttributedString+TML.m */; };
+		C4FA31EE1C5061D9001902EB /* TMLBasicAPIClient.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FA31EC1C5061D9001902EB /* TMLBasicAPIClient.h */; };
+		C4FA31EF1C5061D9001902EB /* TMLBasicAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FA31ED1C5061D9001902EB /* TMLBasicAPIClient.m */; };
 		C4FA63801C1A429600E3ECB8 /* UIResponder+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FA637E1C1A429600E3ECB8 /* UIResponder+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FA63811C1A429600E3ECB8 /* UIResponder+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FA637F1C1A429600E3ECB8 /* UIResponder+TML.m */; };
 		C4FA63841C1A5AF600E3ECB8 /* TMLTranslationActivationView.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FA63821C1A5AF600E3ECB8 /* TMLTranslationActivationView.h */; };
@@ -257,6 +259,8 @@
 		C435BD201C1933BF009A4091 /* NSAttributedString+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+TML.h"; sourceTree = "<group>"; };
 		C435BD211C1933BF009A4091 /* NSAttributedString+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+TML.m"; sourceTree = "<group>"; };
 		C4CF54CC1C100DDC00EC39CC /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
+		C4FA31EC1C5061D9001902EB /* TMLBasicAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLBasicAPIClient.h; sourceTree = "<group>"; };
+		C4FA31ED1C5061D9001902EB /* TMLBasicAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLBasicAPIClient.m; sourceTree = "<group>"; };
 		C4FA637E1C1A429600E3ECB8 /* UIResponder+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+TML.h"; sourceTree = "<group>"; };
 		C4FA637F1C1A429600E3ECB8 /* UIResponder+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+TML.m"; sourceTree = "<group>"; };
 		C4FA63821C1A5AF600E3ECB8 /* TMLTranslationActivationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLTranslationActivationView.h; sourceTree = "<group>"; };
@@ -531,6 +535,8 @@
 				C4FCD2771C0FC7F200D723BC /* TMLAPIResponse.m */,
 				C4FCD2781C0FC7F200D723BC /* TMLAPISerializer.h */,
 				C4FCD2791C0FC7F200D723BC /* TMLAPISerializer.m */,
+				C4FA31EC1C5061D9001902EB /* TMLBasicAPIClient.h */,
+				C4FA31ED1C5061D9001902EB /* TMLBasicAPIClient.m */,
 				C4FCD27A1C0FC7F200D723BC /* TMLJSONValueTransformer.h */,
 				C4FCD27B1C0FC7F200D723BC /* TMLJSONValueTransformer.m */,
 			);
@@ -912,6 +918,7 @@
 				C4FCD2E61C0FC7F200D723BC /* TMLJSONValueTransformer.h in Headers */,
 				C4FCD33E1C0FC7F200D723BC /* TMLTranslation.h in Headers */,
 				C4FCD31B1C0FC7F200D723BC /* TMLLanguageCaseRule.h in Headers */,
+				C4FA31EE1C5061D9001902EB /* TMLBasicAPIClient.h in Headers */,
 				C4FCD3231C0FC7F200D723BC /* TMLRulesParser.h in Headers */,
 				C4FCD33A1C0FC7F200D723BC /* TMLMethodToken.h in Headers */,
 				C4FCD2F41C0FC7F200D723BC /* TMLBundleManager.h in Headers */,
@@ -1225,6 +1232,7 @@
 				C4FCD2E71C0FC7F200D723BC /* TMLJSONValueTransformer.m in Sources */,
 				C4FCD30D1C0FC7F200D723BC /* UISegmentedControl+TML.m in Sources */,
 				C4FCD3091C0FC7F200D723BC /* UINavigationItem+TML.m in Sources */,
+				C4FA31EF1C5061D9001902EB /* TMLBasicAPIClient.m in Sources */,
 				C4FCD2EB1C0FC7F200D723BC /* TMLConfiguration.m in Sources */,
 				C4FCD2E91C0FC7F200D723BC /* TMLApplication.m in Sources */,
 				C435BCFD1C1680B7009A4091 /* UIView+TML.m in Sources */,

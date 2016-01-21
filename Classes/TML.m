@@ -240,8 +240,8 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
         self.currentBundle = nil;
     }
     else {
-        TMLAPIClient *apiClient = [[TMLAPIClient alloc] initWithURL:configuration.apiURL
-                                                        accessToken:configuration.accessToken];
+        TMLAPIClient *apiClient = [[TMLAPIClient alloc] initWithBaseURL:configuration.apiURL
+                                                            accessToken:configuration.accessToken];
         self.apiClient = apiClient;
         [self setupNotificationObserving];
         
