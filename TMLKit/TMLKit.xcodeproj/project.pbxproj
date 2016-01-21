@@ -261,6 +261,7 @@
 		C4CF54CC1C100DDC00EC39CC /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 		C4FA31EC1C5061D9001902EB /* TMLBasicAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLBasicAPIClient.h; sourceTree = "<group>"; };
 		C4FA31ED1C5061D9001902EB /* TMLBasicAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLBasicAPIClient.m; sourceTree = "<group>"; };
+		C4FA31FD1C5078D9001902EB /* TMLPrivateConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TMLPrivateConfig.h; sourceTree = "<group>"; };
 		C4FA637E1C1A429600E3ECB8 /* UIResponder+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIResponder+TML.h"; sourceTree = "<group>"; };
 		C4FA637F1C1A429600E3ECB8 /* UIResponder+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIResponder+TML.m"; sourceTree = "<group>"; };
 		C4FA63821C1A5AF600E3ECB8 /* TMLTranslationActivationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLTranslationActivationView.h; sourceTree = "<group>"; };
@@ -484,6 +485,7 @@
 				C4FCD25B1C0FC7A200D723BC /* TMLKit.h */,
 				C4FCD25D1C0FC7A200D723BC /* Info.plist */,
 				C4FCD3431C0FCB1B00D723BC /* TMLKit-Prefix.pch */,
+				C4FA31FD1C5078D9001902EB /* TMLPrivateConfig.h */,
 			);
 			path = TMLKit;
 			sourceTree = "<group>";
