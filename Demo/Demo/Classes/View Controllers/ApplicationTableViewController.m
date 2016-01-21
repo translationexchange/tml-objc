@@ -51,7 +51,9 @@
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     NSDictionary *item = (NSDictionary *) [self.items objectAtIndex:section];
-    return [item objectForKey:@"title"];
+    NSString *title = [item objectForKey:@"title"];
+    title = TMLLocalizedString(title);
+    return title;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

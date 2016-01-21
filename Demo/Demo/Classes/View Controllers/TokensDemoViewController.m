@@ -82,10 +82,19 @@
         cell.tokens.text = @"";
     }
     
-    if ([item objectForKey:@"tokens"]) {
-        cell.translation.text = TMLLocalizedString(item[@"tml"], item[@"tokens"]);
+    id result = nil;
+    NSString *label = item[@"tml"];
+    NSDictionary *tokens = item[@"tokens"];
+    if ([label tmlContainsDecoratedTokens] == YES) {
+        result = TMLLocalizedAttributedString(label, tokens);
     } else {
-        cell.translation.text = TMLLocalizedString(item[@"tml"]);
+        result = TMLLocalizedString(label);
+    }
+    if ([result isKindOfClass:[NSAttributedString class]] == YES) {
+        cell.translation.attributedText = result;
+    }
+    else {
+        cell.translation.text = result;
     }
     
     cell.translation.frame = CGRectMake(2, 2, 302, 52);

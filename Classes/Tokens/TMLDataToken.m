@@ -64,18 +64,15 @@
 }
 
 + (NSRegularExpression *) expression {
-    static NSRegularExpression *regex;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSError *error = NULL;
-        regex = [NSRegularExpression
-                 regularExpressionWithPattern: [self pattern]
-                 options: NSRegularExpressionCaseInsensitive
-                 error: &error];
-        if (regex == nil) {
-            TMLError(@"Error creating data token regexp: %@", error);
-        }
-    });
+    NSRegularExpression *regex;
+    NSError *error = NULL;
+    regex = [NSRegularExpression
+             regularExpressionWithPattern: [self pattern]
+             options: NSRegularExpressionCaseInsensitive
+             error: &error];
+    if (regex == nil) {
+        TMLError(@"Error creating data token regexp: %@", error);
+    }
     return regex;
 }
 
