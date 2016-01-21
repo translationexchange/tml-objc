@@ -32,14 +32,12 @@
 #import "TMLConfiguration.h"
 #import "TMLLanguage.h"
 
-#define USE_STAGING 1
+#ifndef TMLServiceHost
+#define TMLServiceHost @"https://api.translationexchange.com"
+#endif
 
-#if USE_STAGING
-#define kTMLServiceHost @"https://staging-api.translationexchange.com"
-#define kTMLTranslationCenterHost @"https://staging-translation-center.translationexchange.com"
-#else
-#define kTMLServiceHost @"https://api.translationexchange.com"
-#define kTMLTranslationCenterHost @"https://translation-center.translationexchange.com"
+#ifndef TMLTranslationCenterHost
+#define TMLTranslationCenterHost @"https://translation-center.translationexchange.com"
 #endif
 
 NSString * const TMLApplicationKeyDefaultsKey = @"applicationKey";
@@ -70,8 +68,8 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
         [self setupDefaultContextRules];
         [self setupDefaultTokens];
         [self setupLocalization];
-        self.apiURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/v1", kTMLServiceHost]];
-        self.translationCenterURL = [NSURL URLWithString:kTMLTranslationCenterHost];
+        self.apiURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/v1", TMLServiceHost]];
+        self.translationCenterURL = [NSURL URLWithString:TMLTranslationCenterHost];
         self.localizeNIBStrings = YES;
         self.automaticallyReloadTableViewsWithReusableLocalizedStrings = YES;
     }

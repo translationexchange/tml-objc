@@ -946,6 +946,7 @@
 			buildConfigurationList = C4FCD26C1C0FC7A200D723BC /* Build configuration list for PBXNativeTarget "TMLKit" */;
 			buildPhases = (
 				BE5C101823C9B54256E587D1 /* Check Pods Manifest.lock */,
+				C4FA32041C5079F5001902EB /* Generate TMLPrivateConfig.h */,
 				C4FCD2531C0FC7A200D723BC /* Sources */,
 				C4FCD2541C0FC7A200D723BC /* Frameworks */,
 				C4FCD2551C0FC7A200D723BC /* Headers */,
@@ -1172,6 +1173,20 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		C4FA32041C5079F5001902EB /* Generate TMLPrivateConfig.h */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Generate TMLPrivateConfig.h";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "plist=\"${SRCROOT}/${PROJECT}/TMLPrivateConfig.plist\"\nheader=\"${SRCROOT}/${PROJECT}/TMLPrivateConfig.h\"\ntempFile=\"/tmp/${PROJECT}_TMLPrivateConfig.h\"\n\nif [ ! -f $plist ]; then\necho \"No ${plist}\" >&2\nreturn 0\nfi\n\nif [ ! -f $header ]; then\necho \"No ${header}\" >&2\nreturn 0\nfi\n\nif [ -f ${tempFile} ]; then\nrm -f ${tempFile}\nfi\n\ntouch \"${tempFile}\"\necho \"/* GENERATED FILE - MODIFICATIONS WILL BE LOST */\" >> \"${tempFile}\"\necho \"#ifndef TMLPrivateConfig_h\" >> \"${tempFile}\"\necho \"#define TMLPrivateConfig_h\" >> \"${tempFile}\"\nplutil -p ${plist} | sed \"1d;/^}$/d;s/^ *\\\"/#define /;s/=> *\\\"/=> @\\\"/;s/\\\" *=> */ /\" >> \"${tempFile}\"\necho \"#endif /* TMLPrivateConfig_h */\" >> \"${tempFile}\"\ncp \"${tempFile}\" \"${header}\"\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

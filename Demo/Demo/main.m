@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 #import "AppDelegate.h"
-
 #import "TMLPrivateConfig.h"
 
 #ifndef TMLAccessToken

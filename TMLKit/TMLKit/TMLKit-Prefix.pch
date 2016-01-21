@@ -14,6 +14,7 @@
 #import <Foundation/Foundation.h>
 #import "TMLGlobals.h"
 #import "TMLLogger.h"
+#import "TMLPrivateConfig.h"
 #endif
 
 // Include any system framework and library headers here that should be included in all compilation units.
