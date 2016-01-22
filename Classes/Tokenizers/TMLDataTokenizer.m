@@ -88,19 +88,19 @@
     // TODO: optimize this code to do it in one pass
     NSArray *matches = [[TMLDataToken expression] matchesInString: self.label options: 0 range: NSMakeRange(0, [self.label length])];
     for (NSTextCheckingResult *match in matches) {
-        TMLDataToken *token = [[TMLDataToken alloc] initWithName:[self.label substringWithRange:[match range]]];
+        TMLDataToken *token = [[TMLDataToken alloc] initWithString:[self.label substringWithRange:[match range]]];
         if ([self isTokenAllowed:token])
             [self.tokens addObject:token];
     }
     matches = [[TMLPipedToken expression] matchesInString: self.label options: 0 range: NSMakeRange(0, [self.label length])];
     for (NSTextCheckingResult *match in matches) {
-        TMLPipedToken *token = [[TMLPipedToken alloc] initWithName:[self.label substringWithRange:[match range]]];
+        TMLPipedToken *token = [[TMLPipedToken alloc] initWithString:[self.label substringWithRange:[match range]]];
         if ([self isTokenAllowed:token])
             [self.tokens addObject:token];
     }
     matches = [[TMLMethodToken expression] matchesInString: self.label options: 0 range: NSMakeRange(0, [self.label length])];
     for (NSTextCheckingResult *match in matches) {
-        TMLMethodToken *token =[[TMLMethodToken alloc] initWithName:[self.label substringWithRange:[match range]]];
+        TMLMethodToken *token =[[TMLMethodToken alloc] initWithString:[self.label substringWithRange:[match range]]];
         if ([self isTokenAllowed:token])
             [self.tokens addObject:token];
     }
@@ -109,7 +109,7 @@
 - (NSArray *) tokenNames {
     NSMutableArray *tokenNames = [NSMutableArray array];
     for (TMLDataToken *token in self.tokens) {
-        [tokenNames addObject:token.shortName];
+        [tokenNames addObject:token.name];
     }
     return tokenNames;
 }
@@ -118,7 +118,7 @@
     if (self.allowedTokenNames == nil)
         return YES;
     
-    return [self.allowedTokenNames containsObject:token.shortName];
+    return [self.allowedTokenNames containsObject:token.name];
 }
 
 - (NSString *) substituteTokensInLabelUsingData:(NSDictionary *)tokensData
