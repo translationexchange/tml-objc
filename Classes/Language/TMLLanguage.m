@@ -282,7 +282,7 @@
     
     id viewingUser = ourTokens[TMLViewingUserTokenName];
     if (viewingUser == nil) {
-        viewingUser = [[TML configuration] viewingUser];
+        viewingUser = [[TML configuration] defaultTokenValueForName:TMLViewingUserTokenName];
     }
     if (viewingUser != nil) {
         ourTokens[TMLViewingUserTokenName] = viewingUser;

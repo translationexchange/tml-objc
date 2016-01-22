@@ -54,8 +54,6 @@
 
 @property(nonatomic, assign) BOOL localizeNIBStrings;
 
-@property(nonatomic, strong) id viewingUser;
-
 @property(nonatomic, assign, getter=isTranslationEnabled) BOOL translationEnabled;
 
 @property(nonatomic) BOOL inContextTranslatorEnabled;

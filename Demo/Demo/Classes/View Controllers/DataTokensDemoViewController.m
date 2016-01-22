@@ -38,8 +38,6 @@
 @implementation DataTokensDemoViewController
 
 - (void) prepareSamples {
-    User *michael = [[User alloc] initWithFirstName:@"Michael" andGender:@"male"];
-    
     self.items = @[
        @{
            @"title": @"Simple Data Tokens",
@@ -64,8 +62,8 @@
            @"title": @"Method Tokens",
            @"items": @[
                    @{
-                       @"tml": @"Hello {user.name}, you are a {user.gender}",
-                       @"tokens": @{@"user": michael},
+                       @"tml": @"Hello {user.fullName}, you are a {user.gender}",
+                       @"tokens": @{@"user": [[TML configuration] defaultTokenValueForName:TMLViewingUserTokenName]},
                        @"tokens_desc": @"{\"user\": michael}"
                     },
                 ]
