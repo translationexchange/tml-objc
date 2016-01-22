@@ -48,7 +48,6 @@
     aCopy.variableNames = [self.variableNames copyWithZone:zone];
     aCopy.tokenMapping = [self.tokenMapping copyWithZone:zone];
     aCopy.rules = [self.rules copyWithZone:zone];
-    aCopy.fallbackRule = [self.fallbackRule copyWithZone:zone];
     return aCopy;
 }
 
@@ -78,9 +77,7 @@
             && (self.tokenMapping == languageContext.tokenMapping
                 || [self.tokenMapping isEqual:languageContext.tokenMapping] == YES)
             && (self.rules == languageContext.rules
-                || [self.rules isEqualToDictionary:languageContext.rules] == YES)
-            && (self.fallbackRule == languageContext.fallbackRule
-                || [self.fallbackRule isEqual:languageContext.fallbackRule] == YES));
+                || [self.rules isEqualToDictionary:languageContext.rules] == YES));
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
@@ -109,10 +106,14 @@
             TMLLanguageContextRule *aRule = [TMLAPISerializer materializeObject:rules[keyword]
                                                                       withClass:[TMLLanguageContextRule class]];
             if (aRule != nil) {
+                aRule.languageContext = self;
                 if (aRule.keyword == nil) {
                     aRule.keyword = keyword;
                 }
                 newRules[keyword] = aRule;
+                if ([aRule isFallback] == YES) {
+                    self.fallbackRule = aRule;
+                }
             }
         }
         rules = [newRules copy];
@@ -208,6 +209,19 @@
     }
 
     return vars;
+}
+
+- (TMLLanguageContextRule *)fallbackRule {
+    if (_fallbackRule == nil) {
+        NSArray *allRules = [self.rules allValues];
+        for (TMLLanguageContextRule *rule in allRules) {
+            if ([rule isFallback] == YES) {
+                _fallbackRule = rule;
+                break;
+            }
+        }
+    }
+    return _fallbackRule;
 }
 
 - (NSObject *) findMatchingRule: (NSObject *) object {

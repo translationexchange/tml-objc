@@ -31,7 +31,7 @@
 #import <Foundation/Foundation.h>
 #import "TMLModel.h"
 
-@class TMLLanguage;
+@class TMLLanguage, TMLLanguageContextRule;
 
 @interface TMLLanguageContext : TMLModel
 
@@ -65,7 +65,7 @@
 @property(nonatomic, strong) NSDictionary *rules;
 
 // Fallback rule for the context
-@property(nonatomic, strong) NSObject <NSCopying>*fallbackRule;
+@property(nonatomic, strong) TMLLanguageContextRule *fallbackRule;
 
 // Checks whether the case is applicable to the token with a given name
 - (BOOL) isApplicableToTokenName: (NSString *) tokenName;
