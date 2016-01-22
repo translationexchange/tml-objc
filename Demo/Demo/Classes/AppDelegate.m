@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "IIViewDeckController.h"
 #import "MenuViewController.h"
+#import "User.h"
 
 @interface AppDelegate()<TMLDelegate>
 
@@ -30,6 +31,13 @@
                                                                                  categories:nil];
         [app registerUserNotificationSettings:settings];
     }
+    
+    User *viewingUser = [[User alloc] init];
+    viewingUser.firstName = @"Jane";
+    viewingUser.lastName = @"Doe";
+    viewingUser.birthDate = [NSDate dateWithTimeIntervalSince1970:0];
+    viewingUser.gender = UserGenderFemale;
+    [[[TML sharedInstance] configuration] setDefaultTokenValue:viewingUser forName:TMLViewingUserTokenName];
 
     return YES;
 }
