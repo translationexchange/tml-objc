@@ -36,20 +36,17 @@
 
 @interface TMLDataToken : TMLModel
 
-// Original label from where the token was extracted
-@property (nonatomic, strong) NSString *label;
-
 // Full name of the token
-@property (nonatomic, strong) NSString *fullName;
+@property (nonatomic, strong, readonly) NSString *stringRepresentation;
 
 // Short name of the token
-@property (nonatomic, strong) NSString *shortName;
+@property (nonatomic, strong) NSString *name;
 
 // Array of language case keywords for the token
-@property (nonatomic, strong) NSArray *caseKeys;
+@property (nonatomic, strong) NSSet *caseKeys;
 
 // Array of language context keywords for the token
-@property (nonatomic, strong) NSArray *contextKeys;
+@property (nonatomic, strong) NSSet *contextKeys;
 
 // Regular expression pattern for the token
 // TODO: compile and store as static
@@ -60,23 +57,14 @@
 // Returns the token object from the token map
 + (NSObject *) tokenObjectForName:(NSString *)name fromTokens:(NSDictionary *)tokens;
 
-+ (NSString *) sanitizeValue:(NSString *)value;
-
-+ (NSArray *) sanitizeValues:(NSArray *)values;
-
-// Initialized a new token
-- (id) initWithName:(NSString *)newFullName;
-
-// Initialized a new token
-- (id) initWithName:(NSString *)newFullName inLabel:(NSString *)newLabel;
+- (id) initWithString:(NSString *)string;
 
 - (BOOL) isEqualToDataToken:(TMLDataToken *)dataToken;
 
-// Parsing token data
-- (void) parse;
+- (void) parseFromString:(NSString *)string;
 
-// Returns name based on various options
-- (NSString *) nameWithOptions:(NSDictionary *)options;
+- (NSSet *) sanitizeValues:(NSArray *)values;
+- (NSString *) sanitizeValue:(NSString *)value;
 
 - (TMLLanguageContext *) contextForLanguage:(TMLLanguage *)language;
 

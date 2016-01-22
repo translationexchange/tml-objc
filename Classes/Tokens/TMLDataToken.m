@@ -54,7 +54,7 @@
 #import "TMLLanguageCase.h"
 
 @interface TMLDataToken ()
-
+@property (nonatomic, strong, readwrite) NSString *stringRepresentation;
 @end
 
 @implementation TMLDataToken
@@ -102,28 +102,27 @@
     return object;
 }
 
-- (id) initWithName: (NSString *) newFullName {
-    return [self initWithName:newFullName inLabel:newFullName];
-}
+#pragma mark - Init
 
-- (id) initWithName: (NSString *) newFullName inLabel: (NSString *) newLabel {
+- (id) initWithString:(NSString *)string {
     if (self = [super init]) {
-        self.label = newLabel;
-        self.fullName = newFullName;
-        [self parse];
+        [self parseFromString:string];
+        self.stringRepresentation = string;
     }
     return self;
 }
 
+#pragma mark - Copying
+
 - (id)copyWithZone:(NSZone *)zone {
     TMLDataToken *aCopy = [[TMLDataToken alloc] init];
-    aCopy.label = [self.label copyWithZone:zone];
-    aCopy.fullName = [self.fullName copyWithZone:zone];
-    aCopy.shortName = [self.shortName copyWithZone:zone];
+    aCopy.name = [self.name copyWithZone:zone];
     aCopy.caseKeys = [self.caseKeys copyWithZone:zone];
     aCopy.contextKeys = [self.contextKeys copyWithZone:zone];
     return aCopy;
 }
+
+#pragma mark - Equality
 
 - (BOOL)isEqual:(id)object {
     if (self == object) {
@@ -136,60 +135,88 @@
 }
 
 - (BOOL)isEqualToDataToken:(TMLDataToken *)dataToken {
-    return ((self.label == dataToken.label
-             || [self.label isEqualToString:dataToken.label] == YES)
-            && (self.fullName == dataToken.fullName
-                || [self.fullName isEqualToString:dataToken.fullName] == YES)
-            && (self.shortName == dataToken.shortName
-                || [self.shortName isEqualToString:dataToken.shortName] == YES)
+    return ((self.name == dataToken.name
+                || [self.name isEqualToString:dataToken.name] == YES)
             && (self.caseKeys == dataToken.caseKeys
-                || [self.caseKeys isEqualToArray:dataToken.caseKeys] == YES)
+                || [self.caseKeys isEqualToSet:dataToken.caseKeys] == YES)
             && (self.contextKeys == dataToken.contextKeys
-                || [self.contextKeys isEqualToArray:dataToken.contextKeys] == YES));
+                || [self.contextKeys isEqualToSet:dataToken.contextKeys] == YES));
 }
 
-+ (NSString *) sanitizeValue: (NSString *) value {
+#pragma mark - Sanitizing
+
+- (NSString *) sanitizeValue:(NSString *)value {
     return [value stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
 }
 
-+ (NSArray *) sanitizeValues: (NSArray *) values {
-    NSMutableArray *newValues = [NSMutableArray array];
+- (NSSet *) sanitizeValues:(NSArray *)values {
+    NSMutableSet *newValues = [NSMutableSet set];
     for (NSString *value in values) {
         [newValues addObject: [self sanitizeValue:value]];
     }
     return newValues;
 }
 
-- (void) parse {
-    NSString *nameWithoutParens = [self.fullName stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"{}"]];
+#pragma mark - Parsing
+
+- (void) parseFromString:(NSString *)string {
+    [self reset];
+    NSString *nameWithoutParens = [string stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"{}"]];
     
     NSMutableArray *parts = [NSMutableArray arrayWithArray: [nameWithoutParens componentsSeparatedByString:@"::"]];
     NSString *nameWithoutCaseKeys = [parts objectAtIndex:0];
     [parts removeObjectAtIndex:0];
-    self.caseKeys = [self.class sanitizeValues: parts];
+    self.caseKeys = [self sanitizeValues:parts];
     
     parts = [NSMutableArray arrayWithArray: [nameWithoutCaseKeys componentsSeparatedByString:@":"]];
-    self.shortName = [self.class sanitizeValue: [parts objectAtIndex:0]];
+    self.name = [self sanitizeValue: [parts objectAtIndex:0]];
     [parts removeObjectAtIndex:0];
-    self.contextKeys = [self.class sanitizeValues: parts];
+    self.contextKeys = [self sanitizeValues:parts];
 }
 
-- (NSString *) nameWithOptions: (NSDictionary *) options {
-    NSMutableString *result = [NSMutableString stringWithString:self.shortName];
-    
-    if ([[options valueForKey:@"context_keys"] isEqual: @YES] && [self.contextKeys count] > 0) {
-        [result appendFormat:@":%@", [self.contextKeys componentsJoinedByString:@":"]];
-    }
+#pragma mark - Representation
 
-    if ([[options valueForKey:@"case_keys"] isEqual: @YES] && [self.caseKeys count] > 0) {
-        [result appendFormat:@"::%@", [self.caseKeys componentsJoinedByString:@"::"]];
-    }
-    
-    if ([[options valueForKey:@"parens"] isEqual: @YES]) {
-        result = [NSMutableString stringWithFormat:@"{%@}", result];
-    }
+- (void)reset {
+    _stringRepresentation = nil;
+}
 
-    return result;
+- (NSString *)stringRepresentation {
+    if (_stringRepresentation == nil) {
+        NSMutableString *result = [[NSMutableString alloc] init];
+        [result appendString:@"{"];
+        [result appendString:self.name];
+        NSArray *contextKeys = [self.contextKeys allObjects];
+        if (contextKeys.count > 0) {
+            [result appendFormat:@":%@", [contextKeys componentsJoinedByString:@":"]];
+        }
+        NSArray *caseKeys = [self.caseKeys allObjects];
+        if (caseKeys.count > 0) {
+            [result appendFormat:@"::%@", [caseKeys componentsJoinedByString:@"::"]];
+        }
+        [result appendString:@"}"];
+        _stringRepresentation = [result copy];
+    }
+    return _stringRepresentation;
+}
+
+#pragma mark - Accessors
+
+- (void)setCaseKeys:(NSSet *)caseKeys {
+    if (_caseKeys == caseKeys
+        || [_caseKeys isEqualToSet:caseKeys] == YES) {
+        return;
+    }
+    [self reset];
+    _caseKeys = caseKeys;
+}
+
+- (void)setContextKeys:(NSSet *)contextKeys {
+    if (_contextKeys == contextKeys
+        || [_contextKeys isEqualToSet:contextKeys] == YES) {
+        return;
+    }
+    [self reset];
+    _contextKeys = contextKeys;
 }
 
 /**
@@ -207,11 +234,12 @@
  */
 
 - (TMLLanguageContext *) contextForLanguage: (TMLLanguage *) language {
-    if ([self.contextKeys count] > 0) {
-        return [language contextByKeyword:[self.contextKeys objectAtIndex:0]];
+    NSArray *contextKeys = [self.contextKeys allObjects];
+    if (contextKeys.count > 0) {
+        return [language contextByKeyword:[contextKeys firstObject]];
     }
     
-    return [language contextByTokenName:self.shortName];;
+    return [language contextByTokenName:self.name];;
 }
 
 /**
@@ -237,7 +265,7 @@
  */
 
 - (NSString *) tokenValue:(NSDictionary *)tokens {
-    return [self tokenValue:tokens tokenFormat:TMLHTMLTokenFormat];
+    return [self tokenValue:tokens tokenFormat:TMLAttributedTokenFormat];
 }
 
 - (NSString *) tokenValue:(NSDictionary *)tokens
@@ -245,15 +273,15 @@
 {
 
     // token not provided, fallback onto default, if available
-    if ([tokens objectForKey:self.shortName] == nil) {
-        NSString *tokenObject = (NSString *) [[TML configuration] defaultTokenValueForName:self.shortName
+    if ([tokens objectForKey:self.name] == nil) {
+        NSString *tokenObject = (NSString *) [[TML configuration] defaultTokenValueForName:self.name
                                                                                       type:TMLDataTokenType
                                                                                     format:tokenFormat];
         if (tokenObject != nil) return tokenObject;
-        return [self description];
+        return [self stringRepresentation];
     }
 
-    NSObject *tokenObject = [tokens objectForKey:self.shortName];
+    NSObject *tokenObject = [tokens objectForKey:self.name];
  
     // provided as [object, value]
     if ([tokenObject isKindOfClass:NSArray.class]) {
@@ -261,8 +289,8 @@
         
         // array must have 2 elements, object and value
         if ([tokenArrayObject count] != 2) {
-            TMLDebug(@"{%@ in %@: array substitution value is not provided}", self.shortName, self.label);
-            return [self description];
+            TMLDebug(@"{%@: array substitution value is not provided}", self.name);
+            return [self stringRepresentation];
         }
         
         // @[user, user.name] or @[user, @"Michael"] or @[@1000, @"1,000"]
@@ -270,8 +298,8 @@
             return [tokenArrayObject objectAtIndex:1];
         }
         
-        TMLDebug(@"{%@ in %@: unsupported array method}", self.shortName, self.label);
-        return [self description];
+        TMLDebug(@"{%@: unsupported array method}", self.name);
+        return [self stringRepresentation];
     }
     
     if ([tokenObject isKindOfClass:NSDictionary.class]) {
@@ -283,8 +311,8 @@
         }
         
         if (![[tokenDictionaryObject objectForKey:@"object"] isKindOfClass: NSDictionary.class]) {
-            TMLDebug(@"{%@ in %@: object attribute is missing or invalid}", self.shortName, self.label);
-            return [self description];
+            TMLDebug(@"{%@: object attribute is missing or invalid}", self.name);
+            return [self stringRepresentation];
         }
         
         NSDictionary *object = [tokenDictionaryObject objectForKey:@"object"];
@@ -299,15 +327,15 @@
             return [object objectForKey:[tokenDictionaryObject objectForKey:@"property"]];
         }
 
-        TMLDebug(@"{%@ in %@: substitution property/value is not provided", self.shortName, self.label);
-        return [self description];
+        TMLDebug(@"{%@: substitution property/value is not provided", self.name);
+        return [self stringRepresentation];
     }
     
     return [tokenObject description];
 }
 
 - (NSObject *) tokenObjectFromTokens: (NSDictionary *) tokens {
-    return [self.class tokenObjectForName:self.shortName fromTokens:tokens];
+    return [self.class tokenObjectForName:self.name fromTokens:tokens];
 }
 
 - (NSString *) applyLanguageCaseWithKey:(NSString *)caseKey
@@ -343,17 +371,17 @@
 {
     NSString *tokenValue = [self tokenValue:tokens];
     
-    if ([tokenValue isEqualToString: self.fullName])
+    if ([tokenValue isEqualToString: self.stringRepresentation])
         return translatedLabel;
     
     tokenValue = [self applyLanguageCasesToValue:tokenValue
                                       fromObject:[self tokenObjectFromTokens: tokens]
                                      forLanguage:language];
-    return [translatedLabel stringByReplacingOccurrencesOfString:self.fullName withString:tokenValue];
+    return [translatedLabel stringByReplacingOccurrencesOfString:self.stringRepresentation withString:tokenValue];
 }
 
 - (NSString *) description {
-    return self.fullName;
+    return [NSString stringWithFormat:@"<%@:%@: %p>", [self class], self.stringRepresentation, self];
 }
 
 @end

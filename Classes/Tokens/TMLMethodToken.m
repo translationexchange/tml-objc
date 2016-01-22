@@ -36,46 +36,40 @@
     return @"(\\{[^_:.][\\w]*(\\.[\\w]+)(:[\\w]+)*(::[\\w]+)*\\})";
 }
 
-- (void) parse {
-    [super parse];
+- (void) parseFromString:(NSString *)string {
+    [super parseFromString:string];
     
-    NSArray *parts = [self.shortName componentsSeparatedByString:@"."];
+    NSArray *parts = [self.name componentsSeparatedByString:@"."];
     if (parts.count > 0) {
         self.objectName = [parts objectAtIndex:0];
     }
     if (parts.count > 1) {
-        self.objectMethod = [parts objectAtIndex:1];
+        self.keyPath = [[parts subarrayWithRange:NSMakeRange(1, parts.count-1)] componentsJoinedByString:@"."];
     }
-}
-
-- (NSString *) valueForObject: (NSObject *) object andMethod: (NSString *) method {
-    if (object == nil) {
-//        TML::ins
-        return self.fullName;
-    }
-  
-    return @"";
 }
 
 - (NSString *) substituteInLabel:(NSString *)translatedLabel
                           tokens:(NSDictionary *)tokens
                         language:(TMLLanguage *)language
-                         options:(NSDictionary *)options
 {
+    NSString *objectName = self.objectName;
+    NSObject *object = [self.class tokenObjectForName:objectName fromTokens:tokens];
     
-    NSObject *object = [self.class tokenObjectForName:self.objectName fromTokens:tokens];
+    NSString *result = translatedLabel;
     
-    NSString *tokenValue;
-    
-    if (object == nil)
-       tokenValue = [NSString stringWithFormat:@"{%@: missing value}", self.shortName];
-    else if ([object respondsToSelector:NSSelectorFromString(self.objectMethod)]) {
-        tokenValue = [object valueForKey:self.objectMethod];
+    if (object == nil) {
+        TMLError(@"Invalid object reference: %@", objectName);
     } else {
-        tokenValue = [NSString stringWithFormat:@"{%@: undefined property}", self.shortName];
+        @try {
+            result = [object valueForKeyPath:self.keyPath];
+            result = [translatedLabel stringByReplacingOccurrencesOfString:self.stringRepresentation withString:result];
+        }
+        @catch (NSException *exception) {
+            TMLError(@"Error obtaining value of %@.%@: %@", self.objectName, self.keyPath);
+        }
     }
     
-    return [translatedLabel stringByReplacingOccurrencesOfString:self.fullName withString:tokenValue];
+    return result;
 }
 
 @end

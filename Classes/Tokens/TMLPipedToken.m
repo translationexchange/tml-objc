@@ -50,14 +50,20 @@
 #import "TMLLanguageContextRule.h"
 #import "TMLPipedToken.h"
 
+@interface TMLDataToken()
+- (void)reset;
+@property (nonatomic, strong, readwrite) NSString *stringRepresentation;
+@end
+
 @implementation TMLPipedToken
+@synthesize stringRepresentation = _stringRepresentation;
 
 + (NSString *) pattern {
     return @"(\\{[^_:|][\\w]*(:[\\w]+)*(::[\\w]+)*\\s*\\|\\|?[^{^}]+\\})";
 }
 
-- (void) parse {
-    NSString *nameWithoutParens = [self.fullName stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"{}"]];
+- (void) parseFromString:(NSString *)string {
+    NSString *nameWithoutParens = [string stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"{}"]];
     
     NSMutableArray *parts = [NSMutableArray arrayWithArray: [nameWithoutParens componentsSeparatedByString:@"|"]];
     NSString *nameWithoutPipes = [parts objectAtIndex:0];
@@ -65,21 +71,21 @@
     parts = [NSMutableArray arrayWithArray: [nameWithoutPipes componentsSeparatedByString:@"::"]];
     NSString *nameWithoutCaseKeys = [parts objectAtIndex:0];
     [parts removeObjectAtIndex:0];
-    self.caseKeys = [self.class sanitizeValues: parts];
+    self.caseKeys = [self sanitizeValues: parts];
     
     parts = [NSMutableArray arrayWithArray: [nameWithoutCaseKeys componentsSeparatedByString:@":"]];
-    self.shortName = [self.class sanitizeValue: [parts objectAtIndex:0]];
+    self.name = [self sanitizeValue: [parts objectAtIndex:0]];
     [parts removeObjectAtIndex:0];
-    self.contextKeys = [self.class sanitizeValues: parts];
+    self.contextKeys = [self sanitizeValues: parts];
     
-    self.separator = ([self.fullName rangeOfString:@"||"].length > 0 ? @"||" : @"|");
+    self.separator = ([string rangeOfString:@"||"].length > 0 ? @"||" : @"|");
     
     NSMutableArray *pipedParams = [NSMutableArray array];
     NSArray *pipedParts = [nameWithoutParens componentsSeparatedByString:self.separator];
     if ([pipedParts count] > 1) {
         pipedParts = [[pipedParts objectAtIndex:1] componentsSeparatedByString:@","];
         for (NSString *part in pipedParts) {
-            [pipedParams addObject: [self.class sanitizeValue:part]];
+            [pipedParams addObject: [self sanitizeValue:part]];
         }
     }
     self.parameters = pipedParams;
@@ -118,7 +124,7 @@
     if ([firstParam rangeOfString:@":"].length > 0) {
         for (NSString *param in self.parameters) {
             NSArray *keyValue = [param componentsSeparatedByString:@":"];
-            [values setObject:[self.class sanitizeValue: [keyValue objectAtIndex:1]] forKey:[self.class sanitizeValue: [keyValue objectAtIndex:0]]];
+            [values setObject:[self sanitizeValue: [keyValue objectAtIndex:1]] forKey:[self sanitizeValue: [keyValue objectAtIndex:0]]];
         }
         return values;
     }
@@ -162,7 +168,7 @@
                 NSString *tkey = [value substringWithRange:[match range]];
                 NSString *tokenWithoutParens = [tkey stringByTrimmingCharactersInSet: [NSCharacterSet characterSetWithCharactersInString:@"{}"]];
                 NSMutableArray *parts = [NSMutableArray arrayWithArray:[tokenWithoutParens componentsSeparatedByString:@"::"]];
-                NSString *indexValue = [self.class sanitizeValue: [parts objectAtIndex:0]];
+                NSString *indexValue = [self sanitizeValue: [parts objectAtIndex:0]];
                 int index = [[indexValue stringByReplacingOccurrencesOfString:@"$" withString:@""] intValue];
                 
                 if ([self.parameters count] < index)
@@ -188,42 +194,42 @@
 }
 
 - (NSString *) placeholderName {
-    return [NSString stringWithFormat:@"#%@#", self.shortName];
+    return [NSString stringWithFormat:@"#%@#", self.name];
 }
 
 - (NSString *) substituteInLabel:(NSString *)translatedLabel
                           tokens:(NSDictionary *)tokens
                         language:(TMLLanguage *)language
 {
-    NSObject *object = [tokens objectForKey:self.shortName];
+    NSObject *object = [tokens objectForKey:self.name];
     
     if (object == nil) {
-        TMLDebug(@"{%@: missing value for %@}", translatedLabel, self.shortName);
+        TMLDebug(@"{%@: missing value for %@}", translatedLabel, self.name);
         return translatedLabel;
     }
     
     if ([self.parameters count] == 0) {
-        TMLDebug(@"{%@: missing piped params for %@}", translatedLabel, self.shortName);
+        TMLDebug(@"{%@: missing piped params for %@}", translatedLabel, self.name);
         return translatedLabel;
     }
     
     TMLLanguageContext *context = [self contextForLanguage:language];
     if (context == nil) {
-        TMLDebug(@"{%@: context not available for %@}", translatedLabel, self.shortName);
+        TMLDebug(@"{%@: context not available for %@}", translatedLabel, self.name);
         return translatedLabel;
     }
     
     NSDictionary *valueMap = [self generateValueMapForContext:context];
     
     if (valueMap == nil) {
-        TMLDebug(@"{%@: invalid context or piped params for %@}", translatedLabel, self.shortName);
+        TMLDebug(@"{%@: invalid context or piped params for %@}", translatedLabel, self.name);
         return translatedLabel;
     }
     
     TMLLanguageContextRule *rule = (TMLLanguageContextRule *) [context findMatchingRule:object];
 
     if (rule == nil) {
-        TMLDebug(@"{%@: no context rule matched for %@}", translatedLabel, self.shortName);
+        TMLDebug(@"{%@: no context rule matched for %@}", translatedLabel, self.name);
         return translatedLabel;
     }
     
@@ -236,7 +242,7 @@
     }
     
     if (value == nil) {
-        TMLDebug(@"{%@: no value selected for %@}", translatedLabel, self.shortName);
+        TMLDebug(@"{%@: no value selected for %@}", translatedLabel, self.name);
         return translatedLabel;
     }
 
@@ -250,8 +256,42 @@
     }
     [replacementValue appendString: value];
     
-    return [translatedLabel stringByReplacingOccurrencesOfString:self.fullName withString:replacementValue];
+    return [translatedLabel stringByReplacingOccurrencesOfString:self.stringRepresentation withString:replacementValue];
 }
 
+#pragma mark - Accessors
+
+- (void)setParameters:(NSArray *)parameters {
+    if (_parameters == parameters
+        || [_parameters isEqualToArray:parameters] == YES) {
+        return;
+    }
+    [self reset];
+    _parameters= parameters;
+}
+
+- (void)setSeparator:(NSString *)separator {
+    if (_separator == separator
+        || [_separator isEqualToString:separator] == YES) {
+        return;
+    }
+    [self reset];
+    _separator = separator;
+}
+
+#pragma mark - Representation
+
+- (NSString *)stringRepresentation {
+    if (_stringRepresentation == nil) {
+        NSMutableString *result = [[super stringRepresentation] mutableCopy];
+        if (self.parameters.count > 0) {
+            [result deleteCharactersInRange:NSMakeRange(result.length-1, 1)];
+            [result appendFormat:@" %@ %@", self.separator, [self.parameters componentsJoinedByString:@", "]];
+            [result appendString:@"}"];
+        }
+        _stringRepresentation = [result copy];
+    }
+    return _stringRepresentation;
+}
 
 @end

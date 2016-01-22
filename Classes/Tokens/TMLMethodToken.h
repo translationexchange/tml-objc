@@ -35,6 +35,6 @@
 
 @property(nonatomic, strong) NSString *objectName;
 
-@property(nonatomic, strong) NSString *objectMethod;
+@property(nonatomic, strong) NSString *keyPath;
 
 @end
