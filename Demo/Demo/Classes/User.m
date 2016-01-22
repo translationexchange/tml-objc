@@ -30,42 +30,29 @@
 
 #import "User.h"
 
+NSString * const UserGenderMale = @"male";
+NSString * const UserGenderFemale = @"female";
+
 @implementation User
 
-
-
-- (id) initWithFirstName: (NSString *) fName {
-    return [self initWithFirstName:fName andLastName:@""];
-}
-
-- (id) initWithFirstName: (NSString *) fName andGender: (NSString *) gen {
-    return [self initWithFirstName:fName andLastName:@"" andGender:gen];
-}
-
-- (id) initWithFirstName: (NSString *) fName andLastName: (NSString *) lName {
-    return [self initWithFirstName:fName andLastName:lName andGender:@"male"];
-}
-
-- (id) initWithFirstName: (NSString *) fName andLastName: (NSString *) lName andGender: (NSString *) gen {
-    if (self = [super init]) {
-        self.firstName = fName;
-        self.lastName = lName;
-        self.gender = gen;
-        self.age = [NSNumber numberWithInt:36];
+- (NSString *) fullName {
+    NSMutableString *name = [[NSMutableString alloc] init];
+    NSString *firstName = self.firstName;
+    NSString *lastName = self.lastName;
+    if (firstName.length > 0) {
+        [name appendString:firstName];
     }
-    return self;
-}
-
-- (NSString *) name {
-    NSMutableString *name = [NSMutableString stringWithString:_firstName];
-    if ([self.lastName length] > 0) {
-        [name appendFormat:@" %@", self.lastName];
+    if (lastName.length > 0) {
+        if (name.length > 0) {
+            [name appendString:@" "];
+        }
+        [name appendString:lastName];
     }
-    return name;
+    return [name copy];
 }
 
 - (NSString *) description {
-    return [self name];
+    return [NSString stringWithFormat:@"<%@:%@: %p>", [self class], self.fullName, self];
 }
 
 @end
