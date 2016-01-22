@@ -88,7 +88,7 @@
     if ([label tmlContainsDecoratedTokens] == YES) {
         result = TMLLocalizedAttributedString(label, tokens);
     } else {
-        result = TMLLocalizedString(label);
+        result = TMLLocalizedString(label, tokens);
     }
     if ([result isKindOfClass:[NSAttributedString class]] == YES) {
         cell.translation.attributedText = result;
