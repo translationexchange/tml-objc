@@ -41,9 +41,13 @@
 }
 
 - (void) testConfigurarionBlock {
-    TMLConfiguration *config = [[TML sharedInstance] configuration];
+    TMLConfiguration *config = [[TMLConfiguration alloc] init];
+    config.applicationKey = @"foobar";
+    config.accessToken = @"foobat";
     config.currentLocale = @"en-US";
     XCTAssert([[config currentLocale] isEqual:@"en-US"]);
+    
+    [TML sharedInstanceWithConfiguration:config];
     
     [TML configure:^(TMLConfiguration *config) {
         config.currentLocale = @"ru";
