@@ -442,7 +442,7 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
 - (id) defaultTokenValueForName:(NSString *)name {
     return [self defaultTokenValueForName:name
                                      type:TMLDataTokenType
-                                   format:TMLHTMLTokenFormat];
+                                   format:TMLAttributedTokenFormat];
 }
 
 - (void) setDefaultTokenValue:(id)value
@@ -451,7 +451,7 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
     [self setDefaultTokenValue:value
                        forName:name
                           type:TMLDataTokenType
-                        format:TMLHTMLTokenFormat];
+                        format:TMLAttributedTokenFormat];
 }
 
 - (id) defaultTokenValueForName:(NSString *)name
@@ -459,7 +459,7 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
 {
     return [self defaultTokenValueForName:name
                                      type:type
-                                   format:TMLHTMLTokenFormat];
+                                   format:TMLAttributedTokenFormat];
 }
 
 - (void) setDefaultTokenValue:(id)value
@@ -469,7 +469,7 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
     [self setDefaultTokenValue:value
                        forName:name
                           type:type
-                        format:TMLHTMLTokenFormat];
+                        format:TMLAttributedTokenFormat];
 }
 
 - (id) defaultTokenValueForName:(NSString *)name
