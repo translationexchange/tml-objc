@@ -131,6 +131,7 @@
             TMLLanguageContext *context = [TMLAPISerializer materializeObject:contexts[keyword]
                                                                     withClass:[TMLLanguageContext class]];
             if (context != nil) {
+                context.language = self;
                 if (context.keyword == nil) {
                     context.keyword = keyword;
                 }
@@ -146,6 +147,7 @@
         for (NSString *keyword in cases) {
             TMLLanguageCase *aCase = [TMLAPISerializer materializeObject:cases[keyword] withClass:[TMLLanguageCase class]];
             if (aCase != nil) {
+                aCase.language = self;
                 if (aCase.keyword == nil) {
                     aCase.keyword = keyword;
                 }
