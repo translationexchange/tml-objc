@@ -312,7 +312,7 @@
     if (matchedTranslations != nil) {
         [translationKey setTranslations:matchedTranslations];
         result = [translationKey translateToLanguage:self
-                                              tokens:tokens
+                                              tokens:ourTokens
                                              options:options];
         registerResultBlock(result);
         return result;
@@ -323,7 +323,7 @@
     }
     
     result = [translationKey translateToLanguage:self
-                                          tokens:tokens
+                                          tokens:ourTokens
                                          options:options];
     
     registerResultBlock(result);
