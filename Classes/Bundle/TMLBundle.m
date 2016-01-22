@@ -40,6 +40,7 @@ NSString * const TMLBundleErrorsKey = @"errors";
 @property (readwrite, nonatomic) NSArray *languages;
 @property (readwrite, nonatomic) NSMutableDictionary *translations;
 @property (readwrite, nonatomic) NSArray *availableLocales;
+@property (readwrite, nonatomic) NSMutableDictionary *availableLanguages;
 @property (readwrite, nonatomic) NSArray *locales;
 @property (readwrite, nonatomic) TMLApplication *application;
 @property (readwrite, nonatomic) NSArray *sources;
@@ -70,6 +71,7 @@ NSString * const TMLBundleErrorsKey = @"errors";
     if (self = [super init]) {
         self.path = path;
         _translations = [NSMutableDictionary dictionary];
+        _availableLanguages = [NSMutableDictionary dictionary];
         TMLBundleManager *manager = [TMLBundleManager defaultManager];
         [manager registerBundle:self];
     }
@@ -235,6 +237,38 @@ NSString * const TMLBundleErrorsKey = @"errors";
 - (NSArray *)languages {
     TMLApplication *app = self.application;
     return app.languages;
+}
+
+#pragma mark - Languages
+
+- (TMLLanguage *)languageForLocale:(NSString *)locale {
+    TMLLanguage *lang = _availableLanguages[locale];
+    if (lang == nil) {
+        [self loadLocalLanguageForLocale:locale];
+    }
+    lang = _availableLanguages[locale];
+    return lang;
+}
+
+- (void)loadLocalLanguageForLocale:(NSString *)locale {
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *languageFilePath = [[self.path stringByAppendingPathComponent:locale] stringByAppendingPathComponent:TMLBundleLanguageFilename];
+    if ([fileManager fileExistsAtPath:languageFilePath] == NO) {
+        TMLWarn(@"Cannot find %@ for locale '%@'", TMLBundleLanguageFilename, locale);
+        return;
+    }
+    NSData *data = [NSData dataWithContentsOfFile:languageFilePath];
+    if (data == nil) {
+        TMLError(@"Failed to load %@ for locale '%@'", TMLBundleLanguageFilename, locale);
+        return;
+    }
+    TMLLanguage *lang = [TMLAPISerializer materializeData:data withClass:[TMLLanguage class]];
+    if (lang == nil) {
+        TMLError(@"Failed to materialize %@ for locale '%@'", TMLBundleLanguageFilename, locale);
+    }
+    else {
+        _availableLanguages[locale] = lang;
+    }
 }
 
 #pragma mark - Translations

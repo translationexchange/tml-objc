@@ -99,6 +99,10 @@ typedef NS_ENUM(NSInteger, TMLBundleErrorCode) {
 #pragma mark -
 @property (readonly, nonatomic, getter=isValid) BOOL valid;
 
+#pragma mark - Languages
+
+- (TMLLanguage *)languageForLocale:(NSString *)locale;
+
 #pragma mark - Translations
 
 /**

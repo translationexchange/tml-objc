@@ -1270,9 +1270,21 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 }
 
 - (TMLLanguage *)currentLanguage {
-    TMLLanguage *lang = [[self application] languageForLocale:[self currentLocale]];
+    TMLLanguage *lang = [self languageForLocale:[self currentLocale]];
     if (lang == nil) {
         lang = [TMLLanguage defaultLanguage];
+    }
+    return lang;
+}
+
+- (TMLLanguage *)languageForLocale:(NSString *)locale {
+    TMLBundle *currentBundle = self.currentBundle;
+    TMLLanguage *lang = nil;
+    if (currentBundle != nil) {
+        lang = [currentBundle languageForLocale:locale];
+    }
+    if (lang == nil) {
+        lang = [[self application] languageForLocale:locale];
     }
     return lang;
 }
