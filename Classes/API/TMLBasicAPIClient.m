@@ -17,7 +17,7 @@
 @implementation TMLBasicAPIClient
 
 - (instancetype)init {
-    NSAssert(false, @"Use -[%@ %@] to instantiate.", NSStringFromClass(self.class), NSStringFromSelector(@selector(initWithBaseURL:)));
+    TMLRaiseAlternativeInstantiationMethod(@selector(initWithBaseURL:));
     return nil;
 }
 
