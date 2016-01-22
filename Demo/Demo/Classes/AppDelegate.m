@@ -37,7 +37,11 @@
     viewingUser.lastName = @"Doe";
     viewingUser.birthDate = [NSDate dateWithTimeIntervalSince1970:0];
     viewingUser.gender = UserGenderFemale;
-    [[[TML sharedInstance] configuration] setDefaultTokenValue:viewingUser forName:TMLViewingUserTokenName];
+    NSBundle *mainBundle = [NSBundle mainBundle];
+    [TML configure:^(TMLConfiguration *config) {
+        [config setDefaultTokenValue:viewingUser forName:TMLViewingUserTokenName];
+        [config setDefaultTokenValue:[[mainBundle infoDictionary] objectForKey:@"CFBundleShortVersionString"] forName:@"applicationVersion"];
+    }];
 
     return YES;
 }
