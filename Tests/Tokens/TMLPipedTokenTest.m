@@ -41,134 +41,134 @@
 - (void) testParsing {
     TMLPipedToken *token;
 
-    token = [[TMLPipedToken alloc] initWithName:@"{count | message}"];
-    XCTAssert([@"{count | message}" isEqual: token.fullName]);
-    XCTAssert([@"count" isEqual: token.shortName]);
+    token = [[TMLPipedToken alloc] initWithString:@"{count | message}"];
+    XCTAssert([@"{count | message}" isEqual: token.stringRepresentation]);
+    XCTAssert([@"count" isEqual: token.name]);
+    XCTAssert([@[@"message"] isEqualToArray: token.parameters]);
+    XCTAssert([@"|" isEqual: token.separator]);
+    XCTAssert([@[] isEqual: [token.contextKeys allObjects]]);
+    XCTAssert([@[] isEqual: [token.caseKeys allObjects]]);
+
+    token = [[TMLPipedToken alloc] initWithString:@"{count| message}"];
+    XCTAssert([@"{count| message}" isEqual: token.stringRepresentation]);
+    XCTAssert([@"count" isEqual: token.name]);
     XCTAssert([@[@"message"] isEqual: token.parameters]);
     XCTAssert([@"|" isEqual: token.separator]);
-    XCTAssert([@[] isEqual: token.contextKeys]);
-    XCTAssert([@[] isEqual: token.caseKeys]);
-
-    token = [[TMLPipedToken alloc] initWithName:@"{count| message}"];
-    XCTAssert([@"{count| message}" isEqual: token.fullName]);
-    XCTAssert([@"count" isEqual: token.shortName]);
+    XCTAssert([@[] isEqual: [token.contextKeys allObjects]]);
+    XCTAssert([@[] isEqual: [token.caseKeys allObjects]]);
+    
+    token = [[TMLPipedToken alloc] initWithString:@"{count|message}"];
+    XCTAssert([@"{count|message}" isEqual: token.stringRepresentation]);
+    XCTAssert([@"count" isEqual: token.name]);
     XCTAssert([@[@"message"] isEqual: token.parameters]);
     XCTAssert([@"|" isEqual: token.separator]);
-    XCTAssert([@[] isEqual: token.contextKeys]);
-    XCTAssert([@[] isEqual: token.caseKeys]);
+    XCTAssert([@[] isEqual: [token.contextKeys allObjects]]);
+    XCTAssert([@[] isEqual: [token.caseKeys allObjects]]);
     
-    token = [[TMLPipedToken alloc] initWithName:@"{count|message}"];
-    XCTAssert([@"{count|message}" isEqual: token.fullName]);
-    XCTAssert([@"count" isEqual: token.shortName]);
-    XCTAssert([@[@"message"] isEqual: token.parameters]);
-    XCTAssert([@"|" isEqual: token.separator]);
-    XCTAssert([@[] isEqual: token.contextKeys]);
-    XCTAssert([@[] isEqual: token.caseKeys]);
-    
-    token = [[TMLPipedToken alloc] initWithName:@"{count || message}"];
-    XCTAssert([@"{count || message}" isEqual: token.fullName]);
-    XCTAssert([@"count" isEqual: token.shortName]);
+    token = [[TMLPipedToken alloc] initWithString:@"{count || message}"];
+    XCTAssert([@"{count || message}" isEqual: token.stringRepresentation]);
+    XCTAssert([@"count" isEqual: token.name]);
     XCTAssert([@[@"message"] isEqual: token.parameters]);
     XCTAssert([@"||" isEqual: token.separator]);
-    XCTAssert([@[] isEqual: token.contextKeys]);
-    XCTAssert([@[] isEqual: token.caseKeys]);
+    XCTAssert([@[] isEqual: [token.contextKeys allObjects]]);
+    XCTAssert([@[] isEqual: [token.caseKeys allObjects]]);
 
-    token = [[TMLPipedToken alloc] initWithName:@"{count|| message}"];
-    XCTAssert([@"{count|| message}" isEqual: token.fullName]);
-    XCTAssert([@"count" isEqual: token.shortName]);
+    token = [[TMLPipedToken alloc] initWithString:@"{count|| message}"];
+    XCTAssert([@"{count|| message}" isEqual: token.stringRepresentation]);
+    XCTAssert([@"count" isEqual: token.name]);
     XCTAssert([@[@"message"] isEqual: token.parameters]);
     XCTAssert([@"||" isEqual: token.separator]);
-    XCTAssert([@[] isEqual: token.contextKeys]);
-    XCTAssert([@[] isEqual: token.caseKeys]);
+    XCTAssert([@[] isEqual: [token.contextKeys allObjects]]);
+    XCTAssert([@[] isEqual: [token.caseKeys allObjects]]);
     
-    token = [[TMLPipedToken alloc] initWithName:@"{count||message}"];
-    XCTAssert([@"{count||message}" isEqual: token.fullName]);
-    XCTAssert([@"count" isEqual: token.shortName]);
+    token = [[TMLPipedToken alloc] initWithString:@"{count||message}"];
+    XCTAssert([@"{count||message}" isEqual: token.stringRepresentation]);
+    XCTAssert([@"count" isEqual: token.name]);
     XCTAssert([@[@"message"] isEqual: token.parameters]);
     XCTAssert([@"||" isEqual: token.separator]);
-    XCTAssert([@[] isEqual: token.contextKeys]);
-    XCTAssert([@[] isEqual: token.caseKeys]);
+    XCTAssert([@[] isEqual: [token.contextKeys allObjects]]);
+    XCTAssert([@[] isEqual: [token.caseKeys allObjects]]);
 
-    token = [[TMLPipedToken alloc] initWithName:@"{count:number||message}"];
-    XCTAssert([@"{count:number||message}" isEqual: token.fullName]);
-    XCTAssert([@"count" isEqual: token.shortName]);
+    token = [[TMLPipedToken alloc] initWithString:@"{count:number||message}"];
+    XCTAssert([@"{count:number||message}" isEqual: token.stringRepresentation]);
+    XCTAssert([@"count" isEqual: token.name]);
     XCTAssert([@[@"message"] isEqual: token.parameters]);
     XCTAssert([@"||" isEqual: token.separator]);
-    XCTAssert([@[@"number"] isEqual: token.contextKeys]);
-    XCTAssert([@[] isEqual: token.caseKeys]);
+    XCTAssert([@[@"number"] isEqual: [token.contextKeys allObjects]]);
+    XCTAssert([@[] isEqual: [token.caseKeys allObjects]]);
     
-    token = [[TMLPipedToken alloc] initWithName:@"{count|| message, messages}"];
-    XCTAssert([@"{count|| message, messages}" isEqual: token.fullName]);
-    XCTAssert([@"count" isEqual: token.shortName]);
+    token = [[TMLPipedToken alloc] initWithString:@"{count|| message, messages}"];
+    XCTAssert([@"{count|| message, messages}" isEqual: token.stringRepresentation]);
+    XCTAssert([@"count" isEqual: token.name]);
     NSArray *expectation = @[@"message", @"messages"];
     XCTAssert([expectation isEqual: token.parameters]);
     XCTAssert([@"||" isEqual: token.separator]);
-    XCTAssert([@[] isEqual: token.contextKeys]);
-    XCTAssert([@[] isEqual: token.caseKeys]);
+    XCTAssert([@[] isEqual: [token.contextKeys allObjects]]);
+    XCTAssert([@[] isEqual: [token.caseKeys allObjects]]);
 
-    token = [[TMLPipedToken alloc] initWithName:@"{count|| one: message, other: messages}"];
-    XCTAssert([@"{count|| one: message, other: messages}" isEqual: token.fullName]);
-    XCTAssert([@"count" isEqual: token.shortName]);
+    token = [[TMLPipedToken alloc] initWithString:@"{count|| one: message, other: messages}"];
+    XCTAssert([@"{count|| one: message, other: messages}" isEqual: token.stringRepresentation]);
+    XCTAssert([@"count" isEqual: token.name]);
     expectation = @[@"one: message", @"other: messages"];
     XCTAssert([expectation isEqual: token.parameters]);
     XCTAssert([@"||" isEqual: token.separator]);
-    XCTAssert([@[] isEqual: token.contextKeys]);
-    XCTAssert([@[] isEqual: token.caseKeys]);
+    XCTAssert([@[] isEqual: [token.contextKeys allObjects]]);
+    XCTAssert([@[] isEqual: [token.caseKeys allObjects]]);
 
-    token = [[TMLPipedToken alloc] initWithName:@"{count||one:message,other:messages}"];
-    XCTAssert([@"{count||one:message,other:messages}" isEqual: token.fullName]);
-    XCTAssert([@"count" isEqual: token.shortName]);
+    token = [[TMLPipedToken alloc] initWithString:@"{count||one:message,other:messages}"];
+    XCTAssert([@"{count||one:message,other:messages}" isEqual: token.stringRepresentation]);
+    XCTAssert([@"count" isEqual: token.name]);
     expectation = @[@"one:message", @"other:messages"];
     XCTAssert([expectation isEqual: token.parameters]);
     XCTAssert([@"||" isEqual: token.separator]);
-    XCTAssert([@[] isEqual: token.contextKeys]);
-    XCTAssert([@[] isEqual: token.caseKeys]);
+    XCTAssert([@[] isEqual: [token.contextKeys allObjects]]);
+    XCTAssert([@[] isEqual: [token.caseKeys allObjects]]);
     
-    token = [[TMLPipedToken alloc] initWithName:@"{count:number || one: message, other: messages}"];
-    XCTAssert([@"{count:number || one: message, other: messages}" isEqual: token.fullName]);
-    XCTAssert([@"count" isEqual: token.shortName]);
+    token = [[TMLPipedToken alloc] initWithString:@"{count:number || one: message, other: messages}"];
+    XCTAssert([@"{count:number || one: message, other: messages}" isEqual: token.stringRepresentation]);
+    XCTAssert([@"count" isEqual: token.name]);
     expectation = @[@"one: message", @"other: messages"];
     XCTAssert([expectation isEqual: token.parameters]);
     XCTAssert([@"||" isEqual: token.separator]);
-    XCTAssert([@[@"number"] isEqual: token.contextKeys]);
-    XCTAssert([@[] isEqual: token.caseKeys]);
+    XCTAssert([@[@"number"] isEqual: [token.contextKeys allObjects]]);
+    XCTAssert([@[] isEqual: [token.caseKeys allObjects]]);
  
-    token = [[TMLPipedToken alloc] initWithName:@"{count : number || one : message, other : messages}"];
-    XCTAssert([@"{count : number || one : message, other : messages}" isEqual: token.fullName]);
-    XCTAssert([@"count" isEqual: token.shortName]);
+    token = [[TMLPipedToken alloc] initWithString:@"{count : number || one : message, other : messages}"];
+    XCTAssert([@"{count : number || one : message, other : messages}" isEqual: token.stringRepresentation]);
+    XCTAssert([@"count" isEqual: token.name]);
     expectation = @[@"one : message", @"other : messages"];
     XCTAssert([expectation isEqual: token.parameters]);
     XCTAssert([@"||" isEqual: token.separator]);
-    XCTAssert([@[@"number"] isEqual: token.contextKeys]);
-    XCTAssert([@[] isEqual: token.caseKeys]);
+    XCTAssert([@[@"number"] isEqual: [token.contextKeys allObjects]]);
+    XCTAssert([@[] isEqual: [token.caseKeys allObjects]]);
 
     XCTAssert([token isValueDisplayedInTranslation]);
 
-    token = [[TMLPipedToken alloc] initWithName:@"{user| Born on}"];
-    XCTAssert([@"{user| Born on}" isEqual: token.fullName]);
-    XCTAssert([@"user" isEqual: token.shortName]);
+    token = [[TMLPipedToken alloc] initWithString:@"{user| Born on}"];
+    XCTAssert([@"{user| Born on}" isEqual: token.stringRepresentation]);
+    XCTAssert([@"user" isEqual: token.name]);
     XCTAssert([@[@"Born on"] isEqual: token.parameters]);
     XCTAssert([@"|" isEqual: token.separator]);
-    XCTAssert([@[] isEqual: token.contextKeys]);
-    XCTAssert([@[] isEqual: token.caseKeys]);
+    XCTAssert([@[] isEqual: [token.contextKeys allObjects]]);
+    XCTAssert([@[] isEqual: [token.caseKeys allObjects]]);
 
     XCTAssert(![token isValueDisplayedInTranslation]);
 
-    token = [[TMLPipedToken alloc] initWithName:@"{user:gender| Born on}"];
-    XCTAssert([@"{user:gender| Born on}" isEqual: token.fullName]);
-    XCTAssert([@"user" isEqual: token.shortName]);
+    token = [[TMLPipedToken alloc] initWithString:@"{user:gender| Born on}"];
+    XCTAssert([@"{user:gender| Born on}" isEqual: token.stringRepresentation]);
+    XCTAssert([@"user" isEqual: token.name]);
     XCTAssert([@[@"Born on"] isEqual: token.parameters]);
     XCTAssert([@"|" isEqual: token.separator]);
-    XCTAssert([@[@"gender"] isEqual: token.contextKeys]);
-    XCTAssert([@[] isEqual: token.caseKeys]);
+    XCTAssert([@[@"gender"] isEqual: [token.contextKeys allObjects]]);
+    XCTAssert([@[] isEqual: [token.caseKeys allObjects]]);
 
-    token = [[TMLPipedToken alloc] initWithName:@"{user:gender | Born on}"];
-    XCTAssert([@"{user:gender | Born on}" isEqual: token.fullName]);
-    XCTAssert([@"user" isEqual: token.shortName]);
+    token = [[TMLPipedToken alloc] initWithString:@"{user:gender | Born on}"];
+    XCTAssert([@"{user:gender | Born on}" isEqual: token.stringRepresentation]);
+    XCTAssert([@"user" isEqual: token.name]);
     XCTAssert([@[@"Born on"] isEqual: token.parameters]);
     XCTAssert([@"|" isEqual: token.separator]);
-    XCTAssert([@[@"gender"] isEqual: token.contextKeys]);
-    XCTAssert([@[] isEqual: token.caseKeys]);
+    XCTAssert([@[@"gender"] isEqual: [token.contextKeys allObjects]]);
+    XCTAssert([@[] isEqual: [token.caseKeys allObjects]]);
 }
 
 - (void) testValueMapForContext {
@@ -177,69 +177,69 @@
     
     TMLLanguageContext *context = [self languageContextFromResource:@"ctx_en-US_gender"];
 
-    token = [[TMLPipedToken alloc] initWithName:@"{user:gender| other: Born on}"];
+    token = [[TMLPipedToken alloc] initWithString:@"{user:gender| other: Born on}"];
     expectation = @{@"other": @"Born on"};
     XCTAssert([expectation isEqual: [token generateValueMapForContext:context]]);
     
-    token = [[TMLPipedToken alloc] initWithName:@"{user| male: He, female: She}"];
+    token = [[TMLPipedToken alloc] initWithString:@"{user| male: He, female: She}"];
     expectation = @{@"male": @"He", @"female": @"She"};
     XCTAssert([expectation isEqual: [token generateValueMapForContext:context]]);
 
-    token = [[TMLPipedToken alloc] initWithName:@"{user| male: He, female: She, other: He/She}"];
+    token = [[TMLPipedToken alloc] initWithString:@"{user| male: He, female: She, other: He/She}"];
     expectation = @{@"male": @"He", @"female": @"She", @"other": @"He/She"};
     XCTAssert([expectation isEqual: [token generateValueMapForContext:context]]);
     
-    token = [[TMLPipedToken alloc] initWithName:@"{user:gender| Born on}"];
+    token = [[TMLPipedToken alloc] initWithString:@"{user:gender| Born on}"];
     expectation = @{@"other": @"Born on"};
     XCTAssert([expectation isEqual: [token generateValueMapForContext:context]]);
     
-    token = [[TMLPipedToken alloc] initWithName:@"{user| He, She}"];
+    token = [[TMLPipedToken alloc] initWithString:@"{user| He, She}"];
     expectation = @{@"male": @"He", @"female": @"She", @"other": @"He/She"};
     XCTAssert([expectation isEqual: [token generateValueMapForContext:context]]);
 
-    token = [[TMLPipedToken alloc] initWithName:@"{user| He, She, She/He}"];
+    token = [[TMLPipedToken alloc] initWithString:@"{user| He, She, She/He}"];
     expectation = @{@"male": @"He", @"female": @"She", @"other": @"She/He"};
     XCTAssert([expectation isEqual: [token generateValueMapForContext:context]]);
     
     context = [self languageContextFromResource:@"ctx_en-US_number"];
     
-    token = [[TMLPipedToken alloc] initWithName:@"{count|| one: message, many: messages}"];
+    token = [[TMLPipedToken alloc] initWithString:@"{count|| one: message, many: messages}"];
     expectation = @{@"one": @"message", @"many": @"messages"};
     XCTAssert([expectation isEqual: [token generateValueMapForContext:context]]);
 
-    token = [[TMLPipedToken alloc] initWithName:@"{count|| message, messages}"];
+    token = [[TMLPipedToken alloc] initWithString:@"{count|| message, messages}"];
     expectation = @{@"one": @"message", @"other": @"messages"};
     XCTAssert([expectation isEqual: [token generateValueMapForContext:context]]);
     
-//    token = [[TMLPipedToken alloc] initWithName:@"{count|| message}"];
+//    token = [[TMLPipedToken alloc] initWithString:@"{count|| message}"];
 //    expectation = @{@"one": @"message", @"other": @"messages"};
 //    XCTAssert([expectation isEqual: [token generateValueMapForContext:context]]);
     
     context = [self languageContextFromResource:@"ctx_ru_gender"];
     
-    token = [[TMLPipedToken alloc] initWithName:@"{user| female: родилась, other: родился}"];
+    token = [[TMLPipedToken alloc] initWithString:@"{user| female: родилась, other: родился}"];
     expectation = @{@"female": @"родилась", @"other": @"родился"};
     XCTAssert([expectation isEqual: [token generateValueMapForContext:context]]);
 
-    token = [[TMLPipedToken alloc] initWithName:@"{user| родился, родилась}"];
+    token = [[TMLPipedToken alloc] initWithString:@"{user| родился, родилась}"];
     expectation = @{@"female": @"родилась", @"other": @"родился"};
     XCTAssert([expectation isEqual: [token generateValueMapForContext:context]]);
 
-    token = [[TMLPipedToken alloc] initWithName:@"{user| родился}"];
+    token = [[TMLPipedToken alloc] initWithString:@"{user| родился}"];
     expectation = @{@"other": @"родился"};
     XCTAssert([expectation isEqual: [token generateValueMapForContext:context]]);
     
     context = [self languageContextFromResource:@"ctx_ru_number"];
     
-    token = [[TMLPipedToken alloc] initWithName:@"{count|| one: сообщение, few: сообщения, other: сообщений}"];
+    token = [[TMLPipedToken alloc] initWithString:@"{count|| one: сообщение, few: сообщения, other: сообщений}"];
     expectation = @{@"one": @"сообщение", @"few": @"сообщения", @"other": @"сообщений"};
     XCTAssert([expectation isEqual: [token generateValueMapForContext:context]]);
 
-    token = [[TMLPipedToken alloc] initWithName:@"{count|| сообщение, сообщения, сообщений}"];
+    token = [[TMLPipedToken alloc] initWithString:@"{count|| сообщение, сообщения, сообщений}"];
     expectation = @{@"one": @"сообщение", @"few": @"сообщения", @"many": @"сообщений", @"other": @"сообщений"};
     XCTAssert([expectation isEqual: [token generateValueMapForContext:context]]);
 
-    token = [[TMLPipedToken alloc] initWithName:@"{count|| сообщение, сообщения, сообщений, сообщения}"];
+    token = [[TMLPipedToken alloc] initWithString:@"{count|| сообщение, сообщения, сообщений, сообщения}"];
     expectation = @{@"one": @"сообщение", @"few": @"сообщения", @"many": @"сообщений", @"other": @"сообщения"};
     XCTAssert([expectation isEqual: [token generateValueMapForContext:context]]);
     
