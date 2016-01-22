@@ -36,7 +36,6 @@
 		C42582211C21243500BAE9A9 /* UITextView+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2AA1C0FC7F200D723BC /* UITextView+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C42582221C21243500BAE9A9 /* UIView+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C435BCFA1C1680B7009A4091 /* UIView+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C42582231C21243500BAE9A9 /* UIViewController+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2AC1C0FC7F200D723BC /* UIViewController+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C42BB3741C1FADF6005C0128 /* NSObjectTMLTest.m in Sources */ = {isa = PBXBuildFile; fileRef = C42BB3731C1FADF6005C0128 /* NSObjectTMLTest.m */; };
 		C42BB37D1C1FD1EC005C0128 /* UIActionSheet+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C42BB37B1C1FD1EC005C0128 /* UIActionSheet+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C42BB37E1C1FD1EC005C0128 /* UIActionSheet+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C42BB37C1C1FD1EC005C0128 /* UIActionSheet+TML.m */; };
 		C42BB3811C1FD29B005C0128 /* UIAlertView+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C42BB37F1C1FD29B005C0128 /* UIAlertView+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -241,7 +240,6 @@
 		C42582031C21214800BAE9A9 /* UITableViewRowAction+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableViewRowAction+TML.m"; sourceTree = "<group>"; };
 		C42582061C2121D400BAE9A9 /* UIMutableUserNotificationAction+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIMutableUserNotificationAction+TML.h"; sourceTree = "<group>"; };
 		C42582071C2121D400BAE9A9 /* UIMutableUserNotificationAction+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIMutableUserNotificationAction+TML.m"; sourceTree = "<group>"; };
-		C42BB3731C1FADF6005C0128 /* NSObjectTMLTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSObjectTMLTest.m; sourceTree = "<group>"; };
 		C42BB37B1C1FD1EC005C0128 /* UIActionSheet+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIActionSheet+TML.h"; sourceTree = "<group>"; };
 		C42BB37C1C1FD1EC005C0128 /* UIActionSheet+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIActionSheet+TML.m"; sourceTree = "<group>"; };
 		C42BB37F1C1FD29B005C0128 /* UIAlertView+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIAlertView+TML.h"; sourceTree = "<group>"; };
@@ -735,7 +733,6 @@
 				C4FCD36A1C0FCDD900D723BC /* Tokenizers */,
 				C4FCD36E1C0FCDD900D723BC /* Tokens */,
 				C4FCD3711C0FCDD900D723BC /* Translations */,
-				C42BB3731C1FADF6005C0128 /* NSObjectTMLTest.m */,
 			);
 			name = Tests;
 			path = ../../Tests;
@@ -1270,7 +1267,6 @@
 				C4FCD3731C0FCDD900D723BC /* TMLApplicationTest.m in Sources */,
 				C4FCD3811C0FCDD900D723BC /* TMLLanguageCaseRuleTest.m in Sources */,
 				C4FCD3841C0FCDD900D723BC /* TMLLanguageContextTest.m in Sources */,
-				C42BB3741C1FADF6005C0128 /* NSObjectTMLTest.m in Sources */,
 				C4FCD38F1C0FCDD900D723BC /* TMLDataTokenTest.m in Sources */,
 				C4FCD38A1C0FCDD900D723BC /* TMLTestBase.m in Sources */,
 				C4FCD3901C0FCDD900D723BC /* TMLPipedTokenTest.m in Sources */,
