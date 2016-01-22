@@ -39,27 +39,6 @@
 
 @implementation StaticTableViewController
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(localize)
-                                                 name:TMLLanguageChangedNotification
-                                               object:self.view.window];
-    
-    [self localize];
-}
-
-- (void) localize {
-    UITableViewCell *cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    cell.detailTextLabel.text = TMLLocalizedString(@"Logged in as {user}", @{@"user": @"Michael"});
-
-    cell = [self.tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:2]];
-    cell.detailTextLabel.text = TMLLocalizedString([[TML currentLanguage] name]);
-    
-    self.versionLabel.text = TMLLocalizedString(@"Version {version}", @{@"version": @"1.0"});
-}
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 2) {
         if (indexPath.row == 0) {
