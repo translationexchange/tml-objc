@@ -4,6 +4,29 @@ Pod::Spec.new do |s|
   s.summary                   = "Translation Markup Language for Objective C."
   s.homepage                  = "https://github.com/translationexchange/tml-objc"
 
+  s.license                   = 'MIT'
+  s.author                    = { "Michael Berkovich" => "michael@translationexchnage.com" }
+  s.source                    = { :git => "https://github.com/translationexchange/tml-objc.git", :tag => s.version.to_s }
+  s.social_media_url          = 'https://twitter.com/translationx'
+
+  s.platform                  = :ios, '7.0'
+  s.ios.deployment_target     = '7.0'
+  # s.osx.deployment_target   = '10.7'
+  s.requires_arc              = true
+
+  s.source_files              = 'Classes'
+  s.resources                 = 'Assets'
+
+  s.ios.exclude_files         = 'Classes/osx'
+  s.osx.exclude_files         = 'Classes/ios'
+  s.public_header_files       = 'Classes/**/*.h'
+  s.source_files              = 'Classes/**/*'
+
+  s.dependency 'MPColorTools', '~> 1.6'
+  s.dependency 'MBProgressHUD', '~> 0.9'
+  s.dependency 'SSZipArchive'
+  s.dependency 'NVHTarGzip'
+
   s.description               = <<-DESC
 Tml for Objective C is the most advanced translation solution for iOS applications.
 
@@ -33,23 +56,5 @@ Demo app that comes with the SDK:
 
 DESC
 
-  s.license                   = 'MIT'
-  s.author                    = { "Michael Berkovich" => "michael@translationexchnage.com" }
-  s.source                    = { :git => "https://github.com/translationexchange/tml-objc.git", :tag => s.version.to_s }
-  s.social_media_url          = 'https://twitter.com/translationx'
 
-  s.platform                  = :ios, '7.0'
-  s.ios.deployment_target     = '7.0'
-  # s.osx.deployment_target   = '10.7'
-  s.requires_arc              = true
-
-  s.source_files              = 'Classes'
-  s.resources                 = 'Assets'
-
-  s.ios.exclude_files         = 'Classes/osx'
-  s.osx.exclude_files         = 'Classes/ios'
-  s.public_header_files       = 'Classes/**/*.h'
-
-  s.dependency 'MPColorTools', '~> 1.6'
-  s.dependency 'MBProgressHUD', '~> 0.9'
 end
