@@ -19,7 +19,6 @@
 		4CFA531319284666006E1B43 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4CFA530F19284666006E1B43 /* LICENSE */; };
 		4CFA531419284666006E1B43 /* Rakefile in Resources */ = {isa = PBXBuildFile; fileRef = 4CFA531019284666006E1B43 /* Rakefile */; };
 		4CFA531519284666006E1B43 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4CFA531119284666006E1B43 /* README.md */; };
-		4CFA531619284666006E1B43 /* Tml.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 4CFA531219284666006E1B43 /* Tml.podspec */; };
 		7763CE239D6940AF971EA5E9 /* libPods-Demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2305CA3DC53F409AB1C35AE2 /* libPods-Demo.a */; };
 		C42BB2761C1E2895005C0128 /* TMLKit.framework in Copy Bundle Frameworks */ = {isa = PBXBuildFile; fileRef = C4BC81121C100BD500B995ED /* TMLKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C42BB3381C1E37D8005C0128 /* arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = C42BB3321C1E37D8005C0128 /* arrow_down.png */; };
@@ -417,7 +416,6 @@
 				4C42340118B9B38700B76555 /* Images.xcassets in Resources */,
 				4CFA531319284666006E1B43 /* LICENSE in Resources */,
 				C42BB33C1C1E37D8005C0128 /* logo.png in Resources */,
-				4CFA531619284666006E1B43 /* Tml.podspec in Resources */,
 				C42BB33B1C1E37D8005C0128 /* Icon-Small@2x.png in Resources */,
 				4C4233F318B9B38700B76555 /* InfoPlist.strings in Resources */,
 				C42BB33A1C1E37D8005C0128 /* Icon-60@2x.png in Resources */,
