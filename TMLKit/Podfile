@@ -3,14 +3,10 @@ source 'https://github.com/CocoaPods/Specs.git'
 platform :ios, '7.0'
 
 target "TMLKit" do
-	podspec :path => "../Tml.podspec"
-  pod 'SSZipArchive'
-  pod 'NVHTarGzip'
+	podspec :path => "../TMLKit.podspec"
 end
 
 
 target "TMLKitTests" do
-	podspec :path => "../Tml.podspec"
-  pod 'SSZipArchive'
-  pod 'NVHTarGzip'
+	podspec :path => "../TMLKit.podspec"
 end
