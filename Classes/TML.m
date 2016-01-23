@@ -957,7 +957,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 - (void)translationActivationGestureRecognized:(UIGestureRecognizer *)gestureRecognizer {
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
         if (self.translationEnabled == NO) {
-            [self toggleActiveTranslation:gestureRecognizer];
+            [self toggleActiveTranslation];
         }
         else {
             [self presentActiveTranslationOptions];
@@ -975,7 +975,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     [alertController addAction:changeLocaleAction];
     
     UIAlertAction *disableAction = [UIAlertAction actionWithTitle:TMLLocalizedString(@"Deactivate Translation") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self toggleActiveTranslation:disableAction];
+        [self toggleActiveTranslation];
     }];
     [alertController addAction:disableAction];
     
@@ -987,7 +987,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:alertController animated:YES completion:nil];
 }
 
-- (void)toggleActiveTranslation:(id)sender {
+- (void)toggleActiveTranslation {
     BOOL translationEnabled = self.translationEnabled;
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
     UIColor *backgroundColor = nil;
