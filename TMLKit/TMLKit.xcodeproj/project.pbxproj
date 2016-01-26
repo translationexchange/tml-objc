@@ -47,7 +47,7 @@
 		C435BD0B1C16B5EA009A4091 /* NSURL+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C435BD091C16B5EA009A4091 /* NSURL+TML.m */; };
 		C435BD131C190083009A4091 /* UIBarItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C435BD111C190083009A4091 /* UIBarItem+TML.m */; };
 		C435BD231C1933BF009A4091 /* NSAttributedString+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C435BD211C1933BF009A4091 /* NSAttributedString+TML.m */; };
-		C4CC8D781C56E92100FACF81 /* TMLAnalytics.h in Headers */ = {isa = PBXBuildFile; fileRef = C4CC8D761C56E92100FACF81 /* TMLAnalytics.h */; };
+		C4CC8D781C56E92100FACF81 /* TMLAnalytics.h in Headers */ = {isa = PBXBuildFile; fileRef = C4CC8D761C56E92100FACF81 /* TMLAnalytics.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4CC8D791C56E92100FACF81 /* TMLAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CC8D771C56E92100FACF81 /* TMLAnalytics.m */; };
 		C4FA31EE1C5061D9001902EB /* TMLBasicAPIClient.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FA31EC1C5061D9001902EB /* TMLBasicAPIClient.h */; };
 		C4FA31EF1C5061D9001902EB /* TMLBasicAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FA31ED1C5061D9001902EB /* TMLBasicAPIClient.m */; };
@@ -878,6 +878,7 @@
 				C4FCD3271C0FC7F200D723BC /* TML.h in Headers */,
 				C4FCD3291C0FC7F200D723BC /* TMLGlobals.h in Headers */,
 				C4FCD32B1C0FC7F200D723BC /* TMLLogger.h in Headers */,
+				C4CC8D781C56E92100FACF81 /* TMLAnalytics.h in Headers */,
 				C4FCD32C1C0FC7F200D723BC /* TMLModel.h in Headers */,
 				C4FCD2E81C0FC7F200D723BC /* TMLApplication.h in Headers */,
 				C4FCD2F21C0FC7F200D723BC /* TMLBundle.h in Headers */,
@@ -887,7 +888,6 @@
 				C4FCD3401C0FC7F200D723BC /* TMLTranslationKey.h in Headers */,
 				C4FCD2F81C0FC7F200D723BC /* TMLTranslatorViewController.h in Headers */,
 				C4FCD2F61C0FC7F200D723BC /* TMLLanguageSelectorViewController.h in Headers */,
-				C4CC8D781C56E92100FACF81 /* TMLAnalytics.h in Headers */,
 				C42582141C21243500BAE9A9 /* NSAttributedString+TML.h in Headers */,
 				C42582151C21243500BAE9A9 /* NSObject+TML.h in Headers */,
 				C42582161C21243500BAE9A9 /* NSObject+TMLJSON.h in Headers */,

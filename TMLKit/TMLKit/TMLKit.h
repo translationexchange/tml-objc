@@ -12,6 +12,7 @@
 #import <TMLKit/TMLGlobals.h>
 #import <TMLKit/TMLLogger.h>
 #import <TMLKit/TML.h>
+#import <TMLKit/TMLAnalytics.h>
 
 #import <TMLKit/TMLModel.h>
 #import <TMLKit/TMLApplication.h>
