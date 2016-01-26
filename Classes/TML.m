@@ -36,6 +36,7 @@
 #import "TMLAPIBundle.h"
 #import "TMLAPIClient.h"
 #import "TMLApplication.h"
+#import "TMLAnalytics.h"
 #import "TMLBundleManager.h"
 #import "TMLDataToken.h"
 #import "TMLLanguage.h"
@@ -289,6 +290,10 @@ static BOOL TMLConfigured;
                            selector:@selector(applicationDidBecomeActive:)
                                name:UIApplicationDidBecomeActiveNotification
                              object:nil];
+    [notificationCenter addObserver:self
+                           selector:@selector(applicationDidEnterBackground:)
+                               name:UIApplicationDidEnterBackgroundNotification
+                             object:nil];
     [notificationCenter addObserver:self selector:@selector(bundleSyncDidFinish:)
                                name:TMLDidFinishSyncNotification
                              object:nil];
@@ -324,6 +329,12 @@ static BOOL TMLConfigured;
     if (self.translationEnabled == YES) {
         [self setupInlineTranslationGestureRecognizer];
     }
+    
+    [[TMLAnalytics sharedInstance] startAnalyticsTimerIfNecessary];
+}
+
+- (void)applicationDidEnterBackground:(NSNotification *)aNotification {
+    [[TMLAnalytics sharedInstance] stopAnalyticsTimerIfNecessary];
 }
 
 #pragma mark - Bundles
