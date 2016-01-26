@@ -265,6 +265,9 @@ NSString * const TMLAnalyticsBackingFileName = @"TMLAnalytics.json";
         && [_analyticsTimer isValid] == YES) {
         return;
     }
+    if (_analyticsEvents.count == 0) {
+        return;
+    }
     _analyticsTimer = [NSTimer timerWithTimeInterval:ANALYTICS_TIMER_INTERVAL
                                               target:self
                                             selector:@selector(analyticsTimerFired:)
