@@ -100,4 +100,7 @@
 - (NSObject *) dateValueForToken:(NSString *)token
                           inDate:(NSDate *)date;
 
+#pragma mark - Analytics
+@property (assign, nonatomic) BOOL analyticsEnabled;
+
 @end

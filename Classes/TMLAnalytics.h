@@ -19,4 +19,6 @@ extern NSString * const TMLAnalyticsPageViewEventName;
 - (void)reportEvent:(NSDictionary *)event;
 - (void)submitQueuedEvents;
 
+@property (assign, nonatomic) BOOL enabled;
+
 @end

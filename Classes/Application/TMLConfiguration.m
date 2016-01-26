@@ -29,6 +29,7 @@
  */
 
 #import "TML.h"
+#import "TMLAnalytics.h"
 #import "TMLConfiguration.h"
 #import "TMLLanguage.h"
 
@@ -72,6 +73,11 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
         self.translationCenterURL = [NSURL URLWithString:TMLTranslationCenterHost];
         self.localizeNIBStrings = YES;
         self.automaticallyReloadTableViewsWithReusableLocalizedStrings = YES;
+#if DEBUG
+        self.analyticsEnabled = NO;
+#else
+        self.analyticsEnabled = YES;
+#endif
     }
     return self;
 }
@@ -171,6 +177,16 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
     [self willChangeValueForKey:@"defaultLocale"];
     [self setPersistentValue:newLocale forKey:TMLDefaultLocaleDefaultsKey];
     [self didChangeValueForKey:@"defaultLocale"];
+}
+
+#pragma mark - Analytics
+
+- (void)setAnalyticsEnabled:(BOOL)analyticsEnabled {
+    if (_analyticsEnabled == analyticsEnabled) {
+        return;
+    }
+    _analyticsEnabled = analyticsEnabled;
+    [[TMLAnalytics sharedInstance] setEnabled:analyticsEnabled];
 }
 
 #pragma mark - Setting up Defaults

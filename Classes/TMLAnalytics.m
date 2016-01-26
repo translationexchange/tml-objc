@@ -49,6 +49,18 @@ NSString * const TMLAnalyticsBackingFileName = @"TMLAnalytics.json";
     return self;
 }
 
+#pragma mark - 
+
+- (void)setEnabled:(BOOL)enabled {
+    if (_enabled == enabled) {
+        return;
+    }
+    _enabled = enabled;
+    if (enabled == NO) {
+        [self stopAnalyticsTimerIfNecessary];
+    }
+}
+
 #pragma mark - Backing file
 
 - (NSString *)backingFilePath {
@@ -126,9 +138,15 @@ NSString * const TMLAnalyticsBackingFileName = @"TMLAnalytics.json";
     if (eventInfo == nil) {
         return;
     }
+    
     if (_backingFileInvalid == YES) {
         return;
     }
+    
+    if (_enabled == NO) {
+        return;
+    }
+    
     if ([[[TML sharedInstance] configuration] isValidConfiguration] == NO) {
         return;
     }
