@@ -229,18 +229,26 @@ NSString * const TMLAnalyticsBackingFileName = @"TMLAnalytics.json";
     
     NSURLSession *session = [NSURLSession sharedSession];
     _postTask = [session uploadTaskWithRequest:request fromData:data completionHandler:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
-        if (error != nil) {
-            TMLDebug(@"Error posting analytics data: %@", error);
-            if (completion != nil) {
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    completion(NO);
-                });
+        NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
+        BOOL success = (statusCode == 200) ? YES : NO;
+        if (success == NO) {
+            if (error != nil) {
+                TMLDebug(@"Error posting analytics data: %@", error);
             }
+            else {
+                TMLDebug(@"Error posting analytics data: HTTP %i", statusCode);
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                _postTask = nil;
+                if (completion != nil) {
+                    completion(success);
+                }
+            });
         }
         else {
             dispatch_async(dispatch_get_main_queue(), ^{
                 if (completion != nil) {
-                    completion(YES);
+                    completion(success);
                 }
                 _postTask = nil;
                 [self truncateBackingFile];
