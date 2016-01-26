@@ -49,6 +49,10 @@ NSString * const TMLAnalyticsBackingFileName = @"TMLAnalytics.json";
     return self;
 }
 
+- (void)dealloc {
+    [self stopAnalyticsTimerIfNecessary];
+}
+
 #pragma mark - 
 
 - (void)setEnabled:(BOOL)enabled {
