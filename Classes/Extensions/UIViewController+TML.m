@@ -28,10 +28,28 @@
  *  THE SOFTWARE.
  */
 
-#import "UIViewController+TML.h"
 #import "NSObject+TML.h"
+#import "TMLAnalytics.h"
+#import "UIViewController+TML.h"
+#import <objc/runtime.h>
 
 @implementation UIViewController (TML)
+
++ (void)load {
+    Method original = class_getInstanceMethod(self, @selector(didMoveToParentViewController:));
+    Method ours = class_getInstanceMethod(self, @selector(tmlDidMoveToParentViewController:));
+    method_exchangeImplementations(original, ours);
+}
+
+- (void)tmlDidMoveToParentViewController:(UIViewController *)parent {
+    [self tmlDidMoveToParentViewController:parent];
+    if (parent != nil) {
+        [[TMLAnalytics sharedInstance] reportEvent:@{
+                                                     TMLAnalyticsEventTypeKey: TMLAnalyticsPageViewEventName,
+                                                     TMLAnalyticsEventDataKey: NSStringFromClass(self.class)
+                                                     }];
+    }
+}
 
 - (NSSet *)tmlLocalizableKeyPaths {
     NSMutableSet *keys = [[super tmlLocalizableKeyPaths] mutableCopy];

@@ -47,6 +47,8 @@
 		C435BD0B1C16B5EA009A4091 /* NSURL+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C435BD091C16B5EA009A4091 /* NSURL+TML.m */; };
 		C435BD131C190083009A4091 /* UIBarItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C435BD111C190083009A4091 /* UIBarItem+TML.m */; };
 		C435BD231C1933BF009A4091 /* NSAttributedString+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C435BD211C1933BF009A4091 /* NSAttributedString+TML.m */; };
+		C4CC8D781C56E92100FACF81 /* TMLAnalytics.h in Headers */ = {isa = PBXBuildFile; fileRef = C4CC8D761C56E92100FACF81 /* TMLAnalytics.h */; };
+		C4CC8D791C56E92100FACF81 /* TMLAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CC8D771C56E92100FACF81 /* TMLAnalytics.m */; };
 		C4FA31EE1C5061D9001902EB /* TMLBasicAPIClient.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FA31EC1C5061D9001902EB /* TMLBasicAPIClient.h */; };
 		C4FA31EF1C5061D9001902EB /* TMLBasicAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FA31ED1C5061D9001902EB /* TMLBasicAPIClient.m */; };
 		C4FA63801C1A429600E3ECB8 /* UIResponder+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FA637E1C1A429600E3ECB8 /* UIResponder+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -256,6 +258,8 @@
 		C435BD111C190083009A4091 /* UIBarItem+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarItem+TML.m"; sourceTree = "<group>"; };
 		C435BD201C1933BF009A4091 /* NSAttributedString+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+TML.h"; sourceTree = "<group>"; };
 		C435BD211C1933BF009A4091 /* NSAttributedString+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+TML.m"; sourceTree = "<group>"; };
+		C4CC8D761C56E92100FACF81 /* TMLAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAnalytics.h; sourceTree = "<group>"; };
+		C4CC8D771C56E92100FACF81 /* TMLAnalytics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAnalytics.m; sourceTree = "<group>"; };
 		C4CF54CC1C100DDC00EC39CC /* Pods.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Pods.xcodeproj; path = Pods/Pods.xcodeproj; sourceTree = "<group>"; };
 		C4FA31EC1C5061D9001902EB /* TMLBasicAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLBasicAPIClient.h; sourceTree = "<group>"; };
 		C4FA31ED1C5061D9001902EB /* TMLBasicAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLBasicAPIClient.m; sourceTree = "<group>"; };
@@ -521,6 +525,8 @@
 				C4FCD2DB1C0FC7F200D723BC /* Translations */,
 				C4FA63821C1A5AF600E3ECB8 /* TMLTranslationActivationView.h */,
 				C4FA63831C1A5AF600E3ECB8 /* TMLTranslationActivationView.m */,
+				C4CC8D761C56E92100FACF81 /* TMLAnalytics.h */,
+				C4CC8D771C56E92100FACF81 /* TMLAnalytics.m */,
 			);
 			name = Classes;
 			path = ../../Classes;
@@ -881,6 +887,7 @@
 				C4FCD3401C0FC7F200D723BC /* TMLTranslationKey.h in Headers */,
 				C4FCD2F81C0FC7F200D723BC /* TMLTranslatorViewController.h in Headers */,
 				C4FCD2F61C0FC7F200D723BC /* TMLLanguageSelectorViewController.h in Headers */,
+				C4CC8D781C56E92100FACF81 /* TMLAnalytics.h in Headers */,
 				C42582141C21243500BAE9A9 /* NSAttributedString+TML.h in Headers */,
 				C42582151C21243500BAE9A9 /* NSObject+TML.h in Headers */,
 				C42582161C21243500BAE9A9 /* NSObject+TMLJSON.h in Headers */,
@@ -1232,6 +1239,7 @@
 				C4FCD3181C0FC7F200D723BC /* TMLLanguage.m in Sources */,
 				C4FCD3151C0FC7F200D723BC /* UIViewController+TML.m in Sources */,
 				C4FCD2F51C0FC7F200D723BC /* TMLBundleManager.m in Sources */,
+				C4CC8D791C56E92100FACF81 /* TMLAnalytics.m in Sources */,
 				C4FCD3411C0FC7F200D723BC /* TMLTranslationKey.m in Sources */,
 				C42581F91C21086000BAE9A9 /* UILocalNotification+TML.m in Sources */,
 				C42BB37E1C1FD1EC005C0128 /* UIActionSheet+TML.m in Sources */,

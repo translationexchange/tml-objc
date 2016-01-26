@@ -6,6 +6,8 @@
 //  Copyright © 2015 TmlHub Inc. All rights reserved.
 //
 
+#define TMLBundleIdentifier @"com.translationexchange.TMLKit"
+
 #define TMLRaiseAbstractInvocation() TMLAbstractInvocation(_cmd, self)
 #define TMLRaiseAlternativeInstantiationMethod(selector) TMLUseAlternativeInstantiationMethod(selector, self);
 #define TMLRaiseUnconfiguredIncovation() TMLUnconfiguredIncovation(_cmd, self)

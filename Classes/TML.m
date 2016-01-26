@@ -159,6 +159,10 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 }
 
 
+#pragma mark - TML
+
+static BOOL TMLConfigured;
+
 @interface TML()<UIGestureRecognizerDelegate> {
     BOOL _observingNotifications;
     BOOL _checkingForBundleUpdate;
@@ -197,9 +201,11 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 + (TML *) sharedInstanceWithConfiguration:(TMLConfiguration *)configuration {
     TML *tml = [self sharedInstance];
     if (tml.configuration != nil) {
-        TMLRaiseUnconfiguredIncovation();
+        TMLRaiseAlreadyConfigured();
+        return tml;
     }
     tml.configuration = configuration;
+    TMLConfigured = YES;
     return tml;
 }
 
