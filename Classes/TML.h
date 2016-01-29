@@ -29,6 +29,8 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "TMLApplication.h"
+#import "TMLBundle.h"
 
 @protocol TMLDelegate <NSObject>
 @optional
@@ -327,6 +329,21 @@
 
 id TMLLocalize(NSDictionary *options, NSString *string, ...);
 id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...);
+
+#define TMLLanguages()\
+[[[TML sharedInstance] application] languages]
+
+#define TMLLocales()\
+[[[[TML sharedInstance] application] languages] valueForKeyPath:@"locale"]
+
+#define TMLAvailableLocales()\
+[[[TML sharedInstance] currentBundle] availableLocales]
+
+#define TMLCurrentLanguage()\
+[[TML sharedInstance] currentLanguage]
+
+#define TMLCurrentLocale()\
+[[TML sharedInstance] currentLocale]
 
 #define TMLLocalizedString(string,...)\
 (NSString *)TMLLocalize(@{TMLSenderOptionName: self}, string, ##__VA_ARGS__, NULL)
