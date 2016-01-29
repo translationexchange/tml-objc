@@ -151,7 +151,7 @@
         [hud show:YES];
     }
 
-    [TML changeLocale:newLocale
+    [tml changeLocale:newLocale
       completionBlock:^(BOOL success) {
           if (success == YES) {
               if (_delegate && [_delegate respondsToSelector:@selector(tmlLanguageSelectorViewController:didSelectLanguage:)]) {
