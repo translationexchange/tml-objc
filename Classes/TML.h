@@ -372,14 +372,14 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...);
 #define TMLBeginSource(name) \
     [TML beginBlockWithOptions: @{TMLSourceOptionName: name}];
 
-#define TMLEndSource \
+#define TMLEndSource() \
     [TML endBlockWithOptions];
 
 #define TMLBeginBlockWithOptions(opts) \
-    [TML beginBlockWithOptions:opts];
+    [[TML sharedInstance] beginBlockWithOptions:opts];
 
-#define TMLEndBlockWithopts \
-    [TML endBlockWithopts];
+#define TMLEndBlockWithOptions() \
+    [[TML sharedInstance] endBlockWithOptions];
 
 #define TMLPresentLanguagePicker() \
 [[TML sharedInstance] presentLanguageSelectorController]
