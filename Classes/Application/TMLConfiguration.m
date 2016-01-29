@@ -85,7 +85,7 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
 #pragma mark - Validation
 
 - (BOOL)isValidConfiguration {
-    return self.accessToken.length > 0 && self.applicationKey.length > 0 && self.apiURL != nil;
+    return self.applicationKey.length > 0 && self.apiURL != nil;
 }
 
 - (void)invalidate {
@@ -147,7 +147,8 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
 }
 
 - (BOOL)isTranslationEnabled {
-    return [[self persistentValueForKey:TMLTranslationEnabledDefaultsKey] boolValue];
+    return ([[self persistentValueForKey:TMLTranslationEnabledDefaultsKey] boolValue]
+            && self.accessToken.length > 0);
 }
 
 - (void)setTranslationEnabled:(BOOL)translationEnabled {
