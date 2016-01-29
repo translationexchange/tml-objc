@@ -93,17 +93,56 @@
 }
 
 #pragma mark - Translations
+- (void)loadTranslationsForLocale:(NSString *)aLocale
+                       completion:(void (^)(NSError *))completion {
+    [self loadTranslationsForLocale:aLocale
+                requireLanguageData:YES
+                         completion:completion];
+}
 
 - (void)loadTranslationsForLocale:(NSString *)aLocale
+              requireLanguageData:(BOOL)requireLanguageData
                        completion:(void (^)(NSError *))completion
 {
     TMLAPIClient *client = [[TML sharedInstance] apiClient];
+    
+    NSString *languageFilePath = [[[self path] stringByAppendingPathComponent:aLocale] stringByAppendingPathComponent:TMLBundleLanguageFilename];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:languageFilePath] == NO && requireLanguageData == YES) {
+        [client getLanguageForLocale:aLocale
+                             options:nil
+                     completionBlock:^(TMLLanguage *language, TMLAPIResponse *response, NSError *error) {
+                         NSError *fileError;
+                         if (language != nil) {
+                             [self addLanguage:language];
+                             NSData *writeData = [[response.userInfo tmlJSONString] dataUsingEncoding:NSUTF8StringEncoding];
+                             NSString *relativePath = [aLocale stringByAppendingPathComponent:TMLBundleLanguageFilename];
+                             [self writeResourceData:writeData
+                                      toRelativePath:relativePath
+                                               error:&fileError];
+                         }
+                         [self loadTranslationsForLocale:aLocale requireLanguageData:NO completion:completion];
+                     }];
+        return;
+    }
+    
     [client getTranslationsForLocale:aLocale
                               source:nil
                              options:nil
                      completionBlock:^(NSDictionary *translations, TMLAPIResponse *response, NSError *error) {
                          if (translations != nil) {
                              [self setTranslations:translations forLocale:aLocale];
+                             NSDictionary *jsonObj = @{TMLAPIResponseResultsKey: response.results};
+                             NSData *writeData = [[jsonObj tmlJSONString] dataUsingEncoding:NSUTF8StringEncoding];
+                             NSString *relativePath = [aLocale stringByAppendingPathComponent:TMLBundleTranslationsFilename];
+                             
+                             NSError *fileError;
+                             [self writeResourceData:writeData
+                                      toRelativePath:relativePath
+                                               error:&fileError];
+                             if (error == nil && fileError != nil) {
+                                 error = fileError;
+                             }
                          }
                          if (completion != nil) {
                              completion(error);
