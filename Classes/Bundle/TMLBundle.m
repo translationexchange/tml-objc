@@ -324,6 +324,9 @@ NSString * const TMLBundleErrorsKey = @"errors";
             }
         }
         
+        if (_translations == nil) {
+            _translations = [NSMutableDictionary dictionary];
+        }
         _translations[locale] = [translations copy];
     }
 }
