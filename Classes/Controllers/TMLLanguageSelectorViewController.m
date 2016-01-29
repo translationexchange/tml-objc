@@ -36,15 +36,21 @@
 #import "TMLLanguageSelectorViewController.h"
 #import <QuartzCore/QuartzCore.h>
 
-@interface TMLLanguageSelectorViewController () <MBProgressHUDDelegate>
+@interface TMLLanguageSelectorViewController () <MBProgressHUDDelegate> {
+    BOOL _observingNotifications;
+}
 
 @property(nonatomic, strong) IBOutlet UITableView *tableView;
-@property(nonatomic, readonly) NSArray *languages;
+@property(nonatomic, strong) NSArray *languages;
 - (IBAction) dismiss: (id)sender;
 
 @end
 
 @implementation TMLLanguageSelectorViewController
+
+- (void)dealloc {
+    [self teardownNotificationObserving];
+}
 
 - (void) loadView {
     [super loadView];
@@ -54,12 +60,16 @@
     self.title = TMLLocalizedString(@"Select Language");
     self.navigationItem.leftBarButtonItem = doneButton;
     
+    self.languages = TMLLanguages();
+    
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
     [self.view addSubview:self.tableView];
+    
+    [self setupNotificationObserving];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -70,9 +80,34 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (NSArray *)languages {
-    return [[[TML sharedInstance] application] languages];
+#pragma mark - Notifications
+
+- (void)setupNotificationObserving {
+    if (_observingNotifications == YES) {
+        return;
+    }
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter addObserver:self
+                           selector:@selector(localizationDataChanged:)
+                               name:TMLLocalizationDataChangedNotification
+                             object:nil];
+    _observingNotifications = YES;
 }
+
+- (void)teardownNotificationObserving {
+    if (_observingNotifications == NO) {
+        return;
+    }
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    _observingNotifications = NO;
+}
+
+- (void)localizationDataChanged:(NSNotification *)aNotification {
+    self.languages = TMLLanguages();
+    [self.tableView reloadData];
+}
+
+#pragma mark - Table View
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.languages count];
@@ -84,12 +119,15 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:@"UITableViewCell"];
     }
     
-    NSArray *languages = [self languages];
+    NSArray *languages = self.languages;
     
     TMLLanguage *language = (TMLLanguage *)[languages objectAtIndex:indexPath.row];
-    cell.detailTextLabel.text = language.nativeName;
-    cell.textLabel.text = language.englishName;
-    if ([[[TML sharedInstance] currentLanguage].locale isEqualToString:language.locale]) {
+    NSString *englishName = language.englishName;
+    NSString *nativeName = language.nativeName;
+    cell.detailTextLabel.text = (nativeName == nil) ? englishName : nativeName;
+    cell.textLabel.text = englishName;
+    NSString *currentLocale = TMLCurrentLocale();
+    if ([currentLocale isEqualToString:language.locale]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
