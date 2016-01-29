@@ -325,10 +325,8 @@ static BOOL TMLConfigured;
             }];
         }
     }
-    [self setupTranslationActivationGestureRecognizer];
-    if (self.translationEnabled == YES) {
-        [self setupInlineTranslationGestureRecognizer];
-    }
+    
+    [self updateInlineTranslationRecognizers];
     
     [[TMLAnalytics sharedInstance] startAnalyticsTimerIfNecessary];
 }
@@ -343,6 +341,7 @@ static BOOL TMLConfigured;
     // Special handling of nil bundles - this scenario would arise
     // when switching from API bundle to nothing - b/c no bundles are available
     // neither locally nor on CDN.
+    BOOL updateReusableStrings = YES;
     if (bundle == nil) {
         TMLWarn(@"Setting current bundle not nil");
         self.application = nil;
@@ -352,16 +351,37 @@ static BOOL TMLConfigured;
         TMLInfo(@"Initializing from bundle: %@", bundle.version);
         self.application = newApplication;
         NSString *ourLocale = [self currentLocale];
-        if (ourLocale != nil) {
-            [bundle loadTranslationsForLocale:ourLocale completion:^(NSError *error) {
-                if (error != nil) {
-                    TMLError(@"Could not preload current locale '%@' into newly selected bundle: %@", ourLocale, error);
+        NSArray *bundleLocales = [bundle locales];
+        if (bundleLocales.count == 0) {
+            if ([bundle isKindOfClass:[TMLAPIBundle class]] == YES) {
+                TMLAPIBundle *apiBundle = (TMLAPIBundle *)bundle;
+                if ([apiBundle isSyncing] == NO) {
+                    [apiBundle sync];
                 }
-                else {
-                    [self updateReusableTMLStringsOfAllRegisteredObjects];
-                }
-            }];
+                updateReusableStrings = NO;
+            }
         }
+        else {
+            NSString *targetLocale = nil;
+            if ([bundleLocales containsObject:ourLocale] == YES) {
+                targetLocale = ourLocale;
+            }
+            else {
+                targetLocale = [self defaultLocale];
+            }
+            NSDictionary *translations = [bundle translationsForLocale:targetLocale];
+            if (translations == nil) {
+                [bundle loadTranslationsForLocale:targetLocale completion:^(NSError *error) {
+                    if (error != nil) {
+                        TMLError(@"Could not preload current locale '%@' into newly selected bundle: %@", ourLocale, error);
+                    }
+                }];
+            }
+        }
+    }
+    
+    if (updateReusableStrings == YES) {
+        [self updateReusableTMLStringsOfAllRegisteredObjects];
     }
     
     // TODO: this should probably be getting handled elsewhere
@@ -552,6 +572,7 @@ static BOOL TMLConfigured;
     }
     _application = application;
     self.configuration.defaultLocale = application.defaultLocale;
+    [self updateInlineTranslationRecognizers];
 }
 
 #pragma mark - Translating
@@ -846,7 +867,21 @@ static BOOL TMLConfigured;
     return [[TML sharedInstance] configuration];
 }
 
-#pragma mark - In-App Translations
+
+- (void)updateInlineTranslationRecognizers {
+    if ([[UIApplication sharedApplication] keyWindow] == nil) {
+        return;
+    }
+    TMLApplication *application = self.application;
+    TMLConfiguration *config = self.configuration;
+    if (application.inlineTranslationsEnabled == YES
+        && config.accessToken.length > 0) {
+        [self setupTranslationActivationGestureRecognizer];
+    }
+    else {
+        [self teardownTranslationActivationGestureRecognizer];
+    }
+}
 
 - (void)setTranslationEnabled:(BOOL)translationEnabled {
     if (_translationEnabled == translationEnabled) {
@@ -854,7 +889,6 @@ static BOOL TMLConfigured;
     }
     _translationEnabled = translationEnabled;
     TMLBundle *newBundle = nil;
-    NSString *currentLocale = [self currentLocale];
     if (translationEnabled == YES) {
         newBundle = [TMLBundle apiBundle];
     }
@@ -862,9 +896,6 @@ static BOOL TMLConfigured;
         newBundle = [TMLBundle mainBundle];
     }
     self.currentBundle = newBundle;
-    if ([[newBundle locales] containsObject:currentLocale] == NO) {
-        [self changeLocale:[TML defaultLocale] completionBlock:nil];
-    }
     self.configuration.translationEnabled = translationEnabled;
     if (translationEnabled == YES && [[UIApplication sharedApplication] keyWindow] != nil) {
         [self setupInlineTranslationGestureRecognizer];
