@@ -102,7 +102,7 @@
     NSAttributedString *translation = TMLLocalizedAttributedString(self.label, [self parsedTokens], self.description, [self parsedOptions]);
     self.translationTextView.attributedText = translation;
     
-    TMLEndSource
+    TMLEndSource();
 }
 
 - (IBAction)changeLanguage:(id)sender {
@@ -134,7 +134,7 @@
     self.originalLabel.text = TMLLocalizedString(@"Original Label");
     self.translationLabel.text = TMLLocalizedString(@"Translation");
 
-    TMLEndSource
+    TMLEndSource();
 }
 
 @end
