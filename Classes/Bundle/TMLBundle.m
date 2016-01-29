@@ -253,7 +253,7 @@ NSString * const TMLBundleErrorsKey = @"errors";
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSString *languageFilePath = [[self.path stringByAppendingPathComponent:locale] stringByAppendingPathComponent:TMLBundleLanguageFilename];
     if ([fileManager fileExistsAtPath:languageFilePath] == NO) {
-        TMLWarn(@"Cannot find %@ for locale '%@'", TMLBundleLanguageFilename, locale);
+        TMLDebug(@"Cannot find %@ for locale '%@'", TMLBundleLanguageFilename, locale);
         return;
     }
     NSData *data = [NSData dataWithContentsOfFile:languageFilePath];
