@@ -127,21 +127,6 @@ NSString * const TMLSourceDefaultKey = @"TML";
     self.translations = (NSDictionary *)newTranslations;
 }
 
-- (void) loadTranslationsForLocale:(NSString *)locale
-                   completionBlock:(void(^)(BOOL success))completionBlock
-{
-    [[[TML sharedInstance] apiClient] getTranslationsForLocale:locale source:self options:@{TMLAPIOptionsIncludeAll: @YES} completionBlock:^(NSDictionary *newTranslations, TMLAPIResponse *response, NSError *error) {
-        BOOL success = NO;
-        if (newTranslations != nil) {
-            success = YES;
-            [self updateTranslations:newTranslations forLocale:locale];
-        }
-        if (completionBlock != nil) {
-            completionBlock(success);
-        }
-    }];
-}
-
 - (NSArray *) translationsForKey:(NSString *) translationKey inLanguage: (NSString *) locale {
     if (!self.translations && ![self.translations objectForKey:locale]) return nil;
     return [[self.translations objectForKey:locale] objectForKey:translationKey];
