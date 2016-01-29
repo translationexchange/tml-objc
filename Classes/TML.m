@@ -390,9 +390,6 @@ static BOOL TMLConfigured;
     if ([self.application isInlineTranslationsEnabled] == NO) {
         self.configuration.translationEnabled = NO;
     }
-    
-    // TODO: this should get posted ONLY if we're chaning the bundle
-    [[NSNotificationCenter defaultCenter] postNotificationName:TMLLocalizationDataChangedNotification object:nil];
 }
 
 - (void)setCurrentBundle:(TMLBundle *)currentBundle {
@@ -406,6 +403,7 @@ static BOOL TMLConfigured;
         apiBundle.syncEnabled = YES;
         [apiBundle setNeedsSync];
     }
+    [[NSNotificationCenter defaultCenter] postNotificationName:TMLLocalizationDataChangedNotification object:nil];
 }
 
 - (void) initTranslationBundle:(void(^)(TMLBundle *bundle))completion {
