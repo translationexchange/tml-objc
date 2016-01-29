@@ -118,6 +118,34 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
 
 #pragma mark - Accessors
 
+- (void)setAccessToken:(NSString *)accessToken {
+    if (_accessToken == accessToken
+        || [_accessToken isEqualToString:accessToken] == YES) {
+        return;
+    }
+    
+    if (accessToken.length == 0) {
+        _accessToken = nil;
+    }
+    else {
+        _accessToken = accessToken;
+    }
+}
+
+- (void)setApplicationKey:(NSString *)applicationKey {
+    if (_applicationKey == applicationKey
+        || [_applicationKey isEqualToString:applicationKey] == YES) {
+        return;
+    }
+    
+    if (applicationKey.length == 0) {
+        _applicationKey = nil;
+    }
+    else {
+        _applicationKey = applicationKey;
+    }
+}
+
 - (BOOL)isTranslationEnabled {
     return [[self persistentValueForKey:TMLTranslationEnabledDefaultsKey] boolValue];
 }
