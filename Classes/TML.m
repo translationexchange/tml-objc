@@ -268,8 +268,7 @@ static BOOL TMLConfigured;
             }
         }];
         
-        if (configuration.applicationKey.length == 0
-            || configuration.accessToken.length == 0) {
+        if ([configuration isValidConfiguration] == NO) {
             TMLWarn(@"Application is misconfigured!!!");
         }
     }
