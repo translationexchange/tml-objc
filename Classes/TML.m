@@ -351,14 +351,13 @@ static BOOL TMLConfigured;
         self.application = newApplication;
         NSString *ourLocale = [self currentLocale];
         NSArray *bundleLocales = [bundle locales];
-        if (bundleLocales.count == 0) {
-            if ([bundle isKindOfClass:[TMLAPIBundle class]] == YES) {
-                TMLAPIBundle *apiBundle = (TMLAPIBundle *)bundle;
-                if ([apiBundle isSyncing] == NO) {
-                    [apiBundle sync];
-                }
-                updateReusableStrings = NO;
+        if (bundleLocales.count == 0
+            && [bundle isKindOfClass:[TMLAPIBundle class]] == YES) {
+            TMLAPIBundle *apiBundle = (TMLAPIBundle *)bundle;
+            if ([apiBundle isSyncing] == NO) {
+                [apiBundle sync];
             }
+            updateReusableStrings = NO;
         }
         else {
             NSString *targetLocale = nil;
@@ -368,13 +367,17 @@ static BOOL TMLConfigured;
             else {
                 targetLocale = [self defaultLocale];
             }
-            NSDictionary *translations = [bundle translationsForLocale:targetLocale];
-            if (translations == nil) {
+            BOOL hasTargetLocaleData = [[bundle availableLocales] containsObject:targetLocale];
+            if (hasTargetLocaleData == NO) {
                 [bundle loadTranslationsForLocale:targetLocale completion:^(NSError *error) {
                     if (error != nil) {
                         TMLError(@"Could not preload current locale '%@' into newly selected bundle: %@", ourLocale, error);
                     }
+                    else {
+                        [self updateReusableTMLStringsOfAllRegisteredObjects];
+                    }
                 }];
+                updateReusableStrings = NO;
             }
         }
     }
