@@ -254,6 +254,10 @@
 
 #pragma mark - Sync
 
+- (BOOL)isSyncing {
+    return _syncOperationCount > 0;
+}
+
 -(void)setNeedsSync {
     _needsSync = YES;
     if (self.syncEnabled == NO) {

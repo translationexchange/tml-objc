@@ -14,6 +14,7 @@
                  forSource:(NSString *)sourceKey;
 
 @property(nonatomic, assign) BOOL syncEnabled;
+- (BOOL)isSyncing;
 - (void)setNeedsSync;
 - (void)sync;
 
