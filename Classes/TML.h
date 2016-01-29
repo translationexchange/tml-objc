@@ -380,3 +380,6 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...);
 
 #define TMLEndBlockWithopts \
     [TML endBlockWithopts];
+
+#define TMLPresentLanguagePicker() \
+[[TML sharedInstance] presentLanguageSelectorController]
