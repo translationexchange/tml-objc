@@ -31,7 +31,6 @@
 #import "TML.h"
 #import "TMLAPIResponse.h"
 #import "TMLSource.h"
-#import "TMLAPIClient.h"
 
 NSString * const TMLSourceDefaultKey = @"TML";
 
