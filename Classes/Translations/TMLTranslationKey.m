@@ -182,19 +182,14 @@
 - (TMLTranslation *) findFirstAcceptableTranslationForTokens:(NSDictionary *)tokens
                                                   inLanguage:(TMLLanguage *)language
 {
-    // Get out right away
-    if ([self.translations count] == 0)
+    NSArray *availableTranslations = self.translations;
+    if (availableTranslations.count == 0) {
         return nil;
-
-    // Most common and fastest way to get out
-    if ([self.translations count] == 1) {
-        TMLTranslation *t = (TMLTranslation *) [self.translations objectAtIndex:0];
-        if (t.context == nil) return t;
     }
     
-    for (TMLTranslation *t in self.translations) {
-        if ([t isValidTranslationForTokens:tokens inLanguage:language] == YES) {
-            return t;
+    for (TMLTranslation *translation in availableTranslations) {
+        if ([translation isValidTranslationForTokens:tokens inLanguage:language] == YES) {
+            return translation;
         }
     }
     

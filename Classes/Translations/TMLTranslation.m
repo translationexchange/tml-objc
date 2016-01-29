@@ -90,8 +90,13 @@
 - (BOOL) isValidTranslationForTokens:(NSDictionary *)tokens
                           inLanguage:(TMLLanguage *)language
 {
-    if (![self hasContextRules])
+    if ([self.locale isEqualToString:language.locale] == NO) {
+        return NO;
+    }
+    
+    if ([self hasContextRules] == NO) {
         return YES;
+    }
     
     for (NSString *tokenName in [self.context allKeys]) {
         NSDictionary *rules = [self.context objectForKey:tokenName];
