@@ -9,7 +9,6 @@
 #import "NSObject+TMLJSON.h"
 #import "NSString+TML.h"
 #import "TML.h"
-#import "TMLAPIClient.h"
 #import "TMLAPIResponse.h"
 #import "TMLAPISerializer.h"
 #import "TMLApplication.h"
