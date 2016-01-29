@@ -45,6 +45,8 @@
 + (id)materializeObject:(id)object
               withClass:(Class)aClass;
 
+- (instancetype)initForReadingWithData:(NSData *)data;
+
 /**
  *  Whether to include empty objects (enumerable with count of 0) when serializing or materializing.
  */

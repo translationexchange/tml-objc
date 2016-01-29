@@ -142,6 +142,22 @@
     return self;
 }
 
+- (instancetype)initForReadingWithData:(NSData *)data {
+    if (self = [self init]) {
+        NSError *error;
+        _info = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:&error];
+        if (error != nil) {
+            NSException *exception = [[NSException alloc] initWithName:@"TMLAPISerializer"
+                                                                reason:@"Error instantiating as coder for reading with data"
+                                                              userInfo:@{
+                                                                         @"error": error
+                                                                         }];
+            [exception raise];
+        }
+    }
+    return self;
+}
+
 - (BOOL)allowsKeyedCoding {
     return YES;
 }
