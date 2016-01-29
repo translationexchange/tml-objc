@@ -1032,7 +1032,11 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     }];
     [alertController addAction:cancel];
     
-    [[[[UIApplication sharedApplication] keyWindow] rootViewController] presentViewController:alertController animated:YES completion:nil];
+    UIViewController *presentingController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+    if (presentingController.presentedViewController != nil) {
+        presentingController = presentingController.presentedViewController;
+    }
+    [presentingController presentViewController:alertController animated:YES completion:nil];
 }
 
 - (void)toggleActiveTranslation {
