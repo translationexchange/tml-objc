@@ -370,13 +370,13 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...);
 (NSString *)TMLLocalizeDate(@{TMLSenderOptionName: self, TMLReuseIdentifierOptionName: reuseIdentifier, TMLTokenFormatOptionName: TMLAttributedTokenFormatString}, date, format, ##__VA_ARGS__, NULL)
 
 #define TMLBeginSource(name) \
-    [TML beginBlockWithOptions: @{TMLSourceOptionName: name}];
+    [TML beginBlockWithOptions: @{TMLSourceOptionName: name}]
 
 #define TMLEndSource() \
-    [TML endBlockWithOptions];
+    [TML endBlockWithOptions]
 
 #define TMLBeginBlockWithOptions(opts) \
-    [[TML sharedInstance] beginBlockWithOptions:opts];
+    [[TML sharedInstance] beginBlockWithOptions:opts]
 
 #define TMLEndBlockWithOptions() \
     [[TML sharedInstance] endBlockWithOptions];
