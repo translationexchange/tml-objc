@@ -16,7 +16,6 @@
 #import "TMLConfiguration.h"
 #import "TMLLanguage.h"
 #import "TMLSource.h"
-#import "TMLTranslation.h"
 #import "TMLTranslationKey.h"
 
 @interface TMLBundle()
@@ -157,11 +156,6 @@
         allTranslations = [NSMutableDictionary dictionary];
     }
     
-    NSArray *translationObjects = [[translations allValues] valueForKeyPath:@"@unionOfArrays.self"];
-    for (TMLTranslation *translation in translationObjects) {
-        translation.locale = locale;
-    }
-    
     if (translations.count == 0
         && allTranslations[locale] != nil) {
         allTranslations[locale] = nil;
@@ -169,6 +163,7 @@
     else {
         allTranslations[locale] = translations;
     }
+    
     self.translations = allTranslations;
 }
 

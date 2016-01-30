@@ -36,6 +36,7 @@
 #import "TMLApplication.h"
 #import "TMLLanguage.h"
 #import "TMLSource.h"
+#import "TMLTranslation.h"
 #import "TMLTranslationKey.h"
 
 NSString * const TMLAPIOptionsLocale = @"locale";
@@ -145,6 +146,10 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
     NSDictionary <NSString *, TMLTranslation *>*translations = nil;
     if ([apiResponse isSuccessfulResponse] == YES) {
         translations = [apiResponse resultsAsTranslations];
+        NSArray *translationObjects = [[translations allValues] valueForKeyPath:@"@unionOfArrays.self"];
+        for (TMLTranslation *translation in translationObjects) {
+            translation.locale = locale;
+        }
     }
     else {
         TMLError(@"Error fetching translations for locale: %@; source: %@. Error: %@", locale, source, error);
