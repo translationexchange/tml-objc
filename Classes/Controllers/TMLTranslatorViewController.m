@@ -126,15 +126,16 @@
         [self dismiss:webView];
         return NO;
     }
+    else if ([path rangeOfString:@"logout"].location != NSNotFound) {
+        NSString *origin = [[[request.URL scheme] stringByAppendingString:@"://"] stringByAppendingString:[request.URL host]];
+        NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+        NSArray* facebookCookies = [cookies cookiesForURL:[NSURL URLWithString:origin]];
+        for (NSHTTPCookie* cookie in facebookCookies) {
+            [cookies deleteCookie:cookie];
+        }
+    }
     
     return YES;
-}
-- (void)webViewDidStartLoad:(UIWebView *)webView {
-    
-}
-
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    
 }
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
@@ -153,9 +154,9 @@
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[self.webView.request URL] absoluteString]]];
 }
 
-- (IBAction) reloadButtonPressed: (id) sender {
+- (IBAction)reloadButtonPressed:(id)sender {
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
-    [self.webView reload];
+    [self reload:sender];
 }
 
 -(IBAction)dismiss:(id)sender {
@@ -164,7 +165,23 @@
 }
 
 - (IBAction)reload:(id)sender {
+    [self signoutIfError];
     [self.webView reload];
+}
+
+- (void)signoutIfError {
+    if ([NSThread isMainThread] == NO) {
+        [self performSelectorOnMainThread:_cmd withObject:nil waitUntilDone:NO];
+        return;
+    }
+    
+    UIWebView *webView = self.webView;
+    @try {
+        [webView stringByEvaluatingJavaScriptFromString:@"(function(){ var i=document.createNodeIterator(document.body, NodeFilter.SHOW_COMMENT); var n=null; while (n = i.nextNode()) {if (n.textContent.match(\"public/500.html\")) { document.location.href = document.location.origin + \"/logout\"; } } })()"];
+    }
+    @catch(NSException *e) {
+        TMLDebug(@"Error signing out from translation center: %@", e);
+    }
 }
 
 @end
