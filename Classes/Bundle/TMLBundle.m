@@ -276,6 +276,20 @@ NSString * const TMLBundleErrorsKey = @"errors";
     return [[self.path stringByAppendingPathComponent:locale] stringByAppendingPathComponent:TMLBundleTranslationsFilename];
 }
 
+- (BOOL)hasLocaleTranslationsForLocale:(NSString *)locale {
+    if (_translations[locale] != nil) {
+        return YES;
+    }
+    
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *basePath = [self.path stringByAppendingPathComponent:locale];
+    
+    NSString *languageFilePath = [basePath stringByAppendingPathComponent:TMLBundleLanguageFilename];
+    NSString *translationsFilePath = [basePath stringByAppendingPathComponent:TMLBundleTranslationsFilename];
+    return ([fileManager fileExistsAtPath:languageFilePath] == YES
+            && [fileManager fileExistsAtPath:translationsFilePath] == YES);
+}
+
 - (NSDictionary *)translationsForLocale:(NSString *)locale {
     NSDictionary *translations = _translations[locale];
     if (translations == nil) {

@@ -105,6 +105,8 @@ typedef NS_ENUM(NSInteger, TMLBundleErrorCode) {
 
 #pragma mark - Translations
 
+- (BOOL)hasLocaleTranslationsForLocale:(NSString *)locale;
+
 /**
  *  Returns dictionary of TMLTranslation objects, keyed by translation key, for the given locale
  *
