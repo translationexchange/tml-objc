@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                      = "TMLKit"
-  s.version                   = "0.3.0"
+  s.version                   = "2.1"
   s.summary                   = "Translation Markup Language for Objective C."
   s.homepage                  = "https://github.com/translationexchange/tml-objc"
 
