@@ -774,9 +774,11 @@ static BOOL TMLConfigured;
     if (application.inlineTranslationsEnabled == YES
         && config.accessToken.length > 0) {
         [self setupTranslationActivationGestureRecognizer];
+        [self setupInlineTranslationGestureRecognizer];
     }
     else {
         [self teardownTranslationActivationGestureRecognizer];
+        [self teardownInlineTranslationGestureRecognizer];
     }
 }
 
