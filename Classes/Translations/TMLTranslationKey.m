@@ -193,7 +193,7 @@
         }
     }
     
-    TMLWarn(@"No acceptable ranslations found for key: %@", self.label);
+    TMLDebug(@"No acceptable ranslations found for key: %@", self.label);
     return nil;
 }
 
