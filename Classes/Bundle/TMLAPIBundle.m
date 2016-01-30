@@ -8,15 +8,16 @@
 
 #import "NSObject+TMLJSON.h"
 #import "TML.h"
-#import "TMLConfiguration.h"
 #import "TMLAPIBundle.h"
 #import "TMLAPIClient.h"
+#import "TMLAPIResponse.h"
+#import "TMLApplication.h"
 #import "TMLBundleManager.h"
-#import "TMLTranslationKey.h"
+#import "TMLConfiguration.h"
 #import "TMLLanguage.h"
 #import "TMLSource.h"
-#import "TMLApplication.h"
-#import "TMLAPIResponse.h"
+#import "TMLTranslation.h"
+#import "TMLTranslationKey.h"
 
 @interface TMLBundle()
 - (void)resetData;
@@ -155,6 +156,12 @@
     if (allTranslations == nil) {
         allTranslations = [NSMutableDictionary dictionary];
     }
+    
+    NSArray *translationObjects = [[translations allValues] valueForKeyPath:@"@unionOfArrays.self"];
+    for (TMLTranslation *translation in translationObjects) {
+        translation.locale = locale;
+    }
+    
     if (translations.count == 0
         && allTranslations[locale] != nil) {
         allTranslations[locale] = nil;
