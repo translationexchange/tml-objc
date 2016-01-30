@@ -601,6 +601,12 @@ static BOOL TMLConfigured;
                                            tokens:tokens
                                           options:opts];
     
+    // Default to original string if we failed to get a translation
+    // this could be due to no translation data available, or not even having any meta data whatsoever
+    if (result == nil) {
+        result = string;
+    }
+    
     NSAttributedString *attributedString = nil;
     if ([result isKindOfClass:[NSAttributedString class]] == YES) {
         attributedString = [[NSAttributedString alloc] initWithAttributedString:result];
