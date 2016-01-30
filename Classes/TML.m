@@ -103,16 +103,16 @@ id TMLLocalize(NSDictionary *options, NSString *string, ...) {
     
     id result = nil;
     if ([decorationFormat isEqualToString:TMLAttributedTokenFormatString] == YES) {
-        result = [TML localizeAttributedString:string
-                                   description:description
-                                        tokens:tokens
-                                       options:[ourOpts copy]];
+        result = [[TML sharedInstance] localizeAttributedString:string
+                                                    description:description
+                                                         tokens:tokens
+                                                        options:[ourOpts copy]];
     }
     else {
-        result = [TML localizeString:string
-                         description:description
-                              tokens:tokens
-                             options:[ourOpts copy]];
+        result = [[TML sharedInstance] localizeString:string
+                                          description:description
+                                               tokens:tokens
+                                              options:[ourOpts copy]];
     }
     return result;
 }
@@ -144,16 +144,16 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     NSString *decorationFormat = options[TMLTokenFormatOptionName];
     id result = nil;
     if ([decorationFormat isEqualToString:TMLAttributedTokenFormatString] == YES) {
-        result = [TML localizeAttributedDate:date
-                                  withFormat:dateFormat
-                                 description:description
-                                     options:[ourOpts copy]];
+        result = [[TML sharedInstance] localizeAttributedDate:date
+                                                   withFormat:dateFormat
+                                                  description:description
+                                                      options:[ourOpts copy]];
     }
     else {
-        result = [TML localizeDate:date
-                        withFormat:dateFormat
-                       description:description
-                           options:[ourOpts copy]];
+        result = [[TML sharedInstance] localizeDate:date
+                                         withFormat:dateFormat
+                                        description:description
+                                            options:[ourOpts copy]];
     }
     
     return result;
@@ -181,7 +181,6 @@ static BOOL TMLConfigured;
 
 @implementation TML
 
-// Shared instance of TML
 + (TML *)sharedInstance {
     static TML *sharedInstance = nil;
     static dispatch_once_t onceToken = 0;
@@ -209,17 +208,6 @@ static BOOL TMLConfigured;
     TMLConfigured = YES;
     return tml;
 }
-
-#pragma mark - Class side accessors
-
-+ (NSString *)applicationKey {
-    return [[[self sharedInstance] configuration] applicationKey];
-}
-
-+ (TMLApplication *) application {
-    return [[TML sharedInstance] application];
-}
-
 
 #pragma mark - Init
 
@@ -577,94 +565,6 @@ static BOOL TMLConfigured;
 
 #pragma mark - Translating
 
-+ (NSString *)localizeString:(NSString *)string
-                 description:(NSString *)description
-                      tokens:(NSDictionary *)tokens
-                     options:(NSDictionary *)options
-{
-    return [[self sharedInstance] localizeString:string
-                                     description:description
-                                          tokens:tokens
-                                         options:options];
-}
-
-+ (NSAttributedString *)localizeAttributedString:(NSString *)attributedString
-                                     description:(NSString *)description
-                                          tokens:(NSDictionary *)tokens
-                                         options:(NSDictionary *)options
-{
-    return [[self sharedInstance] localizeAttributedString:attributedString
-                                               description:description
-                                                    tokens:tokens
-                                                   options:options];
-}
-
-+ (NSString *) localizeDate:(NSDate *)date
-                 withFormat:(NSString *)format
-                description:(NSString *)description
-                    options:(NSDictionary *)options
-{
-    return [[self sharedInstance] localizeDate:date
-                                    withFormat:format
-                                   description:description
-                                       options:options];
-}
-
-+ (NSAttributedString *)localizeAttributedDate:(NSDate *)date
-                                    withFormat:(NSString *)format
-                                   description:(NSString *)description
-                                       options:(NSDictionary *)options
-{
-    return [[self sharedInstance] localizeAttributedDate:date
-                                              withFormat:format
-                                             description:description
-                                                 options:options];
-}
-
-+ (NSString *) localizeDate:(NSDate *)date
-             withFormatName:(NSString *)formatName
-                description:(NSString *)description
-                    options:(NSDictionary *)options
-{
-    return [[self sharedInstance] localizeDate:date
-                                withFormatName:formatName
-                                   description:description
-                                       options:options];
-}
-
-+ (NSAttributedString *) localizeAttributedDate:(NSDate *)date
-                                 withFormatName:(NSString *)formatName
-                                    description:(NSString *)description
-                                        options:(NSDictionary *)options
-{
-    return [[self sharedInstance] localizeAttributedDate:date
-                                          withFormatName:formatName
-                                             description:description
-                                                 options:options];
-}
-
-+ (NSString *) localizeDate:(NSDate *)date
-        withTokenizedFormat:(NSString *)tokenizedFormat
-             description:(NSString *)description
-                    options:(NSDictionary *)options
-{
-    return [[self sharedInstance] localizeDate:date
-                           withTokenizedFormat:tokenizedFormat
-                                   description:description
-                                       options:options];
-}
-
-+ (NSAttributedString *) localizeAttributedDate:(NSDate *)date
-                            withTokenizedFormat:(NSString *)tokenizedFormat
-                                 description:(NSString *)description
-                                        options:(NSDictionary *)options
-{
-    return [[self sharedInstance] localizeAttributedDate:date
-                                     withTokenizedFormat:tokenizedFormat
-                                             description:description
-                                                 options:options];
-}
-
 - (NSString *)localizeString:(NSString *)string
                  description:(NSString *)description
                       tokens:(NSDictionary *)tokens
@@ -858,15 +758,6 @@ static BOOL TMLConfigured;
 }
 
 #pragma mark - Configuration
-
-+ (void) configure:(void (^)(TMLConfiguration *config)) changes {
-    changes([TML configuration]);
-}
-
-+ (TMLConfiguration *) configuration {
-    return [[TML sharedInstance] configuration];
-}
-
 
 - (void)updateInlineTranslationRecognizers {
     if ([[UIApplication sharedApplication] keyWindow] == nil) {
@@ -1178,17 +1069,9 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 
 #pragma mark - Presenting View Controllers
 
-+ (void)presentTranslatorViewControllerWithTranslationKey:(NSString *)translationKey {
-    [[TML sharedInstance] presentTranslatorViewControllerWithTranslationKey:translationKey];
-}
-
 - (void)presentTranslatorViewControllerWithTranslationKey:(NSString *)translationKey {
     TMLTranslatorViewController *translator = [[TMLTranslatorViewController alloc] initWithTranslationKey:translationKey];
     [self presentViewController:translator];
-}
-
-+ (void)presentLanguageSelectorController {
-    [[TML sharedInstance] presentLanguageSelectorController];
 }
 
 - (void)presentLanguageSelectorController {
@@ -1236,18 +1119,6 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 
 #pragma mark - Block Options
 
-+ (void) beginBlockWithOptions:(NSDictionary *) options {
-    [[TML sharedInstance] beginBlockWithOptions:options];
-}
-
-+ (NSObject *) blockOptionForKey: (NSString *) key {
-    return [[TML sharedInstance] blockOptionForKey: key];
-}
-
-+ (void) endBlockWithOptions {
-    [[TML sharedInstance] endBlockWithOptions];
-}
-
 - (void) beginBlockWithOptions:(NSDictionary *) options {
     if (self.blockOptions == nil)
         self.blockOptions = [NSMutableArray array];
@@ -1281,10 +1152,6 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 
 #pragma mark - Sources
 
-+ (NSString *) currentSource {
-    return [[self sharedInstance] currentSource];
-}
-
 - (void)setCurrentSource:(NSString *)currentSource {
     if (currentSource != nil) {
         [self beginBlockWithOptions:@{TMLSourceOptionName : currentSource}];
@@ -1301,24 +1168,12 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 
 #pragma mark - Languages and Locales
 
-+ (TMLLanguage *) defaultLanguage {
-    return [[TML sharedInstance] defaultLanguage];
-}
-
 - (TMLLanguage *)defaultLanguage {
     return [[self application] languageForLocale:[self defaultLocale]];
 }
 
-+ (NSString *)defaultLocale {
-    return [[TML sharedInstance] defaultLocale];
-}
-
 - (NSString *)defaultLocale {
     return self.configuration.defaultLocale;
-}
-
-+ (TMLLanguage *) currentLanguage {
-    return [[TML sharedInstance] currentLanguage];
 }
 
 - (TMLLanguage *)currentLanguage {
@@ -1341,27 +1196,16 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     return lang;
 }
 
-+ (NSString *)currentLocale {
-    return [[TML sharedInstance] currentLocale];
-}
-
 - (NSString *)currentLocale {
     return self.configuration.currentLocale;
 }
 
-+ (NSString *)previousLocale {
-    return [[TML sharedInstance] previousLocale];
+- (void)setCurrentLocale:(NSString *)newLocale {
+    [self changeLocale:newLocale completionBlock:nil];
 }
 
 - (NSString *)previousLocale {
     return self.configuration.previousLocale;
-}
-
-+ (void) changeLocale:(NSString *)locale
-      completionBlock:(void(^)(BOOL success))completionBlock
-{
-    [[TML sharedInstance] changeLocale:locale
-                       completionBlock:completionBlock];
 }
 
 - (void) changeLocale:(NSString *)locale
@@ -1376,7 +1220,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
         }
     };
     TMLBundle *ourBundle = self.currentBundle;
-    if ([ourBundle translationsForLocale:locale] == nil) {
+    if ([ourBundle hasLocaleTranslationsForLocale:locale] == NO) {
         [ourBundle loadTranslationsForLocale:locale completion:^(NSError *error) {
             TMLLanguage *newLanguage;
             if (error == nil) {
@@ -1439,11 +1283,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     return results != nil;
 }
 
-+ (void) reloadTranslations {
-    [[TML sharedInstance] reloadTranslations];
-}
-
-- (void) reloadTranslations {
+- (void)reloadLocalizationData {
     TMLBundle *ourBundle = self.currentBundle;
     if ([ourBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
         [(TMLAPIBundle *)ourBundle setNeedsSync];
@@ -1455,7 +1295,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
         return NO;
     }
     TMLBundle *bundle = self.currentBundle;
-    return [bundle translationsForLocale:locale] != nil;
+    return [bundle hasLocaleTranslationsForLocale:locale];
 }
 
 - (void)registerObjectWithLocalizedStrings:(id)object {

@@ -47,7 +47,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 @implementation TMLBundleManager
 
 + (instancetype) defaultManager {
-    NSString *applicationKey = [TML applicationKey];
+    NSString *applicationKey = TMLApplicationKey();
     if (applicationKey == nil) {
         TMLRaiseUnconfiguredIncovation();
         return nil;
@@ -321,7 +321,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 {
     // Sanity checks
     NSError *error;
-    NSString *appKey = [TML applicationKey];
+    NSString *appKey = TMLApplicationKey();
     if (version == nil) {
         TMLError(@"Tried to install published bundle w/o a version string");
         error = [NSError errorWithDomain:TMLBundleManagerErrorDomain
@@ -557,7 +557,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     // Fetch resource data
     NSString *urlString = [NSString stringWithFormat:@"%@/%@/%@/%@",
                      [self archiveURL],
-                     [TML applicationKey],
+                     TMLApplicationKey(),
                      bundleVersion,
                      [resourcePath stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]]];
     NSURL *resourceURL = [NSURL URLWithString:urlString];
@@ -587,7 +587,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 
 - (void) fetchPublishedBundleInfo:(void(^)(NSDictionary *info, NSError *error))completionBlock {
     NSError *error = nil;
-    NSString *applicationKey = [TML applicationKey];
+    NSString *applicationKey = TMLApplicationKey();
     if (applicationKey == nil) {
         error = [NSError errorWithDomain:TMLBundleManagerErrorDomain
                                     code:TMLBundleManagerInvalidApplicationKeyError

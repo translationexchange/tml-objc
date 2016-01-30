@@ -84,7 +84,7 @@
     self.keyDescription = description;
     NSString *locale = [aDecoder decodeObjectForKey:@"locale"];
     if (locale == nil) {
-        locale = [[TML defaultLanguage] locale];
+        locale = [[TML sharedInstance] defaultLocale];
     }
     self.locale = locale;
     self.level = [aDecoder decodeIntegerForKey:@"level"];

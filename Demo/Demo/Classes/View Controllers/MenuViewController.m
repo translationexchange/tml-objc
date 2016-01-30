@@ -172,11 +172,11 @@
         if (indexPath.row == 0) {
             if (self.presentedViewController != nil) {
                 [self dismissViewControllerAnimated:YES completion:^{
-                    [TML presentLanguageSelectorController];
+                    [[TML sharedInstance] presentLanguageSelectorController];
                 }];
             }
             else {
-                [TML presentLanguageSelectorController];
+                [[TML sharedInstance] presentLanguageSelectorController];
             }
         } else if (indexPath.row == 1) {
             TML *tml = [TML sharedInstance];
@@ -187,11 +187,11 @@
         } else if (indexPath.row == 3) {
             if (self.presentedViewController != nil) {
                 [self dismissViewControllerAnimated:YES completion:^{
-                    [TML presentTranslatorViewControllerWithTranslationKey:nil];
+                    [[TML sharedInstance] presentTranslatorViewControllerWithTranslationKey:nil];
                 }];
             }
             else {
-                [TML presentTranslatorViewControllerWithTranslationKey:nil];
+                [[TML sharedInstance] presentTranslatorViewControllerWithTranslationKey:nil];
             }
         }
         [tableView deselectRowAtIndexPath:indexPath animated:YES];

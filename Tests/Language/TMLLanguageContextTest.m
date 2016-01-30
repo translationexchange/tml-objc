@@ -39,9 +39,8 @@
     TMLLanguageContext *context = [self languageContextFromResource:@"ctx_en-US_gender"];
     TMLTestUser *user = [[TMLTestUser alloc] initWithFirstName:@"Michael" andLastName:@"Berkovich" andGender:@"male"];
     
-    [TML configure:^(TMLConfiguration *config) {
-        [config setVariableMethod:@"@gender" forContext:@"gender" andVariableName:@"@gender"];
-    }];
+    TMLConfiguration *config = [[TML sharedInstance] configuration];
+    [config setVariableMethod:@"@gender" forContext:@"gender" andVariableName:@"@gender"];
     
     NSDictionary *expectations = @{@"@gender": @"male"};
     XCTAssert([expectations isEqual:[context vars:user]]);
@@ -50,16 +49,12 @@
     NSDictionary *obj = @{@"name": @"Anna", @"gender": @"female"};
     XCTAssert([expectations isEqual:[context vars: obj]]);
 
-    [TML configure:^(TMLConfiguration *config) {
-        [config setVariableMethod:^(NSObject *obj) { return @"unknown"; } forContext:@"gender" andVariableName:@"@gender"];
-    }];
+    [config setVariableMethod:^(NSObject *obj) { return @"unknown"; } forContext:@"gender" andVariableName:@"@gender"];
 
     expectations = @{@"@gender": @"unknown"};
     XCTAssert([expectations isEqual:[context vars: user]]);
     
-    [TML configure:^(TMLConfiguration *config) {
-        [config setVariableMethod:@"@@name" forContext:@"gender" andVariableName:@"@gender"];
-    }];
+    [config setVariableMethod:@"@@name" forContext:@"gender" andVariableName:@"@gender"];
     
     expectations = @{@"@gender": @"Michael Berkovich"};
     XCTAssert([expectations isEqual:[context vars: user]]);
@@ -69,18 +64,15 @@
     TMLLanguageContext *context = [self languageContextFromResource:@"ctx_en-US_gender"];
     TMLTestUser *user = [[TMLTestUser alloc] initWithFirstName:@"Michael" andLastName:@"Berkovich" andGender:@"male"];
     
-    [TML configure:^(TMLConfiguration *config) {
-        [config setVariableMethod:@"@gender" forContext:@"gender" andVariableName:@"@gender"];
-    }];
+    TMLConfiguration *config = [[TML sharedInstance] configuration];
+    [config setVariableMethod:@"@gender" forContext:@"gender" andVariableName:@"@gender"];
     
     TMLLanguageContextRule *rule = (TMLLanguageContextRule *) [context findMatchingRule:user];
     XCTAssert([@"male" isEqual:rule.keyword]);
     
     context = [self languageContextFromResource:@"ctx_ru_number"];
     
-    [TML configure:^(TMLConfiguration *config) {
-        [config setVariableMethod:@"@@self" forContext:@"number" andVariableName:@"@n"];
-    }];
+    [config setVariableMethod:@"@@self" forContext:@"number" andVariableName:@"@n"];
     
     rule = (TMLLanguageContextRule *) [context findMatchingRule:@1];
     XCTAssert([@"one" isEqual:rule.keyword]);

@@ -90,7 +90,7 @@ void ensureArrayIndex(NSMutableArray *array, NSInteger index) {
         NSMutableDictionary *reuseInfo = [NSMutableDictionary dictionary];
         reuseInfo[TMLLocalizedStringInfoKey] = localizedString;
         TMLTranslationKey *translationKey = [[TMLTranslationKey alloc] initWithLabel:newValue description:nil];
-        translationKey.locale = [TML defaultLocale];
+        translationKey.locale = TMLDefaultLocale();
         reuseInfo[TMLTranslationKeyInfoKey] = translationKey;
         [self registerTMLInfo:reuseInfo forReuseIdentifier:keyPath];
     }
@@ -127,7 +127,7 @@ void ensureArrayIndex(NSMutableArray *array, NSInteger index) {
             reuseInfo = [NSMutableDictionary dictionary];
             reuseInfo[TMLLocalizedStringInfoKey] = localizedString;
             TMLTranslationKey *translationKey = [[TMLTranslationKey alloc] initWithLabel:localizableString description:nil];
-            translationKey.locale = [TML defaultLocale];
+            translationKey.locale = TMLDefaultLocale();
             reuseInfo[TMLTranslationKeyInfoKey] = translationKey;
             if (tokens != nil) {
                 reuseInfo[TMLTokensInfoKey] = tokens;
@@ -141,7 +141,7 @@ void ensureArrayIndex(NSMutableArray *array, NSInteger index) {
             reuseInfo = [NSMutableDictionary dictionary];
             reuseInfo[TMLLocalizedStringInfoKey] = localizedString;
             TMLTranslationKey *translationKey = [[TMLTranslationKey alloc] initWithLabel:localizableString description:nil];
-            translationKey.locale = [TML defaultLocale];
+            translationKey.locale = TMLDefaultLocale();
             reuseInfo[TMLTranslationKeyInfoKey] = translationKey;
         }
         
@@ -251,7 +251,7 @@ void ensureArrayIndex(NSMutableArray *array, NSInteger index) {
 
 - (void)updateReusableTMLStrings {
     // TODO: this should probably be getting set elsewhere
-    self.accessibilityLanguage = [TML currentLocale];
+    self.accessibilityLanguage = TMLCurrentLocale();
     
     NSMutableDictionary *registry = [self tmlRegistry][TMLReusableLocalizedStringsRegistryKey];
     for (NSString *reuseIdentifier in registry) {

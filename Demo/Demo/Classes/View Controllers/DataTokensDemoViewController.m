@@ -49,7 +49,7 @@
                    @{
                        @"tml": @"You have selected {language_name} language",
                        @"tokens": @{
-                               @"language_name": [[TML currentLanguage] englishName]
+                               @"language_name": [TMLCurrentLanguage() englishName]
                         },
                        },
                    @{
@@ -63,7 +63,7 @@
            @"items": @[
                    @{
                        @"tml": @"Hello {user.fullName}, you are a {user.gender}",
-                       @"tokens": @{@"user": [[TML configuration] defaultTokenValueForName:TMLViewingUserTokenName]},
+                       @"tokens": @{@"user": [[[TML sharedInstance] configuration] defaultTokenValueForName:TMLViewingUserTokenName]},
                        @"tokens_desc": @"{\"user\": michael}"
                     },
                 ]

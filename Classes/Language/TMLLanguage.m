@@ -226,7 +226,7 @@
     
     NSString *keyLocale = options[TMLLocaleOptionName];
     if (keyLocale == nil) {
-        keyLocale = [TML defaultLocale];
+        keyLocale = TMLDefaultLocale();
     }
     translationKey.locale = keyLocale;
     
@@ -282,7 +282,7 @@
     
     id viewingUser = ourTokens[TMLViewingUserTokenName];
     if (viewingUser == nil) {
-        viewingUser = [[TML configuration] defaultTokenValueForName:TMLViewingUserTokenName];
+        viewingUser = [[[TML sharedInstance] configuration] defaultTokenValueForName:TMLViewingUserTokenName];
     }
     if (viewingUser != nil) {
         ourTokens[TMLViewingUserTokenName] = viewingUser;

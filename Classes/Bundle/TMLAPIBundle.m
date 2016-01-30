@@ -272,7 +272,7 @@
     NSTimeInterval delay = 0.;
     NSArray *availableLocales = [self availableLocales];
     if (availableLocales.count > 0
-        && [availableLocales containsObject:[TML currentLocale]] == YES) {
+        && [availableLocales containsObject:TMLCurrentLocale()] == YES) {
         delay = 3.;
     }
     [self performSelector:@selector(sync)
@@ -327,12 +327,12 @@
         locales = [NSMutableArray array];
     }
     
-    NSString *defaultLocale = [TML defaultLocale];
+    NSString *defaultLocale = TMLDefaultLocale();
     if (defaultLocale != nil && [locales containsObject:defaultLocale] == NO) {
         [locales addObject:defaultLocale];
     }
     
-    NSString *currentLocale = [TML currentLocale];
+    NSString *currentLocale = TMLCurrentLocale();
     if (currentLocale != nil && [locales containsObject:currentLocale] == NO) {
         [locales addObject:currentLocale];
     }

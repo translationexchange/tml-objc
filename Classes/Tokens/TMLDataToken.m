@@ -274,9 +274,9 @@
 
     // token not provided, fallback onto default, if available
     if ([tokens objectForKey:self.name] == nil) {
-        NSString *tokenObject = (NSString *) [[TML configuration] defaultTokenValueForName:self.name
-                                                                                      type:TMLDataTokenType
-                                                                                    format:tokenFormat];
+        NSString *tokenObject = (NSString *) [[[TML sharedInstance] configuration] defaultTokenValueForName:self.name
+                                                                                                       type:TMLDataTokenType
+                                                                                                     format:tokenFormat];
         if (tokenObject != nil) return tokenObject;
         return [self stringRepresentation];
     }

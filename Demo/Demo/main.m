@@ -11,17 +11,17 @@
 #import "AppDelegate.h"
 #import "TMLPrivateConfig.h"
 
-#ifndef TMLAccessToken
-#define TMLAccessToken @""
+#ifndef TMLDefaultAccessToken
+#define TMLDefaultAccessToken @""
 #endif
-#ifndef TMLApplicationKey
-#define TMLApplicationKey @"8641229aae46c7d39e78657e9da0c86c80f432c21e4e4fb5bf0934673499be7a"
+#ifndef TMLDefaultApplicationKey
+#define TMLDefaultApplicationKey @"8641229aae46c7d39e78657e9da0c86c80f432c21e4e4fb5bf0934673499be7a"
 #endif
 
 int main(int argc, char * argv[])
 {
     @autoreleasepool {
-        [TML sharedInstanceWithApplicationKey:TMLApplicationKey accessToken:TMLAccessToken];
+        [TML sharedInstanceWithApplicationKey:TMLDefaultApplicationKey accessToken:TMLDefaultAccessToken];
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }
 }

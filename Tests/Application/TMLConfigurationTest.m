@@ -49,9 +49,7 @@
     
     [TML sharedInstanceWithConfiguration:config];
     
-    [TML configure:^(TMLConfiguration *config) {
-        config.currentLocale = @"ru";
-    }];
+    config.currentLocale = @"ru";
     
     XCTAssert([[config currentLocale] isEqual:@"ru"]);
 }

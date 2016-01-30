@@ -107,7 +107,7 @@
         cell = [[TMLTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"TMLTableViewCell"];
     }
     
-    [TML beginBlockWithOptions:@{@"source": @"TML Labels"}];
+    TMLBeginBlockWithOptions(@{@"source": @"TML Labels"});
     
     if (indexPath.row == 0) {
         cell.titleLabel.text = TMLLocalizedString(@"Label");
@@ -143,7 +143,7 @@
         cell.optionalLabel.text = TMLLocalizedString(@"optional");
     }
     
-    [TML endBlockWithOptions];
+    TMLEndBlockWithOptions();
     
     return cell;
 }

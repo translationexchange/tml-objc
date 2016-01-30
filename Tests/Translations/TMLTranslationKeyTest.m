@@ -38,10 +38,9 @@
 - (void) testDefaultTokens {
     TMLLanguage *en = [self languageForLocale:@"en-US"];
     
-    [TML configure:^(TMLConfiguration *config) {
-        [config setDefaultTokenValue:@"<strong>{$0}</strong>" forName:@"indent" type:TMLDecorationTokenType format:TMLHTMLTokenFormat];
-        [config setDefaultTokenValue:@"World" forName:@"world" type:TMLDataTokenType];
-    }];
+    TMLConfiguration *config = [[TML sharedInstance] configuration];
+    [config setDefaultTokenValue:@"<strong>{$0}</strong>" forName:@"indent" type:TMLDecorationTokenType format:TMLHTMLTokenFormat];
+    [config setDefaultTokenValue:@"World" forName:@"world" type:TMLDataTokenType];
     
     TMLTranslationKey *tk = [[TMLTranslationKey alloc] init];
     tk.locale = @"en-US";

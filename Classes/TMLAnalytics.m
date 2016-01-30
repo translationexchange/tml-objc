@@ -121,7 +121,7 @@ NSString * const TMLAnalyticsBackingFileName = @"TMLAnalytics.json";
     if (appKey == nil) {
         appKey = @"Unknown";
     }
-    NSString *currentLocale = [TML currentLocale];
+    NSString *currentLocale = TMLCurrentLocale();
     if (currentLocale == nil) {
         currentLocale = [config deviceLocale];
     }

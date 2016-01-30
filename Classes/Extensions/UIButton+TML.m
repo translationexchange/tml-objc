@@ -74,7 +74,7 @@
         
         TMLTranslationKey *translationKey = [[TMLTranslationKey alloc] init];
         translationKey.label = tmlString;
-        translationKey.locale = [TML defaultLocale];
+        translationKey.locale = TMLDefaultLocale();
         
         NSMutableDictionary *info = [NSMutableDictionary dictionary];
         info[TMLTranslationKeyInfoKey] = translationKey;

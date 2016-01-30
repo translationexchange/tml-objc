@@ -431,9 +431,9 @@
         
         NSDictionary *styles = [self.tokensData objectForKey:tokenName];
         if (styles == nil) {
-            styles = [[TML configuration] defaultTokenValueForName:tokenName
-                                                              type:TMLDecorationTokenType
-                                                            format:TMLAttributedTokenFormat];
+            styles = [[[TML sharedInstance] configuration] defaultTokenValueForName:tokenName
+                                                                               type:TMLDecorationTokenType
+                                                                             format:TMLAttributedTokenFormat];
             if (styles == nil) continue;
         }
         

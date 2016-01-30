@@ -99,8 +99,8 @@
 - (void) viewDidLoad {
     [super viewDidLoad];
     
-    TMLApplication *app = [TML application];
-    TMLLanguage *lang = [TML currentLanguage];
+    TMLApplication *app = [[TML sharedInstance] application];
+    TMLLanguage *lang = [[TML sharedInstance] currentLanguage];
     
     NSURL *url = [self translationCenterURL];
     
@@ -159,7 +159,7 @@
 }
 
 -(IBAction)dismiss:(id)sender {
-    [TML reloadTranslations];
+    [[TML sharedInstance] reloadLocalizationData];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
