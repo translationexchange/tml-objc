@@ -34,6 +34,7 @@
 
 @protocol TMLReusableLocalization <NSObject>
 @optional
+- (void)updateReusableTMLStrings;
 - (void)updateTMLLocalizedStringWithInfo:(NSDictionary *)info forReuseIdentifier:(NSString *)reuseIdentifier;
 @end
 
