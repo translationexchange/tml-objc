@@ -487,6 +487,12 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...);
 #define TMLApplicationKey()\
     [[[TML sharedInstance] configuration] applicationKey]
 
+#define TMLSharedApplication()\
+    [[TML sharedInstance] application]
+
+#define TMLSharedConfiguration()\
+    [[TML sharedInstance] configuration]
+
 #define TMLLanguages()\
     [[[TML sharedInstance] application] languages]
 
