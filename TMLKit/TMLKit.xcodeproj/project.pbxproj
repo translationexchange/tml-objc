@@ -956,6 +956,7 @@
 				C4FCD2551C0FC7A200D723BC /* Headers */,
 				C4FCD2561C0FC7A200D723BC /* Resources */,
 				0BFCEE17B52EF5CA125FB045 /* Copy Pods Resources */,
+				C4F8CBF71C5D7B3E0037BE4B /* Update Podspec Version */,
 			);
 			buildRules = (
 			);
@@ -1177,6 +1178,20 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
+		};
+		C4F8CBF71C5D7B3E0037BE4B /* Update Podspec Version */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Update Podspec Version";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "podspec=\"${SRCROOT}/../TMLKit.podspec\"\ninfoplist=\"${SRCROOT}/TMLKit/Info.plist\"\n\nif [ ! -f $podspec ]; then\n    echo \"Cannot find ${podspec}\" >&2\n    return 1\nfi\n\nif [ ! -f $infoplist ]; then\n    echo \"Cannot find ${infoplist}\" >&2\n    return 1\nfi\n\ntargetVersion=$(grep -A1 CFBundleShortVersionString \"${infoplist}\" | tail -1 | sed -E \"s/[^0-9\\.]+//g\")\n\nsed -E \"s/(s.version *= *).*$/\\1\\\"${targetVersion}\\\"/\" \"${podspec}\" > \"${podspec}.new\" && mv \"${podspec}.new\" \"${podspec}\"";
 		};
 		C4FA32041C5079F5001902EB /* Generate TMLPrivateConfig.h */ = {
 			isa = PBXShellScriptBuildPhase;
