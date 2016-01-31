@@ -436,46 +436,44 @@ Will render as:
     "**Michael** пробежал **4.2 мили** в своем последнем забеге."
 
 
-Translating UIViews
+
+Switching Locales At Runtime
 ==================
 
-TML can automatically translate views for you with one line of code. Consider the following example:
+It is possible to tell TMLKit to change local at runtime. Whether you would like to provide that functionality in your released version of the app is up to you and your interpretation of Apple's rules and guidelines. However, it does come in handy when testing the application with various languages and when using *In-App Translation* mode.
+
+For that reason, TMLKit comes with a simple language picker that you can use in your application. To open the langugae picker programmatically, use the following code:
 
 ```objc
-#import "UIViewController+TML.h"
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-
-    [[NSNotificationCenter defaultCenter]
-        addObserver: self
-           selector: @selector(localize)
-               name: TMLLanguageChangedNotification
-             object: self.view.window];
-
-    [self localize];
-}
-
-
-- (void) localize {
-    TMLLocalizeView(self.view);
-}
+TMLPresentLanguagePicker();
 ```
 
-The above code will translate your entire user interface every time a new language is selected.
-
-
-Language Selector
-==================
-
-
-TML SDK comes with a language selector that you can use in your application. To open the langugae selector from a view controller, use the following code:
+To change current locale programmatically:
 
 ```objc
-#import "TMLLanguageSelectorViewController.h"
-
-[TMLLanguageSelectorViewController changeLanguageFromController:self];
+TMLChangeLocale(@"ru"); // will change to Russian locale
 ```
+
+There's one thing worth noting here - unless you've bundled all of your translation data with the app, your app may not have the translation data available locally for the new locale. In which case - TMLKit will download all of the required data in the background. What this means is that the actual change of locale may be deferred. If you'd like to, for example, present a progress indicator while the data is being downloaded, you can use the following call:
+
+```objc
+TML *tml = [TML sharedInstance];
+MBProgressHUD *hud = nil;
+
+if ([tml hasLocalTranslationsForLocale:newLocale] == NO) {
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = TMLLocalizedString(@"Switching language...");
+    [hud show:YES];
+}
+
+[tml changeLocale:newLocale
+  completionBlock:^(BOOL success) {
+    [hud hide:YES];
+  }];
+```
+
+And this is roughly how TMLLanguageSelectorViewController works.
+
 
 In-App Translator
 ==================
