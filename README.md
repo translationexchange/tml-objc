@@ -9,11 +9,11 @@ TML for Objective C
 [![Platform](http://cocoapod-badges.herokuapp.com/p/Tml/badge.png)](http://cocoadocs.org/docsets/Tml)
 [![Build Status](https://travis-ci.org/translationexchange/tml-objc.svg?branch=master)](https://travis-ci.org/translationexchange/tml-objc)
 
-TML SDK for Objective C is an integrated cloud-based translation solution for iOS applications.
+TMLKit is an Objective-C SDK for an integrated cloud-based translation solution for iOS applications.
 
 It reduces the number of steps required for internationalization and localization of your mobile applications.
 
-TML SDK integrates with TranslationExchange.com service, where you can manage the entire translation process - enable languages, invite translators, manage translation keys, and much more.
+TMLKit integrates with TranslationExchange.com service, where you can manage the entire translation process - enable languages, invite translators, manage translation keys, and much more.
 
 You never have to touch the resource bundle files - translation keys are extracted from your app's source code on the fly and kept up to date by the SDK.
 
@@ -23,73 +23,119 @@ Once your app is translated, the translations will automatically be downloaded a
   <img src="https://github.com/translationexchange/tml-docs/blob/master/objc/iphone.gif">
 </p>
 
-Demo Applications
+
+Requirements
 ==================
 
-To run the sample project, follow these steps:
+	iOS 8
+	CocoaPods
+
+
+Demo Application
+==================
+
+This repository comes with a Demo application. To run it, follow these steps:
 
 ```sh
 $ git clone https://github.com/translationexchange/tml-objc.git
-$ cd tml-objc/Project
+$ cd tml-objc/Demo
 $ pod install
 $ open Demo.xcworkspace
 ```
 
-Run the application. Open the language selector and change language.
+Configure TMLKit by editing main.m and setting *application key* and *access token* parameters to match your TranslationExchange project. Finally, run the application from XCode.
+
+Once the Demo application is running, open the side panel and enable **In-App Translation**. That will cause TMLKit to register all of the localizable strings in your application with your TranslationExchange project. Select **Change Language** from the side panel. You should see all of the languages currently used in your project listed here. TMLKit provides a default language picker. Creating a custom one is a breeze - see [TMLLanguageSelectorViewController](https://github.com/translationexchange/tml-objc/blob/dev/Classes/Controllers/TMLLanguageSelectorViewController.m) for details.
+
+Head over to [dashboard](https://dashboard-translationexchange.com) and add a new language to your project. Now, switch back to the Demo app, background and foreground it - that will trigger TMLKit to instantly update information about your project, and, subsequently, list of available languages.
+
+**In-App Translation** mode allows you to also add translation right from within the app. Make sure you select a non-default languages from the language picker, then simply tap and hold over any text you see on the screen. TMLKit will bring up interface for translating the string you tapped. You can manually add a translation, or pick one of the machine translations listed at the bottom if they are to your satisfaction. Once you've added a translation - dismiss the translation view and watch the original string get updated to its translation.
+
 
 Another sample application is located here:
 
 https://github.com/translationexchange/tml-objc-samples-wammer
 
 
-Requirements
-==================
-
-	iOS 7
-	CocoaPods
-
-
-
 Installation
 ==================
 
+To install the SDK through [CocoaPods](http://cocoapods.org), simply add the following line to your Podfile:
 
-Tml SDK is available through [CocoaPods](http://cocoapods.org). To install the SDK, simply add the following line to your Podfile:
-
-```ruby
-pod "Tml"
+```sh
+pod "TMLKit"
 ```
+
+and run
+
+```sh
+pod install
+```
+
+Alternatively, you can clone this repository:
+
+```sh
+$ git clone https://github.com/translationexchange/tml-objc.git
+$ cd tml-objc/TMLKit
+$ pod install
+```
+
+And build TMLKit.xcodeproj and simply include the build framework in your project, or, drag TMLKit.xcodeproj into your application's Xcode project and have it configured as a [linked framework](https://developer.apple.com/library/ios/recipes/xcode_help-project_editor/Articles/AddingaLibrarytoaTarget.html).
+
 
 Integration
 ==================
 
 
-Before you can proceed with the integration, please visit https://TranslationExchange.com - open an account and register your application. Once you register your app, it will be assigned a unique key and secret.
+Before you can proceed with the integration, please visit https://TranslationExchange.com - open an account and create a project for your application. Each project is assigned a unique *application key* and *access token* which you will use to configure TMLKit.
 
-You only need to provide the secret in the application while you test or translate your app. Apps that have a secret can register new translation keys on the server. When you release your application you should remove the secret and only supply the key.
+While *application key* is mandatory, configuring TMLKit with the *access token* is optional and allows your app to register new translation keys on the server and utilize *In-App Translation* mode. When you release your application you should remove *access token* and only supply the *application key*.
 
-TML SDK comes with the English language configuration by default. So if your app's base language is English, you can try out the SDK without even having to initialize it. You get full power of TML and internationalization macros that would improve your code and provide powerful utilities for working with English language. TML provides default inflectors, pluralizers, contextualizer and language cases.
-
-On the other hand, you should initialize the TML SDK if you plan on taking advantage of the continues integration with TranslationExchange platform, translation memory and analytics.
-
+Here's how you would configure TMLKit:
 
 ```objc
-#import "TML.h"
+#import <TMLKit/TMLKit.h>
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
-  [TML sharedInstanceWithToken: YOUR_TOKEN];
-
-  return YES;
+int main(int argc, char * argv[])
+{
+    @autoreleasepool {
+        
+        [TML sharedInstanceWithApplicationKey:@"<APPLICATION KEY>" accessToken:@"<ACCESS TOKEN>"];
+        
+        return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
+    }
 }
 ```
+
+**Note:** TML is capable of automatically localizing strings in NIB files. It's a configurable option that is enabled by default. This automatic localization happens during decoding of NIB files, which may happen before your app delegate is called with application:didFinishLaunchingWithOptions:. This is why the above example uses main.m to configure TMLKit. If you are not using automatic NIB localization - you can move that configuration over to your app delegate...
+
+TMLKit comes with a variety of macros to help with localization. TMLLocalizedString() should be familiar to you if you've used NSLocalizedString() before. To avoid having to include TMLKit.h in every file it's probably best to import it in the prefix header file, along with your foundation framework includes:
+
+```objc
+#ifdef __OBJC__
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <TMLKit/TMLKit.h>
+#endif
+```
+
+If your project uses NSLocalizedString and you have no intention of using TML markup language, or simply eager to see some results, TMLKit comes with redefined NSLocalizedString macros. Simply add:
+
+```objc
+#import <TMLKit/TMLKit+NSLocalizedString.h>
+```
+
+However, you only get full use of TML via TMLLocalizedString() macros. TML supports default inflectors, pluralizers, contextualizer and language cases, which to better code and much better localization.
+
 
 How does it work?
 ==================
 
-TML SDK does all the hard work for you. When you use TML's macros, the library automatically registers translation keys with Translation Exchange service and generates resource bunldes for your app on the fly. TML always keep your local cache up to date by downloading the latest translations from the service when they become available. At run-time, your app will use translations from your local app cache so your users will not experience any delays.
+TMLKit does all the hard work for you. When you use TML's macros (see TML.h), the library automatically registers translation keys with Translation Exchange service and generates resource bunldes for your app on the fly. TMLKit always keep your local cache up to date by downloading the latest translations from the service when they become available. At run-time, your app will use translations from your local app cache so your users will not experience any delays. When new localized data becomes available it is possible for your application to update translations dynamically, without needing to restart the application.
 
-You have an option to pre-cache all your translations in your app before you release it. In that case, the SDK will run in the offline mode. But keeping the SDK connected allows you to release new languages without having to rebuild your app. You will also be able to take advantage of the analytics that show you what languages are used in your app, what the default languages of your users are, where your users are coming from, etc...
+You also have an option to bundle all your translations with your app before you release it - allowing your application to function in offline mode. By default, whenever your application becomes active and has connectivity to the internet - TMLKit will check for new translation releases (published via the [dashboard](https://dashboard-translationexchange.com)). When updates are available they are downloaded on-demand. Translations for default and current locales are downloaded immediately, and additional data is downloaded when TMLKit is told to change current locale.
+
+TMLKit also reports analytics data, allowing you to see what languages are used in your app, what the default languages of your users are, where your users are coming from, etc...
 
 
 Internationalization & TML
@@ -98,51 +144,38 @@ Internationalization & TML
 If your application is already internationalized using the standard NSLocalizedString methods, you can simply import the TML+NSLocalizedString.h header in your .m file and TML will take over the internationalization macros.
 
 ```objc
-#import "TML.h"
+#import "<TMLKit/TML+NSLocalizedString.h>"
 ```
+However, these macros are rather limited as they don't allow full TML syntaxt (data tokens, etc).
 
-TML also provides its own macros for internationalization that enhance the standard iOS macros.
+TML also provides its own macros for internationalization which significantly enhance the standard iOS macros.
+
+Basic example:
 
 ```objc
-TMLLocalizedString(label)
+TMLLocalizedString(label);
+TMLLocalizedString(label, description);
+
+TMLLocalizedString(@"Invite");
+TMLLocalizedString(@"Invite", @"Invite someone to join the group");
 ```
 
-Example:
-
-```objc
-TMLLocalizedString(@"Hello World")
-```
-
-This macro is similar to NSLocalizedString, but it does not require the optional comment to be passed as nil.
-
-
-```objc
-TMLLocalizedStringWithDescription(label, description)
-```
-
-Example:
-
-```objc
-TMLLocalizedStringWithDescription(@"Invite", @"Invite someone to join the group")
-```
-
-```objc
-TMLLocalizedStringWithDescription(@"Invite", @"An invite received from a friend")
-```
+This macro is similar to NSLocalizedString, and it does not require the optional comment parameter.
 
 Unlike NSLocalizedString, where the second parameter is a comment for a translator, TML uses the description to contextualize the key. So the above example would actually register two distinct keys, where each would have its own translations.
 
+Another example:
 
 ```objc
-TMLLocalizedStringWithTokens(label, tokens)
+TMLLocalizedString(label, tokens);
+
+TMLLocalizedStringWithTokens(@"You have {count || message}.", @{@"count": @4});
+TMLLocalizedStringWithTokens(@"Hello {user}.", @{@"user": @"Michael"});
 ```
 
-Example: 
+Tokens can be passed in many different ways. If the token is passed as a primitive type, it would be used for both context rules and displayed value. If it is passed a class or a structure, you can separate the object being used for context rules and the value that would be substituted for the token.
 
-```objc
-TMLLocalizedStringWithTokens(@"You have {count || message}.", @{@"count": @4})
-TMLLocalizedStringWithTokens(@"Hello {user}.", @{@"user": @"Michael"})
-```
+More examples of using tokens:
 
 ```objc
 User *user  = [[User alloc] initWithName: @"Michael" gender: @"male"];
@@ -165,192 +198,160 @@ TMLLocalizedStringWithTokens(@"Hello {user}.", @{
 })
 ```
 
-Tokens can be passed in many different ways. If the token is passed as a primitive type, it would be used for both context rules and displayed value. If it is passed a class or a structure, you can separate the object being used for context rules and the value that would be substituted for the token.
+You might have noticed that we're using the same macro with a variety of arguments. The full syntax of TMLLocalizedString() is:
 
 ```objc
-TMLLocalizedStringWithDescriptionAndTokens(label, description, tokens)
+TMLLocalizedString(NSString *localizedString, NSString *description, NSDictionary *tokens, NSDictionary *userOptions);
 ```
 
-Example: 
+Only the first argument is mandatory...
 
 ```objc
-TMLLocalizedStringWithDescriptionAndTokens(
-    @"Hello {user}",
-    @"A greeting message",
-    @{@"user": @"Michael"}
+TMLLocalizedString(
+    @"Hello {user}",  // localized string
+    @"A greeting message",  // description
+    @{@"user": @"Michael"}  // tokens
 )
 ```
 
-Same as the two examples above - allows you to provide both description and tokens.
-
-
 ```objc
-TMLLocalizedStringWithDescriptionAndTokensAndOptions(label, description, tokens, options)
-```
-
-Example: 
-
-```objc
-TMLLocalizedStringWithDescriptionAndTokensAndOptions(
-    @"Hello {user}",
-    @"A greeting message",
-    @{@"user": @"Michael"},
-    @{@"level": @5, @"max-length": @20}
+TMLLocalizedString(
+    @"Hello {user}",  // localized string
+    @"A greeting message",  // description
+    @{@"user": @"Michael"}, // tokens
+    @{@"level": @5, @"max-length": @20} // options
 )
 ```
 
-Only translators of a specific rank are allowed to translate keys of a specific level. The constraint indicate that the translations of this key may not be longer than 20 chars. See wiki.translationexchage.com for more details.
-
-
 ```objc
-TMLLocalizedStringWithTokensAndOptions(label, tokens, options)
-```
-
-Example: 
-
-```objc
-TMLLocalizedStringWithTokensAndOptions(
-    @"You have {count || message}.",
-    @{@"count": @4},
-    @{@"max-length": @20}
+TMLLocalizedString(
+    @"Hello {user}",  // localized string
+    @{@"user": @"Michael"}, // tokens
 )
 ```
 
-Allows you to skip the description.
-
-
 ```objc
-TMLLocalizedStringWithOptions(label, options)
+TMLLocalizedString(
+    @"Hello {user}",  // localized string
+    @{}, // no tokens
+    @{@"level": @5, @"max-length": @20} // options
+)
 ```
 
-Example: 
+Options are TML specic options. Some are used for formatting strings, some are purely administrative. For example, in the above code snippet options specify that only translators of a specific rank are allowed to translate keys of a specific level. The constraint indicate that the translations of this key may not be longer than 20 chars. See wiki.translationexchage.com for more details.
+
+
+All of the above macros assume that you are working with plain text and will return NSString's. It is also possible to work with attributed strings, in a fashion similar to data token (delimited with '{}'):
 
 ```objc
-TMLLocalizedStringWithOptions(@"Hello World", @{@"max-length": @20})
-```
-
-Allows you to skip description and tokens.
-
-
-
-All of the above macros assume that you are working with HTML and will return HTML markup for decorated tokens. For example:
-
-```objc
-TMLLocalizedStringWithTokens(
+TMLLocalizedAttributedString(
     @"You have completed [bold: {count || mile}] on your last run.",
     @{@"count": @4.2}
 )
 ```
 
-Will result in: 
+Notice that we are now using TMLLocalizedAttributedString() macro. It is synonymous to TMLLocalizedString() and exists solely to make a distinction in the return type. TMLLocalizedString() returns NSString's, and TMLLocalizedAttributedString() returns NSAttributedString's. Secondly, you'll notice that decorated tokens are delimited with '[]' square brackets, as opposed to data tokens, which are delimited using '{}' curly brackets.
+
+All in all, the above example will return:
+
+```
+	"You have completed **4.2 miles** on your last run."
+```
+
+TMLKit supports both NSAttributedString format and HTML. Here's the HTML equivalent:
+
+```objc
+TMLLocalizedString(
+    @"You have completed [bold: {count || mile}] on your last run.",
+    @{@"count": @4.2},
+    @{TMLTokenFormatOptionName: TMLHTMLTokenFormatString}
+)
+```
+
+which results in: 
 
 ```hTML
 	"You have completed <strong>4.2 miles</strong> on your last run."
 ```
 
-Unless you render it in a browser, you should not use decoration tokens with the above methods. Instead, you should use the Attributed String macros.
-
+Do notice that if you are expecting an NSString - use TMLLocalizedString(); if you are expecting NSAttributedString - use TMLLocalizedAttributedString();
 
 
 Default Tokens
 ======================
 
-For tokens that you want to define in once and reuse throughout your application, you can pre-define them in TML configuration, using the following approach:
+It is also possible to define default tokens and refer to them by name throughout your code, instead of having to supplying identical data structures. You get cleaner, more consistent code this way.
 
 ```objc
-[TML configure:^(TMLConfiguration *config) {
-  [config setDefaultTokenValue: @"<strong>{$0}</strong>"
-                       forName: @"bold"
-                          type: TMLDecorationTokenType
-                        format: TMLHTMLTokenFormat];
+TMLConfiguration *config = TMLSharedConfiguration();
+// Data Tokens
+[config setDefaultTokenValue: @"My App Name"
+                     forName: @"app_name"
+                        type: TMLDataTokenType];
 
-  [config setDefaultTokenValue: @"<span style='color:green'>{$0}</span>"
-                       forName: @"green"
-                          type: TMLDecorationTokenType
-                        format: TMLHTMLTokenFormat];
+// Decorated Tokens with attributed strings
+[config setDefaultTokenValue: @{
+                   @"font": @{
+                      @"name": @"system",
+                      @"size": @12,
+                      @"type": @"italic"
+                   },
+                   @"color": @"blue"
+                 }
+                     forName: @"bold"
+                        type: TMLDecorationTokenType
+                      format: TMLAttributedTokenFormat];
 
-  [config setDefaultTokenValue: @{
-                     @"font": @{
-                        @"name": @"system",
-                        @"size": @12,
-                        @"type": @"italic"
-                     },
-                     @"color": @"blue"
+[config setDefaultTokenValue: @{
+                   @"shadow": @{
+                      @"offset": @1,1,
+                      @"radius": @0.5,
+                      @"color": @"grey"
+                   },
+                   @"color": @"black"
+                                 }
+                     forName: @"shadow"
+                        type: TMLDecorationTokenType
+                      format: TMLAttributedTokenFormat];
+
+[config setDefaultTokenValue: @{
+                   @"attributes": @{
+                     UIFontDescriptorNameAttribute: @"Arial"
+                     UIFontDescriptorNameAttribute: @(12.), 
+                     UIFontDescriptorSymbolicTraits: UIFontDescriptorTraitItalic
                    }
-                       forName: @"bold"
-                          type: TMLDecorationTokenType
-                        format: TMLAttributedTokenFormat];
+                 }
+                     forName: @"italic"
+                        type: TMLDecorationTokenType
+                      format: TMLAttributedTokenFormat];
 
-  [config setDefaultTokenValue: @{
-                     @"shadow": @{
-                        @"offset": @1,1,
-                        @"radius": @0.5,
-                        @"color": @"grey"
-                     },
-                     @"color": @"black"
-                                   }
-                       forName: @"shadow"
-                          type: TMLDecorationTokenType
-                        format: TMLAttributedTokenFormat];
+// Decorated tokens with HTML strings
+[config setDefaultTokenValue: @"<strong>{$0}</strong>"
+                     forName: @"bold"
+                        type: TMLDecorationTokenType
+                      format: TMLHTMLTokenFormat];
 
-  [config setDefaultTokenValue: @"My App Name"
-                       forName: @"app_name"
-                          type: TMLDataTokenType];
-}];
+[config setDefaultTokenValue: @"<span style='color:green'>{$0}</span>"
+                     forName: @"green"
+                        type: TMLDecorationTokenType
+                      format: TMLHTMLTokenFormat];
+
 ```
 
 Alternatively, you can provide token values inline, which would overwrite the default token definitions.
 
-The following examples will use the above pre-defined tokens.
-
-
-AttributedString Macros
-======================
-
-Attributed String macros are very similar to the above macros, but will always return an NSAttributedString instead of plain NSString.
+The following examples will use the above pre-defined tokens:
 
 ```objc
-TMLLocalizedAttributedString(label)
-```
-
-Examples:
-
-```objc
-TMLLocalizedAttributedString(@"Hello World")
-TMLLocalizedAttributedString(@"Hello [bold: World]")
-TMLLocalizedAttributedString(@"This [bold: technology is [shadow: very cool]].")
+TMLLocalizedAttributedString(@"Hello [bold: World]");
+TMLLocalizedAttributedString(@"[italic: Hello World]");
+TMLLocalizedAttributedString(@"This [bold: technology is [shadow: very cool]].");
 ```
 
 Notice that "very cool" will be bold and have a shadow. Nesting tokens inherits the parent token traits.
 
 
-The other Attributed String macros are as follow:
-
-```objc
-TMLLocalizedAttributedStringWithDescription(label, description)
-TMLLocalizedAttributedStringWithDescriptionAndTokens(label, description, tokens)
-TMLLocalizedAttributedStringWithDescriptionAndTokensAndOptions(label, description, tokens, options)
-TMLLocalizedAttributedStringWithTokens(label, tokens)
-TMLLocalizedAttributedStringWithTokensAndOptions(label, tokens, options)
-TMLLocalizedAttributedStringWithOptions(label, options)
-```
-
-The previous example that used HTML as decoration can now be rewritten using the following method:
-
-```objc
-TMLLocalizedAttributedStringWithTokens(
-    @"You have completed [bold: {count || mile}] on your last run.",
-    @{@"count": @4.2}
-)
-```
-
-This would result in and NSAttributedString with the following value:
-
-
-  "You have completed **4.2 miles** on the last run."
-
-
-NSAttributedString vs TMLLocalizedAttributedString
+Benefits of TMLLocalizedAttributedString()
 ==================
 
 The benefits of using TML with NSAttributedString is that labels get translated in context. If you tried the above example without using TML, you would end up with code similar to the following:
@@ -385,7 +386,7 @@ The above code has the following issues:
 All of the above code can be replaced with a single line using TML:
 
 ```objc
-TMLLocalizedAttributedStringWithTokens(
+TMLLocalizedAttributedString(
     @"You have completed [bold: {count || mile}] on your last run.",
     @{@"count": @4.2}
 )
@@ -399,22 +400,19 @@ Which is easily translated to Russian:
 Since there are languages, like Hebrew, which depend on the gender of the viewing user, any time you refer to "You", you should always pass the viewing_user as a token.
 
 ```objc
-TMLLocalizedAttributedStringWithTokens(@"You have completed [bold: {count || mile}] on your last run.", @{@"count": @4.2, @"viewing_user": currentUser})
+TMLLocalizedAttributedString(@"You have completed [bold: {count || mile}] on your last run.", @{@"count": @4.2, @"viewing_user": currentUser})
 ```
 
 Or better yet, set it in the configuration, and then you never have to pass it as a token:
 
 ```objc
-[TML configure:^(TMLConfiguration *config) {
-    config.viewingUser = currentUser;
-}];
+TMLSharedConfiguration().viewingUser = currentUser;
 ```
-
 
 Here is a more complicated example:
 
 ```objc
-TMLLocalizedAttributedStringWithTokens(
+TMLLocalizedAttributedString(
     @"[bold: {user}] has completed [bold: {count || mile}] on {user| his, her} last run.",
     @{
         @"user": friend,
