@@ -564,3 +564,6 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...);
 
 #define TMLChangeLocale(aLocale) \
     [[TML sharedInstance] changeLocale:aLocale completionBlock:nil]
+
+#define TMLPresentTranslatorForKey(translationKeyHash)\
+    [[TML sharedInstance] presentTranslatorViewControllerWithTranslationKey:translationKeyHash]
