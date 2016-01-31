@@ -554,7 +554,10 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...);
     [[TML sharedInstance] beginBlockWithOptions:opts]
 
 #define TMLEndBlockWithOptions() \
-    [[TML sharedInstance] endBlockWithOptions];
+    [[TML sharedInstance] endBlockWithOptions]
+
+#define TMLSetTranslationEnabled(translationEnabled)\
+    [[TML sharedInstance] setTranslationEnabled:translationEnabled]
 
 #define TMLPresentLanguagePicker() \
     [[TML sharedInstance] presentLanguageSelectorController]
