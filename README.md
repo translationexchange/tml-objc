@@ -474,6 +474,112 @@ if ([tml hasLocalTranslationsForLocale:newLocale] == NO) {
 
 And this is roughly how TMLLanguageSelectorViewController works.
 
+Off course this means that all of your views that have alraedy presented localized strings need to be updated with new localized strings. See [Reusable Localized Strings] for details...
+
+
+Reusable Localized Strings
+==================
+
+If you'd like to provide dynamic language switching (see [Switching Locales At Runtime]), your app needs to be able to update all of the required objects that have already utilized localized string. Consider a basic UILabel:
+
+```objc
+UILabel *label = self.titleLabel;
+label.attributedText = TMLLocalizedAttributedString(@"[bold:Title]: {title}", @{@"title": @"My Title"});
+```
+
+When your application changes locale this label need to be updated with a localized string corresponding to the new locale. To facilitate these updates, TMLKit provides additional macros: TMLLocalizedStringWithReuseIdenitifer() and TMLLocalizedAttributedStringWithReuseIdenitifer():
+
+Basic usage:
+
+```objc
+TMLLocalizedStringWithReuseIdenitifer(string, reuseIdentifier, ...);
+TMLLocalizedAttributedStringWithReuseIdenitifer(string, reuseIdentifier, ...);
+```
+
+It is identical to the already familiar TMLLocalizedString() and TMLLocalizedAttributedString() macros, accept they take a second mandatory parameter - and identifier.
+
+Thus, the above UILabel example becomes:
+
+```objc
+UILabel *label = self.titleLabel;
+label.attributedText = TMLLocalizedAttributedStringWithReuseIdenitifer(@"[bold:Title]: {title}", @{@"title": @"My Title"}, @"titleLabel");
+```
+
+This causes TMLKit to register the caller (what is 'self' in the context of when the call is made), and when there comes time to update the localized string, it calls that caller's updateTMLLocalizedStringWithInfo:forReuseIdentifier: method, if one is defined.
+
+The method is defined as optional in TMLReusableLocalization protocol. TMLKit extends NSObject by conforming to that protocol.
+
+```objc
+@protocol TMLReusableLocalization <NSObject>
+@optional
+- (void)updateTMLLocalizedStringWithInfo:(NSDictionary *)info forReuseIdentifier:(NSString *)reuseIdentifier;
+@end
+```
+
+We'll get back to this in a second, but first let's finish up with our UILabel example. Within the same class, let's define:
+
+```objc
+- (void)updateTMLLocalizedStringWithInfo:(NSDictionary *)info forReuseIdentifier:(NSString *)reuseIdentifier {
+  if ([reuseIdentifier isEqualToString:@"titleLabel"] == YES) {
+    self.titleLabel.attributedText = info[TMLLocalizedStringInfoKey];
+  }
+  else {
+    [super updateTMLLocalizedStringWithInfo:info forReuseIdentifier:reuseIdentifier];
+  }
+}
+```
+
+Notice that the info object passed to updateTMLLocalizedStringWithInfo:forReuseIdentifier: already contains the new localized string; it also contains all of the data used to construct it in the first place. That means that TMLLocalizedStringWithReuseIdentifier() captures (strongly) all of its arguments. It's worth mentioning that this data is tied to the sender object, and TMLKit captures sender objects weakly. So, once the sender object is released - all of the captured localization data is released with it.
+
+Also notice that we are calling super's implementation...
+
+TMLKit defines default behavior for updating reusable localized strings - it treats reuseIdentifier as a key path into the sender object. If the sender responds to -[NSObject valueForKeyPath:], it will attempt to update the value via -[NSObject setValue:forKeyPath:]. This is how TMLKit handles automatic NIB localization.
+
+Let's simplify our UILabel example a little:
+
+```objc
+@interface MyViewController : UIViewController
+@property (strong, nonatomic) UILabel *titleLabel;
+@end
+
+@implementation MyViewController
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  UIlabel *titleLabel = [[UILabel alloc] init];
+  titleLabel.attributedText = TMLLocalizedAttributedStringWithReuseIdenitifer(@"[bold:Title]: {title}", @{@"title": @"My Title"}, @"titleLabel.attributedText");
+  self.titleLabel = titleLabel;
+}
+@end
+```
+
+This is all you have to do, as TMLKit's default implementation will simply call setValue:forKeyPath: on the controller, using "titleLabel.attributedText" as the keyPath.
+
+
+Let's say you are not comfortable with TMLKit capturing data used to create localized strings:
+
+```objc
+@implementation MyViewController
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  UILabel *titleLabel = [[UIlabel alloc] init];
+  self.titleLabel = titleLabel;
+  [self configureView];
+  [[TML sharedInstance] registerObjectWithReusableLocalizedStrings:self];
+}
+
+- (void)configureView {
+  self.titleLabel.attributedText = TMLLocalizedAttributedString(@"[bold:Title]: {title}", @{@"title": @"My Title"});
+}
+
+- (void)updateReusableTMLStrings {
+  [super updateReusableTMLStrings];
+  [self configureView];
+}
+@end
+```
+
+First of all - notice that we are using TMLLocalizedAttributedString() and not TMLLocalizedAttributedStringWithReuseIdentifier() - so we are not capturing any localization data here. Secondly - we are registering the view controller with TML via registerObjectWithReusableLocalizedStrings:. When it's time to update localized strings - TML will call this controller's updateReusableTMLStrings method. We respond by calling configureView, which re-localizes the label anew.
+
 
 In-App Translator
 ==================
