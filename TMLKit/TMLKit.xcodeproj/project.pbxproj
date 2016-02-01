@@ -955,6 +955,7 @@
 				C4FCD2541C0FC7A200D723BC /* Frameworks */,
 				C4FCD2551C0FC7A200D723BC /* Headers */,
 				C4FCD2561C0FC7A200D723BC /* Resources */,
+				C4F8CBFB1C601EFD0037BE4B /* Update Version strings */,
 				0BFCEE17B52EF5CA125FB045 /* Copy Pods Resources */,
 				C4F8CBF71C5D7B3E0037BE4B /* Update Podspec Version */,
 			);
@@ -1192,6 +1193,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "podspec=\"${SRCROOT}/../TMLKit.podspec\"\ninfoplist=\"${SRCROOT}/TMLKit/Info.plist\"\n\nif [ ! -f $podspec ]; then\n    echo \"Cannot find ${podspec}\" >&2\n    return 1\nfi\n\nif [ ! -f $infoplist ]; then\n    echo \"Cannot find ${infoplist}\" >&2\n    return 1\nfi\n\ntargetVersion=$(grep -A1 CFBundleShortVersionString \"${infoplist}\" | tail -1 | sed -E \"s/[^0-9\\.]+//g\")\n\nsed -E \"s/(s.version *= *).*$/\\1\\\"${targetVersion}\\\"/\" \"${podspec}\" > \"${podspec}.new\" && mv \"${podspec}.new\" \"${podspec}\"";
+		};
+		C4F8CBFB1C601EFD0037BE4B /* Update Version strings */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Update Version strings";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n\n# This script automatically sets the version and short version string of\n# an Xcode project from the Git repository containing the project.\n#\n# To use this script in Xcode 4, add the contents to a \"Run Script\" build\n# phase for your application target.\n\nset -o errexit\nset -o nounset\n\nINFO_PLIST=\"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}/Info\"\nINFO_PLIST_DSYM=\"${BUILT_PRODUCTS_DIR}/${WRAPPER_NAME}.dSYM/Contents/Info\"\nGIT_DIR=\"${PROJECT_DIR}/../.git\"\nlogger \"GIT_DIR: ${GIT_DIR}\"\nlogger \"PROJECT_DIR: ${PROJECT_DIR}\"\n\nGIT_HASH=$(git --git-dir=\"${GIT_DIR}\" --work-tree=\"${PROJECT_DIR}\" rev-parse --short HEAD)\nGIT_REVCOUNT=$(git --git-dir=\"${GIT_DIR}\" --work-tree=\"${PROJECT_DIR}\" rev-list HEAD | wc -l | tr -d ' ')\n\n# incremental number for Release builds, as that's what Apple prefers,\n# otherwise - let's include git hash\nif [ \"${CONFIGURATION}\" = \"Release\" ]; then\n    defaults write \"${INFO_PLIST}\" CFBundleVersion \"${GIT_REVCOUNT}\"\n    defaults write \"${INFO_PLIST_DSYM}\" CFBundleVersion \"${GIT_REVCOUNT}\"\nelse\n    defaults write \"${INFO_PLIST}\" CFBundleVersion \"${GIT_REVCOUNT}-${GIT_HASH}\"\n    defaults write \"${INFO_PLIST_DSYM}\" CFBundleVersion \"${GIT_REVCOUNT}-${GIT_HASH}\"\nfi";
 		};
 		C4FA32041C5079F5001902EB /* Generate TMLPrivateConfig.h */ = {
 			isa = PBXShellScriptBuildPhase;
