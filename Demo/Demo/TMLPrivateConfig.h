@@ -1,15 +1,6 @@
-//
-//  TMLPrivateConfig.h
-//  Demo
-//
-//  Created by Pasha on 11/10/15.
-//  Copyright © 2015 TmlHub Inc. All rights reserved.
-//
-
+/* GENERATED FILE - MODIFICATIONS WILL BE LOST */
 #ifndef TMLPrivateConfig_h
 #define TMLPrivateConfig_h
-
-//#define TMLApplicationKey @""
-//#define TMLAccessToken @""
-
+#define TMLDefaultAccessToken @""
+#define TMLDefaultApplicationKey @""
 #endif /* TMLPrivateConfig_h */
