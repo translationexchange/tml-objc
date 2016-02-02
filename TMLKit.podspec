@@ -19,9 +19,9 @@ Pod::Spec.new do |s|
 
   s.ios.exclude_files         = 'Classes/osx'
   s.osx.exclude_files         = 'Classes/ios'
-  s.public_header_files       = 'Classes/**/*.h', 'TMLKit/TMLKit/**/*.h'
-  s.source_files              = 'Classes/**/*', 'TMLKit/TMLKit/**/*'
+  #s.public_header_files       = 'Classes/**/*.h', 'TMLKit/TMLKit/**/*.h'
   s.prefix_header_file	      = 'TMLKit/TMLKit/TMLKit-Prefix.pch'
+  s.source_files              = 'Classes/**/*.{h,m}', 'TMLKit/TMLKit/**/*.{h,m}'
 
   s.dependency 'MPColorTools', '~> 1.6'
   s.dependency 'MBProgressHUD', '~> 0.9'
