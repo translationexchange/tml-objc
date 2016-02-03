@@ -1,4 +1,5 @@
 language: objective-c
+rvm: 2.2.2
 before_install:
     - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
     - brew update
