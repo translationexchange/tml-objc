@@ -13,7 +13,7 @@ Initial release.
 
 ## 1.0.0
 
-First release as TMLKit, built as a dynamic framework. The SDK underwent several major changes:
+First release as **TMLKit**, built as a dynamic framework. The SDK underwent several major changes:
 
 * Macros have changed. Greatly simplifying numerous localization macros to simply TMLLocalizedString(), TMLLocalizedAttributedString(), TMLLocalizedDate() and TMLLocalizedAttributedDate(). See TML.h for definitions, and corresponding comment for TMLLocalize() C function, found in TML.m.
 * Support for reusable localized strings added via (see below on details about reusable strings):
@@ -38,3 +38,9 @@ First release as TMLKit, built as a dynamic framework. The SDK underwent several
   * TMLPresentLanguagePicker() - presents default Language Picker UI
   * TMLChangeLocale() - sets current locale
   * TMLPresentTranslatorForKey() - presents translation UI for a translation key identified by given hash
+* New methods of handling localization data. Introducing concept of language bundles (TMLBundle). Bundle is a collection of application metadata (application being synonymous with TranslationExchange Project) and localization data:
+  * It is now possible to bundle ""tml_<VERSION>.{zip,.gz,tar,tar.gz}" files with an application that uses TMLKit. Upon application launch, TMLKit will unarchive those files and install them as language bundles.
+  * TMLKit will periodically check and, if needed, downloaded latest language bundles from CDN - these are published via the [Dashboard](https://dashboard.translationexchange.com). Localization data is downloaded on-demand.
+  * When Inline Translation is enabled - a special bundle is created (TMLAPIBundle) to manage localization data. That localization data is retrieved via API, and is always up-to-date, unlike data that's manually published to CDN.
+  * TMLBundle's are managed via TMLBundleManager, with ability to query, install and remove bundles. TMLBundle objects also utilize TMLBundleManager to post notifications about changes.
+  
