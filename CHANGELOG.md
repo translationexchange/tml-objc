@@ -13,9 +13,14 @@ Initial release.
 
 ## 1.0.0
 
-First release as **TMLKit**, built as a dynamic framework. The SDK underwent several major changes:
+First release as TMLKit, built as a dynamic framework. The SDK underwent several major changes:
 
-* Macros have changed. Greatly simplifying numerous localization macros to simply TMLLocalizedString(), TMLLocalizedAttributedString(), TMLLocalizedDate() and TMLLocalizedAttributedDate(). See TML.h for definitions, and corresponding comment for TMLLocalize() C function, found in TML.m.
+* Macros have changed. Greatly simplifying numerous localization macros to simply:
+  * TMLLocalizedString()
+  * TMLLocalizedAttributedString()
+  * TMLLocalizedDate()
+  * TMLLocalizedAttributedDate()
+  * See TML.h for definitions, and corresponding comment for TMLLocalize() C function, found in TML.m.
 * Support for reusable localized strings added via (see below on details about reusable strings):
   * TMLLocalizedStringWithReuseIdenitifer()
   * TMLLocalizedAttributedStringWithReuseIdenitifer()
@@ -43,4 +48,22 @@ First release as **TMLKit**, built as a dynamic framework. The SDK underwent sev
   * TMLKit will periodically check and, if needed, downloaded latest language bundles from CDN - these are published via the [Dashboard](https://dashboard.translationexchange.com). Localization data is downloaded on-demand.
   * When Inline Translation is enabled - a special bundle is created (TMLAPIBundle) to manage localization data. That localization data is retrieved via API, and is always up-to-date, unlike data that's manually published to CDN.
   * TMLBundle's are managed via TMLBundleManager, with ability to query, install and remove bundles. TMLBundle objects also utilize TMLBundleManager to post notifications about changes.
-  
+* Tracking of previous locale, when switching locales.
+* TMLKit tracks new translation keys, but only submits them to the server when Inline Translation mode is activated. Avoiding loss of new translation keys...
+* TMLKit's Inline Translation mode listens to the TranslationExchange Project settings - making it possible to control the behavior remotely, independently of released apps.
+* Automatic NIB localization is configurable via TMLConfiguration
+* Completely reworked dynamic reloading of localized strings:
+  * Using macros like TMLLocalizedStringWithReuseIdentifier() automatically register senders and localization data
+  * -[TML registerObjectWithReusableLocalizedStrings:] allows registration of arbitrary objects with TML
+  * TMLReusableLocalization protocol defines methods that TML invokes on objects that were registered as objects with reusable localized strings.
+  * Default implementation for handling dynamic re-localization of strings invokes -[NSObject updateReusableTMLStrings], which in turn invokes -[NSObject updateTMLLocalizedStringWithInfo:forReuseIdentifier:] for each reuse identifier. Subclasses are free to control all aspects of re-localization via -[NSObject updateReusableTMLStrings], or atomically via -[NSObject updateTMLLocalizedStringWithInfo:forReuseIdentifier:]. The latter's default implementation treats reuse identifiers as key paths into the sender object, simplifying the process.
+* Added gesture recognizer for invoking Inline Translation Mode. It is possible to use custom gesture recognizer via TML shared instance's delegate property (see TMLDelegate protocol).
+* Single gesture recognizer for initiating actual translation. This too can be custom via the delegate object, similar to Inline Translation Mode gesture recognizer. Implementation was changed in a way to allow any UIResponder object to respond to user interaction with appropriate translation key, which is used to invoke translation UI. Technically it is possible for say UIImageView's to respond with translation keys particular to text that appears in a specific region of an image.
+* Changes to NSNotifications:
+  * TMLLanguageChangedNotification - TMLKit changed language - this can be due to user changing default locale, or due to a change in bundle, where previously used locale is no longer available.
+  * TMLLocalizationDataChangedNotification - any time localization data is changed (say you published new update via Dashboard, and TMLKit picked it up; or if you're using Inline Translation Mode and made some changes).
+  * TMLDidStartSyncNotification - When using Inline Translation Mode - indicates that TMLAPIBundle started synchronizing data
+  * TMLDidFinishSyncNotification - When using Inline Translation Mode - indicates that TMLAPIBundle finished synchronizing data
+  * TMLLocalizationUpdatesInstalledNotification - when TMLKit installs new localization bundle (for example when you published new localization data via Dashboard).
+* Various improvements to TMLAPIClient
+* Various improvements to Demo application
