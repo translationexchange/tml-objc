@@ -15,6 +15,11 @@ Initial release.
 
 First release as TMLKit, built as a dynamic framework. The SDK underwent several major changes:
 
+* TMLKit initialization changed - accepts mandatory application key and optional access token. Latter is required for Inline Translation Mode, or otherwise communicating with the server via API.
+* Two ways to initialize TMLKit:
+  * [TML sharedInstanceWithApplicationKey:accessToken:] - mandatory application key, optional accessToken. Arguments are used to construct default TMLConfiguration object and general purpose initializer...
+  * [TML sharedInstanceWithConfiguration:] - more general initializer which allows custom configuration objects to be used.
+  * -[TMLConfiguration isValidConfiguration] was added to indicate whether configuration object is valid. At the moment it checks if you have sensible values such as application key.
 * Macros have changed. Greatly simplifying numerous localization macros to simply:
   * TMLLocalizedString()
   * TMLLocalizedAttributedString()
