@@ -79,7 +79,10 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     return nil;
 }
 
-- (instancetype)initWithApplicationKey:(NSString * _Nonnull)applicationKey {
+- (instancetype)initWithApplicationKey:(NSString *)applicationKey {
+#if DEBUG
+    NSAssert(applicationKey.length > 0, @"application key cannot be empty");
+#endif
     if (self = [super init]) {
         self.archiveURL = [NSURL URLWithString:@"https://cdn.translationexchange.com"];
         self.maximumBundlesToKeep = 2;
@@ -300,7 +303,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     NSString *filename = [[aURL absoluteString] lastPathComponent];
     NSString *destinationPath = [NSString stringWithFormat:@"%@/%@", downloadsPath, filename];
     [self fetchURL:aURL
-   completionBlock:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+   completionBlock:^(NSData *data, NSURLResponse *response, NSError *error) {
        if (error == nil
            && data != nil
            && [data writeToFile:destinationPath atomically:YES] == YES) {
@@ -425,9 +428,9 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 #pragma mark - Downloading
 
 - (void)fetchURL:(NSURL *)url
- completionBlock:(void(^)(NSData * _Nullable data,
-                          NSURLResponse * _Nullable response,
-                          NSError * _Nullable error))completionBlock
+ completionBlock:(void(^)(NSData *data,
+                          NSURLResponse *response,
+                          NSError *error))completionBlock
 {
     NSURLRequest *request = [NSURLRequest requestWithURL:url
                                              cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -437,9 +440,9 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 
 - (void)fetchURL:(NSURL *)url
      cachePolicy:(NSURLRequestCachePolicy)cachePolicy
- completionBlock:(void(^)(NSData * _Nullable data,
-                          NSURLResponse * _Nullable response,
-                          NSError * _Nullable error))completionBlock
+ completionBlock:(void(^)(NSData *data,
+                          NSURLResponse *response,
+                          NSError *error))completionBlock
 {
     NSURL *newURL = url;
     if (cachePolicy == NSURLRequestReloadIgnoringLocalAndRemoteCacheData) {
@@ -452,15 +455,15 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 }
 
 - (void)fetchRequest:(NSURLRequest *)urlRequest
-        completionBlock:(void(^)(NSData * _Nullable data,
-                                 NSURLResponse * _Nullable response,
-                                 NSError * _Nullable error))completionBlock
+        completionBlock:(void(^)(NSData *data,
+                                 NSURLResponse *response,
+                                 NSError *error))completionBlock
 {
     NSURLSession *downloadSession = [self downloadSession];
     [[downloadSession dataTaskWithRequest:urlRequest
-                        completionHandler:^(NSData * _Nullable data,
-                                            NSURLResponse * _Nullable response,
-                                            NSError * _Nullable error) {
+                        completionHandler:^(NSData *data,
+                                            NSURLResponse *response,
+                                            NSError *error) {
                             NSError *ourError = error;
                             NSInteger responseCode = 0;
                             if ([response isKindOfClass:[NSHTTPURLResponse class]] == YES) {
@@ -563,7 +566,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     NSURL *resourceURL = [NSURL URLWithString:urlString];
     
     [self fetchURL:resourceURL
-   completionBlock:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+   completionBlock:^(NSData *data, NSURLResponse *response, NSError *error) {
        NSError *ourError = error;
         if (ourError == nil && data != nil) {
             if ([data writeToFile:destination options:NSDataWritingAtomic error:&ourError] == NO) {
@@ -602,7 +605,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     NSURL *publishedVersionURL = [self.archiveURL URLByAppendingPathComponent:[NSString stringWithFormat:@"%@/version.json", applicationKey]];
     [self fetchURL:publishedVersionURL
        cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
-   completionBlock:^(NSData * _Nullable data, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+   completionBlock:^(NSData *data, NSURLResponse *response, NSError *error) {
        NSDictionary *versionInfo;
        if (data != nil) {
            versionInfo = [data tmlJSONObject];

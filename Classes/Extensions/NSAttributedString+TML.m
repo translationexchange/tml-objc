@@ -25,7 +25,7 @@ NSString * const TMLAttributedStringStylePrefix = @"style";
     
     [self enumerateAttributesInRange:NSMakeRange(0, self.length)
                              options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
-                          usingBlock:^(NSDictionary<NSString *,id> * _Nonnull attrs, NSRange range, BOOL * _Nonnull stop) {
+                          usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
                               if (attrs.count == 0) {
                                   return;
                               }
