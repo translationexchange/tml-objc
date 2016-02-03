@@ -94,7 +94,6 @@
 		C4FCD3111C0FC7F200D723BC /* UITextField+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2A91C0FC7F200D723BC /* UITextField+TML.m */; };
 		C4FCD3131C0FC7F200D723BC /* UITextView+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2AB1C0FC7F200D723BC /* UITextView+TML.m */; };
 		C4FCD3151C0FC7F200D723BC /* UIViewController+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2AD1C0FC7F200D723BC /* UIViewController+TML.m */; };
-		C4FCD3161C0FC7F200D723BC /* .gitkeep in Resources */ = {isa = PBXBuildFile; fileRef = C4FCD2AF1C0FC7F200D723BC /* .gitkeep */; };
 		C4FCD3171C0FC7F200D723BC /* TMLLanguage.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2B11C0FC7F200D723BC /* TMLLanguage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD3181C0FC7F200D723BC /* TMLLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2B21C0FC7F200D723BC /* TMLLanguage.m */; };
 		C4FCD3191C0FC7F200D723BC /* TMLLanguageCase.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2B31C0FC7F200D723BC /* TMLLanguageCase.h */; };
@@ -1081,7 +1080,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4FCD39F1C10012500D723BC /* en.json in Resources */,
-				C4FCD3161C0FC7F200D723BC /* .gitkeep in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
