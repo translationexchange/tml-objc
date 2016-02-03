@@ -72,3 +72,4 @@ First release as TMLKit, built as a dynamic framework. The SDK underwent several
   * TMLLocalizationUpdatesInstalledNotification - when TMLKit installs new localization bundle (for example when you published new localization data via Dashboard).
 * Various improvements to TMLAPIClient and associated models. TMLAPIModel serves as the base; all models are meant compliant with NSCopying and NSCoding in order to facilitate serialization/materialization and copying. Equality methods were added to ease working with collections etc...
 * Various improvements to Demo application
+* Added analytics
