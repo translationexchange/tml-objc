@@ -1,6 +1,7 @@
 language: objective-c
 before_install:
     - rvm use system
+    - gem install activesupport
     - gem install cocoapods --no-rdoc --no-ri --no-document --quiet
     - brew update
     - brew uninstall xctool && brew install xctool --HEAD
