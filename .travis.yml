@@ -1,9 +1,9 @@
 language: objective-c
 before_install:
     - rvm use system
-    - gem install activesupport --version 4.2.5
+    - sudo gem install activesupport --version 4.2.5
     - gem list --local
-    - gem install cocoapods --no-prerelease --no-rdoc --no-ri --no-document
+    - sudo gem install cocoapods --no-prerelease --no-rdoc --no-ri --no-document
     - brew update
     - brew uninstall xctool && brew install xctool --HEAD
     - cd Demo && pod install && cd $TRAVIS_BUILD_DIR
