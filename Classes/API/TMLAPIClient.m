@@ -265,12 +265,12 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
 }
 
 - (void)getProjectLanguagesWithOptions:(NSDictionary *)options
-                       completionBlock:(void (^)(NSArray<TMLLanguage *> *, TMLAPIResponse *response, NSError *))completionBlock
+                       completionBlock:(void (^)(NSArray*, TMLAPIResponse *response, NSError *))completionBlock
 {
     [self get:@"projects/current/languages"
    parameters:options
 completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-    NSArray <TMLLanguage *>*languages = nil;
+    NSArray *languages = nil;
     if ([apiResponse isSuccessfulResponse] == YES) {
         languages = [apiResponse resultsAsLanguages];
     }
@@ -308,7 +308,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
 }];
 }
 
-- (void)registerTranslationKeysBySourceKey:(NSDictionary<NSString *, NSSet <TMLTranslationKey *>*> *)keysInfo
+- (void)registerTranslationKeysBySourceKey:(NSDictionary *)keysInfo
                            completionBlock:(void (^)(BOOL, NSError *))completionBlock
 {
     NSMutableArray *sourceKeysList = [NSMutableArray array];

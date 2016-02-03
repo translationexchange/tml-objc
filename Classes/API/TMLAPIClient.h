@@ -96,7 +96,7 @@ extern NSString * const TMLAPIOptionsPage;
  *  @param completionBlock Completion block
  */
 - (void) getProjectLanguagesWithOptions:(NSDictionary *)options
-                        completionBlock:(void(^)(NSArray <TMLLanguage *>* languages, TMLAPIResponse *response, NSError *error))completionBlock;
+                        completionBlock:(void(^)(NSArray * languages, TMLAPIResponse *response, NSError *error))completionBlock;
 
 /**
  *  Fetches list of translation keys for current project

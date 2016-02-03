@@ -144,7 +144,7 @@ NSString * const TMLApplicationInlineTranslationFeatureKey = @"inline_translatio
     return _defaultLanguage;
 }
 
-- (void)setLanguages:(NSArray<TMLLanguage *> *)languages {
+- (void)setLanguages:(NSArray *)languages {
     if (languages == _languages
         || ([_languages isEqualToArray:languages]) == YES) {
         return;
