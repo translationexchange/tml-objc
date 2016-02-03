@@ -434,7 +434,7 @@
             [client getTranslationsForLocale:locale
                                       source:nil
                                      options:nil
-                             completionBlock:^(NSDictionary<NSString *,TMLTranslation *> *translations, TMLAPIResponse *response, NSError *error) {
+                             completionBlock:^(NSDictionary *translations, TMLAPIResponse *response, NSError *error) {
                                  NSError *fileError;
                                  if (translations != nil) {
                                      [self setTranslations:translations forLocale:locale];
