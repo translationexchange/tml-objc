@@ -6,6 +6,7 @@ before_install:
     - sudo gem install cocoapods --no-prerelease --no-rdoc --no-ri --no-document
     - brew update
     - brew uninstall xctool && brew install xctool --HEAD
+    - cd TMLKit && pod install && cd ..
     - cd Demo && pod install && cd $TRAVIS_BUILD_DIR
 script: 
     - rake test
