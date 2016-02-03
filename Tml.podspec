@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                      = "Tml"
-  s.version                   = "0.2.1"
+  s.version                   = "0.2.2"
   s.deprecated                = true
   s.deprecated_in_favor_of    = "TMLKit"
   s.summary                   = "Translation Markup Language for Objective C."
