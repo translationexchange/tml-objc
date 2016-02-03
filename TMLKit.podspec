@@ -10,15 +10,12 @@ Pod::Spec.new do |s|
   s.social_media_url          = 'https://twitter.com/translationx'
 
   s.platform                  = :ios, '7.0'
-  s.ios.deployment_target     = '7.0'
-  # s.osx.deployment_target   = '10.7'
+  s.ios.deployment_target     = '8.0'
   s.requires_arc              = true
 
   s.source_files              = 'Classes'
   s.resources                 = 'Assets'
 
-  s.ios.exclude_files         = 'Classes/osx'
-  s.osx.exclude_files         = 'Classes/ios'
   #s.public_header_files       = 'Classes/**/*.h', 'TMLKit/TMLKit/**/*.h'
   s.prefix_header_file	      = 'TMLKit/TMLKit/TMLKit-Prefix.pch'
   s.source_files              = 'Classes/**/*.{h,m}', 'TMLKit/TMLKit/**/*.{h,m}'
