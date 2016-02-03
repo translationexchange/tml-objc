@@ -143,7 +143,7 @@ completionBlock:completionBlock];
     [self get:path
    parameters:params
 completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-    NSDictionary <NSString *, TMLTranslation *>*translations = nil;
+    NSDictionary *translations = nil;
     if ([apiResponse isSuccessfulResponse] == YES) {
         translations = [apiResponse resultsAsTranslations];
         NSArray *translationObjects = [[translations allValues] valueForKeyPath:@"@unionOfArrays.self"];
