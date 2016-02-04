@@ -582,6 +582,10 @@ static BOOL TMLConfigured;
                                            tokens:tokens
                                           options:options];
     
+    if (result == nil) {
+        result = string;
+    }
+    
     NSString *stringResult = nil;
     if ([result isKindOfClass:[NSAttributedString class]] == YES) {
         stringResult = [(NSAttributedString *)result string];
