@@ -47,14 +47,17 @@
     static TMLLanguage *lang = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        NSBundle *ourBundle = [NSBundle bundleForClass:[TML class]];
-        if (ourBundle == nil) {
-            ourBundle = [NSBundle mainBundle];
-        }
+        NSBundle *ourBundle = [NSBundle bundleWithIdentifier:@"com.translationexchange.TMLKit"];
         NSString *jsonPath = [ourBundle pathForResource:@"en" ofType:@"json"];
         NSData *data = [NSData dataWithContentsOfFile:jsonPath];
+#if DEBUG
+        NSAssert(data != nil, @"Could not find backing file for default language");
+#endif
         if (data != nil) {
             lang = [TMLAPISerializer materializeData:data withClass:[TMLLanguage class]];
+        }
+        else {
+            TMLError(@"Could not find backing file for default language");
         }
     });
     return lang;
