@@ -313,7 +313,14 @@ static BOOL TMLConfigured;
         }
     }
     
-    [self updateInlineTranslationRecognizers];
+    [self updateTranslationRecognizers];
+    // We might have enabled inline translation before application launched
+    // and before we had a window to which we'd add gesture recognizers.
+    // Setter method has done all the required work, we just need to ensure
+    // the gesture recognizer is added
+    if (_translationEnabled == YES) {
+        [self setupInlineTranslationGestureRecognizer];
+    }
     
     [[TMLAnalytics sharedInstance] startAnalyticsTimerIfNecessary];
 }
@@ -560,7 +567,7 @@ static BOOL TMLConfigured;
     }
     _application = application;
     self.configuration.defaultLocale = application.defaultLocale;
-    [self updateInlineTranslationRecognizers];
+    [self updateTranslationRecognizers];
 }
 
 #pragma mark - Translating
@@ -765,7 +772,7 @@ static BOOL TMLConfigured;
 
 #pragma mark - Configuration
 
-- (void)updateInlineTranslationRecognizers {
+- (void)updateTranslationRecognizers {
     if ([[UIApplication sharedApplication] keyWindow] == nil) {
         return;
     }
@@ -774,11 +781,9 @@ static BOOL TMLConfigured;
     if (application.inlineTranslationsEnabled == YES
         && config.accessToken.length > 0) {
         [self setupTranslationActivationGestureRecognizer];
-        [self setupInlineTranslationGestureRecognizer];
     }
     else {
         [self teardownTranslationActivationGestureRecognizer];
-        [self teardownInlineTranslationGestureRecognizer];
     }
 }
 
@@ -796,8 +801,10 @@ static BOOL TMLConfigured;
     }
     self.currentBundle = newBundle;
     self.configuration.translationEnabled = translationEnabled;
-    if (translationEnabled == YES && [[UIApplication sharedApplication] keyWindow] != nil) {
-        [self setupInlineTranslationGestureRecognizer];
+    if (translationEnabled == YES) {
+        if ([[UIApplication sharedApplication] keyWindow] != nil) {
+            [self setupInlineTranslationGestureRecognizer];
+        }
     }
     else {
         [self teardownInlineTranslationGestureRecognizer];
