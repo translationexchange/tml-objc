@@ -1091,7 +1091,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="6rr-a2-ta9"/>
                     <connections>
-                        <outlet property="navigationItem" destination="iWW-jF-uZg" id="iPF-1k-ita"/>
                         <outlet property="originalLabel" destination="l9H-sJ-cxt" id="uRK-xi-v0D"/>
                         <outlet property="originalTextView" destination="Bmm-M7-Sp4" id="C0u-cT-tUq"/>
                         <outlet property="translationLabel" destination="hWT-rN-qR8" id="XEP-wc-5TR"/>

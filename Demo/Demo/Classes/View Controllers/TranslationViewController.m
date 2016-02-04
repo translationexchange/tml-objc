@@ -36,8 +36,6 @@
 
 @property (weak, nonatomic) IBOutlet UITextView *translationTextView;
 
-@property (weak, nonatomic) IBOutlet UINavigationItem *navigationItem;
-
 @property (weak, nonatomic) IBOutlet UILabel *originalLabel;
 
 @property (weak, nonatomic) IBOutlet UILabel *translationLabel;
