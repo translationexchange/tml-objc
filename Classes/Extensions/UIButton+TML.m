@@ -64,8 +64,9 @@
         }
         else {
             NSString *title = [self titleForState:controlState];
-            if (controlState == UIControlStateNormal
-                || [title isEqualToString:[self titleForState:UIControlStateNormal]] == NO) {
+            if (title.length > 0
+                && (controlState == UIControlStateNormal
+                    || [title isEqualToString:[self titleForState:UIControlStateNormal]] == NO)) {
                 tmlString = title;
                 localizedString = TMLLocalizedString(tmlString);
                 [self setTitle:(NSString *)localizedString forState:[state integerValue]];
