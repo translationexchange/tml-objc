@@ -73,3 +73,7 @@ First release as TMLKit, built as a dynamic framework. The SDK underwent several
 * Various improvements to TMLAPIClient and associated models. TMLAPIModel serves as the base; all models are meant compliant with NSCopying and NSCoding in order to facilitate serialization/materialization and copying. Equality methods were added to ease working with collections etc...
 * Various improvements to Demo application
 * Added analytics
+
+## 1.0.1
+* Addressing issues related to using TMLKit as static lib via cocoapods
+* Minor bug fixes
