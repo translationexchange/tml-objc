@@ -48,6 +48,9 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSBundle *ourBundle = [NSBundle bundleWithIdentifier:@"com.translationexchange.TMLKit"];
+        if (ourBundle == nil) {
+            ourBundle = [NSBundle mainBundle];
+        }
         NSString *jsonPath = [ourBundle pathForResource:@"en" ofType:@"json"];
         NSData *data = [NSData dataWithContentsOfFile:jsonPath];
 #if DEBUG
