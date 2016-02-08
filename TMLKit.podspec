@@ -9,12 +9,11 @@ Pod::Spec.new do |s|
   s.source                    = { :git => "https://github.com/translationexchange/tml-objc.git", :tag => s.version.to_s }
   s.social_media_url          = 'https://twitter.com/translationx'
 
-  s.platform                  = :ios, '7.0'
+  s.platform                  = :ios
   s.ios.deployment_target     = '8.0'
   s.requires_arc              = true
 
-  s.source_files              = 'Classes'
-  s.resources                 = 'Assets'
+  s.resources                 = 'Assets/**/*'
 
   #s.public_header_files       = 'Classes/**/*.h', 'TMLKit/TMLKit/**/*.h'
   s.prefix_header_file	      = 'TMLKit/TMLKit/TMLKit-Prefix.pch'
