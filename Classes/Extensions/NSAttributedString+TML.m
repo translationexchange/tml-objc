@@ -42,6 +42,9 @@ NSString * const TMLAttributedStringStylePrefix = @"style";
                               NSString *trimmedString = [substring stringByTrimmingCharactersInSet:whiteSpaceCharSet];
                               NSRange subRange = [substring rangeOfString:trimmedString];
                               subRange.location += range.location;
+                              if (subRange.location == NSNotFound) {
+                                  subRange = range;
+                              }
                               
                               NSString *tokenizedString = [ourString substringWithRange:subRange];
                               if (implicit == NO
@@ -73,6 +76,9 @@ NSString * const TMLAttributedStringStylePrefix = @"style";
         NSString *tokenizedString = parts[rangeValue];
         [tmlString appendString:tokenizedString];
         tail = range.location + range.length;
+    }
+    if (tmlString.length < ourString.length) {
+        [tmlString appendString:[ourString substringWithRange:NSMakeRange(tmlString.length, ourString.length - tmlString.length)]];
     }
     if (tokens != nil) {
         *tokens = styleTokens;
