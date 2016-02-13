@@ -77,3 +77,6 @@ First release as TMLKit, built as a dynamic framework. The SDK underwent several
 ## 1.0.1
 * Addressing issues related to using TMLKit as static lib via cocoapods
 * Minor bug fixes
+
+## 1.0.2
+* Fixes parsing of tml attributed strings
