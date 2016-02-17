@@ -80,3 +80,6 @@ First release as TMLKit, built as a dynamic framework. The SDK underwent several
 
 ## 1.0.2
 * Fixes parsing of tml attributed strings
+
+## 1.0.3
+* Confiugration change to accomodate automatic reloading of both UICollectionView's and UITableView's. Deprecated: -[TMLConfiguration automaticallyReloadTableViewsWithReusableLocalizedStrings] in favor of a more general -[TMLConfiguration automaticallyReloadDataBackedViews]. Deprecated property forwards to the new one.
