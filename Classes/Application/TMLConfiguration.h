@@ -58,8 +58,18 @@
 
 @property(nonatomic) BOOL inContextTranslatorEnabled;
 
-#pragma mark - User Control
-@property (nonatomic, assign) BOOL automaticallyReloadTableViewsWithReusableLocalizedStrings;
+#pragma mark - Automatic reloading
+/**
+ *  If YES, TMLKit will automatically reload UITableView instances when it's updating reusable localized strings
+ * 
+ *  Deprecated in favor of automaticallyReloadDataViews;
+ */
+@property (nonatomic, assign) BOOL automaticallyReloadTableViewsWithReusableLocalizedStrings __deprecated_msg("Use automaticallyReloadDataBackedViews instead");
+/**
+ *  If YES, TMLKit will automatically reload instances instances of data-backed views, UITableView and UICollectionView,
+ *  when it's updating reusable localized strings.
+ */
+@property (nonatomic, assign) BOOL automaticallyReloadDataBackedViews;
 
 - (instancetype)initWithApplicationKey:(NSString *)applicationKey
                            accessToken:(NSString *)accessToken;

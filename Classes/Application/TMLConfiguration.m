@@ -72,7 +72,7 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
         self.apiURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/v1", TMLServiceHost]];
         self.translationCenterURL = [NSURL URLWithString:TMLTranslationCenterHost];
         self.localizeNIBStrings = YES;
-        self.automaticallyReloadTableViewsWithReusableLocalizedStrings = YES;
+        self.automaticallyReloadDataBackedViews = YES;
 #if DEBUG
         self.analyticsEnabled = NO;
 #else
@@ -155,6 +155,14 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
     [self willChangeValueForKey:@"translationEnabled"];
     [self setPersistentValue:@(translationEnabled) forKey:TMLTranslationEnabledDefaultsKey];
     [self didChangeValueForKey:@"translationEnabled"];
+}
+
+- (void)setAutomaticallyReloadTableViewsWithReusableLocalizedStrings:(BOOL)automaticallyReloadTableViewsWithReusableLocalizedStrings {
+    self.automaticallyReloadDataBackedViews = automaticallyReloadTableViewsWithReusableLocalizedStrings;
+}
+
+- (BOOL)automaticallyReloadTableViewsWithReusableLocalizedStrings {
+    return self.automaticallyReloadDataBackedViews;
 }
 
 #pragma mark - Locales

@@ -1,17 +1,17 @@
 //
-//  UITableView+TML.m
+//  UICollectionView+TML.m
 //  TMLKit
 //
-//  Created by Pasha on 12/7/15.
-//  Copyright © 2015 Translation Exchange. All rights reserved.
+//  Created by Pasha on 2/17/16.
+//  Copyright © 2016 Translation Exchange. All rights reserved.
 //
 
 #import "NSObject+TML.h"
 #import "TML.h"
 #import "TMLConfiguration.h"
-#import "UITableView+TML.h"
+#import "UICollectionView+TML.h"
 
-@implementation UITableView (TML)
+@implementation UICollectionView (TML)
 
 - (void)updateReusableTMLStrings {
     [super updateReusableTMLStrings];
