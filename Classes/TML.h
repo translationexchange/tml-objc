@@ -127,6 +127,8 @@
  */
 + (TML *) sharedInstanceWithConfiguration:(TMLConfiguration *)configuration;
 
++ (BOOL)isConfigured;
+
 /**
  *  Current application/project
  */

@@ -209,6 +209,10 @@ static BOOL TMLConfigured;
     return tml;
 }
 
++ (BOOL)isConfigured {
+    return TMLConfigured;
+}
+
 #pragma mark - Init
 
 - (instancetype)init {
