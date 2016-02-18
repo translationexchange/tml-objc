@@ -32,6 +32,8 @@
 #import "TMLModel.h"
 #import "TMLConfiguration.h"
 
+extern void * const TMLCompiledTokenExpressionKey;
+
 @class TMLLanguage, TMLLanguageContext;
 
 @interface TMLDataToken : TMLModel

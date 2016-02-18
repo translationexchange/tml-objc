@@ -97,7 +97,7 @@
 
 - (BOOL) isTokenAllowed: (NSString *) token;
 
-- (BOOL) token: (NSString *) token matchesExpression: (NSString *) re;
+- (BOOL)token:(NSString *)token matchesExpression:(NSRegularExpression *)regex;
 
 - (NSObject *) substituteTokensInLabelUsingData: (NSDictionary *) newTokensData;
 

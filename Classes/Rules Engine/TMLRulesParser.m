@@ -45,13 +45,19 @@
 @implementation TMLRulesParser
 
 + (NSRegularExpression *) tokensRegularExpression {
-    NSString *pattern = @"[()]|\\w+|@\\w+|[\\+\\-\\!\\|\\=>&<\\*\\/%]+|\".*?\"|'.*?'";
-    NSError *error = NULL;
-    NSRegularExpression *regex = [NSRegularExpression
-                                  regularExpressionWithPattern: pattern
-                                  options: NSRegularExpressionCaseInsensitive
-                                  error: &error];
-    // TODO: check for errors
+    static NSRegularExpression *regex;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSString *pattern = @"[()]|\\w+|@\\w+|[\\+\\-\\!\\|\\=>&<\\*\\/%]+|\".*?\"|'.*?'";
+        NSError *error = NULL;
+        regex = [NSRegularExpression
+                 regularExpressionWithPattern: pattern
+                 options: NSRegularExpressionCaseInsensitive
+                 error: &error];
+        if (error != nil) {
+            TMLError(@"Error constructing regex: %@", error);
+        }
+    });
     return regex;
 }
 

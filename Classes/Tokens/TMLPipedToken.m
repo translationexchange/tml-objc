@@ -153,6 +153,16 @@
             return nil;
     }
     
+    static NSRegularExpression *regex;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSError *error = nil;
+        regex = [NSRegularExpression regularExpressionWithPattern: @"\\{\\$\\d(::[\\w]+)*\\}" options: NSRegularExpressionCaseInsensitive error: &error];
+        if (error != nil) {
+            TMLError(@"Error constructing regex: %@", error);
+        }
+    });
+    
     // Dictionary
     if ([tokenMapping isKindOfClass:NSDictionary.class]) {
         NSDictionary *tokenMappingDictionary = (NSDictionary *) tokenMapping;
@@ -160,8 +170,7 @@
             NSString *value = [tokenMappingDictionary objectForKey:key];
             [values setObject:value forKey:key];
             
-            NSError *error = NULL;
-            NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern: @"\\{\\$\\d(::[\\w]+)*\\}" options: NSRegularExpressionCaseInsensitive error: &error];
+            
             NSArray *tokens = [regex matchesInString: value options: 0 range: NSMakeRange(0, [value length])];
             
             for (NSTextCheckingResult *match in tokens) {

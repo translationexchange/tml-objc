@@ -52,6 +52,9 @@
 #import "TMLDataToken.h"
 #import "TMLLanguage.h"
 #import "TMLLanguageCase.h"
+#import <objc/runtime.h>
+
+void * const TMLCompiledTokenExpressionKey = "TMLCompiledTokenExpressionKey";
 
 @interface TMLDataToken ()
 @property (nonatomic, strong, readwrite) NSString *stringRepresentation;
@@ -64,14 +67,23 @@
 }
 
 + (NSRegularExpression *) expression {
-    NSRegularExpression *regex;
-    NSError *error = NULL;
-    regex = [NSRegularExpression
-             regularExpressionWithPattern: [self pattern]
-             options: NSRegularExpressionCaseInsensitive
-             error: &error];
+    NSRegularExpression *regex = objc_getAssociatedObject(self, TMLCompiledTokenExpressionKey);
     if (regex == nil) {
-        TMLError(@"Error creating data token regexp: %@", error);
+        NSError *error = NULL;
+        regex = [NSRegularExpression
+                 regularExpressionWithPattern: [self pattern]
+                 options: NSRegularExpressionCaseInsensitive
+                 error: &error];
+        if (regex == nil) {
+            TMLError(@"Error creating data token regexp: %@", error);
+            objc_setAssociatedObject(self, TMLCompiledTokenExpressionKey, [NSNull null], OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        }
+        else {
+            objc_setAssociatedObject(self, TMLCompiledTokenExpressionKey, regex, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        }
+    }
+    if ([[NSNull null] isEqual:regex] == YES) {
+        regex = nil;
     }
     return regex;
 }

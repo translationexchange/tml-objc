@@ -687,11 +687,15 @@ static BOOL TMLConfigured;
                                    withDate:(NSDate *)date
                                      tokens:(NSDictionary **)tokens
 {
-    NSError *error = NULL;
-    NSRegularExpression *expression = [NSRegularExpression
-                                       regularExpressionWithPattern: @"[\\w]*"
-                                       options: NSRegularExpressionCaseInsensitive
-                                       error: &error];
+    static NSRegularExpression *expression;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSError *error = NULL;
+        expression = [NSRegularExpression
+                      regularExpressionWithPattern: @"[\\w]*"
+                      options: NSRegularExpressionCaseInsensitive
+                      error: &error];
+    });
     
     NSString *tokenizedFormat = string;
     

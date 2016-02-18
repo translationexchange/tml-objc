@@ -14,12 +14,19 @@
 @implementation NSString (TML)
 
 - (NSString *)tmlTranslationBundleVersionFromPath {
-    NSError *error = nil;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"[^0-9]+"
-                                                                           options:NSRegularExpressionCaseInsensitive
-                                                                             error:&error];
-    if (error != nil) {
-        TMLError(@"Error constructing regexp for determinging version of local localization bundles: %@", error);
+    static NSRegularExpression *regex;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSError *error = nil;
+        regex = [NSRegularExpression regularExpressionWithPattern:@"[^0-9]+"
+                                                          options:NSRegularExpressionCaseInsensitive
+                                                            error:&error];
+        if (error != nil) {
+            TMLError(@"Error constructing regexp for determinging version of local localization bundles: %@", error);
+        }
+    });
+    
+    if (regex == nil) {
         return nil;
     }
     
@@ -113,15 +120,20 @@
 #pragma mark - Utils
 
 - (NSString *)tmlMD5 {
-    const char *cStr = [self UTF8String];
-    unsigned char digest[16];
-    CC_MD5( cStr, (CC_LONG)strlen(cStr), digest );
-    
-    NSMutableString *output = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
-    for(int i = 0; i < CC_MD5_DIGEST_LENGTH; i++) {
-        [output appendFormat:@"%02x", digest[i]];
-    }
-    return  output;
+    static NSString *result;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        const char *cStr = [self UTF8String];
+        unsigned char digest[16];
+        CC_MD5( cStr, (CC_LONG)strlen(cStr), digest );
+        
+        NSMutableString *output = [NSMutableString stringWithCapacity:CC_MD5_DIGEST_LENGTH * 2];
+        for(int i = 0; i < CC_MD5_DIGEST_LENGTH; i++) {
+            [output appendFormat:@"%02x", digest[i]];
+        }
+        result = [output copy];
+    });
+    return result;
 }
 
 @end

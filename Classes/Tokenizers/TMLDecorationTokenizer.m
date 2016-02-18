@@ -145,11 +145,7 @@
     return obj;
 }
 
-- (BOOL) token: (NSString *) token matchesExpression: (NSString *) re {
-    NSError *error = NULL;
-    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:re
-                                                                           options:0
-                                                                             error:&error];
+- (BOOL)token:(NSString *)token matchesExpression:(NSRegularExpression *)regex {
     // TODO: check for errors
     NSRange firstMatch = [regex rangeOfFirstMatchInString:token
                                                   options:0
@@ -187,20 +183,86 @@
     return [string substringWithRange:NSMakeRange(location, length - location)];
 }
 
+- (NSRegularExpression *)regexWithPattern:(NSString *)pattern {
+    NSError *error = nil;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:pattern
+                                                      options:0
+                                                        error:&error];
+    if (error != nil) {
+        TMLError(@"Error constructing regex: %@", error);
+    }
+    return regex;
+}
+
+- (NSRegularExpression *)shortTokenStartRegex {
+    static NSRegularExpression *regex;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        regex = [self regexWithPattern:TML_RE_SHORT_TOKEN_START];
+    });
+    return regex;
+}
+
+- (NSRegularExpression *)shortTokenEndRegex {
+    static NSRegularExpression *regex;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        regex = [self regexWithPattern:TML_RE_SHORT_TOKEN_END];
+    });
+    return regex;
+}
+
+- (NSRegularExpression *)longTokenStartRegex {
+    static NSRegularExpression *regex;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        regex = [self regexWithPattern:TML_RE_LONG_TOKEN_START];
+    });
+    return regex;
+}
+
+- (NSRegularExpression *)longTokenEndRegex {
+    static NSRegularExpression *regex;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        regex = [self regexWithPattern:TML_RE_LONG_TOKEN_END];
+    });
+    return regex;
+}
+
+- (NSRegularExpression *)htmlTokenStartRegex {
+    static NSRegularExpression *regex;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        regex = [self regexWithPattern:TML_RE_HTML_TOKEN_START];
+    });
+    return regex;
+}
+
+- (NSRegularExpression *)htmlTokenEndRegex {
+    static NSRegularExpression *regex;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        regex = [self regexWithPattern:TML_RE_HTML_TOKEN_END];
+    });
+    return regex;
+}
+
+
 - (NSObject *) parse {
     NSString *token = [self pop];
     
-    if ([self token:token matchesExpression:TML_RE_SHORT_TOKEN_START]) {
+    if ([self token:token matchesExpression:[self shortTokenStartRegex]]) {
         token = [token stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"[:"]];
         return [self parseTree: token type: TML_TOKEN_TYPE_SHORT];
     }
 
-    if ([self token:token matchesExpression:TML_RE_LONG_TOKEN_START]) {
+    if ([self token:token matchesExpression:[self longTokenStartRegex]]) {
         token = [token stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"[]"]];
         return [self parseTree: token type: TML_TOKEN_TYPE_LONG];
     }
     
-    if ([self token:token matchesExpression:TML_RE_HTML_TOKEN_START]) {
+    if ([self token:token matchesExpression:[self htmlTokenStartRegex]]) {
         token = [token stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"</>"]];
         return [self parseTree: token type: TML_TOKEN_TYPE_HTML];
     }
@@ -218,7 +280,7 @@
 
     if ([type isEqualToString:TML_TOKEN_TYPE_SHORT]) {
         BOOL first = YES;
-        while ([self peek] != nil && ![self token:[self peek] matchesExpression:TML_RE_SHORT_TOKEN_END]) {
+        while ([self peek] != nil && ![self token:[self peek] matchesExpression:[self shortTokenEndRegex]]) {
             NSObject *value = [self parse];
             if (first && [value isKindOfClass:NSString.class]) {
                 NSString *str = (NSString *) value;
@@ -228,12 +290,12 @@
             [tree addObject:value];
         }
     } else if ([type isEqualToString:TML_TOKEN_TYPE_LONG]) {
-        while ([self peek] != nil && ![self token:[self peek] matchesExpression:TML_RE_LONG_TOKEN_END]) {
+        while ([self peek] != nil && ![self token:[self peek] matchesExpression:[self longTokenEndRegex]]) {
             [tree addObject:[self parse]];
         }
     }
     else if ([type isEqualToString:TML_TOKEN_TYPE_HTML] == YES) {
-        while ([self peek] != nil && ![self token:[self peek] matchesExpression:TML_RE_HTML_TOKEN_END]) {
+        while ([self peek] != nil && ![self token:[self peek] matchesExpression:[self htmlTokenEndRegex]]) {
             [tree addObject:[self parse]];
         }
     }
