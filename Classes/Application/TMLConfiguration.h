@@ -71,6 +71,14 @@
  */
 @property (nonatomic, assign) BOOL automaticallyReloadDataBackedViews;
 
+#pragma mark - Submitting translaton keys
+/**
+ *  If YES, no translation keys will be submitted to the server, under any circumstances.
+ *  This is a general safety switch for flooding server with data.
+ */
+@property (nonatomic, assign) BOOL neverSubmitNewTranslationKeys;
+
+#pragma mark -
 - (instancetype)initWithApplicationKey:(NSString *)applicationKey
                            accessToken:(NSString *)accessToken;
 @property(readonly, nonatomic, getter=isValidConfiguration) BOOL validConfiguration;

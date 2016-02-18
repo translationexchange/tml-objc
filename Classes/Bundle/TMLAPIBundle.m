@@ -32,7 +32,7 @@
 @property (readwrite, nonatomic) TMLApplication *application;
 @property (readwrite, nonatomic) NSDictionary *translations;
 @property (readwrite, nonatomic) NSDictionary *translationKeys;
-@property (readwrite, nonatomic) NSMutableDictionary *addedTranslations;
+@property (readwrite, nonatomic) NSMutableDictionary *addedTranslationKeys;
 @property (strong, nonatomic) NSOperationQueue *syncQueue;
 @end
 
@@ -174,55 +174,58 @@
         return;
     }
     
-    NSMutableDictionary *addedTranslations = self.addedTranslations;
-    if (addedTranslations == nil) {
-        addedTranslations = [NSMutableDictionary dictionary];
+    NSMutableDictionary *addedTranslationKeys = self.addedTranslationKeys;
+    if (addedTranslationKeys == nil) {
+        addedTranslationKeys = [NSMutableDictionary dictionary];
     }
     
-    @synchronized(_addedTranslations) {
+    @synchronized(_addedTranslationKeys) {
         NSString *effectiveSourceKey = sourceKey;
         if (effectiveSourceKey == nil) {
             effectiveSourceKey = TMLSourceDefaultKey;
         }
         
-        NSMutableSet *keys = addedTranslations[effectiveSourceKey];
+        NSMutableSet *keys = addedTranslationKeys[effectiveSourceKey];
         if (keys == nil) {
             keys = [NSMutableSet set];
         }
         
         [keys addObject:translationKey];
-        addedTranslations[effectiveSourceKey] = keys;
-        self.addedTranslations = addedTranslations;
+        addedTranslationKeys[effectiveSourceKey] = keys;
+        self.addedTranslationKeys = addedTranslationKeys;
     }
     
 }
 
-- (void)removeAddedTranslations:(NSDictionary *)translations {
-    @synchronized(_addedTranslations) {
-        if (_addedTranslations.count == 0) {
+- (void)removeAddedTranslationKeys:(NSDictionary *)translationKeys {
+    @synchronized(_addedTranslationKeys) {
+        if (_addedTranslationKeys.count == 0) {
             return;
         }
         
-        for (NSString *source in translations) {
-            NSMutableSet *keys = [_addedTranslations[source] mutableCopy];
-            for (TMLTranslationKey *key in translations[source]) {
+        for (NSString *source in translationKeys) {
+            NSMutableSet *keys = [_addedTranslationKeys[source] mutableCopy];
+            for (TMLTranslationKey *key in translationKeys[source]) {
                 [keys removeObject:key];
             }
-            _addedTranslations[source] = keys;
+            _addedTranslationKeys[source] = keys;
         }
     }
 }
 
-- (void)setAddedTranslations:(NSMutableDictionary *)addedTranslations {
-    if (_addedTranslations == addedTranslations
-        || [_addedTranslations isEqualToDictionary:addedTranslations] == YES) {
+- (void)setAddedTranslationKeys:(NSMutableDictionary *)addedTranslationKeys {
+    if (_addedTranslationKeys == addedTranslationKeys
+        || [_addedTranslationKeys isEqualToDictionary:addedTranslationKeys] == YES) {
         return;
     }
-    _addedTranslations = addedTranslations;
-    [self didAddTranslations];
+    _addedTranslationKeys = addedTranslationKeys;
+    [self didAddTranslationKeys];
 }
 
-- (void)didAddTranslations {
+- (void)didAddTranslationKeys {
+    if (TMLSharedConfiguration().neverSubmitNewTranslationKeys == YES) {
+        return;
+    }
     [self setNeedsSync];
 }
 
@@ -340,7 +343,7 @@
     if (locales.count > 0) {
         [self syncLocales:locales];
     }
-    [self syncAddedTranslations];
+    [self syncAddedTranslationKeys];
     syncQueue.suspended = NO;
 }
 
@@ -486,11 +489,14 @@
     }
 }
 
-- (void)syncAddedTranslations {
-    if (_addedTranslations.count == 0) {
+- (void)syncAddedTranslationKeys {
+    if (TMLSharedConfiguration().neverSubmitNewTranslationKeys == YES) {
         return;
     }
-    NSMutableDictionary *missingTranslations = self.addedTranslations;
+    if (_addedTranslationKeys.count == 0) {
+        return;
+    }
+    NSMutableDictionary *missingTranslations = self.addedTranslationKeys;
     BOOL hasKeys = NO;
     for (NSString *source in missingTranslations) {
         NSArray *value = missingTranslations[source];
@@ -506,7 +512,7 @@
         [[[TML sharedInstance] apiClient] registerTranslationKeysBySourceKey:missingTranslations
                                                              completionBlock:^(BOOL success, NSError *error) {
                                                                  if (success == YES) {
-                                                                     [self removeAddedTranslations:missingTranslations];
+                                                                     [self removeAddedTranslationKeys:missingTranslations];
                                                                  }
                                                                  NSArray *errors = (error != nil) ? @[error] : nil;
                                                                  [self didFinishSyncOperationWithErrors:errors];

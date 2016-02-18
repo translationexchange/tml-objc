@@ -770,6 +770,9 @@ static BOOL TMLConfigured;
 - (void) registerMissingTranslationKey:(TMLTranslationKey *)translationKey
                           forSourceKey:(NSString *)sourceKey
 {
+    if (self.configuration.neverSubmitNewTranslationKeys == YES) {
+        return;
+    }
     if (translationKey.label.length == 0) {
         return;
     }
