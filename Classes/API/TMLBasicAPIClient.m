@@ -90,7 +90,8 @@ completionBlock:(TMLAPIResponseHandler)completionBlock
 {
     NSURL *url = [self URLForAPIPath:path parameters:nil];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
-    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPMethod:@"POST"];    
     [request setHTTPBody:[[self urlEncodedStringFromParameters: parameters] dataUsingEncoding:NSUTF8StringEncoding]];
     
     TMLDebug(@"POST %@", url);
