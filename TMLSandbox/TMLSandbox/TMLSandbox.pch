@@ -1,0 +1,16 @@
+//
+//  TMLSandbox.pch
+//  TMLSandbox
+//
+//  Created by Pasha on 2/17/16.
+//  Copyright © 2016 Translation Exchange. All rights reserved.
+//
+
+#ifndef TMLSandbox_pch
+#define TMLSandbox_pch
+
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import <TMLKit/TMLKit.h>
+
+#endif /* TMLSandbox_pch */
