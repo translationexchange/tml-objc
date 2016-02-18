@@ -43,7 +43,7 @@ $ pod install
 $ open Demo.xcworkspace
 ```
 
-Configure TMLKit by editing main.m and setting *application key* and *access token* parameters to match your TranslationExchange project. Finally, run the application from XCode.
+Configure TMLKit by editing main.m and setting *application key* and *access token* parameters to match your TranslationExchange project. Finally, run the application from Xcode.
 
 Once the Demo application is running, open the side panel and enable **In-App Translation**. That will cause TMLKit to register all of the localizable strings in your application with your TranslationExchange project. Select **Change Language** from the side panel. You should see all of the languages currently used in your project listed here. TMLKit provides a default language picker. Creating a custom one is a breeze - see [TMLLanguageSelectorViewController](https://github.com/translationexchange/tml-objc/blob/dev/Classes/Controllers/TMLLanguageSelectorViewController.m) for details.
 
