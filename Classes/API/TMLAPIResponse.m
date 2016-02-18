@@ -181,7 +181,14 @@ NSString * const TMLAPIResponseErrorCodeKey = @"code";
 #pragma mark - Status
 
 - (NSString *)status {
-    return self.userInfo[TMLAPIResponseStatusKey];
+    id status = self.userInfo[TMLAPIResponseStatusKey];
+    if ([[NSNull null] isEqual:status] == YES) {
+        status = nil;
+    }
+    if (status != nil && [status isKindOfClass:[NSString class]] == NO) {
+        status = [NSString stringWithFormat:@"%@", status];
+    }
+    return status;
 }
 
 - (BOOL)isSuccessfulResponse {
