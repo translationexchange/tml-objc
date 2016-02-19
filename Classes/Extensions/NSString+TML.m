@@ -10,6 +10,7 @@
 #import "TMLDecorationTokenizer.h"
 #import "TMLDataTokenizer.h"
 #import <CommonCrypto/CommonDigest.h>
+#import <objc/runtime.h>
 
 @implementation NSString (TML)
 
@@ -120,9 +121,8 @@
 #pragma mark - Utils
 
 - (NSString *)tmlMD5 {
-    static NSString *result;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
+    NSString *result = objc_getAssociatedObject(self, "_tmlMD5");
+    if (result == nil) {
         const char *cStr = [self UTF8String];
         unsigned char digest[16];
         CC_MD5( cStr, (CC_LONG)strlen(cStr), digest );
@@ -132,7 +132,8 @@
             [output appendFormat:@"%02x", digest[i]];
         }
         result = [output copy];
-    });
+        objc_setAssociatedObject(self, "_tmlMD5", result, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
     return result;
 }
 
