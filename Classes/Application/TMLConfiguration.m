@@ -124,12 +124,14 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
         return;
     }
     
+    [self willChangeValueForKey:@"accessToken"];
     if (accessToken.length == 0) {
         _accessToken = nil;
     }
     else {
         _accessToken = accessToken;
     }
+    [self didChangeValueForKey:@"accessToken"];
 }
 
 - (void)setApplicationKey:(NSString *)applicationKey {
@@ -138,12 +140,14 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
         return;
     }
     
+    [self willChangeValueForKey:@"applicationKey"];
     if (applicationKey.length == 0) {
         _applicationKey = nil;
     }
     else {
         _applicationKey = applicationKey;
     }
+    [self didChangeValueForKey:@"applicationKey"];
 }
 
 - (BOOL)isTranslationEnabled {
