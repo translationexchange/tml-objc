@@ -7,15 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-extern NSString * const TMLAuthorizationStatusKey;
-extern NSString * const TMLAuthorizationStatusAuthorized;
-extern NSString * const TMLAuthorizationAccessTokenKey;
-extern NSString * const TMLAuthorizationTranslatorInfoKey;
-extern NSString * const TMLAuthorizationTranslatorIDKey;
-extern NSString * const TMLAuthorizationTranslatorFirstNameKey;
-extern NSString * const TMLAuthorizationTranslatorMugshotKey;
-extern NSString * const TMLAuthorizationTranslatorInlineModeKey;
+#import "TMLAuthorizationController.h"
 
 @protocol TMLAuthorizationViewControllerDelegate;
 

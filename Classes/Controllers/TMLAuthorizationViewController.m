@@ -10,14 +10,7 @@
 #import "TML.h"
 #import "TMLAuthorizationViewController.h"
 
-NSString * const TMLAuthorizationStatusKey = @"status";
-NSString * const TMLAuthorizationStatusAuthorized = @"authorized";
-NSString * const TMLAuthorizationAccessTokenKey = @"access_token";
-NSString * const TMLAuthorizationTranslatorInfoKey = @"translator";
-NSString * const TMLAuthorizationTranslatorIDKey = @"id";
-NSString * const TMLAuthorizationTranslatorFirstNameKey = @"first_name";
-NSString * const TMLAuthorizationTranslatorMugshotKey = @"mugshot";
-NSString * const TMLAuthorizationTranslatorInlineModeKey = @"inline_mode";
+#define MOCK_AUTH 1
 
 @interface TMLAuthorizationViewController ()<UIWebViewDelegate>
 @property (strong, nonatomic) UIWebView *webView;
@@ -64,29 +57,36 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
         && [requestURL.path isEqualToString:responseURL.path] == YES) {
         id<TMLAuthorizationViewControllerDelegate>delegate = self.delegate;
         if ([delegate respondsToSelector:@selector(authorizationViewController:didAuthorize:)] == YES) {
-            NSDictionary *userInfo = nil;
-            NSString *appKey = [[[TML sharedInstance] configuration] applicationKey];
-            NSString *authCookieName = [NSString stringWithFormat:@"trex_%@", appKey];
-            NSArray *cookies = [[NSHTTPCookieStorage sharedHTTPCookieStorage] cookies];
-            NSHTTPCookie *authCookie;
-            for (NSHTTPCookie *cookie in cookies) {
-                if ([cookie.name isEqualToString:authCookieName] == YES) {
-                    authCookie = cookie;
-                    break;
-                }
-            }
-            if (authCookie != nil) {
-                NSString *cookieString = [[NSString alloc] initWithData:[[NSData alloc] initWithBase64EncodedString:authCookie.value
-                                                                                                            options:0]
-                                                               encoding:NSUTF8StringEncoding];
-                userInfo = [cookieString tmlJSONObject];
-            }
-            if (userInfo != nil) {
-                [delegate authorizationViewController:self didAuthorize:userInfo];
+            NSDictionary *authInfo = nil;
+            TMLAuthorizationController *authController = [TMLAuthorizationController new];
+#if MOCK_AUTH
+            TMLTranslator *translator = [TMLTranslator new];
+            translator.userID = @"1";
+            translator.firstName = @"Mock";
+            translator.inlineTranslationAllowed = YES;
+            translator.mugshotURL = [NSURL URLWithString:@"http://images.clipartpanda.com/cookie-monster-clip-art-cookiecookiecookie.jpg"];
+            authInfo = @{
+                         TMLAuthorizationStatusKey: TMLAuthorizationStatusAuthorized,
+                         TMLAuthorizationAccessTokenKey: @"048f31c32dc56be8c81affad60a25cf64dd03d4944efbb31cdf8cac6d18b18b9",
+                         TMLAuthorizationTranslatorKey: translator
+                         };
+            [authController saveAuthorizationInfo:authInfo];
+#else
+            authInfo = [authController authorizationInfoFromSharedCookieJar];
+#endif
+            if (authInfo != nil) {
+                [delegate authorizationViewController:self didAuthorize:authInfo];
             }
         }
+        return YES;
     }
+    
+#if MOCK_AUTH
+    [webView loadRequest:[NSURLRequest requestWithURL:responseURL]];
+    return NO;
+#else
     return YES;
+#endif
 }
 
 @end

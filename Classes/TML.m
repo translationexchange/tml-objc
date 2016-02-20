@@ -244,6 +244,14 @@ static BOOL TMLConfigured;
         self.currentBundle = nil;
     }
     else {
+        if (configuration.accessToken.length == 0) {
+            TMLAuthorizationController *authController = [TMLAuthorizationController new];
+            NSDictionary *authInfo = [authController storedAuthorizationInfo];
+            if (authInfo != nil) {
+                configuration.accessToken = authInfo[TMLAuthorizationAccessTokenKey];
+                self.translator = authInfo[TMLAuthorizationTranslatorKey];
+            }
+        }
         TMLAPIClient *apiClient = [[TMLAPIClient alloc] initWithBaseURL:configuration.apiURL
                                                             accessToken:configuration.accessToken];
         self.apiClient = apiClient;
@@ -1165,16 +1173,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     
     TMLConfiguration *config = [self configuration];
     config.accessToken = accessToken;
-    
-    NSDictionary *translatorInfo = [userInfo valueForKey:TMLAuthorizationTranslatorInfoKey];
-    if (translatorInfo != nil) {
-        TMLTranslator *translator = [[TMLTranslator alloc] init];
-        translator.userID = [translatorInfo valueForKey:TMLAuthorizationTranslatorIDKey];
-        translator.firstName = [translatorInfo valueForKey:TMLAuthorizationTranslatorFirstNameKey];
-        translator.mugshotURL = [NSURL URLWithString:[translatorInfo valueForKey:TMLAuthorizationTranslatorMugshotKey]];
-        translator.inlineTranslationAllowed = [[translatorInfo valueForKey:TMLAuthorizationTranslatorInlineModeKey] boolValue];
-        self.translator = translator;
-    }
+    self.translator = userInfo[TMLAuthorizationTranslatorKey];
     
     [self setupTranslationActivationGestureRecognizer];
     if (controller.presentingViewController) {
