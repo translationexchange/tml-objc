@@ -17,6 +17,7 @@
 #import <TMLKit/TMLModel.h>
 #import <TMLKit/TMLApplication.h>
 #import <TMLKit/TMLConfiguration.h>
+#import <TMLKit/TMLTranslator.h>
 #import <TMLKit/TMLSource.h>
 #import <TMLKit/TMLLanguage.h>
 #import <TMLKit/TMLTranslationKey.h>

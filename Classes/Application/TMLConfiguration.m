@@ -41,6 +41,10 @@
 #define TMLTranslationCenterHost @"https://translation-center.translationexchange.com"
 #endif
 
+#ifndef TMLGatewayHost
+#define TMLGatewayHost @"https://gateway.translationexchange.com"
+#endif
+
 NSString * const TMLApplicationKeyDefaultsKey = @"applicationKey";
 NSString * const TMLDefaultLocaleDefaultsKey = @"defaultLocale";
 NSString * const TMLCurrentLocaleDefaultsKey = @"currentLocale";
@@ -59,18 +63,18 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
 #pragma mark - Init
 
 - (instancetype)init {
-    return [self initWithApplicationKey:nil accessToken:nil];
+    return [self initWithApplicationKey:nil];
 }
 
-- (instancetype)initWithApplicationKey:(NSString *)applicationKey accessToken:(NSString *)accessToken {
+- (instancetype)initWithApplicationKey:(NSString *)applicationKey {
     if (self = [super init]) {
         self.applicationKey = applicationKey;
-        self.accessToken = accessToken;
         [self setupDefaultContextRules];
         [self setupDefaultTokens];
         [self setupLocalization];
         self.apiURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/v1", TMLServiceHost]];
         self.translationCenterURL = [NSURL URLWithString:TMLTranslationCenterHost];
+        self.gatewayURL = [NSURL URLWithString:TMLGatewayHost];
         self.localizeNIBStrings = YES;
         self.automaticallyReloadDataBackedViews = YES;
 #if DEBUG

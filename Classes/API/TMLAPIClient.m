@@ -46,9 +46,6 @@ NSString * const TMLAPIOptionsIncludeDefinition = @"definition";
 NSString * const TMLAPIOptionsSourceKeys = @"source_keys";
 NSString * const TMLAPIOptionsPage = @"page";
 
-@interface TMLAPIClient()
-@property (readwrite, nonatomic) NSString *accessToken;
-@end
 
 @implementation TMLAPIClient
 

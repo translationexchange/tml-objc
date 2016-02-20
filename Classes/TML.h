@@ -28,10 +28,11 @@
  *  THE SOFTWARE.
  */
 
-#import <Foundation/Foundation.h>
 #import "TMLApplication.h"
 #import "TMLBundle.h"
 #import "TMLConfiguration.h"
+#import "TMLTranslator.h"
+#import <Foundation/Foundation.h>
 
 @protocol TMLDelegate <NSObject>
 @optional
@@ -81,7 +82,7 @@
  *  Returns shared TML instance. This is the main interface with TMLKit.
  *
  *  Note: TML must first be configured via +[TML sharedInstanceWithConfiguration:]
- *  or +[TML sharedInstanceWithApplicationKey:accessToken:]. This call is mostly
+ *  or +[TML sharedInstanceWithApplicationKey:]. This call is mostly
  *  used when interfacing with TML. For common interactions there exist a number of
  *  C macros, as defined in TML.h.
  *
@@ -91,23 +92,18 @@
 
 /**
  *  Initializes TML and configures it with default configuration, using given
- *  application key and access token.
+ *  application key.
  *
  *  See dashboard.translationexchange.com for Integration API keys.
  *
  *  Application key is a required parameter. Configuration is considered invalid
  *  if this key is empty or nil.
  *
- *  Access token is only required for any operations requiring API calls - such as
- *  in-app translation, automatically submitting new keys to the server, etc...
- *
  *  @param applicationKey Application key
- *  @param accessToken    Access token
  *
  *  @return Shared TML instance
  */
-+ (TML *) sharedInstanceWithApplicationKey:(NSString *)applicationKey
-                               accessToken:(NSString *)accessToken;
++ (TML *) sharedInstanceWithApplicationKey:(NSString *)applicationKey;
 
 /**
  *  Initializes TML and configures it with given configuration object.
@@ -117,9 +113,6 @@
  *
  *  Application key is a required parameter. Configuration is considered invalid
  *  if this key is empty or nil.
- *
- *  Access token is only required for any operations requiring API calls - such as
- *  in-app translation, automatically submitting new keys to the server, etc...
  *
  *  @param configuration Configuration
  *
@@ -138,6 +131,8 @@
  *  Holds TML configuration settings
  */
 @property(nonatomic, readonly) TMLConfiguration *configuration;
+
+@property(nonatomic, readonly) TMLTranslator *translator;
 
 /**
  *  Holds the current source key

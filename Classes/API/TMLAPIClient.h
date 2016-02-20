@@ -40,7 +40,7 @@ extern NSString * const TMLAPIOptionsIncludeDefinition;
 extern NSString * const TMLAPIOptionsPage;
 
 @interface TMLAPIClient : TMLBasicAPIClient
-@property (readonly, nonatomic) NSString *accessToken;
+@property (strong, nonatomic) NSString *accessToken;
 - (id) initWithBaseURL:(NSURL *)url accessToken:(NSString *)accessToken;
 
 #pragma mark - Methods

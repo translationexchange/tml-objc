@@ -36,6 +36,8 @@
 
 @property(nonatomic, strong) NSURL *translationCenterURL;
 
+@property(nonatomic, strong) NSURL *gatewayURL;
+
 @property(nonatomic, readwrite) NSString *accessToken;
 
 @property(nonatomic, readwrite) NSString *applicationKey;
@@ -79,8 +81,7 @@
 @property (nonatomic, assign) BOOL neverSubmitNewTranslationKeys;
 
 #pragma mark -
-- (instancetype)initWithApplicationKey:(NSString *)applicationKey
-                           accessToken:(NSString *)accessToken;
+- (instancetype)initWithApplicationKey:(NSString *)applicationKey;
 @property(readonly, nonatomic, getter=isValidConfiguration) BOOL validConfiguration;
 
 - (NSString *) deviceLocale;
