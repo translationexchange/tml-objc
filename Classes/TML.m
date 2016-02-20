@@ -1177,6 +1177,11 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     }
     
     [self setupTranslationActivationGestureRecognizer];
+    if (controller.presentingViewController) {
+        [controller.presentingViewController dismissViewControllerAnimated:YES completion:^{
+            [self setTranslationEnabled:YES];
+        }];
+    }
 }
 
 #pragma mark - Presenting View Controllers
