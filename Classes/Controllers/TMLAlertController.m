@@ -11,6 +11,36 @@
 #import <QuartzCore/QuartzCore.h>
 
 
+UIFont * boldSystemFontOfSize(CGFloat size);
+UIFont * mediumSystemFontOfSize(CGFloat size);
+BOOL useWeight();
+
+BOOL useWeight() {
+    static BOOL result;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        result = [UIFont methodForSelector:@selector(systemFontOfSize:weight:)] != nil;
+    });
+    return result;
+}
+
+UIFont * boldSystemFontOfSize(CGFloat size) {
+    if (useWeight()) {
+        return [UIFont systemFontOfSize:size weight:UIFontWeightBold];
+    }
+    else {
+        return [UIFont fontWithName:@"Helvetica-Neue-Bold" size:size];
+    }
+}
+UIFont * mediumSystemFontOfSize(CGFloat size) {
+    if (useWeight()) {
+        return [UIFont systemFontOfSize:size weight:UIFontWeightMedium];
+    }
+    else {
+        return [UIFont fontWithName:@"Helvetica-Neue-Medium" size:size];
+    }
+}
+
 #pragma mark - TMLAlertTitleView
 @interface TMLAlertTitleView : UIView
 @property (strong, nonatomic) UILabel *titleLabel;
@@ -37,7 +67,7 @@
         self.messageLabelInset = UIEdgeInsetsMake(4, 16, 16, 16);
         
         UILabel *titleLabel = [[UILabel alloc] initWithFrame:frame];
-        titleLabel.font = [UIFont systemFontOfSize:16. weight:UIFontWeightMedium];
+        titleLabel.font = mediumSystemFontOfSize(16.);
         titleLabel.textColor = [UIColor blackColor];
         titleLabel.textAlignment = NSTextAlignmentCenter;
         self.titleLabel = titleLabel;
@@ -57,7 +87,7 @@
         
         UILabel *placeholderLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(imageView.frame), CGRectGetHeight(imageView.frame))];
         placeholderLabel.textColor = [UIColor whiteColor];
-        placeholderLabel.font = [UIFont systemFontOfSize:18. weight:UIFontWeightMedium];
+        placeholderLabel.font = mediumSystemFontOfSize(18.);
         placeholderLabel.textAlignment = NSTextAlignmentCenter;
         self.imagePlaceholderLabel = placeholderLabel;
     }
@@ -421,11 +451,11 @@
         titleLabel.textColor = [self tintColor];
     }
     else if (style == UIAlertActionStyleCancel) {
-        titleLabel.font = [UIFont systemFontOfSize:16. weight:UIFontWeightBold];
+        titleLabel.font = boldSystemFontOfSize(16.);
         titleLabel.textColor = [self tintColor];
     }
     else if (style == UIAlertActionStyleDestructive) {
-        titleLabel.font = [UIFont systemFontOfSize:16. weight:UIFontWeightBlack];
+        titleLabel.font = boldSystemFontOfSize(16.);
         titleLabel.textColor = [UIColor redColor];
     }
 }
