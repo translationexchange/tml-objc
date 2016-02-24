@@ -62,7 +62,9 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 #if MOCK_AUTH
             TMLTranslator *translator = [TMLTranslator new];
             translator.userID = @"1";
-            translator.firstName = @"Mock";
+            translator.firstName = @"Cookie";
+            translator.lastName = @"Monster";
+            translator.displayName = @"I am Cookie Monster";
             translator.inlineTranslationAllowed = YES;
             translator.mugshotURL = [NSURL URLWithString:@"http://images.clipartpanda.com/cookie-monster-clip-art-cookiecookiecookie.jpg"];
             authInfo = @{

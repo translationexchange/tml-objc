@@ -58,6 +58,8 @@
 		C4E3E31F1C77FFC80014D3AD /* TMLTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E3E31D1C77FFC80014D3AD /* TMLTranslator.m */; };
 		C4E3E3221C781CCC0014D3AD /* TMLAuthorizationController.h in Headers */ = {isa = PBXBuildFile; fileRef = C4E3E3201C781CCC0014D3AD /* TMLAuthorizationController.h */; };
 		C4E3E3231C781CCC0014D3AD /* TMLAuthorizationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E3E3211C781CCC0014D3AD /* TMLAuthorizationController.m */; };
+		C4E3E3261C7837950014D3AD /* TMLAlertController.h in Headers */ = {isa = PBXBuildFile; fileRef = C4E3E3241C7837950014D3AD /* TMLAlertController.h */; };
+		C4E3E3271C7837950014D3AD /* TMLAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E3E3251C7837950014D3AD /* TMLAlertController.m */; };
 		C4FA31EE1C5061D9001902EB /* TMLBasicAPIClient.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FA31EC1C5061D9001902EB /* TMLBasicAPIClient.h */; };
 		C4FA31EF1C5061D9001902EB /* TMLBasicAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FA31ED1C5061D9001902EB /* TMLBasicAPIClient.m */; };
 		C4FA63801C1A429600E3ECB8 /* UIResponder+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FA637E1C1A429600E3ECB8 /* UIResponder+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -278,6 +280,8 @@
 		C4E3E31D1C77FFC80014D3AD /* TMLTranslator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTranslator.m; sourceTree = "<group>"; };
 		C4E3E3201C781CCC0014D3AD /* TMLAuthorizationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAuthorizationController.h; sourceTree = "<group>"; };
 		C4E3E3211C781CCC0014D3AD /* TMLAuthorizationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAuthorizationController.m; sourceTree = "<group>"; };
+		C4E3E3241C7837950014D3AD /* TMLAlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAlertController.h; sourceTree = "<group>"; };
+		C4E3E3251C7837950014D3AD /* TMLAlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAlertController.m; sourceTree = "<group>"; };
 		C4FA31EC1C5061D9001902EB /* TMLBasicAPIClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLBasicAPIClient.h; sourceTree = "<group>"; };
 		C4FA31ED1C5061D9001902EB /* TMLBasicAPIClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLBasicAPIClient.m; sourceTree = "<group>"; };
 		C4FA31FD1C5078D9001902EB /* TMLPrivateConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TMLPrivateConfig.h; sourceTree = "<group>"; };
@@ -607,6 +611,8 @@
 				C4E3E3131C77F38F0014D3AD /* TMLAuthorizationViewController.m */,
 				C4E3E3201C781CCC0014D3AD /* TMLAuthorizationController.h */,
 				C4E3E3211C781CCC0014D3AD /* TMLAuthorizationController.m */,
+				C4E3E3241C7837950014D3AD /* TMLAlertController.h */,
+				C4E3E3251C7837950014D3AD /* TMLAlertController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -963,6 +969,7 @@
 				C4FCD2E01C0FC7F200D723BC /* TMLAPIClient.h in Headers */,
 				C4FCD3191C0FC7F200D723BC /* TMLLanguageCase.h in Headers */,
 				C4FCD32E1C0FC7F200D723BC /* TMLAttributedDecorationTokenizer.h in Headers */,
+				C4E3E3261C7837950014D3AD /* TMLAlertController.h in Headers */,
 				C4FCD3211C0FC7F200D723BC /* TMLRulesEvaluator.h in Headers */,
 				C4FCD3381C0FC7F200D723BC /* TMLDataToken.h in Headers */,
 				C4FCD3341C0FC7F200D723BC /* TMLHtmlDecorationTokenizer.h in Headers */,
@@ -1289,6 +1296,7 @@
 				C4FCD2F91C0FC7F200D723BC /* TMLTranslatorViewController.m in Sources */,
 				C4FCD2F11C0FC7F200D723BC /* TMLAPIBundle.m in Sources */,
 				C4FCD32A1C0FC7F200D723BC /* TMLGlobals.m in Sources */,
+				C4E3E3271C7837950014D3AD /* TMLAlertController.m in Sources */,
 				C4FCD32F1C0FC7F200D723BC /* TMLAttributedDecorationTokenizer.m in Sources */,
 				C4FCD3371C0FC7F200D723BC /* TMLTokenizer.m in Sources */,
 				C4FCD3351C0FC7F200D723BC /* TMLHtmlDecorationTokenizer.m in Sources */,

@@ -10,6 +10,8 @@
 
 NSString * const TMLTranslatorIDKey = @"id";
 NSString * const TMLTranslatorFirstNameKey = @"first_name";
+NSString * const TMLTranslatorLastNameKey = @"last_name";
+NSString * const TMLTranslatorDisplayNameKey = @"display_name";
 NSString * const TMLTranslatorMugshotKey = @"mugshot";
 NSString * const TMLTranslatorInlineModeKey = @"inline_mode";
 
@@ -18,6 +20,8 @@ NSString * const TMLTranslatorInlineModeKey = @"inline_mode";
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeObject:self.userID forKey:TMLTranslatorIDKey];
     [aCoder encodeObject:self.firstName forKey:TMLTranslatorFirstNameKey];
+    [aCoder encodeObject:self.lastName forKey:TMLTranslatorLastNameKey];
+    [aCoder encodeObject:self.displayName forKey:TMLTranslatorDisplayNameKey];
     [aCoder encodeObject:[self.mugshotURL absoluteString] forKey:TMLTranslatorMugshotKey];
     [aCoder encodeBool:self.inlineTranslationAllowed forKey:TMLTranslatorInlineModeKey];
 }
@@ -25,6 +29,8 @@ NSString * const TMLTranslatorInlineModeKey = @"inline_mode";
 - (void)decodeWithCoder:(NSCoder *)aDecoder {
     self.userID = [aDecoder decodeObjectForKey:TMLTranslatorIDKey];
     self.firstName = [aDecoder decodeObjectForKey:TMLTranslatorFirstNameKey];
+    self.lastName = [aDecoder decodeObjectForKey:TMLTranslatorLastNameKey];
+    self.displayName = [aDecoder decodeObjectForKey:TMLTranslatorDisplayNameKey];
     self.mugshotURL = [NSURL URLWithString:[aDecoder decodeObjectForKey:TMLTranslatorMugshotKey]];
     self.inlineTranslationAllowed = [aDecoder decodeBoolForKey:TMLTranslatorInlineModeKey];
 }
@@ -47,12 +53,27 @@ NSString * const TMLTranslatorInlineModeKey = @"inline_mode";
 }
 
 - (NSString *) description {
-    NSString *shortName = self.firstName;
+    NSString *shortName = self.displayName;
     NSInteger max = 24;
     if (shortName.length > max) {
         shortName = [[shortName substringToIndex:max-3] stringByAppendingString:@"..."];
     }
     return [NSString stringWithFormat:@"<%@:%@: %p>", [self class], shortName, self];
+}
+
+#pragma mark -
+
+- (NSString *)initials {
+    NSMutableString *string = [NSMutableString string];
+    NSString *firstName = self.firstName;
+    NSString *lastName = self.lastName;
+    if (firstName.length > 0) {
+        [string appendString:[[firstName substringToIndex:1] uppercaseString]];
+    }
+    if (lastName.length > 0) {
+        [string appendString:[[lastName substringToIndex:1] uppercaseString]];
+    }
+    return [string copy];
 }
 
 @end

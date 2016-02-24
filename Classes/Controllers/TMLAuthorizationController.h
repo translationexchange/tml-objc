@@ -17,6 +17,7 @@ extern NSString * const TMLAuthorizationTranslatorKey;
 
 @interface TMLAuthorizationController : NSObject
 
+- (void)removeStoredAuthorizationInfo;
 - (NSDictionary *)storedAuthorizationInfo;
 - (NSDictionary *)authorizationInfoFromSharedCookieJar;
 - (void)saveAuthorizationInfo:(NSDictionary *)authInfo;

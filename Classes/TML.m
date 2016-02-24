@@ -52,6 +52,8 @@
 #import "UIResponder+TML.h"
 #import "UIView+TML.h"
 
+#import "TMLAlertController.h"
+
 /**
  *  Returns localized version of the string argument.
  *
@@ -983,23 +985,41 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 }
 
 - (void)presentActiveTranslationOptions {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:TMLLocalizedString(@"Choose")
-                                                                             message:TMLLocalizedString(@"What would you like to do?")
-                                                                      preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *changeLocaleAction = [UIAlertAction actionWithTitle:TMLLocalizedString(@"Change Language") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    TMLTranslator *translator = self.translator;
+    NSString *initials = [translator initials];
+    TMLAlertController *alertController = [TMLAlertController alertControllerWithTitle:translator.displayName
+                                                                               message:@"TranslationExchange"
+                                                                                 image:nil
+                                                                      imagePlaceholder:initials];
+    
+    NSURL *mugshotURL = self.translator.mugshotURL;
+    if (mugshotURL != nil) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:mugshotURL];
+            if (imageData != nil) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    alertController.titleImage = [UIImage imageWithData:imageData];
+                });
+            }
+        });
+    }
+    
+    TMLAlertAction *changeLocaleAction = [TMLAlertAction actionWithTitle:TMLLocalizedString(@"Change Language") style:UIAlertActionStyleDefault handler:^(TMLAlertAction *action) {
         [self presentLanguageSelectorController];
     }];
     [alertController addAction:changeLocaleAction];
     
-    UIAlertAction *disableAction = [UIAlertAction actionWithTitle:TMLLocalizedString(@"Deactivate Translation") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    TMLAlertAction *disableAction = [TMLAlertAction actionWithTitle:TMLLocalizedString(@"Deactivate Translation") style:UIAlertActionStyleDefault handler:^(TMLAlertAction *action) {
         [self toggleActiveTranslation];
     }];
     [alertController addAction:disableAction];
     
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:TMLLocalizedString(@"Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    TMLAlertAction *cancel = [TMLAlertAction actionWithTitle:TMLLocalizedString(@"Cancel") style:UIAlertActionStyleCancel handler:^(TMLAlertAction *action) {
         [self dismissPresentedViewController];
     }];
     [alertController addAction:cancel];
+    
+    alertController.preferredAction = cancel;
     
     UIViewController *presentingController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
     if (presentingController.presentedViewController != nil) {

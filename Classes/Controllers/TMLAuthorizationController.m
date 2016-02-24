@@ -18,6 +18,27 @@ NSString * const TMLAuthorizationTranslatorKey = @"translator";
 
 @implementation TMLAuthorizationController
 
+- (NSString *)applicationAuthorizationCookieName {
+    TMLConfiguration *config = [[TML sharedInstance] configuration];
+    NSString *appKey = [config applicationKey];
+    NSString *authCookieName = [NSString stringWithFormat:@"trex_%@", appKey];
+    return authCookieName;
+}
+
+- (void)removeStoredAuthorizationInfo {
+    TMLConfiguration *config = [[TML sharedInstance] configuration];
+    NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
+    NSString *cookieName = [self applicationAuthorizationCookieName];
+    NSArray *cookies = [cookieJar cookiesForURL:config.gatewayURL];
+    for (NSHTTPCookie *cookie in cookies) {
+        if ([cookie.name isEqualToString:cookieName] == NO) {
+            continue;
+        }
+        [cookieJar deleteCookie:cookie];
+        break;
+    }
+}
+
 - (NSDictionary *)storedAuthorizationInfo {
     return [self authorizationInfoFromSharedCookieJar];
 }
@@ -34,8 +55,7 @@ NSString * const TMLAuthorizationTranslatorKey = @"translator";
 
 - (void)saveAuthorizationInfo:(NSDictionary *)authInfo {
     TMLConfiguration *config = [[TML sharedInstance] configuration];
-    NSString *appKey = [config applicationKey];
-    NSString *authCookieName = [NSString stringWithFormat:@"trex_%@", appKey];
+    NSString *authCookieName = [self applicationAuthorizationCookieName];
     NSHTTPCookieStorage *cookieJar = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     NSURL *gatewayURL = config.gatewayURL;
     
