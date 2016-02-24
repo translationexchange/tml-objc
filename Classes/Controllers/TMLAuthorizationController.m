@@ -16,6 +16,9 @@ NSString * const TMLAuthorizationStatusAuthorized = @"authorized";
 NSString * const TMLAuthorizationAccessTokenKey = @"access_token";
 NSString * const TMLAuthorizationTranslatorKey = @"translator";
 
+NSString * const TMLAuthorizationGrantedNotification = @"TMLAuthorizationGrantedNotification";
+NSString * const TMLAuthorizationRevokedNotification = @"TMLAuthorizationRevokedNotification";
+
 @implementation TMLAuthorizationController
 
 - (NSString *)applicationAuthorizationCookieName {

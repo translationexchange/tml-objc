@@ -13,10 +13,13 @@
 
 @interface TMLAuthorizationViewController : UIViewController
 @property (weak, nonatomic) id<TMLAuthorizationViewControllerDelegate> delegate;
+- (void)authorize;
+- (void)deauthorize;
 @end
 
 @protocol TMLAuthorizationViewControllerDelegate <NSObject>
 @optional
 - (void) authorizationViewController:(TMLAuthorizationViewController *)controller
                         didAuthorize:(NSDictionary *)userInfo;
+- (void) authorizationViewControllerDidRevokeAuthorization:(TMLAuthorizationViewController *)controller;
 @end

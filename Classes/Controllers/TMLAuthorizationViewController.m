@@ -14,31 +14,54 @@
 
 @interface TMLAuthorizationViewController ()<UIWebViewDelegate>
 @property (strong, nonatomic) UIWebView *webView;
+@property (strong, nonatomic) NSURL *authorizationURL;
+@property (strong, nonatomic) NSURL *authorizationCompleteURL;
+@property (strong, nonatomic) NSURL *deauthorizationURL;
+@property (strong, nonatomic) NSURL *deauthorizationCompleteURL;
 @end
 
 @implementation TMLAuthorizationViewController
 
+- (instancetype)init {
+    if (self = [super init]) {
+        UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+        view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        view.backgroundColor = [UIColor whiteColor];
+        self.view = view;
+        
+        NSURL *gatewayURL = [[[TML sharedInstance] configuration] gatewayURL];
+        NSURL *url = [gatewayURL URLByAppendingPathComponent:@"authorize"];
+        self.authorizationCompleteURL = [url URLByAppendingPathComponent:@"response"];
+        NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
+        components.query = @"s=iOS";
+        self.authorizationURL = components.URL;
+        
+        url = [gatewayURL URLByAppendingPathComponent:@"logout"];
+        self.deauthorizationCompleteURL = [url URLByAppendingPathComponent:@"response"];
+        components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
+        components.query = @"s=iOS";
+        self.deauthorizationURL = components.URL;
+        
+        UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
+        webView.delegate = self;
+        webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        self.webView = webView;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UIView *ourView = self.view;
-    CGRect ourBounds = ourView.bounds;
-    UIWebView *webView = [[UIWebView alloc] initWithFrame:ourBounds];
-    webView.delegate = self;
-    webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    self.webView = webView;
-    [ourView addSubview:webView];
-    
-    self.title = TMLLocalizedString(@"Sign in");
-    
-    [self authorize];
+    [self.view addSubview:self.webView];
 }
 
 - (void)authorize {
-    NSURL *gatewayURL = [[[TML sharedInstance] configuration] gatewayURL];
-    NSURL *url = [gatewayURL URLByAppendingPathComponent:@"authorize"];
-    NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
-    components.query = @"s=iOS";
-    NSURLRequest *request = [NSURLRequest requestWithURL:[components URL]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:self.authorizationURL];
+    [self.webView loadRequest:request];
+}
+
+- (void)deauthorize {
+    NSURLRequest *request = [NSURLRequest requestWithURL:self.deauthorizationURL];
     [self.webView loadRequest:request];
 }
 
@@ -51,11 +74,17 @@
 shouldStartLoadWithRequest:(NSURLRequest *)request
  navigationType:(UIWebViewNavigationType)navigationType
 {
-    NSURL *responseURL = [[[[[TML sharedInstance] configuration] gatewayURL] URLByAppendingPathComponent:@"authorize"] URLByAppendingPathComponent:@"response"];
+    NSURL *authorizationCompleteURL = self.authorizationCompleteURL;
+    NSURL *deauthorizationCompleteURL = self.deauthorizationCompleteURL;
     NSURL *requestURL = request.URL;
-    if ([requestURL.host isEqualToString:responseURL.host] == YES
-        && [requestURL.path isEqualToString:responseURL.path] == YES) {
-        id<TMLAuthorizationViewControllerDelegate>delegate = self.delegate;
+    
+    if ([requestURL.host isEqualToString:authorizationCompleteURL.host] == NO
+        && [requestURL.host isEqualToString:deauthorizationCompleteURL.host] == NO) {
+        return NO;
+    }
+    
+    id<TMLAuthorizationViewControllerDelegate>delegate = self.delegate;
+    if ([requestURL.path isEqualToString:authorizationCompleteURL.path] == YES) {
         if ([delegate respondsToSelector:@selector(authorizationViewController:didAuthorize:)] == YES) {
             NSDictionary *authInfo = nil;
             TMLAuthorizationController *authController = [TMLAuthorizationController new];
@@ -78,13 +107,32 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
 #endif
             if (authInfo != nil) {
                 [delegate authorizationViewController:self didAuthorize:authInfo];
+                [[NSNotificationCenter defaultCenter] postNotificationName:TMLAuthorizationGrantedNotification
+                                                                    object:nil
+                                                                  userInfo:authInfo];
             }
+        }
+        return YES;
+    }
+    else if ([requestURL.path isEqualToString:deauthorizationCompleteURL.path] == YES) {
+        if ([delegate respondsToSelector:@selector(authorizationViewControllerDidRevokeAuthorization:)] == YES) {
+            TMLAuthorizationController *authController = [TMLAuthorizationController new];
+            [authController removeStoredAuthorizationInfo];
+            [delegate authorizationViewControllerDidRevokeAuthorization:self];
+            [[NSNotificationCenter defaultCenter] postNotificationName:TMLAuthorizationRevokedNotification
+                                                                object:nil
+                                                              userInfo:nil];
         }
         return YES;
     }
     
 #if MOCK_AUTH
-    [webView loadRequest:[NSURLRequest requestWithURL:responseURL]];
+    if ([requestURL.path isEqualToString:self.authorizationURL.path] == YES) {
+        [webView loadRequest:[NSURLRequest requestWithURL:authorizationCompleteURL]];
+    }
+    else if ([requestURL.path isEqualToString:self.deauthorizationURL.path] == YES) {
+        [webView loadRequest:[NSURLRequest requestWithURL:deauthorizationCompleteURL]];
+    }
     return NO;
 #else
     return YES;

@@ -35,6 +35,7 @@
 #import "TML.h"
 #import "TMLAPIBundle.h"
 #import "TMLAPIClient.h"
+#import "TMLAlertController.h"
 #import "TMLAnalytics.h"
 #import "TMLApplication.h"
 #import "TMLAuthorizationViewController.h"
@@ -51,8 +52,6 @@
 #import "TMLTranslatorViewController.h"
 #import "UIResponder+TML.h"
 #import "UIView+TML.h"
-
-#import "TMLAlertController.h"
 
 /**
  *  Returns localized version of the string argument.
@@ -967,8 +966,8 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 - (void)translationActivationGestureRecognized:(UIGestureRecognizer *)gestureRecognizer {
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
         if (self.translationEnabled == NO) {
-            TMLTranslator *transltor = self.translator;
-            if (transltor != nil && transltor.inlineTranslationAllowed == NO) {
+            TMLTranslator *translator = self.translator;
+            if (translator != nil && translator.inlineTranslationAllowed == NO) {
                 return;
             }
             TMLConfiguration *config = self.configuration;
@@ -1013,6 +1012,11 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
         [self toggleActiveTranslation];
     }];
     [alertController addAction:disableAction];
+    
+    TMLAlertAction *signoutAction = [TMLAlertAction actionWithTitle:TMLLocalizedString(@"Sign out") style:UIAlertActionStyleDefault handler:^(TMLAlertAction *action) {
+        [self signout];
+    }];
+    [alertController addAction:signoutAction];
     
     TMLAlertAction *cancel = [TMLAlertAction actionWithTitle:TMLLocalizedString(@"Cancel") style:UIAlertActionStyleCancel handler:^(TMLAlertAction *action) {
         [self dismissPresentedViewController];
@@ -1175,6 +1179,19 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
                                                                     action:@selector(dismissPresentedViewController)];
     authController.navigationItem.leftBarButtonItem = cancelButton;
     authController.delegate = self;
+    [authController authorize];
+    [self presentViewController:authController];
+}
+
+- (void)signout {
+    TMLAuthorizationViewController *authController = [[TMLAuthorizationViewController alloc] init];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:TMLLocalizedString(@"Cancel")
+                                                                     style:UIBarButtonItemStylePlain
+                                                                    target:self
+                                                                    action:@selector(dismissPresentedViewController)];
+    authController.navigationItem.leftBarButtonItem = cancelButton;
+    authController.delegate = self;
+    [authController deauthorize];
     [self presentViewController:authController];
 }
 
@@ -1196,9 +1213,21 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     self.translator = userInfo[TMLAuthorizationTranslatorKey];
     
     [self setupTranslationActivationGestureRecognizer];
-    if (controller.presentingViewController) {
+    if (controller.presentingViewController != nil) {
         [controller.presentingViewController dismissViewControllerAnimated:YES completion:^{
             [self setTranslationEnabled:YES];
+            [self presentActiveTranslationOptions];
+        }];
+    }
+}
+
+- (void)authorizationViewControllerDidRevokeAuthorization:(TMLAuthorizationViewController *)controller {
+    TMLConfiguration *config = [self configuration];
+    config.accessToken = nil;
+    self.translator = nil;
+    if (controller.presentingViewController != nil) {
+        [controller.presentingViewController dismissViewControllerAnimated:YES completion:^{
+            [self setTranslationEnabled:NO];
         }];
     }
 }

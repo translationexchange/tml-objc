@@ -15,6 +15,9 @@ extern NSString * const TMLAuthorizationStatusAuthorized;
 extern NSString * const TMLAuthorizationAccessTokenKey;
 extern NSString * const TMLAuthorizationTranslatorKey;
 
+extern NSString * const TMLAuthorizationGrantedNotification;
+extern NSString * const TMLAuthorizationRevokedNotification;
+
 @interface TMLAuthorizationController : NSObject
 
 - (void)removeStoredAuthorizationInfo;
