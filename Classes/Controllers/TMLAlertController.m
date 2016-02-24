@@ -6,9 +6,11 @@
 //  Copyright © 2016 Translation Exchange. All rights reserved.
 //
 
+#import "TML.h"
 #import "TMLAlertController.h"
 #import "UIView+TML.h"
 #import <QuartzCore/QuartzCore.h>
+#import <objc/runtime.h>
 
 
 UIFont * boldSystemFontOfSize(CGFloat size);
@@ -697,18 +699,45 @@ UICollectionViewDelegateFlowLayout
     
     UIView *ourView = nil;
     TMLAlertView *alertView = self.alertView;
+    
+    TMLConfiguration *config = [[TML sharedInstance] configuration];
+    BOOL useBlur = (config.translationAlertUsesBlur == YES);
+    
+    __block UIView *fxView;
+    const void * blurViewKey = "tmlBlurView";
+    UIView *blurTargetView;
+    
     if (toVC == self) {
         ourView = toVC.view;
         ourView.frame = [transitionContext finalFrameForViewController:toVC];
         [transitionContext.containerView addSubview:ourView];
         [alertView alertWillAppear];
+        
+        if (useBlur == YES) {
+            blurTargetView = fromVC.view;
+            fxView = objc_getAssociatedObject(blurTargetView, blurViewKey);
+            if (fxView != nil) {
+                [fxView removeFromSuperview];
+            }
+        
+            UIBlurEffect *fx = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+            fxView = [[UIVisualEffectView alloc] initWithEffect:fx];
+            fxView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+            fxView.frame = blurTargetView.bounds;
+            fxView.alpha = 0.;
+            [blurTargetView addSubview:fxView];
+            objc_setAssociatedObject(blurTargetView, blurViewKey, fxView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        }
     }
     else if (fromVC == self) {
         ourView = fromVC.view;
         ourView.frame = [transitionContext initialFrameForViewController:fromVC];
         [alertView alertWillDisappear];
+        
+        if (useBlur == YES) {
+            blurTargetView = toVC.view;
+        }
     }
-    
     
     [UIView animateWithDuration:[self transitionDuration:transitionContext]
                           delay:0
@@ -718,12 +747,22 @@ UICollectionViewDelegateFlowLayout
                      animations:^{
                          if (toVC == self) {
                              [alertView alertDidAppear];
+                             fxView.alpha = 1.;
                          }
                          else {
                              [alertView alertDidDisappear];
+                             fxView = objc_getAssociatedObject(blurTargetView, blurViewKey);
+                             fxView.alpha = 0.;
                          }
                      }
                      completion:^(BOOL finished) {
+                         if (fromVC == self) {
+                             fxView = objc_getAssociatedObject(blurTargetView, blurViewKey);
+                             if (fxView != nil) {
+                                 [fxView removeFromSuperview];
+                                 objc_setAssociatedObject(blurTargetView, blurViewKey, nil, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+                             }
+                         }
                          [transitionContext completeTransition:YES];
                      }];
 }

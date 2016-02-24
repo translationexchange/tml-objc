@@ -122,4 +122,7 @@
 #pragma mark - Analytics
 @property (assign, nonatomic) BOOL analyticsEnabled;
 
+#pragma mark - UI Customizations
+@property (assign, nonatomic) BOOL translationAlertUsesBlur;
+
 @end

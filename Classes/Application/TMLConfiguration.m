@@ -82,6 +82,7 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
 #else
         self.analyticsEnabled = YES;
 #endif
+        self.translationAlertUsesBlur = YES;
     }
     return self;
 }
