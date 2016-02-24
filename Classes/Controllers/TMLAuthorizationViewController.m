@@ -93,9 +93,9 @@ shouldStartLoadWithRequest:(NSURLRequest *)request
             translator.userID = @"1";
             translator.firstName = @"Cookie";
             translator.lastName = @"Monster";
-            translator.displayName = @"I am Cookie Monster";
+            translator.displayName = @"Cookie Monster";
             translator.inlineTranslationAllowed = YES;
-            translator.mugshotURL = [NSURL URLWithString:@"http://images.clipartpanda.com/cookie-monster-clip-art-cookiecookiecookie.jpg"];
+            translator.mugshotURL = [NSURL URLWithString:@"http://orig13.deviantart.net/2fc7/f/2010/067/8/1/cookie_monster_by_nygraffit1.jpg"];
             authInfo = @{
                          TMLAuthorizationStatusKey: TMLAuthorizationStatusAuthorized,
                          TMLAuthorizationAccessTokenKey: @"048f31c32dc56be8c81affad60a25cf64dd03d4944efbb31cdf8cac6d18b18b9",
