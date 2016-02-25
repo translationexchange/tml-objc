@@ -82,7 +82,7 @@
                            @"null": [NSNull null]
                            };
     result = [[TMLAPISerializer serializeObject:dict] tmlJSONString];
-    XCTAssertEqualObjects(result, [dict tmlJSONString]);
+    XCTAssertEqualObjects([result tmlJSONObject], dict);
 }
 
 - (void)testTMLSerialization {
