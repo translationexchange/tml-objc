@@ -14,8 +14,8 @@ before_install:
     - cd Demo && pod install && cd ..
     - cd $TRAVIS_BUILD_DIR
 #script: 
-    - rake "info:env"
-#    - xctool -workspace TMLKit/TMLKit.xcworkspace -configuration Release -scheme TMLKit build -sdk $TRAVIS_XCODE_SDK 
+#    - rake "info:env"
+    - xctool -workspace TMLKit/TMLKit.xcworkspace -configuration Release -scheme TMLKit build -sdk $TRAVIS_XCODE_SDK 
 #    - xctool -workspace TMLKit/TMLKit.xcworkspace -configuration Release -scheme TMLKit GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES test -test-sdk $TRAVIS_XCODE_SDK -parallelize
 #    - xctool -workspace Demo/Demo.xcworkspace -configuration Release -scheme Demo build -sdk $TRAVIS_XCODE_SDK 
 #    - xctool -workspace TMLSandbox/TMLSandbox.xcworkspace -configuration Release -scheme TMLSandbox build -sdk $TRAVIS_XCODE_SDK 
