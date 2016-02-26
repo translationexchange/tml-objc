@@ -178,6 +178,7 @@
 		C4FCD3951C0FFC4500D723BC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4FCD3941C0FFC4500D723BC /* UIKit.framework */; };
 		C4FCD3971C0FFC6E00D723BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4FCD3961C0FFC6E00D723BC /* Foundation.framework */; };
 		C4FCD39F1C10012500D723BC /* en.json in Resources */ = {isa = PBXBuildFile; fileRef = C4FCD39D1C10012500D723BC /* en.json */; };
+		C4FFC61A1C7FFA71004F6C4D /* TMLKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C4FCD2581C0FC7A200D723BC /* TMLKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F5B8BB7A6BF1EC6E8F0E797C /* libPods-TMLKitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B3F7AF805B2CC554A820C5C /* libPods-TMLKitTests.a */; };
 /* End PBXBuildFile section */
 
@@ -232,6 +233,19 @@
 			remoteInfo = TMLKit;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C4FFC6131C7FFA5F004F6C4D /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				C4FFC61A1C7FFA71004F6C4D /* TMLKit.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		374CDB8BFEDC96F6AD475835 /* Pods-TMLKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMLKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TMLKitTests/Pods-TMLKitTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -1015,6 +1029,7 @@
 				C4FCD2601C0FC7A200D723BC /* Resources */,
 				2C0454231AA105BF308F1AE3 /* Embed Pods Frameworks */,
 				B83F3BC5ED7231378FED575E /* Copy Pods Resources */,
+				C4FFC6131C7FFA5F004F6C4D /* CopyFiles */,
 			);
 			buildRules = (
 			);

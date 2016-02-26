@@ -15,7 +15,7 @@ before_install:
     - cd $TRAVIS_BUILD_DIR
 #script: 
     - xctool -workspace TMLKit/TMLKit.xcworkspace -configuration Release -scheme TMLKit CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO build -sdk $TRAVIS_XCODE_SDK 
-    - xctool -workspace TMLKit/TMLKit.xcworkspace -configuration Release -scheme TMLKit CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES test -test-sdk $TRAVIS_XCODE_SDK -parallelize
+    - xctool -workspace TMLKit/TMLKit.xcworkspace -configuration Release -scheme TMLKit CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO test -test-sdk $TRAVIS_XCODE_SDK -parallelize
     - xctool -workspace Demo/Demo.xcworkspace -configuration Release -scheme Demo CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO build -sdk $TRAVIS_XCODE_SDK 
     - xctool -workspace TMLSandbox/TMLSandbox.xcworkspace -configuration Release -scheme TMLSandbox CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO build -sdk $TRAVIS_XCODE_SDK 
 #    - rake test
