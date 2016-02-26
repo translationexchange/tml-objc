@@ -18,7 +18,7 @@ EXTERNAL SOURCES:
 
 CHECKOUT OPTIONS:
   TMLKit:
-    :commit: 41895bda2b333d654ae562d9ba5858eedfe82c98
+    :commit: b6b51f38fb81126edcbd0224b03d9b5e544e0a48
     :git: http://github.com/translationexchange/tml-objc
 
 SPEC CHECKSUMS:

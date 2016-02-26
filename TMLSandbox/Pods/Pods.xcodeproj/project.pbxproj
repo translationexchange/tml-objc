@@ -1377,85 +1377,13 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		2C6A6624AEE4EF1BB2AF4897B7DE9A91 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = EAA004DF25852A1054986435CAB4A321 /* TMLKit.xcconfig */;
-			buildSettings = {
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/TMLKit/TMLKit-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		378DC8DE1881A0D369DA648656509B9A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3390B65DB9BD6B5940785CBA45346712 /* MPColorTools.xcconfig */;
-			buildSettings = {
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/MPColorTools/MPColorTools-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		37EE4564649B49C38F73DFDDAF43E163 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3390B65DB9BD6B5940785CBA45346712 /* MPColorTools.xcconfig */;
-			buildSettings = {
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/MPColorTools/MPColorTools-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		455B38ACAA1EB1ABF682B4C45BD641AA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = EAA004DF25852A1054986435CAB4A321 /* TMLKit.xcconfig */;
-			buildSettings = {
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/TMLKit/TMLKit-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		4E08021CC29FE1A632A60F51167AE1D9 /* Release */ = {
+		23703A3DB28949251AACFCFAFE0FC7C0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ABE4AF3A78C319C125532D2CD98165CB /* SSZipArchive.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/SSZipArchive/SSZipArchive-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -1467,12 +1395,12 @@
 			};
 			name = Release;
 		};
-		59E1918D6B751D15CE78FB10DDB8F9B9 /* Debug */ = {
+		2E8197DE28F56CB0BF469EF47074EFC9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4B89976A5EBDF500DD57B51D5FBAF1B0 /* Pods-TMLSandbox.debug.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MACH_O_TYPE = staticlib;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
@@ -1484,13 +1412,66 @@
 			};
 			name = Debug;
 		};
-		801AE370E8D492AAC48F90873FDF1D0A /* Release */ = {
+		2EB7464BFC4B881299B5657C95CD0AF5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 08EBEAFEBE89284ABC9887AA89A34434 /* NVHTarGzip.xcconfig */;
+			baseConfigurationReference = 03646E5031CE19BEED83C0943682EFF2 /* MBProgressHUD.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/NVHTarGzip/NVHTarGzip-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				GCC_PREFIX_HEADER = "Target Support Files/MBProgressHUD/MBProgressHUD-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		4100FF02D9F74C4A3047F863BA1C9CA8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DDAA4874D046FAE94ACD603D0FE71ED9 /* Pods-TMLSandbox.release.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		4F62083E968C83438903E67026A2022B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = ABE4AF3A78C319C125532D2CD98165CB /* SSZipArchive.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/SSZipArchive/SSZipArchive-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		919FAA2929EE9C5D42F4E864F99B6175 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 03646E5031CE19BEED83C0943682EFF2 /* MBProgressHUD.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/MBProgressHUD/MBProgressHUD-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -1502,7 +1483,7 @@
 			};
 			name = Release;
 		};
-		8D1534490D941DCA47C62AC4314182AF /* Debug */ = {
+		A70CDAD61F90AC503C7D04CC22DA2923 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1534,37 +1515,38 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				ONLY_ACTIVE_ARCH = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SYMROOT = "${SRCROOT}/../build";
 			};
 			name = Debug;
 		};
-		9854C892DCAC2B17421475EA2A579FD3 /* Release */ = {
+		B1FDBE204069BD2380B064E6139AE46A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DDAA4874D046FAE94ACD603D0FE71ED9 /* Pods-TMLSandbox.release.xcconfig */;
+			baseConfigurationReference = 08EBEAFEBE89284ABC9887AA89A34434 /* NVHTarGzip.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
-				MACH_O_TYPE = staticlib;
-				MTL_ENABLE_DEBUG_INFO = NO;
+				GCC_PREFIX_HEADER = "Target Support Files/NVHTarGzip/NVHTarGzip-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
-			name = Release;
+			name = Debug;
 		};
-		C550302C2133243B83B7191844429167 /* Release */ = {
+		C16139F449AC03F0A84C050185E49FF2 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 03646E5031CE19BEED83C0943682EFF2 /* MBProgressHUD.xcconfig */;
+			baseConfigurationReference = EAA004DF25852A1054986435CAB4A321 /* TMLKit.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/MBProgressHUD/MBProgressHUD-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				GCC_PREFIX_HEADER = "Target Support Files/TMLKit/TMLKit-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -1576,7 +1558,61 @@
 			};
 			name = Release;
 		};
-		C5A18280E9321A9268D1C80B7DA43967 /* Release */ = {
+		C3B6500D206666E4DFF09B5428A4C501 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3390B65DB9BD6B5940785CBA45346712 /* MPColorTools.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/MPColorTools/MPColorTools-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		C918AF045B987963DC35D00C8C70B126 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = EAA004DF25852A1054986435CAB4A321 /* TMLKit.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/TMLKit/TMLKit-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		D9C338362D2722EB4B65C6B1744B480E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 08EBEAFEBE89284ABC9887AA89A34434 /* NVHTarGzip.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/NVHTarGzip/NVHTarGzip-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		FB45FFD90572718D82AB9092B750F0CA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1603,21 +1639,21 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SYMROOT = "${SRCROOT}/../build";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
-		D9A0B1F3C05F49A3DC7265C289D1FA70 /* Debug */ = {
+		FC665E814DA4F1F3133AC4DB8AD8871A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 08EBEAFEBE89284ABC9887AA89A34434 /* NVHTarGzip.xcconfig */;
+			baseConfigurationReference = 3390B65DB9BD6B5940785CBA45346712 /* MPColorTools.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/NVHTarGzip/NVHTarGzip-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
-				MTL_ENABLE_DEBUG_INFO = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/MPColorTools/MPColorTools-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
 				PRIVATE_HEADERS_FOLDER_PATH = "";
@@ -1626,43 +1662,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
-			name = Debug;
-		};
-		E8FF7A0F19A98B3D285D83049DF22E20 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = ABE4AF3A78C319C125532D2CD98165CB /* SSZipArchive.xcconfig */;
-			buildSettings = {
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/SSZipArchive/SSZipArchive-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		ED2CBF2A6B682FB5E7EAA2CE28264B44 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 03646E5031CE19BEED83C0943682EFF2 /* MBProgressHUD.xcconfig */;
-			buildSettings = {
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/MBProgressHUD/MBProgressHUD-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
@@ -1670,8 +1670,8 @@
 		21A0787FEDCC6163AA8E2B56BAF7A0A6 /* Build configuration list for PBXNativeTarget "MPColorTools" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				378DC8DE1881A0D369DA648656509B9A /* Debug */,
-				37EE4564649B49C38F73DFDDAF43E163 /* Release */,
+				C3B6500D206666E4DFF09B5428A4C501 /* Debug */,
+				FC665E814DA4F1F3133AC4DB8AD8871A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1679,8 +1679,8 @@
 		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				8D1534490D941DCA47C62AC4314182AF /* Debug */,
-				C5A18280E9321A9268D1C80B7DA43967 /* Release */,
+				A70CDAD61F90AC503C7D04CC22DA2923 /* Debug */,
+				FB45FFD90572718D82AB9092B750F0CA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1688,8 +1688,8 @@
 		3BBFE39C9B90C031B72DABD4836AE87E /* Build configuration list for PBXNativeTarget "SSZipArchive" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E8FF7A0F19A98B3D285D83049DF22E20 /* Debug */,
-				4E08021CC29FE1A632A60F51167AE1D9 /* Release */,
+				4F62083E968C83438903E67026A2022B /* Debug */,
+				23703A3DB28949251AACFCFAFE0FC7C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1697,8 +1697,8 @@
 		AAB7B718AA10C0625CCAE0B894CD11A6 /* Build configuration list for PBXNativeTarget "Pods-TMLSandbox" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				59E1918D6B751D15CE78FB10DDB8F9B9 /* Debug */,
-				9854C892DCAC2B17421475EA2A579FD3 /* Release */,
+				2E8197DE28F56CB0BF469EF47074EFC9 /* Debug */,
+				4100FF02D9F74C4A3047F863BA1C9CA8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1706,8 +1706,8 @@
 		F0E1D443C56A9F7BADCC89873AC146BA /* Build configuration list for PBXNativeTarget "NVHTarGzip" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D9A0B1F3C05F49A3DC7265C289D1FA70 /* Debug */,
-				801AE370E8D492AAC48F90873FDF1D0A /* Release */,
+				B1FDBE204069BD2380B064E6139AE46A /* Debug */,
+				D9C338362D2722EB4B65C6B1744B480E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1715,8 +1715,8 @@
 		F1DBC909A29147E5245748707E7C7C5D /* Build configuration list for PBXNativeTarget "TMLKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				455B38ACAA1EB1ABF682B4C45BD641AA /* Debug */,
-				2C6A6624AEE4EF1BB2AF4897B7DE9A91 /* Release */,
+				C918AF045B987963DC35D00C8C70B126 /* Debug */,
+				C16139F449AC03F0A84C050185E49FF2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1724,8 +1724,8 @@
 		F2F5671C4613023EE94A2E62DA06031D /* Build configuration list for PBXNativeTarget "MBProgressHUD" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				ED2CBF2A6B682FB5E7EAA2CE28264B44 /* Debug */,
-				C550302C2133243B83B7191844429167 /* Release */,
+				2EB7464BFC4B881299B5657C95CD0AF5 /* Debug */,
+				919FAA2929EE9C5D42F4E864F99B6175 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
