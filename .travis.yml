@@ -14,11 +14,14 @@ before_install:
     - cd Demo && pod install && cd ..
     - cd $TRAVIS_BUILD_DIR
 env:
+    global:
+        - OTHER_XCTOOL_OPTS='CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO'
     matrix:
-      - TRAVIS_XCODE_SDK='iphonesimulator9.2' TRAVIS_XCODE_DESTINATION='platform=iOS Simulator,name=iPhone 6,OS=9.2'
-#script: 
-    - xctool -workspace TMLKit/TMLKit.xcworkspace -configuration Release -scheme TMLKit -destination $TRAVIS_XCODE_DESTINATION CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO build -sdk $TRAVIS_XCODE_SDK 
-    - xctool -workspace TMLKit/TMLKit.xcworkspace -configuration Release -scheme TMLKit -destination $TRAVIS_XCODE_DESTINATION CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO test -test-sdk $TRAVIS_XCODE_SDK -parallelize
-    - xctool -workspace Demo/Demo.xcworkspace -configuration Release -scheme Demo -destination $TRAVIS_XCODE_DESTINATION CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO build -sdk $TRAVIS_XCODE_SDK 
-    - xctool -workspace TMLSandbox/TMLSandbox.xcworkspace -configuration Release -scheme TMLSandbox -destination $TRAVIS_XCODE_DESTINATION CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO build -sdk $TRAVIS_XCODE_SDK 
+        - TRAVIS_XCODE_SDK='iphonesimulator8.1' TRAVIS_XCODE_DESTINATION='platform=iOS Simulator,name=iPhone 5,OS=8.1'
+        - TRAVIS_XCODE_SDK='iphonesimulator9.2' TRAVIS_XCODE_DESTINATION='platform=iOS Simulator,name=iPhone 6,OS=9.2'
+script: 
+    - xctool -workspace TMLKit/TMLKit.xcworkspace -configuration Release -scheme TMLKit -destination $TRAVIS_XCODE_DESTINATION $OTHER_XCTOOL_OPTS build -sdk $TRAVIS_XCODE_SDK 
+    - xctool -workspace TMLKit/TMLKit.xcworkspace -configuration Release -scheme TMLKit -destination $TRAVIS_XCODE_DESTINATION $OTHER_XCTOOL_OPTS test -test-sdk $TRAVIS_XCODE_SDK -parallelize
+    - xctool -workspace Demo/Demo.xcworkspace -configuration Release -scheme Demo -destination $TRAVIS_XCODE_DESTINATION $OTHER_XCTOOL_OPTS build -sdk $TRAVIS_XCODE_SDK 
+    - xctool -workspace TMLSandbox/TMLSandbox.xcworkspace -configuration Release -scheme TMLSandbox -destination $TRAVIS_XCODE_DESTINATION $OTHER_XCTOOL_OPTS build -sdk $TRAVIS_XCODE_SDK 
 #    - rake test
