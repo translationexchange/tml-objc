@@ -9,9 +9,9 @@ before_install:
     - sudo gem install cocoapods --no-prerelease --no-rdoc --no-ri --no-document
     - brew update
     - brew uninstall xctool && brew install xctool --HEAD
-    - cd TMLKit && pod install && cd ..
-    - cd TMLSandbox && pod install && cd ..
-    - cd Demo && pod install && cd ..
+    - cd TMLKit && pod install && pod update && cd ..
+    - cd Demo && pod install && pod update && cd ..
+    - cd TMLSandbox && pod install && pod update && cd ..
     - cd $TRAVIS_BUILD_DIR
 env:
     global:
@@ -25,4 +25,3 @@ script:
     - xctool -workspace TMLKit/TMLKit.xcworkspace -configuration Release -scheme TMLKit -destination "$TRAVIS_XCODE_DESTINATION" $OTHER_XCTOOL_OPTS test -test-sdk $TRAVIS_XCODE_SDK -parallelize
     - xctool -workspace Demo/Demo.xcworkspace -configuration Release -scheme Demo -destination "$TRAVIS_XCODE_DESTINATION" $OTHER_XCTOOL_OPTS build -sdk $TRAVIS_XCODE_SDK 
     - xctool -workspace TMLSandbox/TMLSandbox.xcworkspace -configuration Release -scheme TMLSandbox -destination "$TRAVIS_XCODE_DESTINATION" $OTHER_XCTOOL_OPTS build -sdk $TRAVIS_XCODE_SDK 
-#    - rake test
