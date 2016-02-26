@@ -45,6 +45,13 @@ namespace :info do
     puts "#{podspec_path} v.#{podspec_version}"
     puts "TMLKit v.#{tml_version}"
   end
+
+  desc "Environment"
+  task :env do
+    ENV.each {|k,v|
+      puts "#{k} => #{v}"
+    }
+  end
 end
 
 desc "Execute all test and build tasks"
