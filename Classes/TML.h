@@ -160,6 +160,15 @@
 @property (readonly, nonatomic, strong) TMLLanguage *currentLanguage;
 
 /**
+ *  TMLLanguage corresponding to given locale
+ *
+ *  @param locale Locale (such as "en", "ru", etc)
+ *
+ *  @return TMLLanguage corresponding to locale
+ */
+- (TMLLanguage *)languageForLocale:(NSString *)locale;
+
+/**
  *  Default TML locale.
  *
  *  @return Default locale string

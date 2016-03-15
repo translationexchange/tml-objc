@@ -225,8 +225,7 @@
             label = translation.label;
         }
         else {
-            TMLApplication *application = [[TML sharedInstance] application];
-            language = (TMLLanguage *)[application languageForLocale:self.locale];
+            language = [[TML sharedInstance] languageForLocale:self.locale];
         }
     }
     
