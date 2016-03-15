@@ -87,3 +87,6 @@ First release as TMLKit, built as a dynamic framework. The SDK underwent several
 
 ## 1.0.4
 * Fixed issue with using incomplete language objects for translation, which manifested itself by not localizing piped tokens.
+
+## 1.0.5
+* Fixed static analyzer warnings along with some bugs.
