@@ -220,7 +220,7 @@ static BOOL TMLConfigured;
 }
 
 - (instancetype) initWithConfiguration:(TMLConfiguration *)configuration {
-    if (self == [super init]) {
+    if (self = [super init]) {
         _objectsWithLocalizedStrings = [NSHashTable weakObjectsHashTable];
         _objectsWithReusableLocalizedStrings = [NSHashTable weakObjectsHashTable];
         self.configuration = configuration;

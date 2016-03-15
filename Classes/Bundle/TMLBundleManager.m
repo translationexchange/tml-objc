@@ -480,7 +480,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
                                                                       }];
                             }
                             if (completionBlock != nil) {
-                                completionBlock(data, response, error);
+                                completionBlock(data, response, ourError);
                             }
                         }] resume];
 }
