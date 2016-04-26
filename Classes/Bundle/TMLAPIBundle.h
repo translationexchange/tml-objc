@@ -7,6 +7,7 @@
 //
 
 #import "TMLBundle.h"
+#import "TMLTranslationKey.h"
 
 @interface TMLAPIBundle : TMLBundle
 
