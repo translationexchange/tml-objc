@@ -29,6 +29,8 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+
 #import "TMLApplication.h"
 #import "TMLBundle.h"
 #import "TMLConfiguration.h"

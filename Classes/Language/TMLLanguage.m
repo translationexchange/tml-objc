@@ -48,6 +48,9 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         NSBundle *ourBundle = [NSBundle bundleWithIdentifier:@"com.translationexchange.TMLKit"];
+        if (!ourBundle) {
+            ourBundle = [NSBundle bundleForClass:[TML class]];
+        }
         if (ourBundle == nil) {
             ourBundle = [NSBundle mainBundle];
         }

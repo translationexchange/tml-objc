@@ -6,6 +6,8 @@
 //  Copyright © 2015 TmlHub Inc. All rights reserved.
 //
 
+#import <Foundation/Foundation.h>
+
 #define TMLBundleIdentifier @"com.translationexchange.TMLKit"
 
 #define TMLRaiseAbstractInvocation() TMLAbstractInvocation(_cmd, self)
