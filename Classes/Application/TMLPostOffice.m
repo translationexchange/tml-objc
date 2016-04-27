@@ -35,7 +35,7 @@
 @implementation TMLPostOffice
 
 - (id) initWithApplication: (TMLApplication *) owner {
-    if (self == [super init]) {
+    if (self = [super init]) {
         self.application = owner;
     }
     return self;
