@@ -215,10 +215,7 @@ void ensureArrayIndex(NSMutableArray *array, NSInteger index) {
 
 - (void)registerTMLTranslationKey:(TMLTranslationKey *)translationKey forLocalizedString:(id)string {
     NSMutableDictionary *registry = [self tmlRegistry][TMLLocalizedStringsRegistryKey];
-    if (string == nil) {
-        [registry removeObjectForKey:string];
-    }
-    else {
+    if (string != nil) {
         registry[string] = translationKey;
     }
     [[TML sharedInstance] registerObjectWithLocalizedStrings:self];

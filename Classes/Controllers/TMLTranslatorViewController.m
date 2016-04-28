@@ -142,6 +142,10 @@
     [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
 }
 
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
+    TMLError(@"Error loading request: %@", error);
+}
+
 - (IBAction) backButtonPressed: (id) sender {
     [self.webView goBack];
 }

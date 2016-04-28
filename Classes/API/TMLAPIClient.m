@@ -52,7 +52,7 @@ NSString * const TMLAPIOptionsPage = @"page";
 #pragma mark - Init
 
 - (id) initWithBaseURL:(NSURL *)baseURL accessToken:(NSString *)accessToken {
-    if (self == [super initWithBaseURL:baseURL]) {
+    if (self = [super initWithBaseURL:baseURL]) {
         self.accessToken = accessToken;
     }
     return self;

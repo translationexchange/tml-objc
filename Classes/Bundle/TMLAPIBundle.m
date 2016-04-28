@@ -179,7 +179,7 @@
         addedTranslationKeys = [NSMutableDictionary dictionary];
     }
     
-    @synchronized(_addedTranslationKeys) {
+    @synchronized(self) {
         NSString *effectiveSourceKey = sourceKey;
         if (effectiveSourceKey == nil) {
             effectiveSourceKey = TMLSourceDefaultKey;
@@ -198,7 +198,7 @@
 }
 
 - (void)removeAddedTranslationKeys:(NSDictionary *)translationKeys {
-    @synchronized(_addedTranslationKeys) {
+    @synchronized(self) {
         if (_addedTranslationKeys.count == 0) {
             return;
         }

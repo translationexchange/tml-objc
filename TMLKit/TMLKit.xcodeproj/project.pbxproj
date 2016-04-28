@@ -24,7 +24,7 @@
 		C42582151C21243500BAE9A9 /* NSObject+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2941C0FC7F200D723BC /* NSObject+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C42582161C21243500BAE9A9 /* NSObject+TMLJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2961C0FC7F200D723BC /* NSObject+TMLJSON.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C42582171C21243500BAE9A9 /* NSString+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2981C0FC7F200D723BC /* NSString+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		C42582181C21243500BAE9A9 /* NSURL+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C435BD081C16B5EA009A4091 /* NSURL+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C42582181C21243500BAE9A9 /* NSURL+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C435BD081C16B5EA009A4091 /* NSURL+TML.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C42582191C21243500BAE9A9 /* UIBarItem+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C435BD101C190083009A4091 /* UIBarItem+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C425821A1C21243500BAE9A9 /* UIButton+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD29C1C0FC7F200D723BC /* UIButton+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C425821B1C21243500BAE9A9 /* UILabel+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD29E1C0FC7F200D723BC /* UILabel+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -48,9 +48,9 @@
 		C435BD0B1C16B5EA009A4091 /* NSURL+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C435BD091C16B5EA009A4091 /* NSURL+TML.m */; };
 		C435BD131C190083009A4091 /* UIBarItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C435BD111C190083009A4091 /* UIBarItem+TML.m */; };
 		C435BD231C1933BF009A4091 /* NSAttributedString+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C435BD211C1933BF009A4091 /* NSAttributedString+TML.m */; };
-		C4BDFB911C751AF3002CAB4C /* UICollectionView+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4BDFB8F1C751AF3002CAB4C /* UICollectionView+TML.h */; };
+		C4BDFB911C751AF3002CAB4C /* UICollectionView+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4BDFB8F1C751AF3002CAB4C /* UICollectionView+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4BDFB921C751AF3002CAB4C /* UICollectionView+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BDFB901C751AF3002CAB4C /* UICollectionView+TML.m */; };
-		C4CC8D781C56E92100FACF81 /* TMLAnalytics.h in Headers */ = {isa = PBXBuildFile; fileRef = C4CC8D761C56E92100FACF81 /* TMLAnalytics.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C4CC8D781C56E92100FACF81 /* TMLAnalytics.h in Headers */ = {isa = PBXBuildFile; fileRef = C4CC8D761C56E92100FACF81 /* TMLAnalytics.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C4CC8D791C56E92100FACF81 /* TMLAnalytics.m in Sources */ = {isa = PBXBuildFile; fileRef = C4CC8D771C56E92100FACF81 /* TMLAnalytics.m */; };
 		C4E3E3141C77F38F0014D3AD /* TMLAuthorizationViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C4E3E3121C77F38F0014D3AD /* TMLAuthorizationViewController.h */; };
 		C4E3E3151C77F38F0014D3AD /* TMLAuthorizationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E3E3131C77F38F0014D3AD /* TMLAuthorizationViewController.m */; };
@@ -60,21 +60,21 @@
 		C4E3E3231C781CCC0014D3AD /* TMLAuthorizationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E3E3211C781CCC0014D3AD /* TMLAuthorizationController.m */; };
 		C4E3E3261C7837950014D3AD /* TMLAlertController.h in Headers */ = {isa = PBXBuildFile; fileRef = C4E3E3241C7837950014D3AD /* TMLAlertController.h */; };
 		C4E3E3271C7837950014D3AD /* TMLAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E3E3251C7837950014D3AD /* TMLAlertController.m */; };
-		C4FA31EE1C5061D9001902EB /* TMLBasicAPIClient.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FA31EC1C5061D9001902EB /* TMLBasicAPIClient.h */; };
+		C4FA31EE1C5061D9001902EB /* TMLBasicAPIClient.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FA31EC1C5061D9001902EB /* TMLBasicAPIClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FA31EF1C5061D9001902EB /* TMLBasicAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FA31ED1C5061D9001902EB /* TMLBasicAPIClient.m */; };
 		C4FA63801C1A429600E3ECB8 /* UIResponder+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FA637E1C1A429600E3ECB8 /* UIResponder+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FA63811C1A429600E3ECB8 /* UIResponder+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FA637F1C1A429600E3ECB8 /* UIResponder+TML.m */; };
-		C4FA63841C1A5AF600E3ECB8 /* TMLTranslationActivationView.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FA63821C1A5AF600E3ECB8 /* TMLTranslationActivationView.h */; };
+		C4FA63841C1A5AF600E3ECB8 /* TMLTranslationActivationView.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FA63821C1A5AF600E3ECB8 /* TMLTranslationActivationView.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C4FA63851C1A5AF600E3ECB8 /* TMLTranslationActivationView.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FA63831C1A5AF600E3ECB8 /* TMLTranslationActivationView.m */; };
 		C4FCD25C1C0FC7A200D723BC /* TMLKit.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD25B1C0FC7A200D723BC /* TMLKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD2631C0FC7A200D723BC /* TMLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4FCD2581C0FC7A200D723BC /* TMLKit.framework */; };
-		C4FCD2E01C0FC7F200D723BC /* TMLAPIClient.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2741C0FC7F200D723BC /* TMLAPIClient.h */; };
+		C4FCD2E01C0FC7F200D723BC /* TMLAPIClient.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2741C0FC7F200D723BC /* TMLAPIClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD2E11C0FC7F200D723BC /* TMLAPIClient.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2751C0FC7F200D723BC /* TMLAPIClient.m */; };
-		C4FCD2E21C0FC7F200D723BC /* TMLAPIResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2761C0FC7F200D723BC /* TMLAPIResponse.h */; };
+		C4FCD2E21C0FC7F200D723BC /* TMLAPIResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2761C0FC7F200D723BC /* TMLAPIResponse.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD2E31C0FC7F200D723BC /* TMLAPIResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2771C0FC7F200D723BC /* TMLAPIResponse.m */; };
-		C4FCD2E41C0FC7F200D723BC /* TMLAPISerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2781C0FC7F200D723BC /* TMLAPISerializer.h */; };
+		C4FCD2E41C0FC7F200D723BC /* TMLAPISerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2781C0FC7F200D723BC /* TMLAPISerializer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD2E51C0FC7F200D723BC /* TMLAPISerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2791C0FC7F200D723BC /* TMLAPISerializer.m */; };
-		C4FCD2E61C0FC7F200D723BC /* TMLJSONValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD27A1C0FC7F200D723BC /* TMLJSONValueTransformer.h */; };
+		C4FCD2E61C0FC7F200D723BC /* TMLJSONValueTransformer.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD27A1C0FC7F200D723BC /* TMLJSONValueTransformer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD2E71C0FC7F200D723BC /* TMLJSONValueTransformer.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD27B1C0FC7F200D723BC /* TMLJSONValueTransformer.m */; };
 		C4FCD2E81C0FC7F200D723BC /* TMLApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD27D1C0FC7F200D723BC /* TMLApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD2E91C0FC7F200D723BC /* TMLApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD27E1C0FC7F200D723BC /* TMLApplication.m */; };
@@ -82,11 +82,11 @@
 		C4FCD2EB1C0FC7F200D723BC /* TMLConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2801C0FC7F200D723BC /* TMLConfiguration.m */; };
 		C4FCD2EE1C0FC7F200D723BC /* TMLSource.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2831C0FC7F200D723BC /* TMLSource.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD2EF1C0FC7F200D723BC /* TMLSource.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2841C0FC7F200D723BC /* TMLSource.m */; };
-		C4FCD2F01C0FC7F200D723BC /* TMLAPIBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2861C0FC7F200D723BC /* TMLAPIBundle.h */; };
+		C4FCD2F01C0FC7F200D723BC /* TMLAPIBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2861C0FC7F200D723BC /* TMLAPIBundle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD2F11C0FC7F200D723BC /* TMLAPIBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2871C0FC7F200D723BC /* TMLAPIBundle.m */; };
 		C4FCD2F21C0FC7F200D723BC /* TMLBundle.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2881C0FC7F200D723BC /* TMLBundle.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD2F31C0FC7F200D723BC /* TMLBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2891C0FC7F200D723BC /* TMLBundle.m */; };
-		C4FCD2F41C0FC7F200D723BC /* TMLBundleManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD28A1C0FC7F200D723BC /* TMLBundleManager.h */; };
+		C4FCD2F41C0FC7F200D723BC /* TMLBundleManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD28A1C0FC7F200D723BC /* TMLBundleManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD2F51C0FC7F200D723BC /* TMLBundleManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD28B1C0FC7F200D723BC /* TMLBundleManager.m */; };
 		C4FCD2F61C0FC7F200D723BC /* TMLLanguageSelectorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD28D1C0FC7F200D723BC /* TMLLanguageSelectorViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD2F71C0FC7F200D723BC /* TMLLanguageSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD28E1C0FC7F200D723BC /* TMLLanguageSelectorViewController.m */; };
@@ -107,17 +107,17 @@
 		C4FCD3151C0FC7F200D723BC /* UIViewController+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2AD1C0FC7F200D723BC /* UIViewController+TML.m */; };
 		C4FCD3171C0FC7F200D723BC /* TMLLanguage.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2B11C0FC7F200D723BC /* TMLLanguage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD3181C0FC7F200D723BC /* TMLLanguage.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2B21C0FC7F200D723BC /* TMLLanguage.m */; };
-		C4FCD3191C0FC7F200D723BC /* TMLLanguageCase.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2B31C0FC7F200D723BC /* TMLLanguageCase.h */; };
+		C4FCD3191C0FC7F200D723BC /* TMLLanguageCase.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2B31C0FC7F200D723BC /* TMLLanguageCase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD31A1C0FC7F200D723BC /* TMLLanguageCase.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2B41C0FC7F200D723BC /* TMLLanguageCase.m */; };
-		C4FCD31B1C0FC7F200D723BC /* TMLLanguageCaseRule.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2B51C0FC7F200D723BC /* TMLLanguageCaseRule.h */; };
+		C4FCD31B1C0FC7F200D723BC /* TMLLanguageCaseRule.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2B51C0FC7F200D723BC /* TMLLanguageCaseRule.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD31C1C0FC7F200D723BC /* TMLLanguageCaseRule.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2B61C0FC7F200D723BC /* TMLLanguageCaseRule.m */; };
-		C4FCD31D1C0FC7F200D723BC /* TMLLanguageContext.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2B71C0FC7F200D723BC /* TMLLanguageContext.h */; };
+		C4FCD31D1C0FC7F200D723BC /* TMLLanguageContext.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2B71C0FC7F200D723BC /* TMLLanguageContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD31E1C0FC7F200D723BC /* TMLLanguageContext.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2B81C0FC7F200D723BC /* TMLLanguageContext.m */; };
-		C4FCD31F1C0FC7F200D723BC /* TMLLanguageContextRule.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2B91C0FC7F200D723BC /* TMLLanguageContextRule.h */; };
+		C4FCD31F1C0FC7F200D723BC /* TMLLanguageContextRule.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2B91C0FC7F200D723BC /* TMLLanguageContextRule.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD3201C0FC7F200D723BC /* TMLLanguageContextRule.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2BA1C0FC7F200D723BC /* TMLLanguageContextRule.m */; };
-		C4FCD3211C0FC7F200D723BC /* TMLRulesEvaluator.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2BC1C0FC7F200D723BC /* TMLRulesEvaluator.h */; };
+		C4FCD3211C0FC7F200D723BC /* TMLRulesEvaluator.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2BC1C0FC7F200D723BC /* TMLRulesEvaluator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD3221C0FC7F200D723BC /* TMLRulesEvaluator.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2BD1C0FC7F200D723BC /* TMLRulesEvaluator.m */; };
-		C4FCD3231C0FC7F200D723BC /* TMLRulesParser.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2BE1C0FC7F200D723BC /* TMLRulesParser.h */; };
+		C4FCD3231C0FC7F200D723BC /* TMLRulesParser.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2BE1C0FC7F200D723BC /* TMLRulesParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD3241C0FC7F200D723BC /* TMLRulesParser.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2BF1C0FC7F200D723BC /* TMLRulesParser.m */; };
 		C4FCD3251C0FC7F200D723BC /* TML+NSLocalizedString.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2C01C0FC7F200D723BC /* TML+NSLocalizedString.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD3271C0FC7F200D723BC /* TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2C21C0FC7F200D723BC /* TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -127,23 +127,23 @@
 		C4FCD32B1C0FC7F200D723BC /* TMLLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2C61C0FC7F200D723BC /* TMLLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD32C1C0FC7F200D723BC /* TMLModel.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2C71C0FC7F200D723BC /* TMLModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD32D1C0FC7F200D723BC /* TMLModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2C81C0FC7F200D723BC /* TMLModel.m */; };
-		C4FCD32E1C0FC7F200D723BC /* TMLAttributedDecorationTokenizer.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2CA1C0FC7F200D723BC /* TMLAttributedDecorationTokenizer.h */; };
+		C4FCD32E1C0FC7F200D723BC /* TMLAttributedDecorationTokenizer.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2CA1C0FC7F200D723BC /* TMLAttributedDecorationTokenizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD32F1C0FC7F200D723BC /* TMLAttributedDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2CB1C0FC7F200D723BC /* TMLAttributedDecorationTokenizer.m */; };
-		C4FCD3301C0FC7F200D723BC /* TMLDataTokenizer.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2CC1C0FC7F200D723BC /* TMLDataTokenizer.h */; };
+		C4FCD3301C0FC7F200D723BC /* TMLDataTokenizer.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2CC1C0FC7F200D723BC /* TMLDataTokenizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD3311C0FC7F200D723BC /* TMLDataTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2CD1C0FC7F200D723BC /* TMLDataTokenizer.m */; };
-		C4FCD3321C0FC7F200D723BC /* TMLDecorationTokenizer.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2CE1C0FC7F200D723BC /* TMLDecorationTokenizer.h */; };
+		C4FCD3321C0FC7F200D723BC /* TMLDecorationTokenizer.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2CE1C0FC7F200D723BC /* TMLDecorationTokenizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD3331C0FC7F200D723BC /* TMLDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2CF1C0FC7F200D723BC /* TMLDecorationTokenizer.m */; };
-		C4FCD3341C0FC7F200D723BC /* TMLHtmlDecorationTokenizer.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2D01C0FC7F200D723BC /* TMLHtmlDecorationTokenizer.h */; };
+		C4FCD3341C0FC7F200D723BC /* TMLHtmlDecorationTokenizer.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2D01C0FC7F200D723BC /* TMLHtmlDecorationTokenizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD3351C0FC7F200D723BC /* TMLHtmlDecorationTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2D11C0FC7F200D723BC /* TMLHtmlDecorationTokenizer.m */; };
-		C4FCD3361C0FC7F200D723BC /* TMLTokenizer.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2D21C0FC7F200D723BC /* TMLTokenizer.h */; };
+		C4FCD3361C0FC7F200D723BC /* TMLTokenizer.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2D21C0FC7F200D723BC /* TMLTokenizer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD3371C0FC7F200D723BC /* TMLTokenizer.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2D31C0FC7F200D723BC /* TMLTokenizer.m */; };
-		C4FCD3381C0FC7F200D723BC /* TMLDataToken.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2D51C0FC7F200D723BC /* TMLDataToken.h */; };
+		C4FCD3381C0FC7F200D723BC /* TMLDataToken.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2D51C0FC7F200D723BC /* TMLDataToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD3391C0FC7F200D723BC /* TMLDataToken.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2D61C0FC7F200D723BC /* TMLDataToken.m */; };
-		C4FCD33A1C0FC7F200D723BC /* TMLMethodToken.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2D71C0FC7F200D723BC /* TMLMethodToken.h */; };
+		C4FCD33A1C0FC7F200D723BC /* TMLMethodToken.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2D71C0FC7F200D723BC /* TMLMethodToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD33B1C0FC7F200D723BC /* TMLMethodToken.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2D81C0FC7F200D723BC /* TMLMethodToken.m */; };
-		C4FCD33C1C0FC7F200D723BC /* TMLPipedToken.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2D91C0FC7F200D723BC /* TMLPipedToken.h */; };
+		C4FCD33C1C0FC7F200D723BC /* TMLPipedToken.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2D91C0FC7F200D723BC /* TMLPipedToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD33D1C0FC7F200D723BC /* TMLPipedToken.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2DA1C0FC7F200D723BC /* TMLPipedToken.m */; };
-		C4FCD33E1C0FC7F200D723BC /* TMLTranslation.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2DC1C0FC7F200D723BC /* TMLTranslation.h */; };
+		C4FCD33E1C0FC7F200D723BC /* TMLTranslation.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2DC1C0FC7F200D723BC /* TMLTranslation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD33F1C0FC7F200D723BC /* TMLTranslation.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2DD1C0FC7F200D723BC /* TMLTranslation.m */; };
 		C4FCD3401C0FC7F200D723BC /* TMLTranslationKey.h in Headers */ = {isa = PBXBuildFile; fileRef = C4FCD2DE1C0FC7F200D723BC /* TMLTranslationKey.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4FCD3411C0FC7F200D723BC /* TMLTranslationKey.m in Sources */ = {isa = PBXBuildFile; fileRef = C4FCD2DF1C0FC7F200D723BC /* TMLTranslationKey.m */; };
@@ -283,6 +283,7 @@
 		C435BD111C190083009A4091 /* UIBarItem+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarItem+TML.m"; sourceTree = "<group>"; };
 		C435BD201C1933BF009A4091 /* NSAttributedString+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+TML.h"; sourceTree = "<group>"; };
 		C435BD211C1933BF009A4091 /* NSAttributedString+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+TML.m"; sourceTree = "<group>"; };
+		C474362A1CD0745A002A09F5 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
 		C4BDFB8F1C751AF3002CAB4C /* UICollectionView+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+TML.h"; sourceTree = "<group>"; };
 		C4BDFB901C751AF3002CAB4C /* UICollectionView+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+TML.m"; sourceTree = "<group>"; };
 		C4CC8D761C56E92100FACF81 /* TMLAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAnalytics.h; sourceTree = "<group>"; };
@@ -520,6 +521,7 @@
 			children = (
 				C4FCD2721C0FC7F200D723BC /* Classes */,
 				C4FCD25B1C0FC7A200D723BC /* TMLKit.h */,
+				C474362A1CD0745A002A09F5 /* module.modulemap */,
 				C4FCD25D1C0FC7A200D723BC /* Info.plist */,
 				C4FCD3431C0FCB1B00D723BC /* TMLKit-Prefix.pch */,
 				C4FA31FD1C5078D9001902EB /* TMLPrivateConfig.h */,
@@ -925,7 +927,6 @@
 				C4FCD3271C0FC7F200D723BC /* TML.h in Headers */,
 				C4FCD3291C0FC7F200D723BC /* TMLGlobals.h in Headers */,
 				C4FCD32B1C0FC7F200D723BC /* TMLLogger.h in Headers */,
-				C4CC8D781C56E92100FACF81 /* TMLAnalytics.h in Headers */,
 				C4FCD32C1C0FC7F200D723BC /* TMLModel.h in Headers */,
 				C4FCD2E81C0FC7F200D723BC /* TMLApplication.h in Headers */,
 				C4FCD2F21C0FC7F200D723BC /* TMLBundle.h in Headers */,
@@ -939,7 +940,6 @@
 				C42582151C21243500BAE9A9 /* NSObject+TML.h in Headers */,
 				C42582161C21243500BAE9A9 /* NSObject+TMLJSON.h in Headers */,
 				C42582171C21243500BAE9A9 /* NSString+TML.h in Headers */,
-				C42582181C21243500BAE9A9 /* NSURL+TML.h in Headers */,
 				C42BB37D1C1FD1EC005C0128 /* UIActionSheet+TML.h in Headers */,
 				C42BB3811C1FD29B005C0128 /* UIAlertView+TML.h in Headers */,
 				C42581E81C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.h in Headers */,
@@ -950,7 +950,6 @@
 				C42581F81C21086000BAE9A9 /* UILocalNotification+TML.h in Headers */,
 				C425821C1C21243500BAE9A9 /* UINavigationItem+TML.h in Headers */,
 				C42BB3851C1FDB33005C0128 /* UIRefreshControl+TML.h in Headers */,
-				C4BDFB911C751AF3002CAB4C /* UICollectionView+TML.h in Headers */,
 				C4FA63801C1A429600E3ECB8 /* UIResponder+TML.h in Headers */,
 				C425821D1C21243500BAE9A9 /* UISearchBar+TML.h in Headers */,
 				C4E3E3141C77F38F0014D3AD /* TMLAuthorizationViewController.h in Headers */,
@@ -963,9 +962,7 @@
 				C42582001C211EC000BAE9A9 /* UIAlertController+TML.h in Headers */,
 				C42582041C21214800BAE9A9 /* UITableViewRowAction+TML.h in Headers */,
 				C42582081C2121D400BAE9A9 /* UIMutableUserNotificationAction+TML.h in Headers */,
-				C4FA63841C1A5AF600E3ECB8 /* TMLTranslationActivationView.h in Headers */,
-				C4FCD2FA1C0FC7F200D723BC /* TMLViewController.h in Headers */,
-				C4FCD3251C0FC7F200D723BC /* TML+NSLocalizedString.h in Headers */,
+				C4BDFB911C751AF3002CAB4C /* UICollectionView+TML.h in Headers */,
 				C4FCD31D1C0FC7F200D723BC /* TMLLanguageContext.h in Headers */,
 				C4FCD2E21C0FC7F200D723BC /* TMLAPIResponse.h in Headers */,
 				C4FCD2E41C0FC7F200D723BC /* TMLAPISerializer.h in Headers */,
@@ -990,6 +987,11 @@
 				C4FCD3321C0FC7F200D723BC /* TMLDecorationTokenizer.h in Headers */,
 				C4FCD2F01C0FC7F200D723BC /* TMLAPIBundle.h in Headers */,
 				C4FCD33C1C0FC7F200D723BC /* TMLPipedToken.h in Headers */,
+				C4FCD2FA1C0FC7F200D723BC /* TMLViewController.h in Headers */,
+				C4FCD3251C0FC7F200D723BC /* TML+NSLocalizedString.h in Headers */,
+				C42582181C21243500BAE9A9 /* NSURL+TML.h in Headers */,
+				C4CC8D781C56E92100FACF81 /* TMLAnalytics.h in Headers */,
+				C4FA63841C1A5AF600E3ECB8 /* TMLTranslationActivationView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1479,6 +1481,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4A9CF50CDF0545E105174A56 /* Pods-TMLKit.debug.xcconfig */;
 			buildSettings = {
+				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1492,6 +1495,7 @@
 				INFOPLIST_FILE = TMLKit/Info.plist;
 				INSTALL_PATH = "@rpath";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "${SRCROOT}/TMLKit/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.translationexchange.TMLKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1502,6 +1506,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7DD4AA1189309754FD897BCC /* Pods-TMLKit.release.xcconfig */;
 			buildSettings = {
+				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -1510,6 +1515,7 @@
 				INFOPLIST_FILE = TMLKit/Info.plist;
 				INSTALL_PATH = "@rpath";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MODULEMAP_FILE = "${SRCROOT}/TMLKit/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.translationexchange.TMLKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

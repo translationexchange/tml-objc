@@ -238,7 +238,9 @@ NSString * const TMLAPIResponseErrorCodeKey = @"code";
     }
     
     TMLAPIResponse *copy = [self copy];
-    copy.userInfo = @{TMLAPIResponseResultsKey: newResults};
+    if (newResults != nil) {
+        copy.userInfo = @{TMLAPIResponseResultsKey: newResults};
+    }
     return copy;
 }
 
