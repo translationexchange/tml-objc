@@ -160,6 +160,7 @@
 
 -(IBAction)dismiss:(id)sender {
     [[TML sharedInstance] reloadLocalizationData];
+    self.webView.delegate = nil;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
