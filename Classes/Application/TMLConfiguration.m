@@ -38,7 +38,7 @@
 #endif
 
 #ifndef TMLTranslationCenterHost
-#define TMLTranslationCenterHost @"https://translation-center.translationexchange.com"
+#define TMLTranslationCenterHost @"https://translate.translationexchange.com"
 #endif
 
 #ifndef TMLGatewayHost

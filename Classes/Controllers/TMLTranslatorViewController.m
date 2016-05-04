@@ -93,26 +93,21 @@
     else {
         url = [[[TML sharedInstance] configuration] translationCenterURL];
     }
-    return [url URLByAppendingPathComponent:@"mobile"];
+    
+    TMLLanguage *lang = [[TML sharedInstance] currentLanguage];
+    NSString *urlString = [NSString stringWithFormat:@"%@/#/phrases/%@/translate", url, self.translationKey];
+    url = [NSURL URLWithString:urlString];
+    
+    NSMutableDictionary *query = [NSMutableDictionary dictionaryWithDictionary:@{@"locale": lang.locale}];
+    url = [url URLByAppendingQueryParameters:query];
+    return url;
 }
 
 - (void) viewDidLoad {
     [super viewDidLoad];
     
-    TMLApplication *app = [[TML sharedInstance] application];
-    TMLLanguage *lang = [[TML sharedInstance] currentLanguage];
-    
     NSURL *url = [self translationCenterURL];
-    
-    NSMutableDictionary *query = [NSMutableDictionary dictionaryWithDictionary:@{@"locale": lang.locale,
-                                                                                 @"key": app.key}];
-
-    if (self.translationKey) {
-        query[@"translation_key"] = self.translationKey;
-    }
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:[url URLByAppendingQueryParameters:query]];
-    
+    NSURLRequest *request = [NSURLRequest requestWithURL:url];
     if (request != nil) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         [self.webView loadRequest:request];
