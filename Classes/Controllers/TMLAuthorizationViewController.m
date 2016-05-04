@@ -8,16 +8,18 @@
 
 #import "NSObject+TMLJSON.h"
 #import "TML.h"
+#import "TMLAPIClient.h"
 #import "TMLAuthorizationViewController.h"
+#import "TMLUser.h"
+#import <WebKit/WebKit.h>
 
-#define MOCK_AUTH 1
+NSString * const TMLAuthorizationAccessTokenKey = @"access_token";
+NSString * const TMLAuthorizationUserKey = @"user";
 
-@interface TMLAuthorizationViewController ()<UIWebViewDelegate>
-@property (strong, nonatomic) UIWebView *webView;
+@interface TMLAuthorizationViewController ()<WKScriptMessageHandler, WKNavigationDelegate>
+@property (strong, nonatomic) WKWebView *webView;
 @property (strong, nonatomic) NSURL *authorizationURL;
-@property (strong, nonatomic) NSURL *authorizationCompleteURL;
 @property (strong, nonatomic) NSURL *deauthorizationURL;
-@property (strong, nonatomic) NSURL *deauthorizationCompleteURL;
 @end
 
 @implementation TMLAuthorizationViewController
@@ -30,22 +32,30 @@
         self.view = view;
         
         NSURL *gatewayURL = [[[TML sharedInstance] configuration] gatewayURL];
-        NSURL *url = [gatewayURL URLByAppendingPathComponent:@"authorize"];
-        self.authorizationCompleteURL = [url URLByAppendingPathComponent:@"response"];
+        NSURL *url = [gatewayURL copy];
         NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
         components.query = @"s=iOS";
         self.authorizationURL = components.URL;
         
         url = [gatewayURL URLByAppendingPathComponent:@"logout"];
-        self.deauthorizationCompleteURL = [url URLByAppendingPathComponent:@"response"];
         components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
         components.query = @"s=iOS";
         self.deauthorizationURL = components.URL;
         
-        UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectZero];
-        webView.delegate = self;
+        WKUserContentController *webContentController = [[WKUserContentController alloc] init];
+        [webContentController addScriptMessageHandler:self name:@"trex"];
+        
+        WKUserScript *userScript = [[WKUserScript alloc] initWithSource:@"parent = window.webkit.messageHandlers.trex;" injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];
+        [webContentController addUserScript:userScript];
+        
+        WKWebViewConfiguration *webViewConfig = [[WKWebViewConfiguration alloc] init];
+        webViewConfig.userContentController = webContentController;
+        
+        WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:webViewConfig];
         webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+        webView.navigationDelegate = self;
         self.webView = webView;
+        [view addSubview:webView];
     }
     return self;
 }
@@ -55,88 +65,104 @@
     [self.view addSubview:self.webView];
 }
 
+#pragma mark - Authorizing
+
 - (void)authorize {
     NSURLRequest *request = [NSURLRequest requestWithURL:self.authorizationURL];
     [self.webView loadRequest:request];
 }
+
+- (void) setAccessToken:(NSString *)accessToken forUser:(TMLUser *)user {
+    [[TMLAuthorizationController sharedAuthorizationController] setAccessToken:accessToken
+                                                                    forAccount:user.username];
+    [self notifyDelegateWithGrantedAccessToken:accessToken user:user];
+}
+
+#pragma mark - Deauthorizing
 
 - (void)deauthorize {
     NSURLRequest *request = [NSURLRequest requestWithURL:self.deauthorizationURL];
     [self.webView loadRequest:request];
 }
 
-#pragma mark - UIWebViewDelegate
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    TMLError(@"Error loading authorization controller: %@", error);
+#pragma mark - Notifying Delegate
+- (void)notifyDelegateWithGrantedAccessToken:(NSString *)accessToken user:(TMLUser *)user {
+    id<TMLAuthorizationViewControllerDelegate>delegate = self.delegate;
+    if ([delegate respondsToSelector:@selector(authorizationViewController:didGrantAuthorization:)] == YES) {
+        NSDictionary *authInfo = @{
+                                   TMLAuthorizationAccessTokenKey: accessToken,
+                                   TMLAuthorizationUserKey: user
+                                   };
+        [delegate authorizationViewController:self didGrantAuthorization:authInfo];
+    }
 }
 
-- (BOOL)webView:(UIWebView *)webView
-shouldStartLoadWithRequest:(NSURLRequest *)request
- navigationType:(UIWebViewNavigationType)navigationType
-{
-    NSURL *authorizationCompleteURL = self.authorizationCompleteURL;
-    NSURL *deauthorizationCompleteURL = self.deauthorizationCompleteURL;
-    NSURL *requestURL = request.URL;
-    
-    if ([requestURL.host isEqualToString:authorizationCompleteURL.host] == NO
-        && [requestURL.host isEqualToString:deauthorizationCompleteURL.host] == NO) {
-        return NO;
-    }
-    
+- (void)notifyDelegateWithRevokedAccess {
     id<TMLAuthorizationViewControllerDelegate>delegate = self.delegate;
-    if ([requestURL.path isEqualToString:authorizationCompleteURL.path] == YES) {
-        if ([delegate respondsToSelector:@selector(authorizationViewController:didAuthorize:)] == YES) {
-            NSDictionary *authInfo = nil;
-            TMLAuthorizationController *authController = [TMLAuthorizationController new];
-#if MOCK_AUTH
-            TMLTranslator *translator = [TMLTranslator new];
-            translator.userID = @"1";
-            translator.firstName = @"Cookie";
-            translator.lastName = @"Monster";
-            translator.displayName = @"Cookie Monster";
-            translator.inlineTranslationAllowed = YES;
-            translator.mugshotURL = [NSURL URLWithString:@"http://orig13.deviantart.net/2fc7/f/2010/067/8/1/cookie_monster_by_nygraffit1.jpg"];
-            authInfo = @{
-                         TMLAuthorizationStatusKey: TMLAuthorizationStatusAuthorized,
-                         TMLAuthorizationAccessTokenKey: @"048f31c32dc56be8c81affad60a25cf64dd03d4944efbb31cdf8cac6d18b18b9",
-                         TMLAuthorizationTranslatorKey: translator
-                         };
-            [authController saveAuthorizationInfo:authInfo];
-#else
-            authInfo = [authController authorizationInfoFromSharedCookieJar];
-#endif
-            if (authInfo != nil) {
-                [delegate authorizationViewController:self didAuthorize:authInfo];
-                [[NSNotificationCenter defaultCenter] postNotificationName:TMLAuthorizationGrantedNotification
-                                                                    object:nil
-                                                                  userInfo:authInfo];
-            }
-        }
-        return YES;
+    if ([delegate respondsToSelector:@selector(authorizationViewControllerDidRevokeAuthorization:)] == YES) {
+        [delegate authorizationViewControllerDidRevokeAuthorization:self];
     }
-    else if ([requestURL.path isEqualToString:deauthorizationCompleteURL.path] == YES) {
-        if ([delegate respondsToSelector:@selector(authorizationViewControllerDidRevokeAuthorization:)] == YES) {
-            TMLAuthorizationController *authController = [TMLAuthorizationController new];
-            [authController removeStoredAuthorizationInfo];
-            [delegate authorizationViewControllerDidRevokeAuthorization:self];
-            [[NSNotificationCenter defaultCenter] postNotificationName:TMLAuthorizationRevokedNotification
-                                                                object:nil
-                                                              userInfo:nil];
-        }
-        return YES;
+}
+
+#pragma mark - WKNavigationDelegate
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    NSURL *url = webView.URL;
+    if ([url isEqual:self.deauthorizationURL] == YES) {
+        [self notifyDelegateWithRevokedAccess];
+    }
+}
+
+#pragma mark - WKScriptMessageHandler
+- (void)userContentController:(WKUserContentController *)userContentController
+      didReceiveScriptMessage:(WKScriptMessage *)message
+{
+    if (message.body == nil) {
+        TMLDebug(@"No body in posted message");
+        return;
     }
     
-#if MOCK_AUTH
-    if ([requestURL.path isEqualToString:self.authorizationURL.path] == YES) {
-        [webView loadRequest:[NSURLRequest requestWithURL:authorizationCompleteURL]];
+    NSData *bodyData = [[NSData alloc] initWithBase64EncodedString:message.body options:0];
+    NSString *body = [[NSString alloc] initWithData:bodyData encoding:NSUTF8StringEncoding];
+    NSDictionary *result = nil;
+    if (body != nil) {
+        result = [body tmlJSONObject];
     }
-    else if ([requestURL.path isEqualToString:self.deauthorizationURL.path] == YES) {
-        [webView loadRequest:[NSURLRequest requestWithURL:deauthorizationCompleteURL]];
+    
+    if (result == nil) {
+        TMLDebug(@"Didn't find anything relevant in posted message");
+        return;
     }
-    return NO;
-#else
-    return YES;
-#endif
+    
+    if ([@"unauthorized" isEqualToString:result[@"status"]] == YES) {
+        NSURL *authURL = [NSURL URLWithString:result[@"url"]];
+        if (authURL == nil) {
+            TMLWarn(@"Unauthorized and don't know what to do...");
+            return;
+        }
+        [self.webView loadRequest:[NSURLRequest requestWithURL:authURL]];
+    }
+    else if ([@"authorized" isEqualToString:result[@"status"]] == YES) {
+        NSString *accessToken = result[@"access_token"];
+        if (accessToken == nil) {
+            TMLWarn(@"No authentication token found in posted message");
+        }
+        else {
+            TML *tml = [TML sharedInstance];
+            TMLAPIClient *apiClient = [[TMLAPIClient alloc] initWithBaseURL:tml.configuration.apiURL
+                                                                accessToken:accessToken];
+            [apiClient getUserInfo:^(TMLUser *user, TMLAPIResponse *response, NSError *error) {
+                if (error != nil) {
+                    TMLError(@"Error fetching user info using new access token: %@", error);
+                }
+                else if (user != nil) {
+                    [self setAccessToken:accessToken forUser:user];
+                }
+            }];
+        }
+    }
+    else {
+        TMLWarn(@"Unrecognized message posted");
+    }
 }
 
 @end

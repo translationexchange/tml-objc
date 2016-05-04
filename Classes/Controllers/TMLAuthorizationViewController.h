@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "TMLAuthorizationController.h"
 
+extern NSString * const TMLAuthorizationAccessTokenKey;
+extern NSString * const TMLAuthorizationUserKey;
+
 @protocol TMLAuthorizationViewControllerDelegate;
 
 @interface TMLAuthorizationViewController : UIViewController
@@ -20,6 +23,6 @@
 @protocol TMLAuthorizationViewControllerDelegate <NSObject>
 @optional
 - (void) authorizationViewController:(TMLAuthorizationViewController *)controller
-                        didAuthorize:(NSDictionary *)userInfo;
+                        didGrantAuthorization:(NSDictionary *)userInfo;
 - (void) authorizationViewControllerDidRevokeAuthorization:(TMLAuthorizationViewController *)controller;
 @end

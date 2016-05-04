@@ -38,6 +38,7 @@
 #import "TMLSource.h"
 #import "TMLTranslation.h"
 #import "TMLTranslationKey.h"
+#import "TMLUser.h"
 
 NSString * const TMLAPIOptionsLocale = @"locale";
 NSString * const TMLAPIOptionsIncludeAll = @"all";
@@ -113,6 +114,24 @@ completionBlock:completionBlock];
 }
 
 #pragma mark - Methods
+
+- (void)getUserInfo:(void (^)(TMLUser *, TMLAPIResponse *, NSError *))completionBlock {
+    NSString *path = @"users/me";
+    [self get:path
+   parameters:nil
+completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+    if (completionBlock != nil) {
+        TMLUser *user = nil;
+        if (apiResponse != nil) {
+            NSDictionary *info = apiResponse.userInfo;
+            if (info != nil) {
+                user = [TMLAPISerializer materializeObject:info withClass:[TMLUser class]];
+            }
+        }
+        completionBlock(user, apiResponse, error);
+    }
+}];
+}
 
 - (void) getTranslationsForLocale:(NSString *)locale
                            source:(TMLSource *)source

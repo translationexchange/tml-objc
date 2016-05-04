@@ -50,6 +50,7 @@
 #import "TMLTranslationActivationView.h"
 #import "TMLTranslationKey.h"
 #import "TMLTranslatorViewController.h"
+#import "TMLUser.h"
 #import "UIResponder+TML.h"
 #import "UIView+TML.h"
 
@@ -179,7 +180,7 @@ static BOOL TMLConfigured;
 @property(strong, nonatomic) TMLConfiguration *configuration;
 @property(strong, nonatomic) TMLAPIClient *apiClient;
 @property(nonatomic, readwrite) TMLBundle *currentBundle;
-@property(nonatomic, strong) TMLTranslator *translator;
+@property(nonatomic, readwrite) TMLUser *currentUser;
 @end
 
 @implementation TML
@@ -245,17 +246,20 @@ static BOOL TMLConfigured;
         self.currentBundle = nil;
     }
     else {
-        if (configuration.accessToken.length == 0) {
-            TMLAuthorizationController *authController = [TMLAuthorizationController new];
-            NSDictionary *authInfo = [authController storedAuthorizationInfo];
-            if (authInfo != nil) {
-                configuration.accessToken = authInfo[TMLAuthorizationAccessTokenKey];
-                self.translator = authInfo[TMLAuthorizationTranslatorKey];
-            }
-        }
         TMLAPIClient *apiClient = [[TMLAPIClient alloc] initWithBaseURL:configuration.apiURL
                                                             accessToken:configuration.accessToken];
         self.apiClient = apiClient;
+        if (configuration.accessToken != nil) {
+            [apiClient getUserInfo:^(TMLUser *user, TMLAPIResponse *response, NSError *error) {
+                if (error != nil) {
+                    TMLError(@"Error retrieving user based on supplied access token");
+                }
+                if (user != nil) {
+                    self.currentUser = user;
+                }
+            }];
+        }
+        
         [self setupNotificationObserving];
         
         [configuration addObserver:self
@@ -966,10 +970,11 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 - (void)translationActivationGestureRecognized:(UIGestureRecognizer *)gestureRecognizer {
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
         if (self.translationEnabled == NO) {
-            TMLTranslator *translator = self.translator;
-            if (translator != nil && translator.inlineTranslationAllowed == NO) {
-                return;
-            }
+            // TODO: check if current user can use inline translation
+//            TMLTranslator *translator = self.currentUser.translator;
+//            if (translator == nil) {
+//                return;
+//            }
             TMLConfiguration *config = self.configuration;
             if (config.accessToken.length == 0) {
                 [self acquireAccessToken];
@@ -984,14 +989,14 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 }
 
 - (void)presentActiveTranslationOptions {
-    TMLTranslator *translator = self.translator;
+    TMLTranslator *translator = self.currentUser.translator;
     NSString *initials = [translator initials];
     TMLAlertController *alertController = [TMLAlertController alertControllerWithTitle:translator.displayName
                                                                                message:@"TranslationExchange"
                                                                                  image:nil
                                                                       imagePlaceholder:initials];
     
-    NSURL *mugshotURL = self.translator.mugshotURL;
+    NSURL *mugshotURL = translator.mugshotURL;
     if (mugshotURL != nil) {
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             NSData *imageData = [NSData dataWithContentsOfURL:mugshotURL];
@@ -1196,12 +1201,8 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 }
 
 - (void)authorizationViewController:(TMLAuthorizationViewController *)controller
-                       didAuthorize:(NSDictionary *)userInfo
+                       didGrantAuthorization:(NSDictionary *)userInfo
 {
-    NSString *status = [userInfo valueForKey:TMLAuthorizationStatusKey];
-    if ([status isEqualToString:TMLAuthorizationStatusAuthorized] == NO) {
-        return;
-    }
     NSString *accessToken = [userInfo valueForKey:TMLAuthorizationAccessTokenKey];
     if (accessToken.length == 0) {
         TMLWarn(@"Got empty access token from gateway!");
@@ -1210,7 +1211,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     
     TMLConfiguration *config = [self configuration];
     config.accessToken = accessToken;
-    self.translator = userInfo[TMLAuthorizationTranslatorKey];
+    self.currentUser = userInfo[TMLAuthorizationUserKey];
     
     [self setupTranslationActivationGestureRecognizer];
     if (controller.presentingViewController != nil) {
@@ -1224,7 +1225,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 - (void)authorizationViewControllerDidRevokeAuthorization:(TMLAuthorizationViewController *)controller {
     TMLConfiguration *config = [self configuration];
     config.accessToken = nil;
-    self.translator = nil;
+    self.currentUser = nil;
     if (controller.presentingViewController != nil) {
         [controller.presentingViewController dismissViewControllerAnimated:YES completion:^{
             [self setTranslationEnabled:NO];

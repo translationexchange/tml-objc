@@ -8,22 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-@class TMLTranslator;
-
-extern NSString * const TMLAuthorizationStatusKey;
-extern NSString * const TMLAuthorizationStatusAuthorized;
-extern NSString * const TMLAuthorizationAccessTokenKey;
-extern NSString * const TMLAuthorizationTranslatorKey;
-
-extern NSString * const TMLAuthorizationGrantedNotification;
-extern NSString * const TMLAuthorizationRevokedNotification;
-
 @interface TMLAuthorizationController : NSObject
 
-- (void)removeStoredAuthorizationInfo;
-- (NSDictionary *)storedAuthorizationInfo;
-- (NSDictionary *)authorizationInfoFromSharedCookieJar;
-- (void)saveAuthorizationInfo:(NSDictionary *)authInfo;
-- (TMLTranslator *)storedAuthorizedTranslator;
++ (instancetype)sharedAuthorizationController;
+
+- (void)setAccessToken:(NSString *)accessToken
+            forAccount:(NSString *)account;
+
+- (NSString *)accessTokenForAccount:(NSString *)account;
 
 @end

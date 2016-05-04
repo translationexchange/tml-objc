@@ -42,6 +42,8 @@ extern NSString * const TMLAPIResponseStatusKey;
 extern NSString * const TMLAPIResponseStatusOK;
 extern NSString * const TMLAPIResponseStatusError;
 
+extern NSString * const TMLAPIResponseTranslatorKey;
+
 extern NSString * const TMLAPIResponseErrorDescriptionKey;
 extern NSString * const TMLAPIResponseErrorCodeKey;
 

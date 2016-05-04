@@ -47,6 +47,8 @@ NSString * const TMLAPIResponseStatusKey = @"status";
 NSString * const TMLAPIResponseStatusOK = @"ok";
 NSString * const TMLAPIResponseStatusError = @"error";
 
+NSString * const TMLAPIResponseTranslatorKey = @"translator";
+
 NSString * const TMLAPIResponseErrorDescriptionKey = @"error";
 NSString * const TMLAPIResponseErrorCodeKey = @"code";
 

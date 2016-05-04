@@ -23,6 +23,7 @@ Pod::Spec.new do |s|
   s.dependency 'MBProgressHUD', '~> 0.9'
   s.dependency 'SSZipArchive'
   s.dependency 'NVHTarGzip'
+  s.dependency 'SSKeychain'
 
   s.description               = <<-DESC
 Tml for Objective C is the most advanced translation solution for iOS applications.

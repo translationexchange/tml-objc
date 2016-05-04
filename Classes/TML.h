@@ -34,7 +34,6 @@
 #import "TMLApplication.h"
 #import "TMLBundle.h"
 #import "TMLConfiguration.h"
-#import "TMLTranslator.h"
 
 @protocol TMLDelegate <NSObject>
 @optional
@@ -42,7 +41,7 @@
 - (UIGestureRecognizer *)gestureRecognizerForTranslationActivation;
 @end
 
-@class TMLApplication, TMLBundle, TMLConfiguration, TMLLanguage, TMLSource, TMLAPIClient, TMLTranslationKey;
+@class TMLApplication, TMLBundle, TMLConfiguration, TMLLanguage, TMLSource, TMLAPIClient, TMLTranslationKey, TMLUser;
 
 @interface TML : NSObject
 
@@ -64,7 +63,7 @@
 /**
  *  Holds the current user object
  */
-@property(nonatomic, strong) NSObject *currentUser;
+@property(nonatomic, readonly) TMLUser *currentUser;
 
 /**
  *  Holds block options
@@ -133,8 +132,6 @@
  *  Holds TML configuration settings
  */
 @property(nonatomic, readonly) TMLConfiguration *configuration;
-
-@property(nonatomic, readonly) TMLTranslator *translator;
 
 /**
  *  Holds the current source key

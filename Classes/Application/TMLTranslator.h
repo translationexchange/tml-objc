@@ -7,22 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "TMLModel.h"
+#import "TMLBasicUser.h"
 
 extern NSString * const TMLTranslatorIDKey;
-extern NSString * const TMLTranslatorFirstNameKey;
-extern NSString * const TMLTranslatorLastNameKey;
-extern NSString * const TMLTranslatorDisplayNameKey;
-extern NSString * const TMLTranslatorMugshotKey;
-extern NSString * const TMLTranslatorInlineModeKey;
+extern NSString * const TMLTranslatorUserIDKey;
+extern NSString * const TMLTranslatorLevelKey;
+extern NSString * const TMLTranslatorRankKey;
+extern NSString * const TMLTranslatorVotingPowerKey;
 
-@interface TMLTranslator : TMLModel
-@property (strong, nonatomic) NSString *firstName;
-@property (strong, nonatomic) NSString *lastName;
-@property (strong, nonatomic) NSString *displayName;
-@property (readonly, nonatomic) NSString *initials;
-@property (strong, nonatomic) NSString *userID;
-@property (strong, nonatomic) NSURL *mugshotURL;
-@property (assign, nonatomic) BOOL inlineTranslationAllowed;
+@interface TMLTranslator : TMLBasicUser
+
+@property (assign, nonatomic) NSInteger translatorID;
+
+@property (assign, nonatomic) NSInteger level;
+@property (assign, nonatomic) NSInteger rank;
+@property (assign, nonatomic) NSInteger votingPower;
+
 - (BOOL)isEqualToTranslator:(TMLTranslator *)translator;
+
 @end

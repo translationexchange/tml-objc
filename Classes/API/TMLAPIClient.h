@@ -31,7 +31,7 @@
 #import <Foundation/Foundation.h>
 #import "TMLBasicAPIClient.h"
 
-@class TMLAPIResponse, TMLSource, TMLApplication;
+@class TMLAPIResponse, TMLSource, TMLApplication, TMLUser;
 
 extern NSString * const TMLAPIOptionsLocale;
 extern NSString * const TMLAPIOptionsIncludeAll;
@@ -44,6 +44,13 @@ extern NSString * const TMLAPIOptionsPage;
 - (id) initWithBaseURL:(NSURL *)url accessToken:(NSString *)accessToken;
 
 #pragma mark - Methods
+
+/**
+ * Fetches user info.
+ *
+ * @param completionBlock Completion block
+ */
+- (void) getUserInfo:(void(^)(TMLUser *user, TMLAPIResponse *response, NSError *error))completionBlock;
 
 /**
  *  Fetches list of translations for specified locale. If source is given, 

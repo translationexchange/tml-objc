@@ -20,6 +20,8 @@
 #import "TMLBundle.h"
 #import "TMLAPIBundle.h"
 #import "TMLBundleManager.h"
+#import "TMLUser.h"
+#import "TMLTranslator.h"
 
 #import "TMLBasicAPIClient.h"
 #import "TMLAPIClient.h"
