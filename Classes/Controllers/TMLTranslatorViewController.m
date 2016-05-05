@@ -122,12 +122,17 @@
         return NO;
     }
     else if ([path rangeOfString:@"logout"].location != NSNotFound) {
-        NSString *origin = [[[request.URL scheme] stringByAppendingString:@"://"] stringByAppendingString:[request.URL host]];
+        NSURL *url = request.URL;
+        NSString *scheme = url.scheme;
+        NSString *host = url.host;
+        if (scheme != nil && host != nil) {
+            NSString *origin = [[scheme stringByAppendingString:@"://"] stringByAppendingString:host];
         NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
         NSArray* facebookCookies = [cookies cookiesForURL:[NSURL URLWithString:origin]];
         for (NSHTTPCookie* cookie in facebookCookies) {
             [cookies deleteCookie:cookie];
         }
+    }
     }
     
     return YES;
