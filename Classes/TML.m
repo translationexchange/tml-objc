@@ -38,6 +38,7 @@
 #import "TMLAlertController.h"
 #import "TMLAnalytics.h"
 #import "TMLApplication.h"
+#import "TMLAuthorizationController.h"
 #import "TMLAuthorizationViewController.h"
 #import "TMLBundleManager.h"
 #import "TMLDataToken.h"
@@ -53,6 +54,8 @@
 #import "TMLUser.h"
 #import "UIResponder+TML.h"
 #import "UIView+TML.h"
+
+NSString * const TMLCurrentUserDefaultsKey = @"currentUser";
 
 /**
  *  Returns localized version of the string argument.
@@ -249,7 +252,24 @@ static BOOL TMLConfigured;
         TMLAPIClient *apiClient = [[TMLAPIClient alloc] initWithBaseURL:configuration.apiURL
                                                             accessToken:configuration.accessToken];
         self.apiClient = apiClient;
-        if (configuration.accessToken != nil) {
+        
+        NSString *accessToken = configuration.accessToken;
+        
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSString *lastUser = [userDefaults objectForKey:TMLCurrentUserDefaultsKey];
+        NSArray *userParts = [lastUser componentsSeparatedByString:@"@"];
+        lastUser = [[userParts subarrayWithRange:NSMakeRange(0, userParts.count - 1)] componentsJoinedByString:@"@"];
+        NSString *gatewayURLString = [userParts lastObject];
+        if (accessToken == nil
+            && [[configuration.gatewayURL absoluteString] isEqualToString:gatewayURLString] == YES) {
+            accessToken = [[TMLAuthorizationController sharedAuthorizationController] accessTokenForAccount:lastUser];
+        }
+        
+        if (accessToken != nil) {
+            if ([accessToken isEqualToString:configuration.accessToken] == NO) {
+                configuration.accessToken = accessToken;
+            }
+            apiClient.accessToken = accessToken;
             [apiClient getUserInfo:^(TMLUser *user, TMLAPIResponse *response, NSError *error) {
                 if (error != nil) {
                     TMLError(@"Error retrieving user based on supplied access token");
@@ -1211,7 +1231,16 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     
     TMLConfiguration *config = [self configuration];
     config.accessToken = accessToken;
-    self.currentUser = userInfo[TMLAuthorizationUserKey];
+    TMLUser *user = userInfo[TMLAuthorizationUserKey];
+    self.currentUser = user;
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if (user != nil) {
+        NSString *userDescription = [NSString stringWithFormat:@"%@@%@", user.username, config.gatewayURL];
+        [userDefaults setObject:userDescription forKey:TMLCurrentUserDefaultsKey];
+    }
+    else {
+        [userDefaults removeObjectForKey:TMLCurrentUserDefaultsKey];
+    }
     
     [self setupTranslationActivationGestureRecognizer];
     if (controller.presentingViewController != nil) {

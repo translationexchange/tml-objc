@@ -6,10 +6,9 @@
 //  Copyright © 2016 Translation Exchange. All rights reserved.
 //
 
+#import "TML.h"
 #import "TMLAuthorizationController.h"
 #import <SSKeychain/SSKeychain.h>
-
-NSString * const TMLKeychainServiceName = @"translationexchange.com";
 
 @implementation TMLAuthorizationController
 
@@ -22,13 +21,17 @@ NSString * const TMLKeychainServiceName = @"translationexchange.com";
     return sharedInstance;
 }
 
+- (NSString *)currentService {
+    return [[[[TML sharedInstance] configuration] gatewayURL] absoluteString];
+}
+
 - (void)setAccessToken:(NSString *)accessToken
             forAccount:(NSString *)account {
-    [SSKeychain setPassword:accessToken forService:TMLKeychainServiceName account:account];
+    [SSKeychain setPassword:accessToken forService:[self currentService] account:account];
 }
 
 - (NSString *)accessTokenForAccount:(NSString *)account {
-    return [SSKeychain passwordForService:TMLKeychainServiceName
+    return [SSKeychain passwordForService:[self currentService]
                                   account:account];
 }
 
