@@ -431,7 +431,7 @@
     
     TMLAPIClient *client = [[TML sharedInstance] apiClient];
     for (NSString *aLocale in locales) {
-        NSString *locale = [aLocale lowercaseString];
+        NSString *locale = aLocale;
         // fetch translation
         [self addSyncOperation:[NSBlockOperation blockOperationWithBlock:^{
             [client getTranslationsForLocale:locale
