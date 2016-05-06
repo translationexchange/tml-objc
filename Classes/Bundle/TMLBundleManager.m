@@ -61,14 +61,20 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     return instance;
 }
 
-+ (NSString *) bundleDirectoryForApplicationKey:(NSString *)applicationKey {
++ (NSString *) applicationSupportDirectory {
     static dispatch_once_t onceToken;
-    static NSString *parentPath;
+    static NSString *path;
     dispatch_once(&onceToken, ^{
-        parentPath = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        path = [NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+        NSString *identifier = [[NSBundle bundleForClass:[TML class]] bundleIdentifier];
+        path = [path stringByAppendingPathComponent:identifier];
+        
     });
-    NSString *identifier = @"com.translationexchange";
-    NSString *path = [NSString stringWithFormat:@"%@/%@/%@/Bundles", parentPath, identifier, applicationKey];
+    return path;
+}
+
++ (NSString *) bundleDirectoryForApplicationKey:(NSString *)applicationKey {
+    NSString *path = [[self applicationSupportDirectory] stringByAppendingPathComponent:applicationKey];
     return path;
 }
 
@@ -95,12 +101,8 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 #pragma mark - Paths
 
 - (NSString *)downloadDirectory {
-    static NSString *downloadsPath = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        downloadsPath = [NSSearchPathForDirectoriesInDomains(NSDownloadsDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    });
-    return downloadsPath;
+    NSString *downloadPath = [[self.class applicationSupportDirectory] stringByAppendingPathComponent:@"Downloads"];
+    return downloadPath;
 }
 
 - (NSString *)installPathForBundleVersion:(NSString *)version {
