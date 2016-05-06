@@ -300,7 +300,7 @@ NSString * const TMLBundleErrorsKey = @"errors";
 }
 
 - (void)loadLocalTranslationsForLocale:(NSString *)aLocale {
-    NSString *locale = [aLocale lowercaseString];
+    NSString *locale = aLocale;
     NSArray *availableLocales = self.availableLocales;
     NSString *translationsPath;
     NSFileManager *fileManager = [NSFileManager defaultManager];
@@ -348,7 +348,7 @@ NSString * const TMLBundleErrorsKey = @"errors";
 - (void)loadTranslationsForLocale:(NSString *)aLocale
                        completion:(void(^)(NSError *error))completion
 {
-    NSString *locale = [aLocale lowercaseString];
+    NSString *locale = aLocale;
     NSDictionary *loadedTranslations = [self translationsForLocale:locale];
     if (loadedTranslations != nil) {
         if (completion != nil) {

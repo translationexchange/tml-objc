@@ -419,7 +419,7 @@ static BOOL TMLConfigured;
             && [bundle isKindOfClass:[TMLAPIBundle class]] == YES) {
             TMLAPIBundle *apiBundle = (TMLAPIBundle *)bundle;
             if ([apiBundle isSyncing] == NO) {
-                [apiBundle sync];
+                [apiBundle setNeedsSync];
             }
             updateReusableStrings = NO;
         }
@@ -623,7 +623,7 @@ static BOOL TMLConfigured;
     NSLog(@"%s", __PRETTY_FUNCTION__);
     NSDictionary *userInfo = aNotification.userInfo;
     TMLBundle *bundle = userInfo[TMLBundleChangeInfoBundleKey];
-    if (bundle != nil) {
+    if (bundle != nil && bundle.application != nil) {
         [self updateWithBundle:bundle];
     }
 }
