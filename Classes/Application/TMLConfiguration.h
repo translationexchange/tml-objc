@@ -49,6 +49,8 @@
 
 @property(nonatomic, strong) NSString *previousLocale;
 
+@property(nonatomic, strong) NSString *defaultSourceName;
+
 @property(nonatomic, strong) NSMutableDictionary *contextRules;
 
 @property(nonatomic, strong) NSMutableDictionary *defaultTokens;

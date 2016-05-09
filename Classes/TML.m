@@ -781,8 +781,10 @@ static BOOL TMLConfigured;
         return;
     }
     
+    NSString *effectiveSourceKey = (sourceKey) ? sourceKey : [self currentSource];
+    
     TMLAPIBundle *apiBundle = (TMLAPIBundle *)[TMLBundle apiBundle];
-    [(TMLAPIBundle *)apiBundle addTranslationKey:translationKey forSource:sourceKey];
+    [(TMLAPIBundle *)apiBundle addTranslationKey:translationKey forSource:effectiveSourceKey];
 }
 
 #pragma mark - Configuration
@@ -1190,6 +1192,9 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 
 - (NSString *)currentSource {
     NSString *source = (NSString *)[self blockOptionForKey:TMLSourceOptionName];
+    if (source == nil) {
+        source = self.configuration.defaultSourceName;
+    }
     if (source == nil) {
         source = [[TMLSource defaultSource] key];
     }
