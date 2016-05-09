@@ -37,6 +37,8 @@
 
 @property(nonatomic, strong) NSURL *translationCenterURL;
 
+@property(nonnull, strong) NSURL *cdnURL;
+
 @property(nonatomic, readwrite) NSString *accessToken;
 
 @property(nonatomic, readwrite) NSString *applicationKey;

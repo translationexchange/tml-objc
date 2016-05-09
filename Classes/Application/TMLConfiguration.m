@@ -41,6 +41,10 @@
 #define TMLTranslationCenterHost @"https://translation-center.translationexchange.com"
 #endif
 
+#ifndef TMLCDNHost
+#define TMLCDNHost @"https://cdn.translationexchange.com"
+#endif
+
 NSString * const TMLApplicationKeyDefaultsKey = @"applicationKey";
 NSString * const TMLDefaultLocaleDefaultsKey = @"defaultLocale";
 NSString * const TMLCurrentLocaleDefaultsKey = @"currentLocale";
@@ -71,6 +75,7 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
         [self setupLocalization];
         self.apiURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/v1", TMLServiceHost]];
         self.translationCenterURL = [NSURL URLWithString:TMLTranslationCenterHost];
+        self.cdnURL = [NSURL URLWithString:TMLCDNHost];
         self.localizeNIBStrings = YES;
         self.automaticallyReloadDataBackedViews = YES;
 #if DEBUG

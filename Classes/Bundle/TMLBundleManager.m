@@ -48,7 +48,8 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 
 + (instancetype) defaultManager {
     NSString *applicationKey = TMLApplicationKey();
-    if (applicationKey == nil) {
+    NSURL *cdnURL = TMLSharedConfiguration().cdnURL;
+    if (applicationKey == nil || cdnURL == nil) {
         TMLRaiseUnconfiguredIncovation();
         return nil;
     }
@@ -56,7 +57,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     static TMLBundleManager *instance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        instance = [[TMLBundleManager alloc] initWithApplicationKey:applicationKey];
+        instance = [[TMLBundleManager alloc] initWithApplicationKey:applicationKey archiveURL:cdnURL];
     });
     return instance;
 }
@@ -85,12 +86,12 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     return nil;
 }
 
-- (instancetype)initWithApplicationKey:(NSString *)applicationKey {
+- (instancetype)initWithApplicationKey:(NSString *)applicationKey archiveURL:(NSURL *)archiveURL{
 #if DEBUG
     NSAssert(applicationKey.length > 0, @"application key cannot be empty");
 #endif
     if (self = [super init]) {
-        self.archiveURL = [NSURL URLWithString:@"https://cdn.translationexchange.com"];
+        self.archiveURL = archiveURL;
         self.maximumBundlesToKeep = 2;
         self.applicationKey = applicationKey;
         self.rootDirectory = [[self class] bundleDirectoryForApplicationKey:applicationKey];
