@@ -100,3 +100,7 @@ First release as TMLKit, built as a dynamic framework. The SDK underwent several
 * Fix sync loop
 * Fix API Client POST encoding
 * Change downloads directory path to avoid permission problems
+
+## 1.0.8
+* Fix issue with incessant default source, especially when it comes to registering new translation keys
+* Allow users to provide custom default source name via TMLConfiguration
