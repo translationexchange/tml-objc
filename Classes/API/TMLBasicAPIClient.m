@@ -152,7 +152,7 @@ completionBlock:(TMLAPIResponseHandler)completionBlock
 
 - (NSString *) urlEncode: (id) object {
     NSString *string = [NSString stringWithFormat: @"%@", object];
-    return [string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    return [string stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLPathAllowedCharacterSet]];
 }
 
 - (NSString*) urlEncodedStringFromParameters:(NSDictionary *)parameters {
