@@ -95,3 +95,8 @@ First release as TMLKit, built as a dynamic framework. The SDK underwent several
 * Fix issue with referring to localized data using case-sensitive locale names.
 * Modularize framework
 * Address issue with including TMLKit with use_framework! directive sepcified in Pod, for Swift projects
+
+## 1.0.7
+* Fix sync loop
+* Fix API Client POST encoding
+* Change downloads directory path to avoid permission problems
