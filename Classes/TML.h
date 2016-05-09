@@ -144,7 +144,7 @@
 /**
  *  Holds the current source key
  */
-@property(nonatomic, strong) NSString *currentSource;
+@property(readonly, strong) NSString *currentSource;
 
 #pragma mark - Languages and Locales
 
