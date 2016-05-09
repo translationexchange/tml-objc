@@ -82,7 +82,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 #pragma mark - Init
 
 - (instancetype)init {
-    TMLRaiseAlternativeInstantiationMethod(@selector(initWithApplicationKey:));
+    TMLRaiseAlternativeInstantiationMethod(@selector(initWithApplicationKey:archiveURL:));
     return nil;
 }
 
