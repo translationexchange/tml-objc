@@ -51,6 +51,13 @@
 #import "UIResponder+TML.h"
 #import "UIView+TML.h"
 
+
+#if DEBUG
+#define BUNDLE_UPDATE_INTERVAL 60
+#else
+#define BUNDLE_UPDATE_INTERVAL 3600
+#endif
+
 /**
  *  Returns localized version of the string argument.
  *
@@ -475,7 +482,7 @@ static BOOL TMLConfigured;
     }
     if (_lastBundleUpdateDate != nil) {
         NSTimeInterval sinceLastUpdate = [[NSDate date] timeIntervalSinceDate:_lastBundleUpdateDate];
-        return (sinceLastUpdate > 60);
+        return (sinceLastUpdate > BUNDLE_UPDATE_INTERVAL);
     }
     return YES;
 }
