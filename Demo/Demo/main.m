@@ -21,7 +21,9 @@
 int main(int argc, char * argv[])
 {
     @autoreleasepool {
-        [TML sharedInstanceWithApplicationKey:TMLDefaultApplicationKey accessToken:TMLDefaultAccessToken];
+        TMLConfiguration *config = [[TMLConfiguration alloc] initWithApplicationKey:TMLDefaultApplicationKey
+                                                                        accessToken:TMLDefaultAccessToken];
+        [TML sharedInstanceWithConfiguration:config];
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }
 }
