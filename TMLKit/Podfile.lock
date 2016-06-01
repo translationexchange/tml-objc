@@ -2,7 +2,7 @@ PODS:
   - MBProgressHUD (0.9.2)
   - MPColorTools (1.6.1)
   - NVHTarGzip (1.0.1)
-  - SSZipArchive (1.1)
+  - SSZipArchive (1.2)
 
 DEPENDENCIES:
   - MBProgressHUD (~> 0.9)
@@ -14,6 +14,6 @@ SPEC CHECKSUMS:
   MBProgressHUD: 1569cf7ace17a8bac47aabfbb8580a49690386d1
   MPColorTools: a5d2a09fc44750aea0366f666aa52c80565c0764
   NVHTarGzip: 74cc227b902e5725900d37eb6d79b57e93005a73
-  SSZipArchive: de3d215ab73f87db627f81f2ce24f1731e3886c3
+  SSZipArchive: 251093c65f98d6ea282c50bc404bfa631d9fd721
 
 COCOAPODS: 0.39.0
