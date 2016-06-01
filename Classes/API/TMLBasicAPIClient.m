@@ -8,9 +8,11 @@
 
 #import "NSObject+TMLJSON.h"
 #import "TMLBasicAPIClient.h"
+#import "TML.h"
 
 @interface TMLBasicAPIClient()
 @property (readwrite, strong, nonatomic) NSURL *baseURL;
+@property (strong, nonatomic) NSURLSession *urlSession;
 @end
 
 
@@ -28,13 +30,22 @@
     return self;
 }
 
+#pragma mark -
+
+- (NSURLSession *)urlSession {
+    if (_urlSession == nil) {
+        NSURLSessionConfiguration *config = [NSURLSessionConfiguration defaultSessionConfiguration];
+        _urlSession = [NSURLSession sessionWithConfiguration:config];
+    }
+    return _urlSession;
+}
+
 #pragma mark - Request Support
 
 - (void) request: (NSURLRequest *) request
-     cachePolicy:(NSURLRequestCachePolicy)cachePolicy
  completionBlock:(TMLAPIResponseHandler)completionBlock
 {
-    [[[NSURLSession sharedSession] dataTaskWithRequest: request
+    [[[self urlSession] dataTaskWithRequest: request
                                      completionHandler: ^(NSData *data, NSURLResponse *response, NSError *error) {
                                          dispatch_async(dispatch_get_main_queue(), ^(void){
                                              [self processResponse:response
@@ -75,11 +86,12 @@ completionBlock:completionBlock];
 completionBlock:(TMLAPIResponseHandler)completionBlock
 {
     NSURL *url = [self URLForAPIPath:path parameters:parameters];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSURLRequest *request = [NSURLRequest requestWithURL:url
+                                             cachePolicy:cachePolicy
+                                         timeoutInterval:TMLSharedConfiguration().timeoutIntervalForRequest];
     
     TMLDebug(@"GET %@", url);
     [self request:request
-      cachePolicy:cachePolicy
   completionBlock:completionBlock];
 }
 
@@ -89,14 +101,15 @@ completionBlock:(TMLAPIResponseHandler)completionBlock
 completionBlock:(TMLAPIResponseHandler)completionBlock
 {
     NSURL *url = [self URLForAPIPath:path parameters:nil];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+                                                           cachePolicy:cachePolicy
+                                                       timeoutInterval:TMLSharedConfiguration().timeoutIntervalForRequest];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPMethod:@"POST"];    
     [request setHTTPBody:[[self urlEncodedStringFromParameters: parameters] dataUsingEncoding:NSUTF8StringEncoding]];
     
     TMLDebug(@"POST %@", url);
     [self request:request
-      cachePolicy:cachePolicy
   completionBlock:completionBlock];
 }
 

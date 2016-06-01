@@ -316,7 +316,8 @@ static BOOL TMLConfigured;
             [self checkForBundleUpdate:YES completion:^(NSString *version, NSString *path, NSError *error) {
                 if (version != nil && self.translationEnabled == NO) {
                     TMLBundle *newBundle = [TMLBundle bundleWithVersion:version];
-                    if ([newBundle isEqualToBundle:self.currentBundle] == NO) {
+                    if ([newBundle isEqualToBundle:self.currentBundle] == NO
+                        && newBundle != nil) {
                         self.currentBundle = newBundle;
                     }
                 }
@@ -355,9 +356,7 @@ static BOOL TMLConfigured;
         TMLApplication *newApplication = [bundle application];
         TMLInfo(@"Initializing from bundle: %@", bundle.version);
         self.application = newApplication;
-        NSString *ourLocale = [self currentLocale];
-        NSArray *bundleLocales = [bundle locales];
-        if (bundleLocales.count == 0
+        if (bundle.availableLocales.count == 0
             && [bundle isKindOfClass:[TMLAPIBundle class]] == YES) {
             TMLAPIBundle *apiBundle = (TMLAPIBundle *)bundle;
             if ([apiBundle isSyncing] == NO) {
@@ -366,11 +365,9 @@ static BOOL TMLConfigured;
             updateReusableStrings = NO;
         }
         else {
-            NSString *targetLocale = nil;
-            if ([bundleLocales containsObject:ourLocale] == YES) {
-                targetLocale = ourLocale;
-            }
-            else {
+            NSString *ourLocale = [self currentLocale];
+            NSString *targetLocale = [bundle matchLocale:ourLocale];
+            if (targetLocale == nil) {
                 targetLocale = [self defaultLocale];
             }
             BOOL hasTargetLocaleData = [[bundle availableLocales] containsObject:targetLocale];
@@ -537,14 +534,14 @@ static BOOL TMLConfigured;
                 finalize(version, nil, nil);
             }
             else {
-                NSString *defaultLocale = [self defaultLocale];
                 NSString *currentLocale = [self currentLocale];
+                NSString *defaultLocale = [self defaultLocale];
                 NSMutableArray *localesToFetch = [NSMutableArray array];
-                if (defaultLocale != nil) {
-                    [localesToFetch addObject:defaultLocale];
-                }
                 if (currentLocale != nil) {
                     [localesToFetch addObject:currentLocale];
+                }
+                if (defaultLocale != nil) {
+                    [localesToFetch addObject:defaultLocale];
                 }
                 [bundleManager installPublishedBundleWithVersion:version
                                                          locales:localesToFetch

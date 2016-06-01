@@ -26,6 +26,7 @@ extern NSString * const TMLLocalizationDataChangedNotification;
 extern NSString * const TMLDidStartSyncNotification;
 extern NSString * const TMLDidFinishSyncNotification;
 extern NSString * const TMLLocalizationUpdatesInstalledNotification;
+extern NSString * const TMLLocalizationUpdatesFailedNotification;
 
 #pragma mark - UserInfo Keys
 extern NSString * const TMLPreviousLocaleUserInfoKey;

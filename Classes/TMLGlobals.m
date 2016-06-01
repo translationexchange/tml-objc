@@ -48,6 +48,7 @@ NSString * const TMLLocalizationDataChangedNotification = @"TMLLocalizationDataC
 NSString * const TMLDidStartSyncNotification = @"TMLDidStartSyncNotification";
 NSString * const TMLDidFinishSyncNotification = @"TMLDidFinishSyncNotification";
 NSString * const TMLLocalizationUpdatesInstalledNotification = @"TMLLocalizationUpdatesInstalledNotification";
+NSString * const TMLLocalizationUpdatesFailedNotification = @"TMLLocalizationUpdatesFailedNotification";
 
 #pragma mark - UserInfo Constants
 NSString * const TMLPreviousLocaleUserInfoKey = @"TMLPreviousLocaleUserInfoKey";

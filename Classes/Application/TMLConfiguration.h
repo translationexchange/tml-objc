@@ -83,6 +83,12 @@
  */
 @property (nonatomic, assign) BOOL neverSubmitNewTranslationKeys;
 
+
+/**
+ * Default timeout interval for network operations
+ */
+@property (nonatomic, assign) NSTimeInterval timeoutIntervalForRequest;
+
 #pragma mark -
 - (instancetype)initWithApplicationKey:(NSString *)applicationKey
                            accessToken:(NSString *)accessToken;

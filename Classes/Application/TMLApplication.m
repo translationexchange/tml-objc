@@ -123,9 +123,13 @@ NSString * const TMLApplicationInlineTranslationFeatureKey = @"inline_translatio
 - (TMLLanguage *) languageForLocale:(NSString *)locale {
     TMLLanguage *result = nil;
     for (TMLLanguage *lang in self.languages) {
+        NSString *localeLang = [[[locale componentsSeparatedByString:@"-"] firstObject] lowercaseString];
         if ([lang.locale isEqualToString:locale] == YES) {
             result = lang;
             break;
+        }
+        else if ([lang.locale isEqualToString:localeLang] == YES) {
+            result = lang;
         }
     }
     return result;

@@ -78,6 +78,7 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
         self.cdnURL = [NSURL URLWithString:TMLCDNHost];
         self.localizeNIBStrings = YES;
         self.automaticallyReloadDataBackedViews = YES;
+        self.timeoutIntervalForRequest = 60.;
 #if DEBUG
         self.analyticsEnabled = NO;
 #else
@@ -182,7 +183,7 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
 - (NSString *)currentLocale {
     NSString *locale = [self persistentValueForKey:TMLCurrentLocaleDefaultsKey];
     if (locale == nil) {
-        return self.defaultLocale;
+        return [[NSLocale preferredLanguages] firstObject];
     }
     return locale;
 }
