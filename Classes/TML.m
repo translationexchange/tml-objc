@@ -317,7 +317,8 @@ static BOOL TMLConfigured;
                 if (version != nil && self.translationEnabled == NO) {
                     TMLBundle *newBundle = [TMLBundle bundleWithVersion:version];
                     if ([newBundle isEqualToBundle:self.currentBundle] == NO
-                        && newBundle != nil) {
+                        && newBundle != nil
+                        && [self shouldSwitchToBundle:newBundle] == YES) {
                         self.currentBundle = newBundle;
                     }
                 }
@@ -480,6 +481,14 @@ static BOOL TMLConfigured;
     if (_lastBundleUpdateDate != nil) {
         NSTimeInterval sinceLastUpdate = [[NSDate date] timeIntervalSinceDate:_lastBundleUpdateDate];
         return (sinceLastUpdate > BUNDLE_UPDATE_INTERVAL);
+    }
+    return YES;
+}
+
+- (BOOL)shouldSwitchToBundle:(TMLBundle *)bundle {
+    id<TMLDelegate>delegate = self.delegate;
+    if ([delegate respondsToSelector:@selector(shouldSwitchToBundle:)] == YES) {
+        return [delegate shouldSwitchToBundle:bundle];
     }
     return YES;
 }

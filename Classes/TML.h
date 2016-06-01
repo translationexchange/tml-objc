@@ -39,6 +39,7 @@
 @optional
 - (UIGestureRecognizer *)gestureRecognizerForInlineTranslation;
 - (UIGestureRecognizer *)gestureRecognizerForTranslationActivation;
+- (BOOL)shouldSwitchToBundle:(TMLBundle *)bundle;
 @end
 
 @class TMLApplication, TMLBundle, TMLConfiguration, TMLLanguage, TMLSource, TMLAPIClient, TMLTranslationKey;
