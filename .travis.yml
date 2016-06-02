@@ -6,7 +6,7 @@ before_install:
     - brew update
     - brew uninstall xctool && brew install xctool --HEAD
     - pod repo update
-    - pod search MPColorTools | cat
+    - pod search MPColorTools
     - cd TMLKit && pod install && cd ..
     - cd Demo && pod install && cd $TRAVIS_BUILD_DIR
 script: 
