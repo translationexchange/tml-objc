@@ -5,8 +5,8 @@ PODS:
   - SSZipArchive (1.2)
 
 DEPENDENCIES:
-  - MBProgressHUD (~> 0.9)
-  - MPColorTools (~> 1.6)
+  - MBProgressHUD (>= 0.9)
+  - MPColorTools (>= 1.6)
   - NVHTarGzip
   - SSZipArchive
 
@@ -16,4 +16,6 @@ SPEC CHECKSUMS:
   NVHTarGzip: 74cc227b902e5725900d37eb6d79b57e93005a73
   SSZipArchive: 251093c65f98d6ea282c50bc404bfa631d9fd721
 
-COCOAPODS: 0.39.0
+PODFILE CHECKSUM: 1de0ae1e1bb44109ba394667581a251ebe532c65
+
+COCOAPODS: 1.0.0
