@@ -5,7 +5,7 @@ before_install:
     - sudo gem install cocoapods --no-prerelease --no-rdoc --no-ri --no-document
     - brew update
     - brew uninstall xctool && brew install xctool --HEAD
-    - pod repo update
+    - pod repo update >&/dev/null
     - pod search MPColorTools
     - cd TMLKit && pod install && cd ..
     - cd Demo && pod install && cd $TRAVIS_BUILD_DIR
