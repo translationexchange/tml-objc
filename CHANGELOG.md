@@ -104,3 +104,9 @@ First release as TMLKit, built as a dynamic framework. The SDK underwent several
 ## 1.0.8
 * Fix issue with incessant default source, especially when it comes to registering new translation keys
 * Allow users to provide custom default source name via TMLConfiguration
+
+## 1.0.9
+* Several changes to how translation bundles are handled: increased interval between checks, post notifications about failures to update bundles
+* Add configuration option for timeoutIntervalForRequest which is used in all url requests
+* Current locale, unless specified manually, now defaults to device's locale
+* Better matching of locales against project data
