@@ -385,7 +385,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
         }
     };
     
-    [self fetchPublishedResources:resources
+    [self fetchPublishedResources:[resources allObjects]
                     bundleVersion:version
                     baseDirectory:bundleDestinationPath
                   completionBlock:^(BOOL success, NSArray *paths, NSArray *errors) {
@@ -659,7 +659,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
            TMLError(@"Error fetching published bundle info: %@", error);
            NSArray *errors = (error) ? @[error] : nil;
            [self notifyBundleMutation:TMLLocalizationUpdatesFailedNotification
-                               bundle:self
+                               bundle:nil
                                errors:errors];
        }
        if (completionBlock != nil) {
@@ -871,7 +871,9 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
                        errors:(NSArray *)errors
 {
     NSMutableDictionary *info = [NSMutableDictionary dictionary];
-    info[TMLBundleChangeInfoBundleKey] = bundle;
+    if (bundle != nil) {
+        info[TMLBundleChangeInfoBundleKey] = bundle;
+    }
     if (errors.count > 0) {
         info[TMLBundleChangeInfoErrorsKey] = errors;
     }
