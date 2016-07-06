@@ -135,6 +135,8 @@ TMLKit does all the hard work for you. When you use TML's macros (see TML.h), th
 
 You also have an option to bundle all your translations with your app before you release it - allowing your application to function in offline mode. By default, whenever your application becomes active and has connectivity to the internet - TMLKit will check for new translation releases (published via the [dashboard](https://dashboard-translationexchange.com)). When updates are available they are downloaded on-demand. Translations for default and current locales are downloaded immediately, and additional data is downloaded when TMLKit is told to change current locale.
 
+To bundle translations with your app, simply download published archive from the dashboard, prepend its name with “tml_” and include it in your build as a resource. The resulting filename should be in the format "tml_<version>.tar.gz". TMLKit supports zip, tar, tar.gz/tar.gzip formats.
+
 TMLKit also reports analytics data, allowing you to see what languages are used in your app, what the default languages of your users are, where your users are coming from, etc...
 
 
