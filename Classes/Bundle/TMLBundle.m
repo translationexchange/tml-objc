@@ -241,7 +241,7 @@ NSString * const TMLBundleErrorsKey = @"errors";
 #pragma mark - Languages
 
 - (NSString *)matchLocale:(NSString *)locale {
-    NSArray *allLocales = [[[self application] languages] valueForKeyPath:@"locale.lowercaseString"];
+    NSArray *allLocales = [[[self application] languages] valueForKeyPath:@"locale"];
     NSString *ourLocale = [locale lowercaseString];
     NSArray *parts = [ourLocale componentsSeparatedByString:@"-"];
     NSString *lang = parts[0];
