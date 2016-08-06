@@ -420,7 +420,7 @@ static BOOL TMLConfigured;
     NSString *archivedVersion = [archivePath tmlTranslationBundleVersionFromPath];
     BOOL hasNewerArchive = NO;
     if (archivedVersion != nil) {
-        hasNewerArchive = [archivedVersion compareToTMLTranslationBundleVersion:bundle.version] == NSOrderedAscending;
+        hasNewerArchive = [archivedVersion compareToTMLTranslationBundleVersion:bundle.version] == NSOrderedDescending;
     }
     
     TMLBundleManager *bundleManager = [TMLBundleManager defaultManager];
