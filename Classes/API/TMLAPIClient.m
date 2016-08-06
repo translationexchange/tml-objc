@@ -187,7 +187,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
             if ([apiResponse isSuccessfulResponse] == YES) {
                 NSMutableDictionary *userInfo = [apiResponse.userInfo mutableCopy];
                 NSDictionary *extensions = userInfo[@"extensions"];
-                if (extensions != nil) {
+                if (TMLIsNilNull(extensions) == NO) {
                     NSDictionary *langExtensions = extensions[@"languages"];
                     NSArray *langs = userInfo[@"languages"];
                     if (langExtensions.count > 0 && langs.count > 0) {
@@ -195,10 +195,10 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
                         for (NSDictionary *lang in langs) {
                             NSString *locale = lang[@"locale"];
                             NSDictionary *langExtension = nil;
-                            if (locale != nil) {
+                            if (TMLIsNilNull(locale) == NO) {
                                 langExtension = langExtensions[locale];
                             }
-                            if (langExtension != nil) {
+                            if (TMLIsNilNull(langExtension) == NO) {
                                 NSMutableDictionary *newLang = [lang mutableCopy];
                                 newLang[@"cases"] = langExtension[@"cases"];
                                 newLang[@"contexts"] = langExtension[@"contexts"];

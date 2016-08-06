@@ -14,6 +14,7 @@
 #define TMLRaiseAlternativeInstantiationMethod(selector) TMLUseAlternativeInstantiationMethod(selector, self);
 #define TMLRaiseUnconfiguredIncovation() TMLUnconfiguredIncovation(_cmd, self)
 #define TMLRaiseAlreadyConfigured() TMLAlreadyConfigured(_cmd, self)
+#define TMLIsNilNull(arg) (arg == nil || [[NSNull null] isEqual: arg]) 
 
 void TMLAbstractInvocation(SEL selector,id object);
 void TMLUseAlternativeInstantiationMethod(SEL selector, id object);
