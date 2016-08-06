@@ -452,7 +452,7 @@ static BOOL TMLConfigured;
         return nil;
     }
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self matches '^tml_[0-9]+\\.zip'"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self matches '^tml_[0-9]+\\.(zip|tar\.gz|tar|gz)'"];
     NSArray *bundles = [contents filteredArrayUsingPredicate:predicate];
     return bundles;
 }
