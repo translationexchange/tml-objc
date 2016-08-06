@@ -126,10 +126,11 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     }
     
     NSString *bundleName = [aPath lastPathComponent];
-    if (isDirectory == NO) {
-        bundleName = [bundleName stringByDeletingPathExtension];
+    NSRange extRange = [bundleName rangeOfString:@"."];
+    if (isDirectory == NO && extRange.location != NSNotFound) {
+        bundleName = [bundleName substringToIndex:extRange.location];
     }
-    NSString *extension = [[aPath pathExtension] lowercaseString];
+    NSString *extension = (extRange.location == NSNotFound) ? nil : [[aPath lastPathComponent] substringFromIndex:(extRange.location + extRange.length)];
     
     if (isDirectory == YES) {
         NSString *applicationFilePath = [aPath stringByAppendingPathComponent:TMLBundleApplicationFilename];
@@ -253,7 +254,11 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 - (void) installBundleFromTarball:(NSString *)aPath
                   completionBlock:(TMLBundleInstallBlock)completionBlock
 {
-    NSString *bundleName = [[aPath lastPathComponent] stringByDeletingPathExtension];
+    NSString *bundleName = [aPath lastPathComponent];
+    NSRange extRange = [bundleName rangeOfString:@"."];
+    if (extRange.location != NSNotFound) {
+        bundleName = [bundleName substringToIndex:extRange.location];
+    }
     NSString *tempPath = [NSString stringWithFormat:@"%@/%@", NSTemporaryDirectory(), bundleName];
     NSString *lowercasePath = [aPath lowercaseString];
     void(^finish)(NSError *) = ^(NSError *error){
