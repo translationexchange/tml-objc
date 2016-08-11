@@ -2,8 +2,8 @@ PODS:
   - MBProgressHUD (1.0.0)
   - MPColorTools (1.6.1)
   - NVHTarGzip (1.0.1)
-  - SSKeychain (1.4.0)
-  - SSZipArchive (1.4)
+  - SSKeychain (1.4.1)
+  - SSZipArchive (1.5)
 
 DEPENDENCIES:
   - MBProgressHUD (>= 0.9)
@@ -16,8 +16,8 @@ SPEC CHECKSUMS:
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MPColorTools: a5d2a09fc44750aea0366f666aa52c80565c0764
   NVHTarGzip: 74cc227b902e5725900d37eb6d79b57e93005a73
-  SSKeychain: c71293fa57216a40ab06c23f4085387583293de4
-  SSZipArchive: bab21000ee11b7ba68d5880bcd87d80e4eb93e65
+  SSKeychain: 55cc80f66f5c73da827e3077f02e43528897db41
+  SSZipArchive: 29daace2bccb90a47de2837744da397728ff9207
 
 PODFILE CHECKSUM: 1de0ae1e1bb44109ba394667581a251ebe532c65
 
