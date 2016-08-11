@@ -159,7 +159,7 @@
               }
           }
           if (hud != nil) {
-              [hud hide:YES];
+              [hud hideAnimated:YES];
           }
           else {
               dispatch_async(dispatch_get_main_queue(), ^{
