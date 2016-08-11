@@ -110,3 +110,7 @@ First release as TMLKit, built as a dynamic framework. The SDK underwent several
 * Add configuration option for timeoutIntervalForRequest which is used in all url requests
 * Current locale, unless specified manually, now defaults to device's locale
 * Better matching of locales against project data
+
+## 10.0.10
+* Support for handling bundled tar, gz and tar.gz archives
+* Minor bug fixes around bundle management
