@@ -39,6 +39,7 @@
 @optional
 - (UIGestureRecognizer *)gestureRecognizerForInlineTranslation;
 - (UIGestureRecognizer *)gestureRecognizerForTranslationActivation;
+- (BOOL)shouldSwitchToBundle:(TMLBundle *)bundle;
 @end
 
 @class TMLApplication, TMLBundle, TMLConfiguration, TMLLanguage, TMLSource, TMLAPIClient, TMLTranslationKey, TMLUser;
@@ -136,7 +137,7 @@
 /**
  *  Holds the current source key
  */
-@property(nonatomic, strong) NSString *currentSource;
+@property(readonly, strong) NSString *currentSource;
 
 #pragma mark - Languages and Locales
 

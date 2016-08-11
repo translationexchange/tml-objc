@@ -182,7 +182,7 @@
     @synchronized(self) {
         NSString *effectiveSourceKey = sourceKey;
         if (effectiveSourceKey == nil) {
-            effectiveSourceKey = TMLSourceDefaultKey;
+            effectiveSourceKey = [[TML sharedInstance] currentSource];
         }
         
         NSMutableSet *keys = addedTranslationKeys[effectiveSourceKey];

@@ -39,6 +39,8 @@
 
 @property(nonatomic, strong) NSURL *gatewayURL;
 
+@property(nonatomic, strong) NSURL *cdnURL;
+
 @property(nonatomic, readwrite) NSString *accessToken;
 
 @property(nonatomic, readwrite) NSString *applicationKey;
@@ -48,6 +50,8 @@
 @property(nonatomic, strong) NSString *currentLocale;
 
 @property(nonatomic, strong) NSString *previousLocale;
+
+@property(nonatomic, strong) NSString *defaultSourceName;
 
 @property(nonatomic, strong) NSMutableDictionary *contextRules;
 
@@ -80,6 +84,12 @@
  *  This is a general safety switch for flooding server with data.
  */
 @property (nonatomic, assign) BOOL neverSubmitNewTranslationKeys;
+
+
+/**
+ * Default timeout interval for network operations
+ */
+@property (nonatomic, assign) NSTimeInterval timeoutIntervalForRequest;
 
 #pragma mark -
 - (instancetype)initWithApplicationKey:(NSString *)applicationKey;

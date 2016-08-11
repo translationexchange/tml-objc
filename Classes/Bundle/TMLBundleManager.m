@@ -31,7 +31,6 @@ NSString * const TMLBundleManagerAPIBundleDirectoryName = @"api";
 NSString * const TMLBundleChangeInfoBundleKey = @"bundle";
 NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 
-#define DEFAULT_URL_TASK_TIMEOUT 60.
 
 @interface TMLBundleManager() {
     NSURLSession *_downloadSession;
@@ -48,7 +47,8 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 
 + (instancetype) defaultManager {
     NSString *applicationKey = TMLApplicationKey();
-    if (applicationKey == nil) {
+    NSURL *cdnURL = TMLSharedConfiguration().cdnURL;
+    if (applicationKey == nil || cdnURL == nil) {
         TMLRaiseUnconfiguredIncovation();
         return nil;
     }
@@ -56,7 +56,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     static TMLBundleManager *instance = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        instance = [[TMLBundleManager alloc] initWithApplicationKey:applicationKey];
+        instance = [[TMLBundleManager alloc] initWithApplicationKey:applicationKey archiveURL:cdnURL];
     });
     return instance;
 }
@@ -81,16 +81,16 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 #pragma mark - Init
 
 - (instancetype)init {
-    TMLRaiseAlternativeInstantiationMethod(@selector(initWithApplicationKey:));
+    TMLRaiseAlternativeInstantiationMethod(@selector(initWithApplicationKey:archiveURL:));
     return nil;
 }
 
-- (instancetype)initWithApplicationKey:(NSString *)applicationKey {
+- (instancetype)initWithApplicationKey:(NSString *)applicationKey archiveURL:(NSURL *)archiveURL{
 #if DEBUG
     NSAssert(applicationKey.length > 0, @"application key cannot be empty");
 #endif
     if (self = [super init]) {
-        self.archiveURL = [NSURL URLWithString:@"https://cdn.translationexchange.com"];
+        self.archiveURL = archiveURL;
         self.maximumBundlesToKeep = 2;
         self.applicationKey = applicationKey;
         self.rootDirectory = [[self class] bundleDirectoryForApplicationKey:applicationKey];
@@ -126,10 +126,11 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     }
     
     NSString *bundleName = [aPath lastPathComponent];
-    if (isDirectory == NO) {
-        bundleName = [bundleName stringByDeletingPathExtension];
+    NSRange extRange = [bundleName rangeOfString:@"."];
+    if (isDirectory == NO && extRange.location != NSNotFound) {
+        bundleName = [bundleName substringToIndex:extRange.location];
     }
-    NSString *extension = [[aPath pathExtension] lowercaseString];
+    NSString *extension = (extRange.location == NSNotFound) ? nil : [[aPath lastPathComponent] substringFromIndex:(extRange.location + extRange.length)];
     
     if (isDirectory == YES) {
         NSString *applicationFilePath = [aPath stringByAppendingPathComponent:TMLBundleApplicationFilename];
@@ -225,7 +226,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
                     toDestination:tempPath
                         overwrite:YES
                          password:nil
-                  progressHandler:nil
+                  progressHandler:^(NSString *entry, unz_file_info zipInfo, long entryNumber, long total){}
                 completionHandler:^(NSString *zipPath, BOOL succeeded, NSError *error) {
                     if (error != nil) {
                         TMLError(@"Error uncompressing local translation bundle: %@", error);
@@ -253,7 +254,11 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 - (void) installBundleFromTarball:(NSString *)aPath
                   completionBlock:(TMLBundleInstallBlock)completionBlock
 {
-    NSString *bundleName = [[aPath lastPathComponent] stringByDeletingPathExtension];
+    NSString *bundleName = [aPath lastPathComponent];
+    NSRange extRange = [bundleName rangeOfString:@"."];
+    if (extRange.location != NSNotFound) {
+        bundleName = [bundleName substringToIndex:extRange.location];
+    }
     NSString *tempPath = [NSString stringWithFormat:@"%@/%@", NSTemporaryDirectory(), bundleName];
     NSString *lowercasePath = [aPath lowercaseString];
     void(^finish)(NSError *) = ^(NSError *error){
@@ -320,6 +325,28 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
    }];
 }
 
+- (NSArray *)selectMatchingLocales:(NSArray *)locales fromPool:(NSArray *)pool {
+    NSMutableArray *results = [NSMutableArray array];
+    NSArray *ourPool = [pool valueForKeyPath:@"lowercaseString"];
+    for (NSString *locale in locales) {
+        NSArray *parts = [[locale lowercaseString] componentsSeparatedByString:@"-"];
+        NSString *lang = parts[0];
+        NSString *region = (parts.count > 1) ? parts[1] : nil;
+        if (region == nil && [ourPool containsObject:lang]) {
+            [results addObject:lang];
+        }
+        else if (region != nil) {
+            if ([ourPool containsObject:locale]) {
+                [results addObject:locale];
+            }
+            else if ([ourPool containsObject:lang]) {
+                [results addObject:lang];
+            }
+        }
+    }
+    return results;
+}
+
 - (void) installPublishedBundleWithVersion:(NSString *)version
                                    locales:(NSArray *)locales
                            completionBlock:(TMLBundleInstallBlock)completionBlock
@@ -346,43 +373,64 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
         return;
     }
     
-    __block NSMutableSet *resources = [NSMutableSet setWithArray:@[@"application.json", @"snapshot.json"]];
-    if (locales.count > 0) {
-        for (NSString *locale in locales) {
-            [resources addObject:[locale stringByAppendingPathComponent:TMLBundleLanguageFilename]];
-            [resources addObject:[locale stringByAppendingPathComponent:TMLBundleTranslationsFilename]];
-        }
-    }
+    NSMutableSet *resources = [NSMutableSet setWithArray:@[TMLBundleApplicationFilename, TMLBundleVersionFilename, TMLBundleSourcesFilename]];
     
     NSString *bundleDestinationPath = [NSString stringWithFormat:@"%@/%@", [self downloadDirectory], version];
-    [self fetchPublishedResource:TMLBundleSourcesFilename
-                   bundleVersion:version
-                   baseDirectory:bundleDestinationPath
-                 completionBlock:^(NSString *path, NSError *error) {
-                     if (path != nil && locales.count > 0) {
-                         NSArray *sources = [[NSData dataWithContentsOfFile:path] tmlJSONObject];
-                         for (NSString *source in sources) {
-                             for (NSString *locale in locales) {
-                                 [resources addObject:[NSString stringWithFormat:@"%@/%@/%@.json", locale, TMLBundleSourcesRelativePath, source]];
-                             }
-                         }
-                     }
-                     [self fetchPublishedResources:[resources copy]
-                                     bundleVersion:version
-                                     baseDirectory:bundleDestinationPath
-                                   completionBlock:^(BOOL success, NSArray *paths, NSArray *errors) {
-                                       if (success == YES) {
-                                           [self installBundleFromPath:bundleDestinationPath
-                                                       completionBlock:completionBlock];
-                                       }
-                                       else if (completionBlock != nil) {
-                                           NSError *error = [NSError errorWithDomain:TMLBundleManagerErrorDomain
-                                                                                code:TMLBundleManagerIncompleteData
-                                                                            userInfo:nil];
-                                           completionBlock(bundleDestinationPath, error);
-                                       }
-                     }];
-    }];
+    
+    void (^finalize)(BOOL) = ^void(BOOL success){
+        if (success == YES) {
+            [self installBundleFromPath:bundleDestinationPath
+                        completionBlock:completionBlock];
+        }
+        else if (completionBlock != nil) {
+            NSError *error = [NSError errorWithDomain:TMLBundleManagerErrorDomain
+                                                 code:TMLBundleManagerIncompleteData
+                                             userInfo:nil];
+            completionBlock(bundleDestinationPath, error);
+        }
+    };
+    
+    [self fetchPublishedResources:[resources allObjects]
+                    bundleVersion:version
+                    baseDirectory:bundleDestinationPath
+                  completionBlock:^(BOOL success, NSArray *paths, NSArray *errors) {
+                      if (success == NO || locales.count == 0) {
+                          finalize(success);
+                          return;
+                      }
+                      
+                      NSArray *sources = nil;
+                      NSDictionary *application = nil;
+                      for (NSString *path in paths) {
+                          NSString *filename = [path lastPathComponent];
+                          if ([TMLBundleSourcesFilename isEqualToString:filename] == YES) {
+                              sources = [[NSData dataWithContentsOfFile:path] tmlJSONObject];
+                          }
+                          else if ([TMLBundleApplicationFilename isEqualToString:filename] == YES) {
+                              application = [[NSData dataWithContentsOfFile:path] tmlJSONObject];
+                          }
+                      }
+                      
+                      NSArray *availableLocales = [application valueForKeyPath:@"languages.locale"];
+                      NSArray *effectiveLocales = [self selectMatchingLocales:locales fromPool:availableLocales];
+                      NSMutableArray *additionalResources = [NSMutableArray array];
+                      for (NSString *locale in effectiveLocales) {
+                          [additionalResources addObject:[locale stringByAppendingPathComponent:TMLBundleLanguageFilename]];
+                          [additionalResources addObject:[locale stringByAppendingPathComponent:TMLBundleTranslationsFilename]];
+                          if (sources != nil) {
+                              for (NSString *source in sources) {
+                                  [additionalResources addObject:[NSString stringWithFormat:@"%@/%@/%@.json", locale, TMLBundleSourcesRelativePath, source]];
+                              }
+                          }
+                      }
+                      
+                      [self fetchPublishedResources:[additionalResources copy]
+                                      bundleVersion:version
+                                      baseDirectory:bundleDestinationPath
+                                    completionBlock:^(BOOL success, NSArray *paths, NSArray *errors) {
+                                        finalize(success);
+                                    }];
+                  }];
 }
 
 - (void)uninstallBundle:(TMLBundle *)bundle {
@@ -436,7 +484,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
 {
     NSURLRequest *request = [NSURLRequest requestWithURL:url
                                              cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                         timeoutInterval:DEFAULT_URL_TASK_TIMEOUT];
+                                         timeoutInterval:TMLSharedConfiguration().timeoutIntervalForRequest];
     [self fetchRequest:request completionBlock:completionBlock];
 }
 
@@ -452,7 +500,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
     }
     NSURLRequest *request = [NSURLRequest requestWithURL:newURL
                                              cachePolicy:cachePolicy
-                                         timeoutInterval:DEFAULT_URL_TASK_TIMEOUT];
+                                         timeoutInterval:TMLSharedConfiguration().timeoutIntervalForRequest];
     [self fetchRequest:request completionBlock:completionBlock];
 }
 
@@ -614,6 +662,10 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
        }
        else {
            TMLError(@"Error fetching published bundle info: %@", error);
+           NSArray *errors = (error) ? @[error] : nil;
+           [self notifyBundleMutation:TMLLocalizationUpdatesFailedNotification
+                               bundle:nil
+                               errors:errors];
        }
        if (completionBlock != nil) {
            completionBlock(versionInfo, error);
@@ -824,7 +876,9 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
                        errors:(NSArray *)errors
 {
     NSMutableDictionary *info = [NSMutableDictionary dictionary];
-    info[TMLBundleChangeInfoBundleKey] = bundle;
+    if (bundle != nil) {
+        info[TMLBundleChangeInfoBundleKey] = bundle;
+    }
     if (errors.count > 0) {
         info[TMLBundleChangeInfoErrorsKey] = errors;
     }

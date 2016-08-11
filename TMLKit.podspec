@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                      = "TMLKit"
-  s.version                   = "1.0.6"
+  s.version                   = "1.0.10"
   s.summary                   = "Translation Markup Language for Objective C."
   s.homepage                  = "https://github.com/translationexchange/tml-objc"
 
@@ -19,8 +19,8 @@ Pod::Spec.new do |s|
   s.prefix_header_file	      = 'TMLKit/TMLKit/TMLKit-Prefix.pch'
   s.source_files              = 'Classes/**/*.{h,m}', 'TMLKit/TMLKit/**/*.{h,m}'
 
-  s.dependency 'MPColorTools', '~> 1.6'
-  s.dependency 'MBProgressHUD', '~> 0.9'
+  s.dependency 'MPColorTools', '>= 1.6'
+  s.dependency 'MBProgressHUD', '>= 0.9'
   s.dependency 'SSZipArchive'
   s.dependency 'NVHTarGzip'
   s.dependency 'SSKeychain'

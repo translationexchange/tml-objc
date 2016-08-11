@@ -38,7 +38,9 @@
     viewingUser.birthDate = [NSDate dateWithTimeIntervalSince1970:0];
     viewingUser.gender = UserGenderFemale;
     NSBundle *mainBundle = [NSBundle mainBundle];
-    TMLConfiguration *config = [[TML sharedInstance] configuration];
+    TML *tml = [TML sharedInstance];
+    tml.delegate = self;
+    TMLConfiguration *config = [tml configuration];
     [config setDefaultTokenValue:viewingUser forName:TMLViewingUserTokenName];
     [config setDefaultTokenValue:[[mainBundle infoDictionary] objectForKey:@"CFBundleShortVersionString"] forName:@"applicationVersion"];
 
@@ -68,6 +70,11 @@
                                            cancelButtonTitle:@"Cancel"
                                            otherButtonTitles: nil];
     [alert show];
+}
+
+#pragma mark - TMLDelegate
+- (BOOL)shouldSwitchToBundle:(TMLBundle *)bundle {
+    return YES;
 }
 
 @end

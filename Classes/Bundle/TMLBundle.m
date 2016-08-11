@@ -240,12 +240,34 @@ NSString * const TMLBundleErrorsKey = @"errors";
 
 #pragma mark - Languages
 
-- (TMLLanguage *)languageForLocale:(NSString *)locale {
-    TMLLanguage *lang = _availableLanguages[locale];
-    if (lang == nil) {
-        [self loadLocalLanguageForLocale:locale];
+- (NSString *)matchLocale:(NSString *)locale {
+    NSArray *allLocales = [[[self application] languages] valueForKeyPath:@"locale"];
+    NSString *ourLocale = [locale lowercaseString];
+    NSArray *parts = [ourLocale componentsSeparatedByString:@"-"];
+    NSString *lang = parts[0];
+    NSString *result = nil;
+    for (NSString *l in allLocales) {
+        if ([l isEqualToString:ourLocale] == YES) {
+            result = l;
+            break;
+        }
+        else if ([l isEqualToString:lang] == YES) {
+            result = l;
+        }
     }
-    lang = _availableLanguages[locale];
+    return result;
+}
+
+- (TMLLanguage *)languageForLocale:(NSString *)locale {
+    NSString *applicableLocale = [self matchLocale:locale];
+    if (applicableLocale == nil) {
+        return nil;
+    }
+    TMLLanguage *lang = _availableLanguages[applicableLocale];
+    if (lang == nil) {
+        [self loadLocalLanguageForLocale:applicableLocale];
+    }
+    lang = _availableLanguages[applicableLocale];
     return lang;
 }
 

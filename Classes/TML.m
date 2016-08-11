@@ -57,6 +57,12 @@
 
 NSString * const TMLCurrentUserDefaultsKey = @"currentUser";
 
+#if DEBUG
+#define BUNDLE_UPDATE_INTERVAL 60
+#else
+#define BUNDLE_UPDATE_INTERVAL 3600
+#endif
+
 /**
  *  Returns localized version of the string argument.
  *
@@ -374,7 +380,9 @@ static BOOL TMLConfigured;
             [self checkForBundleUpdate:YES completion:^(NSString *version, NSString *path, NSError *error) {
                 if (version != nil && self.translationEnabled == NO) {
                     TMLBundle *newBundle = [TMLBundle bundleWithVersion:version];
-                    if ([newBundle isEqualToBundle:self.currentBundle] == NO) {
+                    if ([newBundle isEqualToBundle:self.currentBundle] == NO
+                        && newBundle != nil
+                        && [self shouldSwitchToBundle:newBundle] == YES) {
                         self.currentBundle = newBundle;
                     }
                 }
@@ -413,9 +421,7 @@ static BOOL TMLConfigured;
         TMLApplication *newApplication = [bundle application];
         TMLInfo(@"Initializing from bundle: %@", bundle.version);
         self.application = newApplication;
-        NSString *ourLocale = [self currentLocale];
-        NSArray *bundleLocales = [bundle locales];
-        if (bundleLocales.count == 0
+        if (bundle.availableLocales.count == 0
             && [bundle isKindOfClass:[TMLAPIBundle class]] == YES) {
             TMLAPIBundle *apiBundle = (TMLAPIBundle *)bundle;
             if ([apiBundle isSyncing] == NO) {
@@ -424,11 +430,9 @@ static BOOL TMLConfigured;
             updateReusableStrings = NO;
         }
         else {
-            NSString *targetLocale = nil;
-            if ([bundleLocales containsObject:ourLocale] == YES) {
-                targetLocale = ourLocale;
-            }
-            else {
+            NSString *ourLocale = [self currentLocale];
+            NSString *targetLocale = [bundle matchLocale:ourLocale];
+            if (targetLocale == nil) {
                 targetLocale = [self defaultLocale];
             }
             BOOL hasTargetLocaleData = [[bundle availableLocales] containsObject:targetLocale];
@@ -480,7 +484,7 @@ static BOOL TMLConfigured;
     NSString *archivedVersion = [archivePath tmlTranslationBundleVersionFromPath];
     BOOL hasNewerArchive = NO;
     if (archivedVersion != nil) {
-        hasNewerArchive = [archivedVersion compareToTMLTranslationBundleVersion:bundle.version] == NSOrderedAscending;
+        hasNewerArchive = [archivedVersion compareToTMLTranslationBundleVersion:bundle.version] == NSOrderedDescending;
     }
     
     TMLBundleManager *bundleManager = [TMLBundleManager defaultManager];
@@ -512,7 +516,7 @@ static BOOL TMLConfigured;
         return nil;
     }
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self matches '^tml_[0-9]+\\.zip'"];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self matches '^tml_[0-9]+\\.(zip|tar\\.gz|tar|gz)'"];
     NSArray *bundles = [contents filteredArrayUsingPredicate:predicate];
     return bundles;
 }
@@ -540,7 +544,15 @@ static BOOL TMLConfigured;
     }
     if (_lastBundleUpdateDate != nil) {
         NSTimeInterval sinceLastUpdate = [[NSDate date] timeIntervalSinceDate:_lastBundleUpdateDate];
-        return (sinceLastUpdate > 60);
+        return (sinceLastUpdate > BUNDLE_UPDATE_INTERVAL);
+    }
+    return YES;
+}
+
+- (BOOL)shouldSwitchToBundle:(TMLBundle *)bundle {
+    id<TMLDelegate>delegate = self.delegate;
+    if ([delegate respondsToSelector:@selector(shouldSwitchToBundle:)] == YES) {
+        return [delegate shouldSwitchToBundle:bundle];
     }
     return YES;
 }
@@ -595,14 +607,14 @@ static BOOL TMLConfigured;
                 finalize(version, nil, nil);
             }
             else {
-                NSString *defaultLocale = [self defaultLocale];
                 NSString *currentLocale = [self currentLocale];
+                NSString *defaultLocale = [self defaultLocale];
                 NSMutableArray *localesToFetch = [NSMutableArray array];
-                if (defaultLocale != nil) {
-                    [localesToFetch addObject:defaultLocale];
-                }
                 if (currentLocale != nil) {
                     [localesToFetch addObject:currentLocale];
+                }
+                if (defaultLocale != nil) {
+                    [localesToFetch addObject:defaultLocale];
                 }
                 [bundleManager installPublishedBundleWithVersion:version
                                                          locales:localesToFetch
@@ -846,8 +858,10 @@ static BOOL TMLConfigured;
         return;
     }
     
+    NSString *effectiveSourceKey = (sourceKey) ? sourceKey : [self currentSource];
+    
     TMLAPIBundle *apiBundle = (TMLAPIBundle *)[TMLBundle apiBundle];
-    [(TMLAPIBundle *)apiBundle addTranslationKey:translationKey forSource:sourceKey];
+    [(TMLAPIBundle *)apiBundle addTranslationKey:translationKey forSource:effectiveSourceKey];
 }
 
 #pragma mark - Configuration
@@ -1355,6 +1369,9 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 
 - (NSString *)currentSource {
     NSString *source = (NSString *)[self blockOptionForKey:TMLSourceOptionName];
+    if (source == nil) {
+        source = self.configuration.defaultSourceName;
+    }
     if (source == nil) {
         source = [[TMLSource defaultSource] key];
     }

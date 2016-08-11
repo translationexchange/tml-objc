@@ -146,9 +146,9 @@
     
     if ([tml hasLocalTranslationsForLocale:newLocale] == NO) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.labelText = TMLLocalizedString(@"Switching language...");
+        hud.label.text = TMLLocalizedString(@"Switching language...");
         hud.delegate = self;
-        [hud show:YES];
+        [hud showAnimated:YES];
     }
 
     [tml changeLocale:newLocale
@@ -159,7 +159,7 @@
               }
           }
           if (hud != nil) {
-              [hud hide:YES];
+              [hud hideAnimated:YES];
           }
           else {
               dispatch_async(dispatch_get_main_queue(), ^{

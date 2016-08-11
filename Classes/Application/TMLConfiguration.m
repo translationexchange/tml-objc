@@ -45,6 +45,10 @@
 #define TMLGatewayHost @"https://gateway.translationexchange.com"
 #endif
 
+#ifndef TMLCDNHost
+#define TMLCDNHost @"https://cdn.translationexchange.com"
+#endif
+
 NSString * const TMLApplicationKeyDefaultsKey = @"applicationKey";
 NSString * const TMLDefaultLocaleDefaultsKey = @"defaultLocale";
 NSString * const TMLCurrentLocaleDefaultsKey = @"currentLocale";
@@ -75,8 +79,10 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
         self.apiURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/v1", TMLServiceHost]];
         self.translationCenterURL = [NSURL URLWithString:TMLTranslationCenterHost];
         self.gatewayURL = [NSURL URLWithString:TMLGatewayHost];
+        self.cdnURL = [NSURL URLWithString:TMLCDNHost];
         self.localizeNIBStrings = YES;
         self.automaticallyReloadDataBackedViews = YES;
+        self.timeoutIntervalForRequest = 60.;
 #if DEBUG
         self.analyticsEnabled = NO;
 #else
@@ -186,7 +192,7 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
 - (NSString *)currentLocale {
     NSString *locale = [self persistentValueForKey:TMLCurrentLocaleDefaultsKey];
     if (locale == nil) {
-        return self.defaultLocale;
+        return [[NSLocale preferredLanguages] firstObject];
     }
     return locale;
 }

@@ -9,6 +9,7 @@ before_install:
     - sudo gem install cocoapods --no-prerelease --no-rdoc --no-ri --no-document
     - brew update
     - brew uninstall xctool && brew install xctool --HEAD
+    - pod repo update >&/dev/null
     - cd TMLKit && pod install && pod update && cd ..
     - cd Demo && pod install && pod update && cd ..
     - cd TMLSandbox && pod install && pod update && cd ..
