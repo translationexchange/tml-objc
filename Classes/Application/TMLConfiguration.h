@@ -63,8 +63,6 @@
 
 @property(nonatomic, assign, getter=isTranslationEnabled) BOOL translationEnabled;
 
-@property(nonatomic) BOOL inContextTranslatorEnabled;
-
 #pragma mark - Automatic reloading
 /**
  *  If YES, TMLKit will automatically reload UITableView instances when it's updating reusable localized strings
