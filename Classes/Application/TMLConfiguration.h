@@ -92,6 +92,8 @@
 @property (nonatomic, assign) NSTimeInterval timeoutIntervalForRequest;
 
 #pragma mark -
+- (instancetype)initWithApplicationKey:(NSString *)applicationKey
+                           accessToken:(NSString *)accessToken __attribute__((deprecated));
 - (instancetype)initWithApplicationKey:(NSString *)applicationKey;
 @property(readonly, nonatomic, getter=isValidConfiguration) BOOL validConfiguration;
 

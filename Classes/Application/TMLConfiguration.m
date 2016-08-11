@@ -70,6 +70,12 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
     return [self initWithApplicationKey:nil];
 }
 
+- (instancetype)initWithApplicationKey:(NSString *)applicationKey
+                           accessToken:(NSString *)accessToken
+{
+    return [self initWithApplicationKey:applicationKey];
+}
+
 - (instancetype)initWithApplicationKey:(NSString *)applicationKey {
     if (self = [super init]) {
         self.applicationKey = applicationKey;
