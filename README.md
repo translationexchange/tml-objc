@@ -586,13 +586,17 @@ First of all - notice that we are using TMLLocalizedAttributedString() and not T
 In-App Translator
 ==================
 
-TMLKit supports translation of strings right from within the app. Assuming your application is configured with both *application key* and *access token*, you can enable **In-App Translation** mode like this:
+TMLKit supports translation of strings right from within the app. By performing a special, and customizable gesture, TMLKit will switch to live translation mode. This will require TMLKit to first authenticate the translator with TranslationExchange service. To programatically enable live translation mode:
 
 ```objc
-TMLSetTranslationEnabled(YES); // NO argument disables
+TMLActivateTranslation(YES); // NO argument disables
 ```
 
-Please note, that if your TranslationExchange project configuration disallows **Inline Translations** - TMLKit will honor that setting and ignore TMLSetTranslationEnabled() call.
+This feature is allowed by default, but can be disabled via TMLConfiguration:
+
+```objc
+TMLSharedConfiguration().disallowTranslation = YES;
+```
 
 Once the **In-App Translation** mode is enabled - tap and hold on any localized string on the screen - TMLKit will bring up Translator interface for that specific string. From there you can add/remove and otherwise manage translations of that string.
 

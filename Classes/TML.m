@@ -293,11 +293,8 @@ static BOOL TMLConfigured;
                            options:NSKeyValueObservingOptionNew
                            context:nil];
         
-        self.translationEnabled = configuration.translationEnabled;
-        if (self.translationEnabled == YES) {
-            TMLAPIBundle *apiBundle = (TMLAPIBundle *)[TMLBundle apiBundle];
-            self.currentBundle = apiBundle;
-            [apiBundle setNeedsSync];
+        if (self.translationActive == YES && configuration.disallowTranslation == YES) {
+            self.translationActive = NO;
         }
         
         [self initTranslationBundle:^(TMLBundle *bundle) {
@@ -378,7 +375,7 @@ static BOOL TMLConfigured;
     else {
         if ([self shouldCheckForBundleUpdate] == YES) {
             [self checkForBundleUpdate:YES completion:^(NSString *version, NSString *path, NSError *error) {
-                if (version != nil && self.translationEnabled == NO) {
+                if (version != nil && self.translationActive == NO) {
                     TMLBundle *newBundle = [TMLBundle bundleWithVersion:version];
                     if ([newBundle isEqualToBundle:self.currentBundle] == NO
                         && newBundle != nil
@@ -390,13 +387,17 @@ static BOOL TMLConfigured;
         }
     }
     
-    [self updateTranslationRecognizers];
+    [self setupTranslationActivationGestureRecognizer];
+    
     // We might have enabled inline translation before application launched
     // and before we had a window to which we'd add gesture recognizers.
     // Setter method has done all the required work, we just need to ensure
     // the gesture recognizer is added
-    if (_translationEnabled == YES) {
+    if (_translationActive == YES) {
         [self setupInlineTranslationGestureRecognizer];
+    }
+    else {
+        [self teardownInlineTranslationGestureRecognizer];
     }
     
     [[TMLAnalytics sharedInstance] startAnalyticsTimerIfNecessary];
@@ -452,11 +453,6 @@ static BOOL TMLConfigured;
     
     if (updateReusableStrings == YES) {
         [self updateReusableTMLStringsOfAllRegisteredObjects];
-    }
-    
-    // TODO: this should probably be getting handled elsewhere
-    if ([self.application isInlineTranslationsEnabled] == NO) {
-        self.configuration.translationEnabled = NO;
     }
 }
 
@@ -647,8 +643,10 @@ static BOOL TMLConfigured;
         return;
     }
     _application = application;
-    self.configuration.defaultLocale = application.defaultLocale;
-    [self updateTranslationRecognizers];
+    TMLConfiguration *config = self.configuration;
+    if (config.defaultLocale == nil) {
+        config.defaultLocale = application.defaultLocale;
+    }
 }
 
 #pragma mark - Translating
@@ -866,34 +864,20 @@ static BOOL TMLConfigured;
 
 #pragma mark - Configuration
 
-- (void)updateTranslationRecognizers {
-    if ([[UIApplication sharedApplication] keyWindow] == nil) {
+- (void)setTranslationActive:(BOOL)translationActive {
+    if (_translationActive == translationActive) {
         return;
     }
-    TMLApplication *application = self.application;
-    if (application.inlineTranslationsEnabled == YES) {
-        [self setupTranslationActivationGestureRecognizer];
-    }
-    else {
-        [self teardownTranslationActivationGestureRecognizer];
-    }
-}
-
-- (void)setTranslationEnabled:(BOOL)translationEnabled {
-    if (_translationEnabled == translationEnabled) {
-        return;
-    }
-    _translationEnabled = translationEnabled;
+    _translationActive = translationActive;
     TMLBundle *newBundle = nil;
-    if (translationEnabled == YES) {
+    if (translationActive == YES) {
         newBundle = [TMLBundle apiBundle];
     }
     else {
         newBundle = [TMLBundle mainBundle];
     }
     self.currentBundle = newBundle;
-    self.configuration.translationEnabled = translationEnabled;
-    if (translationEnabled == YES) {
+    if (translationActive == YES) {
         if ([[UIApplication sharedApplication] keyWindow] != nil) {
             [self setupInlineTranslationGestureRecognizer];
         }
@@ -901,15 +885,6 @@ static BOOL TMLConfigured;
     else {
         [self teardownInlineTranslationGestureRecognizer];
     }
-}
-
-- (BOOL)isInlineTranslationsEnabled {
-    if (self.application == nil) {
-        // application may start up w/o any project metadata (no release available locally or on CDN)
-        // however, we could still try to comminicate with the API
-        return YES;
-    }
-    return [self.application isInlineTranslationsEnabled];
 }
 
 #pragma mark - Gesture Recognizer
@@ -1003,7 +978,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 
 - (void)translationActivationGestureRecognized:(UIGestureRecognizer *)gestureRecognizer {
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        if (self.translationEnabled == NO) {
+        if (self.translationActive == NO) {
             // TODO: check if current user can use inline translation
 //            TMLTranslator *translator = self.currentUser.translator;
 //            if (translator == nil) {
@@ -1072,7 +1047,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 }
 
 - (void)toggleActiveTranslation {
-    BOOL translationEnabled = self.translationEnabled;
+    BOOL translationActive = self.translationActive;
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
     UIColor *backgroundColor = nil;
     
@@ -1080,7 +1055,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
         _translationActivationView = [[TMLTranslationActivationView alloc] initWithFrame:window.bounds];
     }
     
-    if (translationEnabled) {
+    if (translationActive) {
         backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.77];
     }
     else {
@@ -1100,7 +1075,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     if (_translationActivationView.superview == nil) {
         [window addSubview:_translationActivationView];
     }
-    self.translationEnabled = !self.translationEnabled;
+    self.translationActive = !self.translationActive;
 }
 
 - (void)inlineTranslationGestureRecognized:(UIGestureRecognizer *)gestureRecognizer {
@@ -1259,7 +1234,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     [self setupTranslationActivationGestureRecognizer];
     if (controller.presentingViewController != nil) {
         [controller.presentingViewController dismissViewControllerAnimated:YES completion:^{
-            [self setTranslationEnabled:YES];
+            self.translationActive = YES;
             [self presentActiveTranslationOptions];
         }];
     }
@@ -1271,7 +1246,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     self.currentUser = nil;
     if (controller.presentingViewController != nil) {
         [controller.presentingViewController dismissViewControllerAnimated:YES completion:^{
-            [self setTranslationEnabled:NO];
+            self.translationActive = NO;
         }];
     }
 }

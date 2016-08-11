@@ -150,12 +150,7 @@
     cell.accessoryType = UITableViewCellAccessoryNone;
     if (indexPath.section == 2 && indexPath.row == 1) {
         TML *tml = [TML sharedInstance];
-        if ([tml isInlineTranslationsEnabled] == NO) {
-            cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        }
-        else {
-            cell.accessoryType = (tml.translationEnabled == YES) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-        }
+        cell.accessoryType = (tml.translationActive == YES) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
     }
     cell.textLabel.text = TMLLocalizedString(title);
     return cell;
@@ -180,7 +175,7 @@
             }
         } else if (indexPath.row == 1) {
             TML *tml = [TML sharedInstance];
-            tml.translationEnabled = !tml.translationEnabled;
+            tml.translationActive = !tml.translationActive;
             [tableView reloadData];
         } else if (indexPath.row == 2) {
             [[TML sharedInstance] removeLocalizationData];

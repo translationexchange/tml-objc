@@ -53,7 +53,7 @@ NSString * const TMLApplicationKeyDefaultsKey = @"applicationKey";
 NSString * const TMLDefaultLocaleDefaultsKey = @"defaultLocale";
 NSString * const TMLCurrentLocaleDefaultsKey = @"currentLocale";
 NSString * const TMLPreviousLocaleDefaultsKey = @"previousLocale";
-NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
+NSString * const TMLDisallowTranslationDefaultsKey = @"disallowTranslation";
 
 
 @interface TMLConfiguration () {
@@ -109,7 +109,7 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:TMLDefaultLocaleDefaultsKey];
     [defaults removeObjectForKey:TMLCurrentLocaleDefaultsKey];
-    [defaults removeObjectForKey:TMLTranslationEnabledDefaultsKey];
+    [defaults removeObjectForKey:TMLDisallowTranslationDefaultsKey];
 }
 
 #pragma mark - Persistence
@@ -167,15 +167,14 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
     [self didChangeValueForKey:@"applicationKey"];
 }
 
-- (BOOL)isTranslationEnabled {
-    return ([[self persistentValueForKey:TMLTranslationEnabledDefaultsKey] boolValue]
-            && self.accessToken.length > 0);
+- (BOOL)isDisallowTranslation {
+    return [[self persistentValueForKey:TMLDisallowTranslationDefaultsKey] boolValue];
 }
 
-- (void)setTranslationEnabled:(BOOL)translationEnabled {
-    [self willChangeValueForKey:@"translationEnabled"];
-    [self setPersistentValue:@(translationEnabled) forKey:TMLTranslationEnabledDefaultsKey];
-    [self didChangeValueForKey:@"translationEnabled"];
+- (void)setDisallowTranslation:(BOOL)disallowTranslation {
+    [self willChangeValueForKey:@"disallowTranslation"];
+    [self setPersistentValue:@(disallowTranslation) forKey:TMLDisallowTranslationDefaultsKey];
+    [self didChangeValueForKey:@"disallowTranslation"];
 }
 
 - (void)setAutomaticallyReloadTableViewsWithReusableLocalizedStrings:(BOOL)automaticallyReloadTableViewsWithReusableLocalizedStrings {

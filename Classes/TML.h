@@ -59,7 +59,7 @@
  *  Conversely, setting this to NO would utilize published translations and 
  *  disallow makging translation changes from within the app.
  */
-@property(nonatomic, assign) BOOL translationEnabled;
+@property(nonatomic, assign, getter=isTranslationActive) BOOL translationActive;
 
 /**
  *  Holds the current user object
@@ -422,12 +422,6 @@
 - (void)registerObjectWithReusableLocalizedStrings:(id)object;
 
 /**
- *  Readonly property indicating whether currently associated Translation Exchange Project 
- *  allows translation of strings from within the app.
- */
-@property(nonatomic, readonly, getter=isInlineTranslationsEnabled) BOOL inlineTranslationsEnabled;
-
-/**
  *  Removes all stored translation data.
  *
  *  That includes all of the translation bundles whether they were retrieved from an archive
@@ -563,7 +557,10 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...);
     [[TML sharedInstance] endBlockWithOptions]
 
 #define TMLSetTranslationEnabled(translationEnabled)\
-    [[TML sharedInstance] setTranslationEnabled:translationEnabled]
+    [[TML sharedInstance] setTranslationActive:translationEnabled]
+
+#define TMLActivateTranslation(active)\
+    [[TML sharedInstance] setTranslationActive:active]
 
 #define TMLPresentLanguagePicker() \
     [[TML sharedInstance] presentLanguageSelectorController]

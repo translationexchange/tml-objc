@@ -61,7 +61,7 @@
 
 @property(nonatomic, assign) BOOL localizeNIBStrings;
 
-@property(nonatomic, assign, getter=isTranslationEnabled) BOOL translationEnabled;
+@property(nonatomic, assign) BOOL disallowTranslation;
 
 #pragma mark - Automatic reloading
 /**
@@ -91,7 +91,7 @@
 
 #pragma mark -
 - (instancetype)initWithApplicationKey:(NSString *)applicationKey
-                           accessToken:(NSString *)accessToken __attribute__((deprecated));
+                           accessToken:(NSString *)accessToken __deprecated;
 - (instancetype)initWithApplicationKey:(NSString *)applicationKey;
 @property(readonly, nonatomic, getter=isValidConfiguration) BOOL validConfiguration;
 
