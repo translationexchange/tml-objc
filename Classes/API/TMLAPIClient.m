@@ -74,6 +74,11 @@ NSString * const TMLAPIOptionsPage = @"page";
  cachePolicy:(NSURLRequestCachePolicy)cachePolicy
 completionBlock:(TMLAPIResponseHandler)completionBlock
 {
+    if (_accessToken == nil) {
+        TMLWarn(@"Ignoring API GET request due to absent access token");
+        return;
+    }
+    
     BOOL includeAllResults = [parameters[TMLAPIOptionsIncludeAll] boolValue];
     NSDictionary *requestParameters = [self prepareAPIParameters:parameters];
     [super get:path
@@ -106,6 +111,11 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
   cachePolicy:(NSURLRequestCachePolicy)cachePolicy
 completionBlock:(TMLAPIResponseHandler)completionBlock
 {
+    if (_accessToken == nil) {
+        TMLWarn(@"Ignoring API GET request due to absent access token");
+        return;
+    }
+    
     NSDictionary *requestParameters = [self prepareAPIParameters:parameters];
     [super post:path
      parameters:requestParameters
