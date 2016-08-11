@@ -226,7 +226,7 @@ NSString * const TMLBundleChangeInfoErrorsKey = @"errors";
                     toDestination:tempPath
                         overwrite:YES
                          password:nil
-                  progressHandler:nil
+                  progressHandler:^(NSString *entry, unz_file_info zipInfo, long entryNumber, long total){}
                 completionHandler:^(NSString *zipPath, BOOL succeeded, NSError *error) {
                     if (error != nil) {
                         TMLError(@"Error uncompressing local translation bundle: %@", error);

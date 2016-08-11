@@ -146,7 +146,7 @@
     
     if ([tml hasLocalTranslationsForLocale:newLocale] == NO) {
         MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-        hud.labelText = TMLLocalizedString(@"Switching language...");
+        hud.label.text = TMLLocalizedString(@"Switching language...");
         hud.delegate = self;
         [hud show:YES];
     }
