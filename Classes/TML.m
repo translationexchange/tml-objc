@@ -1209,10 +1209,11 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     authController.navigationItem.leftBarButtonItem = cancelButton;
     authController.delegate = self;
     [authController deauthorize];
-    [self presentViewController:authController beforePresentation:^(UIViewController *wrapper) {
-        wrapper.modalPresentationStyle = UIModalPresentationFormSheet;
-        wrapper.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
-    }];
+    // deliberately not displaying...
+//    [self presentViewController:authController beforePresentation:^(UIViewController *wrapper) {
+//        wrapper.modalPresentationStyle = UIModalPresentationFormSheet;
+//        wrapper.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+//    }];
 }
 
 - (void)authorizationViewController:(TMLAuthorizationViewController *)controller
@@ -1254,6 +1255,9 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
         [controller.presentingViewController dismissViewControllerAnimated:YES completion:^{
             self.translationActive = NO;
         }];
+    }
+    else {
+        self.translationActive = NO;
     }
 }
 
