@@ -1194,7 +1194,10 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     authController.navigationItem.leftBarButtonItem = cancelButton;
     authController.delegate = self;
     [authController authorize];
-    [self presentViewController:authController];
+    [self presentViewController:authController beforePresentation:^(UIViewController *wrapper) {
+        wrapper.modalPresentationStyle = UIModalPresentationFormSheet;
+        wrapper.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    }];
 }
 
 - (void)signout {
@@ -1206,7 +1209,10 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     authController.navigationItem.leftBarButtonItem = cancelButton;
     authController.delegate = self;
     [authController deauthorize];
-    [self presentViewController:authController];
+    [self presentViewController:authController beforePresentation:^(UIViewController *wrapper) {
+        wrapper.modalPresentationStyle = UIModalPresentationFormSheet;
+        wrapper.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    }];
 }
 
 - (void)authorizationViewController:(TMLAuthorizationViewController *)controller
@@ -1275,6 +1281,14 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 
 - (void)presentViewController:(UIViewController *)viewController {
     UINavigationController *wrapper = [[UINavigationController alloc] initWithRootViewController:viewController];
+    [self _presentViewController:wrapper];
+}
+
+- (void)presentViewController:(UIViewController *)viewController beforePresentation:(void(^)(UIViewController *))beforePresentationBlock {
+    UINavigationController *wrapper = [[UINavigationController alloc] initWithRootViewController:viewController];
+    if (beforePresentationBlock != nil) {
+        beforePresentationBlock(wrapper);
+    }
     [self _presentViewController:wrapper];
 }
 
