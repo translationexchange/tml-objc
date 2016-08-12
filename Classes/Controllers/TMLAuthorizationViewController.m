@@ -43,9 +43,9 @@ NSString * const TMLAuthorizationUserKey = @"user";
         self.deauthorizationURL = components.URL;
         
         WKUserContentController *webContentController = [[WKUserContentController alloc] init];
-        [webContentController addScriptMessageHandler:self name:@"iOSHandler"];
+        [webContentController addScriptMessageHandler:self name:@"tmlMessageHandler"];
         
-        WKUserScript *userScript = [[WKUserScript alloc] initWithSource:@"var iOSHandler = window.webkit.messageHandlers.iOSHandler;" injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];
+        WKUserScript *userScript = [[WKUserScript alloc] initWithSource:@"var tmlMessageHandler = window.webkit.messageHandlers.tmlMessageHandler;" injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];
         [webContentController addUserScript:userScript];
         
         WKWebViewConfiguration *webViewConfig = [[WKWebViewConfiguration alloc] init];
