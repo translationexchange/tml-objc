@@ -51,7 +51,7 @@
 #import "TMLTranslationActivationView.h"
 #import "TMLTranslationKey.h"
 #import "TMLTranslatorViewController.h"
-#import "TMLUser.h"
+#import "TMLBasicUser.h"
 #import "UIResponder+TML.h"
 #import "UIView+TML.h"
 
@@ -189,7 +189,7 @@ static BOOL TMLConfigured;
 @property(strong, nonatomic) TMLConfiguration *configuration;
 @property(strong, nonatomic) TMLAPIClient *apiClient;
 @property(nonatomic, readwrite) TMLBundle *currentBundle;
-@property(nonatomic, readwrite) TMLUser *currentUser;
+@property(nonatomic, readwrite) TMLBasicUser *currentUser;
 @end
 
 @implementation TML
@@ -980,7 +980,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
         if (self.translationActive == NO) {
             // TODO: check if current user can use inline translation
-//            TMLTranslator *translator = self.currentUser.translator;
+//            TMLBasicUser *translator = self.currentUser;
 //            if (translator == nil) {
 //                return;
 //            }
@@ -998,7 +998,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 }
 
 - (void)presentActiveTranslationOptions {
-    TMLTranslator *translator = self.currentUser.translator;
+    TMLBasicUser *translator = self.currentUser;
     NSString *initials = [translator initials];
     TMLAlertController *alertController = [TMLAlertController alertControllerWithTitle:translator.displayName
                                                                                message:@"TranslationExchange"
@@ -1226,7 +1226,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     
     TMLConfiguration *config = [self configuration];
     config.accessToken = accessToken;
-    TMLUser *user = userInfo[TMLAuthorizationUserKey];
+    TMLBasicUser *user = userInfo[TMLAuthorizationUserKey];
     self.currentUser = user;
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if (user != nil) {

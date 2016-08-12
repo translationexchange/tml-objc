@@ -9,8 +9,9 @@
 #import "NSObject+TMLJSON.h"
 #import "TML.h"
 #import "TMLAPIClient.h"
+#import "TMLAPISerializer.h"
 #import "TMLAuthorizationViewController.h"
-#import "TMLUser.h"
+#import "TMLTranslator.h"
 #import <WebKit/WebKit.h>
 
 NSString * const TMLAuthorizationAccessTokenKey = @"access_token";
@@ -72,7 +73,7 @@ NSString * const TMLAuthorizationUserKey = @"user";
     [self.webView loadRequest:request];
 }
 
-- (void) setAccessToken:(NSString *)accessToken forUser:(TMLUser *)user {
+- (void) setAccessToken:(NSString *)accessToken forUser:(TMLBasicUser *)user {
     [[TMLAuthorizationController sharedAuthorizationController] setAccessToken:accessToken
                                                                     forAccount:user.username];
     [self notifyDelegateWithGrantedAccessToken:accessToken user:user];
@@ -86,7 +87,7 @@ NSString * const TMLAuthorizationUserKey = @"user";
 }
 
 #pragma mark - Notifying Delegate
-- (void)notifyDelegateWithGrantedAccessToken:(NSString *)accessToken user:(TMLUser *)user {
+- (void)notifyDelegateWithGrantedAccessToken:(NSString *)accessToken user:(TMLBasicUser *)user {
     id<TMLAuthorizationViewControllerDelegate>delegate = self.delegate;
     if ([delegate respondsToSelector:@selector(authorizationViewController:didGrantAuthorization:)] == YES) {
         NSDictionary *authInfo = @{
@@ -150,7 +151,7 @@ NSString * const TMLAuthorizationUserKey = @"user";
             TML *tml = [TML sharedInstance];
             TMLAPIClient *apiClient = [[TMLAPIClient alloc] initWithBaseURL:tml.configuration.apiURL
                                                                 accessToken:accessToken];
-            TMLUser *user = [TMLAPISerializer materializeObject:result[@"translator"] withClass:[TMLUser class]];
+            TMLTranslator *user = [TMLAPISerializer materializeObject:result[@"translator"] withClass:[TMLTranslator class]];
             [self setAccessToken:accessToken forUser:user];
         }
     }

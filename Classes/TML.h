@@ -32,6 +32,7 @@
 #import <UIKit/UIKit.h>
 
 #import "TMLApplication.h"
+#import "TMLBasicUser.h"
 #import "TMLBundle.h"
 #import "TMLConfiguration.h"
 
@@ -64,7 +65,7 @@
 /**
  *  Holds the current user object
  */
-@property(nonatomic, readonly) TMLUser *currentUser;
+@property(nonatomic, readonly) TMLBasicUser *currentUser;
 
 /**
  *  Holds block options
