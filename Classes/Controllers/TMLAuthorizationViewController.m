@@ -34,7 +34,7 @@ NSString * const TMLAuthorizationUserKey = @"user";
         NSURL *gatewayURL = [[[TML sharedInstance] configuration] gatewayURL];
         NSURL *url = [gatewayURL copy];
         NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
-        components.query = @"s=iOS";
+        components.query = [NSString stringWithFormat:@"s=iOS&app_id=%@", TMLSharedConfiguration().applicationKey];
         self.authorizationURL = components.URL;
         
         url = [gatewayURL URLByAppendingPathComponent:@"logout"];
@@ -43,9 +43,9 @@ NSString * const TMLAuthorizationUserKey = @"user";
         self.deauthorizationURL = components.URL;
         
         WKUserContentController *webContentController = [[WKUserContentController alloc] init];
-        [webContentController addScriptMessageHandler:self name:@"trex"];
+        [webContentController addScriptMessageHandler:self name:@"iOSHandler"];
         
-        WKUserScript *userScript = [[WKUserScript alloc] initWithSource:@"parent = window.webkit.messageHandlers.trex;" injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];
+        WKUserScript *userScript = [[WKUserScript alloc] initWithSource:@"var iOSHandler = window.webkit.messageHandlers.iOSHandler;" injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];
         [webContentController addUserScript:userScript];
         
         WKWebViewConfiguration *webViewConfig = [[WKWebViewConfiguration alloc] init];
@@ -150,14 +150,8 @@ NSString * const TMLAuthorizationUserKey = @"user";
             TML *tml = [TML sharedInstance];
             TMLAPIClient *apiClient = [[TMLAPIClient alloc] initWithBaseURL:tml.configuration.apiURL
                                                                 accessToken:accessToken];
-            [apiClient getUserInfo:^(TMLUser *user, TMLAPIResponse *response, NSError *error) {
-                if (error != nil) {
-                    TMLError(@"Error fetching user info using new access token: %@", error);
-                }
-                else if (user != nil) {
-                    [self setAccessToken:accessToken forUser:user];
-                }
-            }];
+            TMLUser *user = [TMLAPISerializer materializeObject:result[@"translator"] withClass:[TMLUser class]];
+            [self setAccessToken:accessToken forUser:user];
         }
     }
     else {
