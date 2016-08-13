@@ -40,6 +40,8 @@
 #import "TMLTranslationKey.h"
 
 NSString * const TMLApplicationInlineTranslationFeatureKey = @"inline_translations";
+NSString * const TMLApplicationMTCURLKey = @"mobile_translation_center";
+NSString * const TMLApplicationMTCTranslationURLKey = @"mobile_translation_center_key";
 
 @interface TMLApplication() {
     TMLLanguage *_defaultLanguage;
@@ -70,6 +72,7 @@ NSString * const TMLApplicationInlineTranslationFeatureKey = @"inline_translatio
     self.defaultLocale = [aDecoder decodeObjectForKey:@"default_locale"];
     self.threshold = [aDecoder decodeIntegerForKey:@"threshold"];
     self.features = [aDecoder decodeObjectForKey:@"features"];
+    self.tools = [aDecoder decodeObjectForKey:@"tools"];
     NSArray *languages = [aDecoder decodeObjectForKey:@"languages"];
     if (languages != nil && [aDecoder isKindOfClass:[TMLAPISerializer class]] == YES) {
         languages = [TMLAPISerializer materializeObject:languages
@@ -189,6 +192,28 @@ NSString * const TMLApplicationInlineTranslationFeatureKey = @"inline_translatio
 
 - (BOOL)isInlineTranslationsEnabled {
     return [_features[TMLApplicationInlineTranslationFeatureKey] boolValue];
+}
+
+#pragma mark - Translation Center
+
+- (NSURL *)translationCenterURL {
+    return [NSURL URLWithString:self.tools[TMLApplicationMTCURLKey]];
+}
+
+- (NSString *)translationURLPattern {
+    return self.tools[TMLApplicationMTCTranslationURLKey];
+}
+
+- (NSURL *)translationCenterURLForTranslationKey:(NSString *)key
+                                          locale:(NSString *)locale
+{
+    NSString *url = [self translationURLPattern];
+    if (url == nil) {
+        return nil;
+    }
+    url = [url stringByReplacingOccurrencesOfString:@"{translation_key}" withString:key];
+    url = [url stringByReplacingOccurrencesOfString:@"{locale}" withString:locale];
+    return [NSURL URLWithString:url];
 }
 
 @end

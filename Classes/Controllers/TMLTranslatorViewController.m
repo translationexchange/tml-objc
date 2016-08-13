@@ -84,22 +84,9 @@
 }
 
 - (NSURL *) translationCenterURL {
-    NSURL *url = nil;
-    TMLApplication *app = [TML sharedInstance].application;
-    NSString *host = [app.tools objectForKey: @"host"];
-    if (host != nil) {
-        url = [NSURL URLWithString:host];
-    }
-    else {
-        url = [[[TML sharedInstance] configuration] translationCenterURL];
-    }
-    
-    TMLLanguage *lang = [[TML sharedInstance] currentLanguage];
-    NSString *urlString = [NSString stringWithFormat:@"%@/#/phrases/%@/translate", url, self.translationKey];
-    url = [NSURL URLWithString:urlString];
-    
-    NSMutableDictionary *query = [NSMutableDictionary dictionaryWithDictionary:@{@"locale": lang.locale}];
-    url = [url URLByAppendingQueryParameters:query];
+    TML *tml = [TML sharedInstance];
+    TMLApplication *app = tml.application;
+    NSURL *url = [app translationCenterURLForTranslationKey:self.translationKey locale:tml.currentLocale];
     return url;
 }
 

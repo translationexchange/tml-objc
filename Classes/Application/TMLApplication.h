@@ -62,6 +62,12 @@
 // Languages
 @property(nonatomic, strong) NSArray *languages;
 
+// Mobile Translation Center
+@property(nonatomic, strong, readonly) NSURL *translationCenterURL;
+
+// Holds URL pattern used for constructing URL to mobile translation center for specific translation key
+@property(nonatomic, strong, readonly) NSString *translationURLPattern;
+
 /**
  *  Readonly accessor for the default language.
  *  This is really a shortcut for calling -languageForLocale: witih value of defaultLocale property.
@@ -79,6 +85,9 @@
 - (TMLLanguage *) languageForLocale:(NSString *)locale;
 
 - (TMLSource *) sourceForKey:(NSString *)sourceKey;
+
+- (NSURL *)translationCenterURLForTranslationKey:(NSString *)key
+                                          locale:(NSString *)locale;
 
 @end
 
