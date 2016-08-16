@@ -211,8 +211,11 @@ NSString * const TMLApplicationMTCTranslationURLKey = @"mobile_translation_cente
     if (url == nil) {
         return nil;
     }
+    
     url = [url stringByReplacingOccurrencesOfString:@"{translation_key}" withString:key];
     url = [url stringByReplacingOccurrencesOfString:@"{locale}" withString:locale];
+    url = [url stringByReplacingOccurrencesOfString:@"{access_token}" withString:TMLSharedConfiguration().accessToken];
+    
     return [NSURL URLWithString:url];
 }
 
