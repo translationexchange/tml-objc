@@ -17,6 +17,10 @@
 NSString * const TMLAuthorizationAccessTokenKey = @"access_token";
 NSString * const TMLAuthorizationUserKey = @"user";
 
+@interface TML(Private)
+- (void)presentAlertController:(UIAlertController *)alertController;
+@end
+
 @interface TMLAuthorizationViewController ()<WKScriptMessageHandler, WKNavigationDelegate>
 @property (strong, nonatomic) WKWebView *webView;
 @property (strong, nonatomic) NSURL *authorizationURL;
@@ -154,6 +158,14 @@ NSString * const TMLAuthorizationUserKey = @"user";
             TMLTranslator *user = [TMLAPISerializer materializeObject:result[@"translator"] withClass:[TMLTranslator class]];
             [self setAccessToken:accessToken forUser:user];
         }
+    }
+    else if ([@"error" isEqualToString:result[@"status"]] == YES) {
+        NSString *message = result[@"message"];
+        if (message == nil) {
+            message = @"Unknown Error";
+        }
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:TMLLocalizedString(@"Error") message:message preferredStyle:UIAlertControllerStyleAlert];
+        [[TML sharedInstance] presentAlertController:alert];
     }
     else {
         TMLWarn(@"Unrecognized message posted");
