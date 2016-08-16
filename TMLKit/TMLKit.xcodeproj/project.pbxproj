@@ -1059,8 +1059,8 @@
 				C4FCD25E1C0FC7A200D723BC /* Sources */,
 				C4FCD25F1C0FC7A200D723BC /* Frameworks */,
 				C4FCD2601C0FC7A200D723BC /* Resources */,
-				2C0454231AA105BF308F1AE3 /* Embed Pods Frameworks */,
-				B83F3BC5ED7231378FED575E /* Copy Pods Resources */,
+				2C0454231AA105BF308F1AE3 /* 📦 Embed Pods Frameworks */,
+				B83F3BC5ED7231378FED575E /* 📦 Copy Pods Resources */,
 				C4FFC6131C7FFA5F004F6C4D /* CopyFiles */,
 			);
 			buildRules = (
