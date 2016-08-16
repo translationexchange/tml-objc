@@ -94,7 +94,7 @@
     [super viewDidLoad];
     
     NSURL *url = [self translationCenterURL];
-    NSURLRequest *request = [NSURLRequest requestWithURL:url];
+    NSURLRequest *request = (url == nil) ? nil : [NSURLRequest requestWithURL:url];
     if (request != nil) {
         [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         [self.webView loadRequest:request];
