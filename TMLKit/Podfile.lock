@@ -6,7 +6,7 @@ PODS:
   - SSZipArchive (1.5)
 
 DEPENDENCIES:
-  - MBProgressHUD (>= 0.9)
+  - MBProgressHUD
   - MPColorTools (>= 1.6)
   - NVHTarGzip
   - SSKeychain

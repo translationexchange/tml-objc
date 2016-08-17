@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
   s.source_files              = 'Classes/**/*.{h,m}', 'TMLKit/TMLKit/**/*.{h,m}'
 
   s.dependency 'MPColorTools', '>= 1.6'
-  s.dependency 'MBProgressHUD', '>= 0.9'
+  s.dependency 'MBProgressHUD'
   s.dependency 'SSZipArchive'
   s.dependency 'NVHTarGzip'
   s.dependency 'SSKeychain'
