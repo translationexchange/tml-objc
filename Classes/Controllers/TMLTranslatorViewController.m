@@ -30,16 +30,17 @@
 
 
 #import "MBProgressHUD.h"
+#import "NSURL+TML.h"
 #import "TML.h"
 #import "TMLApplication.h"
 #import "TMLConfiguration.h"
 #import "TMLLanguage.h"
 #import "TMLTranslatorViewController.h"
-#import "NSURL+TML.h"
+#import <WebKit/WebKit.h>
 
 @interface TMLTranslatorViewController ()
 
-@property (nonatomic, strong) UIWebView *webView;
+@property (nonatomic, strong) WKWebView *webView;
 @property (nonatomic, strong) NSString *translationKey;
 
 - (IBAction) reloadButtonPressed: (id) sender;
@@ -75,12 +76,6 @@
     
     UIBarButtonItem *reloadButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload:)];
     self.navigationItem.rightBarButtonItem = reloadButton;
-
-    UIWebView *webView = [[UIWebView alloc] initWithFrame:ourView.bounds];
-    [webView  setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-    webView.delegate = self;
-    self.webView = webView;
-    [self.view addSubview:webView];
 }
 
 - (NSURL *) translationCenterURL {
@@ -96,41 +91,8 @@
     NSURL *url = [self translationCenterURL];
     NSURLRequest *request = (url == nil) ? nil : [NSURLRequest requestWithURL:url];
     if (request != nil) {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         [self.webView loadRequest:request];
     }
-}
-
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    
-    NSString *path = request.URL.path;
-    if (path && [path rangeOfString:@"dismiss"].location != NSNotFound) {
-        [self dismiss:webView];
-        return NO;
-    }
-    else if ([path rangeOfString:@"logout"].location != NSNotFound) {
-        NSURL *url = request.URL;
-        NSString *scheme = url.scheme;
-        NSString *host = url.host;
-        if (scheme != nil && host != nil) {
-            NSString *origin = [[scheme stringByAppendingString:@"://"] stringByAppendingString:host];
-        NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-        NSArray* facebookCookies = [cookies cookiesForURL:[NSURL URLWithString:origin]];
-        for (NSHTTPCookie* cookie in facebookCookies) {
-            [cookies deleteCookie:cookie];
-        }
-    }
-    }
-    
-    return YES;
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-}
-
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    TMLError(@"Error loading request: %@", error);
 }
 
 - (IBAction) backButtonPressed: (id) sender {
@@ -142,38 +104,20 @@
 }
 
 - (IBAction) actionButtonPressed: (id) sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[self.webView.request URL] absoluteString]]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[self.webView URL] absoluteString]]];
 }
 
 - (IBAction)reloadButtonPressed:(id)sender {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [self reload:sender];
 }
 
 -(IBAction)dismiss:(id)sender {
     [[TML sharedInstance] reloadLocalizationData];
-    self.webView.delegate = nil;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (IBAction)reload:(id)sender {
-    [self signoutIfError];
     [self.webView reload];
-}
-
-- (void)signoutIfError {
-    if ([NSThread isMainThread] == NO) {
-        [self performSelectorOnMainThread:_cmd withObject:nil waitUntilDone:NO];
-        return;
-    }
-    
-    UIWebView *webView = self.webView;
-    @try {
-        [webView stringByEvaluatingJavaScriptFromString:@"(function(){ var i=document.createNodeIterator(document.body, NodeFilter.SHOW_COMMENT); var n=null; while (n = i.nextNode()) {if (n.textContent.match(\"public/500.html\")) { document.location.href = document.location.origin + \"/logout\"; } } })()"];
-    }
-    @catch(NSException *e) {
-        TMLDebug(@"Error signing out from translation center: %@", e);
-    }
 }
 
 @end

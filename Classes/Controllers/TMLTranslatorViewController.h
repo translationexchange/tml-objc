@@ -28,11 +28,12 @@
  *  THE SOFTWARE.
  */
 
+#import "TMLViewController.h"
+#import "TMLWebViewController.h"
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "TMLViewController.h"
 
-@interface TMLTranslatorViewController : TMLViewController <UIWebViewDelegate>
+@interface TMLTranslatorViewController : TMLWebViewController <UIWebViewDelegate>
 
 -(instancetype)initWithTranslationKey:(NSString *)translationKey;
 

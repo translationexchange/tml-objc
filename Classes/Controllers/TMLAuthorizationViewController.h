@@ -8,13 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "TMLAuthorizationController.h"
+#import "TMLWebViewController.h"
 
 extern NSString * const TMLAuthorizationAccessTokenKey;
 extern NSString * const TMLAuthorizationUserKey;
 
 @protocol TMLAuthorizationViewControllerDelegate;
 
-@interface TMLAuthorizationViewController : UIViewController
+@interface TMLAuthorizationViewController : TMLWebViewController
 @property (weak, nonatomic) id<TMLAuthorizationViewControllerDelegate> delegate;
 - (void)authorize;
 - (void)deauthorize;

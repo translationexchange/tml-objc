@@ -50,6 +50,7 @@
 #import "TMLTranslatorViewController.h"
 #import "TMLLanguageSelectorViewController.h"
 #import "TMLViewController.h"
+#import "TMLWebViewController.h"
 
 #import "NSAttributedString+TML.h"
 #import "NSObject+TML.h"

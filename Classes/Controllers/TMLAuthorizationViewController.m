@@ -17,10 +17,6 @@
 NSString * const TMLAuthorizationAccessTokenKey = @"access_token";
 NSString * const TMLAuthorizationUserKey = @"user";
 
-@interface TML(Private)
-- (void)presentAlertController:(UIAlertController *)alertController;
-@end
-
 @interface TMLAuthorizationViewController ()<WKScriptMessageHandler, WKNavigationDelegate>
 @property (strong, nonatomic) WKWebView *webView;
 @property (strong, nonatomic) NSURL *authorizationURL;
@@ -46,28 +42,8 @@ NSString * const TMLAuthorizationUserKey = @"user";
         components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
         components.query = @"s=iOS";
         self.deauthorizationURL = components.URL;
-        
-        WKUserContentController *webContentController = [[WKUserContentController alloc] init];
-        [webContentController addScriptMessageHandler:self name:@"tmlMessageHandler"];
-        
-        WKUserScript *userScript = [[WKUserScript alloc] initWithSource:@"var tmlMessageHandler = window.webkit.messageHandlers.tmlMessageHandler;" injectionTime:WKUserScriptInjectionTimeAtDocumentStart forMainFrameOnly:NO];
-        [webContentController addUserScript:userScript];
-        
-        WKWebViewConfiguration *webViewConfig = [[WKWebViewConfiguration alloc] init];
-        webViewConfig.userContentController = webContentController;
-        
-        WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:webViewConfig];
-        webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        webView.navigationDelegate = self;
-        self.webView = webView;
-        [view addSubview:webView];
     }
     return self;
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [self.view addSubview:self.webView];
 }
 
 #pragma mark - Authorizing
@@ -111,43 +87,25 @@ NSString * const TMLAuthorizationUserKey = @"user";
 
 #pragma mark - WKNavigationDelegate
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
+    [super webView:webView didFinishNavigation:navigation];
     NSURL *url = webView.URL;
     if ([url isEqual:self.deauthorizationURL] == YES) {
         [self notifyDelegateWithRevokedAccess];
     }
 }
 
-#pragma mark - WKScriptMessageHandler
-- (void)userContentController:(WKUserContentController *)userContentController
-      didReceiveScriptMessage:(WKScriptMessage *)message
-{
-    if (message.body == nil) {
-        TMLDebug(@"No body in posted message");
-        return;
-    }
-    
-    NSData *bodyData = [[NSData alloc] initWithBase64EncodedString:message.body options:0];
-    NSString *body = [[NSString alloc] initWithData:bodyData encoding:NSUTF8StringEncoding];
-    NSDictionary *result = nil;
-    if (body != nil) {
-        result = [body tmlJSONObject];
-    }
-    
-    if (result == nil) {
-        TMLDebug(@"Didn't find anything relevant in posted message");
-        return;
-    }
-    
-    if ([@"unauthorized" isEqualToString:result[@"status"]] == YES) {
-        NSURL *authURL = [NSURL URLWithString:result[@"url"]];
+- (void)postedUserInfo:(NSDictionary *)userInfo {
+    [super postedUserInfo:userInfo];
+    if ([@"unauthorized" isEqualToString:userInfo[@"status"]] == YES) {
+        NSURL *authURL = [NSURL URLWithString:userInfo[@"url"]];
         if (authURL == nil) {
             TMLWarn(@"Unauthorized and don't know what to do...");
             return;
         }
         [self.webView loadRequest:[NSURLRequest requestWithURL:authURL]];
     }
-    else if ([@"authorized" isEqualToString:result[@"status"]] == YES) {
-        NSString *accessToken = result[@"access_token"];
+    else if ([@"authorized" isEqualToString:userInfo[@"status"]] == YES) {
+        NSString *accessToken = userInfo[@"access_token"];
         if (accessToken == nil) {
             TMLWarn(@"No authentication token found in posted message");
         }
@@ -155,17 +113,9 @@ NSString * const TMLAuthorizationUserKey = @"user";
             TML *tml = [TML sharedInstance];
             TMLAPIClient *apiClient = [[TMLAPIClient alloc] initWithBaseURL:tml.configuration.apiURL
                                                                 accessToken:accessToken];
-            TMLTranslator *user = [TMLAPISerializer materializeObject:result[@"translator"] withClass:[TMLTranslator class]];
+            TMLTranslator *user = [TMLAPISerializer materializeObject:userInfo[@"translator"] withClass:[TMLTranslator class]];
             [self setAccessToken:accessToken forUser:user];
         }
-    }
-    else if ([@"error" isEqualToString:result[@"status"]] == YES) {
-        NSString *message = result[@"message"];
-        if (message == nil) {
-            message = @"Unknown Error";
-        }
-        UIAlertController *alert = [UIAlertController alertControllerWithTitle:TMLLocalizedString(@"Error") message:message preferredStyle:UIAlertControllerStyleAlert];
-        [[TML sharedInstance] presentAlertController:alert];
     }
     else {
         TMLWarn(@"Unrecognized message posted");
