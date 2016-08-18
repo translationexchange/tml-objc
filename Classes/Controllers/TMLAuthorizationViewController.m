@@ -17,8 +17,7 @@
 NSString * const TMLAuthorizationAccessTokenKey = @"access_token";
 NSString * const TMLAuthorizationUserKey = @"user";
 
-@interface TMLAuthorizationViewController ()<WKScriptMessageHandler, WKNavigationDelegate>
-@property (strong, nonatomic) WKWebView *webView;
+@interface TMLAuthorizationViewController ()
 @property (strong, nonatomic) NSURL *authorizationURL;
 @property (strong, nonatomic) NSURL *deauthorizationURL;
 @end
@@ -27,11 +26,6 @@ NSString * const TMLAuthorizationUserKey = @"user";
 
 - (instancetype)init {
     if (self = [super init]) {
-        UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
-        view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-        view.backgroundColor = [UIColor whiteColor];
-        self.view = view;
-        
         NSURL *gatewayURL = [[[TML sharedInstance] configuration] gatewayURL];
         NSURL *url = [gatewayURL copy];
         NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];

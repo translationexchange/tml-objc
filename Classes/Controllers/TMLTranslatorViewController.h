@@ -33,7 +33,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface TMLTranslatorViewController : TMLWebViewController <UIWebViewDelegate>
+@interface TMLTranslatorViewController : TMLWebViewController
 
 -(instancetype)initWithTranslationKey:(NSString *)translationKey;
 

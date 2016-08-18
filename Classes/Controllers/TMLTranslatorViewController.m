@@ -30,11 +30,13 @@
 
 
 #import "MBProgressHUD.h"
+#import "NSObject+TML.h"
 #import "NSURL+TML.h"
 #import "TML.h"
 #import "TMLApplication.h"
 #import "TMLConfiguration.h"
 #import "TMLLanguage.h"
+#import "TMLTranslation.h"
 #import "TMLTranslatorViewController.h"
 #import <WebKit/WebKit.h>
 
@@ -59,23 +61,17 @@
 - (instancetype)initWithTranslationKey:(NSString *)translationKey {
     if (self = [super init]) {
         self.translationKey = translationKey;
+        self.title = TMLLocalizedString(@"Translate");
+        
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:TMLLocalizedString(@"Done") style:UIBarButtonItemStylePlain target:self action:@selector(dismiss:)];
+        self.navigationItem.leftBarButtonItem = doneButton;
+        
+        UIBarButtonItem *reloadButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload:)];
+        self.navigationItem.rightBarButtonItem = reloadButton;
+        
+        [self translate];
     }
     return self;
-}
-
-- (void) loadView {
-    [super loadView];
-    
-    UIView *ourView = self.view;
-    ourView.backgroundColor = [UIColor colorWithWhite:0.97f alpha:1.0f];
-    
-    self.title = TMLLocalizedString(@"Translate");
-    
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:TMLLocalizedString(@"Done") style:UIBarButtonItemStylePlain target:self action:@selector(dismiss:)];
-    self.navigationItem.leftBarButtonItem = doneButton;
-    
-    UIBarButtonItem *reloadButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload:)];
-    self.navigationItem.rightBarButtonItem = reloadButton;
 }
 
 - (NSURL *) translationCenterURL {
@@ -85,9 +81,7 @@
     return url;
 }
 
-- (void) viewDidLoad {
-    [super viewDidLoad];
-    
+- (void)translate {
     NSURL *url = [self translationCenterURL];
     NSURLRequest *request = (url == nil) ? nil : [NSURLRequest requestWithURL:url];
     if (request != nil) {
@@ -118,6 +112,34 @@
 
 - (IBAction)reload:(id)sender {
     [self.webView reload];
+}
+
+#pragma mark - TMLWebViewController
+- (void)postedUserInfo:(NSDictionary *)userInfo {
+    [super postedUserInfo:userInfo];
+    if (userInfo == nil) {
+        return;
+    }
+    
+    NSString *action = userInfo[@"action"];
+    if ([@"next" isEqualToString:action] == YES) {
+        [self dismiss:nil];
+        return;
+    }
+    
+    NSString *locale = userInfo[@"target_locale"];
+    NSString *label = userInfo[@"translation"];
+    NSString *key = userInfo[@"translation_key"];
+    if (locale == nil || label == nil || key == nil) {
+        TMLDebug(@"No translation data found");
+        return;
+    }
+    
+    TML *tml = [TML sharedInstance];
+    TMLTranslation *translation = [TMLTranslation translationWithKey:key locale:locale label:label];
+    [tml addTranslation:translation locale:locale];
+    [tml updateReusableTMLStrings];
+    [tml reloadLocalizationData];
 }
 
 @end

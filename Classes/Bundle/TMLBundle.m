@@ -321,6 +321,25 @@ NSString * const TMLBundleErrorsKey = @"errors";
     return translations;
 }
 
+- (void)addTranslation:(TMLTranslation *)translation locale:(NSString *)locale {
+    if (self.isMutable == NO) {
+        return;
+    }
+    if (_translations[locale] == nil) {
+        [self loadLocalTranslationsForLocale:locale];
+    }
+    NSMutableDictionary *translations = [_translations[locale] mutableCopy];
+    NSArray *all = translations[translation.translationKey];
+    if (all == nil) {
+        all = [NSArray arrayWithObject:translation];
+    }
+    else {
+        all = [[NSArray arrayWithObject:translation] arrayByAddingObjectsFromArray:all];
+    }
+    translations[translation.translationKey] = all;
+    _translations[locale] = translations;
+}
+
 - (void)loadLocalTranslationsForLocale:(NSString *)aLocale {
     NSString *locale = aLocale;
     NSArray *availableLocales = self.availableLocales;

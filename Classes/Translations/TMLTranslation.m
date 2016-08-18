@@ -38,6 +38,17 @@
 
 @implementation TMLTranslation
 
++ (instancetype)translationWithKey:(NSString *)translationKey
+                            locale:(NSString *)locale
+                             label:(NSString *)label
+{
+    TMLTranslation *instance = [[TMLTranslation alloc] init];
+    instance.translationKey = translationKey;
+    instance.locale = locale;
+    instance.label = label;
+    return instance;
+}
+
 - (id)copyWithZone:(NSZone *)zone {
     TMLTranslation *aCopy = [[TMLTranslation alloc] init];
     aCopy.label = [self.label copyWithZone:zone];

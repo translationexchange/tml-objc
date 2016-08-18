@@ -35,14 +35,17 @@
         webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         webView.navigationDelegate = self;
         self.webView = webView;
+        UIView *ourView = self.view;
+        [ourView addSubview:webView];
     }
     return self;
 }
 
 - (void)loadView {
-    [super loadView];
-    self.webView.frame = self.view.bounds;
-    [self.view addSubview:self.webView];
+    UIView *view = [[UIView alloc] initWithFrame:CGRectZero];
+    view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    view.backgroundColor = [UIColor whiteColor];
+    self.view = view;
 }
 
 #pragma mark - WKNavigationDelegate
@@ -71,11 +74,16 @@
         return;
     }
     
-    NSData *bodyData = [[NSData alloc] initWithBase64EncodedString:message.body options:0];
-    NSString *body = [[NSString alloc] initWithData:bodyData encoding:NSUTF8StringEncoding];
     NSDictionary *result = nil;
-    if (body != nil) {
-        result = [body tmlJSONObject];
+    if ([message.body isKindOfClass:[NSDictionary class]] == YES) {
+        result = message.body;
+    }
+    else {
+        NSData *bodyData = [[NSData alloc] initWithBase64EncodedString:message.body options:0];
+        NSString *body = [[NSString alloc] initWithData:bodyData encoding:NSUTF8StringEncoding];
+        if (body != nil) {
+            result = [body tmlJSONObject];
+        }
     }
     
     if (result == nil) {

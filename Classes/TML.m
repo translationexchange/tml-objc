@@ -1470,6 +1470,11 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     return translations[translationKey];
 }
 
+- (void) addTranslation:(TMLTranslation *)translation locale:(NSString *)locale {
+    TMLBundle *bundle = self.currentBundle;
+    [bundle addTranslation:translation locale:locale];
+}
+
 - (NSArray *)translationKeysMatchingString:(NSString *)string
                                     locale:(NSString *)locale
 {
@@ -1508,6 +1513,10 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 }
 
 #pragma mark - Reusable Localized Strings
+
+- (void) updateReusableTMLStrings {
+    [self updateReusableTMLStringsOfAllRegisteredObjects];
+}
 
 - (void)updateReusableTMLStringsOfAllRegisteredObjects {
     NSArray *toRestore = [_objectsWithReusableLocalizedStrings allObjects];

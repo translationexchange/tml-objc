@@ -433,6 +433,17 @@
 
 - (void)reloadLocalizationData;
 
+/**
+ * Adds translation to current bundle
+ * 
+ * This is used to manually add translations returned by the translation center.
+ * Be warned, that only mutable bundles can be used for adding translations, 
+ * and since they are mutable - the translation you added may disappear with future
+ * modifications, such as when updating localziation data from API server.
+ */
+- (void) addTranslation:(TMLTranslation *)translation locale:(NSString *)locale;
+
+
 #pragma mark - Block options
 
 /**

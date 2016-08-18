@@ -28,7 +28,7 @@ typedef NS_ENUM(NSInteger, TMLBundleErrorCode) {
     TMLBundleMissingResources
 };
 
-@class TMLApplication;
+@class TMLApplication, TMLTranslation;
 
 @interface TMLBundle : NSObject
 
@@ -143,5 +143,17 @@ typedef NS_ENUM(NSInteger, TMLBundleErrorCode) {
  */
 - (NSArray *)translationKeysMatchingString:(NSString *)string
                                     locale:(NSString *)locale;
+
+/**
+ * Manually adds translation to the interally managed translation table.
+ * 
+ * This functionality exists to allow atomic updates to the localization data,
+ * which happens with inline translation, and this only works for mutable bundles.
+ *
+ * Please be mindful when using this function, as the translation can and will be
+ * overwritten next time the data is loaded.
+ */
+- (void)addTranslation:(TMLTranslation *)translation
+                locale:(NSString *)locale;
 
 @end
