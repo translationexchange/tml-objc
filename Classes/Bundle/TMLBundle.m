@@ -247,11 +247,12 @@ NSString * const TMLBundleErrorsKey = @"errors";
     NSString *lang = parts[0];
     NSString *result = nil;
     for (NSString *l in allLocales) {
-        if ([l isEqualToString:ourLocale] == YES) {
+        NSString *matchingLocale = [l lowercaseString];
+        if ([matchingLocale isEqualToString:ourLocale] == YES) {
             result = l;
             break;
         }
-        else if ([l isEqualToString:lang] == YES) {
+        else if ([matchingLocale isEqualToString:lang] == YES) {
             result = l;
         }
     }
