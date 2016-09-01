@@ -114,3 +114,7 @@ First release as TMLKit, built as a dynamic framework. The SDK underwent several
 ## 10.0.10
 * Support for handling bundled tar, gz and tar.gz archives
 * Minor bug fixes around bundle management
+
+## 10.0.11
+* Minor fix for locale matching
+* Update cocoapod dependency on SSZipArchive
