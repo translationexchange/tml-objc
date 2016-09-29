@@ -47,6 +47,7 @@ NSString * const TMLAPIOptionsSourceKeys = @"source_keys";
 NSString * const TMLAPIOptionsPage = @"page";
 
 @interface TMLAPIClient()
+@property (readwrite, nonatomic) NSString *applicationKey;
 @property (readwrite, nonatomic) NSString *accessToken;
 @end
 
@@ -54,8 +55,11 @@ NSString * const TMLAPIOptionsPage = @"page";
 
 #pragma mark - Init
 
-- (id) initWithBaseURL:(NSURL *)baseURL accessToken:(NSString *)accessToken {
+- (id) initWithBaseURL:(NSURL *)baseURL
+        applicationKey:(NSString *)applicationKey
+           accessToken:(NSString *)accessToken {
     if (self = [super initWithBaseURL:baseURL]) {
+        self.applicationKey = applicationKey;
         self.accessToken = accessToken;
     }
     return self;
@@ -66,6 +70,7 @@ NSString * const TMLAPIOptionsPage = @"page";
 - (NSDictionary *) prepareAPIParameters:(NSDictionary *)params {
     // TODO - should really use an HTTP header for this
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:params];
+    parameters[@"app_id"] = self.applicationKey;
     parameters[@"access_token"] = self.accessToken;
     return parameters;
 }
@@ -117,6 +122,10 @@ completionBlock:completionBlock];
 
 #pragma mark - Methods
 
+- (NSString *)applicationProjectPath {
+    return [NSString stringWithFormat:@"projects/%@", self.applicationKey];
+}
+
 - (void) getTranslationsForLocale:(NSString *)locale
                            source:(TMLSource *)source
                           options:(NSDictionary *)options
@@ -128,7 +137,7 @@ completionBlock:completionBlock];
         path = [NSString stringWithFormat: @"sources/%@/translations", [sourceKey tmlMD5]];
     }
     else {
-        path = [NSString stringWithFormat:@"projects/current/translations"];
+        path = [NSString stringWithFormat:@"%@/translations", [self applicationProjectPath]];
     }
     
     NSMutableDictionary *params = nil;
@@ -174,7 +183,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
     }
     params[TMLAPIOptionsClientName] = @"ios";
     
-    NSString *path = @"projects/current";
+    NSString *path = [self applicationProjectPath];
     if ([params[TMLAPIOptionsIncludeDefinition] boolValue] == YES) {
         path = [NSString stringWithFormat:@"%@/definition", path];
         [params removeObjectForKey:TMLAPIOptionsIncludeDefinition];
@@ -227,7 +236,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
 - (void)getSources:(NSDictionary *)options
    completionBlock:(void (^)(NSArray *, TMLAPIResponse *response, NSError *))completionBlock
 {
-    [self get:@"projects/current/sources"
+    [self get:[NSString stringWithFormat:@"%@/sources", [self applicationProjectPath]]
    parameters:options
 completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
     NSArray *sources = nil;
@@ -267,7 +276,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
 - (void)getProjectLanguagesWithOptions:(NSDictionary *)options
                        completionBlock:(void (^)(NSArray*, TMLAPIResponse *response, NSError *))completionBlock
 {
-    [self get:@"projects/current/languages"
+    [self get:[NSString stringWithFormat:@"%@/languages", [self applicationProjectPath]]
    parameters:options
 completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
     NSArray *languages = nil;
@@ -292,7 +301,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
     }
     params[TMLAPIOptionsIncludeAll] = @YES;
     
-    [self get:@"projects/current/translation_keys"
+    [self get:[NSString stringWithFormat:@"%@/translation_keys", [self applicationProjectPath]]
    parameters:params
 completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
     NSArray *translationKeys = nil;
