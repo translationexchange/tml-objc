@@ -96,16 +96,23 @@
     return [url URLByAppendingPathComponent:@"mobile"];
 }
 
+- (NSString *)applicationKey {
+    return [[[TML sharedInstance] configuration] applicationKey];
+}
+
+- (TMLLanguage *)currentLanguage {
+    return [[TML sharedInstance] currentLanguage];
+}
+
 - (void) viewDidLoad {
     [super viewDidLoad];
     
-    TMLApplication *app = [[TML sharedInstance] application];
-    TMLLanguage *lang = [[TML sharedInstance] currentLanguage];
-    
+    NSString *applicationKey = [self applicationKey];
+    TMLLanguage *lang = [self currentLanguage];
     NSURL *url = [self translationCenterURL];
     
     NSMutableDictionary *query = [NSMutableDictionary dictionaryWithDictionary:@{@"locale": lang.locale,
-                                                                                 @"key": app.key}];
+                                                                                 @"key": applicationKey}];
 
     if (self.translationKey) {
         query[@"translation_key"] = self.translationKey;
