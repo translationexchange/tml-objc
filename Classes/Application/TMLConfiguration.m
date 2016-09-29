@@ -34,7 +34,7 @@
 #import "TMLLanguage.h"
 
 #ifndef TMLServiceHost
-#define TMLServiceHost @"https://api.translationexchange.com"
+#define TMLServiceHost @"https://api.translationexchange.com/v1"
 #endif
 
 #ifndef TMLTranslationCenterHost
@@ -75,7 +75,7 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
         [self setupDefaultContextRules];
         [self setupDefaultTokens];
         [self setupLocalization];
-        self.apiBaseURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/v1", TMLServiceHost]];
+        self.apiBaseURL = [NSURL URLWithString:TMLServiceHost];
         self.translationCenterBaseURL = [NSURL URLWithString:TMLTranslationCenterHost];
         self.cdnBaseURL = [NSURL URLWithString:TMLCDNHost];
         self.localizeNIBStrings = YES;
