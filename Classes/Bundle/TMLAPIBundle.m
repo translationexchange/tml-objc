@@ -41,7 +41,7 @@
 @dynamic sources, languages, application, translations, translationKeys;
 
 - (NSURL *)sourceURL {
-    return [[[TML sharedInstance] configuration] apiURL];
+    return [[[TML sharedInstance] configuration] apiBaseURL];
 }
 
 - (BOOL)isMutable {
@@ -295,9 +295,8 @@
     [syncQueue addOperation:syncOperation];
     _syncOperationCount++;
     if (_syncOperationCount == 1) {
-        [[TMLBundleManager defaultManager] notifyBundleMutation:TMLDidStartSyncNotification
-                                                         bundle:self
-                                                         errors:nil];
+        [self notifyBundleMutation:TMLDidStartSyncNotification
+                            errors:nil];
     }
 }
 
@@ -533,19 +532,16 @@
         [_syncErrors addObjectsFromArray:errors];
     }
     
-    TMLBundleManager *bundleManager = [TMLBundleManager defaultManager];
-    [bundleManager notifyBundleMutation:TMLLocalizationDataChangedNotification
-                                 bundle:self
-                                 errors:errors];
+    [self notifyBundleMutation:TMLLocalizationDataChangedNotification
+                        errors:errors];
     
     if (_syncOperationCount == 0) {
         [self resetData];
         if (_needsSync == YES) {
             [self performSelector:@selector(sync) withObject:nil afterDelay:3.0];
         }
-        [bundleManager notifyBundleMutation:TMLDidFinishSyncNotification
-                                     bundle:self
-                                     errors:_syncErrors];
+        [self notifyBundleMutation:TMLDidFinishSyncNotification
+                            errors:_syncErrors];
     }
 }
 

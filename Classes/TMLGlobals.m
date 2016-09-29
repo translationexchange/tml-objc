@@ -8,35 +8,30 @@
 
 #import "TMLGlobals.h"
 
-NSString * const TMLUnconfiguredException = @"TMLUnconfiguredException";
+NSExceptionName const TMLAbstractInvocationException = @"TMLAbstractInvocation";
 
 void TMLAbstractInvocation(SEL selector,id object) {
-    [NSException raise:NSInvalidArgumentException
+    [NSException raise:TMLAbstractInvocationException
                 format:@"[%@ %@] forwards to an abstract invocation",
      NSStringFromClass([object class]),
      NSStringFromSelector(selector)
      ];
 }
 
+NSExceptionName const TMLNotYetImplementedException = @"TMLNotYetImplemented";
+
+void TMLNotYetImplemented(SEL selector, id object) {
+    [NSException raise:TMLNotYetImplementedException
+                format:@"[%@ %@] Is not yet implemented",
+     NSStringFromClass([object class]),
+     NSStringFromSelector(selector)];
+}
+
+NSExceptionName const TMLAlternativeInstantiationException = @"TMLAlternativeInstantiation";
 void TMLUseAlternativeInstantiationMethod(SEL selector, id object) {
-    [NSException raise:NSInvalidArgumentException format:@"Use -[%@ %@] instantiation method",
+    [NSException raise:TMLAlternativeInstantiationException
+                format:@"Use -[%@ %@] instantiation method",
      [object class],
-     NSStringFromSelector(selector)
-     ];
-}
-
-void TMLUnconfiguredIncovation(SEL selector, id object) {
-    [NSException raise:TMLUnconfiguredException
-                format:@"[%@ %@] requires TML sharedInstance to be configured",
-     NSStringFromClass([object class]),
-     NSStringFromSelector(selector)
-     ];
-}
-
-void TMLAlreadyConfigured(SEL selector, id object) {
-    [NSException raise:TMLUnconfiguredException
-                format:@"[%@ %@] attempted to reconfigured shared TML instance",
-     NSStringFromClass([object class]),
      NSStringFromSelector(selector)
      ];
 }

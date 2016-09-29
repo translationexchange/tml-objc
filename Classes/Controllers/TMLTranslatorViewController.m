@@ -91,7 +91,7 @@
         url = [NSURL URLWithString:host];
     }
     else {
-        url = [[[TML sharedInstance] configuration] translationCenterURL];
+        url = [[[TML sharedInstance] configuration] translationCenterBaseURL];
     }
     return [url URLByAppendingPathComponent:@"mobile"];
 }

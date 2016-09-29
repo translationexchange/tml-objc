@@ -28,6 +28,7 @@ NSString * const TMLBundleSourcesRelativePath = @"sources";
 
 NSString * const TMLBundleVersionKey = @"version";
 NSString * const TMLBundleURLKey = @"url";
+NSString * const TMLBundleBaseURLKey = @"cdn_url";
 
 NSString * const TMLBundleErrorDomain = @"TMLBundleErrorDomain";
 NSString * const TMLBundleErrorResourcePathKey = @"resourcePath";
@@ -45,34 +46,16 @@ NSString * const TMLBundleErrorsKey = @"errors";
 @property (readwrite, nonatomic) NSArray *sources;
 @property (readwrite, nonatomic) NSDictionary *translationKeys;
 @property (readwrite, nonatomic) NSURL *sourceURL;
+@property (readwrite, nonatomic) NSURL *baseURL;
 @end
 
 @implementation TMLBundle
-
-+ (instancetype)mainBundle {
-    return [[TMLBundleManager defaultManager] latestBundle];
-}
-
-+ (instancetype)apiBundle {
-    return [[TMLBundleManager defaultManager] apiBundle];
-}
-
-+ (instancetype)bundleWithVersion:(NSString *)version {
-    TMLBundleManager *manager = [TMLBundleManager defaultManager];
-    TMLBundle *bundle = [manager registeredBundleWithVersion:version];
-    if (bundle != nil) {
-        return bundle;
-    }
-    return [manager installedBundleWithVersion:version];
-}
 
 - (instancetype)initWithContentsOfDirectory:(NSString *)path {
     if (self = [super init]) {
         self.path = path;
         _translations = [NSMutableDictionary dictionary];
         _availableLanguages = [NSMutableDictionary dictionary];
-        TMLBundleManager *manager = [TMLBundleManager defaultManager];
-        [manager registerBundle:self];
     }
     return self;
 }
@@ -105,6 +88,7 @@ NSString * const TMLBundleErrorsKey = @"errors";
     self.application = nil;
     self.version = nil;
     self.sourceURL = nil;
+    self.baseURL = nil;
     self.availableLocales = nil;
     self.translationKeys = nil;
     self.translations = nil;
@@ -120,6 +104,7 @@ NSString * const TMLBundleErrorsKey = @"errors";
     }
     self.version = versionInfo[TMLBundleVersionKey];
     self.sourceURL = [NSURL URLWithString:versionInfo[TMLBundleURLKey]];
+    self.baseURL = [NSURL URLWithString:versionInfo[TMLBundleBaseURLKey]];
 }
 
 - (void)reloadApplicationData {
@@ -198,6 +183,13 @@ NSString * const TMLBundleErrorsKey = @"errors";
         [self reloadVersionInfo];
     }
     return _sourceURL;
+}
+
+- (NSURL *)baseURL {
+    if (_baseURL == nil) {
+        [self reloadVersionInfo];
+    }
+    return _baseURL;
 }
 
 - (TMLApplication *)application {
@@ -380,7 +372,6 @@ NSString * const TMLBundleErrorsKey = @"errors";
         return;
     }
     
-    NSString *version = self.version;
     NSMutableArray *paths = [NSMutableArray array];
     NSArray *sources = [self sources];
     [paths addObject:[locale stringByAppendingPathComponent:TMLBundleLanguageFilename]];
@@ -390,8 +381,7 @@ NSString * const TMLBundleErrorsKey = @"errors";
     }
     
     [[TMLBundleManager defaultManager] fetchPublishedResources:paths
-                                                 bundleVersion:version
-                                                 baseDirectory:nil
+                                                     forBundle:self
                                                completionBlock:^(BOOL success, NSArray *paths, NSArray *errors) {
                                                        if (success == YES && paths.count > 0) {
                                                            [self installResources:paths completion:completion];
@@ -446,9 +436,9 @@ NSString * const TMLBundleErrorsKey = @"errors";
 - (void)loadCompleteBundle:(void(^)(NSError *error))completion {
     NSURL *url = self.sourceURL;
     TMLBundleManager *manager = [TMLBundleManager defaultManager];
-    [manager installBundleFromURL:url completionBlock:^(NSString *path, NSError *error) {
-        if (path != nil) {
-            TMLInfo(@"Bundle successfully synchronized: %@", path);
+    [manager installBundleFromURL:url completionBlock:^(TMLBundle *bundle, NSError *error) {
+        if (bundle != nil) {
+            TMLInfo(@"Bundle successfully synchronized: %@", bundle.path);
         }
         else {
             TMLError(@"Bundle failed to synchronize: %@", error);
@@ -460,7 +450,6 @@ NSString * const TMLBundleErrorsKey = @"errors";
 }
 
 - (void)loadMetaData:(void(^)(NSError *error))completion {
-    NSString *version = self.version;
     NSArray *paths = @[
                        TMLBundleApplicationFilename,
                        TMLBundleSourcesFilename,
@@ -468,8 +457,8 @@ NSString * const TMLBundleErrorsKey = @"errors";
                        ];
     
     [[TMLBundleManager defaultManager] fetchPublishedResources:paths
-                                                 bundleVersion:version
-                                                 baseDirectory:nil
+                                                       baseURL:[self baseURL]
+                                               destinationPath:nil
                                                completionBlock:^(BOOL success, NSArray *paths, NSArray *errors) {
                                                    [self installResources:paths completion:^(NSError *error) {
                                                        if (completion != nil) {
@@ -493,7 +482,6 @@ NSString * const TMLBundleErrorsKey = @"errors";
     
     __block NSInteger count = 0;
     NSString *version = self.version;
-    TMLBundleManager *bundleManager = [TMLBundleManager defaultManager];
     __block NSMutableArray *allErrors = [NSMutableArray array];
     
     for (NSString *path in resourcePaths) {
@@ -512,9 +500,8 @@ NSString * const TMLBundleErrorsKey = @"errors";
             [allErrors addObject:installError];
             continue;
         }
-        [bundleManager installResourceFromPath:path
+        [self installResourceFromPath:path
                         withRelativeBundlePath:relativePath
-                             intoBundleVersion:version
                                completionBlock:^(NSString *path, NSError *error) {
                                    count++;
                                    if (error != nil) {
@@ -523,17 +510,46 @@ NSString * const TMLBundleErrorsKey = @"errors";
                                    if (count == resourcePaths.count) {
                                        dispatch_async(dispatch_get_main_queue(), ^{
                                            [self resetData];
-                                           if ([[TML sharedInstance] currentBundle] == self) {
-                                               [[TMLBundleManager defaultManager] notifyBundleMutation:TMLLocalizationDataChangedNotification
-                                                                                                bundle:self
-                                                                                                errors:allErrors];
-                                           }
+                                           [self notifyBundleMutation:TMLLocalizationDataChangedNotification errors:allErrors];
                                            if (completion != nil) {
                                                completion((allErrors.count > 0) ? [allErrors firstObject] : nil);
                                            }
                                        });
                                    }
                                }];
+    }
+}
+
+- (void) installResourceFromPath:(NSString *)resourcePath
+          withRelativeBundlePath:(NSString *)relativeBundlePath
+                 completionBlock:(void(^)(NSString *path, NSError *error))completionBlock
+{
+    NSString *bundleRootPath = [self path];
+    NSString *destinationPath = [bundleRootPath stringByAppendingPathComponent:relativeBundlePath];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    NSString *destinationRoot = [destinationPath stringByDeletingLastPathComponent];
+    NSError *error;
+    if ([fileManager fileExistsAtPath:destinationRoot] == NO) {
+        if ([fileManager createDirectoryAtPath:destinationRoot
+                   withIntermediateDirectories:YES
+                                    attributes:nil
+                                         error:&error] == NO){
+            TMLError(@"Error creating installation directory for resource '%@': %@", relativeBundlePath, error);
+        }
+    }
+    if (error == nil
+        && [resourcePath isEqualToString:destinationPath] == NO) {
+        if ([fileManager fileExistsAtPath:destinationPath] == YES) {
+            if([fileManager removeItemAtPath:destinationPath error:&error] == NO) {
+                TMLError(@"Error removing existing resource at path '%@': %@", error);
+            }
+        }
+        if ([fileManager moveItemAtPath:resourcePath toPath:destinationPath error:&error] == NO) {
+            TMLError(@"Error installing resource '%@' : %@", relativeBundlePath, error);
+        }
+    }
+    if (completionBlock != nil) {
+        completionBlock((error) ? nil : destinationPath, error);
     }
 }
 
@@ -549,6 +565,20 @@ NSString * const TMLBundleErrorsKey = @"errors";
         }
     }
     return YES;
+}
+
+#pragma mark - Notifications
+- (void) notifyBundleMutation:(NSString *)mutationType
+                       errors:(NSArray *)errors
+{
+    NSMutableDictionary *info = [NSMutableDictionary dictionary];
+    info[TMLBundleChangeInfoBundleKey] = self;
+    if (errors.count > 0) {
+        info[TMLBundleChangeInfoErrorsKey] = errors;
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:mutationType
+                                                        object:nil
+                                                      userInfo:info];
 }
 
 #pragma mark -
