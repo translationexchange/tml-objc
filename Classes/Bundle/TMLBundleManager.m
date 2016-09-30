@@ -857,7 +857,12 @@ NSString * const TMLBundleRegistryAPIBundleKey = @"apiBundle";
         }
         apiBundle = [[TMLAPIBundle alloc] initWithContentsOfDirectory:apiBundleDir];
         if (apiBundle != nil) {
-            _bundleRegistry[applicationKey][TMLBundleRegistryAPIBundleKey] = apiBundle;
+            NSMutableDictionary *info = _bundleRegistry[applicationKey];
+            if (info == nil) {
+                info = [self newRegistryInfo];
+                _bundleRegistry[applicationKey] = info;
+            }
+            info[TMLBundleRegistryAPIBundleKey] = apiBundle;
         }
     }
     return apiBundle;
