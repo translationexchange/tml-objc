@@ -45,6 +45,7 @@ NSString * const TMLAPIOptionsIncludeAll = @"all";
 NSString * const TMLAPIOptionsClientName = @"client";
 NSString * const TMLAPIOptionsIncludeDefinition = @"definition";
 NSString * const TMLAPIOptionsSourceKeys = @"source_keys";
+NSString * const TMLAPIOptionsApplicationId = @"app_id";
 NSString * const TMLAPIOptionsPage = @"page";
 
 @interface TMLAPIClient()
@@ -176,6 +177,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
         params = [NSMutableDictionary dictionaryWithDictionary:@{TMLAPIOptionsIncludeAll: @YES}];
     }
     params[TMLAPIOptionsLocale] = locale;
+    params[TMLAPIOptionsApplicationId] = self.applicationKey;
     
     [self get:path
    parameters:params
@@ -361,7 +363,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
     }
     
     [self post:@"sources/register_keys"
-    parameters:@{TMLAPIOptionsSourceKeys: sourceKeysList}
+    parameters:@{TMLAPIOptionsSourceKeys: sourceKeysList, TMLAPIOptionsApplicationId: self.applicationKey}
 completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
     BOOL success = [apiResponse isSuccessfulResponse];
     if (success == NO) {
