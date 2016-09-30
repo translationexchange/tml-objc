@@ -544,6 +544,7 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 }
 
 - (void)resetBundleUpdateCheck {
+    _checkingForBundleUpdate = NO;
     _lastBundleUpdateDate = nil;
 }
 
@@ -1591,7 +1592,14 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 - (void)removeLocalizationData {
     [[TMLBundleManager defaultManager] removeAllBundles];
     [self setCurrentBundle:nil];
-    _lastBundleUpdateDate = nil;
+    [self resetBundleUpdateCheck];
+    self.translationActive = NO;
+    [self initTranslationBundle:^(TMLBundle *bundle, NSError *error) {
+        if (bundle != nil) {
+            self.currentBundle = bundle;
+        }
+        [self attemptToUpdateBundle];
+    }];
 }
 
 @end
