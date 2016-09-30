@@ -235,6 +235,7 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     
     if (_configuration != nil) {
         [_configuration removeObserver:self forKeyPath:@"accessToken"];
+        [_configuration removeObserver:self forKeyPath:@"disallowTranslation"];
     }
     
     _configuration = configuration;
@@ -286,10 +287,12 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
                         forKeyPath:@"accessToken"
                            options:NSKeyValueObservingOptionNew
                            context:nil];
+        [configuration addObserver:self
+                        forKeyPath:@"disallowTranslation"
+                           options:NSKeyValueObservingOptionNew
+                           context:nil];
         
-        if (self.translationActive == YES && configuration.disallowTranslation == YES) {
-            self.translationActive = NO;
-        }
+        [self configurationDisallowTranslationChanged];
         
         [self initTranslationBundle:^(TMLBundle *bundle, NSError *error) {
             if (bundle == nil) {
@@ -315,12 +318,16 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
                        context:(void *)context
 {
     if (object == _configuration
-        && [keyPath isEqualToString:@"accessToken"]) {
+        && [keyPath isEqualToString:@"accessToken"] == YES) {
         TMLAPIClient *client = self.apiClient;
         if (client != nil) {
             NSString *newValue = [change valueForKey:NSKeyValueChangeNewKey];
             client.accessToken = newValue;
         }
+    }
+    else if (object == _configuration
+        && [keyPath isEqualToString:@"disallowTranslation"] == YES) {
+        [self configurationDisallowTranslationChanged];
     }
     else {
         [super observeValueForKeyPath:keyPath
@@ -863,6 +870,19 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 
 #pragma mark - Configuration
 
+- (void)configurationDisallowTranslationChanged {
+    BOOL disallowed = _configuration.disallowTranslation;
+    if (self.translationActive == YES && disallowed == YES) {
+        self.translationActive = NO;
+    }
+    if (disallowed == YES) {
+        [self teardownTranslationActivationGestureRecognizer];
+    }
+    else {
+        [self setupTranslationActivationGestureRecognizer];
+    }
+}
+
 - (void)setTranslationActive:(BOOL)translationActive {
     if (_translationActive == translationActive) {
         return;
@@ -1021,17 +1041,19 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     }];
     [alertController addAction:changeLocaleAction];
     
-    if (self.translationActive == YES) {
-        TMLAlertAction *disableAction = [TMLAlertAction actionWithTitle:TMLLocalizedString(@"Deactivate Translation") style:UIAlertActionStyleDefault handler:^(TMLAlertAction *action) {
-            [self toggleActiveTranslation];
-        }];
-        [alertController addAction:disableAction];
-    }
-    else {
-        TMLAlertAction *enableAction = [TMLAlertAction actionWithTitle:TMLLocalizedString(@"Activate Translation") style:UIAlertActionStyleDefault handler:^(TMLAlertAction *action) {
-            [self toggleActiveTranslation];
-        }];
-        [alertController addAction:enableAction];
+    if (_configuration.disallowTranslation == NO) {
+        if (self.translationActive == YES) {
+            TMLAlertAction *disableAction = [TMLAlertAction actionWithTitle:TMLLocalizedString(@"Deactivate Translation") style:UIAlertActionStyleDefault handler:^(TMLAlertAction *action) {
+                [self toggleActiveTranslation];
+            }];
+            [alertController addAction:disableAction];
+        }
+        else {
+            TMLAlertAction *enableAction = [TMLAlertAction actionWithTitle:TMLLocalizedString(@"Activate Translation") style:UIAlertActionStyleDefault handler:^(TMLAlertAction *action) {
+                [self toggleActiveTranslation];
+            }];
+            [alertController addAction:enableAction];
+        }
     }
     
     TMLAlertAction *signoutAction = [TMLAlertAction actionWithTitle:TMLLocalizedString(@"Sign out") style:UIAlertActionStyleDefault handler:^(TMLAlertAction *action) {

@@ -53,7 +53,6 @@ NSString * const TMLApplicationKeyDefaultsKey = @"applicationKey";
 NSString * const TMLDefaultLocaleDefaultsKey = @"defaultLocale";
 NSString * const TMLCurrentLocaleDefaultsKey = @"currentLocale";
 NSString * const TMLPreviousLocaleDefaultsKey = @"previousLocale";
-NSString * const TMLDisallowTranslationDefaultsKey = @"disallowTranslation";
 
 
 @interface TMLConfiguration () {
@@ -110,7 +109,6 @@ NSString * const TMLDisallowTranslationDefaultsKey = @"disallowTranslation";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:TMLDefaultLocaleDefaultsKey];
     [defaults removeObjectForKey:TMLCurrentLocaleDefaultsKey];
-    [defaults removeObjectForKey:TMLDisallowTranslationDefaultsKey];
 }
 
 #pragma mark - Persistence
@@ -166,16 +164,6 @@ NSString * const TMLDisallowTranslationDefaultsKey = @"disallowTranslation";
         _applicationKey = applicationKey;
     }
     [self didChangeValueForKey:@"applicationKey"];
-}
-
-- (BOOL)isDisallowTranslation {
-    return [[self persistentValueForKey:TMLDisallowTranslationDefaultsKey] boolValue];
-}
-
-- (void)setDisallowTranslation:(BOOL)disallowTranslation {
-    [self willChangeValueForKey:@"disallowTranslation"];
-    [self setPersistentValue:@(disallowTranslation) forKey:TMLDisallowTranslationDefaultsKey];
-    [self didChangeValueForKey:@"disallowTranslation"];
 }
 
 - (void)setAutomaticallyReloadTableViewsWithReusableLocalizedStrings:(BOOL)automaticallyReloadTableViewsWithReusableLocalizedStrings {
