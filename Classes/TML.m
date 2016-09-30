@@ -987,22 +987,12 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 
 - (void)translationActivationGestureRecognized:(UIGestureRecognizer *)gestureRecognizer {
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        if (self.translationActive == NO) {
-            // TODO: check if current user can use inline translation
-//            TMLBasicUser *translator = self.currentUser;
-//            if (translator == nil) {
-//                return;
-//            }
-            TMLConfiguration *config = self.configuration;
-            if (config.accessToken.length == 0) {
-                [self acquireAccessToken];
-                return;
-            }
-            [self toggleActiveTranslation];
+        if (self.translationActive == NO
+            && self.configuration.accessToken.length == 0) {
+            [self acquireAccessToken];
+            return;
         }
-        else {
-            [self presentActiveTranslationOptions];
-        }
+        [self presentActiveTranslationOptions];
     }
 }
 
@@ -1031,10 +1021,18 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     }];
     [alertController addAction:changeLocaleAction];
     
-    TMLAlertAction *disableAction = [TMLAlertAction actionWithTitle:TMLLocalizedString(@"Deactivate Translation") style:UIAlertActionStyleDefault handler:^(TMLAlertAction *action) {
-        [self toggleActiveTranslation];
-    }];
-    [alertController addAction:disableAction];
+    if (self.translationActive == YES) {
+        TMLAlertAction *disableAction = [TMLAlertAction actionWithTitle:TMLLocalizedString(@"Deactivate Translation") style:UIAlertActionStyleDefault handler:^(TMLAlertAction *action) {
+            [self toggleActiveTranslation];
+        }];
+        [alertController addAction:disableAction];
+    }
+    else {
+        TMLAlertAction *enableAction = [TMLAlertAction actionWithTitle:TMLLocalizedString(@"Activate Translation") style:UIAlertActionStyleDefault handler:^(TMLAlertAction *action) {
+            [self toggleActiveTranslation];
+        }];
+        [alertController addAction:enableAction];
+    }
     
     TMLAlertAction *signoutAction = [TMLAlertAction actionWithTitle:TMLLocalizedString(@"Sign out") style:UIAlertActionStyleDefault handler:^(TMLAlertAction *action) {
         [self signout];
