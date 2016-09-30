@@ -1452,6 +1452,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.translationexchange.TMLKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				WARNING_CFLAGS = "-Wno-nullability-completeness";
 			};
 			name = Debug;
 		};
@@ -1472,6 +1473,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.translationexchange.TMLKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				WARNING_CFLAGS = "-Wno-nullability-completeness";
 			};
 			name = Release;
 		};

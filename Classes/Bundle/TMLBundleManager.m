@@ -653,7 +653,6 @@ NSString * const TMLBundleRegistryAPIBundleKey = @"apiBundle";
 
 - (void) fetchPublishedBundleInfo:(NSURL *)baseURL
                        completion:(void(^)(NSDictionary *info, NSError *error))completionBlock {
-    NSError *error = nil;
     NSURL *publishedVersionURL = [baseURL URLByAppendingPathComponent:@"version.json"];
     [self fetchURL:publishedVersionURL
        cachePolicy:NSURLRequestReloadIgnoringLocalAndRemoteCacheData
@@ -664,10 +663,6 @@ NSString * const TMLBundleRegistryAPIBundleKey = @"apiBundle";
        }
        else {
            TMLError(@"Error fetching published bundle info: %@", error);
-           /*NSArray *errors = (error) ? @[error] : nil;
-           [self notifyBundleMutation:TMLLocalizationUpdatesFailedNotification
-                               bundle:nil
-                               errors:errors];*/
        }
        if (completionBlock != nil) {
            completionBlock(versionInfo, error);
