@@ -10,16 +10,19 @@
 
 #define TMLBundleIdentifier @"com.translationexchange.TMLKit"
 
+#define TMLRaiseNotYetImplemented() TMLNotYetImplemented(_cmd, self) 
 #define TMLRaiseAbstractInvocation() TMLAbstractInvocation(_cmd, self)
 #define TMLRaiseAlternativeInstantiationMethod(selector) TMLUseAlternativeInstantiationMethod(selector, self);
-#define TMLRaiseUnconfiguredIncovation() TMLUnconfiguredIncovation(_cmd, self)
-#define TMLRaiseAlreadyConfigured() TMLAlreadyConfigured(_cmd, self)
 #define TMLIsNilNull(arg) (arg == nil || [[NSNull null] isEqual: arg]) 
 
+extern NSExceptionName const TMLAbstractInvocationException;
 void TMLAbstractInvocation(SEL selector,id object);
+
+extern NSExceptionName const TMLNotYetImplementedException;
+void TMLNotYetImplemented(SEL selector, id object);
+
+extern NSExceptionName const TMLAlternativeInstantiationException;
 void TMLUseAlternativeInstantiationMethod(SEL selector, id object);
-void TMLUnconfiguredIncovation(SEL selector, id object);
-void TMLAlreadyConfigured(SEL selector, id object);
 
 #pragma mark - Notifications
 extern NSString * const TMLLanguageChangedNotification;

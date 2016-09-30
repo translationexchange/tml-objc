@@ -33,17 +33,19 @@
 
 @interface TMLConfiguration : NSObject
 
-@property(nonatomic, strong) NSURL *apiURL;
+@property(nonatomic, strong) NSURL *apiBaseURL;
 
-@property(nonatomic, strong) NSURL *translationCenterURL;
+@property(nonatomic, strong) NSURL *translationCenterBaseURL;
 
-@property(nonatomic, strong) NSURL *gatewayURL;
+@property(nonatomic, strong) NSURL *gatewayBaseURL;
 
-@property(nonatomic, strong) NSURL *cdnURL;
+@property(nonatomic, strong) NSURL *cdnBaseURL;
 
-@property(nonatomic, readwrite) NSString *accessToken;
+@property(nonnull, readonly) NSURL *cdnURL;
 
-@property(nonatomic, readwrite) NSString *applicationKey;
+@property(nonatomic, readonly) NSString *accessToken;
+
+@property(nonatomic, readonly) NSString *applicationKey;
 
 @property(nonatomic, strong) NSString *defaultLocale;
 

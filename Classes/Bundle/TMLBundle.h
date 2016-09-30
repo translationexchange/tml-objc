@@ -32,19 +32,6 @@ typedef NS_ENUM(NSInteger, TMLBundleErrorCode) {
 
 @interface TMLBundle : NSObject
 
-/**
- *  Returns main translation bundle. This bundle contains project definition, including
- *  available languages and translations. This method may return nil if there are no
- *  bundles available locally.
- *
- *  @return Main translation bundle, or nil, if none exist locally.
- */
-+ (instancetype)mainBundle;
-
-+ (instancetype)apiBundle;
-
-+ (instancetype)bundleWithVersion:(NSString *)version;
-
 - (instancetype)initWithContentsOfDirectory:(NSString *)path;
 
 - (BOOL)isEqualToBundle:(TMLBundle *)bundle;
@@ -90,9 +77,15 @@ typedef NS_ENUM(NSInteger, TMLBundleErrorCode) {
 @property (readonly, nonatomic) TMLApplication *application;
 
 /**
- *  Source URL from which this bundle was derrived
+ *  Source URL from which this bundle was derrived - typically an archive on CDN
  */
 @property (readonly, nonatomic) NSURL *sourceURL;
+
+/**
+ * Base URL indicates location from which the bundle can replenish missing localization data.
+ * This is used for incremental loading of resources...
+ */
+@property (readonly, nonnull) NSURL *baseURL;
 
 @property (readonly, nonatomic) BOOL isMutable;
 
@@ -155,5 +148,9 @@ typedef NS_ENUM(NSInteger, TMLBundleErrorCode) {
  */
 - (void)addTranslation:(TMLTranslation *)translation
                 locale:(NSString *)locale;
+
+#pragma mark - Notifications
+- (void) notifyBundleMutation:(NSString *)mutationType
+                       errors:(NSArray *)errors;
 
 @end

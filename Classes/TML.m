@@ -174,8 +174,6 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 
 #pragma mark - TML
 
-static BOOL TMLConfigured;
-
 @interface TML()<UIGestureRecognizerDelegate, TMLAuthorizationViewControllerDelegate> {
     BOOL _observingNotifications;
     BOOL _checkingForBundleUpdate;
@@ -211,17 +209,8 @@ static BOOL TMLConfigured;
 
 + (TML *) sharedInstanceWithConfiguration:(TMLConfiguration *)configuration {
     TML *tml = [self sharedInstance];
-    if (tml.configuration != nil) {
-        TMLRaiseAlreadyConfigured();
-        return tml;
-    }
     tml.configuration = configuration;
-    TMLConfigured = YES;
     return tml;
-}
-
-+ (BOOL)isConfigured {
-    return TMLConfigured;
 }
 
 #pragma mark - Init
@@ -249,13 +238,19 @@ static BOOL TMLConfigured;
     }
     
     _configuration = configuration;
+    [self reset];
     if (configuration == nil) {
         self.apiClient = nil;
         [self teardownNotificationObserving];
         self.currentBundle = nil;
     }
     else {
-        TMLAPIClient *apiClient = [[TMLAPIClient alloc] initWithBaseURL:configuration.apiURL
+        if ([configuration isValidConfiguration] == NO) {
+            TMLWarn(@"Application is misconfigured!!!");
+        }
+        
+        TMLAPIClient *apiClient = [[TMLAPIClient alloc] initWithBaseURL:configuration.apiBaseURL
+                                                         applicationKey:configuration.applicationKey
                                                             accessToken:configuration.accessToken];
         self.apiClient = apiClient;
         
@@ -287,7 +282,6 @@ static BOOL TMLConfigured;
         }
         
         [self setupNotificationObserving];
-        
         [configuration addObserver:self
                         forKeyPath:@"accessToken"
                            options:NSKeyValueObservingOptionNew
@@ -297,7 +291,7 @@ static BOOL TMLConfigured;
             self.translationActive = NO;
         }
         
-        [self initTranslationBundle:^(TMLBundle *bundle) {
+        [self initTranslationBundle:^(TMLBundle *bundle, NSError *error) {
             if (bundle == nil) {
                 TMLWarn(@"No local translation bundle found...");
             }
@@ -305,10 +299,8 @@ static BOOL TMLConfigured;
                 self.currentBundle = bundle;
             }
         }];
-        
-        if ([configuration isValidConfiguration] == NO) {
-            TMLWarn(@"Application is misconfigured!!!");
-        }
+
+        [self attemptToUpdateBundle];
     }
 }
 
@@ -367,24 +359,30 @@ static BOOL TMLConfigured;
     _observingNotifications = NO;
 }
 
+- (void)attemptToUpdateBundle {
+    if ([self.currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
+        [(TMLAPIBundle *)self.currentBundle setNeedsSync];
+    }
+    else if ([self shouldCheckForBundleUpdate] == YES) {
+        [self checkForBundleUpdate:YES completion:^(NSString *version, TMLBundle *bundle, NSError *error) {
+            if (bundle != nil && self.translationEnabled == NO) {
+                if ([bundle isEqualToBundle:self.currentBundle] == NO
+                    && bundle != nil
+                    && [self shouldSwitchToBundle:bundle] == YES) {
+                    self.currentBundle = bundle;
+                }
+            }
+        }];
+    }
+}
+
 - (void) applicationDidBecomeActive:(NSNotification *)aNotification {
     TMLBundle *currentBundle = self.currentBundle;
     if ([currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
         [(TMLAPIBundle *)currentBundle setNeedsSync];
     }
     else {
-        if ([self shouldCheckForBundleUpdate] == YES) {
-            [self checkForBundleUpdate:YES completion:^(NSString *version, NSString *path, NSError *error) {
-                if (version != nil && self.translationActive == NO) {
-                    TMLBundle *newBundle = [TMLBundle bundleWithVersion:version];
-                    if ([newBundle isEqualToBundle:self.currentBundle] == NO
-                        && newBundle != nil
-                        && [self shouldSwitchToBundle:newBundle] == YES) {
-                        self.currentBundle = newBundle;
-                    }
-                }
-            }];
-        }
+        [self attemptToUpdateBundle];
     }
     
     [self setupTranslationActivationGestureRecognizer];
@@ -470,9 +468,10 @@ static BOOL TMLConfigured;
     [[NSNotificationCenter defaultCenter] postNotificationName:TMLLocalizationDataChangedNotification object:nil];
 }
 
-- (void) initTranslationBundle:(void(^)(TMLBundle *bundle))completion {
+- (void) initTranslationBundle:(TMLBundleInstallBlock)completion {
+    TMLBundleManager *bundleManager = [TMLBundleManager defaultManager];
     // Check if there's a main bundle already set up
-    TMLBundle *bundle = [TMLBundle mainBundle];
+    TMLBundle *bundle = [bundleManager mainBundleForApplicationKey:self.configuration.applicationKey];
 
     // Check if we have a locally availale archive
     // use it if we have no main bundle, or archived version supersedes
@@ -483,23 +482,13 @@ static BOOL TMLConfigured;
         hasNewerArchive = [archivedVersion compareToTMLTranslationBundleVersion:bundle.version] == NSOrderedDescending;
     }
     
-    TMLBundleManager *bundleManager = [TMLBundleManager defaultManager];
-    
     // Install archived bundle if we got one
     if (hasNewerArchive == YES) {
-        __block TMLBundle *latestArchivedBundle = nil;
-        [bundleManager installBundleFromPath:archivePath completionBlock:^(NSString *path, NSError *error) {
-            if (path != nil && error == nil) {
-                latestArchivedBundle = [[TMLBundle alloc] initWithContentsOfDirectory:path];
-            }
-            if (completion != nil) {
-                completion(latestArchivedBundle);
-            }
-        }];
+        [bundleManager installBundleFromPath:archivePath completionBlock:completion];
         return;
     }
     if (completion != nil) {
-        completion(bundle);
+        completion(bundle, nil);
     }
 }
 
@@ -545,6 +534,10 @@ static BOOL TMLConfigured;
     return YES;
 }
 
+- (void)resetBundleUpdateCheck {
+    _lastBundleUpdateDate = nil;
+}
+
 - (BOOL)shouldSwitchToBundle:(TMLBundle *)bundle {
     id<TMLDelegate>delegate = self.delegate;
     if ([delegate respondsToSelector:@selector(shouldSwitchToBundle:)] == YES) {
@@ -556,7 +549,7 @@ static BOOL TMLConfigured;
 /**
  *  Checks CDN for the current version info, and calls completion block when finishes.
  *
- *  The arguments passed to the completion block indicates several possible outcomes:
+ *  The arguments passed to the completion block indicate several possible outcomes:
  *
  *     - The version argument indicates version found on CDN
  *
@@ -570,22 +563,25 @@ static BOOL TMLConfigured;
  *  @param completion Completion block
  */
 - (void) checkForBundleUpdate:(BOOL)install
-                   completion:(void(^)(NSString *version, NSString *path, NSError *error))completion
+                   completion:(void(^)(NSString *version, TMLBundle *bundle, NSError *error))completion
 {
     _checkingForBundleUpdate = YES;
-    
     TMLBundleManager *bundleManager = [TMLBundleManager defaultManager];
-    void(^finalize)(NSString *, NSString *, NSError *) = ^(NSString *aVersion, NSString *aPath, NSError *anError){
+    
+    void(^finalize)(NSString *, TMLBundle *, NSError *) = ^(NSString *aVersion, TMLBundle *aBundle, NSError *anError){
         dispatch_async(dispatch_get_main_queue(), ^{
             _checkingForBundleUpdate = NO;
             _lastBundleUpdateDate = [NSDate date];
             if (completion != nil) {
-                completion(aVersion, aPath, anError);
+                completion(aVersion, aBundle, anError);
             }
         });
     };
     
-    [bundleManager fetchPublishedBundleInfo:^(NSDictionary *info, NSError *error) {
+    NSString *applicationKey = self.configuration.applicationKey;
+    NSURL *cdnURL = self.configuration.cdnURL;
+    [bundleManager fetchPublishedBundleInfo:cdnURL
+                                 completion:^(NSDictionary *info, NSError *error) {
         NSString *version = info[TMLBundleVersionKey];
         if (version == nil) {
             NSError *error = [NSError errorWithDomain:TMLBundleManagerErrorDomain
@@ -595,11 +591,11 @@ static BOOL TMLConfigured;
             return;
         }
         
-        TMLBundle *existingBundle = [TMLBundle bundleWithVersion:version];
+        TMLBundle *existingBundle = [bundleManager bundleWithVersion:version applicationKey:applicationKey];
         
         if (install == YES) {
             if (existingBundle != nil && [existingBundle isValid] == YES) {
-                bundleManager.latestBundle = existingBundle;
+                [bundleManager setMainBundle:existingBundle forApplicationKey:applicationKey];
                 finalize(version, nil, nil);
             }
             else {
@@ -613,9 +609,10 @@ static BOOL TMLConfigured;
                     [localesToFetch addObject:defaultLocale];
                 }
                 [bundleManager installPublishedBundleWithVersion:version
+                                                         baseURL:cdnURL
                                                          locales:localesToFetch
-                                                 completionBlock:^(NSString *path, NSError *error) {
-                                                     finalize(version, path, error);
+                                                 completionBlock:^(TMLBundle *bundle, NSError *error) {
+                                                     finalize(version, bundle, error);
                                                  }];
             }
         }
@@ -858,8 +855,8 @@ static BOOL TMLConfigured;
     
     NSString *effectiveSourceKey = (sourceKey) ? sourceKey : [self currentSource];
     
-    TMLAPIBundle *apiBundle = (TMLAPIBundle *)[TMLBundle apiBundle];
-    [(TMLAPIBundle *)apiBundle addTranslationKey:translationKey forSource:effectiveSourceKey];
+    TMLAPIBundle *apiBundle = [[TMLBundleManager defaultManager] apiBundleForApplicationKey:self.configuration.applicationKey];
+    [apiBundle addTranslationKey:translationKey forSource:effectiveSourceKey];
 }
 
 #pragma mark - Configuration
@@ -870,11 +867,13 @@ static BOOL TMLConfigured;
     }
     _translationActive = translationActive;
     TMLBundle *newBundle = nil;
+    TMLBundleManager *bundleManager = [TMLBundleManager defaultManager];
+    NSString *applicationKey = self.configuration.applicationKey;
     if (translationActive == YES) {
-        newBundle = [TMLBundle apiBundle];
+        newBundle = [bundleManager apiBundleForApplicationKey:applicationKey];
     }
     else {
-        newBundle = [TMLBundle mainBundle];
+        newBundle = [bundleManager mainBundleForApplicationKey:applicationKey];
     }
     self.currentBundle = newBundle;
     if (translationActive == YES) {
@@ -885,6 +884,12 @@ static BOOL TMLConfigured;
     else {
         [self teardownInlineTranslationGestureRecognizer];
     }
+}
+
+#pragma mark - Reseting
+- (void)reset {
+    self.currentBundle = nil;
+    [self resetBundleUpdateCheck];
 }
 
 #pragma mark - Gesture Recognizer
@@ -1553,6 +1558,21 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     [[TMLBundleManager defaultManager] removeAllBundles];
     [self setCurrentBundle:nil];
     _lastBundleUpdateDate = nil;
+}
+
+#pragma mark - Testing
+- (void) switchToSandbox {
+    TMLConfiguration *config = [[TMLConfiguration alloc] initWithApplicationKey:@"524eec5973d1bf8ae361c8ea52cb41712ef9bee1c9212d1b01d4559067aa542a" accessToken:@"1bca8bdce58b2a0de4615291a97f0a9b6b6e5c3e1fdddf195ccc77b75849d0bd"];
+    config.apiBaseURL = [NSURL URLWithString:@"https://sandbox-api.translationexchange.com/v1"];
+    config.translationCenterBaseURL = [NSURL URLWithString:@"https://sandbox-translate.translationexchange.com"];
+    [self setConfiguration:config];
+}
+
+- (void) switchToProd {
+    TMLConfiguration *config = [[TMLConfiguration alloc] initWithApplicationKey:@"e4c84d9c59f4e300eaf55cc22c3c4e7f882a65ec43cbc2e9da1e66ce706eaa8e" accessToken:@"048f31c32dc56be8c81affad60a25cf64dd03d4944efbb31cdf8cac6d18b18b9"];
+    config.apiBaseURL = [NSURL URLWithString:@"https://api.translationexchange.com/v1"];
+    config.translationCenterBaseURL = [NSURL URLWithString:@"https://translate.translationexchange.com"];
+    [self setConfiguration:config];
 }
 
 @end

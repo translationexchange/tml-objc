@@ -34,7 +34,7 @@
 #import "TMLLanguage.h"
 
 #ifndef TMLServiceHost
-#define TMLServiceHost @"https://api.translationexchange.com"
+#define TMLServiceHost @"https://api.translationexchange.com/v1"
 #endif
 
 #ifndef TMLTranslationCenterHost
@@ -60,6 +60,8 @@ NSString * const TMLDisallowTranslationDefaultsKey = @"disallowTranslation";
     NSCalendar *calendar;
     NSDateFormatter *dateFormatter;
 }
+@property(nonatomic, readwrite, strong) NSString *accessToken;
+@property(nonatomic, readwrite, strong) NSString *applicationKey;
 @end
 
 @implementation TMLConfiguration
@@ -82,10 +84,10 @@ NSString * const TMLDisallowTranslationDefaultsKey = @"disallowTranslation";
         [self setupDefaultContextRules];
         [self setupDefaultTokens];
         [self setupLocalization];
-        self.apiURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@/v1", TMLServiceHost]];
-        self.translationCenterURL = [NSURL URLWithString:TMLTranslationCenterHost];
-        self.gatewayURL = [NSURL URLWithString:TMLGatewayHost];
-        self.cdnURL = [NSURL URLWithString:TMLCDNHost];
+        self.apiBaseURL = [NSURL URLWithString:TMLServiceHost];
+        self.translationCenterBaseURL = [NSURL URLWithString:TMLTranslationCenterHost];
+        self.cdnBaseURL = [NSURL URLWithString:TMLCDNHost];
+        self.gatewayBaseURL = [NSURL URLWithString:TMLGatewayHost];
         self.localizeNIBStrings = YES;
         self.automaticallyReloadDataBackedViews = YES;
         self.timeoutIntervalForRequest = 60.;
@@ -102,7 +104,7 @@ NSString * const TMLDisallowTranslationDefaultsKey = @"disallowTranslation";
 #pragma mark - Validation
 
 - (BOOL)isValidConfiguration {
-    return self.applicationKey.length > 0 && self.apiURL != nil;
+    return self.applicationKey.length > 0 && self.apiBaseURL != nil;
 }
 
 - (void)invalidate {
@@ -183,6 +185,10 @@ NSString * const TMLDisallowTranslationDefaultsKey = @"disallowTranslation";
 
 - (BOOL)automaticallyReloadTableViewsWithReusableLocalizedStrings {
     return self.automaticallyReloadDataBackedViews;
+}
+
+- (NSURL *)cdnURL {
+    return [self.cdnBaseURL URLByAppendingPathComponent:self.applicationKey];
 }
 
 #pragma mark - Locales

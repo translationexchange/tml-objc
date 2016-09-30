@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class TMLBundle;
+@class TMLBundle, TMLAPIBundle;
 
 extern NSString * const TMLBundleManagerErrorDomain;
 
@@ -30,59 +30,56 @@ extern NSString * const TMLBundleManagerErrorCodeKey;
 extern NSString * const TMLBundleChangeInfoBundleKey;
 extern NSString * const TMLBundleChangeInfoErrorsKey;
 
-typedef void (^TMLBundleInstallBlock)(NSString *path, NSError *error);
+typedef void (^TMLBundleInstallBlock)(TMLBundle *bundle, NSError *error);
 
 @interface TMLBundleManager : NSObject
 
-+ (instancetype) defaultManager;
++ (instancetype)defaultManager;
+
 
 #pragma mark - Installation
 
 @property (nonatomic, assign) NSUInteger maximumBundlesToKeep;
-- (void) installBundleFromPath:(NSString *)aPath completionBlock:(TMLBundleInstallBlock)completionBlock;
+
+- (void) installBundleFromPath:(NSString *)aPath
+               completionBlock:(TMLBundleInstallBlock)completionBlock;
+
 - (void) installBundleFromURL:(NSURL *)aURL completionBlock:(TMLBundleInstallBlock)completionBlock;
+
 - (void) installPublishedBundleWithVersion:(NSString *)version
+                                   baseURL:(NSURL *)baseURL
                                    locales:(NSArray *)locales
                            completionBlock:(TMLBundleInstallBlock)completionBlock;
-- (void) installResourceFromPath:(NSString *)resourcePath
-          withRelativeBundlePath:(NSString *)relativeBundlePath
-               intoBundleVersion:(NSString *)bundleVersion
-                 completionBlock:(void(^)(NSString *path, NSError *error))completionBlock;
 
 - (void) cleanup;
-
-#pragma mark - Registration
-
-- (void)registerBundle:(TMLBundle *)bundle;
-- (TMLBundle *)registeredBundleWithVersion:(NSString *)version;
+- (void) cleanupUsingApplicationKey:(NSString *)applicationKey;
 
 #pragma mark - Query
-
 - (NSArray *) installedBundles;
-- (TMLBundle *) installedBundleWithVersion:(NSString *)version;
-- (BOOL) isVersionInstalled:(NSString *)version;
+- (NSArray *) installedBundlesForApplicationKey:(NSString *)applicationKey;
+
+- (TMLBundle *)bundleWithVersion:(NSString *)version applicationKey:(NSString *)applicationKey;
+- (BOOL) isBundleInstalledWithVersion:(NSString *)version applicationKey:(NSString *)applicationKey;
+
+- (TMLAPIBundle *)apiBundleForApplicationKey:(NSString *)applicationKey;
+- (TMLBundle *)mainBundleForApplicationKey:(NSString *)appcalitionKey;
+- (void)setMainBundle:(TMLBundle *)bundle forApplicationKey:(NSString *)applicationKey;
 
 #pragma mark - Fetching
 
-- (void) fetchPublishedBundleInfo:(void(^)(NSDictionary *info, NSError *error))completionBlock;
+- (void) fetchPublishedBundleInfo:(NSURL *)baseURL
+                       completion:(void(^)(NSDictionary *info, NSError *error))completionBlock;
 - (void) fetchPublishedResources:(NSArray *)resourcePaths
-                   bundleVersion:(NSString *)bundleVersion
-                   baseDirectory:(NSString *)baseDirectory
+                       forBundle:(TMLBundle *)bundle
                  completionBlock:(void(^)(BOOL success, NSArray *paths, NSArray *errors))completionBlock;
-
-#pragma mark - Selection
-
-@property (nonatomic, strong) TMLBundle *latestBundle;
-@property (nonatomic, readonly) TMLBundle *apiBundle;
+- (void) fetchPublishedResources:(NSArray *)resourcePaths
+                         baseURL:(NSURL *)baseURL
+                 destinationPath:(NSString *)destinationPath
+                 completionBlock:(void(^)(BOOL success, NSArray *paths, NSArray *errors))completionBlock;
 
 #pragma mark - Removing
 
 - (void)removeAllBundles;
 
-#pragma mark - Notifications
-
-- (void) notifyBundleMutation:(NSString *)mutationType
-                       bundle:(TMLBundle *)bundle
-                       errors:(NSArray *)errors;
 
 @end
