@@ -1395,19 +1395,4 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     _lastBundleUpdateDate = nil;
 }
 
-#pragma mark - Testing
-- (void) switchToSandbox {
-    TMLConfiguration *config = [[TMLConfiguration alloc] initWithApplicationKey:@"524eec5973d1bf8ae361c8ea52cb41712ef9bee1c9212d1b01d4559067aa542a" accessToken:@"1bca8bdce58b2a0de4615291a97f0a9b6b6e5c3e1fdddf195ccc77b75849d0bd"];
-    config.apiBaseURL = [NSURL URLWithString:@"https://sandbox-api.translationexchange.com/v1"];
-    config.translationCenterBaseURL = [NSURL URLWithString:@"https://sandbox-translate.translationexchange.com"];
-    [self setConfiguration:config];
-}
-
-- (void) switchToProd {
-    TMLConfiguration *config = [[TMLConfiguration alloc] initWithApplicationKey:@"e4c84d9c59f4e300eaf55cc22c3c4e7f882a65ec43cbc2e9da1e66ce706eaa8e" accessToken:@"048f31c32dc56be8c81affad60a25cf64dd03d4944efbb31cdf8cac6d18b18b9"];
-    config.apiBaseURL = [NSURL URLWithString:@"https://api.translationexchange.com/v1"];
-    config.translationCenterBaseURL = [NSURL URLWithString:@"https://translate.translationexchange.com"];
-    [self setConfiguration:config];
-}
-
 @end
