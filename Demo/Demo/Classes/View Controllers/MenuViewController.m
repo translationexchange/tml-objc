@@ -111,9 +111,6 @@
                                    @"title": @"Change Language",
                                    },
                                @{
-                                   @"title": @"In-App Translations",
-                                   },
-                               @{
                                    @"title": @"Remove Cache",
                                    },
                                @{
@@ -148,10 +145,6 @@
     NSString *title = [[[section objectForKey:@"items"] objectAtIndex:indexPath.row] objectForKey:@"title"];
     cell.selectionStyle = UITableViewCellSelectionStyleDefault;
     cell.accessoryType = UITableViewCellAccessoryNone;
-    if (indexPath.section == 2 && indexPath.row == 1) {
-        TML *tml = [TML sharedInstance];
-        cell.accessoryType = (tml.translationActive == YES) ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
-    }
     cell.textLabel.text = TMLLocalizedString(title);
     return cell;
 }
@@ -174,12 +167,8 @@
                 [[TML sharedInstance] presentLanguageSelectorController];
             }
         } else if (indexPath.row == 1) {
-            TML *tml = [TML sharedInstance];
-            tml.translationActive = !tml.translationActive;
-            [tableView reloadData];
-        } else if (indexPath.row == 2) {
             [[TML sharedInstance] removeLocalizationData];
-        } else if (indexPath.row == 3) {
+        } else if (indexPath.row == 2) {
             if (self.presentedViewController != nil) {
                 [self dismissViewControllerAnimated:YES completion:^{
                     [[TML sharedInstance] presentTranslatorViewControllerWithTranslationKey:nil];
