@@ -60,7 +60,6 @@ NSString * const TMLDisallowTranslationDefaultsKey = @"disallowTranslation";
     NSCalendar *calendar;
     NSDateFormatter *dateFormatter;
 }
-@property(nonatomic, readwrite, strong) NSString *accessToken;
 @property(nonatomic, readwrite, strong) NSString *applicationKey;
 @end
 

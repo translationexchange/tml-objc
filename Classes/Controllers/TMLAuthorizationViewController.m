@@ -16,6 +16,7 @@
 
 NSString * const TMLAuthorizationAccessTokenKey = @"access_token";
 NSString * const TMLAuthorizationUserKey = @"user";
+NSString * const TMLAuthorizationErrorDomain = @"TMLAuthorizationErrorDomain";
 
 @interface TMLAuthorizationViewController ()
 @property (strong, nonatomic) NSURL *authorizationURL;
@@ -26,7 +27,7 @@ NSString * const TMLAuthorizationUserKey = @"user";
 
 - (instancetype)init {
     if (self = [super init]) {
-        NSURL *gatewayURL = [[[TML sharedInstance] configuration] gatewayURL];
+        NSURL *gatewayURL = [[[TML sharedInstance] configuration] gatewayBaseURL];
         NSURL *url = [gatewayURL copy];
         NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
         components.query = [NSString stringWithFormat:@"s=iOS&app_id=%@", TMLSharedConfiguration().applicationKey];
@@ -51,6 +52,10 @@ NSString * const TMLAuthorizationUserKey = @"user";
     [[TMLAuthorizationController sharedAuthorizationController] setAccessToken:accessToken
                                                                     forAccount:user.username];
     [self notifyDelegateWithGrantedAccessToken:accessToken user:user];
+}
+
+- (void) failAuthorizationWithError:(NSError *)error {
+    [self notifyDelegateAuthorizationFailed:error];
 }
 
 #pragma mark - Deauthorizing
@@ -79,6 +84,13 @@ NSString * const TMLAuthorizationUserKey = @"user";
     }
 }
 
+- (void)notifyDelegateAuthorizationFailed:(NSError *)error {
+    id<TMLAuthorizationViewControllerDelegate>delegate = self.delegate;
+    if ([delegate respondsToSelector:@selector(authorizationViewController:didFailToAuthorize:)] == YES) {
+        [delegate authorizationViewController:self didFailToAuthorize:error];
+    }
+}
+
 #pragma mark - WKNavigationDelegate
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation {
     [super webView:webView didFinishNavigation:navigation];
@@ -100,15 +112,34 @@ NSString * const TMLAuthorizationUserKey = @"user";
     }
     else if ([@"authorized" isEqualToString:userInfo[@"status"]] == YES) {
         NSString *accessToken = userInfo[@"access_token"];
+        TMLTranslator *user = nil;
+        NSError *error = nil;
         if (accessToken == nil) {
             TMLWarn(@"No authentication token found in posted message");
+            error = [NSError errorWithDomain:TMLAuthorizationErrorDomain
+                                        code:TMLAuthorizationUnexpectedResponseError
+                                    userInfo:@{NSLocalizedDescriptionKey : @"No authentication token found in authorization response"}];
         }
         else {
-            TML *tml = [TML sharedInstance];
-            TMLAPIClient *apiClient = [[TMLAPIClient alloc] initWithBaseURL:tml.configuration.apiURL
-                                                                accessToken:accessToken];
-            TMLTranslator *user = [TMLAPISerializer materializeObject:userInfo[@"translator"] withClass:[TMLTranslator class]];
+            user = [TMLAPISerializer materializeObject:userInfo[@"translator"] withClass:[TMLTranslator class]];
+            if (user == nil || [[NSNull null] isEqual:user] == YES) {
+                TMLError(@"No translator indicated in auth response");
+                user = nil;
+                error = [NSError errorWithDomain:TMLAuthorizationErrorDomain
+                                            code:TMLAuthorizationUnexpectedResponseError
+                                        userInfo:@{NSLocalizedDescriptionKey : @"No translator description found in authorization response"}];
+            }
+        }
+        if (user != nil) {
             [self setAccessToken:accessToken forUser:user];
+        }
+        else {
+            if (error == nil) {
+                error = [NSError errorWithDomain:TMLAuthorizationErrorDomain
+                                            code:TMLAuthorizationUnknownError
+                                        userInfo:nil];
+            }
+            [self notifyDelegateAuthorizationFailed:error];
         }
     }
     else {

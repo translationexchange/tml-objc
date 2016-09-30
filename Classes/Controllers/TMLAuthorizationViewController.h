@@ -12,6 +12,12 @@
 
 extern NSString * const TMLAuthorizationAccessTokenKey;
 extern NSString * const TMLAuthorizationUserKey;
+extern NSString * const TMLAuthorizationErrorDomain;
+
+typedef NS_ENUM(NSInteger, TMLAuthorizationErrorCode) {
+    TMLAuthorizationUnknownError = 0,
+    TMLAuthorizationUnexpectedResponseError
+};
 
 @protocol TMLAuthorizationViewControllerDelegate;
 
@@ -25,5 +31,7 @@ extern NSString * const TMLAuthorizationUserKey;
 @optional
 - (void) authorizationViewController:(TMLAuthorizationViewController *)controller
                         didGrantAuthorization:(NSDictionary *)userInfo;
+- (void) authorizationViewController:(TMLAuthorizationViewController *)controller
+                  didFailToAuthorize:(NSError *)error;
 - (void) authorizationViewControllerDidRevokeAuthorization:(TMLAuthorizationViewController *)controller;
 @end

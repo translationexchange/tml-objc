@@ -262,7 +262,7 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
         lastUser = [[userParts subarrayWithRange:NSMakeRange(0, userParts.count - 1)] componentsJoinedByString:@"@"];
         NSString *gatewayURLString = [userParts lastObject];
         if (accessToken == nil
-            && [[configuration.gatewayURL absoluteString] isEqualToString:gatewayURLString] == YES) {
+            && [[configuration.gatewayBaseURL absoluteString] isEqualToString:gatewayURLString] == YES) {
             accessToken = [[TMLAuthorizationController sharedAuthorizationController] accessTokenForAccount:lastUser];
         }
         
@@ -365,12 +365,11 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     }
     else if ([self shouldCheckForBundleUpdate] == YES) {
         [self checkForBundleUpdate:YES completion:^(NSString *version, TMLBundle *bundle, NSError *error) {
-            if (bundle != nil && self.translationEnabled == NO) {
-                if ([bundle isEqualToBundle:self.currentBundle] == NO
-                    && bundle != nil
-                    && [self shouldSwitchToBundle:bundle] == YES) {
-                    self.currentBundle = bundle;
-                }
+            if (bundle != nil
+                && self.translationActive == NO
+                && [bundle isEqualToBundle:self.currentBundle] == NO
+                && [self shouldSwitchToBundle:bundle] == YES) {
+                self.currentBundle = bundle;
             }
         }];
     }
@@ -457,6 +456,9 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 - (void)setCurrentBundle:(TMLBundle *)currentBundle {
     if (_currentBundle == currentBundle) {
         return;
+    }
+    if ([_currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
+        [(TMLAPIBundle *)_currentBundle cancelSync];
     }
     _currentBundle = currentBundle;
     [self updateWithBundle:currentBundle];
@@ -888,8 +890,10 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 
 #pragma mark - Reseting
 - (void)reset {
+    self.translationActive = NO;
     self.currentBundle = nil;
     [self resetBundleUpdateCheck];
+    self.currentUser = nil;
 }
 
 #pragma mark - Gesture Recognizer
@@ -1236,7 +1240,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     self.currentUser = user;
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if (user != nil) {
-        NSString *userDescription = [NSString stringWithFormat:@"%@@%@", user.username, config.gatewayURL];
+        NSString *userDescription = [NSString stringWithFormat:@"%@@%@", user.username, config.gatewayBaseURL];
         [userDefaults setObject:userDescription forKey:TMLCurrentUserDefaultsKey];
     }
     else {
@@ -1250,6 +1254,16 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
             [self presentActiveTranslationOptions];
         }];
     }
+}
+
+- (void)authorizationViewController:(TMLAuthorizationViewController *)controller
+                 didFailToAuthorize:(NSError *)error
+{
+    [self dismissPresentedViewController:^{
+        if (error != nil) {
+            [self showError:error];
+        }
+    }];
 }
 
 - (void)authorizationViewControllerDidRevokeAuthorization:(TMLAuthorizationViewController *)controller {
@@ -1320,7 +1334,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 - (void)dismissPresentedViewController:(void (^)(void))completion {
     UIViewController *presenter = [self defaultPresentingViewController];
     if (presenter.presentedViewController != nil) {
-        [presenter dismissViewControllerAnimated:YES completion:nil];
+        [presenter dismissViewControllerAnimated:YES completion:completion];
     }
 }
 
@@ -1565,6 +1579,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     TMLConfiguration *config = [[TMLConfiguration alloc] initWithApplicationKey:@"524eec5973d1bf8ae361c8ea52cb41712ef9bee1c9212d1b01d4559067aa542a" accessToken:@"1bca8bdce58b2a0de4615291a97f0a9b6b6e5c3e1fdddf195ccc77b75849d0bd"];
     config.apiBaseURL = [NSURL URLWithString:@"https://sandbox-api.translationexchange.com/v1"];
     config.translationCenterBaseURL = [NSURL URLWithString:@"https://sandbox-translate.translationexchange.com"];
+    config.gatewayBaseURL = [NSURL URLWithString:@"https://sandbox-gateway.translationexchange.com"];
     [self setConfiguration:config];
 }
 
@@ -1572,6 +1587,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     TMLConfiguration *config = [[TMLConfiguration alloc] initWithApplicationKey:@"e4c84d9c59f4e300eaf55cc22c3c4e7f882a65ec43cbc2e9da1e66ce706eaa8e" accessToken:@"048f31c32dc56be8c81affad60a25cf64dd03d4944efbb31cdf8cac6d18b18b9"];
     config.apiBaseURL = [NSURL URLWithString:@"https://api.translationexchange.com/v1"];
     config.translationCenterBaseURL = [NSURL URLWithString:@"https://translate.translationexchange.com"];
+    config.gatewayBaseURL = [NSURL URLWithString:@"https://gateway.translationexchange.com"];
     [self setConfiguration:config];
 }
 

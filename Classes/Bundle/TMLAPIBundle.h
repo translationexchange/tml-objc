@@ -18,5 +18,6 @@
 - (BOOL)isSyncing;
 - (void)setNeedsSync;
 - (void)sync;
+- (void)cancelSync;
 
 @end

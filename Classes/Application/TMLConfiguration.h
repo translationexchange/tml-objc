@@ -43,7 +43,7 @@
 
 @property(nonnull, readonly) NSURL *cdnURL;
 
-@property(nonatomic, readonly) NSString *accessToken;
+@property(nonatomic, readwrite) NSString *accessToken;
 
 @property(nonatomic, readonly) NSString *applicationKey;
 

@@ -22,7 +22,7 @@
 }
 
 - (NSString *)currentService {
-    return [[[[TML sharedInstance] configuration] gatewayURL] absoluteString];
+    return [[[[TML sharedInstance] configuration] gatewayBaseURL] absoluteString];
 }
 
 - (void)setAccessToken:(NSString *)accessToken
