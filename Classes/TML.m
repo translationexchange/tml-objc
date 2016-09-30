@@ -277,7 +277,7 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
                     TMLError(@"Error retrieving user based on supplied access token");
                 }
                 if (user != nil) {
-                    self.currentUser = user;
+                    self.currentUser = (TMLBasicUser *)user;
                 }
             }];
         }

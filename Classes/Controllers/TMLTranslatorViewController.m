@@ -42,7 +42,6 @@
 
 @interface TMLTranslatorViewController ()
 
-@property (nonatomic, strong) WKWebView *webView;
 @property (nonatomic, strong) NSString *translationKey;
 
 - (IBAction) reloadButtonPressed: (id) sender;

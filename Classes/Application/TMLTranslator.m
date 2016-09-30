@@ -32,9 +32,23 @@ NSString * const TMLTranslatorVotingPowerKey = @"voting_power";
     self.translatorID = [aDecoder decodeIntegerForKey:TMLTranslatorIDKey];
     self.userID = [aDecoder decodeIntegerForKey:TMLTranslatorUserIDKey];
     
-    self.level = [aDecoder decodeObjectForKey:TMLTranslatorLevelKey];
-    self.rank = [aDecoder decodeObjectForKey:TMLTranslatorRankKey];
+    self.level = [aDecoder decodeIntegerForKey:TMLTranslatorLevelKey];
+    self.rank = [aDecoder decodeIntegerForKey:TMLTranslatorRankKey];
     self.votingPower = [aDecoder decodeIntegerForKey:TMLTranslatorVotingPowerKey];
+}
+
+- (BOOL)isEqual:(id)object {
+    if (self == object) {
+        return YES;
+    }
+    else if ([object isKindOfClass:[TMLTranslator class]] == NO) {
+        return NO;
+    }
+    return [self isEqualToTranslator:object];
+}
+
+- (BOOL)isEqualToTranslator:(TMLTranslator *)translator {
+    return self.translatorID != translator.translatorID;
 }
 
 @end
