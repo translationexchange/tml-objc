@@ -8,7 +8,7 @@
 
 #import "TML.h"
 #import "TMLAuthorizationController.h"
-#import <SSKeychain/SSKeychain.h>
+#import <SAMKeychain/SAMKeychain.h>
 
 @implementation TMLAuthorizationController
 
@@ -27,12 +27,26 @@
 
 - (void)setAccessToken:(NSString *)accessToken
             forAccount:(NSString *)account {
-    [SSKeychain setPassword:accessToken forService:[self currentService] account:account];
+    NSError *error = nil;
+    if ([SAMKeychain setPassword:accessToken forService:[self currentService]
+                         account:account
+                           error:&error] == NO) {
+        TMLError(@"Failed to store access token in keychain: %@", error);
+    }
+    NSString *result = [SAMKeychain passwordForService:[self currentService]
+                                               account:account
+                                                 error:&error];
 }
 
 - (NSString *)accessTokenForAccount:(NSString *)account {
-    return [SSKeychain passwordForService:[self currentService]
-                                  account:account];
+    NSError *error = nil;
+    NSString *result = [SAMKeychain passwordForService:[self currentService]
+                                               account:account
+                                                 error:&error];
+    if (error != nil) {
+        TMLError(@"Error retrieving access token from keychain: %@", error);
+    }
+    return result;
 }
 
 @end

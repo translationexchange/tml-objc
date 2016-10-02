@@ -56,6 +56,7 @@
 #import "UIView+TML.h"
 
 NSString * const TMLCurrentUserDefaultsKey = @"currentUser";
+NSString * const TMLTranslationActiveDefaultsKey = @"translationActive";
 
 #if DEBUG
 #define BUNDLE_UPDATE_INTERVAL 60
@@ -293,6 +294,13 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
                            context:nil];
         
         [self configurationDisallowTranslationChanged];
+        
+        if (accessToken != nil && configuration.disallowTranslation == NO) {
+            BOOL wasTranslationActive = [userDefaults boolForKey:TMLTranslationActiveDefaultsKey];
+            if (wasTranslationActive == YES) {
+                self.translationActive = YES;
+            }
+        }
         
         [self initTranslationBundle:^(TMLBundle *bundle, NSError *error) {
             if (bundle == nil) {
@@ -892,11 +900,14 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     TMLBundle *newBundle = nil;
     TMLBundleManager *bundleManager = [TMLBundleManager defaultManager];
     NSString *applicationKey = self.configuration.applicationKey;
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     if (translationActive == YES) {
         newBundle = [bundleManager apiBundleForApplicationKey:applicationKey];
+        [userDefaults setBool:translationActive forKey:TMLTranslationActiveDefaultsKey];
     }
     else {
         newBundle = [bundleManager mainBundleForApplicationKey:applicationKey];
+        [userDefaults removeObjectForKey:TMLTranslationActiveDefaultsKey];
     }
     self.currentBundle = newBundle;
     if (translationActive == YES) {
@@ -1215,6 +1226,29 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 
 #pragma mark - Authorization
 
+- (void)setCurrentUser:(TMLBasicUser *)currentUser {
+    if (_currentUser == currentUser) {
+        return;
+    }
+    _currentUser = currentUser;
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if (currentUser != nil) {
+        NSString *username = currentUser.username;
+        if (username.length == 0) {
+            TMLWarn(@"Cannot persist user information because user has no username");
+        }
+        else {
+            NSString *userDescription = [NSString stringWithFormat:@"%@@%@", username, _configuration.gatewayBaseURL];
+            [userDefaults setObject:userDescription forKey:TMLCurrentUserDefaultsKey];
+        }
+    }
+    else {
+        [userDefaults removeObjectForKey:TMLCurrentUserDefaultsKey];
+    }
+    
+}
+
 - (void)acquireAccessToken {
     TMLAuthorizationViewController *authController = [[TMLAuthorizationViewController alloc] init];
     UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:TMLLocalizedString(@"Cancel")
@@ -1259,14 +1293,6 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     config.accessToken = accessToken;
     TMLBasicUser *user = userInfo[TMLAuthorizationUserKey];
     self.currentUser = user;
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    if (user != nil) {
-        NSString *userDescription = [NSString stringWithFormat:@"%@@%@", user.username, config.gatewayBaseURL];
-        [userDefaults setObject:userDescription forKey:TMLCurrentUserDefaultsKey];
-    }
-    else {
-        [userDefaults removeObjectForKey:TMLCurrentUserDefaultsKey];
-    }
     
     [self setupTranslationActivationGestureRecognizer];
     if (controller.presentingViewController != nil) {
