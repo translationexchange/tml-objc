@@ -107,7 +107,7 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
 
 - (NSString *)keynameForPersisting:(NSString *)key {
     NSString *bundleIdentifier = [[NSBundle bundleForClass:[TML class]] bundleIdentifier];
-    return [NSString stringWithFormat:@"%@:%@", bundleIdentifier, key];
+    return [NSString stringWithFormat:@"%@:%@:%@", bundleIdentifier, _applicationKey, key];
 }
 
 - (id) persistentValueForKey:(NSString *)key {
