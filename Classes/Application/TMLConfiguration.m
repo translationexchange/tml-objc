@@ -113,17 +113,23 @@ NSString * const TMLPreviousLocaleDefaultsKey = @"previousLocale";
 
 #pragma mark - Persistence
 
+- (NSString *)keynameForPersisting:(NSString *)key {
+    NSString *bundleIdentifier = [[NSBundle bundleForClass:[TML class]] bundleIdentifier];
+    return [NSString stringWithFormat:@"%@:%@", bundleIdentifier, key];
+}
+
 - (id) persistentValueForKey:(NSString *)key {
-    return [[NSUserDefaults standardUserDefaults] valueForKey:key];
+    return [[NSUserDefaults standardUserDefaults] valueForKey:[self keynameForPersisting:key]];
 }
 
 - (void)setPersistentValue:(id)value forKey:(NSString *)key {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if (key == nil) {
-        [defaults removeObjectForKey:key];
+    NSString *keyName = [self keynameForPersisting:key];
+    if (value == nil) {
+        [defaults removeObjectForKey:keyName];
     }
     else {
-        [defaults setValue:value forKey:key];
+        [defaults setValue:value forKey:keyName];
     }
     [defaults synchronize];
 }
