@@ -18,6 +18,7 @@
 - (BOOL)isSyncing;
 - (void)setNeedsSync;
 - (void)sync;
+- (void)syncMetaData;
 - (void)cancelSync;
 
 @end

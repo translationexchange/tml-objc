@@ -1508,6 +1508,9 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     }
     else {
         finalize(YES);
+        if ([ourBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
+            [(TMLAPIBundle *)ourBundle setNeedsSync];
+        }
     }
 }
 
