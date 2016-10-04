@@ -10,7 +10,7 @@
 #import <UIKit/UIKit.h>
 #import <WebKit/WebKit.h>
 
-@interface TMLWebViewController : UIViewController <WKScriptMessageHandler, WKNavigationDelegate>
+@interface TMLWebViewController : UIViewController <WKScriptMessageHandler, WKNavigationDelegate, WKUIDelegate>
 
 @property (nonatomic, readonly) WKWebView *webView;
 
