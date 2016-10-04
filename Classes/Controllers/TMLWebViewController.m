@@ -34,11 +34,32 @@
         WKWebView *webView = [[WKWebView alloc] initWithFrame:CGRectZero configuration:webViewConfig];
         webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         webView.navigationDelegate = self;
+        webView.UIDelegate = self;
+        
         self.webView = webView;
         UIView *ourView = self.view;
         [ourView addSubview:webView];
     }
     return self;
+}
+
+- (void)webView:(WKWebView *)webView runJavaScriptConfirmPanelWithMessage:(NSString *)message initiatedByFrame:(WKFrameInfo *)frame completionHandler:(void (^)(BOOL result))completionHandler {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:message
+                                                                             message:nil
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:@"No"
+                                                        style:UIAlertActionStyleCancel
+                                                      handler:^(UIAlertAction *action) {
+                                                          completionHandler(NO);
+                                                      }]];
+
+    [alertController addAction:[UIAlertAction actionWithTitle:@"Yes"
+                                                        style:UIAlertActionStyleDefault
+                                                      handler:^(UIAlertAction *action) {
+                                                          completionHandler(YES);
+                                                      }]];
+
+    [self presentViewController:alertController animated:YES completion:^{}];
 }
 
 - (void)loadView {

@@ -82,6 +82,8 @@
 
 - (void)translate {
     NSURL *url = [self translationCenterURL];
+    TMLDebug(@"%@", [url absoluteString]);
+    
     NSURLRequest *request = (url == nil) ? nil : [NSURLRequest requestWithURL:url];
     if (request != nil) {
         [self.webView loadRequest:request];
