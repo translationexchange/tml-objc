@@ -33,9 +33,6 @@
                            error:&error] == NO) {
         TMLError(@"Failed to store access token in keychain: %@", error);
     }
-    NSString *result = [SAMKeychain passwordForService:[self currentService]
-                                               account:account
-                                                 error:&error];
 }
 
 - (NSString *)accessTokenForAccount:(NSString *)account {
