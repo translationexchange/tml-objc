@@ -41,6 +41,10 @@
 #define TMLTranslationCenterHost @"https://translate.translationexchange.com"
 #endif
 
+#ifndef TMLGatewayHost
+#define TMLGatewayHost @"https://gateway.translationexchange.com"
+#endif
+
 #ifndef TMLCDNHost
 #define TMLCDNHost @"https://cdn.translationexchange.com"
 #endif
@@ -49,14 +53,12 @@ NSString * const TMLApplicationKeyDefaultsKey = @"applicationKey";
 NSString * const TMLDefaultLocaleDefaultsKey = @"defaultLocale";
 NSString * const TMLCurrentLocaleDefaultsKey = @"currentLocale";
 NSString * const TMLPreviousLocaleDefaultsKey = @"previousLocale";
-NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
 
 
 @interface TMLConfiguration () {
     NSCalendar *calendar;
     NSDateFormatter *dateFormatter;
 }
-@property(nonatomic, readwrite, strong) NSString *accessToken;
 @property(nonatomic, readwrite, strong) NSString *applicationKey;
 @end
 
@@ -65,19 +67,25 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
 #pragma mark - Init
 
 - (instancetype)init {
-    return [self initWithApplicationKey:nil accessToken:nil];
+    return [self initWithApplicationKey:nil];
 }
 
-- (instancetype)initWithApplicationKey:(NSString *)applicationKey accessToken:(NSString *)accessToken {
+- (instancetype)initWithApplicationKey:(NSString *)applicationKey
+                           accessToken:(NSString *)accessToken
+{
+    return [self initWithApplicationKey:applicationKey];
+}
+
+- (instancetype)initWithApplicationKey:(NSString *)applicationKey {
     if (self = [super init]) {
         self.applicationKey = applicationKey;
-        self.accessToken = accessToken;
         [self setupDefaultContextRules];
         [self setupDefaultTokens];
         [self setupLocalization];
         self.apiBaseURL = [NSURL URLWithString:TMLServiceHost];
         self.translationCenterBaseURL = [NSURL URLWithString:TMLTranslationCenterHost];
         self.cdnBaseURL = [NSURL URLWithString:TMLCDNHost];
+        self.gatewayBaseURL = [NSURL URLWithString:TMLGatewayHost];
         self.localizeNIBStrings = YES;
         self.automaticallyReloadDataBackedViews = YES;
         self.timeoutIntervalForRequest = 60.;
@@ -86,6 +94,7 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
 #else
         self.analyticsEnabled = YES;
 #endif
+        self.translationAlertUsesBlur = YES;
     }
     return self;
 }
@@ -100,7 +109,6 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     [defaults removeObjectForKey:TMLDefaultLocaleDefaultsKey];
     [defaults removeObjectForKey:TMLCurrentLocaleDefaultsKey];
-    [defaults removeObjectForKey:TMLTranslationEnabledDefaultsKey];
 }
 
 #pragma mark - Persistence
@@ -138,12 +146,14 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
         return;
     }
     
+    [self willChangeValueForKey:@"accessToken"];
     if (accessToken.length == 0) {
         _accessToken = nil;
     }
     else {
         _accessToken = accessToken;
     }
+    [self didChangeValueForKey:@"accessToken"];
 }
 
 - (void)setApplicationKey:(NSString *)applicationKey {
@@ -152,23 +162,14 @@ NSString * const TMLTranslationEnabledDefaultsKey = @"translationEnabled";
         return;
     }
     
+    [self willChangeValueForKey:@"applicationKey"];
     if (applicationKey.length == 0) {
         _applicationKey = nil;
     }
     else {
         _applicationKey = applicationKey;
     }
-}
-
-- (BOOL)isTranslationEnabled {
-    return ([[self persistentValueForKey:TMLTranslationEnabledDefaultsKey] boolValue]
-            && self.accessToken.length > 0);
-}
-
-- (void)setTranslationEnabled:(BOOL)translationEnabled {
-    [self willChangeValueForKey:@"translationEnabled"];
-    [self setPersistentValue:@(translationEnabled) forKey:TMLTranslationEnabledDefaultsKey];
-    [self didChangeValueForKey:@"translationEnabled"];
+    [self didChangeValueForKey:@"applicationKey"];
 }
 
 - (void)setAutomaticallyReloadTableViewsWithReusableLocalizedStrings:(BOOL)automaticallyReloadTableViewsWithReusableLocalizedStrings {

@@ -32,6 +32,7 @@
 #import <UIKit/UIKit.h>
 
 #import "TMLApplication.h"
+#import "TMLBasicUser.h"
 #import "TMLBundle.h"
 #import "TMLConfiguration.h"
 
@@ -42,7 +43,7 @@
 - (BOOL)shouldSwitchToBundle:(TMLBundle *)bundle;
 @end
 
-@class TMLApplication, TMLBundle, TMLConfiguration, TMLLanguage, TMLSource, TMLAPIClient, TMLTranslationKey;
+@class TMLApplication, TMLBundle, TMLConfiguration, TMLLanguage, TMLSource, TMLAPIClient, TMLTranslationKey, TMLUser;
 
 @interface TML : NSObject
 
@@ -59,12 +60,12 @@
  *  Conversely, setting this to NO would utilize published translations and 
  *  disallow makging translation changes from within the app.
  */
-@property(nonatomic, assign) BOOL translationEnabled;
+@property(nonatomic, assign, getter=isTranslationActive) BOOL translationActive;
 
 /**
  *  Holds the current user object
  */
-@property(nonatomic, strong) NSObject *currentUser;
+@property(nonatomic, readonly) TMLBasicUser *currentUser;
 
 /**
  *  Holds block options
@@ -84,7 +85,7 @@
  *  Returns shared TML instance. This is the main interface with TMLKit.
  *
  *  Note: TML must first be configured via +[TML sharedInstanceWithConfiguration:]
- *  or +[TML sharedInstanceWithApplicationKey:accessToken:]. This call is mostly
+ *  or +[TML sharedInstanceWithApplicationKey:]. This call is mostly
  *  used when interfacing with TML. For common interactions there exist a number of
  *  C macros, as defined in TML.h.
  *
@@ -94,23 +95,18 @@
 
 /**
  *  Initializes TML and configures it with default configuration, using given
- *  application key and access token.
+ *  application key.
  *
  *  See dashboard.translationexchange.com for Integration API keys.
  *
  *  Application key is a required parameter. Configuration is considered invalid
  *  if this key is empty or nil.
  *
- *  Access token is only required for any operations requiring API calls - such as
- *  in-app translation, automatically submitting new keys to the server, etc...
- *
  *  @param applicationKey Application key
- *  @param accessToken    Access token
  *
  *  @return Shared TML instance
  */
-+ (TML *) sharedInstanceWithApplicationKey:(NSString *)applicationKey
-                               accessToken:(NSString *)accessToken;
++ (TML *) sharedInstanceWithApplicationKey:(NSString *)applicationKey;
 
 /**
  *  Initializes TML and configures it with given configuration object.
@@ -120,9 +116,6 @@
  *
  *  Application key is a required parameter. Configuration is considered invalid
  *  if this key is empty or nil.
- *
- *  Access token is only required for any operations requiring API calls - such as
- *  in-app translation, automatically submitting new keys to the server, etc...
  *
  *  @param configuration Configuration
  *
@@ -428,12 +421,6 @@
 - (void)registerObjectWithReusableLocalizedStrings:(id)object;
 
 /**
- *  Readonly property indicating whether currently associated Translation Exchange Project 
- *  allows translation of strings from within the app.
- */
-@property(nonatomic, readonly, getter=isInlineTranslationsEnabled) BOOL inlineTranslationsEnabled;
-
-/**
  *  Removes all stored translation data.
  *
  *  That includes all of the translation bundles whether they were retrieved from an archive
@@ -443,6 +430,17 @@
 - (void)removeLocalizationData;
 
 - (void)reloadLocalizationData;
+
+/**
+ * Adds translation to current bundle
+ * 
+ * This is used to manually add translations returned by the translation center.
+ * Be warned, that only mutable bundles can be used for adding translations, 
+ * and since they are mutable - the translation you added may disappear with future
+ * modifications, such as when updating localziation data from API server.
+ */
+- (void) addTranslation:(TMLTranslation *)translation locale:(NSString *)locale;
+
 
 #pragma mark - Block options
 
@@ -569,7 +567,10 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...);
     [[TML sharedInstance] endBlockWithOptions]
 
 #define TMLSetTranslationEnabled(translationEnabled)\
-    [[TML sharedInstance] setTranslationEnabled:translationEnabled]
+    [[TML sharedInstance] setTranslationActive:translationEnabled]
+
+#define TMLActivateTranslation(active)\
+    [[TML sharedInstance] setTranslationActive:active]
 
 #define TMLPresentLanguagePicker() \
     [[TML sharedInstance] presentLanguageSelectorController]

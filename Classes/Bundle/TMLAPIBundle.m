@@ -40,10 +40,6 @@
 
 @dynamic sources, languages, application, translations, translationKeys;
 
-- (NSURL *)sourceURL {
-    return [[[TML sharedInstance] configuration] apiBaseURL];
-}
-
 - (BOOL)isMutable {
     return YES;
 }

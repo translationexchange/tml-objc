@@ -35,6 +35,8 @@
 
 @interface TMLTranslation : TMLModel
 
++ (instancetype)translationWithKey:(NSString *)translationKey locale:(NSString *)locale label:(NSString *)label;
+
 // Reference to the translation key it belongs to
 @property(nonatomic, strong) NSString *translationKey;
 

@@ -31,10 +31,15 @@
 
 #import "MBProgressHUD.h"
 #import "TML.h"
+#import "TMLAPIBundle.h"
 #import "TMLApplication.h"
 #import "TMLLanguage.h"
 #import "TMLLanguageSelectorViewController.h"
 #import <QuartzCore/QuartzCore.h>
+
+@interface TML(Private)
+@property(nonatomic, readonly) TMLBundle *currentBundle;
+@end
 
 @interface TMLLanguageSelectorViewController () <MBProgressHUDDelegate> {
     BOOL _observingNotifications;
@@ -74,6 +79,10 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    TMLBundle *currentBundle = [[TML sharedInstance] currentBundle];
+    if ([currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
+        [(TMLAPIBundle *)currentBundle syncMetaData];
+    }
 }
 
 -(IBAction)dismiss:(id)sender {

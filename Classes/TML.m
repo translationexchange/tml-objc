@@ -35,8 +35,11 @@
 #import "TML.h"
 #import "TMLAPIBundle.h"
 #import "TMLAPIClient.h"
-#import "TMLApplication.h"
+#import "TMLAlertController.h"
 #import "TMLAnalytics.h"
+#import "TMLApplication.h"
+#import "TMLAuthorizationController.h"
+#import "TMLAuthorizationViewController.h"
 #import "TMLBundleManager.h"
 #import "TMLDataToken.h"
 #import "TMLLanguage.h"
@@ -48,9 +51,12 @@
 #import "TMLTranslationActivationView.h"
 #import "TMLTranslationKey.h"
 #import "TMLTranslatorViewController.h"
+#import "TMLBasicUser.h"
 #import "UIResponder+TML.h"
 #import "UIView+TML.h"
 
+NSString * const TMLCurrentUserDefaultsKey = @"currentUser";
+NSString * const TMLTranslationActiveDefaultsKey = @"translationActive";
 
 #if DEBUG
 #define BUNDLE_UPDATE_INTERVAL 60
@@ -169,7 +175,7 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 
 #pragma mark - TML
 
-@interface TML()<UIGestureRecognizerDelegate> {
+@interface TML()<UIGestureRecognizerDelegate, TMLAuthorizationViewControllerDelegate> {
     BOOL _observingNotifications;
     BOOL _checkingForBundleUpdate;
     NSDate *_lastBundleUpdateDate;
@@ -182,6 +188,7 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 @property(strong, nonatomic) TMLConfiguration *configuration;
 @property(strong, nonatomic) TMLAPIClient *apiClient;
 @property(nonatomic, readwrite) TMLBundle *currentBundle;
+@property(nonatomic, readwrite) TMLBasicUser *currentUser;
 @end
 
 @implementation TML
@@ -196,10 +203,8 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 }
 
 + (TML *) sharedInstanceWithApplicationKey:(NSString *)applicationKey
-                               accessToken:(NSString *)token
 {
-    TMLConfiguration *config = [[TMLConfiguration alloc] initWithApplicationKey:applicationKey
-                                                                    accessToken:token];
+    TMLConfiguration *config = [[TMLConfiguration alloc] initWithApplicationKey:applicationKey];
     return [self sharedInstanceWithConfiguration:config];
 }
 
@@ -228,6 +233,12 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     if (_configuration == configuration) {
         return;
     }
+    
+    if (_configuration != nil) {
+        [_configuration removeObserver:self forKeyPath:@"accessToken"];
+        [_configuration removeObserver:self forKeyPath:@"disallowTranslation"];
+    }
+    
     _configuration = configuration;
     [self reset];
     if (configuration == nil) {
@@ -244,13 +255,56 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
                                                          applicationKey:configuration.applicationKey
                                                             accessToken:configuration.accessToken];
         self.apiClient = apiClient;
-        [self setupNotificationObserving];
         
-        self.translationEnabled = configuration.translationEnabled;
-        if (self.translationEnabled == YES) {
-            TMLAPIBundle *apiBundle = [[TMLBundleManager defaultManager] apiBundleForApplicationKey:configuration.applicationKey];
-            self.currentBundle = apiBundle;
-            [apiBundle setNeedsSync];
+        NSString *accessToken = configuration.accessToken;
+        
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSString *lastUser = [userDefaults objectForKey:TMLCurrentUserDefaultsKey];
+        NSArray *userParts = [lastUser componentsSeparatedByString:@"@"];
+        lastUser = [[userParts subarrayWithRange:NSMakeRange(0, userParts.count - 1)] componentsJoinedByString:@"@"];
+        NSString *gatewayURLString = [userParts lastObject];
+        if (accessToken == nil
+            && [[configuration.gatewayBaseURL absoluteString] isEqualToString:gatewayURLString] == YES) {
+            accessToken = [[TMLAuthorizationController sharedAuthorizationController] accessTokenForAccount:lastUser];
+        }
+        
+        if (accessToken != nil) {
+            if ([accessToken isEqualToString:configuration.accessToken] == NO) {
+                configuration.accessToken = accessToken;
+            }
+            apiClient.accessToken = accessToken;
+            [apiClient getUserInfo:^(TMLUser *user, TMLAPIResponse *response, NSError *error) {
+                if (error != nil) {
+                    TMLError(@"Error retrieving user based on supplied access token");
+                }
+                if (user != nil) {
+                    self.currentUser = (TMLBasicUser *)user;
+                }
+            }];
+        }
+        
+        [self setupNotificationObserving];
+        [configuration addObserver:self
+                        forKeyPath:@"accessToken"
+                           options:NSKeyValueObservingOptionNew
+                           context:nil];
+        [configuration addObserver:self
+                        forKeyPath:@"disallowTranslation"
+                           options:NSKeyValueObservingOptionNew
+                           context:nil];
+        
+        [self configurationDisallowTranslationChanged];
+        
+        if (accessToken != nil && configuration.disallowTranslation == NO) {
+            BOOL wasTranslationActive = [userDefaults boolForKey:TMLTranslationActiveDefaultsKey];
+            if (wasTranslationActive == YES) {
+                self.translationActive = YES;
+            }
+        }
+        
+        NSString *lastLocale = [configuration currentLocale];
+        if (lastLocale != nil) {
+            self.currentLocale = lastLocale;
         }
         
         NSString *lastLocale = [configuration currentLocale];
@@ -273,6 +327,32 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 
 - (void)dealloc {
     [self teardownNotificationObserving];
+}
+
+#pragma mark - KVO
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+    if (object == _configuration
+        && [keyPath isEqualToString:@"accessToken"] == YES) {
+        TMLAPIClient *client = self.apiClient;
+        if (client != nil) {
+            NSString *newValue = [change valueForKey:NSKeyValueChangeNewKey];
+            client.accessToken = newValue;
+        }
+    }
+    else if (object == _configuration
+        && [keyPath isEqualToString:@"disallowTranslation"] == YES) {
+        [self configurationDisallowTranslationChanged];
+    }
+    else {
+        [super observeValueForKeyPath:keyPath
+                             ofObject:object
+                               change:change
+                              context:context];
+    }
 }
 
 #pragma mark - Notifications
@@ -310,12 +390,11 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     }
     else if ([self shouldCheckForBundleUpdate] == YES) {
         [self checkForBundleUpdate:YES completion:^(NSString *version, TMLBundle *bundle, NSError *error) {
-            if (bundle != nil && self.translationEnabled == NO) {
-                if ([bundle isEqualToBundle:self.currentBundle] == NO
-                    && bundle != nil
-                    && [self shouldSwitchToBundle:bundle] == YES) {
-                    self.currentBundle = bundle;
-                }
+            if (bundle != nil
+                && self.translationActive == NO
+                && [bundle isEqualToBundle:self.currentBundle] == NO
+                && [self shouldSwitchToBundle:bundle] == YES) {
+                self.currentBundle = bundle;
             }
         }];
     }
@@ -330,13 +409,17 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
         [self attemptToUpdateBundle];
     }
     
-    [self updateTranslationRecognizers];
+    [self setupTranslationActivationGestureRecognizer];
+    
     // We might have enabled inline translation before application launched
     // and before we had a window to which we'd add gesture recognizers.
     // Setter method has done all the required work, we just need to ensure
     // the gesture recognizer is added
-    if (_translationEnabled == YES) {
+    if (_translationActive == YES) {
         [self setupInlineTranslationGestureRecognizer];
+    }
+    else {
+        [self teardownInlineTranslationGestureRecognizer];
     }
     
     [[TMLAnalytics sharedInstance] startAnalyticsTimerIfNecessary];
@@ -393,16 +476,14 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     if (updateReusableStrings == YES) {
         [self updateReusableTMLStringsOfAllRegisteredObjects];
     }
-    
-    // TODO: this should probably be getting handled elsewhere
-    if ([self.application isInlineTranslationsEnabled] == NO) {
-        self.configuration.translationEnabled = NO;
-    }
 }
 
 - (void)setCurrentBundle:(TMLBundle *)currentBundle {
     if (_currentBundle == currentBundle) {
         return;
+    }
+    if ([_currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
+        [(TMLAPIBundle *)_currentBundle cancelSync];
     }
     _currentBundle = currentBundle;
     [self updateWithBundle:currentBundle];
@@ -481,6 +562,7 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 }
 
 - (void)resetBundleUpdateCheck {
+    _checkingForBundleUpdate = NO;
     _lastBundleUpdateDate = nil;
 }
 
@@ -586,8 +668,10 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
         return;
     }
     _application = application;
-    self.configuration.defaultLocale = application.defaultLocale;
-    [self updateTranslationRecognizers];
+    TMLConfiguration *config = self.configuration;
+    if (config.defaultLocale == nil) {
+        config.defaultLocale = application.defaultLocale;
+    }
 }
 
 #pragma mark - Translating
@@ -805,38 +889,38 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 
 #pragma mark - Configuration
 
-- (void)updateTranslationRecognizers {
-    if ([[UIApplication sharedApplication] keyWindow] == nil) {
-        return;
+- (void)configurationDisallowTranslationChanged {
+    BOOL disallowed = _configuration.disallowTranslation;
+    if (self.translationActive == YES && disallowed == YES) {
+        self.translationActive = NO;
     }
-    TMLApplication *application = self.application;
-    TMLConfiguration *config = self.configuration;
-    if (application.inlineTranslationsEnabled == YES
-        && config.accessToken.length > 0) {
-        [self setupTranslationActivationGestureRecognizer];
+    if (disallowed == YES) {
+        [self teardownTranslationActivationGestureRecognizer];
     }
     else {
-        [self teardownTranslationActivationGestureRecognizer];
+        [self setupTranslationActivationGestureRecognizer];
     }
 }
 
-- (void)setTranslationEnabled:(BOOL)translationEnabled {
-    if (_translationEnabled == translationEnabled) {
+- (void)setTranslationActive:(BOOL)translationActive {
+    if (_translationActive == translationActive) {
         return;
     }
-    _translationEnabled = translationEnabled;
+    _translationActive = translationActive;
     TMLBundle *newBundle = nil;
     TMLBundleManager *bundleManager = [TMLBundleManager defaultManager];
     NSString *applicationKey = self.configuration.applicationKey;
-    if (translationEnabled == YES) {
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if (translationActive == YES) {
         newBundle = [bundleManager apiBundleForApplicationKey:applicationKey];
+        [userDefaults setBool:translationActive forKey:TMLTranslationActiveDefaultsKey];
     }
     else {
         newBundle = [bundleManager mainBundleForApplicationKey:applicationKey];
+        [userDefaults removeObjectForKey:TMLTranslationActiveDefaultsKey];
     }
     self.currentBundle = newBundle;
-    self.configuration.translationEnabled = translationEnabled;
-    if (translationEnabled == YES) {
+    if (translationActive == YES) {
         if ([[UIApplication sharedApplication] keyWindow] != nil) {
             [self setupInlineTranslationGestureRecognizer];
         }
@@ -846,19 +930,12 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     }
 }
 
-- (BOOL)isInlineTranslationsEnabled {
-    if (self.application == nil) {
-        // application may start up w/o any project metadata (no release available locally or on CDN)
-        // however, we could still try to comminicate with the API
-        return YES;
-    }
-    return [self.application isInlineTranslationsEnabled];
-}
-
 #pragma mark - Reseting
 - (void)reset {
+    self.translationActive = NO;
     self.currentBundle = nil;
     [self resetBundleUpdateCheck];
+    self.currentUser = nil;
 }
 
 #pragma mark - Gesture Recognizer
@@ -877,6 +954,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     if (_translationActivationGestureRecognizer.view != nil) {
         return;
     }
+    
     UIGestureRecognizer *gestureRecognizer = nil;
     id<TMLDelegate>delegate = self.delegate;
     if ([delegate respondsToSelector:@selector(gestureRecognizerForTranslationActivation)] == YES) {
@@ -951,33 +1029,66 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 
 - (void)translationActivationGestureRecognized:(UIGestureRecognizer *)gestureRecognizer {
     if (gestureRecognizer.state == UIGestureRecognizerStateBegan) {
-        if (self.translationEnabled == NO) {
-            [self toggleActiveTranslation];
+        if (self.translationActive == NO
+            && self.configuration.accessToken.length == 0) {
+            [self acquireAccessToken];
+            return;
         }
-        else {
-            [self presentActiveTranslationOptions];
-        }
+        [self presentActiveTranslationOptions];
     }
 }
 
 - (void)presentActiveTranslationOptions {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:TMLLocalizedString(@"Choose")
-                                                                             message:TMLLocalizedString(@"What would you like to do?")
-                                                                      preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *changeLocaleAction = [UIAlertAction actionWithTitle:TMLLocalizedString(@"Change Language") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
+    TMLBasicUser *translator = self.currentUser;
+    NSString *initials = [translator initials];
+    TMLAlertController *alertController = [TMLAlertController alertControllerWithTitle:translator.displayName
+                                                                               message:@"TranslationExchange"
+                                                                                 image:nil
+                                                                      imagePlaceholder:initials];
+    
+    NSURL *mugshotURL = translator.mugshotURL;
+    if (mugshotURL != nil) {
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSData *imageData = [NSData dataWithContentsOfURL:mugshotURL];
+            if (imageData != nil) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    alertController.titleImage = [UIImage imageWithData:imageData];
+                });
+            }
+        });
+    }
+    
+    TMLAlertAction *changeLocaleAction = [TMLAlertAction actionWithTitle:TMLLocalizedString(@"Change Language") style:UIAlertActionStyleDefault handler:^(TMLAlertAction *action) {
         [self presentLanguageSelectorController];
     }];
     [alertController addAction:changeLocaleAction];
     
-    UIAlertAction *disableAction = [UIAlertAction actionWithTitle:TMLLocalizedString(@"Deactivate Translation") style:UIAlertActionStyleDefault handler:^(UIAlertAction *action) {
-        [self toggleActiveTranslation];
-    }];
-    [alertController addAction:disableAction];
+    if (_configuration.disallowTranslation == NO) {
+        if (self.translationActive == YES) {
+            TMLAlertAction *disableAction = [TMLAlertAction actionWithTitle:TMLLocalizedString(@"Deactivate Translation") style:UIAlertActionStyleDefault handler:^(TMLAlertAction *action) {
+                [self toggleActiveTranslation];
+            }];
+            [alertController addAction:disableAction];
+        }
+        else {
+            TMLAlertAction *enableAction = [TMLAlertAction actionWithTitle:TMLLocalizedString(@"Activate Translation") style:UIAlertActionStyleDefault handler:^(TMLAlertAction *action) {
+                [self toggleActiveTranslation];
+            }];
+            [alertController addAction:enableAction];
+        }
+    }
     
-    UIAlertAction *cancel = [UIAlertAction actionWithTitle:TMLLocalizedString(@"Cancel") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+    TMLAlertAction *signoutAction = [TMLAlertAction actionWithTitle:TMLLocalizedString(@"Sign out") style:UIAlertActionStyleDefault handler:^(TMLAlertAction *action) {
+        [self signout];
+    }];
+    [alertController addAction:signoutAction];
+    
+    TMLAlertAction *cancel = [TMLAlertAction actionWithTitle:TMLLocalizedString(@"Cancel") style:UIAlertActionStyleCancel handler:^(TMLAlertAction *action) {
         [self dismissPresentedViewController];
     }];
     [alertController addAction:cancel];
+    
+    alertController.preferredAction = cancel;
     
     UIViewController *presentingController = [[[UIApplication sharedApplication] keyWindow] rootViewController];
     if (presentingController.presentedViewController != nil) {
@@ -987,7 +1098,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 }
 
 - (void)toggleActiveTranslation {
-    BOOL translationEnabled = self.translationEnabled;
+    BOOL translationActive = self.translationActive;
     UIWindow *window = [[UIApplication sharedApplication] keyWindow];
     UIColor *backgroundColor = nil;
     
@@ -995,7 +1106,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
         _translationActivationView = [[TMLTranslationActivationView alloc] initWithFrame:window.bounds];
     }
     
-    if (translationEnabled) {
+    if (translationActive) {
         backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.77];
     }
     else {
@@ -1015,7 +1126,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     if (_translationActivationView.superview == nil) {
         [window addSubview:_translationActivationView];
     }
-    self.translationEnabled = !self.translationEnabled;
+    self.translationActive = !self.translationActive;
 }
 
 - (void)inlineTranslationGestureRecognized:(UIGestureRecognizer *)gestureRecognizer {
@@ -1123,6 +1234,109 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     [self presentAlertController:alert];
 }
 
+#pragma mark - Authorization
+
+- (void)setCurrentUser:(TMLBasicUser *)currentUser {
+    if (_currentUser == currentUser) {
+        return;
+    }
+    _currentUser = currentUser;
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if (currentUser != nil) {
+        NSString *username = currentUser.username;
+        if (username.length == 0) {
+            TMLWarn(@"Cannot persist user information because user has no username");
+        }
+        else {
+            NSString *userDescription = [NSString stringWithFormat:@"%@@%@", username, _configuration.gatewayBaseURL];
+            [userDefaults setObject:userDescription forKey:TMLCurrentUserDefaultsKey];
+        }
+    }
+    else {
+        [userDefaults removeObjectForKey:TMLCurrentUserDefaultsKey];
+    }
+    
+}
+
+- (void)acquireAccessToken {
+    TMLAuthorizationViewController *authController = [[TMLAuthorizationViewController alloc] init];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:TMLLocalizedString(@"Cancel")
+                                                                     style:UIBarButtonItemStylePlain
+                                                                    target:self
+                                                                    action:@selector(dismissPresentedViewController)];
+    authController.navigationItem.leftBarButtonItem = cancelButton;
+    authController.delegate = self;
+    [authController authorize];
+    [self presentViewController:authController beforePresentation:^(UIViewController *wrapper) {
+        wrapper.modalPresentationStyle = UIModalPresentationFormSheet;
+        wrapper.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    }];
+}
+
+- (void)signout {
+    TMLAuthorizationViewController *authController = [[TMLAuthorizationViewController alloc] init];
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:TMLLocalizedString(@"Cancel")
+                                                                     style:UIBarButtonItemStylePlain
+                                                                    target:self
+                                                                    action:@selector(dismissPresentedViewController)];
+    authController.navigationItem.leftBarButtonItem = cancelButton;
+    authController.delegate = self;
+    [authController deauthorize];
+    // deliberately not displaying...
+//    [self presentViewController:authController beforePresentation:^(UIViewController *wrapper) {
+//        wrapper.modalPresentationStyle = UIModalPresentationFormSheet;
+//        wrapper.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+//    }];
+}
+
+- (void)authorizationViewController:(TMLAuthorizationViewController *)controller
+                       didGrantAuthorization:(NSDictionary *)userInfo
+{
+    NSString *accessToken = [userInfo valueForKey:TMLAuthorizationAccessTokenKey];
+    if (accessToken.length == 0) {
+        TMLWarn(@"Got empty access token from gateway!");
+        return;
+    }
+    
+    TMLConfiguration *config = [self configuration];
+    config.accessToken = accessToken;
+    TMLBasicUser *user = userInfo[TMLAuthorizationUserKey];
+    self.currentUser = user;
+    
+    [self setupTranslationActivationGestureRecognizer];
+    if (controller.presentingViewController != nil) {
+        [controller.presentingViewController dismissViewControllerAnimated:YES completion:^{
+            self.translationActive = YES;
+            [self presentActiveTranslationOptions];
+        }];
+    }
+}
+
+- (void)authorizationViewController:(TMLAuthorizationViewController *)controller
+                 didFailToAuthorize:(NSError *)error
+{
+    [self dismissPresentedViewController:^{
+        if (error != nil) {
+            [self showError:error];
+        }
+    }];
+}
+
+- (void)authorizationViewControllerDidRevokeAuthorization:(TMLAuthorizationViewController *)controller {
+    TMLConfiguration *config = [self configuration];
+    config.accessToken = nil;
+    self.currentUser = nil;
+    if (controller.presentingViewController != nil) {
+        [controller.presentingViewController dismissViewControllerAnimated:YES completion:^{
+            self.translationActive = NO;
+        }];
+    }
+    else {
+        self.translationActive = NO;
+    }
+}
+
 #pragma mark - Presenting View Controllers
 
 - (void)presentTranslatorViewControllerWithTranslationKey:(NSString *)translationKey {
@@ -1150,6 +1364,14 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     [self _presentViewController:wrapper];
 }
 
+- (void)presentViewController:(UIViewController *)viewController beforePresentation:(void(^)(UIViewController *))beforePresentationBlock {
+    UINavigationController *wrapper = [[UINavigationController alloc] initWithRootViewController:viewController];
+    if (beforePresentationBlock != nil) {
+        beforePresentationBlock(wrapper);
+    }
+    [self _presentViewController:wrapper];
+}
+
 - (void)_presentViewController:(UIViewController *)viewController {
     UIViewController *presenter = [self defaultPresentingViewController];
     if (presenter.presentedViewController != nil) {
@@ -1169,7 +1391,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 - (void)dismissPresentedViewController:(void (^)(void))completion {
     UIViewController *presenter = [self defaultPresentingViewController];
     if (presenter.presentedViewController != nil) {
-        [presenter dismissViewControllerAnimated:YES completion:nil];
+        [presenter dismissViewControllerAnimated:YES completion:completion];
     }
 }
 
@@ -1291,6 +1513,9 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     }
     else {
         finalize(YES);
+        if ([ourBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
+            [(TMLAPIBundle *)ourBundle setNeedsSync];
+        }
     }
 }
 
@@ -1322,6 +1547,11 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 - (NSArray *) translationsForKey:(NSString *)translationKey locale:(NSString *)locale {
     NSDictionary *translations = [self.currentBundle translationsForLocale:locale];
     return translations[translationKey];
+}
+
+- (void) addTranslation:(TMLTranslation *)translation locale:(NSString *)locale {
+    TMLBundle *bundle = self.currentBundle;
+    [bundle addTranslation:translation locale:locale];
 }
 
 - (NSArray *)translationKeysMatchingString:(NSString *)string
@@ -1363,6 +1593,10 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 
 #pragma mark - Reusable Localized Strings
 
+- (void) updateReusableTMLStrings {
+    [self updateReusableTMLStringsOfAllRegisteredObjects];
+}
+
 - (void)updateReusableTMLStringsOfAllRegisteredObjects {
     NSArray *toRestore = [_objectsWithReusableLocalizedStrings allObjects];
     for (id object in toRestore) {
@@ -1397,7 +1631,14 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 - (void)removeLocalizationData {
     [[TMLBundleManager defaultManager] removeAllBundles];
     [self setCurrentBundle:nil];
-    _lastBundleUpdateDate = nil;
+    [self resetBundleUpdateCheck];
+    self.translationActive = NO;
+    [self initTranslationBundle:^(TMLBundle *bundle, NSError *error) {
+        if (bundle != nil) {
+            self.currentBundle = bundle;
+        }
+        [self attemptToUpdateBundle];
+    }];
 }
 
 @end

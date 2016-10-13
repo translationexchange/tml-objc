@@ -40,11 +40,13 @@
 
 @property(nonatomic, strong) NSURL *translationCenterBaseURL;
 
+@property(nonatomic, strong) NSURL *gatewayBaseURL;
+
 @property(nonatomic, strong) NSURL *cdnBaseURL;
 
 @property(nonnull, readonly) NSURL *cdnURL;
 
-@property(nonatomic, readonly) NSString *accessToken;
+@property(nonatomic, readwrite) NSString *accessToken;
 
 @property(nonatomic, readonly) NSString *applicationKey;
 
@@ -64,9 +66,7 @@
 
 @property(nonatomic, assign) BOOL localizeNIBStrings;
 
-@property(nonatomic, assign, getter=isTranslationEnabled) BOOL translationEnabled;
-
-@property(nonatomic) BOOL inContextTranslatorEnabled;
+@property(nonatomic, assign) BOOL disallowTranslation;
 
 #pragma mark - Automatic reloading
 /**
@@ -96,7 +96,8 @@
 
 #pragma mark -
 - (instancetype)initWithApplicationKey:(NSString *)applicationKey
-                           accessToken:(NSString *)accessToken;
+                           accessToken:(NSString *)accessToken __deprecated;
+- (instancetype)initWithApplicationKey:(NSString *)applicationKey;
 @property(readonly, nonatomic, getter=isValidConfiguration) BOOL validConfiguration;
 
 - (NSString *) deviceLocale;
@@ -136,6 +137,9 @@
 
 #pragma mark - Analytics
 @property (assign, nonatomic) BOOL analyticsEnabled;
+
+#pragma mark - UI Customizations
+@property (assign, nonatomic) BOOL translationAlertUsesBlur;
 
 @end
 

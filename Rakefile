@@ -1,25 +1,64 @@
 namespace :test do
-  desc "Run the Tml Tests for iOS"
-  task :ios do
-    $ios_success = system("xctool -workspace Demo/Demo.xcworkspace -scheme 'Demo' -sdk iphonesimulator -configuration Release test -test-sdk iphonesimulator ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES")
+  desc "Run All Tests"
+  task :all => ['tml'] do |name|
+    if $success
+      puts "\033[0;32m** Test '#{name}' finished successfully."
+    else
+      puts "\033[0;31m! Test '#{name}' failed!"
+    end
+  end
+
+  desc "TMLKit Tests"
+  task :tml do
+    $success = system("xctool -workspace TMLKit/TMLKit.xcworkspace -scheme 'TMLKit' -sdk iphonesimulator -configuration Release GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES test -test-sdk iphonesimulator")
   end
 end
 
-desc "Run the Tml Tests for iOS"
-task :test => ['test:ios'] do
-  puts "\033[0;31m! iOS unit tests failed" unless $ios_success
-  if $ios_success
-    puts "\033[0;32m** All tests executed successfully"
-  else
-    exit(-1)
+namespace :build do
+  desc "Run All Builds"
+  task :all => ['demo', 'tmlsandbox'] do |name|
+    if $success
+      puts "\033[0;32m** Build '#{name}' finished successfully."
+    else
+      puts "\033[0;31m! Build '#{name}' failed!"
+    end
+  end
+
+  desc "Demo Build"
+  task :demo do
+    $success = system("xctool -workspace Demo/Demo.xcworkspace -scheme 'Demo' -sdk iphonesimulator -configuration Release build")
+  end
+
+  desc "TMLSandbox Build"
+  task :tmlsandbox do
+    $success = system("xctool -workspace TMLSandbox/TMLSandbox.xcworkspace -scheme 'TMLSandbox' -sdk iphonesimulator -configuration Release build")
   end
 end
-task :default => 'test'
 
-desc "Runs the specs [EMPTY]"
-task :spec do
-  # Provide your own implementation
+namespace :info do
+  desc "All Info"
+  task :all => [:versions] do
+  end
+
+  desc "Informational details"
+  task :versions do
+    puts "#{podspec_path} v.#{podspec_version}"
+    puts "TMLKit v.#{tml_version}"
+  end
+
+  desc "Environment"
+  task :env do
+    ENV.each {|k,v|
+      puts "#{k} => #{v}"
+    }
+  end
 end
+
+desc "Execute all test and build tasks"
+task :all => ['info:all', 'test:all', 'build:all'] do
+end
+
+task :default => 'all'
 
 task :version do
   git_remotes = `git remote`.strip.split("\n")
@@ -28,14 +67,14 @@ task :version do
     puts "-- fetching version number from github"
     sh 'git fetch'
 
-    remote_version = remote_spec_version
+    remote_version = remote_podspec_version
   end
 
   if remote_version.nil?
     puts "There is no current released version. You're about to release a new Pod."
     version = "0.0.1"
   else
-    puts "The current released version of your pod is " + remote_spec_version.to_s()
+    puts "The current released version of your pod is " + remote_podspec_version.to_s()
     version = suggested_version_number
   end
   
@@ -60,32 +99,36 @@ task :release do
       exit 1
     end
 
-    if `git tag`.strip.split("\n").include?(spec_version)
-      $stderr.puts "[!] A tag for version `#{spec_version}' already exists. Change the version in the podspec"
+    if `git tag`.strip.split("\n").include?(podspec_version)
+      $stderr.puts "[!] A tag for version `#{podspec_version}' already exists. Change the version in the podspec"
       exit 1
     end
 
-    puts "You are about to release `#{spec_version}`, is that correct? [y/n]"
+    puts "You are about to release `#{podspec_version}`, is that correct? [y/n]"
     exit if $stdin.gets.strip.downcase != 'y'
   end
 
-  puts "* Running specs"
-  sh "rake spec"
- 
   puts "* Linting the podspec"
   sh "pod lib lint"
 
   # Then release
-  sh "git commit #{podspec_path} CHANGELOG.md -m 'Release #{spec_version}'"
-  sh "git tag -a #{spec_version} -m 'Release #{spec_version}'"
+  sh "git commit #{podspec_path} CHANGELOG.md -m 'Release #{podspec_version}'"
+  sh "git tag -a #{podspec_version} -m 'Release #{podspec_version}'"
   sh "git push origin master"
   sh "git push origin --tags"
   sh "pod push master #{podspec_path}"
 end
 
+# @return [String] TMLKit version
+#
+def tml_version
+  result = `plutil -p TMLKit/TMLKit/Info.plist | grep "CFBundleShortVersionString" | sed -E "s/[^0-9\.]+//g"`
+  result
+end
+
 # @return [Pod::Version] The version as reported by the Podspec.
 #
-def spec_version
+def podspec_version
   require 'cocoapods'
   spec = Pod::Specification.from_file(podspec_path)
   spec.version
@@ -93,7 +136,7 @@ end
 
 # @return [Pod::Version] The version as reported by the Podspec from remote.
 #
-def remote_spec_version
+def remote_podspec_version
   require 'cocoapods-core'
 
   if spec_file_exist_on_remote?
@@ -120,47 +163,10 @@ end
 # @return [String] The relative path of the Podspec.
 #
 def podspec_path
-  podspecs = Dir.glob('*.podspec')
+  podspecs = Dir.glob('TMLKit.podspec')
   if podspecs.count == 1
     podspecs.first
   else
     raise "Could not select a podspec"
   end
-end
-
-# @return [String] The suggested version number based on the local and remote version numbers.
-#
-def suggested_version_number
-  if spec_version != remote_spec_version
-    spec_version.to_s()
-  else
-    next_version(spec_version).to_s()
-  end
-end
-
-# @param  [Pod::Version] version
-#         the version for which you need the next version
-#
-# @note   It is computed by bumping the last component of the versino string by 1.
-#
-# @return [Pod::Version] The version that comes next after the version supplied.
-#
-def next_version(version)
-  version_components = version.to_s().split(".");
-  last = (version_components.last.to_i() + 1).to_s
-  version_components[-1] = last
-  Pod::Version.new(version_components.join("."))
-end
-
-# @param  [String] new_version_number
-#         the new version number
-#
-# @note   This methods replaces the version number in the podspec file with a new version number.
-#
-# @return void
-#
-def replace_version_number(new_version_number)
-  text = File.read(podspec_path)
-  text.gsub!(/(s.version( )*= ")#{spec_version}(")/, "\\1#{new_version_number}\\3")
-  File.open(podspec_path, "w") { |file| file.puts text }
 end

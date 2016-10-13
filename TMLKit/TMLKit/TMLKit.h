@@ -20,6 +20,8 @@
 #import "TMLBundle.h"
 #import "TMLAPIBundle.h"
 #import "TMLBundleManager.h"
+#import "TMLUser.h"
+#import "TMLTranslator.h"
 
 #import "TMLBasicAPIClient.h"
 #import "TMLAPIClient.h"
@@ -48,6 +50,7 @@
 #import "TMLTranslatorViewController.h"
 #import "TMLLanguageSelectorViewController.h"
 #import "TMLViewController.h"
+#import "TMLWebViewController.h"
 
 #import "NSAttributedString+TML.h"
 #import "NSObject+TML.h"

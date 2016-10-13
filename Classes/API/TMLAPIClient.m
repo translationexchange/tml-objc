@@ -38,6 +38,7 @@
 #import "TMLSource.h"
 #import "TMLTranslation.h"
 #import "TMLTranslationKey.h"
+#import "TMLUser.h"
 
 NSString * const TMLAPIOptionsLocale = @"locale";
 NSString * const TMLAPIOptionsIncludeAll = @"all";
@@ -49,7 +50,6 @@ NSString * const TMLAPIOptionsPage = @"page";
 
 @interface TMLAPIClient()
 @property (readwrite, nonatomic) NSString *applicationKey;
-@property (readwrite, nonatomic) NSString *accessToken;
 @end
 
 @implementation TMLAPIClient
@@ -82,6 +82,11 @@ NSString * const TMLAPIOptionsPage = @"page";
  cachePolicy:(NSURLRequestCachePolicy)cachePolicy
 completionBlock:(TMLAPIResponseHandler)completionBlock
 {
+    if (_accessToken == nil) {
+        TMLWarn(@"Ignoring API GET request due to absent access token");
+        return;
+    }
+    
     BOOL includeAllResults = [parameters[TMLAPIOptionsIncludeAll] boolValue];
     NSDictionary *requestParameters = [self prepareAPIParameters:parameters];
     [super get:path
@@ -114,6 +119,11 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
   cachePolicy:(NSURLRequestCachePolicy)cachePolicy
 completionBlock:(TMLAPIResponseHandler)completionBlock
 {
+    if (_accessToken == nil) {
+        TMLWarn(@"Ignoring API GET request due to absent access token");
+        return;
+    }
+    
     NSDictionary *requestParameters = [self prepareAPIParameters:parameters];
     [super post:path
      parameters:requestParameters
@@ -122,6 +132,24 @@ completionBlock:completionBlock];
 }
 
 #pragma mark - Methods
+
+- (void)getUserInfo:(void (^)(TMLUser *, TMLAPIResponse *, NSError *))completionBlock {
+    NSString *path = @"users/me";
+    [self get:path
+   parameters:nil
+completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+    if (completionBlock != nil) {
+        TMLUser *user = nil;
+        if (apiResponse != nil) {
+            NSDictionary *info = apiResponse.userInfo;
+            if (info != nil) {
+                user = [TMLAPISerializer materializeObject:info withClass:[TMLUser class]];
+            }
+        }
+        completionBlock(user, apiResponse, error);
+    }
+}];
+}
 
 - (NSString *)applicationProjectPath {
     return [NSString stringWithFormat:@"projects/%@", self.applicationKey];

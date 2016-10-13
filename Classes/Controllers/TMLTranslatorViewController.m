@@ -30,16 +30,18 @@
 
 
 #import "MBProgressHUD.h"
+#import "NSObject+TML.h"
+#import "NSURL+TML.h"
 #import "TML.h"
 #import "TMLApplication.h"
 #import "TMLConfiguration.h"
 #import "TMLLanguage.h"
+#import "TMLTranslation.h"
 #import "TMLTranslatorViewController.h"
-#import "NSURL+TML.h"
+#import <WebKit/WebKit.h>
 
 @interface TMLTranslatorViewController ()
 
-@property (nonatomic, strong) UIWebView *webView;
 @property (nonatomic, strong) NSString *translationKey;
 
 - (IBAction) reloadButtonPressed: (id) sender;
@@ -58,99 +60,34 @@
 - (instancetype)initWithTranslationKey:(NSString *)translationKey {
     if (self = [super init]) {
         self.translationKey = translationKey;
+        self.title = TMLLocalizedString(@"Translate");
+        
+        UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:TMLLocalizedString(@"Done") style:UIBarButtonItemStylePlain target:self action:@selector(dismiss:)];
+        self.navigationItem.leftBarButtonItem = doneButton;
+        
+        UIBarButtonItem *reloadButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload:)];
+        self.navigationItem.rightBarButtonItem = reloadButton;
+        
+        [self translate];
     }
     return self;
 }
 
-- (void) loadView {
-    [super loadView];
-    
-    UIView *ourView = self.view;
-    ourView.backgroundColor = [UIColor colorWithWhite:0.97f alpha:1.0f];
-    
-    self.title = TMLLocalizedString(@"Translate");
-    
-    UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:TMLLocalizedString(@"Done") style:UIBarButtonItemStylePlain target:self action:@selector(dismiss:)];
-    self.navigationItem.leftBarButtonItem = doneButton;
-    
-    UIBarButtonItem *reloadButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload:)];
-    self.navigationItem.rightBarButtonItem = reloadButton;
-
-    UIWebView *webView = [[UIWebView alloc] initWithFrame:ourView.bounds];
-    [webView  setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
-    webView.delegate = self;
-    self.webView = webView;
-    [self.view addSubview:webView];
-}
-
 - (NSURL *) translationCenterURL {
-    NSURL *url = nil;
-    TMLApplication *app = [TML sharedInstance].application;
-    NSString *host = [app.tools objectForKey: @"host"];
-    if (host != nil) {
-        url = [NSURL URLWithString:host];
-    }
-    else {
-        url = [[[TML sharedInstance] configuration] translationCenterBaseURL];
-    }
-    return [url URLByAppendingPathComponent:@"mobile"];
+    TML *tml = [TML sharedInstance];
+    TMLApplication *app = tml.application;
+    NSURL *url = [app translationCenterURLForTranslationKey:self.translationKey locale:tml.currentLocale];
+    return url;
 }
 
-- (NSString *)applicationKey {
-    return [[[TML sharedInstance] configuration] applicationKey];
-}
-
-- (TMLLanguage *)currentLanguage {
-    return [[TML sharedInstance] currentLanguage];
-}
-
-- (void) viewDidLoad {
-    [super viewDidLoad];
-    
-    NSString *applicationKey = [self applicationKey];
-    TMLLanguage *lang = [self currentLanguage];
+- (void)translate {
     NSURL *url = [self translationCenterURL];
+    TMLDebug(@"%@", [url absoluteString]);
     
-    NSMutableDictionary *query = [NSMutableDictionary dictionaryWithDictionary:@{@"locale": lang.locale,
-                                                                                 @"key": applicationKey}];
-
-    if (self.translationKey) {
-        query[@"translation_key"] = self.translationKey;
-    }
-    
-    NSURLRequest *request = [NSURLRequest requestWithURL:[url URLByAppendingQueryParameters:query]];
-    
+    NSURLRequest *request = (url == nil) ? nil : [NSURLRequest requestWithURL:url];
     if (request != nil) {
-        [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
         [self.webView loadRequest:request];
     }
-}
-
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
-    
-    NSString *path = request.URL.path;
-    if (path && [path rangeOfString:@"dismiss"].location != NSNotFound) {
-        [self dismiss:webView];
-        return NO;
-    }
-    else if ([path rangeOfString:@"logout"].location != NSNotFound) {
-        NSString *origin = [[[request.URL scheme] stringByAppendingString:@"://"] stringByAppendingString:[request.URL host]];
-        NSHTTPCookieStorage* cookies = [NSHTTPCookieStorage sharedHTTPCookieStorage];
-        NSArray* facebookCookies = [cookies cookiesForURL:[NSURL URLWithString:origin]];
-        for (NSHTTPCookie* cookie in facebookCookies) {
-            [cookies deleteCookie:cookie];
-        }
-    }
-    
-    return YES;
-}
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:NO];
-}
-
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {
-    TMLError(@"Error loading request: %@", error);
 }
 
 - (IBAction) backButtonPressed: (id) sender {
@@ -162,11 +99,10 @@
 }
 
 - (IBAction) actionButtonPressed: (id) sender {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[self.webView.request URL] absoluteString]]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:[[self.webView URL] absoluteString]]];
 }
 
 - (IBAction)reloadButtonPressed:(id)sender {
-    [[UIApplication sharedApplication] setNetworkActivityIndicatorVisible:YES];
     [self reload:sender];
 }
 
@@ -176,23 +112,35 @@
 }
 
 - (IBAction)reload:(id)sender {
-    [self signoutIfError];
     [self.webView reload];
 }
 
-- (void)signoutIfError {
-    if ([NSThread isMainThread] == NO) {
-        [self performSelectorOnMainThread:_cmd withObject:nil waitUntilDone:NO];
+#pragma mark - TMLWebViewController
+- (void)postedUserInfo:(NSDictionary *)userInfo {
+    [super postedUserInfo:userInfo];
+    if (userInfo == nil) {
         return;
     }
     
-    UIWebView *webView = self.webView;
-    @try {
-        [webView stringByEvaluatingJavaScriptFromString:@"(function(){ var i=document.createNodeIterator(document.body, NodeFilter.SHOW_COMMENT); var n=null; while (n = i.nextNode()) {if (n.textContent.match(\"public/500.html\")) { document.location.href = document.location.origin + \"/logout\"; } } })()"];
+    NSString *action = userInfo[@"action"];
+    if ([@"next" isEqualToString:action] == YES) {
+        [self dismiss:nil];
+        return;
     }
-    @catch(NSException *e) {
-        TMLDebug(@"Error signing out from translation center: %@", e);
+    
+    NSString *locale = userInfo[@"target_locale"];
+    NSString *label = userInfo[@"translation"];
+    NSString *key = userInfo[@"translation_key"];
+    if (locale == nil || label == nil || key == nil) {
+        TMLDebug(@"No translation data found");
+        return;
     }
+    
+    TML *tml = [TML sharedInstance];
+    TMLTranslation *translation = [TMLTranslation translationWithKey:key locale:locale label:label];
+    [tml addTranslation:translation locale:locale];
+    [tml updateReusableTMLStrings];
+    [tml reloadLocalizationData];
 }
 
 @end
