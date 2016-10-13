@@ -96,7 +96,7 @@
 
 #pragma mark -
 - (instancetype)initWithApplicationKey:(NSString *)applicationKey
-                           accessToken:(NSString *)accessToken __deprecated;
+                           accessToken:(NSString *)accessToken __deprecated_msg("User initWithApplicationKey:");
 - (instancetype)initWithApplicationKey:(NSString *)applicationKey;
 @property(readonly, nonatomic, getter=isValidConfiguration) BOOL validConfiguration;
 

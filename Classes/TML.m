@@ -208,6 +208,10 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     return [self sharedInstanceWithConfiguration:config];
 }
 
++ (TML *)sharedInstanceWithApplicationKey:(NSString *)applicationKey accessToken:(NSString *)accessToken {
+    return [self sharedInstanceWithApplicationKey:applicationKey];
+}
+
 + (TML *) sharedInstanceWithConfiguration:(TMLConfiguration *)configuration {
     TML *tml = [self sharedInstance];
     tml.configuration = configuration;

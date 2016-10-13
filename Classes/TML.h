@@ -107,6 +107,8 @@
  *  @return Shared TML instance
  */
 + (TML *) sharedInstanceWithApplicationKey:(NSString *)applicationKey;
++ (TML *) sharedInstanceWithApplicationKey:(NSString *)applicationKey
+                               accessToken:(NSString *)accessToken __deprecated_msg("Use sharedInstanceWithApplicationKey: instead");
 
 /**
  *  Initializes TML and configures it with given configuration object.
