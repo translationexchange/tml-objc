@@ -118,3 +118,6 @@ First release as TMLKit, built as a dynamic framework. The SDK underwent several
 ## 10.0.11
 * Minor fix for locale matching
 * Update cocoapod dependency on SSZipArchive
+
+## 10.0.12
+* Added ability to switch configuration at runtime by assigning TMLConfiguration objects to [TML sharedInstance]
