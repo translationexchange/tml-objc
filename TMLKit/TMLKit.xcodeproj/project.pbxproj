@@ -191,13 +191,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		C4704EC41CDA814500157748 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C4CF54CC1C100DDC00EC39CC /* Pods.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = B25740E838DDD3D11D6E12F40B234DD0;
-			remoteInfo = SSKeychain;
-		};
 		C4CF54D51C100DDD00EC39CC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C4CF54CC1C100DDC00EC39CC /* Pods.xcodeproj */;
@@ -239,6 +232,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = BE0B3663879E4A48B0B4BCCA256C0FC5;
 			remoteInfo = SSZipArchive;
+		};
+		C4D64E881DB033A40044F250 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C4CF54CC1C100DDC00EC39CC /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A26C348F9E05EC65E4C4A2180F968F31;
+			remoteInfo = SAMKeychain;
 		};
 		C4FCD2641C0FC7A200D723BC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -516,7 +516,7 @@
 				C4CF54DA1C100DDD00EC39CC /* libNVHTarGzip.a */,
 				C4CF54DC1C100DDD00EC39CC /* libPods-TMLKit.a */,
 				C4CF54DE1C100DDD00EC39CC /* libPods-TMLKitTests.a */,
-				C4704EC51CDA814500157748 /* libSSKeychain.a */,
+				C4D64E891DB033A40044F250 /* libSAMKeychain.a */,
 				C4CF54E01C100DDD00EC39CC /* libSSZipArchive.a */,
 			);
 			name = Products;
@@ -1122,13 +1122,6 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		C4704EC51CDA814500157748 /* libSSKeychain.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libSSKeychain.a;
-			remoteRef = C4704EC41CDA814500157748 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		C4CF54D61C100DDD00EC39CC /* libMBProgressHUD.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1169,6 +1162,13 @@
 			fileType = archive.ar;
 			path = libSSZipArchive.a;
 			remoteRef = C4CF54DF1C100DDD00EC39CC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C4D64E891DB033A40044F250 /* libSAMKeychain.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSAMKeychain.a;
+			remoteRef = C4D64E881DB033A40044F250 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */

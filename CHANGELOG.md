@@ -121,3 +121,17 @@ First release as TMLKit, built as a dynamic framework. The SDK underwent several
 
 ## 1.0.12
 * Added ability to switch configuration at runtime by assigning TMLConfiguration objects to [TML sharedInstance]
+
+
+## 2.0.0
+Major release featuring integration with the new Translation Center and new authentication scheme. Most notable, TMLKit doesn't deal with access tokens anymore. If TMLKit is used for in-app translation - users will login directly from within the app. TMLKit will prompt user with a popup, when responding to activation gesture recognizer (defaults to 4-finger long press, or 2-finger long press when running on iPhone Simulator). This popup will include options for switching languages and toggling in-app translation.
+
+TML:
+* translationEnabled -> translationActive, Added TMLActivateTranslation(active) macro
+* inlineTranslationsEnabled has been removed in favor of TMLApplication.isInlineTranslationsEnabled
+* sharedInstanceWithApplicationKey:accessToken: is deprecated, use sharedInstanceWithApplicationKey: instead
+
+TMLConfiguration:
+* accessToken property is now writable; TMLKit will manage this property when user signs on/off but also allows one to override it manually
+* inContextTranslatorEnabled -> disallowTranslation for clarity
+* initWithApplicationKey:accessToken: is deprecated, use initWithApplicationKey: instead
