@@ -307,11 +307,6 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
             self.currentLocale = lastLocale;
         }
         
-        NSString *lastLocale = [configuration currentLocale];
-        if (lastLocale != nil) {
-            self.currentLocale = lastLocale;
-        }
-        
         [self initTranslationBundle:^(TMLBundle *bundle, NSError *error) {
             if (bundle == nil) {
                 TMLWarn(@"No local translation bundle found...");
