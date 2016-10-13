@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnullability-completeness"
+
 extern NSString * const TMLBundleVersionFilename;
 extern NSString * const TMLBundleApplicationFilename;
 extern NSString * const TMLBundleSourcesFilename;
@@ -142,3 +146,5 @@ typedef NS_ENUM(NSInteger, TMLBundleErrorCode) {
                        errors:(NSArray *)errors;
 
 @end
+
+#pragma clang diagnostic pop

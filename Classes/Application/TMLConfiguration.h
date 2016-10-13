@@ -31,6 +31,9 @@
 #import <Foundation/Foundation.h>
 #import "TMLGlobals.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wnullability-completeness"
+
 @interface TMLConfiguration : NSObject
 
 @property(nonatomic, strong) NSURL *apiBaseURL;
@@ -135,3 +138,5 @@
 @property (assign, nonatomic) BOOL analyticsEnabled;
 
 @end
+
+#pragma clang diagnostic pop
