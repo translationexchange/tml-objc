@@ -1,8 +1,8 @@
 language: objective-c
 git:
   depth: 10
-osx_image: xcode7.2
-xcode_sdk: iphonesimulator9.2
+osx_image: xcode8
+xcode_sdk: iphonesimulator10.0
 before_install:
     - rvm use system
     - sudo gem install activesupport --version 4.2.5
@@ -18,9 +18,9 @@ env:
     global:
         - OTHER_XCTOOL_OPTS='CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO'
     matrix:
-        - TRAVIS_XCODE_SDK='iphonesimulator8.1' TRAVIS_XCODE_DESTINATION='platform=iOS Simulator,name=iPhone 5,OS=8.1'
-        - TRAVIS_XCODE_SDK='iphonesimulator8.2' TRAVIS_XCODE_DESTINATION='platform=iOS Simulator,name=iPhone 5,OS=8.2'
-        - TRAVIS_XCODE_SDK='iphonesimulator9.2' TRAVIS_XCODE_DESTINATION='platform=iOS Simulator,name=iPhone 6s,OS=9.2'
+        - TRAVIS_XCODE_SDK='iphonesimulator8.4' TRAVIS_XCODE_DESTINATION='platform=iOS Simulator,name=iPhone 5,OS=8.4'
+        - TRAVIS_XCODE_SDK='iphonesimulator9.3' TRAVIS_XCODE_DESTINATION='platform=iOS Simulator,name=iPhone 6s,OS=9.3'
+        - TRAVIS_XCODE_SDK='iphonesimulator10.0' TRAVIS_XCODE_DESTINATION='platform=iOS Simulator,name=iPhone 6,OS=10.0'
 script: 
     - xctool -workspace TMLKit/TMLKit.xcworkspace -configuration Release -scheme TMLKit -destination "$TRAVIS_XCODE_DESTINATION" $OTHER_XCTOOL_OPTS build -sdk $TRAVIS_XCODE_SDK 
     - xctool -workspace TMLKit/TMLKit.xcworkspace -configuration Release -scheme TMLKit -destination "$TRAVIS_XCODE_DESTINATION" $OTHER_XCTOOL_OPTS test -test-sdk $TRAVIS_XCODE_SDK -parallelize
