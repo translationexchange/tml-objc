@@ -15,13 +15,13 @@
 #define TMLRaiseAlternativeInstantiationMethod(selector) TMLUseAlternativeInstantiationMethod(selector, self);
 #define TMLIsNilNull(arg) (arg == nil || [[NSNull null] isEqual: arg]) 
 
-extern NSExceptionName const TMLAbstractInvocationException;
+extern NSString * const TMLAbstractInvocationException;
 void TMLAbstractInvocation(SEL selector,id object);
 
-extern NSExceptionName const TMLNotYetImplementedException;
+extern NSString * const TMLNotYetImplementedException;
 void TMLNotYetImplemented(SEL selector, id object);
 
-extern NSExceptionName const TMLAlternativeInstantiationException;
+extern NSString * const TMLAlternativeInstantiationException;
 void TMLUseAlternativeInstantiationMethod(SEL selector, id object);
 
 #pragma mark - Notifications

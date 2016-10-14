@@ -8,7 +8,7 @@
 
 #import "TMLGlobals.h"
 
-NSExceptionName const TMLAbstractInvocationException = @"TMLAbstractInvocation";
+NSString * const TMLAbstractInvocationException = @"TMLAbstractInvocation";
 
 void TMLAbstractInvocation(SEL selector,id object) {
     [NSException raise:TMLAbstractInvocationException
@@ -18,7 +18,7 @@ void TMLAbstractInvocation(SEL selector,id object) {
      ];
 }
 
-NSExceptionName const TMLNotYetImplementedException = @"TMLNotYetImplemented";
+NSString * const TMLNotYetImplementedException = @"TMLNotYetImplemented";
 
 void TMLNotYetImplemented(SEL selector, id object) {
     [NSException raise:TMLNotYetImplementedException
@@ -27,7 +27,7 @@ void TMLNotYetImplemented(SEL selector, id object) {
      NSStringFromSelector(selector)];
 }
 
-NSExceptionName const TMLAlternativeInstantiationException = @"TMLAlternativeInstantiation";
+NSString * const TMLAlternativeInstantiationException = @"TMLAlternativeInstantiation";
 void TMLUseAlternativeInstantiationMethod(SEL selector, id object) {
     [NSException raise:TMLAlternativeInstantiationException
                 format:@"Use -[%@ %@] instantiation method",
