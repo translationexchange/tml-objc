@@ -50,6 +50,8 @@
 		C435BD0B1C16B5EA009A4091 /* NSURL+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C435BD091C16B5EA009A4091 /* NSURL+TML.m */; };
 		C435BD131C190083009A4091 /* UIBarItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C435BD111C190083009A4091 /* UIBarItem+TML.m */; };
 		C435BD231C1933BF009A4091 /* NSAttributedString+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C435BD211C1933BF009A4091 /* NSAttributedString+TML.m */; };
+		C43ACFDE1E16506800093DA1 /* TMLScreenShot.h in Sources */ = {isa = PBXBuildFile; fileRef = C43ACFDC1E16506800093DA1 /* TMLScreenShot.h */; };
+		C43ACFDF1E16506800093DA1 /* TMLScreenShot.m in Sources */ = {isa = PBXBuildFile; fileRef = C43ACFDD1E16506800093DA1 /* TMLScreenShot.m */; };
 		C4704EAF1CD98B2300157748 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4704EAE1CD98B2300157748 /* WebKit.framework */; };
 		C4704EB71CD9A1A900157748 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4704EB61CD9A1A900157748 /* Security.framework */; };
 		C4704EBC1CDA814400157748 /* TMLUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C4704EBA1CDA814400157748 /* TMLUser.m */; };
@@ -300,6 +302,8 @@
 		C435BD111C190083009A4091 /* UIBarItem+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIBarItem+TML.m"; sourceTree = "<group>"; };
 		C435BD201C1933BF009A4091 /* NSAttributedString+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+TML.h"; sourceTree = "<group>"; };
 		C435BD211C1933BF009A4091 /* NSAttributedString+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+TML.m"; sourceTree = "<group>"; };
+		C43ACFDC1E16506800093DA1 /* TMLScreenShot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = TMLScreenShot.h; sourceTree = "<group>"; };
+		C43ACFDD1E16506800093DA1 /* TMLScreenShot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLScreenShot.m; sourceTree = "<group>"; };
 		C4704EAE1CD98B2300157748 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		C4704EB61CD9A1A900157748 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		C4704EB91CDA814400157748 /* TMLUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = TMLUser.h; sourceTree = "<group>"; };
@@ -592,6 +596,8 @@
 				C4FA63831C1A5AF600E3ECB8 /* TMLTranslationActivationView.m */,
 				C4CC8D761C56E92100FACF81 /* TMLAnalytics.h */,
 				C4CC8D771C56E92100FACF81 /* TMLAnalytics.m */,
+				C43ACFDC1E16506800093DA1 /* TMLScreenShot.h */,
+				C43ACFDD1E16506800093DA1 /* TMLScreenShot.m */,
 			);
 			name = Classes;
 			path = ../../Classes;
@@ -1039,14 +1045,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C4FCD26C1C0FC7A200D723BC /* Build configuration list for PBXNativeTarget "TMLKit" */;
 			buildPhases = (
-				BE5C101823C9B54256E587D1 /* 📦 Check Pods Manifest.lock */,
+				BE5C101823C9B54256E587D1 /* [CP] Check Pods Manifest.lock */,
 				C4FA32041C5079F5001902EB /* Generate TMLPrivateConfig.h */,
 				C4FCD2531C0FC7A200D723BC /* Sources */,
 				C4FCD2541C0FC7A200D723BC /* Frameworks */,
 				C4FCD2551C0FC7A200D723BC /* Headers */,
 				C4FCD2561C0FC7A200D723BC /* Resources */,
 				C4F8CBFB1C601EFD0037BE4B /* Update Version strings */,
-				0BFCEE17B52EF5CA125FB045 /* 📦 Copy Pods Resources */,
+				0BFCEE17B52EF5CA125FB045 /* [CP] Copy Pods Resources */,
 				C4F8CBF71C5D7B3E0037BE4B /* Update Podspec Version */,
 			);
 			buildRules = (
@@ -1062,12 +1068,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C4FCD26F1C0FC7A200D723BC /* Build configuration list for PBXNativeTarget "TMLKitTests" */;
 			buildPhases = (
-				120A9611E39814438BE4A5F9 /* 📦 Check Pods Manifest.lock */,
+				120A9611E39814438BE4A5F9 /* [CP] Check Pods Manifest.lock */,
 				C4FCD25E1C0FC7A200D723BC /* Sources */,
 				C4FCD25F1C0FC7A200D723BC /* Frameworks */,
 				C4FCD2601C0FC7A200D723BC /* Resources */,
-				2C0454231AA105BF308F1AE3 /* 📦 Embed Pods Frameworks */,
-				B83F3BC5ED7231378FED575E /* 📦 Copy Pods Resources */,
+				2C0454231AA105BF308F1AE3 /* [CP] Embed Pods Frameworks */,
+				B83F3BC5ED7231378FED575E /* [CP] Copy Pods Resources */,
 				C4FFC6131C7FFA5F004F6C4D /* CopyFiles */,
 			);
 			buildRules = (
@@ -1202,14 +1208,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0BFCEE17B52EF5CA125FB045 /* 📦 Copy Pods Resources */ = {
+		0BFCEE17B52EF5CA125FB045 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1217,29 +1223,29 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TMLKit/Pods-TMLKit-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		120A9611E39814438BE4A5F9 /* 📦 Check Pods Manifest.lock */ = {
+		120A9611E39814438BE4A5F9 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		2C0454231AA105BF308F1AE3 /* 📦 Embed Pods Frameworks */ = {
+		2C0454231AA105BF308F1AE3 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1247,14 +1253,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TMLKitTests/Pods-TMLKitTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B83F3BC5ED7231378FED575E /* 📦 Copy Pods Resources */ = {
+		B83F3BC5ED7231378FED575E /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1262,19 +1268,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TMLKitTests/Pods-TMLKitTests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		BE5C101823C9B54256E587D1 /* 📦 Check Pods Manifest.lock */ = {
+		BE5C101823C9B54256E587D1 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		C4F8CBF71C5D7B3E0037BE4B /* Update Podspec Version */ = {
@@ -1339,6 +1345,7 @@
 				C42581E91C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.m in Sources */,
 				C42582091C2121D400BAE9A9 /* UIMutableUserNotificationAction+TML.m in Sources */,
 				C4E3E31F1C77FFC80014D3AD /* TMLTranslator.m in Sources */,
+				C43ACFDE1E16506800093DA1 /* TMLScreenShot.h in Sources */,
 				C4FCD3131C0FC7F200D723BC /* UITextView+TML.m in Sources */,
 				C4FCD2FD1C0FC7F200D723BC /* NSObject+TML.m in Sources */,
 				C4FCD31C1C0FC7F200D723BC /* TMLLanguageCaseRule.m in Sources */,
@@ -1362,6 +1369,7 @@
 				C4FCD32F1C0FC7F200D723BC /* TMLAttributedDecorationTokenizer.m in Sources */,
 				C4FCD3371C0FC7F200D723BC /* TMLTokenizer.m in Sources */,
 				C4FCD3351C0FC7F200D723BC /* TMLHtmlDecorationTokenizer.m in Sources */,
+				C43ACFDF1E16506800093DA1 /* TMLScreenShot.m in Sources */,
 				C4FCD3331C0FC7F200D723BC /* TMLDecorationTokenizer.m in Sources */,
 				C4FCD2FF1C0FC7F200D723BC /* NSObject+TMLJSON.m in Sources */,
 				C42581F31C20FE4300BAE9A9 /* UIBarButtonItem+TML.m in Sources */,

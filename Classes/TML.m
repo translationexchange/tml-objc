@@ -35,6 +35,7 @@
 #import "TML.h"
 #import "TMLAPIBundle.h"
 #import "TMLAPIClient.h"
+#import "TMLAPISerializer.h"
 #import "TMLAlertController.h"
 #import "TMLAnalytics.h"
 #import "TMLApplication.h"
@@ -47,6 +48,7 @@
 #import "TMLLanguageSelectorViewController.h"
 #import "TMLLogger.h"
 #import "TMLSource.h"
+#import "TMLScreenShot.h"
 #import "TMLTranslation.h"
 #import "TMLTranslationActivationView.h"
 #import "TMLTranslationKey.h"
@@ -1062,6 +1064,11 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     }];
     [alertController addAction:changeLocaleAction];
     
+    TMLAlertAction *screenshotAction = [TMLAlertAction actionWithTitle:TMLLocalizedString(@"Take Screenshot") style:UIAlertActionStyleDefault handler:^(TMLAlertAction *action) {
+        [self takeScreenshot];
+    }];
+    [alertController addAction:screenshotAction];
+    
     if (_configuration.disallowTranslation == NO) {
         if (self.translationActive == YES) {
             TMLAlertAction *disableAction = [TMLAlertAction actionWithTitle:TMLLocalizedString(@"Deactivate Translation") style:UIAlertActionStyleDefault handler:^(TMLAlertAction *action) {
@@ -1334,6 +1341,16 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     else {
         self.translationActive = NO;
     }
+}
+
+#pragma mark - Screenshots
+- (void)takeScreenshot {
+    TMLScreenShot *screenshot = [TMLScreenShot screenShot];
+    screenshot.title = TMLLocalizedString(@"New Screenshot");
+    screenshot.userDescription = TMLLocalizedString(@"New screenshot description");
+    [[self apiClient] postScreenShot:screenshot completionBlock:^(BOOL success, NSError *error) {
+        //
+    }];
 }
 
 #pragma mark - Presenting View Controllers

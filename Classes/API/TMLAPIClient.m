@@ -39,6 +39,8 @@
 #import "TMLTranslation.h"
 #import "TMLTranslationKey.h"
 #import "TMLUser.h"
+#import "TMLScreenShot.h"
+#import <AFNetworking/AFNetworking.h>
 
 NSString * const TMLAPIOptionsLocale = @"locale";
 NSString * const TMLAPIOptionsIncludeAll = @"all";
@@ -47,6 +49,14 @@ NSString * const TMLAPIOptionsIncludeDefinition = @"definition";
 NSString * const TMLAPIOptionsSourceKeys = @"source_keys";
 NSString * const TMLAPIOptionsApplicationId = @"app_id";
 NSString * const TMLAPIOptionsPage = @"page";
+
+@interface TML(Private)
+- (void)showError:(NSError *)error;
+@end
+
+@interface TMLBasicAPIClient (Private)
+- (NSURL *) URLForAPIPath: (NSString *)path parameters:(NSDictionary *)parameters;
+@end
 
 @interface TMLAPIClient()
 @property (readwrite, nonatomic) NSString *applicationKey;
@@ -373,6 +383,53 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
         completionBlock(success, error);
     }
 }];
+}
+
+- (void)postScreenShot: (TMLScreenShot *)screenShot
+       completionBlock:(void (^)(BOOL, NSError *))completionBlock
+{
+    NSString *path = [NSString stringWithFormat:@"projects/%@/screenshots", self.applicationKey];
+    NSURL *url = [self URLForAPIPath:path parameters:nil];
+    NSError *postError = nil;
+    
+    NSMutableDictionary *payload = [[[TMLAPISerializer serializeObject:screenShot] tmlJSONObject] mutableCopy];
+    if (self.accessToken != nil) {
+        payload[@"access_token"] = self.accessToken;
+    }
+    
+    NSMutableURLRequest *request = [[AFHTTPRequestSerializer serializer]
+                                    multipartFormRequestWithMethod:@"POST"
+                                    URLString:url.absoluteString
+                                    parameters:payload
+                                    constructingBodyWithBlock:^(id<AFMultipartFormData>  _Nonnull formData) {
+                                        if (screenShot.image != nil) {
+                                            [formData appendPartWithFileData:UIImagePNGRepresentation(screenShot.image) name:@"image" fileName:@"screenshot.png" mimeType:@"image/png"];
+                                        }
+                                    }
+                                    error:&postError];
+    
+    if (postError != nil) {
+        TMLError(@"Error posting screenshot: %@", postError);
+    }
+    
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+    
+    NSURLSessionUploadTask *uploadTask;
+    uploadTask = [manager
+                  uploadTaskWithStreamedRequest:request
+                  progress:nil
+                  completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+                      if (error) {
+                          NSLog(@"Error: %@", error);
+                      } else {
+                          NSLog(@"%@ %@", response, responseObject);
+                      }
+                      if (completionBlock != nil) {
+                          completionBlock(error == nil, error);
+                      }
+                  }];
+    
+    [uploadTask resume];
 }
 
 @end

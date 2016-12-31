@@ -31,7 +31,7 @@
 #import <Foundation/Foundation.h>
 #import "TMLBasicAPIClient.h"
 
-@class TMLAPIResponse, TMLSource, TMLApplication, TMLUser;
+@class TMLAPIResponse, TMLSource, TMLApplication, TMLUser, TMLScreenShot;
 
 extern NSString * const TMLAPIOptionsLocale;
 extern NSString * const TMLAPIOptionsIncludeAll;
@@ -126,5 +126,9 @@ extern NSString * const TMLAPIOptionsPage;
  */
 - (void) registerTranslationKeysBySourceKey:(NSDictionary *)sourceKeys
                             completionBlock:(void(^)(BOOL success, NSError *error))completionBlock;
+
+
+- (void)postScreenShot: (TMLScreenShot *)screenShot
+       completionBlock:(void (^)(BOOL, NSError *))completionBlock;
 
 @end
