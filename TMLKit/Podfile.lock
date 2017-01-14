@@ -16,6 +16,9 @@ PODS:
     - AFNetworking/NSURLSession
   - MBProgressHUD (1.0.0)
   - MPColorTools (1.6.1)
+  - MZAppearance (1.1.6)
+  - MZFormSheetPresentationController (2.4.2):
+    - MZAppearance
   - NVHTarGzip (1.0.1)
   - SAMKeychain (1.5.2)
   - SSZipArchive (1.6.2)
@@ -24,6 +27,7 @@ DEPENDENCIES:
   - AFNetworking
   - MBProgressHUD
   - MPColorTools (>= 1.6)
+  - MZFormSheetPresentationController
   - NVHTarGzip
   - SAMKeychain
   - SSZipArchive
@@ -32,6 +36,8 @@ SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   MPColorTools: a5d2a09fc44750aea0366f666aa52c80565c0764
+  MZAppearance: 0c06d3fa9cc55142f1da14bc8631fbe8fd6e19d5
+  MZFormSheetPresentationController: c1dc3bce639d2393b3cc416fcb6e050eb5bca062
   NVHTarGzip: 74cc227b902e5725900d37eb6d79b57e93005a73
   SAMKeychain: 1865333198217411f35327e8da61b43de79b635b
   SSZipArchive: 428eb1ac8d37dd133404d30f422b23958c1f9acc

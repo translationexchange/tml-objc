@@ -55,6 +55,8 @@
 		C4704EAF1CD98B2300157748 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4704EAE1CD98B2300157748 /* WebKit.framework */; };
 		C4704EB71CD9A1A900157748 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4704EB61CD9A1A900157748 /* Security.framework */; };
 		C4704EBC1CDA814400157748 /* TMLUser.m in Sources */ = {isa = PBXBuildFile; fileRef = C4704EBA1CDA814400157748 /* TMLUser.m */; };
+		C47E4ED51E1B8171009BAC7D /* TMLScreenShotViewController.h in Sources */ = {isa = PBXBuildFile; fileRef = C47E4ED31E1B8171009BAC7D /* TMLScreenShotViewController.h */; };
+		C47E4ED61E1B8171009BAC7D /* TMLScreenShotViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C47E4ED41E1B8171009BAC7D /* TMLScreenShotViewController.m */; };
 		C4BDFB911C751AF3002CAB4C /* UICollectionView+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C4BDFB8F1C751AF3002CAB4C /* UICollectionView+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C4BDFB921C751AF3002CAB4C /* UICollectionView+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C4BDFB901C751AF3002CAB4C /* UICollectionView+TML.m */; };
 		C4CC8D781C56E92100FACF81 /* TMLAnalytics.h in Headers */ = {isa = PBXBuildFile; fileRef = C4CC8D761C56E92100FACF81 /* TMLAnalytics.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -193,6 +195,27 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		C45658391E1C822B0030E6B2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C4CF54CC1C100DDC00EC39CC /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A4A4E4F39B7069FA9434A8923A8E95FA;
+			remoteInfo = MZAppearance;
+		};
+		C456583B1E1C822B0030E6B2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C4CF54CC1C100DDC00EC39CC /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DF7A29053992E9543037D8C5334373B0;
+			remoteInfo = MZFormSheetPresentationController;
+		};
+		C47E4EDF1E1B8172009BAC7D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C4CF54CC1C100DDC00EC39CC /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 24ACF688D2D709371FA877987281A5DC;
+			remoteInfo = AFNetworking;
+		};
 		C4CF54D51C100DDD00EC39CC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C4CF54CC1C100DDC00EC39CC /* Pods.xcodeproj */;
@@ -309,6 +332,8 @@
 		C4704EB91CDA814400157748 /* TMLUser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = TMLUser.h; sourceTree = "<group>"; };
 		C4704EBA1CDA814400157748 /* TMLUser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLUser.m; sourceTree = "<group>"; };
 		C474362A1CD0745A002A09F5 /* module.modulemap */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = "sourcecode.module-map"; path = module.modulemap; sourceTree = "<group>"; };
+		C47E4ED31E1B8171009BAC7D /* TMLScreenShotViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = TMLScreenShotViewController.h; sourceTree = "<group>"; };
+		C47E4ED41E1B8171009BAC7D /* TMLScreenShotViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLScreenShotViewController.m; sourceTree = "<group>"; };
 		C4BDFB8F1C751AF3002CAB4C /* UICollectionView+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+TML.h"; sourceTree = "<group>"; };
 		C4BDFB901C751AF3002CAB4C /* UICollectionView+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+TML.m"; sourceTree = "<group>"; };
 		C4CC8D761C56E92100FACF81 /* TMLAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAnalytics.h; sourceTree = "<group>"; };
@@ -515,8 +540,11 @@
 		C4CF54CD1C100DDC00EC39CC /* Products */ = {
 			isa = PBXGroup;
 			children = (
+				C47E4EE01E1B8172009BAC7D /* libAFNetworking.a */,
 				C4CF54D61C100DDD00EC39CC /* libMBProgressHUD.a */,
 				C4CF54D81C100DDD00EC39CC /* libMPColorTools.a */,
+				C456583A1E1C822B0030E6B2 /* libMZAppearance.a */,
+				C456583C1E1C822B0030E6B2 /* libMZFormSheetPresentationController.a */,
 				C4CF54DA1C100DDD00EC39CC /* libNVHTarGzip.a */,
 				C4CF54DC1C100DDD00EC39CC /* libPods-TMLKit.a */,
 				C4CF54DE1C100DDD00EC39CC /* libPods-TMLKitTests.a */,
@@ -669,6 +697,8 @@
 				C4E3E3211C781CCC0014D3AD /* TMLAuthorizationController.m */,
 				C4E3E3241C7837950014D3AD /* TMLAlertController.h */,
 				C4E3E3251C7837950014D3AD /* TMLAlertController.m */,
+				C47E4ED31E1B8171009BAC7D /* TMLScreenShotViewController.h */,
+				C47E4ED41E1B8171009BAC7D /* TMLScreenShotViewController.m */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -1128,6 +1158,27 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		C456583A1E1C822B0030E6B2 /* libMZAppearance.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMZAppearance.a;
+			remoteRef = C45658391E1C822B0030E6B2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C456583C1E1C822B0030E6B2 /* libMZFormSheetPresentationController.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libMZFormSheetPresentationController.a;
+			remoteRef = C456583B1E1C822B0030E6B2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C47E4EE01E1B8172009BAC7D /* libAFNetworking.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libAFNetworking.a;
+			remoteRef = C47E4EDF1E1B8172009BAC7D /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		C4CF54D61C100DDD00EC39CC /* libMBProgressHUD.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1353,6 +1404,7 @@
 				C4FCD31E1C0FC7F200D723BC /* TMLLanguageContext.m in Sources */,
 				C4FCD33B1C0FC7F200D723BC /* TMLMethodToken.m in Sources */,
 				C435BD071C1696A5009A4091 /* UITableView+TML.m in Sources */,
+				C47E4ED51E1B8171009BAC7D /* TMLScreenShotViewController.h in Sources */,
 				C4FCD30B1C0FC7F200D723BC /* UISearchBar+TML.m in Sources */,
 				C4FCD2E31C0FC7F200D723BC /* TMLAPIResponse.m in Sources */,
 				C42582051C21214800BAE9A9 /* UITableViewRowAction+TML.m in Sources */,
@@ -1379,6 +1431,7 @@
 				C4FCD3181C0FC7F200D723BC /* TMLLanguage.m in Sources */,
 				C4704EBC1CDA814400157748 /* TMLUser.m in Sources */,
 				C4FCD3151C0FC7F200D723BC /* UIViewController+TML.m in Sources */,
+				C47E4ED61E1B8171009BAC7D /* TMLScreenShotViewController.m in Sources */,
 				C4FCD2F51C0FC7F200D723BC /* TMLBundleManager.m in Sources */,
 				C42EABF61D63FC2D0096C175 /* TMLWebViewController.m in Sources */,
 				C4CC8D791C56E92100FACF81 /* TMLAnalytics.m in Sources */,
@@ -1540,6 +1593,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4A9CF50CDF0545E105174A56 /* Pods-TMLKit.debug.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -1567,6 +1621,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7DD4AA1189309754FD897BCC /* Pods-TMLKit.release.xcconfig */;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;

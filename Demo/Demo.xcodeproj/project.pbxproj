@@ -19,7 +19,7 @@
 		4CFA531319284666006E1B43 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4CFA530F19284666006E1B43 /* LICENSE */; };
 		4CFA531419284666006E1B43 /* Rakefile in Resources */ = {isa = PBXBuildFile; fileRef = 4CFA531019284666006E1B43 /* Rakefile */; };
 		4CFA531519284666006E1B43 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4CFA531119284666006E1B43 /* README.md */; };
-		C42BB2761C1E2895005C0128 /* TMLKit.framework in Copy Bundle Frameworks */ = {isa = PBXBuildFile; fileRef = C4BC81121C100BD500B995ED /* TMLKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C42BB2761C1E2895005C0128 /* ReferenceProxy in Copy Bundle Frameworks */ = {isa = PBXBuildFile; fileRef = C4BC81121C100BD500B995ED /* TMLKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C42BB3381C1E37D8005C0128 /* arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = C42BB3321C1E37D8005C0128 /* arrow_down.png */; };
 		C42BB3391C1E37D8005C0128 /* Icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C42BB3331C1E37D8005C0128 /* Icon-40@2x.png */; };
 		C42BB33A1C1E37D8005C0128 /* Icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C42BB3341C1E37D8005C0128 /* Icon-60@2x.png */; };
@@ -42,8 +42,8 @@
 		C42BB36E1C1E37F0005C0128 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C42BB35B1C1E37F0005C0128 /* WelcomeViewController.m */; };
 		C42BB36F1C1E37F0005C0128 /* TMLSampleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C42BB35E1C1E37F0005C0128 /* TMLSampleTableViewCell.m */; };
 		C42BB3701C1E37F0005C0128 /* TMLTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C42BB3601C1E37F0005C0128 /* TMLTableViewCell.m */; };
-		C4CF54E41C10D1B500EC39CC /* TMLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4BC81121C100BD500B995ED /* TMLKit.framework */; };
-		C4FCD3A51C10075C00D723BC /* (null) in Resources */ = {isa = PBXBuildFile; };
+		C4CF54E41C10D1B500EC39CC /* ReferenceProxy in Frameworks */ = {isa = PBXBuildFile; fileRef = C4BC81121C100BD500B995ED /* TMLKit.framework */; };
+		C4FCD3A51C10075C00D723BC /* BuildFile in Resources */ = {isa = PBXBuildFile; };
 		D85407C9F8919AC662F5688B /* libPods-Demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB4D206C0DA72FBAC39F8689 /* libPods-Demo.a */; };
 /* End PBXBuildFile section */
 
@@ -71,7 +71,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C42BB2761C1E2895005C0128 /* TMLKit.framework in Copy Bundle Frameworks */,
+				C42BB2761C1E2895005C0128 /* ReferenceProxy in Copy Bundle Frameworks */,
 			);
 			name = "Copy Bundle Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -147,7 +147,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4CF54E41C10D1B500EC39CC /* TMLKit.framework in Frameworks */,
+				C4CF54E41C10D1B500EC39CC /* ReferenceProxy in Frameworks */,
 				4C81FD011A265B8F0014DC1D /* SystemConfiguration.framework in Frameworks */,
 				4C4233EB18B9B38700B76555 /* CoreGraphics.framework in Frameworks */,
 				4C4233ED18B9B38700B76555 /* UIKit.framework in Frameworks */,
@@ -331,14 +331,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4C42341718B9B38700B76555 /* Build configuration list for PBXNativeTarget "Demo" */;
 			buildPhases = (
-				82086C7A9DE5C0692783D0FE /* 📦 Check Pods Manifest.lock */,
+				82086C7A9DE5C0692783D0FE /* [CP] Check Pods Manifest.lock */,
 				C4FA31FC1C506EA2001902EB /* Generate TMLPrivateConfig.h */,
 				4C4233E118B9B38700B76555 /* Sources */,
 				4C4233E218B9B38700B76555 /* Frameworks */,
 				4C4233E318B9B38700B76555 /* Resources */,
 				C4CF54E21C10170200EC39CC /* Copy Bundle Frameworks */,
-				43A70564205414DFC5E5FF4E /* 📦 Embed Pods Frameworks */,
-				3B74167B8730B700CF4B3161 /* 📦 Copy Pods Resources */,
+				43A70564205414DFC5E5FF4E /* [CP] Embed Pods Frameworks */,
+				3B74167B8730B700CF4B3161 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -427,21 +427,21 @@
 				C42BB3381C1E37D8005C0128 /* arrow_down.png in Resources */,
 				4C4233FC18B9B38700B76555 /* Main.storyboard in Resources */,
 				4CFA531419284666006E1B43 /* Rakefile in Resources */,
-				C4FCD3A51C10075C00D723BC /* (null) in Resources */,
+				C4FCD3A51C10075C00D723BC /* BuildFile in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		3B74167B8730B700CF4B3161 /* 📦 Copy Pods Resources */ = {
+		3B74167B8730B700CF4B3161 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Copy Pods Resources";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -449,14 +449,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Demo/Pods-Demo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		43A70564205414DFC5E5FF4E /* 📦 Embed Pods Frameworks */ = {
+		43A70564205414DFC5E5FF4E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -464,19 +464,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Demo/Pods-Demo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		82086C7A9DE5C0692783D0FE /* 📦 Check Pods Manifest.lock */ = {
+		82086C7A9DE5C0692783D0FE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		C4FA31FC1C506EA2001902EB /* Generate TMLPrivateConfig.h */ = {

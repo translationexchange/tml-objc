@@ -41,21 +41,23 @@
 #import "TMLApplication.h"
 #import "TMLAuthorizationController.h"
 #import "TMLAuthorizationViewController.h"
+#import "TMLBasicUser.h"
 #import "TMLBundleManager.h"
 #import "TMLDataToken.h"
 #import "TMLLanguage.h"
 #import "TMLLanguageCase.h"
 #import "TMLLanguageSelectorViewController.h"
 #import "TMLLogger.h"
-#import "TMLSource.h"
 #import "TMLScreenShot.h"
+#import "TMLScreenShotViewController.h"
+#import "TMLSource.h"
 #import "TMLTranslation.h"
 #import "TMLTranslationActivationView.h"
 #import "TMLTranslationKey.h"
 #import "TMLTranslatorViewController.h"
-#import "TMLBasicUser.h"
 #import "UIResponder+TML.h"
 #import "UIView+TML.h"
+#import <MZFormSheetPresentationViewController.h>
 
 NSString * const TMLCurrentUserDefaultsKey = @"currentUser";
 NSString * const TMLTranslationActiveDefaultsKey = @"translationActive";
@@ -1065,7 +1067,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     [alertController addAction:changeLocaleAction];
     
     TMLAlertAction *screenshotAction = [TMLAlertAction actionWithTitle:TMLLocalizedString(@"Take Screenshot") style:UIAlertActionStyleDefault handler:^(TMLAlertAction *action) {
-        [self takeScreenshot];
+        [self presentScreenshotController];
     }];
     [alertController addAction:screenshotAction];
     
@@ -1355,6 +1357,13 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 
 #pragma mark - Presenting View Controllers
 
+- (void)presentScreenshotController {
+    TMLScreenShotViewController *vc = [[TMLScreenShotViewController alloc] init];
+    MZFormSheetPresentationViewController *formSheet = [[MZFormSheetPresentationViewController alloc] initWithContentViewController:vc];
+    [vc.titleField becomeFirstResponder];
+    [self _presentViewController:formSheet];
+}
+
 - (void)presentTranslatorViewControllerWithTranslationKey:(NSString *)translationKey {
     TMLTranslatorViewController *translator = [[TMLTranslatorViewController alloc] initWithTranslationKey:translationKey];
     [self presentViewController:translator];
@@ -1389,14 +1398,18 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 }
 
 - (void)_presentViewController:(UIViewController *)viewController {
+    [self _presentViewController:viewController completion:nil];
+}
+
+- (void)_presentViewController:(UIViewController *)viewController completion:(void(^)(void))completion {
     UIViewController *presenter = [self defaultPresentingViewController];
     if (presenter.presentedViewController != nil) {
         [presenter dismissViewControllerAnimated:YES completion:^{
-            [presenter presentViewController:viewController animated:YES completion:nil];
+            [presenter presentViewController:viewController animated:YES completion:completion];
         }];
     }
     else {
-        [presenter presentViewController:viewController animated:YES completion:nil];
+        [presenter presentViewController:viewController animated:YES completion:completion];
     }
 }
 
