@@ -1345,16 +1345,6 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     }
 }
 
-#pragma mark - Screenshots
-- (void)takeScreenshot {
-    TMLScreenShot *screenshot = [TMLScreenShot screenShot];
-    screenshot.title = TMLLocalizedString(@"New Screenshot");
-    screenshot.userDescription = TMLLocalizedString(@"New screenshot description");
-    [[self apiClient] postScreenShot:screenshot completionBlock:^(BOOL success, NSError *error) {
-        //
-    }];
-}
-
 #pragma mark - Presenting View Controllers
 
 - (void)presentScreenshotController {
