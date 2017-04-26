@@ -1359,9 +1359,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 
 - (void)presentScreenshotController {
     TMLScreenShotViewController *vc = [[TMLScreenShotViewController alloc] init];
-    MZFormSheetPresentationViewController *formSheet = [[MZFormSheetPresentationViewController alloc] initWithContentViewController:vc];
-    [vc.titleField becomeFirstResponder];
-    [self _presentViewController:formSheet];
+    [self _presentViewController:vc];
 }
 
 - (void)presentTranslatorViewControllerWithTranslationKey:(NSString *)translationKey {

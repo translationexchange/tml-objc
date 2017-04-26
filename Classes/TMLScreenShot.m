@@ -38,9 +38,8 @@
 }
 
 + (UIImage *) screenshotView: (UIView *)view {
-    CGFloat scale = [[UIScreen mainScreen] scale];
     CGSize viewSize = view.bounds.size;
-    UIGraphicsBeginImageContextWithOptions(viewSize, view.opaque, 0.0);
+    UIGraphicsBeginImageContextWithOptions(viewSize, view.opaque, 1.0);
     [view.layer renderInContext:UIGraphicsGetCurrentContext()];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
