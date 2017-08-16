@@ -1,4 +1,4 @@
-//
+  //
 //  main.m
 //  Sample
 //
@@ -12,7 +12,11 @@
 #import "TMLPrivateConfig.h"
 
 #ifndef TMLDefaultApplicationKey
-#define TMLDefaultApplicationKey @"8641229aae46c7d39e78657e9da0c86c80f432c21e4e4fb5bf0934673499be7a"
+#define TMLDefaultApplicationKey @"9102347fa327caedc04673441c16defa12e52c0a2fdf62b83c151086c418b39b"
+#endif
+
+#ifndef DEBUG
+#define DEBUG true
 #endif
 
 int main(int argc, char * argv[])

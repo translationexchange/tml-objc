@@ -624,7 +624,7 @@ Links
 Copyright and license
 ==================
 
-Copyright (c) 2015 TranslationExchange.com
+Copyright (c) 2017 TranslationExchange.com
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

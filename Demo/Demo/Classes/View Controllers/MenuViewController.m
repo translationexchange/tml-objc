@@ -118,6 +118,28 @@
                                    },
                                ]
                        },
+                   @{
+                       @"title": @"Netamo",
+                       @"items": @[
+                               @{
+                                   @"title":@"Home Coach",
+                                   @"controller": @"NetatmoViewController"
+                                   },
+                               @{
+                                   @"title":@"Healthy Home",
+                                   @"controller": @"Netatmo2ViewController"
+                                   }
+                               ]
+                       },
+                   @{
+                       @"title": @"Blizzard",
+                       @"items": @[
+                               @{
+                                   @"title":@"Main Menu",
+                                   @"controller": @"BlizzardViewController"
+                                   }
+                               ]
+                       },
                    ];
 }
 

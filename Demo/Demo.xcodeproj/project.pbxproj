@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B3C1F225B33C8D2514DCFCA /* libPods-Demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB4D206C0DA72FBAC39F8689 /* libPods-Demo.a */; };
 		4C4233E918B9B38700B76555 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C4233E818B9B38700B76555 /* Foundation.framework */; };
 		4C4233EB18B9B38700B76555 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C4233EA18B9B38700B76555 /* CoreGraphics.framework */; };
 		4C4233ED18B9B38700B76555 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C4233EC18B9B38700B76555 /* UIKit.framework */; };
@@ -19,7 +20,16 @@
 		4CFA531319284666006E1B43 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4CFA530F19284666006E1B43 /* LICENSE */; };
 		4CFA531419284666006E1B43 /* Rakefile in Resources */ = {isa = PBXBuildFile; fileRef = 4CFA531019284666006E1B43 /* Rakefile */; };
 		4CFA531519284666006E1B43 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4CFA531119284666006E1B43 /* README.md */; };
-		C42BB2761C1E2895005C0128 /* ReferenceProxy in Copy Bundle Frameworks */ = {isa = PBXBuildFile; fileRef = C4BC81121C100BD500B995ED /* TMLKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		C0B833711E82E19300D0EC23 /* netatmo.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C0B833701E82E19300D0EC23 /* netatmo.jpeg */; };
+		C0B833761E82E2F900D0EC23 /* NetatmoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B833751E82E2F900D0EC23 /* NetatmoViewController.m */; };
+		C0B833781E82E4FF00D0EC23 /* netatmo2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C0B833771E82E4FF00D0EC23 /* netatmo2.jpeg */; };
+		C0B8337B1E82E52900D0EC23 /* Netatmo2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B8337A1E82E52900D0EC23 /* Netatmo2ViewController.m */; };
+		C0B88A9E1E8484BB002FB8D8 /* blizzard.png in Resources */ = {isa = PBXBuildFile; fileRef = C0B88A9D1E8484BB002FB8D8 /* blizzard.png */; };
+		C0B88AA11E848C32002FB8D8 /* BlizzardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B88AA01E848C32002FB8D8 /* BlizzardViewController.m */; };
+		C0E2B6841F44C0A9004268AE /* TMLPrivateConfig-Production.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0E2B6831F44C0A9004268AE /* TMLPrivateConfig-Production.plist */; };
+		C0E2B6891F44C0C7004268AE /* TMLPrivateConfig-Sandbox.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0E2B6871F44C0C7004268AE /* TMLPrivateConfig-Sandbox.plist */; };
+		C0E2B68A1F44C0C7004268AE /* TMLPrivateConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0E2B6881F44C0C7004268AE /* TMLPrivateConfig.plist */; };
+		C42BB2761C1E2895005C0128 /* TMLKit.framework in Copy Bundle Frameworks */ = {isa = PBXBuildFile; fileRef = C4BC81121C100BD500B995ED /* TMLKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C42BB3381C1E37D8005C0128 /* arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = C42BB3321C1E37D8005C0128 /* arrow_down.png */; };
 		C42BB3391C1E37D8005C0128 /* Icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C42BB3331C1E37D8005C0128 /* Icon-40@2x.png */; };
 		C42BB33A1C1E37D8005C0128 /* Icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C42BB3341C1E37D8005C0128 /* Icon-60@2x.png */; };
@@ -42,9 +52,8 @@
 		C42BB36E1C1E37F0005C0128 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C42BB35B1C1E37F0005C0128 /* WelcomeViewController.m */; };
 		C42BB36F1C1E37F0005C0128 /* TMLSampleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C42BB35E1C1E37F0005C0128 /* TMLSampleTableViewCell.m */; };
 		C42BB3701C1E37F0005C0128 /* TMLTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C42BB3601C1E37F0005C0128 /* TMLTableViewCell.m */; };
-		C4CF54E41C10D1B500EC39CC /* ReferenceProxy in Frameworks */ = {isa = PBXBuildFile; fileRef = C4BC81121C100BD500B995ED /* TMLKit.framework */; };
-		C4FCD3A51C10075C00D723BC /* BuildFile in Resources */ = {isa = PBXBuildFile; };
-		D85407C9F8919AC662F5688B /* libPods-Demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB4D206C0DA72FBAC39F8689 /* libPods-Demo.a */; };
+		C4CF54E41C10D1B500EC39CC /* TMLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4BC81121C100BD500B995ED /* TMLKit.framework */; };
+		C4FCD3A51C10075C00D723BC /* (null) in Resources */ = {isa = PBXBuildFile; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,7 +80,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C42BB2761C1E2895005C0128 /* ReferenceProxy in Copy Bundle Frameworks */,
+				C42BB2761C1E2895005C0128 /* TMLKit.framework in Copy Bundle Frameworks */,
 			);
 			name = "Copy Bundle Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -98,6 +107,18 @@
 		4CFA531219284666006E1B43 /* Tml.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Tml.podspec; path = ../Tml.podspec; sourceTree = "<group>"; };
 		849FC625621A230B8BAF60C9 /* Pods-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		BB4D206C0DA72FBAC39F8689 /* libPods-Demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Demo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C0B833701E82E19300D0EC23 /* netatmo.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = netatmo.jpeg; sourceTree = "<group>"; };
+		C0B833741E82E2F900D0EC23 /* NetatmoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetatmoViewController.h; sourceTree = "<group>"; };
+		C0B833751E82E2F900D0EC23 /* NetatmoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetatmoViewController.m; sourceTree = "<group>"; };
+		C0B833771E82E4FF00D0EC23 /* netatmo2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = netatmo2.jpeg; sourceTree = "<group>"; };
+		C0B833791E82E52900D0EC23 /* Netatmo2ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Netatmo2ViewController.h; sourceTree = "<group>"; };
+		C0B8337A1E82E52900D0EC23 /* Netatmo2ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Netatmo2ViewController.m; sourceTree = "<group>"; };
+		C0B88A9D1E8484BB002FB8D8 /* blizzard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blizzard.png; sourceTree = "<group>"; };
+		C0B88A9F1E848C32002FB8D8 /* BlizzardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlizzardViewController.h; sourceTree = "<group>"; };
+		C0B88AA01E848C32002FB8D8 /* BlizzardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlizzardViewController.m; sourceTree = "<group>"; };
+		C0E2B6831F44C0A9004268AE /* TMLPrivateConfig-Production.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TMLPrivateConfig-Production.plist"; sourceTree = "<group>"; };
+		C0E2B6871F44C0C7004268AE /* TMLPrivateConfig-Sandbox.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TMLPrivateConfig-Sandbox.plist"; sourceTree = "<group>"; };
+		C0E2B6881F44C0C7004268AE /* TMLPrivateConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TMLPrivateConfig.plist; sourceTree = "<group>"; };
 		C42BB3321C1E37D8005C0128 /* arrow_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_down.png; sourceTree = "<group>"; };
 		C42BB3331C1E37D8005C0128 /* Icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40@2x.png"; sourceTree = "<group>"; };
 		C42BB3341C1E37D8005C0128 /* Icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@2x.png"; sourceTree = "<group>"; };
@@ -147,12 +168,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4CF54E41C10D1B500EC39CC /* ReferenceProxy in Frameworks */,
+				C4CF54E41C10D1B500EC39CC /* TMLKit.framework in Frameworks */,
 				4C81FD011A265B8F0014DC1D /* SystemConfiguration.framework in Frameworks */,
 				4C4233EB18B9B38700B76555 /* CoreGraphics.framework in Frameworks */,
 				4C4233ED18B9B38700B76555 /* UIKit.framework in Frameworks */,
 				4C4233E918B9B38700B76555 /* Foundation.framework in Frameworks */,
-				D85407C9F8919AC662F5688B /* libPods-Demo.a in Frameworks */,
+				0B3C1F225B33C8D2514DCFCA /* libPods-Demo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,9 +217,12 @@
 		4C4233EE18B9B38700B76555 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				C0E2B6871F44C0C7004268AE /* TMLPrivateConfig-Sandbox.plist */,
+				C0E2B6881F44C0C7004268AE /* TMLPrivateConfig.plist */,
+				C0E2B6831F44C0A9004268AE /* TMLPrivateConfig-Production.plist */,
+				C42C56331BF31A6600207911 /* TMLPrivateConfig.h */,
 				C4D231821DA084A000F29CA0 /* Demo.entitlements */,
 				C42BB33E1C1E37F0005C0128 /* Classes */,
-				C42C56331BF31A6600207911 /* TMLPrivateConfig.h */,
 				4C4233EF18B9B38700B76555 /* Supporting Files */,
 				4C7A871218BD354100C2375D /* Assets */,
 			);
@@ -240,6 +264,9 @@
 		C42BB3311C1E37D8005C0128 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				C0B88A9D1E8484BB002FB8D8 /* blizzard.png */,
+				C0B833771E82E4FF00D0EC23 /* netatmo2.jpeg */,
+				C0B833701E82E19300D0EC23 /* netatmo.jpeg */,
 				C42BB3321C1E37D8005C0128 /* arrow_down.png */,
 				C42BB3331C1E37D8005C0128 /* Icon-40@2x.png */,
 				C42BB3341C1E37D8005C0128 /* Icon-60@2x.png */,
@@ -291,6 +318,12 @@
 				C42BB3591C1E37F0005C0128 /* TranslationViewController.m */,
 				C42BB35A1C1E37F0005C0128 /* WelcomeViewController.h */,
 				C42BB35B1C1E37F0005C0128 /* WelcomeViewController.m */,
+				C0B833741E82E2F900D0EC23 /* NetatmoViewController.h */,
+				C0B833751E82E2F900D0EC23 /* NetatmoViewController.m */,
+				C0B833791E82E52900D0EC23 /* Netatmo2ViewController.h */,
+				C0B8337A1E82E52900D0EC23 /* Netatmo2ViewController.m */,
+				C0B88A9F1E848C32002FB8D8 /* BlizzardViewController.h */,
+				C0B88AA01E848C32002FB8D8 /* BlizzardViewController.m */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -415,19 +448,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C42340118B9B38700B76555 /* Images.xcassets in Resources */,
+				C0B833711E82E19300D0EC23 /* netatmo.jpeg in Resources */,
+				C0E2B68A1F44C0C7004268AE /* TMLPrivateConfig.plist in Resources */,
+				C0E2B6841F44C0A9004268AE /* TMLPrivateConfig-Production.plist in Resources */,
 				4CFA531319284666006E1B43 /* LICENSE in Resources */,
 				C42BB33C1C1E37D8005C0128 /* logo.png in Resources */,
 				C42BB33B1C1E37D8005C0128 /* Icon-Small@2x.png in Resources */,
 				4C4233F318B9B38700B76555 /* InfoPlist.strings in Resources */,
 				C42BB33A1C1E37D8005C0128 /* Icon-60@2x.png in Resources */,
+				C0B88A9E1E8484BB002FB8D8 /* blizzard.png in Resources */,
 				4C7A863418BD1C0800C2375D /* Podfile in Resources */,
 				4CFA531519284666006E1B43 /* README.md in Resources */,
 				C42BB33D1C1E37D8005C0128 /* more.png in Resources */,
 				C42BB3391C1E37D8005C0128 /* Icon-40@2x.png in Resources */,
+				C0B833781E82E4FF00D0EC23 /* netatmo2.jpeg in Resources */,
 				C42BB3381C1E37D8005C0128 /* arrow_down.png in Resources */,
 				4C4233FC18B9B38700B76555 /* Main.storyboard in Resources */,
 				4CFA531419284666006E1B43 /* Rakefile in Resources */,
-				C4FCD3A51C10075C00D723BC /* BuildFile in Resources */,
+				C4FCD3A51C10075C00D723BC /* (null) in Resources */,
+				C0E2B6891F44C0C7004268AE /* TMLPrivateConfig-Sandbox.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -504,17 +543,20 @@
 				C42BB3681C1E37F0005C0128 /* MenuViewController.m in Sources */,
 				C42BB36A1C1E37F0005C0128 /* StaticViewController.m in Sources */,
 				C42BB3661C1E37F0005C0128 /* DataTokensDemoViewController.m in Sources */,
+				C0B88AA11E848C32002FB8D8 /* BlizzardViewController.m in Sources */,
 				C42BB3641C1E37F0005C0128 /* ApplicationViewController.m in Sources */,
 				C42BB36F1C1E37F0005C0128 /* TMLSampleTableViewCell.m in Sources */,
 				C42BB36E1C1E37F0005C0128 /* WelcomeViewController.m in Sources */,
 				C42BB3701C1E37F0005C0128 /* TMLTableViewCell.m in Sources */,
 				C42BB3631C1E37F0005C0128 /* ApplicationTableViewController.m in Sources */,
+				C0B833761E82E2F900D0EC23 /* NetatmoViewController.m in Sources */,
 				C42BB36D1C1E37F0005C0128 /* TranslationViewController.m in Sources */,
 				C42BB36C1C1E37F0005C0128 /* TokensDemoViewController.m in Sources */,
 				C42BB3611C1E37F0005C0128 /* AppDelegate.m in Sources */,
 				4C4233F518B9B38700B76555 /* main.m in Sources */,
 				C42BB36B1C1E37F0005C0128 /* TMLConsoleViewController.m in Sources */,
 				C42BB3691C1E37F0005C0128 /* StaticTableViewController.m in Sources */,
+				C0B8337B1E82E52900D0EC23 /* Netatmo2ViewController.m in Sources */,
 				C42BB3621C1E37F0005C0128 /* User.m in Sources */,
 				C42BB3671C1E37F0005C0128 /* DecorationTokensDemoViewController.m in Sources */,
 			);
