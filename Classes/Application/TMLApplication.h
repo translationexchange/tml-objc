@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2015 Translation Exchange, Inc. All rights reserved.
+ *  Copyright (c) 2017 Translation Exchange, Inc. All rights reserved.
  *
  *  _______                  _       _   _             ______          _
  * |__   __|                | |     | | (_)           |  ____|        | |
@@ -40,9 +40,6 @@
 
 // Application key - must always be specified
 @property(nonatomic, strong) NSString *key;
-
-// Application secret - only necessary for submitting keys
-@property(nonatomic, strong) NSString *secret;
 
 // Application name
 @property(nonatomic, strong) NSString *name;

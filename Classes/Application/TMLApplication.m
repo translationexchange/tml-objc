@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2015 Translation Exchange, Inc. All rights reserved.
+ *  Copyright (c) 2017 Translation Exchange, Inc. All rights reserved.
  *
  *  _______                  _       _   _             ______          _
  * |__   __|                | |     | | (_)           |  ____|        | |
@@ -54,7 +54,6 @@ NSString * const TMLApplicationMTCTranslationURLKey = @"mobile_translation_cente
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeInteger:self.applicationID forKey:@"id"];
     [aCoder encodeObject:self.key forKey:@"key"];
-    [aCoder encodeObject:self.secret forKey:@"secret"];
     [aCoder encodeObject:self.name forKey:@"name"];
     [aCoder encodeObject:self.defaultLocale forKey:@"default_locale"];
     [aCoder encodeInteger:self.threshold forKey:@"threshold"];
@@ -67,7 +66,6 @@ NSString * const TMLApplicationMTCTranslationURLKey = @"mobile_translation_cente
 - (void)decodeWithCoder:(NSCoder *)aDecoder {
     self.applicationID = [aDecoder decodeIntegerForKey:@"id"];
     self.key = [aDecoder decodeObjectForKey:@"key"];
-    self.secret = [aDecoder decodeObjectForKey:@"secret"];
     self.name = [aDecoder decodeObjectForKey:@"name"];
     self.defaultLocale = [aDecoder decodeObjectForKey:@"default_locale"];
     self.threshold = [aDecoder decodeIntegerForKey:@"threshold"];
@@ -102,8 +100,6 @@ NSString * const TMLApplicationMTCTranslationURLKey = @"mobile_translation_cente
     return (self.applicationID == application.applicationID
             && (self.key == application.key
                 || [self.key isEqualToString:application.key] == YES)
-            && (self.secret == application.secret
-                || [self.secret isEqualToString:application.secret] == YES)
             && (self.name == application.name
                 || [self.name isEqualToString:application.name] == YES)
             && (self.defaultLocale == application.defaultLocale

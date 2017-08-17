@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2015 Translation Exchange, Inc. All rights reserved.
+ *  Copyright (c) 2017 Translation Exchange, Inc. All rights reserved.
  *
  *  _______                  _       _   _             ______          _
  * |__   __|                | |     | | (_)           |  ____|        | |
@@ -151,6 +151,24 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
 }];
 }
 
+- (void)getTranslatorInfo:(void (^)(TMLUser *, TMLAPIResponse *, NSError *))completionBlock {
+    NSString *path = [NSString stringWithFormat:@"%@/translators/me", [self applicationProjectPath]];
+    [self get:path
+   parameters:nil
+completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+    if (completionBlock != nil) {
+        TMLUser *user = nil;
+        if (apiResponse != nil) {
+            NSDictionary *info = apiResponse.userInfo;
+            if (info != nil) {
+                user = [TMLAPISerializer materializeObject:info withClass:[TMLTranslator class]];
+            }
+        }
+        completionBlock(user, apiResponse, error);
+    }
+}];
+}
+
 - (NSString *)applicationProjectPath {
     return [NSString stringWithFormat:@"projects/%@", self.applicationKey];
 }
@@ -163,7 +181,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
     NSString *path = nil;
     NSString *sourceKey = source.key;
     if (sourceKey != nil) {
-        path = [NSString stringWithFormat: @"sources/%@/translations", [sourceKey tmlMD5]];
+        path = [NSString stringWithFormat:@"%@/sources/%@/translations", [self applicationProjectPath], [sourceKey tmlMD5]];
     }
     else {
         path = [NSString stringWithFormat:@"%@/translations", [self applicationProjectPath]];
@@ -215,7 +233,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
     
     NSString *path = [self applicationProjectPath];
     if ([params[TMLAPIOptionsIncludeDefinition] boolValue] == YES) {
-        path = [NSString stringWithFormat:@"%@/definition", path];
+        path = [NSString stringWithFormat:@"%@", path];
         [params removeObjectForKey:TMLAPIOptionsIncludeDefinition];
     }
     
@@ -285,7 +303,7 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
                      options:(NSDictionary *)options
              completionBlock:(void (^)(TMLLanguage *, TMLAPIResponse *response, NSError *))completionBlock
 {
-    [self get: [NSString stringWithFormat: @"languages/%@", locale]
+    [self get: [NSString stringWithFormat:@"%@/languages/%@", [self applicationProjectPath], locale]
    parameters:options
 completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
     TMLLanguage *lang = nil;
@@ -323,18 +341,19 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
 }
 
 - (void)getTranslationKeysWithOptions:(NSDictionary *)options
-                      completionBlock:(void (^)(NSArray *, TMLAPIResponse *, NSError *))completionBlock
+                      completionBlock:(void (^)(NSDictionary *, TMLAPIResponse *, NSError *))completionBlock
 {
     NSMutableDictionary *params = [options mutableCopy];
     if (params == nil) {
         params = [NSMutableDictionary dictionary];
     }
     params[TMLAPIOptionsIncludeAll] = @YES;
+    params[@"hash"] = @YES;
     
     [self get:[NSString stringWithFormat:@"%@/translation_keys", [self applicationProjectPath]]
    parameters:params
 completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-    NSArray *translationKeys = nil;
+    NSDictionary *translationKeys = nil;
     if ([apiResponse isSuccessfulResponse] == YES) {
         translationKeys = [apiResponse resultsAsTranslationKeys];
     }
@@ -362,7 +381,9 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
         [sourceKeysList addObject:@{@"source": sourceKey, @"keys": keysPayload}];
     }
     
-    [self post:@"sources/register_keys"
+    NSString *path = [NSString stringWithFormat:@"%@/translation_keys", [self applicationProjectPath]];
+    
+    [self post:path
     parameters:@{TMLAPIOptionsSourceKeys: sourceKeysList, TMLAPIOptionsApplicationId: self.applicationKey}
 completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
     BOOL success = [apiResponse isSuccessfulResponse];

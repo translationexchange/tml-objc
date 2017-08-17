@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2015 Translation Exchange, Inc. All rights reserved.
+ *  Copyright (c) 2017 Translation Exchange, Inc. All rights reserved.
  *
  *  _______                  _       _   _             ______          _
  * |__   __|                | |     | | (_)           |  ____|        | |
@@ -51,12 +51,7 @@ NSString * const TMLSourceDefaultKey = @"TML";
     aCopy.translations = [self.translations copyWithZone:zone];
     aCopy.sourceID = self.sourceID;
     aCopy.key = [self.key copyWithZone:zone];
-    aCopy.created = [self.created copyWithZone:zone];
-    aCopy.updated = [self.updated copyWithZone:zone];
-    aCopy.displayName = [self.displayName copyWithZone:zone];
-    aCopy.sourceName = [self.sourceName copyWithZone:zone];
-    aCopy.type = [self.type copyWithZone:zone];
-    aCopy.state = [self.state copyWithZone:zone];
+    aCopy.path = [self.path copyWithZone:zone];
     return aCopy;
 }
 
@@ -76,40 +71,20 @@ NSString * const TMLSourceDefaultKey = @"TML";
     return (self.sourceID == source.sourceID
             && (self.key == source.key
                 || [self.key isEqualToString:source.key] == YES)
-            && (self.created == source.created
-                || [self.created isEqualToDate:source.created] == YES)
-            && (self.updated == source.updated
-                || [self.updated isEqualToDate:source.updated] == YES)
-            && (self.displayName == source.displayName
-                || [self.displayName isEqualToString:source.displayName] == YES)
-            && (self.sourceName == source.sourceName
-                || [self.sourceName isEqualToString:source.sourceName] == YES)
-            && (self.type == source.type
-                || [self.type isEqualToString:source.type] == YES)
-            && (self.state == source.state
-                || [self.state isEqualToString:source.state] == YES));
+            && (self.path == source.path
+                || [self.path isEqualToString:source.path] == YES));
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeInteger:self.sourceID forKey:@"id"];
     [aCoder encodeObject:self.key forKey:@"key"];
-    [aCoder encodeObject:self.created forKey:@"created_at"];
-    [aCoder encodeObject:self.updated forKey:@"updated_at"];
-    [aCoder encodeObject:self.displayName forKey:@"display_name"];
-    [aCoder encodeObject:self.sourceName forKey:@"source"];
-    [aCoder encodeObject:self.type forKey:@"type"];
-    [aCoder encodeObject:self.state forKey:@"state"];
+    [aCoder encodeObject:self.path forKey:@"path"];
 }
 
 - (void)decodeWithCoder:(NSCoder *)aDecoder {
     self.sourceID = [aDecoder decodeIntegerForKey:@"id"];
     self.key = [aDecoder decodeObjectForKey:@"key"];
-    self.created = [aDecoder decodeObjectForKey:@"created_at"];
-    self.updated = [aDecoder decodeObjectForKey:@"updated_at"];
-    self.displayName = [aDecoder decodeObjectForKey:@"display_name"];
-    self.sourceName = [aDecoder decodeObjectForKey:@"source"];
-    self.type = [aDecoder decodeObjectForKey:@"type"];
-    self.state = [aDecoder decodeObjectForKey:@"state"];
+    self.path = [aDecoder decodeObjectForKey:@"path"];
 }
 
 - (NSString *)description {
