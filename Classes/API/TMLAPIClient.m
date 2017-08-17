@@ -191,10 +191,10 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
         params = [options mutableCopy];
     }
     else {
-        params = [NSMutableDictionary dictionaryWithDictionary:@{TMLAPIOptionsIncludeAll: @YES}];
+        params = [NSMutableDictionary dictionary];
     }
+    
     params[TMLAPIOptionsLocale] = locale;
-    params[TMLAPIOptionsApplicationId] = self.applicationKey;
     
     [self get:path
    parameters:params
@@ -346,9 +346,6 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
     if (params == nil) {
         params = [NSMutableDictionary dictionary];
     }
-    params[TMLAPIOptionsIncludeAll] = @YES;
-    params[@"hash"] = @YES;
-    
     [self get:[NSString stringWithFormat:@"%@/translation_keys", [self applicationProjectPath]]
    parameters:params
 completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
