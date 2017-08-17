@@ -71,7 +71,6 @@ NSString * const TMLAPIOptionsPage = @"page";
 - (NSDictionary *) prepareAPIParameters:(NSDictionary *)params {
     // TODO - should really use an HTTP header for this
     NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithDictionary:params];
-    parameters[@"app_id"] = self.applicationKey;
     parameters[@"access_token"] = self.accessToken;
     return parameters;
 }

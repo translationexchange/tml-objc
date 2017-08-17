@@ -53,7 +53,7 @@ NSString * const TMLAuthorizationErrorDomain = @"TMLAuthorizationErrorDomain";
         NSURL *gatewayURL = [[[TML sharedInstance] configuration] gatewayBaseURL];
         NSURL *url = [gatewayURL copy];
         NSURLComponents *components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
-        components.query = @"s=iOS";
+        components.query = [NSString stringWithFormat:@"s=iOS&app_id=%@", TMLSharedConfiguration().applicationKey];
         self.authorizationURL = components.URL;
         
         url = [gatewayURL URLByAppendingPathComponent:@"logout"];
