@@ -34,6 +34,7 @@
 extern NSString * const TMLBundleVersionFilename;
 extern NSString * const TMLBundleApplicationFilename;
 extern NSString * const TMLBundleSourcesFilename;
+extern NSString * const TMLBundleTranslatorFilename;
 extern NSString * const TMLBundleTranslationsFilename;
 extern NSString * const TMLBundleTranslationKeysFilename;
 extern NSString * const TMLBundleLanguageFilename;

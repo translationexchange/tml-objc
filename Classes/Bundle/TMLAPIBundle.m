@@ -370,6 +370,26 @@
 
 - (void)syncMetaData {
     TMLAPIClient *client = [[TML sharedInstance] apiClient];
+    
+    [self addSyncOperation:[NSBlockOperation blockOperationWithBlock:^{
+        [client getTranslatorInfo:^(TMLTranslator *translator, TMLAPIResponse *response, NSError *error) {
+            NSError *fileError;
+            if (translator != nil) {
+                TMLSharedConfiguration().currentTranslator = translator;
+            }
+            NSMutableArray *errors = [NSMutableArray array];
+            if (error != nil) {
+                [errors addObject:error];
+            }
+            if (fileError != nil) {
+                [errors addObject:fileError];
+            }
+            
+            [self didFinishSyncOperationWithErrors:errors];
+        }];
+        
+    }]];
+    
     [self addSyncOperation:[NSBlockOperation blockOperationWithBlock:^{
         [client getCurrentApplicationWithOptions:@{TMLAPIOptionsIncludeDefinition: @YES}
                                  completionBlock:^(TMLApplication *application, TMLAPIResponse *response, NSError *error) {

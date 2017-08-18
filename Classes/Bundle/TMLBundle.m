@@ -43,6 +43,7 @@
 
 NSString * const TMLBundleVersionFilename = @"snapshot.json";
 NSString * const TMLBundleApplicationFilename = @"application.json";
+NSString * const TMLBundleTranslatorFilename = @"translator.json";
 NSString * const TMLBundleSourcesFilename = @"sources.json";
 NSString * const TMLBundleTranslationsFilename = @"translations.json";
 NSString * const TMLBundleTranslationKeysFilename = @"translation_keys.json";

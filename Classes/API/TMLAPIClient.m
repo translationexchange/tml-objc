@@ -150,20 +150,21 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
 }];
 }
 
-- (void)getTranslatorInfo:(void (^)(TMLUser *, TMLAPIResponse *, NSError *))completionBlock {
+- (void)getTranslatorInfo:(void (^)(TMLTranslator *, TMLAPIResponse *, NSError *))completionBlock {
     NSString *path = [NSString stringWithFormat:@"%@/translators/me", [self applicationProjectPath]];
     [self get:path
    parameters:nil
 completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
     if (completionBlock != nil) {
-        TMLUser *user = nil;
+        TMLTranslator *translator = nil;
         if (apiResponse != nil) {
             NSDictionary *info = apiResponse.userInfo;
             if (info != nil) {
-                user = [TMLAPISerializer materializeObject:info withClass:[TMLTranslator class]];
+                translator = [TMLAPISerializer materializeObject:[info objectForKey:@"translator"] withClass:[TMLTranslator class]];
+                translator.role = [info objectForKey:@"role"];
             }
         }
-        completionBlock(user, apiResponse, error);
+        completionBlock(translator, apiResponse, error);
     }
 }];
 }

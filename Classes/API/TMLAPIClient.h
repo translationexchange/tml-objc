@@ -55,6 +55,12 @@ extern NSString * const TMLAPIOptionsPage;
  */
 - (void) getUserInfo:(void(^)(TMLUser *user, TMLAPIResponse *response, NSError *error))completionBlock;
 
+
+/**
+ * Fetches current translator
+ */
+- (void) getTranslatorInfo:(void(^)(TMLTranslator *translator, TMLAPIResponse *response, NSError *error))completionBlock;
+
 /**
  *  Fetches list of translations for specified locale. If source is given, 
  *  list will be restricted to that source, otherwise results will be
