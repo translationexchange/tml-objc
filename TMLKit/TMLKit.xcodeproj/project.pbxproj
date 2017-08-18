@@ -295,7 +295,7 @@
 		7DD4AA1189309754FD897BCC /* Pods-TMLKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMLKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-TMLKit/Pods-TMLKit.release.xcconfig"; sourceTree = "<group>"; };
 		9C4DCAD61B82C00F44444A8C /* libPods-TMLKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TMLKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BACE78FD18874EB6A192BC4E /* Pods-TMLKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMLKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TMLKitTests/Pods-TMLKitTests.debug.xcconfig"; sourceTree = "<group>"; };
-		C0E2B68B1F44C11F004268AE /* TMLPrivateConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TMLPrivateConfig.plist; sourceTree = "<group>"; };
+		C00484251F46551800F6665C /* TMLPrivateConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TMLPrivateConfig.plist; sourceTree = "<group>"; };
 		C42581E61C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplicationShortcutItem+TML.h"; sourceTree = "<group>"; };
 		C42581E71C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplicationShortcutItem+TML.m"; sourceTree = "<group>"; };
 		C42581F01C20FE4300BAE9A9 /* UIBarButtonItem+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+TML.h"; sourceTree = "<group>"; };
@@ -411,7 +411,6 @@
 		C4FCD2AB1C0FC7F200D723BC /* UITextView+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+TML.m"; sourceTree = "<group>"; };
 		C4FCD2AC1C0FC7F200D723BC /* UIViewController+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+TML.h"; sourceTree = "<group>"; };
 		C4FCD2AD1C0FC7F200D723BC /* UIViewController+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+TML.m"; sourceTree = "<group>"; };
-		C4FCD2AF1C0FC7F200D723BC /* .gitkeep */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitkeep; sourceTree = "<group>"; };
 		C4FCD2B11C0FC7F200D723BC /* TMLLanguage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLLanguage.h; sourceTree = "<group>"; };
 		C4FCD2B21C0FC7F200D723BC /* TMLLanguage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLLanguage.m; sourceTree = "<group>"; };
 		C4FCD2B31C0FC7F200D723BC /* TMLLanguageCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLLanguageCase.h; sourceTree = "<group>"; };
@@ -550,7 +549,7 @@
 				C4CF54DA1C100DDD00EC39CC /* libNVHTarGzip.a */,
 				C4CF54DC1C100DDD00EC39CC /* libPods-TMLKit.a */,
 				C4CF54DE1C100DDD00EC39CC /* libPods-TMLKitTests.a */,
-				C4D64E891DB033A40044F250 /* libSAMKeychain.a */,
+				C00484221F44D9B300F6665C /* libSAMKeychain.a */,
 				C4CF54E01C100DDD00EC39CC /* libSSZipArchive.a */,
 			);
 			name = Products;
@@ -609,9 +608,11 @@
 				C4FCD2851C0FC7F200D723BC /* Bundle */,
 				C4FCD28C1C0FC7F200D723BC /* Controllers */,
 				C4FCD2931C0FC7F200D723BC /* Extensions */,
-				C4FCD2AE1C0FC7F200D723BC /* ios */,
 				C4FCD2B01C0FC7F200D723BC /* Language */,
 				C4FCD2BB1C0FC7F200D723BC /* Rules Engine */,
+				C4FCD2C91C0FC7F200D723BC /* Tokenizers */,
+				C4FCD2DB1C0FC7F200D723BC /* Translations */,
+				C4FCD2D41C0FC7F200D723BC /* Tokens */,
 				C4FCD2C21C0FC7F200D723BC /* TML.h */,
 				C4FCD2C31C0FC7F200D723BC /* TML.m */,
 				C4FCD2C01C0FC7F200D723BC /* TML+NSLocalizedString.h */,
@@ -620,9 +621,6 @@
 				C4FCD2C61C0FC7F200D723BC /* TMLLogger.h */,
 				C4FCD2C71C0FC7F200D723BC /* TMLModel.h */,
 				C4FCD2C81C0FC7F200D723BC /* TMLModel.m */,
-				C4FCD2C91C0FC7F200D723BC /* Tokenizers */,
-				C4FCD2D41C0FC7F200D723BC /* Tokens */,
-				C4FCD2DB1C0FC7F200D723BC /* Translations */,
 				C4FA63821C1A5AF600E3ECB8 /* TMLTranslationActivationView.h */,
 				C4FA63831C1A5AF600E3ECB8 /* TMLTranslationActivationView.m */,
 				C4CC8D761C56E92100FACF81 /* TMLAnalytics.h */,
@@ -765,14 +763,6 @@
 				C4BDFB901C751AF3002CAB4C /* UICollectionView+TML.m */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		C4FCD2AE1C0FC7F200D723BC /* ios */ = {
-			isa = PBXGroup;
-			children = (
-				C4FCD2AF1C0FC7F200D723BC /* .gitkeep */,
-			);
-			path = ios;
 			sourceTree = "<group>";
 		};
 		C4FCD2B01C0FC7F200D723BC /* Language */ = {
@@ -1238,6 +1228,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C00484261F46551800F6665C /* TMLPrivateConfig.plist in Resources */,
 				C4FCD39F1C10012500D723BC /* en.json in Resources */,
 				C0E2B68C1F44C11F004268AE /* TMLPrivateConfig.plist in Resources */,
 			);

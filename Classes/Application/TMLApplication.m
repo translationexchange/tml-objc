@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2015 Translation Exchange, Inc. All rights reserved.
+ *  Copyright (c) 2017 Translation Exchange, Inc. All rights reserved.
  *
  *  _______                  _       _   _             ______          _
  * |__   __|                | |     | | (_)           |  ____|        | |
@@ -54,7 +54,6 @@ NSString * const TMLApplicationMTCTranslationURLKey = @"mobile_translation_cente
 - (void)encodeWithCoder:(NSCoder *)aCoder {
     [aCoder encodeInteger:self.applicationID forKey:@"id"];
     [aCoder encodeObject:self.key forKey:@"key"];
-    [aCoder encodeObject:self.secret forKey:@"secret"];
     [aCoder encodeObject:self.name forKey:@"name"];
     [aCoder encodeObject:self.defaultLocale forKey:@"default_locale"];
     [aCoder encodeInteger:self.threshold forKey:@"threshold"];
@@ -67,7 +66,6 @@ NSString * const TMLApplicationMTCTranslationURLKey = @"mobile_translation_cente
 - (void)decodeWithCoder:(NSCoder *)aDecoder {
     self.applicationID = [aDecoder decodeIntegerForKey:@"id"];
     self.key = [aDecoder decodeObjectForKey:@"key"];
-    self.secret = [aDecoder decodeObjectForKey:@"secret"];
     self.name = [aDecoder decodeObjectForKey:@"name"];
     self.defaultLocale = [aDecoder decodeObjectForKey:@"default_locale"];
     self.threshold = [aDecoder decodeIntegerForKey:@"threshold"];
@@ -102,8 +100,6 @@ NSString * const TMLApplicationMTCTranslationURLKey = @"mobile_translation_cente
     return (self.applicationID == application.applicationID
             && (self.key == application.key
                 || [self.key isEqualToString:application.key] == YES)
-            && (self.secret == application.secret
-                || [self.secret isEqualToString:application.secret] == YES)
             && (self.name == application.name
                 || [self.name isEqualToString:application.name] == YES)
             && (self.defaultLocale == application.defaultLocale
@@ -208,15 +204,27 @@ NSString * const TMLApplicationMTCTranslationURLKey = @"mobile_translation_cente
                                           locale:(NSString *)locale
 {
     NSString *url = [self translationURLPattern];
+//    NSString *url = [NSString stringWithFormat:@"http://localhost:3013/#/projects/{project_key}/strings/{translation_key}?locale={locale}&role={role}&access_token={access_token}&translator_id={translator_id}"];
+    
     if (url == nil) {
         return nil;
     }
+
+    TMLTranslator *translator = TMLSharedConfiguration().currentTranslator;
+
+    if (translator == nil) {
+        return nil;
+    }
     
+    url = [url stringByReplacingOccurrencesOfString:@"{project_key}" withString:self.key];
     url = [url stringByReplacingOccurrencesOfString:@"{translation_key}" withString:key];
     url = [url stringByReplacingOccurrencesOfString:@"{locale}" withString:locale];
+    url = [url stringByReplacingOccurrencesOfString:@"{role}" withString: translator.role];
+    url = [url stringByReplacingOccurrencesOfString:@"{translator_id}" withString: [NSString stringWithFormat:@"%ld", (long)translator.translatorID]];
     url = [url stringByReplacingOccurrencesOfString:@"{access_token}" withString:TMLSharedConfiguration().accessToken];
-    url = [url stringByReplacingOccurrencesOfString:@"{app_id}" withString:self.key];
-    
+
+    TMLDebug(@"Opening translator at: %@", url);
+
     return [NSURL URLWithString:url];
 }
 

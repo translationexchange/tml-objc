@@ -224,7 +224,8 @@
 				C4D231821DA084A000F29CA0 /* Demo.entitlements */,
 				C42BB33E1C1E37F0005C0128 /* Classes */,
 				4C4233EF18B9B38700B76555 /* Supporting Files */,
-				4C7A871218BD354100C2375D /* Assets */,
+				C4D231821DA084A000F29CA0 /* Demo.entitlements */,
+				C42C56331BF31A6600207911 /* TMLPrivateConfig.h */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -368,7 +369,6 @@
 				C4FA31FC1C506EA2001902EB /* Generate TMLPrivateConfig.h */,
 				4C4233E118B9B38700B76555 /* Sources */,
 				4C4233E218B9B38700B76555 /* Frameworks */,
-				4C4233E318B9B38700B76555 /* Resources */,
 				C4CF54E21C10170200EC39CC /* Copy Bundle Frameworks */,
 				43A70564205414DFC5E5FF4E /* [CP] Embed Pods Frameworks */,
 				3B74167B8730B700CF4B3161 /* [CP] Copy Pods Resources */,
@@ -463,6 +463,7 @@
 				C42BB3391C1E37D8005C0128 /* Icon-40@2x.png in Resources */,
 				C0B833781E82E4FF00D0EC23 /* netatmo2.jpeg in Resources */,
 				C42BB3381C1E37D8005C0128 /* arrow_down.png in Resources */,
+				C00484281F4683EB00F6665C /* TMLPrivateConfig.plist in Resources */,
 				4C4233FC18B9B38700B76555 /* Main.storyboard in Resources */,
 				4CFA531419284666006E1B43 /* Rakefile in Resources */,
 				C4FCD3A51C10075C00D723BC /* (null) in Resources */,

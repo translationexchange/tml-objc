@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2015 Translation Exchange, Inc. All rights reserved.
+ *  Copyright (c) 2017 Translation Exchange, Inc. All rights reserved.
  *
  *  _______                  _       _   _             ______          _
  * |__   __|                | |     | | (_)           |  ____|        | |
@@ -27,6 +27,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
+
 
 #import <Foundation/Foundation.h>
 #import "TMLModel.h"

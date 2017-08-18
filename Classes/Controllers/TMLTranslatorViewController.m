@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2015 Translation Exchange, Inc. All rights reserved.
+ *  Copyright (c) 2017 Translation Exchange, Inc. All rights reserved.
  *
  *  _______                  _       _   _             ______          _
  * |__   __|                | |     | | (_)           |  ____|        | |
@@ -65,8 +65,8 @@
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithTitle:TMLLocalizedString(@"Done") style:UIBarButtonItemStylePlain target:self action:@selector(dismiss:)];
         self.navigationItem.leftBarButtonItem = doneButton;
         
-        UIBarButtonItem *reloadButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload:)];
-        self.navigationItem.rightBarButtonItem = reloadButton;
+//        UIBarButtonItem *reloadButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(reload:)];
+//        self.navigationItem.rightBarButtonItem = reloadButton;
         
         [self translate];
     }

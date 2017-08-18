@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2015 Translation Exchange, Inc. All rights reserved.
+ *  Copyright (c) 2017 Translation Exchange, Inc. All rights reserved.
  *
  *  _______                  _       _   _             ______          _
  * |__   __|                | |     | | (_)           |  ____|        | |
@@ -39,12 +39,7 @@ extern NSString * const TMLSourceDefaultKey;
 
 @property (nonatomic, assign) NSInteger sourceID;
 @property(nonatomic, strong) NSString *key;
-@property (nonatomic, strong) NSDate *created;
-@property (nonatomic, strong) NSDate *updated;
-@property (nonatomic, strong) NSString *displayName;
-@property (nonatomic, strong) NSString *sourceName;
-@property (nonatomic, strong) NSString *type;
-@property (nonatomic, strong) NSString *state;
+@property (nonatomic, strong) NSString *path;
 
 #pragma mark - Internal Use
 

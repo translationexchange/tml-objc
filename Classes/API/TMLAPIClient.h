@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2015 Translation Exchange, Inc. All rights reserved.
+ *  Copyright (c) 2017 Translation Exchange, Inc. All rights reserved.
  *
  *  _______                  _       _   _             ______          _
  * |__   __|                | |     | | (_)           |  ____|        | |
@@ -54,6 +54,12 @@ extern NSString * const TMLAPIOptionsPage;
  * @param completionBlock Completion block
  */
 - (void) getUserInfo:(void(^)(TMLUser *user, TMLAPIResponse *response, NSError *error))completionBlock;
+
+
+/**
+ * Fetches current translator
+ */
+- (void) getTranslatorInfo:(void(^)(TMLTranslator *translator, TMLAPIResponse *response, NSError *error))completionBlock;
 
 /**
  *  Fetches list of translations for specified locale. If source is given, 
@@ -115,7 +121,7 @@ extern NSString * const TMLAPIOptionsPage;
  *  @param completionBlock Completion block;
  */
 - (void) getTranslationKeysWithOptions:(NSDictionary *)options
-                       completionBlock:(void(^)(NSArray *translationKeys, TMLAPIResponse *response, NSError *error))completionBlock;
+                       completionBlock:(void(^)(NSDictionary *translationKeys, TMLAPIResponse *response, NSError *error))completionBlock;
 
 /**
  *  Register source and translation key associations.

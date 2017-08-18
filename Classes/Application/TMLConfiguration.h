@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2015 Translation Exchange, Inc. All rights reserved.
+ *  Copyright (c) 2017 Translation Exchange, Inc. All rights reserved.
  *
  *  _______                  _       _   _             ______          _
  * |__   __|                | |     | | (_)           |  ____|        | |
@@ -30,39 +30,42 @@
 
 #import <Foundation/Foundation.h>
 #import "TMLGlobals.h"
+#import "TMLTranslator.h"
 
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wnullability-completeness"
 
 @interface TMLConfiguration : NSObject
 
-@property(nonatomic, strong) NSURL *apiBaseURL;
+@property(nonatomic, strong) NSURL * _Nullable apiBaseURL;
 
-@property(nonatomic, strong) NSURL *translationCenterBaseURL;
+@property(nonatomic, strong) NSURL * _Nullable translationCenterBaseURL;
 
-@property(nonatomic, strong) NSURL *gatewayBaseURL;
+@property(nonatomic, strong) NSURL * _Nullable gatewayBaseURL;
 
-@property(nonatomic, strong) NSURL *cdnBaseURL;
+@property(nonatomic, strong) NSURL * _Nullable cdnBaseURL;
 
 @property(nonnull, readonly) NSURL *cdnURL;
 
-@property(nonatomic, readwrite) NSString *accessToken;
+@property(nonatomic, readwrite) NSString * _Nullable accessToken;
 
-@property(nonatomic, readonly) NSString *applicationKey;
+@property(nonatomic, readonly) NSString * _Nullable applicationKey;
 
-@property(nonatomic, strong) NSString *defaultLocale;
+@property(nonatomic, strong) NSString * _Nullable defaultLocale;
 
-@property(nonatomic, strong) NSString *currentLocale;
+@property(nonatomic, strong) NSString * _Nullable currentLocale;
 
-@property(nonatomic, strong) NSString *previousLocale;
+@property(nonatomic, readwrite) TMLTranslator * _Nullable currentTranslator;
 
-@property(nonatomic, strong) NSString *defaultSourceName;
+@property(nonatomic, strong) NSString * _Nullable previousLocale;
 
-@property(nonatomic, strong) NSMutableDictionary *contextRules;
+@property(nonatomic, strong) NSString * _Nullable defaultSourceName;
 
-@property(nonatomic, strong) NSMutableDictionary *defaultTokens;
+@property(nonatomic, strong) NSMutableDictionary * _Nullable contextRules;
 
-@property(nonatomic, strong) NSMutableDictionary *defaultLocalization;
+@property(nonatomic, strong) NSMutableDictionary * _Nullable defaultTokens;
+
+@property(nonatomic, strong) NSMutableDictionary * _Nullable defaultLocalization;
 
 @property(nonatomic, assign) BOOL localizeNIBStrings;
 

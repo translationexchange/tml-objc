@@ -11,6 +11,10 @@
 #import "MenuViewController.h"
 #import "User.h"
 
+#ifndef TML_DEBUG
+#define TML_DEBUG = TMLLogLevelDebug
+#endif
+
 @interface AppDelegate()<TMLDelegate>
 
 @end

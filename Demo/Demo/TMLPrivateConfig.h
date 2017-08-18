@@ -1,5 +1,5 @@
 /* GENERATED FILE - MODIFICATIONS WILL BE LOST */
 #ifndef TMLPrivateConfig_h
 #define TMLPrivateConfig_h
-#define TMLDefaultApplicationKey @"16298b5879db98aebcbb30790b19aeec6ccb8546666a810f9a638da56a5be7ae"
+#define TMLDefaultApplicationKey @"2f3bf80d0c46815c6cbf922b0877f9e2cf5dd4bc65e84a0fdbc883e22259cf7e"
 #endif /* TMLPrivateConfig_h */
