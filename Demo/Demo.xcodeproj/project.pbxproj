@@ -19,6 +19,7 @@
 		4CFA531319284666006E1B43 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4CFA530F19284666006E1B43 /* LICENSE */; };
 		4CFA531419284666006E1B43 /* Rakefile in Resources */ = {isa = PBXBuildFile; fileRef = 4CFA531019284666006E1B43 /* Rakefile */; };
 		4CFA531519284666006E1B43 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4CFA531119284666006E1B43 /* README.md */; };
+		C00484281F4683EB00F6665C /* TMLPrivateConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = C00484271F4683EB00F6665C /* TMLPrivateConfig.plist */; };
 		C42BB2761C1E2895005C0128 /* TMLKit.framework in Copy Bundle Frameworks */ = {isa = PBXBuildFile; fileRef = C4BC81121C100BD500B995ED /* TMLKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C42BB3381C1E37D8005C0128 /* arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = C42BB3321C1E37D8005C0128 /* arrow_down.png */; };
 		C42BB3391C1E37D8005C0128 /* Icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C42BB3331C1E37D8005C0128 /* Icon-40@2x.png */; };
@@ -98,6 +99,7 @@
 		4CFA531219284666006E1B43 /* Tml.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Tml.podspec; path = ../Tml.podspec; sourceTree = "<group>"; };
 		849FC625621A230B8BAF60C9 /* Pods-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		BB4D206C0DA72FBAC39F8689 /* libPods-Demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Demo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C00484271F4683EB00F6665C /* TMLPrivateConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TMLPrivateConfig.plist; sourceTree = "<group>"; };
 		C42BB3321C1E37D8005C0128 /* arrow_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_down.png; sourceTree = "<group>"; };
 		C42BB3331C1E37D8005C0128 /* Icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40@2x.png"; sourceTree = "<group>"; };
 		C42BB3341C1E37D8005C0128 /* Icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@2x.png"; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 		4C4233EE18B9B38700B76555 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				C00484271F4683EB00F6665C /* TMLPrivateConfig.plist */,
 				4C7A871218BD354100C2375D /* Assets */,
 				C42BB33E1C1E37F0005C0128 /* Classes */,
 				4C4233EF18B9B38700B76555 /* Supporting Files */,
@@ -425,6 +428,7 @@
 				C42BB33D1C1E37D8005C0128 /* more.png in Resources */,
 				C42BB3391C1E37D8005C0128 /* Icon-40@2x.png in Resources */,
 				C42BB3381C1E37D8005C0128 /* arrow_down.png in Resources */,
+				C00484281F4683EB00F6665C /* TMLPrivateConfig.plist in Resources */,
 				4C4233FC18B9B38700B76555 /* Main.storyboard in Resources */,
 				4CFA531419284666006E1B43 /* Rakefile in Resources */,
 				C4FCD3A51C10075C00D723BC /* (null) in Resources */,
