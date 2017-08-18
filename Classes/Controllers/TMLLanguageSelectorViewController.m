@@ -46,6 +46,7 @@
 }
 
 @property(nonatomic, strong) IBOutlet UITableView *tableView;
+@property(nonatomic, strong) UIRefreshControl *refreshControl;
 @property(nonatomic, strong) NSArray *languages;
 - (IBAction) dismiss: (id)sender;
 
@@ -67,11 +68,15 @@
     
     self.languages = TMLLanguages();
     
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(syncMetaData) forControlEvents:UIControlEventValueChanged];
+    
     self.tableView = [[UITableView alloc] initWithFrame:self.view.bounds];
     self.tableView.backgroundColor = [UIColor whiteColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     [self.tableView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+    [self.tableView addSubview:self.refreshControl];
     [self.view addSubview:self.tableView];
     
     [self setupNotificationObserving];
@@ -79,14 +84,21 @@
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    TMLBundle *currentBundle = [[TML sharedInstance] currentBundle];
-    if ([currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
-        [(TMLAPIBundle *)currentBundle syncMetaData];
-    }
+    
+    [self syncMetaData];
 }
 
 -(IBAction)dismiss:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)syncMetaData {
+    [self.refreshControl beginRefreshing];
+    
+    TMLBundle *currentBundle = [[TML sharedInstance] currentBundle];
+    if ([currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
+        [(TMLAPIBundle *)currentBundle syncMetaData];
+    }
 }
 
 #pragma mark - Notifications
@@ -97,8 +109,8 @@
     }
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self
-                           selector:@selector(localizationDataChanged:)
-                               name:TMLLocalizationDataChangedNotification
+                           selector:@selector(bundleSyncDidFinish:)
+                               name:TMLDidFinishSyncNotification
                              object:nil];
     _observingNotifications = YES;
 }
@@ -111,7 +123,9 @@
     _observingNotifications = NO;
 }
 
-- (void)localizationDataChanged:(NSNotification *)aNotification {
+- (void)bundleSyncDidFinish:(NSNotification *)aNotification {
+    [self.refreshControl endRefreshing];
+    
     self.languages = TMLLanguages();
     [self.tableView reloadData];
 }

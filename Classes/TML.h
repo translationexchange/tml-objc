@@ -44,7 +44,7 @@
 - (BOOL)shouldSwitchToBundle:(TMLBundle *)bundle;
 @end
 
-@class TMLApplication, TMLBundle, TMLConfiguration, TMLLanguage, TMLSource, TMLAPIClient, TMLTranslationKey, TMLUser;
+@class TMLApplication, TMLBundle, TMLConfiguration, TMLLanguage, TMLSource, TMLAPIClient, TMLTranslationKey, TMLUser, TMLAuthorizationViewController;
 
 @interface TML : NSObject
 
@@ -433,6 +433,7 @@
 - (void)removeLocalizationData;
 
 - (void)reloadLocalizationData;
+- (void)reloadTranslationDataForCurrentLocale;
 
 /**
  * Adds translation to current bundle
@@ -480,6 +481,11 @@
 - (void)presentLanguageSelectorController;
 
 /**
+ *  Presents authorization controller.
+ */
+- (TMLAuthorizationViewController *)presentAuthorizationControllerForTokenRefresh;
+
+/**
  *  Presents translator controller for given translation key (hash).
  *
  *  This is used during in-app traslation.
@@ -487,6 +493,11 @@
  *  @param translationKey Translation key.
  */
 - (void)presentTranslatorViewControllerWithTranslationKey:(NSString *)translationKey;
+
+/**
+ *  Dismisses presented controller.
+ */
+- (void)dismissPresentedViewController;
 
 @end
 

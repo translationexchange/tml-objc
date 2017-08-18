@@ -42,6 +42,7 @@
 - (void)setNeedsSync;
 - (void)sync;
 - (void)syncMetaData;
+- (void)syncCurrentLocaleOnly;
 - (void)cancelSync;
 
 @end

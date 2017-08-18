@@ -1269,11 +1269,6 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 
 - (void)acquireAccessToken {
     TMLAuthorizationViewController *authController = [[TMLAuthorizationViewController alloc] init];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:TMLLocalizedString(@"Cancel")
-                                                                     style:UIBarButtonItemStylePlain
-                                                                    target:self
-                                                                    action:@selector(dismissPresentedViewController)];
-    authController.navigationItem.leftBarButtonItem = cancelButton;
     authController.delegate = self;
     [authController authorize];
     [self presentViewController:authController beforePresentation:^(UIViewController *wrapper) {
@@ -1284,11 +1279,6 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 
 - (void)signout {
     TMLAuthorizationViewController *authController = [[TMLAuthorizationViewController alloc] init];
-    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:TMLLocalizedString(@"Cancel")
-                                                                     style:UIBarButtonItemStylePlain
-                                                                    target:self
-                                                                    action:@selector(dismissPresentedViewController)];
-    authController.navigationItem.leftBarButtonItem = cancelButton;
     authController.delegate = self;
     [authController deauthorize];
     // deliberately not displaying...
@@ -1296,6 +1286,19 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 //        wrapper.modalPresentationStyle = UIModalPresentationFormSheet;
 //        wrapper.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
 //    }];
+}
+
+- (TMLAuthorizationViewController *)presentAuthorizationControllerForTokenRefresh {
+    TMLAuthorizationViewController *authController = [[TMLAuthorizationViewController alloc] init];
+    authController.isRefreshingToken = YES;
+    authController.delegate = self;
+    [authController authorize];
+    [self presentViewController:authController beforePresentation:^(UIViewController *wrapper) {
+        wrapper.modalPresentationStyle = UIModalPresentationFormSheet;
+        wrapper.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
+    }];
+    
+    return authController;
 }
 
 - (void)authorizationViewController:(TMLAuthorizationViewController *)controller
@@ -1316,7 +1319,9 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     if (controller.presentingViewController != nil) {
         [controller.presentingViewController dismissViewControllerAnimated:YES completion:^{
             self.translationActive = YES;
-            [self presentActiveTranslationOptions];
+            
+            if (!controller.isRefreshingToken)
+                [self presentActiveTranslationOptions];
         }];
     }
 }
@@ -1391,7 +1396,8 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 
 - (void)_presentViewController:(UIViewController *)viewController completion:(void(^)(void))completion {
     UIViewController *presenter = [self defaultPresentingViewController];
-    if (presenter.presentedViewController != nil) {
+    
+    if (presenter.presentedViewController != nil && !presenter.presentedViewController.isBeingDismissed) {
         [presenter dismissViewControllerAnimated:YES completion:^{
             [presenter presentViewController:viewController animated:YES completion:completion];
         }];
@@ -1593,6 +1599,13 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     TMLBundle *ourBundle = self.currentBundle;
     if ([ourBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
         [(TMLAPIBundle *)ourBundle setNeedsSync];
+    }
+}
+
+- (void)reloadTranslationDataForCurrentLocale {
+    TMLBundle *ourBundle = self.currentBundle;
+    if ([ourBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
+        [(TMLAPIBundle *)ourBundle syncCurrentLocaleOnly];
     }
 }
 

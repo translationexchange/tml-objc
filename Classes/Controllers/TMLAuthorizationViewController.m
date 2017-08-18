@@ -64,6 +64,21 @@ NSString * const TMLAuthorizationErrorDomain = @"TMLAuthorizationErrorDomain";
     return self;
 }
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:TMLLocalizedString(@"Cancel")
+                                                                     style:UIBarButtonItemStylePlain
+                                                                    target:self
+                                                                    action:@selector(didPressCancelButton)];
+    
+    self.navigationItem.leftBarButtonItem = cancelButton;
+}
+
+- (void)didPressCancelButton {
+    [self notifyDelegateWithRevokedAccess];
+}
+
 #pragma mark - Authorizing
 
 - (void)authorize {
@@ -98,6 +113,10 @@ NSString * const TMLAuthorizationErrorDomain = @"TMLAuthorizationErrorDomain";
                                    };
         [delegate authorizationViewController:self didGrantAuthorization:authInfo];
     }
+    
+    if (self.completion) {
+        self.completion(true, accessToken);
+    }
 }
 
 - (void)notifyDelegateWithRevokedAccess {
@@ -105,12 +124,20 @@ NSString * const TMLAuthorizationErrorDomain = @"TMLAuthorizationErrorDomain";
     if ([delegate respondsToSelector:@selector(authorizationViewControllerDidRevokeAuthorization:)] == YES) {
         [delegate authorizationViewControllerDidRevokeAuthorization:self];
     }
+    
+    if (self.completion) {
+        self.completion(false, nil);
+    }
 }
 
 - (void)notifyDelegateAuthorizationFailed:(NSError *)error {
     id<TMLAuthorizationViewControllerDelegate>delegate = self.delegate;
     if ([delegate respondsToSelector:@selector(authorizationViewController:didFailToAuthorize:)] == YES) {
         [delegate authorizationViewController:self didFailToAuthorize:error];
+    }
+    
+    if (self.completion) {
+        self.completion(false, nil);
     }
 }
 

@@ -368,6 +368,13 @@
     syncQueue.suspended = NO;
 }
 
+- (void)syncCurrentLocaleOnly {
+    NSString *currentLocale = TMLCurrentLocale();
+    [self syncLocales:@[currentLocale]];
+    
+    self.syncQueue.suspended = NO;
+}
+
 - (void)syncMetaData {
     TMLAPIClient *client = [[TML sharedInstance] apiClient];
     

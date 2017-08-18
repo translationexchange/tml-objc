@@ -40,6 +40,7 @@
 #import "TMLTranslationKey.h"
 #import "TMLUser.h"
 #import "TMLScreenShot.h"
+#import "TMLAuthorizationViewController.h"
 #import <AFNetworking/AFNetworking.h>
 
 NSString * const TMLAPIOptionsLocale = @"locale";
@@ -49,6 +50,9 @@ NSString * const TMLAPIOptionsIncludeDefinition = @"definition";
 NSString * const TMLAPIOptionsSourceKeys = @"source_keys";
 NSString * const TMLAPIOptionsApplicationId = @"app_id";
 NSString * const TMLAPIOptionsPage = @"page";
+
+typedef void (^TMLAPIRequestRetryCompletion)(BOOL shouldRetry);
+typedef void (^AccessTokenRefreshCompletion)(BOOL succeeded, NSString *accessToken);
 
 @interface TML(Private)
 - (void)showError:(NSError *)error;
@@ -60,6 +64,9 @@ NSString * const TMLAPIOptionsPage = @"page";
 
 @interface TMLAPIClient()
 @property (readwrite, nonatomic) NSString *applicationKey;
+@property (strong, nonatomic) NSMutableArray<TMLAPIRequestRetryCompletion> *requestsToRetry;
+@property (nonatomic) BOOL isRefreshingAccessToken;
+@property (strong, nonatomic) NSLock *lock;
 @end
 
 @implementation TMLAPIClient
@@ -72,8 +79,16 @@ NSString * const TMLAPIOptionsPage = @"page";
     if (self = [super initWithBaseURL:baseURL]) {
         self.applicationKey = applicationKey;
         self.accessToken = accessToken;
+        
+        [self reset];
     }
     return self;
+}
+
+- (void)reset {
+    self.isRefreshingAccessToken = NO;
+    self.requestsToRetry = [@[] mutableCopy];
+    self.lock = [[NSLock alloc] init];
 }
 
 #pragma mark - URL Construction
@@ -86,97 +101,125 @@ NSString * const TMLAPIOptionsPage = @"page";
 }
 
 #pragma mark - Making Requests
-- (void) get:(NSString *)path
-  parameters:(NSDictionary *)parameters
- cachePolicy:(NSURLRequestCachePolicy)cachePolicy
-completionBlock:(TMLAPIResponseHandler)completionBlock
-{
-    if (_accessToken == nil) {
-        TMLWarn(@"Ignoring API GET request due to absent access token");
-        return;
+
+- (void)shouldRetryRequest:(TMLAPIRequest *)request completionBlock:(TMLAPIRequestRetryCompletion)completionBlock {
+    [self.lock lock];
+    
+    if ([request.response isKindOfClass:[NSHTTPURLResponse class]]) {
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)request.response;
+        
+        if (httpResponse.statusCode == 403) {
+            [self.requestsToRetry addObject:completionBlock];
+            
+            if (!self.isRefreshingAccessToken) {
+                __weak typeof(self)weakSelf = self;
+                
+                [weakSelf refreshAccessToken:^(BOOL succeeded, NSString *accessToken) {
+                    __strong typeof(self)strongSelf = weakSelf;
+                    
+                    [strongSelf.lock lock];
+                    
+                    strongSelf.accessToken = accessToken;
+                    
+                    for (TMLAPIRequestRetryCompletion completion in strongSelf.requestsToRetry) {
+                        completion(succeeded);
+                    }
+                    
+                    [strongSelf.requestsToRetry removeAllObjects];
+                    
+                    [strongSelf.lock unlock];
+                }];
+            }
+        } else {
+            completionBlock(false);
+        }
+    } else {
+        completionBlock(false);
     }
     
-    BOOL includeAllResults = [parameters[TMLAPIOptionsIncludeAll] boolValue];
-    NSDictionary *requestParameters = [self prepareAPIParameters:parameters];
-    [super get:path
-    parameters:requestParameters
-   cachePolicy:cachePolicy
-completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-    if (includeAllResults == YES
-        && error == nil
-        && apiResponse.paginated == YES
-        && apiResponse.currentPage < apiResponse.totalPages) {
-        NSMutableDictionary *newParams = [parameters mutableCopy];
-        newParams[TMLAPIOptionsPage] = @(apiResponse.currentPage + 1);
-        newParams[TMLAPIOptionsIncludeAll] = @(YES);
-        __block TMLAPIResponse *runningResponse = apiResponse;
-        [self get:path parameters:[newParams copy] cachePolicy:cachePolicy completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-            runningResponse = [runningResponse responseByMergingWithResponse:apiResponse];
-            if (completionBlock != nil) {
-                completionBlock(runningResponse, response, error);
-            }
-        }];
-    }
-    else if (completionBlock != nil) {
-        completionBlock(apiResponse, response, error);
-    }
-}];
+    [self.lock unlock];
 }
 
-- (void) post:(NSString *)path
-   parameters:(NSDictionary *)parameters
-  cachePolicy:(NSURLRequestCachePolicy)cachePolicy
-completionBlock:(TMLAPIResponseHandler)completionBlock
-{
-    if (_accessToken == nil) {
-        TMLWarn(@"Ignoring API GET request due to absent access token");
+- (void)refreshAccessToken:(AccessTokenRefreshCompletion)completionBlock {
+    if (self.isRefreshingAccessToken) {
         return;
     }
     
-    NSDictionary *requestParameters = [self prepareAPIParameters:parameters];
-    [super post:path
-     parameters:requestParameters
-    cachePolicy:cachePolicy
-completionBlock:completionBlock];
+    self.isRefreshingAccessToken = YES;
+    
+    TMLAuthorizationViewController *authController = [[TML sharedInstance] presentAuthorizationControllerForTokenRefresh];
+    authController.completion = ^(BOOL succeeded, NSString *accessToken) {
+        completionBlock(succeeded, accessToken);
+        
+        self.isRefreshingAccessToken = NO;
+    };
+}
+
+- (void)send:(TMLAPIRequest *)request completionBlock:(TMLAPIResponseHandler)completionBlock {
+    if ([request.method isEqualToString:@"GET"]) {
+        [super get:request.path parameters:[self prepareAPIParameters:request.parameters] completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+            [self handleResponse:apiResponse response:response error:error request:request completionBlock:completionBlock];
+        }];
+    } else if ([request.method isEqualToString:@"POST"]) {
+        [super post:request.path parameters:[self prepareAPIParameters:request.parameters] completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+            [self handleResponse:apiResponse response:response error:error request:request completionBlock:completionBlock];
+        }];
+    }
+}
+
+- (void)handleResponse:(TMLAPIResponse *)apiResponse response:(NSURLResponse *)response error:(NSError *)error request:(TMLAPIRequest *)request completionBlock:(TMLAPIResponseHandler)completionBlock {
+    request.response = response;
+    
+    __weak typeof(self)weakSelf = self;
+    
+    [weakSelf shouldRetryRequest:request completionBlock:^(BOOL shouldRetry) {
+        __strong typeof(self)strongSelf = weakSelf;
+        
+        if (!shouldRetry) {
+            completionBlock(apiResponse, response, error);
+            
+            return;
+        }
+        
+        [strongSelf send:request completionBlock:completionBlock];
+    }];
 }
 
 #pragma mark - Methods
 
 - (void)getUserInfo:(void (^)(TMLUser *, TMLAPIResponse *, NSError *))completionBlock {
     NSString *path = @"users/me";
-    [self get:path
-   parameters:nil
-completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-    if (completionBlock != nil) {
-        TMLUser *user = nil;
-        if (apiResponse != nil) {
-            NSDictionary *info = apiResponse.userInfo;
-            if (info != nil) {
-                user = [TMLAPISerializer materializeObject:info withClass:[TMLUser class]];
+    [self send:[TMLAPIRequest requestWithMethod:@"GET" path:path parameters:nil] completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+        if (completionBlock != nil) {
+            TMLUser *user = nil;
+            if (apiResponse != nil) {
+                NSDictionary *info = apiResponse.userInfo;
+                if (info != nil) {
+                    user = [TMLAPISerializer materializeObject:info withClass:[TMLUser class]];
+                }
             }
+            completionBlock(user, apiResponse, error);
         }
-        completionBlock(user, apiResponse, error);
-    }
-}];
+    }];
 }
 
 - (void)getTranslatorInfo:(void (^)(TMLTranslator *, TMLAPIResponse *, NSError *))completionBlock {
     NSString *path = [NSString stringWithFormat:@"%@/translators/me", [self applicationProjectPath]];
-    [self get:path
-   parameters:nil
-completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-    if (completionBlock != nil) {
-        TMLTranslator *translator = nil;
-        if (apiResponse != nil) {
-            NSDictionary *info = apiResponse.userInfo;
-            if (info != nil) {
-                translator = [TMLAPISerializer materializeObject:[info objectForKey:@"translator"] withClass:[TMLTranslator class]];
-                translator.role = [info objectForKey:@"role"];
+    [self send:[TMLAPIRequest requestWithMethod:@"GET" path:path parameters:nil] completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+        if (completionBlock != nil) {
+            TMLTranslator *translator = nil;
+            if (apiResponse != nil) {
+                NSDictionary *info = apiResponse.userInfo;
+                if (info != nil) {
+                    translator = [TMLAPISerializer materializeObject:[info objectForKey:@"translator"] withClass:[TMLTranslator class]];
+                    if (![translator isKindOfClass:[NSNull class]]) {
+                        translator.role = [info objectForKey:@"role"];
+                    }
+                }
             }
+            completionBlock(translator, apiResponse, error);
         }
-        completionBlock(translator, apiResponse, error);
-    }
-}];
+    }];
 }
 
 - (NSString *)applicationProjectPath {
@@ -207,26 +250,22 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
     
     params[TMLAPIOptionsLocale] = locale;
     
-    [self get:path
-   parameters:params
-completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-    NSDictionary *translations = nil;
-    if ([apiResponse isSuccessfulResponse] == YES) {
-        translations = [apiResponse resultsAsTranslations];
-        NSArray *translationObjects = [[translations allValues] valueForKeyPath:@"@unionOfArrays.self"];
-        for (TMLTranslation *translation in translationObjects) {
-            translation.locale = locale;
+    [self send:[TMLAPIRequest requestWithMethod:@"GET" path:path parameters:params] completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+        NSDictionary *translations = nil;
+        if ([apiResponse isSuccessfulResponse] == YES) {
+            translations = [apiResponse resultsAsTranslations];
+            NSArray *translationObjects = [[translations allValues] valueForKeyPath:@"@unionOfArrays.self"];
+            for (TMLTranslation *translation in translationObjects) {
+                translation.locale = locale;
+            }
         }
-    }
-    else {
-        TMLError(@"Error fetching translations for locale: %@; source: %@. Error: %@", locale, source, error);
-    }
-    if (completionBlock != nil) {
-        completionBlock(translations, apiResponse, error);
-    }
-}
-     
-     ];
+        else {
+            TMLError(@"Error fetching translations for locale: %@; source: %@. Error: %@", locale, source, error);
+        }
+        if (completionBlock != nil) {
+            completionBlock(translations, apiResponse, error);
+        }
+    }];
 }
 
 - (void)getCurrentApplicationWithOptions:(NSDictionary *)options
@@ -247,107 +286,97 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
         [params removeObjectForKey:TMLAPIOptionsIncludeDefinition];
     }
     
-    [self get:path
-             parameters:params
-        completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-            TMLApplication *app = nil;
-            if ([apiResponse isSuccessfulResponse] == YES) {
-                NSMutableDictionary *userInfo = [apiResponse.userInfo mutableCopy];
-                NSDictionary *extensions = userInfo[@"extensions"];
-                if (TMLIsNilNull(extensions) == NO) {
-                    NSDictionary *langExtensions = extensions[@"languages"];
-                    NSArray *langs = userInfo[@"languages"];
-                    if (langExtensions.count > 0 && langs.count > 0) {
-                        NSMutableArray *newLanguages = [NSMutableArray array];
-                        for (NSDictionary *lang in langs) {
-                            NSString *locale = lang[@"locale"];
-                            NSDictionary *langExtension = nil;
-                            if (TMLIsNilNull(locale) == NO) {
-                                langExtension = langExtensions[locale];
-                            }
-                            if (TMLIsNilNull(langExtension) == NO) {
-                                NSMutableDictionary *newLang = [lang mutableCopy];
-                                newLang[@"cases"] = langExtension[@"cases"];
-                                newLang[@"contexts"] = langExtension[@"contexts"];
-                                [newLanguages addObject:[newLang copy]];
-                            }
-                            else {
-                                [newLanguages addObject:lang];
-                            }
+    [self send:[TMLAPIRequest requestWithMethod:@"GET" path:path parameters:params] completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+        TMLApplication *app = nil;
+        if ([apiResponse isSuccessfulResponse] == YES) {
+            NSMutableDictionary *userInfo = [apiResponse.userInfo mutableCopy];
+            NSDictionary *extensions = userInfo[@"extensions"];
+            if (TMLIsNilNull(extensions) == NO) {
+                NSDictionary *langExtensions = extensions[@"languages"];
+                NSArray *langs = userInfo[@"languages"];
+                if (langExtensions.count > 0 && langs.count > 0) {
+                    NSMutableArray *newLanguages = [NSMutableArray array];
+                    for (NSDictionary *lang in langs) {
+                        NSString *locale = lang[@"locale"];
+                        NSDictionary *langExtension = nil;
+                        if (TMLIsNilNull(locale) == NO) {
+                            langExtension = langExtensions[locale];
                         }
-                        userInfo[@"languages"] = [newLanguages copy];
+                        if (TMLIsNilNull(langExtension) == NO) {
+                            NSMutableDictionary *newLang = [lang mutableCopy];
+                            newLang[@"cases"] = langExtension[@"cases"];
+                            newLang[@"contexts"] = langExtension[@"contexts"];
+                            [newLanguages addObject:[newLang copy]];
+                        }
+                        else {
+                            [newLanguages addObject:lang];
+                        }
                     }
+                    userInfo[@"languages"] = [newLanguages copy];
                 }
-                app = [TMLAPISerializer materializeObject:[userInfo copy]
-                                                withClass:[TMLApplication class]];
             }
-            else {
-                TMLError(@"Error fetching current project description: %@", error);
-            }
-            if (completionBlock != nil) {
-                completionBlock(app, apiResponse, error);
-            }
+            app = [TMLAPISerializer materializeObject:[userInfo copy]
+                                            withClass:[TMLApplication class]];
         }
-     ];
+        else {
+            TMLError(@"Error fetching current project description: %@", error);
+        }
+        if (completionBlock != nil) {
+            completionBlock(app, apiResponse, error);
+        }
+    }];
 }
 
 - (void)getSources:(NSDictionary *)options
    completionBlock:(void (^)(NSArray *, TMLAPIResponse *response, NSError *))completionBlock
 {
-    [self get:[NSString stringWithFormat:@"%@/sources", [self applicationProjectPath]]
-   parameters:options
-completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-    NSArray *sources = nil;
-    if (apiResponse.successfulResponse == YES) {
-        sources = [TMLAPISerializer materializeObject:apiResponse.results
-                                            withClass:[TMLSource class]];
-    }
-    TMLDebug(@"Got %i total sources via API", sources.count);
-    if (completionBlock != nil) {
-        completionBlock(sources, apiResponse, error);
-    }
-}];
+    [self send:[TMLAPIRequest requestWithMethod:@"GET" path:[NSString stringWithFormat:@"%@/sources", [self applicationProjectPath]] parameters:options] completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+        NSArray *sources = nil;
+        if (apiResponse.successfulResponse == YES) {
+            sources = [TMLAPISerializer materializeObject:apiResponse.results
+                                                withClass:[TMLSource class]];
+        }
+        TMLDebug(@"Got %i total sources via API", sources.count);
+        if (completionBlock != nil) {
+            completionBlock(sources, apiResponse, error);
+        }
+    }];
 }
 
 - (void)getLanguageForLocale:(NSString *)locale
                      options:(NSDictionary *)options
              completionBlock:(void (^)(TMLLanguage *, TMLAPIResponse *response, NSError *))completionBlock
 {
-    [self get: [NSString stringWithFormat:@"%@/languages/%@", [self applicationProjectPath], locale]
-   parameters:options
-completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-    TMLLanguage *lang = nil;
-    if ([apiResponse isSuccessfulResponse] == YES) {
-        lang = [TMLAPISerializer materializeObject:apiResponse.userInfo
-                                         withClass:[TMLLanguage class]];
-    }
-    else {
-        TMLError(@"Error fetching languages description for locale: %@. Error: %@", locale, error);
-    }
-    if (completionBlock != nil) {
-        completionBlock(lang, apiResponse, error);
-    }
-}
-     ];
+    [self send:[TMLAPIRequest requestWithMethod:@"GET" path:[NSString stringWithFormat:@"%@/languages/%@", [self applicationProjectPath], locale] parameters:options] completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+        TMLLanguage *lang = nil;
+        if ([apiResponse isSuccessfulResponse] == YES) {
+            lang = [TMLAPISerializer materializeObject:apiResponse.userInfo
+                                             withClass:[TMLLanguage class]];
+        }
+        else {
+            TMLError(@"Error fetching languages description for locale: %@. Error: %@", locale, error);
+        }
+        if (completionBlock != nil) {
+            completionBlock(lang, apiResponse, error);
+        }
+    }];
 }
 
 - (void)getProjectLanguagesWithOptions:(NSDictionary *)options
                        completionBlock:(void (^)(NSArray*, TMLAPIResponse *response, NSError *))completionBlock
 {
-    [self get:[NSString stringWithFormat:@"%@/languages", [self applicationProjectPath]]
-   parameters:options
-completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-    NSArray *languages = nil;
-    if ([apiResponse isSuccessfulResponse] == YES) {
-        languages = [apiResponse resultsAsLanguages];
-    }
-    else {
-        TMLError(@"Error fetching descriptions of all languages for current project: %@", error);
-    }
-    if (completionBlock != nil) {
-        completionBlock(languages, apiResponse, error);
-    }
-}];
+    [self send:[TMLAPIRequest requestWithMethod:@"GET" path:[NSString stringWithFormat:@"%@/languages", [self applicationProjectPath]] parameters:options] completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+        NSArray *languages = nil;
+        if ([apiResponse isSuccessfulResponse] == YES) {
+            languages = [apiResponse resultsAsLanguages];
+        }
+        else {
+            TMLError(@"Error fetching descriptions of all languages for current project: %@", error);
+        }
+        if (completionBlock != nil) {
+            completionBlock(languages, apiResponse, error);
+        }
+    }];
 }
 
 - (void)getTranslationKeysWithOptions:(NSDictionary *)options
@@ -357,20 +386,19 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
     if (params == nil) {
         params = [NSMutableDictionary dictionary];
     }
-    [self get:[NSString stringWithFormat:@"%@/translation_keys", [self applicationProjectPath]]
-   parameters:params
-completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-    NSDictionary *translationKeys = nil;
-    if ([apiResponse isSuccessfulResponse] == YES) {
-        translationKeys = [apiResponse resultsAsTranslationKeys];
-    }
-    else {
-        TMLError(@"Error fetching translation keys for current project: %@", error);
-    }
-    if (completionBlock != nil) {
-        completionBlock(translationKeys, apiResponse, error);
-    }
-}];
+    
+    [self send:[TMLAPIRequest requestWithMethod:@"GET" path:[NSString stringWithFormat:@"%@/translation_keys", [self applicationProjectPath]] parameters:params] completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+        NSDictionary *translationKeys = nil;
+        if ([apiResponse isSuccessfulResponse] == YES) {
+            translationKeys = [apiResponse resultsAsTranslationKeys];
+        }
+        else {
+            TMLError(@"Error fetching translation keys for current project: %@", error);
+        }
+        if (completionBlock != nil) {
+            completionBlock(translationKeys, apiResponse, error);
+        }
+    }];
 }
 
 - (void)registerTranslationKeysBySourceKey:(NSDictionary *)keysInfo
@@ -390,17 +418,15 @@ completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError 
     
     NSString *path = [NSString stringWithFormat:@"%@/translation_keys", [self applicationProjectPath]];
     
-    [self post:path
-    parameters:@{TMLAPIOptionsSourceKeys: sourceKeysList, TMLAPIOptionsApplicationId: self.applicationKey}
-completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
-    BOOL success = [apiResponse isSuccessfulResponse];
-    if (success == NO) {
-        TMLError(@"Error submitting translation keys by source: %@", error);
-    }
-    if (completionBlock != nil) {
-        completionBlock(success, error);
-    }
-}];
+    [self send:[TMLAPIRequest requestWithMethod:@"POST" path:path parameters:@{TMLAPIOptionsSourceKeys: sourceKeysList, TMLAPIOptionsApplicationId: self.applicationKey}] completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+        BOOL success = [apiResponse isSuccessfulResponse];
+        if (success == NO) {
+            TMLError(@"Error submitting translation keys by source: %@", error);
+        }
+        if (completionBlock != nil) {
+            completionBlock(success, error);
+        }
+    }];
 }
 
 - (void)postScreenShot: (TMLScreenShot *)screenShot

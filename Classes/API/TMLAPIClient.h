@@ -31,7 +31,7 @@
 #import <Foundation/Foundation.h>
 #import "TMLBasicAPIClient.h"
 
-@class TMLAPIResponse, TMLSource, TMLApplication, TMLUser, TMLScreenShot;
+@class TMLAPIRequest, TMLAPIResponse, TMLSource, TMLApplication, TMLUser, TMLScreenShot;
 
 extern NSString * const TMLAPIOptionsLocale;
 extern NSString * const TMLAPIOptionsIncludeAll;
@@ -45,6 +45,8 @@ extern NSString * const TMLAPIOptionsPage;
 - (id) initWithBaseURL:(NSURL *)url
         applicationKey:(NSString *)applicationKey
            accessToken:(NSString *)accessToken;
+
+- (void)reset;
 
 #pragma mark - Methods
 

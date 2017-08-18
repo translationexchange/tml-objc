@@ -107,8 +107,8 @@
 }
 
 -(IBAction)dismiss:(id)sender {
-    [[TML sharedInstance] reloadLocalizationData];
     [self dismissViewControllerAnimated:YES completion:nil];
+    [[TML sharedInstance] reloadTranslationDataForCurrentLocale];
 }
 
 - (IBAction)reload:(id)sender {
@@ -140,7 +140,7 @@
     TMLTranslation *translation = [TMLTranslation translationWithKey:key locale:locale label:label];
     [tml addTranslation:translation locale:locale];
     [tml updateReusableTMLStrings];
-    [tml reloadLocalizationData];
+    [tml reloadTranslationDataForCurrentLocale];
 }
 
 @end

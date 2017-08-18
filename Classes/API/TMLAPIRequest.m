@@ -28,37 +28,23 @@
  *  THE SOFTWARE.
  */
 
-#import <UIKit/UIKit.h>
-#import "TMLAuthorizationController.h"
-#import "TMLWebViewController.h"
+#import "TMLAPIRequest.h"
 
-extern NSString * const TMLAuthorizationAccessTokenKey;
-extern NSString * const TMLAuthorizationUserKey;
-extern NSString * const TMLAuthorizationErrorDomain;
+@implementation TMLAPIRequest
 
-typedef NS_ENUM(NSInteger, TMLAuthorizationErrorCode) {
-    TMLAuthorizationUnknownError = 0,
-    TMLAuthorizationUnexpectedResponseError
-};
+#pragma mark - Init
 
-typedef void (^TMLAuthorizationViewControllerCompletion)(BOOL succeeded, NSString *accessToken);
+- (instancetype)initWithMethod:(NSString *)method path:(NSString *)path parameters:(NSDictionary *)parameters {
+    if (self = [super init]) {
+        self.method = method;
+        self.path = path;
+        self.parameters = parameters;
+    }
+    return self;
+}
 
-@protocol TMLAuthorizationViewControllerDelegate;
++ (instancetype)requestWithMethod:(NSString *)method path:(NSString *)path parameters:(NSDictionary *)parameters {
+    return [[TMLAPIRequest alloc] initWithMethod:method path:path parameters:parameters];
+}
 
-@interface TMLAuthorizationViewController : TMLWebViewController
-@property (weak, nonatomic) id<TMLAuthorizationViewControllerDelegate> delegate;
-@property (strong, nonatomic) TMLAuthorizationViewControllerCompletion completion;
-@property (nonatomic) BOOL isRefreshingToken;
-
-- (void)authorize;
-- (void)deauthorize;
-@end
-
-@protocol TMLAuthorizationViewControllerDelegate <NSObject>
-@optional
-- (void) authorizationViewController:(TMLAuthorizationViewController *)controller
-                        didGrantAuthorization:(NSDictionary *)userInfo;
-- (void) authorizationViewController:(TMLAuthorizationViewController *)controller
-                  didFailToAuthorize:(NSError *)error;
-- (void) authorizationViewControllerDidRevokeAuthorization:(TMLAuthorizationViewController *)controller;
 @end
