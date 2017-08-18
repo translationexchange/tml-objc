@@ -196,7 +196,7 @@
         return;
     }
     
-    NSMutableDictionary *addedTranslationKeys = self.addedTranslationKeys;
+    NSMutableDictionary *addedTranslationKeys = [self.addedTranslationKeys mutableCopy];
     if (addedTranslationKeys == nil) {
         addedTranslationKeys = [NSMutableDictionary dictionary];
     }
@@ -207,7 +207,7 @@
             effectiveSourceKey = [[TML sharedInstance] currentSource];
         }
         
-        NSMutableSet *keys = addedTranslationKeys[effectiveSourceKey];
+        NSMutableSet *keys = [addedTranslationKeys[effectiveSourceKey] mutableCopy];
         if (keys == nil) {
             keys = [NSMutableSet set];
         }
@@ -216,7 +216,6 @@
         addedTranslationKeys[effectiveSourceKey] = keys;
         self.addedTranslationKeys = addedTranslationKeys;
     }
-    
 }
 
 - (void)removeAddedTranslationKeys:(NSDictionary *)translationKeys {
@@ -236,8 +235,7 @@
 }
 
 - (void)setAddedTranslationKeys:(NSMutableDictionary *)addedTranslationKeys {
-    if (_addedTranslationKeys == addedTranslationKeys
-        || [_addedTranslationKeys isEqualToDictionary:addedTranslationKeys] == YES) {
+    if ([_addedTranslationKeys isEqualToDictionary:addedTranslationKeys] == YES) {
         return;
     }
     _addedTranslationKeys = addedTranslationKeys;
