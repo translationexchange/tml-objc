@@ -28,9 +28,9 @@
  *  THE SOFTWARE.
  */
 
-framework module TMLKit {
-    umbrella header "TMLKit.h"
-    header "TML+NSLocalizedString.h"
-    export *
-    module * { export * }
-}
+//framework module TMLKit {
+//    umbrella header "TMLKit.h"
+//    header "TML+NSLocalizedString.h"
+//    export *
+//    module * { export * }
+//}

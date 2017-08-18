@@ -9,7 +9,7 @@
 #import "TML.h"
 #import "TMLAPIClient.h"
 #import "TMLScreenShot.h"
-#import "TMLScreenshotViewController.h"
+#import "TMLScreenShotViewController.h"
 
 @interface TMLScreenShotViewController ()
 

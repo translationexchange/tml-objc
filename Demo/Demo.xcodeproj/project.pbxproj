@@ -27,7 +27,6 @@
 		C0B88A9E1E8484BB002FB8D8 /* blizzard.png in Resources */ = {isa = PBXBuildFile; fileRef = C0B88A9D1E8484BB002FB8D8 /* blizzard.png */; };
 		C0B88AA11E848C32002FB8D8 /* BlizzardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B88AA01E848C32002FB8D8 /* BlizzardViewController.m */; };
 		C0E2B6841F44C0A9004268AE /* TMLPrivateConfig-Production.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0E2B6831F44C0A9004268AE /* TMLPrivateConfig-Production.plist */; };
-		C0E2B6891F44C0C7004268AE /* TMLPrivateConfig-Sandbox.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0E2B6871F44C0C7004268AE /* TMLPrivateConfig-Sandbox.plist */; };
 		C0E2B68A1F44C0C7004268AE /* TMLPrivateConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0E2B6881F44C0C7004268AE /* TMLPrivateConfig.plist */; };
 		C42BB2761C1E2895005C0128 /* TMLKit.framework in Copy Bundle Frameworks */ = {isa = PBXBuildFile; fileRef = C4BC81121C100BD500B995ED /* TMLKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C42BB3381C1E37D8005C0128 /* arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = C42BB3321C1E37D8005C0128 /* arrow_down.png */; };
@@ -116,9 +115,8 @@
 		C0B88A9D1E8484BB002FB8D8 /* blizzard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blizzard.png; sourceTree = "<group>"; };
 		C0B88A9F1E848C32002FB8D8 /* BlizzardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BlizzardViewController.h; sourceTree = "<group>"; };
 		C0B88AA01E848C32002FB8D8 /* BlizzardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BlizzardViewController.m; sourceTree = "<group>"; };
-		C0E2B6831F44C0A9004268AE /* TMLPrivateConfig-Production.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TMLPrivateConfig-Production.plist"; sourceTree = "<group>"; };
-		C0E2B6871F44C0C7004268AE /* TMLPrivateConfig-Sandbox.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TMLPrivateConfig-Sandbox.plist"; sourceTree = "<group>"; };
-		C0E2B6881F44C0C7004268AE /* TMLPrivateConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TMLPrivateConfig.plist; sourceTree = "<group>"; };
+		C0E2B6831F44C0A9004268AE /* TMLPrivateConfig-Production.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "TMLPrivateConfig-Production.plist"; path = "Demo/TMLPrivateConfig-Production.plist"; sourceTree = "<group>"; };
+		C0E2B6881F44C0C7004268AE /* TMLPrivateConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = TMLPrivateConfig.plist; path = Demo/TMLPrivateConfig.plist; sourceTree = "<group>"; };
 		C42BB3321C1E37D8005C0128 /* arrow_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow_down.png; sourceTree = "<group>"; };
 		C42BB3331C1E37D8005C0128 /* Icon-40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-40@2x.png"; sourceTree = "<group>"; };
 		C42BB3341C1E37D8005C0128 /* Icon-60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-60@2x.png"; sourceTree = "<group>"; };
@@ -157,9 +155,9 @@
 		C42BB35E1C1E37F0005C0128 /* TMLSampleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLSampleTableViewCell.m; sourceTree = "<group>"; };
 		C42BB35F1C1E37F0005C0128 /* TMLTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLTableViewCell.h; sourceTree = "<group>"; };
 		C42BB3601C1E37F0005C0128 /* TMLTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTableViewCell.m; sourceTree = "<group>"; };
-		C42C56331BF31A6600207911 /* TMLPrivateConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLPrivateConfig.h; sourceTree = "<group>"; };
+		C42C56331BF31A6600207911 /* TMLPrivateConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TMLPrivateConfig.h; path = Demo/TMLPrivateConfig.h; sourceTree = "<group>"; };
 		C4BC810C1C100BD500B995ED /* TMLKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TMLKit.xcodeproj; path = ../TMLKit/TMLKit.xcodeproj; sourceTree = "<group>"; };
-		C4D231821DA084A000F29CA0 /* Demo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Demo.entitlements; sourceTree = "<group>"; };
+		C4D231821DA084A000F29CA0 /* Demo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Demo.entitlements; path = Demo/Demo.entitlements; sourceTree = "<group>"; };
 		EA8DF5C57FC1739108F0ADB8 /* Pods-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -185,6 +183,10 @@
 			children = (
 				C4BC810C1C100BD500B995ED /* TMLKit.xcodeproj */,
 				4C4233EE18B9B38700B76555 /* Demo */,
+				C0E2B6881F44C0C7004268AE /* TMLPrivateConfig.plist */,
+				C0E2B6831F44C0A9004268AE /* TMLPrivateConfig-Production.plist */,
+				C42C56331BF31A6600207911 /* TMLPrivateConfig.h */,
+				C4D231821DA084A000F29CA0 /* Demo.entitlements */,
 				4C4233E718B9B38700B76555 /* Frameworks */,
 				4C4233E618B9B38700B76555 /* Products */,
 				4CFA53171928466D006E1B43 /* Configuration */,
@@ -217,15 +219,9 @@
 		4C4233EE18B9B38700B76555 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				C0E2B6871F44C0C7004268AE /* TMLPrivateConfig-Sandbox.plist */,
-				C0E2B6881F44C0C7004268AE /* TMLPrivateConfig.plist */,
-				C0E2B6831F44C0A9004268AE /* TMLPrivateConfig-Production.plist */,
-				C42C56331BF31A6600207911 /* TMLPrivateConfig.h */,
-				C4D231821DA084A000F29CA0 /* Demo.entitlements */,
 				C42BB33E1C1E37F0005C0128 /* Classes */,
 				4C4233EF18B9B38700B76555 /* Supporting Files */,
-				C4D231821DA084A000F29CA0 /* Demo.entitlements */,
-				C42C56331BF31A6600207911 /* TMLPrivateConfig.h */,
+				4C7A871218BD354100C2375D /* Assets */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -369,6 +365,7 @@
 				C4FA31FC1C506EA2001902EB /* Generate TMLPrivateConfig.h */,
 				4C4233E118B9B38700B76555 /* Sources */,
 				4C4233E218B9B38700B76555 /* Frameworks */,
+				4C4233E318B9B38700B76555 /* Resources */,
 				C4CF54E21C10170200EC39CC /* Copy Bundle Frameworks */,
 				43A70564205414DFC5E5FF4E /* [CP] Embed Pods Frameworks */,
 				3B74167B8730B700CF4B3161 /* [CP] Copy Pods Resources */,
@@ -463,11 +460,9 @@
 				C42BB3391C1E37D8005C0128 /* Icon-40@2x.png in Resources */,
 				C0B833781E82E4FF00D0EC23 /* netatmo2.jpeg in Resources */,
 				C42BB3381C1E37D8005C0128 /* arrow_down.png in Resources */,
-				C00484281F4683EB00F6665C /* TMLPrivateConfig.plist in Resources */,
 				4C4233FC18B9B38700B76555 /* Main.storyboard in Resources */,
 				4CFA531419284666006E1B43 /* Rakefile in Resources */,
 				C4FCD3A51C10075C00D723BC /* (null) in Resources */,
-				C0E2B6891F44C0C7004268AE /* TMLPrivateConfig-Sandbox.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

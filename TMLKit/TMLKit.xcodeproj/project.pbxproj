@@ -295,7 +295,7 @@
 		7DD4AA1189309754FD897BCC /* Pods-TMLKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMLKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-TMLKit/Pods-TMLKit.release.xcconfig"; sourceTree = "<group>"; };
 		9C4DCAD61B82C00F44444A8C /* libPods-TMLKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TMLKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BACE78FD18874EB6A192BC4E /* Pods-TMLKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMLKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TMLKitTests/Pods-TMLKitTests.debug.xcconfig"; sourceTree = "<group>"; };
-		C00484251F46551800F6665C /* TMLPrivateConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TMLPrivateConfig.plist; sourceTree = "<group>"; };
+		C0E2B68B1F44C11F004268AE /* TMLPrivateConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TMLPrivateConfig.plist; sourceTree = "<group>"; };
 		C42581E61C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplicationShortcutItem+TML.h"; sourceTree = "<group>"; };
 		C42581E71C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplicationShortcutItem+TML.m"; sourceTree = "<group>"; };
 		C42581F01C20FE4300BAE9A9 /* UIBarButtonItem+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIBarButtonItem+TML.h"; sourceTree = "<group>"; };
@@ -549,7 +549,7 @@
 				C4CF54DA1C100DDD00EC39CC /* libNVHTarGzip.a */,
 				C4CF54DC1C100DDD00EC39CC /* libPods-TMLKit.a */,
 				C4CF54DE1C100DDD00EC39CC /* libPods-TMLKitTests.a */,
-				C00484221F44D9B300F6665C /* libSAMKeychain.a */,
+				C4D64E891DB033A40044F250 /* libSAMKeychain.a */,
 				C4CF54E01C100DDD00EC39CC /* libSSZipArchive.a */,
 			);
 			name = Products;
@@ -580,13 +580,13 @@
 		C4FCD25A1C0FC7A200D723BC /* TMLKit */ = {
 			isa = PBXGroup;
 			children = (
-				C0E2B68B1F44C11F004268AE /* TMLPrivateConfig.plist */,
-				C4FA31FD1C5078D9001902EB /* TMLPrivateConfig.h */,
 				C4FCD2721C0FC7F200D723BC /* Classes */,
 				C4FCD25B1C0FC7A200D723BC /* TMLKit.h */,
 				C474362A1CD0745A002A09F5 /* module.modulemap */,
 				C4FCD25D1C0FC7A200D723BC /* Info.plist */,
 				C4FCD3431C0FCB1B00D723BC /* TMLKit-Prefix.pch */,
+				C0E2B68B1F44C11F004268AE /* TMLPrivateConfig.plist */,
+				C4FA31FD1C5078D9001902EB /* TMLPrivateConfig.h */,
 			);
 			path = TMLKit;
 			sourceTree = "<group>";
@@ -611,8 +611,8 @@
 				C4FCD2B01C0FC7F200D723BC /* Language */,
 				C4FCD2BB1C0FC7F200D723BC /* Rules Engine */,
 				C4FCD2C91C0FC7F200D723BC /* Tokenizers */,
-				C4FCD2DB1C0FC7F200D723BC /* Translations */,
 				C4FCD2D41C0FC7F200D723BC /* Tokens */,
+				C4FCD2DB1C0FC7F200D723BC /* Translations */,
 				C4FCD2C21C0FC7F200D723BC /* TML.h */,
 				C4FCD2C31C0FC7F200D723BC /* TML.m */,
 				C4FCD2C01C0FC7F200D723BC /* TML+NSLocalizedString.h */,
@@ -1228,7 +1228,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C00484261F46551800F6665C /* TMLPrivateConfig.plist in Resources */,
 				C4FCD39F1C10012500D723BC /* en.json in Resources */,
 				C0E2B68C1F44C11F004268AE /* TMLPrivateConfig.plist in Resources */,
 			);
