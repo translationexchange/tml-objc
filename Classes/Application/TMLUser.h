@@ -34,7 +34,6 @@
 
 extern NSString * const TMLUserGenderKey;
 extern NSString * const TMLUserLocaleKey;
-extern NSString * const TMLUserRoleKey;
 extern NSString * const TMLUserTranslatorKey;
 
 @class TMLTranslator;
@@ -42,6 +41,5 @@ extern NSString * const TMLUserTranslatorKey;
 @interface TMLUser : TMLBasicUser
 @property (strong, nonatomic) NSString *gender;
 @property (strong, nonatomic) NSString *locale;
-@property (strong, nonatomic) NSString *role;
 @property (strong, nonatomic) TMLTranslator *translator;
 @end

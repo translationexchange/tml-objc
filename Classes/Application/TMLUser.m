@@ -34,7 +34,6 @@
 
 NSString * const TMLUserGenderKey = @"gender";
 NSString * const TMLUserLocaleKey = @"locale";
-NSString * const TMLUserRoleKey = @"role";
 NSString * const TMLUserTranslatorKey = @"translator";
 
 @implementation TMLUser
@@ -43,7 +42,6 @@ NSString * const TMLUserTranslatorKey = @"translator";
     [super encodeWithCoder:aCoder];
     [aCoder encodeObject:self.gender forKey:TMLUserGenderKey];
     [aCoder encodeObject:self.locale forKey:TMLUserLocaleKey];
-    [aCoder encodeObject:self.role forKey:TMLUserRoleKey];
     [aCoder encodeObject:self.translator forKey:TMLUserTranslatorKey];
 }
 

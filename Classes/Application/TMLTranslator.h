@@ -37,6 +37,7 @@ extern NSString * const TMLTranslatorUserIDKey;
 extern NSString * const TMLTranslatorLevelKey;
 extern NSString * const TMLTranslatorRankKey;
 extern NSString * const TMLTranslatorVotingPowerKey;
+extern NSString * const TMLTranslatorRoleKey;
 
 @interface TMLTranslator : TMLBasicUser
 
@@ -45,6 +46,7 @@ extern NSString * const TMLTranslatorVotingPowerKey;
 @property (assign, nonatomic) NSInteger level;
 @property (assign, nonatomic) NSInteger rank;
 @property (assign, nonatomic) NSInteger votingPower;
+@property (strong, nonatomic) NSString *role;
 
 - (BOOL)isEqualToTranslator:(TMLTranslator *)translator;
 

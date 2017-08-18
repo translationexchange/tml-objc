@@ -30,6 +30,7 @@
 
 #import <Foundation/Foundation.h>
 #import "TMLGlobals.h"
+#import "TMLTranslator.h"
 
 @interface TMLConfiguration : NSObject
 
@@ -50,6 +51,8 @@
 @property(nonatomic, strong) NSString * _Nullable defaultLocale;
 
 @property(nonatomic, strong) NSString * _Nullable currentLocale;
+
+@property(nonatomic, readwrite) TMLTranslator * _Nullable currentTranslator;
 
 @property(nonatomic, strong) NSString * _Nullable previousLocale;
 

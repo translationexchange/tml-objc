@@ -36,6 +36,7 @@ NSString * const TMLTranslatorUserIDKey = @"user_id";
 NSString * const TMLTranslatorLevelKey = @"level";
 NSString * const TMLTranslatorRankKey = @"rank";
 NSString * const TMLTranslatorVotingPowerKey = @"voting_power";
+NSString * const TMLTranslatorRoleKey = @"role";
 
 @implementation TMLTranslator
 
@@ -43,7 +44,7 @@ NSString * const TMLTranslatorVotingPowerKey = @"voting_power";
     [super encodeWithCoder:aCoder];
     [aCoder encodeInteger:self.translatorID forKey:TMLTranslatorIDKey];
     [aCoder encodeInteger:self.userID forKey:TMLTranslatorUserIDKey];
-    
+    [aCoder encodeObject:self.role forKey:TMLTranslatorRoleKey];
     [aCoder encodeInteger:self.level forKey:TMLTranslatorLevelKey];
     [aCoder encodeInteger:self.rank forKey:TMLTranslatorRankKey];
     [aCoder encodeInteger:self.votingPower forKey:TMLTranslatorVotingPowerKey];
@@ -54,7 +55,7 @@ NSString * const TMLTranslatorVotingPowerKey = @"voting_power";
     
     self.translatorID = [aDecoder decodeIntegerForKey:TMLTranslatorIDKey];
     self.userID = [aDecoder decodeIntegerForKey:TMLTranslatorUserIDKey];
-    
+    self.role = [aDecoder decodeObjectForKey:TMLTranslatorRoleKey];
     self.level = [aDecoder decodeIntegerForKey:TMLTranslatorLevelKey];
     self.rank = [aDecoder decodeIntegerForKey:TMLTranslatorRankKey];
     self.votingPower = [aDecoder decodeIntegerForKey:TMLTranslatorVotingPowerKey];

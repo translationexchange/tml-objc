@@ -155,6 +155,7 @@ NSString * const TMLAuthorizationErrorDomain = @"TMLAuthorizationErrorDomain";
         }
         if (user != nil) {
             [self setAccessToken:accessToken forUser:user];
+            [TMLSharedConfiguration() setCurrentTranslator: user];
         }
         else {
             if (error == nil) {

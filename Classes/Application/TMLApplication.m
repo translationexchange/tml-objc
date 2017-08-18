@@ -204,15 +204,27 @@ NSString * const TMLApplicationMTCTranslationURLKey = @"mobile_translation_cente
                                           locale:(NSString *)locale
 {
     NSString *url = [self translationURLPattern];
+//    NSString *url = [NSString stringWithFormat:@"http://localhost:3013/#/projects/{project_key}/strings/{translation_key}?locale={locale}&role={role}&access_token={access_token}&translator_id={translator_id}"];
+    
     if (url == nil) {
         return nil;
     }
+
+    TMLTranslator *translator = TMLSharedConfiguration().currentTranslator;
+
+    if (translator == nil) {
+        return nil;
+    }
     
+    url = [url stringByReplacingOccurrencesOfString:@"{project_key}" withString:self.key];
     url = [url stringByReplacingOccurrencesOfString:@"{translation_key}" withString:key];
     url = [url stringByReplacingOccurrencesOfString:@"{locale}" withString:locale];
+    url = [url stringByReplacingOccurrencesOfString:@"{role}" withString: translator.role];
+    url = [url stringByReplacingOccurrencesOfString:@"{translator_id}" withString: [NSString stringWithFormat:@"%ld", (long)translator.translatorID]];
     url = [url stringByReplacingOccurrencesOfString:@"{access_token}" withString:TMLSharedConfiguration().accessToken];
-    url = [url stringByReplacingOccurrencesOfString:@"{app_id}" withString:self.key];
-    
+
+    TMLDebug(@"Opening translator at: %@", url);
+
     return [NSURL URLWithString:url];
 }
 
