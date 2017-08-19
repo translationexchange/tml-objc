@@ -389,7 +389,7 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 
 - (void)attemptToUpdateBundle {
     if ([self.currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
-        [(TMLAPIBundle *)self.currentBundle setNeedsSync];
+        [(TMLAPIBundle *)self.currentBundle pull];
     }
     else if ([self shouldCheckForBundleUpdate] == YES) {
         [self checkForBundleUpdate:YES completion:^(NSString *version, TMLBundle *bundle, NSError *error) {
@@ -406,7 +406,7 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 - (void) applicationDidBecomeActive:(NSNotification *)aNotification {
     TMLBundle *currentBundle = self.currentBundle;
     if ([currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
-        [(TMLAPIBundle *)currentBundle setNeedsSync];
+        [(TMLAPIBundle *)currentBundle pull];
     }
     else {
         [self attemptToUpdateBundle];
@@ -447,11 +447,10 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
         TMLApplication *newApplication = [bundle application];
         TMLInfo(@"Initializing from bundle: %@", bundle.version);
         self.application = newApplication;
-        if (bundle.availableLocales.count == 0
-            && [bundle isKindOfClass:[TMLAPIBundle class]] == YES) {
+        if (bundle.availableLocales.count == 0 && [bundle isKindOfClass:[TMLAPIBundle class]] == YES) {
             TMLAPIBundle *apiBundle = (TMLAPIBundle *)bundle;
-            if ([apiBundle isSyncing] == NO) {
-                [apiBundle setNeedsSync];
+            if ([apiBundle isPulling] == NO) {
+                [apiBundle pull];
             }
             updateReusableStrings = NO;
         }
@@ -486,14 +485,15 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
         return;
     }
     if ([_currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
-        [(TMLAPIBundle *)_currentBundle cancelSync];
+        [(TMLAPIBundle *)_currentBundle cancelPull];
+        [(TMLAPIBundle *)_currentBundle cancelPush];
     }
     _currentBundle = currentBundle;
     [self updateWithBundle:currentBundle];
     if ([currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
         TMLAPIBundle *apiBundle = (TMLAPIBundle *)currentBundle;
         apiBundle.syncEnabled = YES;
-        [apiBundle setNeedsSync];
+        [apiBundle pull];
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:TMLLocalizationDataChangedNotification object:nil];
 }
@@ -1537,7 +1537,7 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     else {
         finalize(YES);
         if ([ourBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
-            [(TMLAPIBundle *)ourBundle setNeedsSync];
+            [(TMLAPIBundle *)ourBundle pull];
         }
     }
 }
@@ -1598,14 +1598,14 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
 - (void)reloadLocalizationData {
     TMLBundle *ourBundle = self.currentBundle;
     if ([ourBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
-        [(TMLAPIBundle *)ourBundle setNeedsSync];
+        [(TMLAPIBundle *)ourBundle pull];
     }
 }
 
 - (void)reloadTranslationDataForCurrentLocale {
     TMLBundle *ourBundle = self.currentBundle;
     if ([ourBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
-        [(TMLAPIBundle *)ourBundle syncCurrentLocaleOnly];
+        [(TMLAPIBundle *)ourBundle pullCurrentLocaleOnly];
     }
 }
 

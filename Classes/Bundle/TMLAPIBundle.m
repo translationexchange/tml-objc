@@ -46,9 +46,11 @@
 @end
 
 @interface TMLAPIBundle() {
-    BOOL _needsSync;
-    NSMutableArray *_syncErrors;
-    NSInteger _syncOperationCount;
+    BOOL _needsPush;
+    NSMutableArray *_pullErrors;
+    NSMutableArray *_pushErrors;
+    NSInteger _pullOperationCount;
+    NSInteger _pushOperationCount;
 }
 @property (strong, nonatomic) NSArray *sources;
 @property (readwrite, nonatomic) NSArray *languages;
@@ -56,7 +58,8 @@
 @property (readwrite, nonatomic) NSDictionary *translations;
 @property (readwrite, nonatomic) NSDictionary *translationKeys;
 @property (readwrite, nonatomic) NSMutableDictionary *addedTranslationKeys;
-@property (strong, nonatomic) NSOperationQueue *syncQueue;
+@property (strong, nonatomic) NSOperationQueue *pullQueue;
+@property (strong, nonatomic) NSOperationQueue *pushQueue;
 @end
 
 @implementation TMLAPIBundle
@@ -246,7 +249,7 @@
     if (TMLSharedConfiguration().neverSubmitNewTranslationKeys == YES) {
         return;
     }
-    [self setNeedsSync];
+    [self setNeedsPush];
 }
 
 #pragma mark - Resource handling
@@ -277,73 +280,65 @@
     return (fileError != nil);
 }
 
-#pragma mark - Sync
+#pragma mark - Data Reset
 
-- (BOOL)isSyncing {
-    return _syncOperationCount > 0;
-}
-
--(void)setNeedsSync {
-    _needsSync = YES;
-    if (self.syncEnabled == NO) {
-        return;
-    }
-    [NSObject cancelPreviousPerformRequestsWithTarget:self
-                                             selector:@selector(sync)
-                                               object:nil];
+- (void)resetPullData {
+    NSDictionary *translationKeys = self.translationKeys;
     
-    NSTimeInterval delay = 0.;
-    NSArray *availableLocales = [self availableLocales];
-    if (availableLocales.count > 0
-        && [availableLocales containsObject:TMLCurrentLocale()] == YES) {
-        delay = 3.;
-    }
-    [self performSelector:@selector(sync)
-               withObject:nil
-               afterDelay:delay];
+    [super resetData];
+    
+    self.translationKeys = translationKeys;
 }
 
-- (NSOperationQueue *)syncQueue {
-    if (_syncQueue == nil) {
-        _syncQueue = [[NSOperationQueue alloc] init];
-    }
-    return _syncQueue;
+- (void)resetPushData {
+    self.translationKeys = nil;
 }
 
-- (void)addSyncOperation:(NSOperation *)syncOperation {
-    NSOperationQueue *syncQueue = self.syncQueue;
-    [syncQueue addOperation:syncOperation];
-    _syncOperationCount++;
-    if (_syncOperationCount == 1) {
+#pragma mark - Pulling Data
+
+- (NSOperationQueue *)pullQueue {
+    if (_pullQueue == nil) {
+        _pullQueue = [[NSOperationQueue alloc] init];
+    }
+    return _pullQueue;
+}
+
+- (BOOL)isPulling {
+    return _pullOperationCount > 0;
+}
+
+- (void)addPullOperation:(NSOperation *)pullOperation {
+    NSOperationQueue *pullQueue = self.pullQueue;
+    [pullQueue addOperation:pullOperation];
+    _pullOperationCount++;
+    if (_pullOperationCount == 1) {
         [self notifyBundleMutation:TMLDidStartSyncNotification
                             errors:nil];
     }
 }
 
-- (void)cancelSync {
-    if (_syncOperationCount == 0) {
+- (void)cancelPull {
+    if (_pullOperationCount == 0) {
         return;
     }
-    NSOperationQueue *syncQueue = self.syncQueue;
-    [syncQueue cancelAllOperations];
-    _syncOperationCount = 0;
+    NSOperationQueue *pullQueue = self.pullQueue;
+    [pullQueue cancelAllOperations];
+    _pullOperationCount = 0;
 }
 
-- (void)sync {
+- (void)pull {
     if (self.syncEnabled == NO) {
-        [self setNeedsSync];
         return;
     }
-    if (_syncOperationCount > 0) {
+    if (_pullOperationCount > 0) {
         return;
     }
     
-    _needsSync = NO;
+    NSOperationQueue *pullQueue = self.pullQueue;
+    pullQueue.suspended = YES;
     
-    NSOperationQueue *syncQueue = self.syncQueue;
-    syncQueue.suspended = YES;
+    [self pullMetaData];
     
-    [self syncMetaData];
     NSMutableArray *locales = [self.availableLocales mutableCopy];
     if (locales == nil) {
         locales = [NSMutableArray array];
@@ -360,23 +355,23 @@
     }
     
     if (locales.count > 0) {
-        [self syncLocales:locales];
+        [self pullLocales:locales];
     }
-    [self syncAddedTranslationKeys];
-    syncQueue.suspended = NO;
-}
-
-- (void)syncCurrentLocaleOnly {
-    NSString *currentLocale = TMLCurrentLocale();
-    [self syncLocales:@[currentLocale]];
     
-    self.syncQueue.suspended = NO;
+    pullQueue.suspended = NO;
 }
 
-- (void)syncMetaData {
+- (void)pullCurrentLocaleOnly {
+    NSString *currentLocale = TMLCurrentLocale();
+    [self pullLocales:@[currentLocale]];
+    
+    self.pullQueue.suspended = NO;
+}
+
+- (void)pullMetaData {
     TMLAPIClient *client = [[TML sharedInstance] apiClient];
     
-    [self addSyncOperation:[NSBlockOperation blockOperationWithBlock:^{
+    [self addPullOperation:[NSBlockOperation blockOperationWithBlock:^{
         [client getTranslatorInfo:^(TMLTranslator *translator, TMLAPIResponse *response, NSError *error) {
             NSError *fileError;
             if (translator != nil) {
@@ -390,12 +385,12 @@
                 [errors addObject:fileError];
             }
             
-            [self didFinishSyncOperationWithErrors:errors];
+            [self didFinishPullOperationWithErrors:errors];
         }];
         
     }]];
     
-    [self addSyncOperation:[NSBlockOperation blockOperationWithBlock:^{
+    [self addPullOperation:[NSBlockOperation blockOperationWithBlock:^{
         [client getCurrentApplicationWithOptions:@{TMLAPIOptionsIncludeDefinition: @YES}
                                  completionBlock:^(TMLApplication *application, TMLAPIResponse *response, NSError *error) {
                                      NSError *fileError;
@@ -416,11 +411,11 @@
                                          [errors addObject:fileError];
                                      }
                                      
-                                     [self didFinishSyncOperationWithErrors:errors];
+                                     [self didFinishPullOperationWithErrors:errors];
                                  }];
     }]];
     
-    [self addSyncOperation:[NSBlockOperation blockOperationWithBlock:^{
+    [self addPullOperation:[NSBlockOperation blockOperationWithBlock:^{
         [client getSources:nil
            completionBlock:^(NSArray *sources, TMLAPIResponse *response, NSError *error) {
                NSError *fileError;
@@ -439,11 +434,11 @@
                    [errors addObject:fileError];
                }
                
-               [self didFinishSyncOperationWithErrors:errors];
+               [self didFinishPullOperationWithErrors:errors];
            }];
     }]];
     
-    [self addSyncOperation:[NSBlockOperation blockOperationWithBlock:^{
+    [self addPullOperation:[NSBlockOperation blockOperationWithBlock:^{
         [client getTranslationKeysWithOptions:nil
                               completionBlock:^(NSDictionary *translationKeys, TMLAPIResponse *response, NSError *error) {
                                   NSError *fileError;
@@ -461,12 +456,12 @@
                                   if (fileError != nil) {
                                       [errors addObject:fileError];
                                   }
-                                  [self didFinishSyncOperationWithErrors:errors];
+                                  [self didFinishPullOperationWithErrors:errors];
                               }];
     }]];
 }
 
-- (void)syncLocales:(NSArray *)locales {
+- (void)pullLocales:(NSArray *)locales {
     if (locales.count == 0) {
         return;
     }
@@ -475,7 +470,7 @@
     for (NSString *aLocale in locales) {
         NSString *locale = aLocale;
         // fetch translation
-        [self addSyncOperation:[NSBlockOperation blockOperationWithBlock:^{
+        [self addPullOperation:[NSBlockOperation blockOperationWithBlock:^{
             [client getTranslationsForLocale:locale
                                       source:nil
                                      options:nil
@@ -498,12 +493,12 @@
                                  if (fileError != nil) {
                                      [errors addObject:fileError];
                                  }
-                                 [self didFinishSyncOperationWithErrors:errors];
+                                 [self didFinishPullOperationWithErrors:errors];
                              }];
         }]];
         
         // fetch language definition
-        [self addSyncOperation:[NSBlockOperation blockOperationWithBlock:^{
+        [self addPullOperation:[NSBlockOperation blockOperationWithBlock:^{
             [client getLanguageForLocale:locale
                                  options:@{TMLAPIOptionsIncludeDefinition: @YES}
                          completionBlock:^(TMLLanguage *language, TMLAPIResponse *response, NSError *error) {
@@ -525,20 +520,104 @@
                                  [errors addObject:fileError];
                              }
                              
-                             [self didFinishSyncOperationWithErrors:errors];
+                             [self didFinishPullOperationWithErrors:errors];
                          }];
         }]];
     }
 }
 
-- (void)syncAddedTranslationKeys {
+- (void)didFinishPullOperationWithErrors:(NSArray *)errors {
+    _pullOperationCount--;
+    if (_pullOperationCount < 0) {
+        TMLWarn(@"Unbalanced call to %s", __PRETTY_FUNCTION__);
+        _pullOperationCount = 0;
+    }
+    if (_pullErrors == nil) {
+        _pullErrors = [NSMutableArray array];
+    }
+    if (errors.count > 0) {
+        [_pullErrors addObjectsFromArray:errors];
+    }
+    
+    [self notifyBundleMutation:TMLLocalizationDataChangedNotification
+                        errors:errors];
+    
+    if (_pullOperationCount == 0) {
+        [self resetPullData];
+        [self notifyBundleMutation:TMLDidFinishSyncNotification
+                            errors:_pullErrors];
+    }
+}
+
+#pragma mark - Pushing Data
+
+- (NSOperationQueue *)pushQueue {
+    if (_pushQueue == nil) {
+        _pushQueue = [[NSOperationQueue alloc] init];
+    }
+    return _pushQueue;
+}
+
+- (BOOL)isPushing {
+    return _pushOperationCount > 0;
+}
+
+- (void)addPushOperation:(NSOperation *)pushOperation {
+    NSOperationQueue *pushQueue = self.pushQueue;
+    [pushQueue addOperation:pushOperation];
+    _pushOperationCount++;
+}
+
+- (void)cancelPush {
+    if (_pushOperationCount == 0) {
+        return;
+    }
+    NSOperationQueue *pushQueue = self.pushQueue;
+    [pushQueue cancelAllOperations];
+    _pushOperationCount = 0;
+}
+
+- (void)setNeedsPush {
+    _needsPush = YES;
+    if (self.syncEnabled == NO) {
+        return;
+    }
+    [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                             selector:@selector(push)
+                                               object:nil];
+    
+    NSTimeInterval delay = 3.;
+    
+    [self performSelector:@selector(push)
+               withObject:nil
+               afterDelay:delay];
+}
+
+- (void)push {
+    if (self.syncEnabled == NO) {
+        [self setNeedsPush];
+        return;
+    }
+    if (_pushOperationCount > 0) {
+        return;
+    }
+    
+    _needsPush = NO;
+    
+    NSOperationQueue *pushQueue = self.pushQueue;
+    pushQueue.suspended = YES;
+    [self pushAddedTranslationKeys];
+    pushQueue.suspended = NO;
+}
+
+- (void)pushAddedTranslationKeys {
     if (TMLSharedConfiguration().neverSubmitNewTranslationKeys == YES) {
         return;
     }
     if (_addedTranslationKeys.count == 0) {
         return;
     }
-    NSMutableDictionary *missingTranslations = self.addedTranslationKeys;
+    NSMutableDictionary *missingTranslations = [self.addedTranslationKeys mutableCopy];
     BOOL hasKeys = NO;
     for (NSString *source in missingTranslations) {
         NSArray *value = missingTranslations[source];
@@ -550,41 +629,34 @@
     if (hasKeys == NO) {
         return;
     }
-    [self addSyncOperation:[NSBlockOperation blockOperationWithBlock:^{
+    [self addPushOperation:[NSBlockOperation blockOperationWithBlock:^{
         [[[TML sharedInstance] apiClient] registerTranslationKeysBySourceKey:missingTranslations
                                                              completionBlock:^(BOOL success, NSError *error) {
                                                                  if (success == YES) {
                                                                      [self removeAddedTranslationKeys:missingTranslations];
                                                                  }
                                                                  NSArray *errors = (error != nil) ? @[error] : nil;
-                                                                 [self didFinishSyncOperationWithErrors:errors];
+                                                                 [self didFinishPushOperationWithErrors:errors];
                                                              }];
     }]];
 }
 
-- (void)didFinishSyncOperationWithErrors:(NSArray *)errors {
-    _syncOperationCount--;
-    if (_syncOperationCount < 0) {
+- (void)didFinishPushOperationWithErrors:(NSArray *)errors {
+    _pushOperationCount--;
+    if (_pushOperationCount < 0) {
         TMLWarn(@"Unbalanced call to %s", __PRETTY_FUNCTION__);
-        _syncOperationCount = 0;
+        _pushOperationCount = 0;
     }
-    if (_syncErrors == nil) {
-        _syncErrors = [NSMutableArray array];
+    if (_pushErrors == nil) {
+        _pushErrors = [NSMutableArray array];
     }
     if (errors.count > 0) {
-        [_syncErrors addObjectsFromArray:errors];
+        [_pushErrors addObjectsFromArray:errors];
     }
     
-    [self notifyBundleMutation:TMLLocalizationDataChangedNotification
-                        errors:errors];
-    
-    if (_syncOperationCount == 0) {
-        [self resetData];
-        if (_needsSync == YES) {
-            [self performSelector:@selector(sync) withObject:nil afterDelay:3.0];
-        }
-        [self notifyBundleMutation:TMLDidFinishSyncNotification
-                            errors:_syncErrors];
+    if (_pushOperationCount == 0) {
+        [self resetPushData];
+        [self performSelector:@selector(pull) withObject:nil afterDelay:3.0];
     }
 }
 

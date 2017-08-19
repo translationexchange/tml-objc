@@ -97,7 +97,7 @@
     
     TMLBundle *currentBundle = [[TML sharedInstance] currentBundle];
     if ([currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
-        [(TMLAPIBundle *)currentBundle syncMetaData];
+        [(TMLAPIBundle *)currentBundle pullMetaData];
     }
 }
 

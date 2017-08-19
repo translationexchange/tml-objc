@@ -38,11 +38,17 @@
                  forSource:(NSString *)sourceKey;
 
 @property(nonatomic, assign) BOOL syncEnabled;
-- (BOOL)isSyncing;
-- (void)setNeedsSync;
-- (void)sync;
-- (void)syncMetaData;
-- (void)syncCurrentLocaleOnly;
-- (void)cancelSync;
+
+- (BOOL)isPulling;
+
+- (void)pull;
+- (void)pullMetaData;
+- (void)pullCurrentLocaleOnly;
+- (void)cancelPull;
+
+- (BOOL)isPushing;
+
+- (void)setNeedsPush;
+- (void)cancelPush;
 
 @end
