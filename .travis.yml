@@ -17,11 +17,11 @@ before_install:
 env:
     global:
         - OTHER_XCTOOL_OPTS='CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO'
-        - OTHER_XCODEBUILD_OPTS='CODE_SIGNING_REQUIRED=NO'
+        - OTHER_XCODEBUILD_OPTS='-quiet CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO'
     matrix:
         - TRAVIS_XCODE_SDK='iphonesimulator8.4' TRAVIS_XCODE_DESTINATION='platform=iOS Simulator,name=iPhone 5,OS=8.4'
         - TRAVIS_XCODE_SDK='iphonesimulator9.3' TRAVIS_XCODE_DESTINATION='platform=iOS Simulator,name=iPhone 6s,OS=9.3'
-        - TRAVIS_XCODE_SDK='iphonesimulator10.3' TRAVIS_XCODE_DESTINATION='platform=iOS Simulator,name=iPhone 7,OS=10.3'
+        - TRAVIS_XCODE_SDK='iphonesimulator10.3' TRAVIS_XCODE_DESTINATION='platform=iOS Simulator,name=iPhone 7,OS=10.3.1'
 script: 
     - xcodebuild -workspace TMLKit/TMLKit.xcworkspace -configuration Release -scheme TMLKit -destination "$TRAVIS_XCODE_DESTINATION" $OTHER_XCODEBUILD_OPTS build-for-testing -sdk $TRAVIS_XCODE_SDK
     - xctool -workspace TMLKit/TMLKit.xcworkspace -configuration Release -scheme TMLKit -destination "$TRAVIS_XCODE_DESTINATION" $OTHER_XCTOOL_OPTS run-tests -test-sdk $TRAVIS_XCODE_SDK -parallelize
