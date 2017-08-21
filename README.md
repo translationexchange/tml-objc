@@ -7,7 +7,7 @@ TML for Objective C
 
 [![Version](http://cocoapod-badges.herokuapp.com/v/TMLKit/badge.png)](http://cocoadocs.org/docsets/TMLKit/1.0.0/)
 [![Platform](http://cocoapod-badges.herokuapp.com/p/TMLKit/badge.png)](http://cocoadocs.org/docsets/TMLKit)
-[![Build Status](https://travis-ci.org/translationexchange/tml-objc.svg?branch=master)](https://travis-ci.org/translationexchange/tml-objc)
+[![Build Status](https://travis-ci.org/translationexchange/tml-objc.svg?branch=develop)](https://travis-ci.org/translationexchange/tml-objc)
 
 TMLKit is an Objective-C SDK for an integrated cloud-based translation solution for iOS applications.
 
