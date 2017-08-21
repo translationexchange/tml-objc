@@ -41,8 +41,7 @@
 }
 
 - (void) testConfigurarionBlock {
-    TMLConfiguration *config = [[TMLConfiguration alloc] init];
-    config.applicationKey = @"foobar";
+    TMLConfiguration *config = [[TMLConfiguration alloc] initWithApplicationKey:@"foobar"];
     config.accessToken = @"foobat";
     config.currentLocale = @"en-US";
     XCTAssert([[config currentLocale] isEqual:@"en-US"]);

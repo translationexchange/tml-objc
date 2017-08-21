@@ -34,11 +34,11 @@
 #import "TMLLanguage.h"
 
 #ifndef TMLServiceHost
-#define TMLServiceHost @"https://api.translationexchange.com/v1"
+#define TMLServiceHost @"https://api.translationexchange.com/v2/sdk"
 #endif
 
 #ifndef TMLTranslationCenterHost
-#define TMLTranslationCenterHost @"https://translate.translationexchange.com"
+#define TMLTranslationCenterHost @"https://tools.translationexchange.com/mobile/stable"
 #endif
 
 #ifndef TMLGatewayHost
