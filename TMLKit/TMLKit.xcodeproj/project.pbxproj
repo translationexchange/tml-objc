@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		74CAF4D7AE5F673571FAD626 /* libPods-TMLKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C4DCAD61B82C00F44444A8C /* libPods-TMLKit.a */; };
-		AB02D3BD1F4A9508000C9673 /* TMLPrivateConfig.plist in Resources */ = {isa = PBXBuildFile; fileRef = AB02D3BC1F4A9508000C9673 /* TMLPrivateConfig.plist */; };
 		AB7A5BA11F47212300327B36 /* TMLAPIRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = AB7A5B9F1F47212300327B36 /* TMLAPIRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB7A5BA21F47212300327B36 /* TMLAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7A5BA01F47212300327B36 /* TMLAPIRequest.m */; };
 		C42581E81C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C42581E61C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -296,7 +295,6 @@
 		6B3F7AF805B2CC554A820C5C /* libPods-TMLKitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TMLKitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DD4AA1189309754FD897BCC /* Pods-TMLKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMLKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-TMLKit/Pods-TMLKit.release.xcconfig"; sourceTree = "<group>"; };
 		9C4DCAD61B82C00F44444A8C /* libPods-TMLKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TMLKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		AB02D3BC1F4A9508000C9673 /* TMLPrivateConfig.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TMLPrivateConfig.plist; sourceTree = "<group>"; };
 		AB7A5B9F1F47212300327B36 /* TMLAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAPIRequest.h; sourceTree = "<group>"; };
 		AB7A5BA01F47212300327B36 /* TMLAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPIRequest.m; sourceTree = "<group>"; };
 		BACE78FD18874EB6A192BC4E /* Pods-TMLKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMLKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TMLKitTests/Pods-TMLKitTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -589,7 +587,6 @@
 				C474362A1CD0745A002A09F5 /* module.modulemap */,
 				C4FCD25D1C0FC7A200D723BC /* Info.plist */,
 				C4FCD3431C0FCB1B00D723BC /* TMLKit-Prefix.pch */,
-				AB02D3BC1F4A9508000C9673 /* TMLPrivateConfig.plist */,
 				C4FA31FD1C5078D9001902EB /* TMLPrivateConfig.h */,
 			);
 			path = TMLKit;
@@ -1235,7 +1232,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AB02D3BD1F4A9508000C9673 /* TMLPrivateConfig.plist in Resources */,
 				C4FCD39F1C10012500D723BC /* en.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
