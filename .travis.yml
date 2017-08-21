@@ -25,5 +25,5 @@ env:
 script: 
     - xcodebuild -workspace TMLKit/TMLKit.xcworkspace -configuration Release -scheme TMLKit -destination "$TRAVIS_XCODE_DESTINATION" $OTHER_XCODEBUILD_OPTS build-for-testing -sdk $TRAVIS_XCODE_SDK
     - xctool -workspace TMLKit/TMLKit.xcworkspace -configuration Release -scheme TMLKit -destination "$TRAVIS_XCODE_DESTINATION" $OTHER_XCTOOL_OPTS run-tests -test-sdk $TRAVIS_XCODE_SDK -parallelize
-    - xcodebuild -workspace Demo/Demo.xcworkspace -configuration Release -scheme Demo -destination "$TRAVIS_XCODE_DESTINATION" $OTHER_XCODEBUILD_OPTS build-for-testing -sdk $TRAVIS_XCODE_SDK
-    - xcodebuild -workspace TMLSandbox/TMLSandbox.xcworkspace -configuration Release -scheme TMLSandbox -destination "$TRAVIS_XCODE_DESTINATION" $OTHER_XCODEBUILD_OPTS build-for-testing -sdk $TRAVIS_XCODE_SDK
+    - xcodebuild -workspace Demo/Demo.xcworkspace -configuration Release -scheme Demo -destination "$TRAVIS_XCODE_DESTINATION" $OTHER_XCODEBUILD_OPTS build -sdk $TRAVIS_XCODE_SDK
+    - xcodebuild -workspace TMLSandbox/TMLSandbox.xcworkspace -configuration Release -scheme TMLSandbox -destination "$TRAVIS_XCODE_DESTINATION" $OTHER_XCODEBUILD_OPTS build -sdk $TRAVIS_XCODE_SDK
