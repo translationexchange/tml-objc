@@ -39,6 +39,7 @@
 #import "TMLTranslation.h"
 #import "TMLTranslationKey.h"
 #import "TMLUser.h"
+#import "TMLTranslator.h"
 #import "TMLScreenShot.h"
 #import "TMLAuthorizationViewController.h"
 #import <AFNetworking/AFNetworking.h>

@@ -31,7 +31,7 @@
 #import <Foundation/Foundation.h>
 #import "TMLBasicAPIClient.h"
 
-@class TMLAPIRequest, TMLAPIResponse, TMLSource, TMLApplication, TMLUser, TMLScreenShot;
+@class TMLAPIRequest, TMLAPIResponse, TMLSource, TMLApplication, TMLUser, TMLTranslator, TMLScreenShot;
 
 extern NSString * const TMLAPIOptionsLocale;
 extern NSString * const TMLAPIOptionsIncludeAll;
