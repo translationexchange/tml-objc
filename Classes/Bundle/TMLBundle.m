@@ -78,6 +78,9 @@ NSString * const TMLBundleErrorsKey = @"errors";
 - (instancetype)initWithContentsOfDirectory:(NSString *)path {
     if (self = [super init]) {
         self.path = path;
+        
+        TMLDebug(@"Bundle root path: %@", self.path);
+        
         _translations = [NSMutableDictionary dictionary];
         _availableLanguages = [NSMutableDictionary dictionary];
     }

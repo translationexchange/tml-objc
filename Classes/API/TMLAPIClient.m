@@ -49,6 +49,7 @@ NSString * const TMLAPIOptionsIncludeAll = @"all";
 NSString * const TMLAPIOptionsClientName = @"client";
 NSString * const TMLAPIOptionsIncludeDefinition = @"definition";
 NSString * const TMLAPIOptionsSourceKeys = @"source_keys";
+NSString * const TMLAPIOptionsBase64 = @"base64";
 NSString * const TMLAPIOptionsApplicationId = @"app_id";
 NSString * const TMLAPIOptionsPage = @"page";
 
@@ -418,8 +419,9 @@ typedef void (^AccessTokenRefreshCompletion)(BOOL succeeded, NSString *accessTok
     }
     
     NSString *path = [NSString stringWithFormat:@"%@/translation_keys", [self applicationProjectPath]];
+    NSString *base64Encoded = [[TMLAPISerializer serializeObject:sourceKeysList] base64EncodedStringWithOptions:0];
     
-    [self send:[TMLAPIRequest requestWithMethod:@"POST" path:path parameters:@{TMLAPIOptionsSourceKeys: sourceKeysList, TMLAPIOptionsApplicationId: self.applicationKey}] completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+    [self send:[TMLAPIRequest requestWithMethod:@"POST" path:path parameters:@{TMLAPIOptionsSourceKeys: base64Encoded, TMLAPIOptionsBase64: @"true", TMLAPIOptionsApplicationId: self.applicationKey}] completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
         BOOL success = [apiResponse isSuccessfulResponse];
         if (success == NO) {
             TMLError(@"Error submitting translation keys by source: %@", error);

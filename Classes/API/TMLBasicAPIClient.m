@@ -127,10 +127,13 @@ completionBlock:(TMLAPIResponseHandler)completionBlock
                                                            cachePolicy:cachePolicy
                                                        timeoutInterval:TMLSharedConfiguration().timeoutIntervalForRequest];
     [request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
-    [request setHTTPMethod:@"POST"];    
-    [request setHTTPBody:[[self urlEncodedStringFromParameters: parameters] dataUsingEncoding:NSUTF8StringEncoding]];
+    [request setHTTPMethod:@"POST"];
     
+    NSString *body = [self urlEncodedStringFromParameters: parameters];
+    [request setHTTPBody: [body dataUsingEncoding:NSUTF8StringEncoding]];
     TMLDebug(@"POST %@", url);
+    TMLDebug(@"DATA %@", body);
+    
     [self request:request
   completionBlock:completionBlock];
 }
