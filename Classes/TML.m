@@ -880,6 +880,9 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     if (self.configuration.neverSubmitNewTranslationKeys == YES) {
         return;
     }
+    
+    translationKey.label = [translationKey.label stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+    
     if (translationKey.label.length == 0) {
         return;
     }

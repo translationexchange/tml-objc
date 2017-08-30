@@ -79,7 +79,7 @@
  */
 @property (nonatomic, assign) BOOL automaticallyReloadTableViewsWithReusableLocalizedStrings __deprecated_msg("Use automaticallyReloadDataBackedViews instead");
 /**
- *  If YES, TMLKit will automatically reload instances instances of data-backed views, UITableView and UICollectionView,
+ *  If YES, TMLKit will automatically reload instances of data-backed views, UITableView and UICollectionView,
  *  when it's updating reusable localized strings.
  */
 @property (nonatomic, assign) BOOL automaticallyReloadDataBackedViews;

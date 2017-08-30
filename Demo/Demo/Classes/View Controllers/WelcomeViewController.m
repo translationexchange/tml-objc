@@ -29,6 +29,7 @@
  */
 
 #import "WelcomeViewController.h"
+#import "TMLKit/UIViewController+TML.h"
 
 @interface WelcomeViewController ()
 
@@ -38,6 +39,21 @@
 @end
 
 @implementation WelcomeViewController
+
+//- (void)updateReusableTMLStrings {
+//    NSLog(@"Test");
+////    [super updateReusableTMLStrings];
+//}
+
+- (void)updateTMLLocalizedStringWithInfo:(NSDictionary *)info forReuseIdentifier:(NSString *)reuseIdentifier {
+    NSLog(@"Test");
+    if ([reuseIdentifier isEqualToString:@"welcomeLabel"] == YES) {
+//        self.titleLabel.attributedText = info[TMLLocalizedStringInfoKey];
+    }
+    else {
+        [super updateTMLLocalizedStringWithInfo:info forReuseIdentifier:reuseIdentifier];
+    }
+}
 
 @end
 

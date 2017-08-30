@@ -87,9 +87,7 @@ Integration
 ==================
 
 
-Before you can proceed with the integration, please visit https://TranslationExchange.com - open an account and create a project for your application. Each project is assigned a unique *application key* and *access token* which you will use to configure TMLKit.
-
-While *application key* is mandatory, configuring TMLKit with the *access token* is optional and allows your app to register new translation keys on the server and utilize *In-App Translation* mode. When you release your application you should remove *access token* and only supply the *application key*.
+Before you can proceed with the integration, please visit https://TranslationExchange.com - open an account and create a project for your application. Each project is assigned a unique *application key* which you will use to configure TMLKit.
 
 Here's how you would configure TMLKit:
 
@@ -100,7 +98,7 @@ int main(int argc, char * argv[])
 {
     @autoreleasepool {
         
-        [TML sharedInstanceWithApplicationKey:@"<APPLICATION KEY>" accessToken:@"<ACCESS TOKEN>"];
+        [TML sharedInstanceWithApplicationKey:@"<APPLICATION KEY>"];
         
         return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
     }
@@ -131,9 +129,9 @@ However, you only get full use of TML via TMLLocalizedString() macros. TML suppo
 How does it work?
 ==================
 
-TMLKit does all the hard work for you. When you use TML's macros (see TML.h), the library automatically registers translation keys with Translation Exchange service and generates resource bunldes for your app on the fly. TMLKit always keep your local cache up to date by downloading the latest translations from the service when they become available. At run-time, your app will use translations from your local app cache so your users will not experience any delays. When new localized data becomes available it is possible for your application to update translations dynamically, without needing to restart the application.
+TMLKit does all the hard work for you. When you use TML's macros (see TML.h), the library automatically registers translation keys with Translation Exchange service and generates resource bunldes for your app on the fly. TMLKit always keeps your local cache up to date by downloading the latest translations from the service when they become available. At run-time, your app will use translations from your local app cache so your users will not experience any delays. When new localized data becomes available it is possible for your application to update translations dynamically, without needing to restart the application.
 
-You also have an option to bundle all your translations with your app before you release it - allowing your application to function in offline mode. By default, whenever your application becomes active and has connectivity to the internet - TMLKit will check for new translation releases (published via the [dashboard](https://dashboard-translationexchange.com)). When updates are available they are downloaded on-demand. Translations for default and current locales are downloaded immediately, and additional data is downloaded when TMLKit is told to change current locale.
+You also have an option to bundle all your translations with your app before you release it - allowing your application to function in offline mode. By default, whenever your application becomes active and has connectivity to the internet - TMLKit will check for new translation releases (published via the [dashboard](https://dashboard.translationexchange.com)). When updates are available they are downloaded on-demand. Translations for default and current locales are downloaded immediately, and additional data is downloaded when TMLKit is told to change current locale.
 
 To bundle translations with your app, simply download published archive from the dashboard, prepend its name with “tml_” and include it in your build as a resource. The resulting filename should be in the format "tml_<version>.tar.gz". TMLKit supports zip, tar, tar.gz/tar.gzip formats.
 
@@ -498,7 +496,7 @@ TMLLocalizedStringWithReuseIdenitifer(string, reuseIdentifier, ...);
 TMLLocalizedAttributedStringWithReuseIdenitifer(string, reuseIdentifier, ...);
 ```
 
-It is identical to the already familiar TMLLocalizedString() and TMLLocalizedAttributedString() macros, accept they take a second mandatory parameter - and identifier.
+It is identical to the already familiar TMLLocalizedString() and TMLLocalizedAttributedString() macros, except they take a second mandatory parameter - and identifier.
 
 Thus, the above UILabel example becomes:
 
@@ -610,15 +608,15 @@ TMLPresentTranslatorForKey([TMLTranslationKey generateKeyForLabel:@"<localized s
 Links
 ==================
 
-* Register on TranslationExchange.com: http://translationexchange.com
+* Register on TranslationExchange.com: https://translationexchange.com
 
-* Read TranslationExchange's documentation: http://www.translationexchange.com/docs
+* Read TranslationExchange's documentation: http://docs.translationexchange.com
 
 * Follow TranslationExchange on Twitter: https://twitter.com/translationx
 
 * Connect with TranslationExchange on Facebook: https://www.facebook.com/translationexchange
 
-* If you have any questions or suggestions, contact us: info@translationexchange.com
+* If you have any questions or suggestions, contact us: support@translationexchange.com
 
 
 Copyright and license

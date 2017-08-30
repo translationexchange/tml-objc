@@ -33,6 +33,15 @@
 
 @implementation ApplicationViewController
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [[TML sharedInstance] registerObjectWithReusableLocalizedStrings:self];
+}
+
+- (void) updateReusableTMLStrings {
+    
+}
+
 - (IBAction)toggleMenu:(id)sender {
     [self.viewDeckController toggleLeftViewAnimated:YES];
 }
