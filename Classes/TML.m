@@ -59,6 +59,8 @@
 #import "UIView+TML.h"
 #import "MZFormSheetPresentationViewController.h"
 
+@import SocketIO;
+
 NSString * const TMLCurrentUserDefaultsKey = @"currentUser";
 NSString * const TMLTranslationActiveDefaultsKey = @"translationActive";
 
@@ -193,6 +195,8 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 @property(strong, nonatomic) TMLAPIClient *apiClient;
 @property(nonatomic, readwrite) TMLBundle *currentBundle;
 @property(nonatomic, readwrite) TMLBasicUser *currentUser;
+@property(strong, nonatomic) SocketManager *socketManager;
+@property(strong, nonatomic) SocketIOClient *socket;
 @end
 
 @implementation TML
@@ -263,6 +267,9 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
                                                          applicationKey:configuration.applicationKey
                                                             accessToken:configuration.accessToken];
         self.apiClient = apiClient;
+        
+        self.socketManager = [[SocketManager alloc] initWithSocketURL:[NSURL URLWithString:@"https://communicator.translationexchange.com"] config:@{@"log": @YES, @"compress": @YES}];
+        self.socket = self.socketManager.defaultSocket;
         
         NSString *accessToken = configuration.accessToken;
         
@@ -934,6 +941,12 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     else {
         [self teardownInlineTranslationGestureRecognizer];
     }
+    
+    if (translationActive == YES) {
+        [self setupSocketAndConnect];
+    } else {
+        [self teardownSocketAndDisconnect];
+    }
 }
 
 #pragma mark - Reseting
@@ -942,6 +955,47 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     self.currentBundle = nil;
     [self resetBundleUpdateCheck];
     self.currentUser = nil;
+}
+
+#pragma mark - Socket.IO
+
+- (void)setupSocketAndConnect {
+    [self.socket on:@"connect" callback:^(NSArray * _Nonnull data, SocketAckEmitter * _Nonnull ack) {
+        NSString *roomAddress = [NSString stringWithFormat:@"production:project:%@", self.configuration.applicationKey];
+        
+        [self.socket emit:@"room" with:@[@[roomAddress]]];
+    }];
+    
+    [self.socket on:@"message" callback:^(NSArray * _Nonnull data, SocketAckEmitter * _Nonnull ack) {
+        NSDictionary *dict = [data firstObject];
+        
+        if ([dict[@"type"] isEqualToString:@"translation-key:translations-added"]) {
+            NSDictionary *translationKeyDict = dict[@"data"][@"translation_key"];
+            
+            NSString *translationKey = translationKeyDict[@"key"];
+            
+            NSDictionary *translationDict = dict[@"data"][@"translations"];
+            NSString *locale = [[translationDict allKeys] firstObject];
+            NSArray *translations = translationDict[locale];
+            
+            for (NSDictionary *tranlsationDict in translations) {
+                NSString *translationLabel = tranlsationDict[@"label"];
+                TMLTranslation *translation = [TMLTranslation translationWithKey:translationKey locale:locale label:translationLabel];
+                
+                [self.currentBundle addTranslation:translation locale:locale];
+            }
+            
+            [self.currentBundle notifyBundleMutation:TMLDidFinishSyncNotification errors:nil];
+        }
+    }];
+    
+    [self.socket connect];
+}
+
+- (void)teardownSocketAndDisconnect {
+    [self.socket removeAllHandlers];
+    
+    [self.socket disconnect];
 }
 
 #pragma mark - Gesture Recognizer

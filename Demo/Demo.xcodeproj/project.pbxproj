@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0B3C1F225B33C8D2514DCFCA /* libPods-Demo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BB4D206C0DA72FBAC39F8689 /* libPods-Demo.a */; };
 		4C4233E918B9B38700B76555 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C4233E818B9B38700B76555 /* Foundation.framework */; };
 		4C4233EB18B9B38700B76555 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C4233EA18B9B38700B76555 /* CoreGraphics.framework */; };
 		4C4233ED18B9B38700B76555 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C4233EC18B9B38700B76555 /* UIKit.framework */; };
@@ -15,18 +14,17 @@
 		4C4233F518B9B38700B76555 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C4233F418B9B38700B76555 /* main.m */; };
 		4C4233FC18B9B38700B76555 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4C4233FA18B9B38700B76555 /* Main.storyboard */; };
 		4C42340118B9B38700B76555 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4C42340018B9B38700B76555 /* Images.xcassets */; };
-		4C7A863418BD1C0800C2375D /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 4C7A863318BD1C0800C2375D /* Podfile */; };
 		4C81FD011A265B8F0014DC1D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C81FD001A265B8F0014DC1D /* SystemConfiguration.framework */; };
 		4CFA531319284666006E1B43 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4CFA530F19284666006E1B43 /* LICENSE */; };
 		4CFA531419284666006E1B43 /* Rakefile in Resources */ = {isa = PBXBuildFile; fileRef = 4CFA531019284666006E1B43 /* Rakefile */; };
 		4CFA531519284666006E1B43 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4CFA531119284666006E1B43 /* README.md */; };
+		6BA607C87949750B5566E804 /* Pods_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A5A86F92A523BF65983E1C23 /* Pods_Demo.framework */; };
 		C0B833711E82E19300D0EC23 /* netatmo.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C0B833701E82E19300D0EC23 /* netatmo.jpeg */; };
 		C0B833761E82E2F900D0EC23 /* NetatmoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B833751E82E2F900D0EC23 /* NetatmoViewController.m */; };
 		C0B833781E82E4FF00D0EC23 /* netatmo2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = C0B833771E82E4FF00D0EC23 /* netatmo2.jpeg */; };
 		C0B8337B1E82E52900D0EC23 /* Netatmo2ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B8337A1E82E52900D0EC23 /* Netatmo2ViewController.m */; };
 		C0B88A9E1E8484BB002FB8D8 /* blizzard.png in Resources */ = {isa = PBXBuildFile; fileRef = C0B88A9D1E8484BB002FB8D8 /* blizzard.png */; };
 		C0B88AA11E848C32002FB8D8 /* BlizzardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C0B88AA01E848C32002FB8D8 /* BlizzardViewController.m */; };
-		C42BB2761C1E2895005C0128 /* TMLKit.framework in Copy Bundle Frameworks */ = {isa = PBXBuildFile; fileRef = C4BC81121C100BD500B995ED /* TMLKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C42BB3381C1E37D8005C0128 /* arrow_down.png in Resources */ = {isa = PBXBuildFile; fileRef = C42BB3321C1E37D8005C0128 /* arrow_down.png */; };
 		C42BB3391C1E37D8005C0128 /* Icon-40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C42BB3331C1E37D8005C0128 /* Icon-40@2x.png */; };
 		C42BB33A1C1E37D8005C0128 /* Icon-60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C42BB3341C1E37D8005C0128 /* Icon-60@2x.png */; };
@@ -49,26 +47,8 @@
 		C42BB36E1C1E37F0005C0128 /* WelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C42BB35B1C1E37F0005C0128 /* WelcomeViewController.m */; };
 		C42BB36F1C1E37F0005C0128 /* TMLSampleTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C42BB35E1C1E37F0005C0128 /* TMLSampleTableViewCell.m */; };
 		C42BB3701C1E37F0005C0128 /* TMLTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C42BB3601C1E37F0005C0128 /* TMLTableViewCell.m */; };
-		C4CF54E41C10D1B500EC39CC /* TMLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4BC81121C100BD500B995ED /* TMLKit.framework */; };
 		C4FCD3A51C10075C00D723BC /* (null) in Resources */ = {isa = PBXBuildFile; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		C4BC81111C100BD500B995ED /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C4BC810C1C100BD500B995ED /* TMLKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C4FCD2581C0FC7A200D723BC;
-			remoteInfo = TMLKit;
-		};
-		C4BC81131C100BD500B995ED /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = C4BC810C1C100BD500B995ED /* TMLKit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = C4FCD2621C0FC7A200D723BC;
-			remoteInfo = TMLKitTests;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		C4CF54E21C10170200EC39CC /* Copy Bundle Frameworks */ = {
@@ -77,7 +57,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C42BB2761C1E2895005C0128 /* TMLKit.framework in Copy Bundle Frameworks */,
 			);
 			name = "Copy Bundle Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -96,14 +75,13 @@
 		4C4233FB18B9B38700B76555 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4C42340018B9B38700B76555 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		4C42340718B9B38700B76555 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		4C7A863318BD1C0800C2375D /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		4C81FD001A265B8F0014DC1D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		4CFA530F19284666006E1B43 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		4CFA531019284666006E1B43 /* Rakefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Rakefile; path = ../Rakefile; sourceTree = "<group>"; };
 		4CFA531119284666006E1B43 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		4CFA531219284666006E1B43 /* Tml.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Tml.podspec; path = ../Tml.podspec; sourceTree = "<group>"; };
 		849FC625621A230B8BAF60C9 /* Pods-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.debug.xcconfig"; sourceTree = "<group>"; };
-		BB4D206C0DA72FBAC39F8689 /* libPods-Demo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Demo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A5A86F92A523BF65983E1C23 /* Pods_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C0B833701E82E19300D0EC23 /* netatmo.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = netatmo.jpeg; sourceTree = "<group>"; };
 		C0B833741E82E2F900D0EC23 /* NetatmoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetatmoViewController.h; sourceTree = "<group>"; };
 		C0B833751E82E2F900D0EC23 /* NetatmoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetatmoViewController.m; sourceTree = "<group>"; };
@@ -151,8 +129,7 @@
 		C42BB35E1C1E37F0005C0128 /* TMLSampleTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLSampleTableViewCell.m; sourceTree = "<group>"; };
 		C42BB35F1C1E37F0005C0128 /* TMLTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLTableViewCell.h; sourceTree = "<group>"; };
 		C42BB3601C1E37F0005C0128 /* TMLTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLTableViewCell.m; sourceTree = "<group>"; };
-		C4BC810C1C100BD500B995ED /* TMLKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TMLKit.xcodeproj; path = ../TMLKit/TMLKit.xcodeproj; sourceTree = "<group>"; };
-		C4D231821DA084A000F29CA0 /* Demo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Demo.entitlements; path = Demo/Demo.entitlements; sourceTree = "<group>"; };
+		C4D231821DA084A000F29CA0 /* Demo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Demo.entitlements; sourceTree = "<group>"; };
 		EA8DF5C57FC1739108F0ADB8 /* Pods-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -161,12 +138,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4CF54E41C10D1B500EC39CC /* TMLKit.framework in Frameworks */,
 				4C81FD011A265B8F0014DC1D /* SystemConfiguration.framework in Frameworks */,
 				4C4233EB18B9B38700B76555 /* CoreGraphics.framework in Frameworks */,
 				4C4233ED18B9B38700B76555 /* UIKit.framework in Frameworks */,
 				4C4233E918B9B38700B76555 /* Foundation.framework in Frameworks */,
-				0B3C1F225B33C8D2514DCFCA /* libPods-Demo.a in Frameworks */,
+				6BA607C87949750B5566E804 /* Pods_Demo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,13 +152,10 @@
 		4C4233DC18B9B38600B76555 = {
 			isa = PBXGroup;
 			children = (
-				C4BC810C1C100BD500B995ED /* TMLKit.xcodeproj */,
 				4C4233EE18B9B38700B76555 /* Demo */,
-				C4D231821DA084A000F29CA0 /* Demo.entitlements */,
 				4C4233E718B9B38700B76555 /* Frameworks */,
 				4C4233E618B9B38700B76555 /* Products */,
 				4CFA53171928466D006E1B43 /* Configuration */,
-				4C7A863318BD1C0800C2375D /* Podfile */,
 				D328B0C1DB896042F1823CBE /* Pods */,
 			);
 			sourceTree = "<group>";
@@ -203,7 +176,7 @@
 				4C4233EA18B9B38700B76555 /* CoreGraphics.framework */,
 				4C4233EC18B9B38700B76555 /* UIKit.framework */,
 				4C42340718B9B38700B76555 /* XCTest.framework */,
-				BB4D206C0DA72FBAC39F8689 /* libPods-Demo.a */,
+				A5A86F92A523BF65983E1C23 /* Pods_Demo.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -225,6 +198,7 @@
 				4C4233F118B9B38700B76555 /* InfoPlist.strings */,
 				4C4233F418B9B38700B76555 /* main.m */,
 				4C4233F618B9B38700B76555 /* Demo-Prefix.pch */,
+				C4D231821DA084A000F29CA0 /* Demo.entitlements */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -328,15 +302,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		C4BC810D1C100BD500B995ED /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C4BC81121C100BD500B995ED /* TMLKit.framework */,
-				C4BC81141C100BD500B995ED /* TMLKitTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		D328B0C1DB896042F1823CBE /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -401,35 +366,12 @@
 			mainGroup = 4C4233DC18B9B38600B76555;
 			productRefGroup = 4C4233E618B9B38700B76555 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = C4BC810D1C100BD500B995ED /* Products */;
-					ProjectRef = C4BC810C1C100BD500B995ED /* TMLKit.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				4C4233E418B9B38700B76555 /* Demo */,
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		C4BC81121C100BD500B995ED /* TMLKit.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = TMLKit.framework;
-			remoteRef = C4BC81111C100BD500B995ED /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		C4BC81141C100BD500B995ED /* TMLKitTests.xctest */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = TMLKitTests.xctest;
-			remoteRef = C4BC81131C100BD500B995ED /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		4C4233E318B9B38700B76555 /* Resources */ = {
@@ -444,7 +386,6 @@
 				4C4233F318B9B38700B76555 /* InfoPlist.strings in Resources */,
 				C42BB33A1C1E37D8005C0128 /* Icon-60@2x.png in Resources */,
 				C0B88A9E1E8484BB002FB8D8 /* blizzard.png in Resources */,
-				4C7A863418BD1C0800C2375D /* Podfile in Resources */,
 				4CFA531519284666006E1B43 /* README.md in Resources */,
 				C42BB33D1C1E37D8005C0128 /* more.png in Resources */,
 				C42BB3391C1E37D8005C0128 /* Icon-40@2x.png in Resources */,
@@ -480,9 +421,34 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Demo/Pods-Demo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/MPColorTools/MPColorTools.framework",
+				"${BUILT_PRODUCTS_DIR}/MZAppearance/MZAppearance.framework",
+				"${BUILT_PRODUCTS_DIR}/MZFormSheetPresentationController/MZFormSheetPresentationController.framework",
+				"${BUILT_PRODUCTS_DIR}/NVHTarGzip/NVHTarGzip.framework",
+				"${BUILT_PRODUCTS_DIR}/SAMKeychain/SAMKeychain.framework",
+				"${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework",
+				"${BUILT_PRODUCTS_DIR}/Socket.IO-Client-Swift/SocketIO.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
+				"${BUILT_PRODUCTS_DIR}/TMLKit/TMLKit.framework",
+				"${BUILT_PRODUCTS_DIR}/ViewDeck/ViewDeck.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MPColorTools.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MZAppearance.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MZFormSheetPresentationController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVHTarGzip.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SAMKeychain.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSZipArchive.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SocketIO.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TMLKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ViewDeck.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -495,13 +461,16 @@
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Demo-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C4FA31FC1C506EA2001902EB /* Generate TMLPrivateConfig.h */ = {

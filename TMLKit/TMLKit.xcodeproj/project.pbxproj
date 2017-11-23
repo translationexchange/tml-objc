@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		74CAF4D7AE5F673571FAD626 /* libPods-TMLKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C4DCAD61B82C00F44444A8C /* libPods-TMLKit.a */; };
 		AB7A5BA11F47212300327B36 /* TMLAPIRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = AB7A5B9F1F47212300327B36 /* TMLAPIRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB7A5BA21F47212300327B36 /* TMLAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7A5BA01F47212300327B36 /* TMLAPIRequest.m */; };
 		C42581E81C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C42581E61C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -193,7 +192,8 @@
 		C4FCD3971C0FFC6E00D723BC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C4FCD3961C0FFC6E00D723BC /* Foundation.framework */; };
 		C4FCD39F1C10012500D723BC /* en.json in Resources */ = {isa = PBXBuildFile; fileRef = C4FCD39D1C10012500D723BC /* en.json */; };
 		C4FFC61A1C7FFA71004F6C4D /* TMLKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = C4FCD2581C0FC7A200D723BC /* TMLKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F5B8BB7A6BF1EC6E8F0E797C /* libPods-TMLKitTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B3F7AF805B2CC554A820C5C /* libPods-TMLKitTests.a */; };
+		E4868D1D5E3B5E6D8D3DEE13 /* Pods_TMLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6897BBA85B0F3E467238BE18 /* Pods_TMLKit.framework */; };
+		F9610FD6575BCD1DC90251DC /* Pods_TMLKitTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF7B3942A6C13153510B5FF6 /* Pods_TMLKitTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -292,9 +292,8 @@
 /* Begin PBXFileReference section */
 		374CDB8BFEDC96F6AD475835 /* Pods-TMLKitTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMLKitTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TMLKitTests/Pods-TMLKitTests.release.xcconfig"; sourceTree = "<group>"; };
 		4A9CF50CDF0545E105174A56 /* Pods-TMLKit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMLKit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TMLKit/Pods-TMLKit.debug.xcconfig"; sourceTree = "<group>"; };
-		6B3F7AF805B2CC554A820C5C /* libPods-TMLKitTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TMLKitTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6897BBA85B0F3E467238BE18 /* Pods_TMLKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TMLKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DD4AA1189309754FD897BCC /* Pods-TMLKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMLKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-TMLKit/Pods-TMLKit.release.xcconfig"; sourceTree = "<group>"; };
-		9C4DCAD61B82C00F44444A8C /* libPods-TMLKit.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TMLKit.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB7A5B9F1F47212300327B36 /* TMLAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAPIRequest.h; sourceTree = "<group>"; };
 		AB7A5BA01F47212300327B36 /* TMLAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPIRequest.m; sourceTree = "<group>"; };
 		BACE78FD18874EB6A192BC4E /* Pods-TMLKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMLKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TMLKitTests/Pods-TMLKitTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -489,6 +488,7 @@
 		C4FCD3941C0FFC4500D723BC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C4FCD3961C0FFC6E00D723BC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		C4FCD39D1C10012500D723BC /* en.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = en.json; sourceTree = "<group>"; };
+		EF7B3942A6C13153510B5FF6 /* Pods_TMLKitTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TMLKitTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -500,7 +500,7 @@
 				C4704EAF1CD98B2300157748 /* WebKit.framework in Frameworks */,
 				C4FCD3971C0FFC6E00D723BC /* Foundation.framework in Frameworks */,
 				C4FCD3951C0FFC4500D723BC /* UIKit.framework in Frameworks */,
-				74CAF4D7AE5F673571FAD626 /* libPods-TMLKit.a in Frameworks */,
+				E4868D1D5E3B5E6D8D3DEE13 /* Pods_TMLKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -509,7 +509,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4FCD2631C0FC7A200D723BC /* TMLKit.framework in Frameworks */,
-				F5B8BB7A6BF1EC6E8F0E797C /* libPods-TMLKitTests.a in Frameworks */,
+				F9610FD6575BCD1DC90251DC /* Pods_TMLKitTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -534,8 +534,8 @@
 				C4704EAE1CD98B2300157748 /* WebKit.framework */,
 				C4FCD3961C0FFC6E00D723BC /* Foundation.framework */,
 				C4FCD3941C0FFC4500D723BC /* UIKit.framework */,
-				9C4DCAD61B82C00F44444A8C /* libPods-TMLKit.a */,
-				6B3F7AF805B2CC554A820C5C /* libPods-TMLKitTests.a */,
+				6897BBA85B0F3E467238BE18 /* Pods_TMLKit.framework */,
+				EF7B3942A6C13153510B5FF6 /* Pods_TMLKitTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1289,7 +1289,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		2C0454231AA105BF308F1AE3 /* [CP] Embed Pods Frameworks */ = {
@@ -1298,9 +1298,30 @@
 			files = (
 			);
 			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-TMLKitTests/Pods-TMLKitTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AFNetworking/AFNetworking.framework",
+				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/MPColorTools/MPColorTools.framework",
+				"${BUILT_PRODUCTS_DIR}/MZAppearance/MZAppearance.framework",
+				"${BUILT_PRODUCTS_DIR}/MZFormSheetPresentationController/MZFormSheetPresentationController.framework",
+				"${BUILT_PRODUCTS_DIR}/NVHTarGzip/NVHTarGzip.framework",
+				"${BUILT_PRODUCTS_DIR}/SAMKeychain/SAMKeychain.framework",
+				"${BUILT_PRODUCTS_DIR}/SSZipArchive/SSZipArchive.framework",
+				"${BUILT_PRODUCTS_DIR}/Socket.IO-Client-Swift/SocketIO.framework",
+				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AFNetworking.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MPColorTools.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MZAppearance.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MZFormSheetPresentationController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVHTarGzip.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SAMKeychain.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SSZipArchive.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SocketIO.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1340,7 +1361,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		C4F8CBF71C5D7B3E0037BE4B /* Update Podspec Version */ = {
