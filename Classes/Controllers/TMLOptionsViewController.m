@@ -98,9 +98,9 @@
     self.translationActiveSwitch.on = [TML sharedInstance].translationActive;
     
     if (![TML sharedInstance].dashboardInlineTranslationModeActive) {
-        self.inlineTranslationModeValueLabel.text = @"In-App";
+        self.inlineTranslationModeValueLabel.text = TMLLocalizedString(@"In-App");
     } else {
-        self.inlineTranslationModeValueLabel.text = @"Dashboard";
+        self.inlineTranslationModeValueLabel.text = TMLLocalizedString(@"Dashboard");
     }
 }
 
@@ -137,19 +137,19 @@
 }
 
 - (void)presentInlineTranslationModeAlertView {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Inline Translation Mode" message:@"Tap and hold a string to translate it inline. In-app mode presents translation center in the app and dashboard mode only highlights selected string on the dashboard." preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:TMLLocalizedString(@"Inline Translation Mode") message:TMLLocalizedString(@"Tap and hold a string to translate it inline. In-app mode presents translation center in the app and dashboard mode only highlights selected string on the dashboard.") preferredStyle:UIAlertControllerStyleActionSheet];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:@"In-App" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:TMLLocalizedString(@"In-App") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [TML sharedInstance].dashboardInlineTranslationModeActive = NO;
         [self configureView];
     }]];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Dashboard" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:TMLLocalizedString(@"Dashboard") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [TML sharedInstance].dashboardInlineTranslationModeActive = YES;
         [self configureView];
     }]];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil]];
+    [alertController addAction:[UIAlertAction actionWithTitle:TMLLocalizedString(@"Cancel") style:UIAlertActionStyleCancel handler:nil]];
     
     [self presentViewController:alertController animated:true completion:nil];
 }
