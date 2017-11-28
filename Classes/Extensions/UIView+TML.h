@@ -32,6 +32,8 @@
 
 @interface UIView (TML)
 
+@property(nonatomic, getter=isPreventedFromAutomaticLocalization) IBInspectable BOOL preventedFromAutomaticLocalization;
+
 - (void)tmlIterateSubviewsWithBlock:(void(^)(UIView *view, BOOL *skip, BOOL *stop))block;
 
 @end

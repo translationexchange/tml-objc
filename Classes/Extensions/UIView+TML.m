@@ -30,8 +30,23 @@
 
 #import "UIView+TML.h"
 #import "NSObject+TML.h"
+#import "TML.h"
 
 @implementation UIView (TML)
+
+- (BOOL)isPreventedFromAutomaticLocalization {
+    return [[TML sharedInstance] isObjectRegisteredPreventedFromAutomaticLocalization:self];
+}
+
+- (void)setPreventedFromAutomaticLocalization:(BOOL)preventedFromAutomaticLocalization {
+    [[TML sharedInstance] registerObjectPreventedFromAutomaticLocalization:self];
+}
+
+- (void)localizeWithTML {
+    if (![self isPreventedFromAutomaticLocalization]) {
+        [super localizeWithTML];
+    }
+}
 
 #pragma mark - Localization
 

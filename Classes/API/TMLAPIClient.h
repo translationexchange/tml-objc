@@ -139,4 +139,6 @@ extern NSString * const TMLAPIOptionsPage;
 - (void)postScreenShot: (TMLScreenShot *)screenShot
        completionBlock:(void (^)(BOOL, NSError *))completionBlock;
 
+- (void)highlightTranslationKeyOnDashboard: (NSString *)key completionBlock:(void (^)(BOOL, NSError *))completionBlock;
+
 @end
