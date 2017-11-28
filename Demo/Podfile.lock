@@ -21,7 +21,7 @@ PODS:
     - MZAppearance
   - NVHTarGzip (1.0.1)
   - SAMKeychain (1.5.3)
-  - Socket.IO-Client-Swift (13.0.0):
+  - Socket.IO-Client-Swift (13.0.1):
     - Starscream (~> 3.0.2)
   - SSZipArchive (2.1.1)
   - Starscream (3.0.2)
@@ -52,7 +52,7 @@ SPEC CHECKSUMS:
   MZFormSheetPresentationController: fbfdbad31884f16fac17fbe3c44c168306cc1095
   NVHTarGzip: 74cc227b902e5725900d37eb6d79b57e93005a73
   SAMKeychain: 483e1c9f32984d50ca961e26818a534283b4cd5c
-  Socket.IO-Client-Swift: d187c14afd9f3a8baf908e6e09ca8e77420dadff
+  Socket.IO-Client-Swift: 7055c89b7a9926b343194c4cac75998329c4a95a
   SSZipArchive: 14401ade5f8e82aba1ff03e9f88e9de60937ae60
   Starscream: b512c62f6706421221b5ceb2ba01a9f58aca5bea
   TMLKit: 9269e0b61d476346d7bba4f1cae93c60c3838ca1

@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		AB7A5BA11F47212300327B36 /* TMLAPIRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = AB7A5B9F1F47212300327B36 /* TMLAPIRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB7A5BA21F47212300327B36 /* TMLAPIRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = AB7A5BA01F47212300327B36 /* TMLAPIRequest.m */; };
+		ABFF40EF1FCDBDFC00E30B88 /* TMLOptionsViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = ABFF40EC1FCDBDFC00E30B88 /* TMLOptionsViewController.h */; };
+		ABFF40F01FCDBDFC00E30B88 /* TMLOptionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = ABFF40ED1FCDBDFC00E30B88 /* TMLOptionsViewController.m */; };
+		ABFF40FD1FCDBE8400E30B88 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ABFF40F21FCDBE8400E30B88 /* Main.storyboard */; };
 		C42581E81C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C42581E61C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C42581E91C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.m in Sources */ = {isa = PBXBuildFile; fileRef = C42581E71C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.m */; };
 		C42581F21C20FE4300BAE9A9 /* UIBarButtonItem+TML.h in Headers */ = {isa = PBXBuildFile; fileRef = C42581F01C20FE4300BAE9A9 /* UIBarButtonItem+TML.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -296,6 +299,9 @@
 		7DD4AA1189309754FD897BCC /* Pods-TMLKit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMLKit.release.xcconfig"; path = "Pods/Target Support Files/Pods-TMLKit/Pods-TMLKit.release.xcconfig"; sourceTree = "<group>"; };
 		AB7A5B9F1F47212300327B36 /* TMLAPIRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLAPIRequest.h; sourceTree = "<group>"; };
 		AB7A5BA01F47212300327B36 /* TMLAPIRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLAPIRequest.m; sourceTree = "<group>"; };
+		ABFF40EC1FCDBDFC00E30B88 /* TMLOptionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TMLOptionsViewController.h; sourceTree = "<group>"; };
+		ABFF40ED1FCDBDFC00E30B88 /* TMLOptionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TMLOptionsViewController.m; sourceTree = "<group>"; };
+		ABFF40F21FCDBE8400E30B88 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		BACE78FD18874EB6A192BC4E /* Pods-TMLKitTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMLKitTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TMLKitTests/Pods-TMLKitTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C42581E61C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplicationShortcutItem+TML.h"; sourceTree = "<group>"; };
 		C42581E71C20FDBD00BAE9A9 /* UIApplicationShortcutItem+TML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplicationShortcutItem+TML.m"; sourceTree = "<group>"; };
@@ -687,6 +693,8 @@
 		C4FCD28C1C0FC7F200D723BC /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				ABFF40EC1FCDBDFC00E30B88 /* TMLOptionsViewController.h */,
+				ABFF40ED1FCDBDFC00E30B88 /* TMLOptionsViewController.m */,
 				C4FCD28D1C0FC7F200D723BC /* TMLLanguageSelectorViewController.h */,
 				C4FCD28E1C0FC7F200D723BC /* TMLLanguageSelectorViewController.m */,
 				C4FCD28F1C0FC7F200D723BC /* TMLTranslatorViewController.h */,
@@ -975,6 +983,7 @@
 		C4FCD39B1C10012500D723BC /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				ABFF40F21FCDBE8400E30B88 /* Main.storyboard */,
 				C4FCD39D1C10012500D723BC /* en.json */,
 			);
 			name = Assets;
@@ -1048,6 +1057,7 @@
 				C4FCD3211C0FC7F200D723BC /* TMLRulesEvaluator.h in Headers */,
 				C4FCD3381C0FC7F200D723BC /* TMLDataToken.h in Headers */,
 				C4FCD3341C0FC7F200D723BC /* TMLHtmlDecorationTokenizer.h in Headers */,
+				ABFF40EF1FCDBDFC00E30B88 /* TMLOptionsViewController.h in Headers */,
 				C4FCD3321C0FC7F200D723BC /* TMLDecorationTokenizer.h in Headers */,
 				AB7A5BA11F47212300327B36 /* TMLAPIRequest.h in Headers */,
 				C4D22C2E1CDA94AF006C40D4 /* TMLBasicUser.h in Headers */,
@@ -1232,6 +1242,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ABFF40FD1FCDBE8400E30B88 /* Main.storyboard in Resources */,
 				C4FCD39F1C10012500D723BC /* en.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1438,6 +1449,7 @@
 				C4FCD30B1C0FC7F200D723BC /* UISearchBar+TML.m in Sources */,
 				C4FCD2E31C0FC7F200D723BC /* TMLAPIResponse.m in Sources */,
 				C42582051C21214800BAE9A9 /* UITableViewRowAction+TML.m in Sources */,
+				ABFF40F01FCDBDFC00E30B88 /* TMLOptionsViewController.m in Sources */,
 				C4FCD2F71C0FC7F200D723BC /* TMLLanguageSelectorViewController.m in Sources */,
 				C435BD131C190083009A4091 /* UIBarItem+TML.m in Sources */,
 				C4FCD31A1C0FC7F200D723BC /* TMLLanguageCase.m in Sources */,
