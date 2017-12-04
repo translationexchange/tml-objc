@@ -272,7 +272,7 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
                                                             accessToken:configuration.accessToken];
         self.apiClient = apiClient;
         
-        self.socketManager = [[SocketManager alloc] initWithSocketURL:[NSURL URLWithString:@"https://communicator.translationexchange.com"] config:@{@"log": @YES, @"compress": @YES}];
+        self.socketManager = [[SocketManager alloc] initWithSocketURL:configuration.communicatorBaseURL config:@{@"log": @YES, @"compress": @YES}];
         self.socket = self.socketManager.defaultSocket;
         
         NSString *accessToken = configuration.accessToken;

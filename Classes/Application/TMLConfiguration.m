@@ -41,6 +41,10 @@
 #define TMLTranslationCenterHost @"https://tools.translationexchange.com/mobile/stable"
 #endif
 
+#ifndef TMLCommunicatorHost
+#define TMLCommunicatorHost @"https://communicator.translationexchange.com"
+#endif
+
 #ifndef TMLGatewayHost
 #define TMLGatewayHost @"https://gateway.translationexchange.com"
 #endif
@@ -84,6 +88,7 @@ NSString * const TMLPreviousLocaleDefaultsKey = @"previousLocale";
         [self setupLocalization];
         self.apiBaseURL = [NSURL URLWithString:TMLServiceHost];
         self.translationCenterBaseURL = [NSURL URLWithString:TMLTranslationCenterHost];
+        self.communicatorBaseURL = [NSURL URLWithString:TMLCommunicatorHost];
         self.cdnBaseURL = [NSURL URLWithString:TMLCDNHost];
         self.gatewayBaseURL = [NSURL URLWithString:TMLGatewayHost];
         self.localizeNIBStrings = YES;
