@@ -35,3 +35,11 @@ TMLKit/Pods
 
 TMLPrivateConfig.h
 TMLPrivateConfig.plist
+
+
+Demo/.appbuilder
+Demo/APP_BUILDER_LOG
+Demo/Demo/TMLPrivateConfig - development.plist
+Demo/Demo/TMLPrivateConfig - production.plist
+TMLKit/TMLKit/TMLPrivateConfig - development.plist
+TMLKit/TMLKit/TMLPrivateConfig - production.plist
