@@ -200,6 +200,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		AB56993B1FD7F5A4009959DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C4CF54CC1C100DDC00EC39CC /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = C4B286A4A82FEBEFD919B3A374C21987;
+			remoteInfo = "Socket.IO-Client-Swift";
+		};
+		AB56993D1FD7F5A4009959DC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C4CF54CC1C100DDC00EC39CC /* Pods.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D90542EE0A5F09D991CFC58CE211A83B;
+			remoteInfo = Starscream;
+		};
 		C45658391E1C822B0030E6B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C4CF54CC1C100DDC00EC39CC /* Pods.xcodeproj */;
@@ -549,16 +563,18 @@
 		C4CF54CD1C100DDC00EC39CC /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C47E4EE01E1B8172009BAC7D /* libAFNetworking.a */,
-				C4CF54D61C100DDD00EC39CC /* libMBProgressHUD.a */,
-				C4CF54D81C100DDD00EC39CC /* libMPColorTools.a */,
-				C456583A1E1C822B0030E6B2 /* libMZAppearance.a */,
-				C456583C1E1C822B0030E6B2 /* libMZFormSheetPresentationController.a */,
-				C4CF54DA1C100DDD00EC39CC /* libNVHTarGzip.a */,
-				C4CF54DC1C100DDD00EC39CC /* libPods-TMLKit.a */,
-				C4CF54DE1C100DDD00EC39CC /* libPods-TMLKitTests.a */,
-				C4D64E891DB033A40044F250 /* libSAMKeychain.a */,
-				C4CF54E01C100DDD00EC39CC /* libSSZipArchive.a */,
+				C47E4EE01E1B8172009BAC7D /* AFNetworking.framework */,
+				C4CF54D61C100DDD00EC39CC /* MBProgressHUD.framework */,
+				C4CF54D81C100DDD00EC39CC /* MPColorTools.framework */,
+				C456583A1E1C822B0030E6B2 /* MZAppearance.framework */,
+				C456583C1E1C822B0030E6B2 /* MZFormSheetPresentationController.framework */,
+				C4CF54DA1C100DDD00EC39CC /* NVHTarGzip.framework */,
+				C4CF54DC1C100DDD00EC39CC /* Pods_TMLKit.framework */,
+				C4CF54DE1C100DDD00EC39CC /* Pods_TMLKitTests.framework */,
+				C4D64E891DB033A40044F250 /* SAMKeychain.framework */,
+				AB56993C1FD7F5A4009959DC /* SocketIO.framework */,
+				C4CF54E01C100DDD00EC39CC /* SSZipArchive.framework */,
+				AB56993E1FD7F5A4009959DC /* Starscream.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1165,73 +1181,87 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		C456583A1E1C822B0030E6B2 /* libMZAppearance.a */ = {
+		AB56993C1FD7F5A4009959DC /* SocketIO.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libMZAppearance.a;
+			fileType = wrapper.framework;
+			path = SocketIO.framework;
+			remoteRef = AB56993B1FD7F5A4009959DC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		AB56993E1FD7F5A4009959DC /* Starscream.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Starscream.framework;
+			remoteRef = AB56993D1FD7F5A4009959DC /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		C456583A1E1C822B0030E6B2 /* MZAppearance.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MZAppearance.framework;
 			remoteRef = C45658391E1C822B0030E6B2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		C456583C1E1C822B0030E6B2 /* libMZFormSheetPresentationController.a */ = {
+		C456583C1E1C822B0030E6B2 /* MZFormSheetPresentationController.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libMZFormSheetPresentationController.a;
+			fileType = wrapper.framework;
+			path = MZFormSheetPresentationController.framework;
 			remoteRef = C456583B1E1C822B0030E6B2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		C47E4EE01E1B8172009BAC7D /* libAFNetworking.a */ = {
+		C47E4EE01E1B8172009BAC7D /* AFNetworking.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libAFNetworking.a;
+			fileType = wrapper.framework;
+			path = AFNetworking.framework;
 			remoteRef = C47E4EDF1E1B8172009BAC7D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		C4CF54D61C100DDD00EC39CC /* libMBProgressHUD.a */ = {
+		C4CF54D61C100DDD00EC39CC /* MBProgressHUD.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libMBProgressHUD.a;
+			fileType = wrapper.framework;
+			path = MBProgressHUD.framework;
 			remoteRef = C4CF54D51C100DDD00EC39CC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		C4CF54D81C100DDD00EC39CC /* libMPColorTools.a */ = {
+		C4CF54D81C100DDD00EC39CC /* MPColorTools.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libMPColorTools.a;
+			fileType = wrapper.framework;
+			path = MPColorTools.framework;
 			remoteRef = C4CF54D71C100DDD00EC39CC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		C4CF54DA1C100DDD00EC39CC /* libNVHTarGzip.a */ = {
+		C4CF54DA1C100DDD00EC39CC /* NVHTarGzip.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libNVHTarGzip.a;
+			fileType = wrapper.framework;
+			path = NVHTarGzip.framework;
 			remoteRef = C4CF54D91C100DDD00EC39CC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		C4CF54DC1C100DDD00EC39CC /* libPods-TMLKit.a */ = {
+		C4CF54DC1C100DDD00EC39CC /* Pods_TMLKit.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libPods-TMLKit.a";
+			fileType = wrapper.framework;
+			path = Pods_TMLKit.framework;
 			remoteRef = C4CF54DB1C100DDD00EC39CC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		C4CF54DE1C100DDD00EC39CC /* libPods-TMLKitTests.a */ = {
+		C4CF54DE1C100DDD00EC39CC /* Pods_TMLKitTests.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libPods-TMLKitTests.a";
+			fileType = wrapper.framework;
+			path = Pods_TMLKitTests.framework;
 			remoteRef = C4CF54DD1C100DDD00EC39CC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		C4CF54E01C100DDD00EC39CC /* libSSZipArchive.a */ = {
+		C4CF54E01C100DDD00EC39CC /* SSZipArchive.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libSSZipArchive.a;
+			fileType = wrapper.framework;
+			path = SSZipArchive.framework;
 			remoteRef = C4CF54DF1C100DDD00EC39CC /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		C4D64E891DB033A40044F250 /* libSAMKeychain.a */ = {
+		C4D64E891DB033A40044F250 /* SAMKeychain.framework */ = {
 			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libSAMKeychain.a;
+			fileType = wrapper.framework;
+			path = SAMKeychain.framework;
 			remoteRef = C4D64E881DB033A40044F250 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};

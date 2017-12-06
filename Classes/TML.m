@@ -382,6 +382,10 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     }
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     [notificationCenter addObserver:self
+                           selector:@selector(applicationDidFinishLaunching:)
+                               name:UIApplicationDidFinishLaunchingNotification
+                             object:nil];
+    [notificationCenter addObserver:self
                            selector:@selector(applicationDidBecomeActive:)
                                name:UIApplicationDidBecomeActiveNotification
                              object:nil];
@@ -419,6 +423,35 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     }
 }
 
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isAppetize"]) {
+        return;
+    }
+    
+    NSString *jsonString = [[NSUserDefaults standardUserDefaults] stringForKey:@"key"];
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *params = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
+    
+    TMLTranslator *translator = [TMLAPISerializer materializeObject:params[@"translator"] withClass:[TMLTranslator class]];
+    
+    if (![translator isKindOfClass:[NSNull class]]) {
+        translator.role = params[@"role"];
+    }
+    
+    if (translator != nil) {
+        TMLSharedConfiguration().currentTranslator = translator;
+    }
+    
+    NSString *accessToken = params[@"access_token"];
+    TMLSharedConfiguration().accessToken = accessToken;
+    
+    NSString *locale = params[@"locale"];
+    [[TML sharedInstance] changeLocale:locale completionBlock:nil];
+    
+    [TML sharedInstance].translationActive = YES;
+    [TML sharedInstance].dashboardInlineTranslationModeActive = YES;
+}
+
 - (void) applicationDidBecomeActive:(NSNotification *)aNotification {
     TMLBundle *currentBundle = self.currentBundle;
     if ([currentBundle isKindOfClass:[TMLAPIBundle class]] == YES) {
@@ -428,7 +461,9 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
         [self attemptToUpdateBundle];
     }
     
-    [self setupTranslationActivationGestureRecognizer];
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isAppetize"]) {
+        [self setupTranslationActivationGestureRecognizer];
+    }
     
     // We might have enabled inline translation before application launched
     // and before we had a window to which we'd add gesture recognizers.
@@ -920,7 +955,9 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
         [self teardownTranslationActivationGestureRecognizer];
     }
     else {
-        [self setupTranslationActivationGestureRecognizer];
+        if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isAppetize"]) {
+            [self setupTranslationActivationGestureRecognizer];
+        }
     }
 }
 
@@ -955,6 +992,10 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
         [self setupSocketAndConnect];
     } else {
         [self teardownSocketAndDisconnect];
+    }
+    
+    if (translationActive == YES) {
+        [self presentTranslationModeGuide];
     }
 }
 
@@ -1136,10 +1177,15 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:ourBundle];
     UINavigationController *initialViewController = [storyboard instantiateInitialViewController];
-//    TMLOptionsViewController *optionsViewController = [initialViewController.viewControllers firstObject];
-//    optionsViewController.translator = self.currentUser;
     
     [self _presentViewController:initialViewController];
+}
+
+- (void)presentTranslationModeGuide {
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:TMLLocalizedString(@"Getting Started") message:TMLLocalizedString(@"Tap and hold on any string to translate it.") preferredStyle:UIAlertControllerStyleAlert];
+    [alertController addAction:[UIAlertAction actionWithTitle:TMLLocalizedString(@"Continue") style:UIAlertActionStyleDefault handler:nil]];
+    
+    [self _presentViewController:alertController];
 }
 
 - (void)toggleActiveTranslation {
@@ -1358,7 +1404,10 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     TMLBasicUser *user = userInfo[TMLAuthorizationUserKey];
     self.currentUser = user;
     
-    [self setupTranslationActivationGestureRecognizer];
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isAppetize"]) {
+        [self setupTranslationActivationGestureRecognizer];
+    }
+    
     if (controller.presentingViewController != nil) {
         [controller.presentingViewController dismissViewControllerAnimated:YES completion:^{
             self.translationActive = YES;
