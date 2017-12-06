@@ -39,6 +39,8 @@
 
 @property(nonatomic, strong) NSURL * _Nullable apiBaseURL;
 
+@property(nonatomic, strong) NSString * _Nullable environment;
+
 @property(nonatomic, strong) NSURL * _Nullable translationCenterBaseURL;
 
 @property(nonatomic, strong) NSURL * _Nullable communicatorBaseURL;

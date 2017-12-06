@@ -986,7 +986,7 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
 
 - (void)setupSocketAndConnect {
     [self.socket on:@"connect" callback:^(NSArray * _Nonnull data, SocketAckEmitter * _Nonnull ack) {
-        NSString *roomAddress = [NSString stringWithFormat:@"production:project:%@", self.configuration.applicationKey];
+        NSString *roomAddress = [NSString stringWithFormat:@"%@:project:%@", self.configuration.environment,  self.configuration.applicationKey];
         
         [self.socket emit:@"room" with:@[@[roomAddress]]];
     }];
@@ -1250,8 +1250,8 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     
     if (translationKey != nil) {
         if (self.dashboardInlineTranslationModeActive) {
-            [self.apiClient highlightTranslationKeyOnDashboard:translationKey.key completionBlock:^(BOOL success, NSError *error) {
-                
+            TMLConfiguration *config = [self configuration];
+            [self.apiClient highlightTranslationKeyOnDashboard:translationKey.key locale: config.currentLocale completionBlock:^(BOOL success, NSError *error) {
             }];
         } else {
             [self presentTranslatorViewControllerWithTranslationKey:translationKey.key];
