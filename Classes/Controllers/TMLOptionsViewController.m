@@ -100,7 +100,7 @@
     if (![TML sharedInstance].dashboardInlineTranslationModeActive) {
         self.inlineTranslationModeValueLabel.text = TMLLocalizedString(@"In-App");
     } else {
-        self.inlineTranslationModeValueLabel.text = TMLLocalizedString(@"Dashboard");
+        self.inlineTranslationModeValueLabel.text = TMLLocalizedString(@"Translation Center");
     }
 }
 
@@ -137,14 +137,14 @@
 }
 
 - (void)presentInlineTranslationModeAlertView {
-    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:TMLLocalizedString(@"Inline Translation Mode") message:TMLLocalizedString(@"Tap and hold a string to translate it inline. In-app mode presents translation center in the app and dashboard mode only highlights selected string on the dashboard.") preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:TMLLocalizedString(@"Translation Mode") message:TMLLocalizedString(@"Tap and hold on any string to translate it. In-App mode allows you to translate within the app. Translation Center mode highlights selected string inside the web version of the Translation Center.") preferredStyle:UIAlertControllerStyleActionSheet];
     
     [alertController addAction:[UIAlertAction actionWithTitle:TMLLocalizedString(@"In-App") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [TML sharedInstance].dashboardInlineTranslationModeActive = NO;
         [self configureView];
     }]];
     
-    [alertController addAction:[UIAlertAction actionWithTitle:TMLLocalizedString(@"Dashboard") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+    [alertController addAction:[UIAlertAction actionWithTitle:TMLLocalizedString(@"Translation Center") style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
         [TML sharedInstance].dashboardInlineTranslationModeActive = YES;
         [self configureView];
     }]];

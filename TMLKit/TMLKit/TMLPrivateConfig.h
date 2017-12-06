@@ -1,10 +1,9 @@
 /* GENERATED FILE - MODIFICATIONS WILL BE LOST */
 #ifndef TMLPrivateConfig_h
 #define TMLPrivateConfig_h
-#define TMLCDNHost @"https://trex-snapshots-dev.s3-us-west-1.amazonaws.com"
-#define TMLCommunicatorHost @"http://localhost:3016"
-#define TMLEnvironment @"development"
-#define TMLGatewayHost @"http://localhost:3008"
-#define TMLServiceHost @"http://localhost:3000/v2/sdk"
-#define TMLTranslationCenterHost @"http://localhost:3011"
+#define TMLCommunicatorHost @"https://communicator.translationexchange.com"
+#define TMLEnvironment @"production"
+#define TMLGatewayHost @"https://gateway.translationexchange.com"
+#define TMLServiceHost @"https://api.translationexchange.com/v2/sdk"
+#define TMLTranslationCenterHost @"https://tools.translationexchange.com/mobile/stable"
 #endif /* TMLPrivateConfig_h */
