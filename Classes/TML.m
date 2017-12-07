@@ -428,26 +428,23 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
         return;
     }
     
-    NSString *jsonString = [[NSUserDefaults standardUserDefaults] stringForKey:@"key"];
-    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *params = [NSJSONSerialization JSONObjectWithData:jsonData options:0 error:nil];
+    NSDictionary *translatorDict = [[NSUserDefaults standardUserDefaults] dictionaryForKey:@"translator"];
+    NSString *role = [[NSUserDefaults standardUserDefaults] stringForKey:@"role"];
+    NSString *locale = [[NSUserDefaults standardUserDefaults] stringForKey:@"locale"];
+    NSString *accessToken = [[NSUserDefaults standardUserDefaults] stringForKey:@"access_token"];
     
-    TMLTranslator *translator = [TMLAPISerializer materializeObject:params[@"translator"] withClass:[TMLTranslator class]];
+    TMLTranslator *translator = [TMLAPISerializer materializeObject:translatorDict withClass:[TMLTranslator class]];
     
     if (![translator isKindOfClass:[NSNull class]]) {
-        translator.role = params[@"role"];
+        translator.role = role;
     }
     
     if (translator != nil) {
         TMLSharedConfiguration().currentTranslator = translator;
     }
     
-    NSString *accessToken = params[@"access_token"];
     TMLSharedConfiguration().accessToken = accessToken;
-    
-    NSString *locale = params[@"locale"];
     [[TML sharedInstance] changeLocale:locale completionBlock:nil];
-    
     [TML sharedInstance].translationActive = YES;
     [TML sharedInstance].dashboardInlineTranslationModeActive = YES;
 }
