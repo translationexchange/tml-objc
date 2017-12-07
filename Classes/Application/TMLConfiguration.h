@@ -59,6 +59,8 @@
 
 @property(nonatomic, strong) NSString * _Nullable currentLocale;
 
+@property(nonatomic, strong) NSString * _Nullable preferredLocale;
+
 @property(nonatomic, readwrite) TMLTranslator * _Nullable currentTranslator;
 
 @property(nonatomic, strong) NSString * _Nullable previousLocale;

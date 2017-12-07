@@ -434,19 +434,19 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     NSString *accessToken = [[NSUserDefaults standardUserDefaults] stringForKey:@"access_token"];
     
     TMLTranslator *translator = [TMLAPISerializer materializeObject:translatorDict withClass:[TMLTranslator class]];
-    
+
     if (![translator isKindOfClass:[NSNull class]]) {
         translator.role = role;
     }
-    
+
     if (translator != nil) {
         TMLSharedConfiguration().currentTranslator = translator;
     }
     
     TMLSharedConfiguration().accessToken = accessToken;
-    [[TML sharedInstance] changeLocale:locale completionBlock:nil];
     [TML sharedInstance].translationActive = YES;
     [TML sharedInstance].dashboardInlineTranslationModeActive = YES;
+    [[TML sharedInstance] changeLocale:locale completionBlock:nil];
 }
 
 - (void) applicationDidBecomeActive:(NSNotification *)aNotification {
@@ -709,6 +709,14 @@ id TMLLocalizeDate(NSDictionary *options, NSDate *date, NSString *format, ...) {
     TMLBundle *bundle = userInfo[TMLBundleChangeInfoBundleKey];
     if (bundle != nil && bundle.application != nil) {
         [self updateWithBundle:bundle];
+    }
+    
+    if (self.configuration.preferredLocale != nil) {
+        [self changeLocale:self.configuration.preferredLocale completionBlock:^(BOOL success) {
+            if (success) {
+                self.configuration.preferredLocale = nil;
+            }
+        }];
     }
 }
 
@@ -1607,7 +1615,10 @@ shouldBeRequiredToFailByGestureRecognizer:(UIGestureRecognizer *)otherGestureRec
     void(^finalize)(BOOL) = ^(BOOL success) {
         if (success == YES) {
             [self _changeToLocale:locale];
+        } else {
+            self.configuration.preferredLocale = locale;
         }
+        
         if (completionBlock != nil) {
             completionBlock(success);
         }
