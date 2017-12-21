@@ -19,10 +19,16 @@ You never have to touch the resource bundle files - translation keys are extract
 
 Once your app is translated, the translations will automatically be downloaded and installed by the SDK. You DO NOT need to submit a new application to the App Store. You can simply enable a new language on TranslationExchange.com and it will immediately be available in your application.
 
-<p align="center">
-  <img src="https://github.com/translationexchange/tml-docs/blob/master/objc/iphone.gif">
-</p>
+Video
+==================
 
+Click on the image to see it in action.
+
+<p align="center">
+  <a href="https://youtu.be/N8isi19D9fU">		
+  	<img src="https://github.com/translationexchange/tml-objc-samples-tmlkit/blob/master/ios-tmlkit.png?raw=true">
+   </a> 	  
+</p>
 
 Requirements
 ==================
