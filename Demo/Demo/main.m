@@ -11,7 +11,7 @@
 #import "AppDelegate.h"
 
 #ifndef TMLDefaultApplicationKey
-#define TMLDefaultApplicationKey @"2f3bf80d0c46815c6cbf922b0877f9e2cf5dd4bc65e84a0fdbc883e22259cf7e"
+#define TMLDefaultApplicationKey @"145581a710562dce1198f3a5c764c06b23e6dcc47b45844e7161dd92a5bd92c9"
 #endif
 
 #ifndef DEBUG

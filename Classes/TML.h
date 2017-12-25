@@ -64,6 +64,11 @@
 @property(nonatomic, assign, getter=isTranslationActive) BOOL translationActive;
 
 /**
+ * Current inline translation mode
+ */
+@property(nonatomic, assign, getter=isDashboardInlineTranslationModeActive) BOOL dashboardInlineTranslationModeActive;
+
+/**
  *  Holds the current user object
  */
 @property(nonatomic, readonly) TMLBasicUser *currentUser;
@@ -423,6 +428,10 @@
  */
 - (void)registerObjectWithReusableLocalizedStrings:(id)object;
 
+- (void)registerObjectPreventedFromAutomaticLocalization:(id)object;
+
+- (BOOL)isObjectRegisteredPreventedFromAutomaticLocalization:(NSObject *)object;
+
 /**
  *  Removes all stored translation data.
  *
@@ -481,6 +490,11 @@
 - (void)presentLanguageSelectorController;
 
 /**
+ *  Presents screenshot picker.
+ */
+- (void)presentScreenshotController;
+
+/**
  *  Presents authorization controller.
  */
 - (TMLAuthorizationViewController *)presentAuthorizationControllerForTokenRefresh;
@@ -498,6 +512,10 @@
  *  Dismisses presented controller.
  */
 - (void)dismissPresentedViewController;
+
+- (void)toggleActiveTranslation;
+
+- (void)signout;
 
 @end
 

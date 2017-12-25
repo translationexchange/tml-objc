@@ -33,12 +33,20 @@
 #import "TMLConfiguration.h"
 #import "TMLLanguage.h"
 
+#ifndef TMLEnvironment
+#define TMLEnvironment @"production"
+#endif
+
 #ifndef TMLServiceHost
 #define TMLServiceHost @"https://api.translationexchange.com/v2/sdk"
 #endif
 
 #ifndef TMLTranslationCenterHost
 #define TMLTranslationCenterHost @"https://tools.translationexchange.com/mobile/stable"
+#endif
+
+#ifndef TMLCommunicatorHost
+#define TMLCommunicatorHost @"https://communicator.translationexchange.com"
 #endif
 
 #ifndef TMLGatewayHost
@@ -82,8 +90,10 @@ NSString * const TMLPreviousLocaleDefaultsKey = @"previousLocale";
         [self setupDefaultContextRules];
         [self setupDefaultTokens];
         [self setupLocalization];
+        self.environment = TMLEnvironment;
         self.apiBaseURL = [NSURL URLWithString:TMLServiceHost];
         self.translationCenterBaseURL = [NSURL URLWithString:TMLTranslationCenterHost];
+        self.communicatorBaseURL = [NSURL URLWithString:TMLCommunicatorHost];
         self.cdnBaseURL = [NSURL URLWithString:TMLCDNHost];
         self.gatewayBaseURL = [NSURL URLWithString:TMLGatewayHost];
         self.localizeNIBStrings = YES;

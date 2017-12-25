@@ -39,7 +39,11 @@
 
 @property(nonatomic, strong) NSURL * _Nullable apiBaseURL;
 
+@property(nonatomic, strong) NSString * _Nullable environment;
+
 @property(nonatomic, strong) NSURL * _Nullable translationCenterBaseURL;
+
+@property(nonatomic, strong) NSURL * _Nullable communicatorBaseURL;
 
 @property(nonatomic, strong) NSURL * _Nullable gatewayBaseURL;
 
@@ -54,6 +58,8 @@
 @property(nonatomic, strong) NSString * _Nullable defaultLocale;
 
 @property(nonatomic, strong) NSString * _Nullable currentLocale;
+
+@property(nonatomic, strong) NSString * _Nullable preferredLocale;
 
 @property(nonatomic, readwrite) TMLTranslator * _Nullable currentTranslator;
 

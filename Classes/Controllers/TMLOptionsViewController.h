@@ -28,53 +28,13 @@
  *  THE SOFTWARE.
  */
 
-#import "UIView+TML.h"
-#import "NSObject+TML.h"
-#import "TML.h"
 
-@implementation UIView (TML)
+#import <UIKit/UIKit.h>
 
-- (BOOL)isPreventedFromAutomaticLocalization {
-    return [[TML sharedInstance] isObjectRegisteredPreventedFromAutomaticLocalization:self];
-}
+@class TMLBasicUser;
 
-- (void)setPreventedFromAutomaticLocalization:(BOOL)preventedFromAutomaticLocalization {
-    [[TML sharedInstance] registerObjectPreventedFromAutomaticLocalization:self];
-}
+@interface TMLOptionsViewController : UITableViewController
 
-- (void)localizeWithTML {
-    if (![self isPreventedFromAutomaticLocalization]) {
-        [super localizeWithTML];
-    }
-}
-
-#pragma mark - Localization
-
-- (void)updateReusableTMLStrings {
-    [super updateReusableTMLStrings];
-    [self setNeedsLayout];
-}
-
-#pragma mark - Supporting Methods
-
-- (void)tmlIterateSubviewsWithBlock:(void (^)(UIView *view, BOOL *skip, BOOL *stop))block {
-    __block BOOL shouldStop = NO;
-    for (UIView *subview in self.subviews) {
-        __block BOOL shouldSkip = NO;
-        block(subview, &shouldSkip, &shouldStop);
-        if (shouldStop == YES) {
-            break;
-        }
-        if (shouldSkip == YES) {
-            continue;
-        }
-        [subview tmlIterateSubviewsWithBlock:^(UIView *view, BOOL *skip, BOOL *stop) {
-            block(view, &shouldSkip, &shouldStop);
-        }];
-        if (shouldStop == YES) {
-            break;
-        }
-    }
-}
+@property(strong, nonatomic) TMLBasicUser *translator;
 
 @end

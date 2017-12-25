@@ -1,8 +1,11 @@
+EMBEDDED_CONTENT_CONTAINS_SWIFT = YES
+FRAMEWORK_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/AFNetworking" "$PODS_CONFIGURATION_BUILD_DIR/MBProgressHUD" "$PODS_CONFIGURATION_BUILD_DIR/MPColorTools" "$PODS_CONFIGURATION_BUILD_DIR/MZAppearance" "$PODS_CONFIGURATION_BUILD_DIR/MZFormSheetPresentationController" "$PODS_CONFIGURATION_BUILD_DIR/NVHTarGzip" "$PODS_CONFIGURATION_BUILD_DIR/SAMKeychain" "$PODS_CONFIGURATION_BUILD_DIR/SSZipArchive" "$PODS_CONFIGURATION_BUILD_DIR/Socket.IO-Client-Swift" "$PODS_CONFIGURATION_BUILD_DIR/Starscream" "$PODS_CONFIGURATION_BUILD_DIR/TMLKit" "$PODS_CONFIGURATION_BUILD_DIR/ViewDeck"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/ViewDeck"
-LIBRARY_SEARCH_PATHS = $(inherited) "$PODS_CONFIGURATION_BUILD_DIR/ViewDeck"
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/ViewDeck"
-OTHER_LDFLAGS = $(inherited) -ObjC -l"ViewDeck" -framework "QuartzCore"
+LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
+OTHER_CFLAGS = $(inherited) -iquote "$PODS_CONFIGURATION_BUILD_DIR/AFNetworking/AFNetworking.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/MBProgressHUD/MBProgressHUD.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/MPColorTools/MPColorTools.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/MZAppearance/MZAppearance.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/MZFormSheetPresentationController/MZFormSheetPresentationController.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/NVHTarGzip/NVHTarGzip.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/SAMKeychain/SAMKeychain.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/SSZipArchive/SSZipArchive.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Socket.IO-Client-Swift/SocketIO.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/Starscream/Starscream.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/TMLKit/TMLKit.framework/Headers" -iquote "$PODS_CONFIGURATION_BUILD_DIR/ViewDeck/ViewDeck.framework/Headers"
+OTHER_LDFLAGS = $(inherited) -framework "AFNetworking" -framework "MBProgressHUD" -framework "MPColorTools" -framework "MZAppearance" -framework "MZFormSheetPresentationController" -framework "NVHTarGzip" -framework "SAMKeychain" -framework "SSZipArchive" -framework "SocketIO" -framework "Starscream" -framework "TMLKit" -framework "ViewDeck"
+OTHER_SWIFT_FLAGS = $(inherited) "-D" "COCOAPODS"
 PODS_BUILD_DIR = $BUILD_DIR
 PODS_CONFIGURATION_BUILD_DIR = $PODS_BUILD_DIR/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
 PODS_ROOT = ${SRCROOT}/Pods

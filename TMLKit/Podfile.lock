@@ -21,7 +21,10 @@ PODS:
     - MZAppearance
   - NVHTarGzip (1.0.1)
   - SAMKeychain (1.5.2)
+  - Socket.IO-Client-Swift (13.0.0):
+    - Starscream (~> 3.0.2)
   - SSZipArchive (1.6.2)
+  - Starscream (3.0.2)
 
 DEPENDENCIES:
   - AFNetworking
@@ -30,6 +33,7 @@ DEPENDENCIES:
   - MZFormSheetPresentationController
   - NVHTarGzip
   - SAMKeychain
+  - Socket.IO-Client-Swift (~> 13.0.0)
   - SSZipArchive
 
 SPEC CHECKSUMS:
@@ -40,8 +44,10 @@ SPEC CHECKSUMS:
   MZFormSheetPresentationController: c1dc3bce639d2393b3cc416fcb6e050eb5bca062
   NVHTarGzip: 74cc227b902e5725900d37eb6d79b57e93005a73
   SAMKeychain: 1865333198217411f35327e8da61b43de79b635b
+  Socket.IO-Client-Swift: d187c14afd9f3a8baf908e6e09ca8e77420dadff
   SSZipArchive: 428eb1ac8d37dd133404d30f422b23958c1f9acc
+  Starscream: b512c62f6706421221b5ceb2ba01a9f58aca5bea
 
-PODFILE CHECKSUM: d5695406e25a5f957533f8de99022b232ecc0867
+PODFILE CHECKSUM: b3ae44948b1571ae18ebd488d7d1b1e357205fb7
 
-COCOAPODS: 1.2.0
+COCOAPODS: 1.3.1

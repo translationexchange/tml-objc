@@ -479,4 +479,22 @@ typedef void (^AccessTokenRefreshCompletion)(BOOL succeeded, NSString *accessTok
     [uploadTask resume];
 }
 
+- (void)highlightTranslationKeyOnDashboard: (NSString *)key locale: (NSString *) locale completionBlock:(void (^)(BOOL, NSError *))completionBlock; {
+    NSString *path = [NSString stringWithFormat:@"%@/translation_keys/%@/select", [self applicationProjectPath], key];
+    
+    [self send:[TMLAPIRequest requestWithMethod:@"POST"
+                                           path:path
+                                     parameters:@{
+                                                  @"locale": locale
+                                                  }] completionBlock:^(TMLAPIResponse *apiResponse, NSURLResponse *response, NSError *error) {
+        BOOL success = [apiResponse isSuccessfulResponse];
+        if (success == NO) {
+            TMLError(@"Error highlighting translation key: %@", error);
+        }
+        if (completionBlock != nil) {
+            completionBlock(success, error);
+        }
+    }];
+}
+
 @end
